@@ -11,7 +11,11 @@ namespace Azure.AI.AnomalyDetector.Tests
     {
         public AnomalyDetectorLiveTestBase(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new AnomalyDetectorRecordedTestSanitizer();
+            {
+                JsonPathSanitizers.Add("$..accessToken");
+                JsonPathSanitizers.Add("$..source");
+                SanitizedHeaders.Add(Constants.AuthorizationHeader);
+            };
         }
 
         /// <summary>
@@ -30,12 +34,12 @@ namespace Azure.AI.AnomalyDetector.Tests
 
             if (useTokenCredential)
             {
-                client = new AnomalyDetectorClient(endpoint, TestEnvironment.Credential, options);
+                client = new AnomalyDetectorClient(endpoint, TestEnvironment.Credential, options: options);
             }
             else
             {
                 var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
-                client = new AnomalyDetectorClient(endpoint, credential, options);
+                client = new AnomalyDetectorClient(endpoint, credential, options: options);
             }
 
             return skipInstrumenting ? client : InstrumentClient(client);

@@ -44,8 +44,6 @@ namespace Management.HDInsight.Tests
             Assert.NotNull(capabilitiesResult.Quota);
             Assert.NotNull(capabilitiesResult.Regions);
             Assert.NotNull(capabilitiesResult.Versions);
-            Assert.NotNull(capabilitiesResult.VmsizeFilters);
-            Assert.NotNull(capabilitiesResult.Vmsizes);
 
             foreach (var feature in capabilitiesResult.Features)
             {
@@ -65,16 +63,6 @@ namespace Management.HDInsight.Tests
             foreach (var platform in capabilitiesResult.Versions.Keys)
             {
                 Assert.NotNull(capabilitiesResult.Versions[platform]);
-            }
-
-            foreach (var filter in capabilitiesResult.VmsizeFilters)
-            {
-                Assert.NotNull(filter);
-            }
-
-            foreach (var platform in capabilitiesResult.Vmsizes.Keys)
-            {
-                Assert.NotNull(capabilitiesResult.Vmsizes[platform]);
             }
         }
 
@@ -122,6 +110,21 @@ namespace Management.HDInsight.Tests
             {
                 Assert.Equal(System.Net.HttpStatusCode.BadRequest, ex.Response.StatusCode);
             }
+        }
+
+        [Fact]
+        public void TestListBillingSpecs()
+        {
+            TestInitialize();
+
+            string location = "South Central US";
+            var billingSpecsResult = HDInsightClient.Locations.ListBillingSpecs(location);
+            Assert.NotNull(billingSpecsResult);
+            Assert.NotNull(billingSpecsResult.BillingResources);
+            Assert.NotNull(billingSpecsResult.VmSizes);
+            Assert.NotNull(billingSpecsResult.VmSizeFilters);
+            Assert.NotNull(billingSpecsResult.VmSizeProperties);
+            Assert.NotNull(billingSpecsResult.VmSizesWithEncryptionAtHost);
         }
     }
 }

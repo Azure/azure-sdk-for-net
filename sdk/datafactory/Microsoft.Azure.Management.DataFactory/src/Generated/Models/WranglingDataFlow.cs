@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified, Data flow will appear at the root level.</param>
         /// <param name="sources">List of sources in Power Query.</param>
         /// <param name="script">Power query mashup script.</param>
-        public WranglingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<PowerQuerySource> sources = default(IList<PowerQuerySource>), string script = default(string))
+        /// <param name="documentLocale">Locale of the Power query mashup
+        /// document.</param>
+        public WranglingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<PowerQuerySource> sources = default(IList<PowerQuerySource>), string script = default(string), string documentLocale = default(string))
             : base(description, annotations, folder)
         {
             Sources = sources;
             Script = script;
+            DocumentLocale = documentLocale;
             CustomInit();
         }
 
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.script")]
         public string Script { get; set; }
+
+        /// <summary>
+        /// Gets or sets locale of the Power query mashup document.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.documentLocale")]
+        public string DocumentLocale { get; set; }
 
     }
 }

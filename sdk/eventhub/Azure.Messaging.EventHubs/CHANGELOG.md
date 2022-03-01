@@ -1,6 +1,12 @@
 # Release History
 
-## 5.7.0-beta.1 (Unreleased)
+## 5.7.0-beta.4 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
@@ -9,6 +15,66 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- The `EventHubBufferedProducer` will now invoke the handlers for success or failure when publishing a batch in a deterministic manner, as part of the publishing flow.  Handlers will now be awaited, causing the publishing operation to be considered incomplete until the handler returns.  Previously, handlers were invoked in the background non-deterministically and without a guaranteed ordering.  This ensured they could not interfere with publishing throughput but caused difficulty for reliably checkpointing with the source of events.
+
+- Attempt to retrieve AMQP objects synchronously before calling `GetOrCreateAsync`, avoiding an asynchronous call unless necessary.
+
+- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Remove LINQ from the `AmqpMessageConverter` in favor of direct looping.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Change the internal batch `AsEnumerable<T>` to `AsList<T>` in order to avoid casting costs and have `Count` available to right-size transform collections. _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Use the two item overload when creating a linked token source to avoid allocating an unnecessary array. _([ref](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Threading/CancellationTokenSource.cs#L736-L739))_ _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events read by the `EventHubConsumerClient`.
+
+### Other Changes
+
+- Improved documentation for `EventPosition` to be more explicit about defaults for inclusivity.
+
+- Minor updates to the class hierarchy of `EventData` to improve integration with Azure Schema Registry.
+
+## 5.7.0-beta.2 (2022-01-13)
+
+### Features Added
+
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
+### Bugs Fixed
+
+- Fixed an issue for publishing with idempotent retries enabled where the client and service state could become out-of-sync for error scenarios with ambiguous outcomes. When this occurred, callers had no way to detect or correct the condition and it was possible that new events would fail to publish or be incorrectly identified as duplicates by the service. 
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for `EventProcessor<T>` load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+## 5.7.0-beta.1 (2021-11-09)
+
+### Features Added
+
+- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
+
+### Other Changes
+
+- `EventData` now allows the `EventBody` to be set after construction and supports an empty constructor.
+
+- Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessor<T>` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- `EventPosition` now exposes its `ToString` method for code completion, making it more discoverable.
+
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
 
 ## 5.6.1 (2021-09-08)
 

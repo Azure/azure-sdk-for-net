@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         /// <returns>A location where this resource type is supported for the current subscription</returns>
         public static async Task<string> GetResourceLocation(ArmClient client, string resourceType, FeaturesInfo.Type feature = FeaturesInfo.Type.Default)
         {
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
             HashSet<string> supportedLocations = null;
 
             switch (feature)
@@ -30,8 +31,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 case FeaturesInfo.Type.All:
                     supportedLocations = FeaturesInfo.AllFeaturesSupportedLocations;
                     break;
-                case FeaturesInfo.Type.Ipv6:
-                    supportedLocations = FeaturesInfo.Ipv6SupportedLocations;
+                case FeaturesInfo.Type.IPv6:
+                    supportedLocations = FeaturesInfo.IPv6SupportedLocations;
                     break;
                 case FeaturesInfo.Type.MultiCA:
                     supportedLocations = FeaturesInfo.DefaultLocations;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Provider provider = await client.DefaultSubscription.GetProviders().GetAsync(providerName);
+            Provider provider = await subscription.GetProviders().GetAsync(providerName);
             foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

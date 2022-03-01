@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -28,8 +27,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> description = default;
             Optional<SecurityRuleProtocol> protocol = default;
             Optional<string> sourcePortRange = default;
@@ -363,7 +365,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new SecurityRuleData(id, name.Value, etag.Value, type.Value, description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
+            return new SecurityRuleData(id.Value, name.Value, etag.Value, type.Value, description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
         }
     }
 }

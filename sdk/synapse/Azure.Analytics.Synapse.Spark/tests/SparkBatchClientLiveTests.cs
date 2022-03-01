@@ -37,8 +37,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
-        public async Task TestSparkBatchJob()
+        public async Task TestSparkBatchJobCompletesWhenJobStarts()
         {
             SparkBatchClient client = CreateClient();
 
@@ -47,13 +46,74 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
-            // Verify the Spark batch job completes successfully
-            Assert.True("success".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
+            // Verify the Spark batch job submission starts successfully
+            Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+                string.Format(
+                    "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
+                    jobCreateResponse.Id,
+                    jobCreateResponse.State,
+                    string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
+                )
+            );
+
+            // Get the list of Spark batch jobs and check that the submitted job exists
+            List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
+            Assert.NotNull(listJobResponse);
+            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24513")]
+        public async Task TestSparkBatchJobCompletesWhenJobComplete()
+        {
+            SparkBatchClient client = CreateClient();
+
+            SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
+
+            // Set completion type to wait for completion of job execution.
+            createParams.CreationCompletionType = SparkBatchOperationCompletionType.JobExecution;
+
+            // Submit the Spark job
+            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
+            SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
+
+            // Verify the Spark batch job exuecution completes successfully
+            Assert.True(LivyStates.Success == jobCreateResponse.State  && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     jobCreateResponse.Id,
                     jobCreateResponse.State,
                     jobCreateResponse.Result,
+                    string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
+                )
+            );
+
+            // Get the list of Spark batch jobs and check that the submitted job exists
+            List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
+            Assert.NotNull(listJobResponse);
+            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+        }
+
+        [RecordedTest]
+        public async Task TestSparkBatchOperationPublicConstructor()
+        {
+            SparkBatchClient client = CreateClient();
+
+            // Submit the Spark job
+            SparkBatchJobOptions createParams = SparkTestUtilities.CreateSparkJobRequestParameters(Recording, TestEnvironment);
+            SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
+
+            // Create another SparkBatchOperation
+            SparkBatchOperation anotherOperation =
+                InstrumentOperation(new SparkBatchOperation(int.Parse(createOperation.Id), client, createOperation.CompletionType));
+            SparkBatchJob jobCreateResponse = await anotherOperation.WaitForCompletionAsync();
+
+            // Verify the Spark batch job submission starts successfully
+            Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+                string.Format(
+                    "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
+                    jobCreateResponse.Id,
+                    jobCreateResponse.State,
                     string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
                 )
             );

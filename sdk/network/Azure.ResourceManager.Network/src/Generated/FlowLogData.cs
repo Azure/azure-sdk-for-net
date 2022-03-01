@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of FlowLogData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -61,7 +61,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Parameters that define the flow log format. </summary>
         public FlowLogFormatParameters Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> The provisioning state of the flow log. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,36 +8,31 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using Azure.Messaging.WebPubSub;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Utilities
     {
-        private static readonly char[] HeaderSeparator = { ',' };
+        public static MediaTypeHeaderValue GetMediaType(WebPubSubDataType dataType) => new(GetContentType(dataType));
 
-        public static MediaTypeHeaderValue GetMediaType(MessageDataType dataType) => new(GetContentType(dataType));
-
-        public static string GetContentType(MessageDataType dataType) =>
+        public static string GetContentType(WebPubSubDataType dataType) =>
             dataType switch
             {
-                MessageDataType.Binary => Constants.ContentTypes.BinaryContentType,
-                MessageDataType.Text => Constants.ContentTypes.PlainTextContentType,
-                MessageDataType.Json => Constants.ContentTypes.JsonContentType,
+                WebPubSubDataType.Text => Constants.ContentTypes.PlainTextContentType,
+                WebPubSubDataType.Json => Constants.ContentTypes.JsonContentType,
                 // Default set binary type to align with service side logic
                 _ => Constants.ContentTypes.BinaryContentType
             };
 
-        public static MessageDataType GetDataType(string mediaType) =>
+        public static WebPubSubDataType GetDataType(string mediaType) =>
             mediaType.ToLowerInvariant() switch
             {
-                Constants.ContentTypes.BinaryContentType => MessageDataType.Binary,
-                Constants.ContentTypes.JsonContentType => MessageDataType.Json,
-                Constants.ContentTypes.PlainTextContentType => MessageDataType.Text,
+                Constants.ContentTypes.BinaryContentType => WebPubSubDataType.Binary,
+                Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
+                Constants.ContentTypes.PlainTextContentType => WebPubSubDataType.Text,
                 _ => throw new ArgumentException($"{Constants.ErrorMessages.NotSupportedDataType}{mediaType}")
             };
 
@@ -48,27 +43,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubEventType.User;
         }
 
-        public static HttpResponseMessage BuildResponse(MessageResponse response)
+        public static HttpResponseMessage BuildUserEventResponse(UserEventResponse response, Dictionary<string, object> mergedStates)
         {
             HttpResponseMessage result = new();
 
-            if (response.Message != null)
+            if (response.Data != null)
             {
-                result.Content = new StreamContent(response.Message.ToStream());
+                result.Content = new StreamContent(response.Data.ToStream());
+            }
+
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
             }
             result.Content.Headers.ContentType = GetMediaType(response.DataType);
 
             return result;
         }
 
-        public static HttpResponseMessage BuildResponse(ConnectResponse response)
-        {
-            return BuildResponse(JsonConvert.SerializeObject(response), MessageDataType.Json);
-        }
-
-        public static HttpResponseMessage BuildResponse(string response, MessageDataType dataType = MessageDataType.Text)
+        public static HttpResponseMessage BuildConnectEventResponse(string response, Dictionary<string, object> mergedStates, WebPubSubDataType dataType = WebPubSubDataType.Json)
         {
             HttpResponseMessage result = new();
+            if (mergedStates?.Count > 0)
+            {
+                result.Headers.Add(Constants.Headers.CloudEvents.State, mergedStates.EncodeConnectionStates());
+            }
 
             result.Content = new StringContent(response);
             result.Content.Headers.ContentType = GetMediaType(dataType);
@@ -76,13 +75,89 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return result;
         }
 
-        public static HttpResponseMessage BuildErrorResponse(ErrorResponse error)
+        public static HttpResponseMessage BuildErrorResponse(EventErrorResponse error)
+        {
+            return BuildErrorResponse(error.ErrorMessage, error.Code);
+        }
+
+        public static HttpResponseMessage BuildErrorResponse(string errorMessage, WebPubSubErrorCode code = WebPubSubErrorCode.ServerError)
         {
             HttpResponseMessage result = new();
 
-            result.StatusCode = GetStatusCode(error.Code);
-            result.Content = new StringContent(error.ErrorMessage);
+            result.StatusCode = GetStatusCode(code);
+            result.Content = new StringContent(errorMessage);
             return result;
+        }
+
+        public static HttpResponseMessage BuildValidResponse(
+            WebPubSubEventResponse response, RequestType requestType,
+            WebPubSubConnectionContext context)
+        {
+            // check error as top priority.
+            if (response is EventErrorResponse errorResponse)
+            {
+                return BuildErrorResponse(errorResponse);
+            }
+
+            if (requestType == RequestType.Connect)
+            {
+                if (response is ConnectEventResponse connectResponse)
+                {
+                    var mergedStates = context.UpdateStates(connectResponse.ConnectionStates);
+                    return BuildConnectEventResponse(JsonConvert.SerializeObject(response), mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            if (requestType == RequestType.User)
+            {
+                if (response is UserEventResponse messageResponse)
+                {
+                    var mergedStates = context.UpdateStates(messageResponse.ConnectionStates);
+                    return BuildUserEventResponse(messageResponse, mergedStates);
+                }
+                return BuildErrorResponse($"Invalid response type: '{response.GetType()}' in current request type '{requestType}'.");
+            }
+            // should not hit.
+            throw new ArgumentException($"Invalid request type, {requestType}");
+        }
+
+        public static HttpResponseMessage BuildValidResponse(
+            JToken jResponse, RequestType requestType,
+            WebPubSubConnectionContext context)
+        {
+            try
+            {
+                JObject response = jResponse is JObject jObj ? jObj : throw new ArgumentException("Response should be a JObject.");
+
+                // check error as top priority.
+                if (response.TryGetValue("code", out var code)
+                    && code.ToObject<WebPubSubStatusCode>() != WebPubSubStatusCode.Success)
+                {
+                    var error = response.ToObject<EventErrorResponse>();
+                    return BuildErrorResponse(error);
+                }
+
+                if (requestType == RequestType.Connect)
+                {
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    var formattedResponse = JsonConvert.SerializeObject(response.ToObject<ConnectEventResponse>());
+                    return BuildConnectEventResponse(formattedResponse, mergedStates);
+                }
+                if (requestType == RequestType.User)
+                {
+                    var states = GetStatesFromJson(response);
+                    var mergedStates = context.UpdateStates(states);
+                    return BuildUserEventResponse(response.ToObject<UserEventResponse>(), mergedStates);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BuildErrorResponse(new EventErrorResponse(WebPubSubErrorCode.ServerError, ex.Message));
+            }
+
+            // should not hit.
+            throw new ArgumentException($"Invalid request type, '{requestType}'.");
         }
 
         public static HttpStatusCode GetStatusCode(WebPubSubErrorCode errorCode) =>
@@ -93,21 +168,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 WebPubSubErrorCode.ServerError => HttpStatusCode.InternalServerError,
                 _ => HttpStatusCode.InternalServerError
             };
-
-        public static IReadOnlyList<string> GetSignatureList(string signatures)
-        {
-            if (string.IsNullOrEmpty(signatures))
-            {
-                return default;
-            }
-
-            return signatures.Split(HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        public static PropertyInfo[] GetProperties(Type type)
-        {
-            return type.GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-        }
 
         public static PropertyInfo GetProperty(Type type, string name)
         {
@@ -140,82 +200,44 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return RequestType.Ignored;
         }
 
-        public static bool ValidateSignature(string connectionId, string signature, HashSet<string> accessKeys)
-        {
-            foreach (var accessKey in accessKeys)
-            {
-                var signatures = GetSignatureList(signature);
-                if (signatures == null)
-                {
-                    break;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return false;
-        }
-
-        public static bool ValidateMediaType(string mediaType, out MessageDataType dataType)
+        public static bool ValidateMediaType(string mediaType, out WebPubSubDataType dataType)
         {
             try
             {
                 dataType = GetDataType(mediaType);
                 return true;
             }
-            catch (Exception)
+            catch
             {
-                dataType = MessageDataType.Binary;
+                dataType = WebPubSubDataType.Binary;
                 return false;
             }
         }
 
-        public static bool RespondToServiceAbuseCheck(HttpRequestMessage req, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        public static bool IsValidationRequest(this HttpRequestMessage req, out List<string> requestHosts)
         {
-            response = new HttpResponseMessage();
             if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
             {
-                var requestHosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).ToList();
-                return RespondToServiceAbuseCheck(requestHosts, allowedHosts, out response);
+                requestHosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).ToList();
+                return true;
             }
+            requestHosts = null;
             return false;
         }
 
-        public static bool RespondToServiceAbuseCheck(HttpRequest req, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
         {
-            response = new HttpResponseMessage();
-            if (req.Method.Equals("options", StringComparison.OrdinalIgnoreCase) || req.Method.Equals("get", StringComparison.OrdinalIgnoreCase))
+            if (response.TryGetValue("states", out var val))
             {
-                req.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out var requestHosts);
-                return RespondToServiceAbuseCheck(requestHosts, allowedHosts, out response);
-            }
-            return false;
-        }
-
-        private static bool RespondToServiceAbuseCheck(IList<string> requestHosts, HashSet<string> allowedHosts, out HttpResponseMessage response)
-        {
-            response = new HttpResponseMessage();
-            if (requestHosts != null && requestHosts.Any())
-            {
-                foreach (var item in requestHosts)
+                // val should be a JSON object of <key,value> pairs
+                if (val.Type == JTokenType.Object)
                 {
-                    if (allowedHosts.Contains(item, StringComparer.OrdinalIgnoreCase))
-                    {
-                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, requestHosts);
-                        return true;
-                    }
+                    return val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
+                        .ToDictionary(k => k.Key, v => v.Value);
                 }
-                response.StatusCode = HttpStatusCode.BadRequest;
             }
-            return true;
+            // We don't support clear states for JS
+            return new Dictionary<string, BinaryData>();
         }
     }
 }

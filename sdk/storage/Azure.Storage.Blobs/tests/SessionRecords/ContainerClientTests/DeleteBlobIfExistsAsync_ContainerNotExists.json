@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "db165d16-74a7-b44e-5dcc-d0e54385b7f0",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -29,7 +29,7 @@
         "x-ms-client-request-id": "db165d16-74a7-b44e-5dcc-d0e54385b7f0",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "4affd32b-901e-0036-795e-0557b2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "750de4d6-6fb3-ad35-d883-bb1aadfe75bf",
         "x-ms-date": "Wed, 17 Feb 2021 18:59:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "750de4d6-6fb3-ad35-d883-bb1aadfe75bf",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "4affd33f-901e-0036-085e-0557b2000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

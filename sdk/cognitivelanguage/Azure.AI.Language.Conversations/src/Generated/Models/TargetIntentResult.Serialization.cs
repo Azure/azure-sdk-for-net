@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     public partial class TargetIntentResult
     {
@@ -18,8 +18,9 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "conversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
                     case "luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element);
-                    case "luis_deepstack": return DSTargetIntentResult.DeserializeDSTargetIntentResult(element);
+                    case "non_linked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element);
                     case "question_answering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element);
                 }
             }

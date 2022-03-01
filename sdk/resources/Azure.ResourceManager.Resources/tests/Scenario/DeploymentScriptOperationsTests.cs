@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -19,14 +20,15 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Delete()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-5-");
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-D-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            DeploymentScript deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(deployScriptName, deploymentScriptData)).Value;
-            await deploymentScript.DeleteAsync();
+            DeploymentScript deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(true, deployScriptName, deploymentScriptData)).Value;
+            await deploymentScript.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentScript.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

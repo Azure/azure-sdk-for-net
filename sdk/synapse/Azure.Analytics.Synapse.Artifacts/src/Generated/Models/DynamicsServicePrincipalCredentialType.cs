@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
-    public readonly partial struct DynamicsServicePrincipalCredentialType : IEquatable<DynamicsServicePrincipalCredentialType>
+    internal readonly partial struct DynamicsServicePrincipalCredentialType : IEquatable<DynamicsServicePrincipalCredentialType>
     {
         private readonly string _value;
 

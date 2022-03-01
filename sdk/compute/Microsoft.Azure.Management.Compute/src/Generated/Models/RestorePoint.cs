@@ -48,16 +48,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// restore point. Please refer to https://aka.ms/RestorePoints for
         /// more details. Possible values include: 'CrashConsistent',
         /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
-        /// <param name="provisioningDetails">Gets the provisioning details set
-        /// by the server during Create restore point operation.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails))
+        /// <param name="timeCreated">Gets the creation time of the restore
+        /// point.</param>
+        /// <param name="sourceRestorePoint">Resource Id of the source restore
+        /// point from which a copy needs to be created.</param>
+        /// <param name="instanceView">The restore point instance view.</param>
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), System.DateTime? timeCreated = default(System.DateTime?), ApiEntityReference sourceRestorePoint = default(ApiEntityReference), RestorePointInstanceView instanceView = default(RestorePointInstanceView))
             : base(id, name, type)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
-            ProvisioningDetails = provisioningDetails;
+            TimeCreated = timeCreated;
+            SourceRestorePoint = sourceRestorePoint;
+            InstanceView = instanceView;
             CustomInit();
         }
 
@@ -97,11 +102,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ConsistencyMode { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning details set by the server during Create
-        /// restore point operation.
+        /// Gets the creation time of the restore point.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningDetails")]
-        public RestorePointProvisioningDetails ProvisioningDetails { get; private set; }
+        [JsonProperty(PropertyName = "properties.timeCreated")]
+        public System.DateTime? TimeCreated { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource Id of the source restore point from which a
+        /// copy needs to be created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceRestorePoint")]
+        public ApiEntityReference SourceRestorePoint { get; set; }
+
+        /// <summary>
+        /// Gets the restore point instance view.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instanceView")]
+        public RestorePointInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Validate the object.

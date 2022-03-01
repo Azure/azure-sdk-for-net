@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
         internal EncryptionProtectorListResult()
         {
-            Value = new ChangeTrackingList<EncryptionProtector>();
+            Value = new ChangeTrackingList<EncryptionProtectorData>();
         }
 
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal EncryptionProtectorListResult(IReadOnlyList<EncryptionProtector> value, string nextLink)
+        internal EncryptionProtectorListResult(IReadOnlyList<EncryptionProtectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<EncryptionProtector> Value { get; }
+        public IReadOnlyList<EncryptionProtectorData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
     public partial class LuisCallingOptions

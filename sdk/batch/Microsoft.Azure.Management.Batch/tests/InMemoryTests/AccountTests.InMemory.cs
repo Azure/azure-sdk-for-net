@@ -907,14 +907,16 @@ namespace Microsoft.Azure.Batch.Tests
         [Fact]
         public void UserAssignedIdentitiesShouldSubstituteForBatchAccountIdentityUserAssignedIdentitiesValue()
         {
-            string principalId = "TestPrincipal";
-            string tenantId = "TestTenant";
-            BatchAccountIdentityUserAssignedIdentitiesValue testIdentity = new BatchAccountIdentityUserAssignedIdentitiesValue();
-            BatchAccountIdentity identity = new BatchAccountIdentity(ResourceIdentityType.UserAssigned, principalId, tenantId, new Dictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> { { "", testIdentity } });
-
+            string testPrincipalId = "testPrincipalId";
+            string testClientId = "testClientId";
+            string testAccount = "testAccount";
+#pragma warning disable CS0618 // Type or member is obsolete
+            BatchAccountIdentityUserAssignedIdentitiesValue testIdentity = new BatchAccountIdentityUserAssignedIdentitiesValue(testPrincipalId, testClientId);
+            BatchAccountIdentity identity = new BatchAccountIdentity(ResourceIdentityType.UserAssigned, new Dictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> { { testAccount, testIdentity } });
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(testIdentity is UserAssignedIdentities);
-            Assert.Equal(principalId, identity.PrincipalId);
-            Assert.Equal(tenantId, identity.TenantId);
+            Assert.Equal(testPrincipalId, identity.UserAssignedIdentities[testAccount].PrincipalId);
+            Assert.Equal(testClientId, identity.UserAssignedIdentities[testAccount].ClientId);
         }
     }
 }

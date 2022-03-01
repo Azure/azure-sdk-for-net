@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DatabaseStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseStatus(string value)
         {

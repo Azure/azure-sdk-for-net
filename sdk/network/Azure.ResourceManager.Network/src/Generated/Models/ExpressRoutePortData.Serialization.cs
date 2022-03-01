@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -40,8 +45,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PeeringLocation))
@@ -76,12 +79,12 @@ namespace Azure.ResourceManager.Network
         internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<string> peeringLocation = default;
             Optional<int> bandwidthInGbps = default;
             Optional<float> provisionedBandwidthInGbps = default;
@@ -89,8 +92,8 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
             Optional<string> etherType = default;
             Optional<string> allocationDate = default;
-            Optional<IList<ExpressRouteLink>> links = default;
-            Optional<IReadOnlyList<Models.SubResource>> circuits = default;
+            Optional<IList<ExpressRouteLinkData>> links = default;
+            Optional<IReadOnlyList<WritableSubResource>> circuits = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
@@ -107,7 +110,12 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -138,11 +146,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -211,10 +214,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ExpressRouteLink> array = new List<ExpressRouteLink>();
+                            List<ExpressRouteLinkData> array = new List<ExpressRouteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteLink.DeserializeExpressRouteLink(item));
+                                array.Add(ExpressRouteLinkData.DeserializeExpressRouteLinkData(item));
                             }
                             links = array;
                             continue;
@@ -226,10 +229,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             circuits = array;
                             continue;
@@ -253,7 +256,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRoutePortData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new ExpressRoutePortData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

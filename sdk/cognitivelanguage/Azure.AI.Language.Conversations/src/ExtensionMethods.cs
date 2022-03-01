@@ -18,7 +18,6 @@ namespace Azure.AI.Language.Conversations
             loggedHeaderNames.Add("x-envoy-upstream-service-time");
 
             IList<string> loggedQueryParameters = options.Diagnostics.LoggedQueryParameters;
-            loggedQueryParameters.Add("api-version");
             loggedQueryParameters.Add("deploymentName");
             loggedQueryParameters.Add("projectName");
         }

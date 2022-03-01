@@ -19,6 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Sources = new ChangeTrackingList<DataFlowSource>();
             Sinks = new ChangeTrackingList<DataFlowSink>();
             Transformations = new ChangeTrackingList<Transformation>();
+            ScriptLines = new ChangeTrackingList<string>();
             Type = "MappingDataFlow";
         }
 
@@ -31,12 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sinks"> List of sinks in data flow. </param>
         /// <param name="transformations"> List of transformations in data flow. </param>
         /// <param name="script"> DataFlow script. </param>
-        internal MappingDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script) : base(type, description, annotations, folder)
+        /// <param name="scriptLines"> Data flow script lines. </param>
+        internal MappingDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(type, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;
             Transformations = transformations;
             Script = script;
+            ScriptLines = scriptLines;
             Type = type ?? "MappingDataFlow";
         }
 
@@ -48,5 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IList<Transformation> Transformations { get; }
         /// <summary> DataFlow script. </summary>
         public string Script { get; set; }
+        /// <summary> Data flow script lines. </summary>
+        public IList<string> ScriptLines { get; }
     }
 }

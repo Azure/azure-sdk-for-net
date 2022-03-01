@@ -49,8 +49,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// shared VHD attached. String value of SrsDataContract.PresenceStatus
         /// enum. Possible values include: 'Unknown', 'Present',
         /// 'NotPresent'</param>
-        public VmmVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string))
-            : base(sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd)
+        /// <param name="hyperVHostId">The Id of the hyper-v host in
+        /// fabric.</param>
+        public VmmVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string), string hyperVHostId = default(string))
+            : base(sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId)
         {
             CustomInit();
         }

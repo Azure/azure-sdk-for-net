@@ -1,6 +1,6 @@
 # Checks spelling of files that changed between the current state of the repo
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
-# ContinueOnError   - true: Pipeline warns on spelling error 
+# ContinueOnError   - true: Pipeline warns on spelling error
 #                     false: Pipeline fails on spelling error
 # TargetBranch      - Target ref (e.g. main) to compare to create file change
 #                     list.
@@ -14,13 +14,18 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: 16.x
+      displayName: Use Node.js 16.x
+
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       continueOnError: ${{ parameters.ContinueOnError }}
-      inputs: 
+      inputs:
         targetType: filePath
         filePath: eng/common/scripts/check-spelling-in-changed-files.ps1
-        arguments: >- 
+        arguments: >-
           -TargetBranch "origin/$("${{ parameters.TargetBranch }}" -replace "refs/heads/")"
           -SourceBranch ${{ parameters.SourceBranch }}
           -CspellConfigPath ${{ parameters.CspellConfigPath }}

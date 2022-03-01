@@ -1,16 +1,20 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
-    public partial class SchemaRegistryAvroObjectSerializer : Azure.Core.Serialization.ObjectSerializer
+    public partial class SchemaRegistryAvroSerializer
     {
-        public SchemaRegistryAvroObjectSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroObjectSerializerOptions options = null) { }
-        public override object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override void Serialize(System.IO.Stream stream, object value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
-        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public SchemaRegistryAvroSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroSerializerOptions options = null) { }
+        public object Deserialize(Azure.BinaryContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<object> DeserializeAsync(Azure.BinaryContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<TData> DeserializeAsync<TData>(Azure.BinaryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public TData Deserialize<TData>(Azure.BinaryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.BinaryContent Serialize(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.BinaryContent> SerializeAsync(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEnvelope : Azure.BinaryContent, new() { throw null; }
+        public TEnvelope Serialize<TEnvelope, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEnvelope : Azure.BinaryContent, new() { throw null; }
     }
-    public partial class SchemaRegistryAvroObjectSerializerOptions
+    public partial class SchemaRegistryAvroSerializerOptions
     {
-        public SchemaRegistryAvroObjectSerializerOptions() { }
+        public SchemaRegistryAvroSerializerOptions() { }
         public bool AutoRegisterSchemas { get { throw null; } set { } }
     }
 }

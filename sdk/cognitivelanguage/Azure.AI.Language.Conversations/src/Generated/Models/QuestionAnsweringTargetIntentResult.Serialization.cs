@@ -8,13 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     public partial class QuestionAnsweringTargetIntentResult
     {
         internal static QuestionAnsweringTargetIntentResult DeserializeQuestionAnsweringTargetIntentResult(JsonElement element)
         {
-            Optional<object> result = default;
+            Optional<KnowledgeBaseAnswers> result = default;
             TargetKind targetKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Models
                         result = null;
                         continue;
                     }
-                    result = property.Value.GetObject();
+                    result = KnowledgeBaseAnswers.DeserializeKnowledgeBaseAnswers(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetKind"))

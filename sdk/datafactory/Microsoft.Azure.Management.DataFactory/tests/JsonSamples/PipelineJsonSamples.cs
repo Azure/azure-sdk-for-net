@@ -5042,7 +5042,8 @@ namespace DataFactory.Tests.JsonSamples
               ""recursive"": true,
               ""wildcardFolderPath"": ""A*"",
               ""wildcardFileName"":  ""*.csv"",
-              ""useBinaryTransfer"":  true
+              ""useBinaryTransfer"":  true,
+              ""disableChunking"":  true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -7541,6 +7542,83 @@ namespace DataFactory.Tests.JsonSamples
             }
         ]
     }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipelineNew = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    queries:[
+                      {
+                         queryName: """",
+                         dataflowSinks: []
+                      }
+                    ]
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteScriptActivityPipeline = @"
+{
+  ""name"": ""##PipelineName##"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyScriptActivity"",
+        ""type"": ""Script"",
+        ""linkedServiceName"": {
+          ""referenceName"": ""myLinkedService"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+          ""scripts"": [
+            {
+              ""text"": ""@pipeline().parameters.query"",
+              ""type"": ""Query""
+            }
+          ]
+        }
+      }
+    ],
+    ""parameters"": {
+      ""query"": {
+          ""type"": ""String""
+        }
+      }
+   }
 }
 ";
     }

@@ -73,7 +73,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IPersonGroupOperations operations, string personGroupId, string name = default(string), string userData = default(string), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this IPersonGroupOperations operations, string personGroupId, string name, string userData = default(string), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateWithHttpMessagesAsync(personGroupId, name, userData, recognitionModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

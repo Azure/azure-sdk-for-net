@@ -1,13 +1,17 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Constants
     {
+        public static readonly char[] HeaderSeparator = { ',' };
+        public const string AllowedAllOrigins = "*";
+
         // WebPubSubOptions can be set by customers.
         public const string WebPubSubConnectionStringName = "WebPubSubConnectionString";
         public const string HubNameStringName = "WebPubSubHub";
+        public const string WebPubSubValidationStringName = "WebPubSubValidation";
 
         public static class ContentTypes
         {
@@ -39,6 +43,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 public const string Source = Prefix + "source";
                 public const string EventName = Prefix + "eventName";
                 public const string UserId = Prefix + "userId";
+                public const string State = Prefix + "connectionState";
+                public const string AwpsVersion = Prefix + "awpsversion";
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";
@@ -50,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public class ErrorMessages
         {
-            public const string NotSupportedDataType = "Message only supports text, binary, json. Current value is: ";
+            public const string NotSupportedDataType = "Message data only supports text, binary, json. Current value is: ";
             public const string NotValidWebPubSubRequest = "Invalid request that missing required fields.";
             public const string SignatureValidationFailed = "Invalid request signature.";
         }

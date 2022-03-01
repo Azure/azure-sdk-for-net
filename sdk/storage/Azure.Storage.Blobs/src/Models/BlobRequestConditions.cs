@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Models
@@ -17,6 +18,33 @@ namespace Azure.Storage.Blobs.Models
         /// matching this Id.
         /// </summary>
         public string LeaseId { get; set; }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public BlobRequestConditions()
+        {
+        }
+
+        private BlobRequestConditions(BlobRequestConditions deepCopySource) : base(deepCopySource)
+        {
+            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
+            LeaseId = deepCopySource.LeaseId;
+        }
+
+        /// <summary>
+        /// Creates a deep copy of the given instance, if any.
+        /// </summary>
+        /// <param name="deepCopySource">Instance to deep copy.</param>
+        /// <returns>The deep copy, or null.</returns>
+        internal static BlobRequestConditions CloneOrDefault(BlobRequestConditions deepCopySource)
+        {
+            if (deepCopySource == default)
+            {
+                return default;
+            }
+            return new BlobRequestConditions(deepCopySource);
+        }
 
         /// <summary>
         /// Converts the value of the current RequestConditions object to
@@ -42,14 +70,9 @@ namespace Azure.Storage.Blobs.Models
         }
 
         internal BlobRequestConditions WithIfMatch(ETag etag) =>
-            new BlobRequestConditions
+            new BlobRequestConditions(this)
             {
-                LeaseId = LeaseId,
                 IfMatch = etag,
-                IfNoneMatch = IfNoneMatch,
-                IfModifiedSince = IfModifiedSince,
-                IfUnmodifiedSince = IfUnmodifiedSince,
-                TagConditions = TagConditions,
             };
 
         /// <summary>

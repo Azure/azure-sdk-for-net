@@ -4,7 +4,9 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source1652207384?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-c38d4213435fd040805409e5569317ea-a245d966660c2a4c-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
@@ -31,8 +33,10 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source1652207384/Document1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "27",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-a8c50308147b8842a634f06d0a424183-0f2d329046820943-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -63,8 +67,10 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source1652207384/File2.jpg",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "3",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-af75f7d351e36144b174448e7dc66a5c-b1f466fbb72a3941-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -95,7 +101,9 @@
       "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/target328402405?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-b692209e7313024dbe3973be61442a1a-0ae5e46f0cf30542-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",

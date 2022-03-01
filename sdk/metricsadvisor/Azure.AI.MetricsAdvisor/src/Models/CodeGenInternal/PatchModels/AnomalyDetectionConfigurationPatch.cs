@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullStringValue("name", Name);
-            writer.WriteNullStringValue("description", Description);
+            writer.WriteNullObjectValue("name", Name);
+            writer.WriteNullObjectValue("description", Description);
             writer.WriteNullObjectValue("wholeMetricConfiguration", WholeMetricConfiguration);
             if (Optional.IsCollectionDefined(DimensionGroupOverrideConfigurations))
             {

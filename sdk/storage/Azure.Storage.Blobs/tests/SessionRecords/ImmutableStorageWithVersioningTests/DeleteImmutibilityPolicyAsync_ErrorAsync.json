@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "787b68f1-2afb-24ec-a90c-076d70110d4d",
         "x-ms-date": "Wed, 11 Aug 2021 19:42:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -23,7 +23,7 @@
         "x-ms-client-request-id": "787b68f1-2afb-24ec-a90c-076d70110d4d",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "b12297d7-d01e-004a-51e9-8e693e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",

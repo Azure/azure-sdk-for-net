@@ -4,7 +4,9 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source2012179097?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-c4e1e72e419efc4aa8a0e890b4ae2461-c44c9d3a7c3fc445-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
@@ -31,8 +33,10 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/source2012179097/Document1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "27",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-ac84329a80ab934a84fdb28eb44d30e1-500065ef60732548-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -63,7 +67,9 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target859132197?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-a6d6d5b540b2d043a8fec2efb5464a0f-ac20f4c6c0acc443-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
@@ -90,7 +96,9 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/glossary841945723?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-186e05c7676ab643a4cbb0d18082b56b-c744d4f6d0449648-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
@@ -117,8 +125,10 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/glossary841945723/validGlossary.csv",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "40",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-4805bbf58d13214fa945503dfc0bf80b-82b7fc6bb0897840-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -1256,6 +1266,7 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target859132197/Document1.txt",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "traceparent": "00-f04c1ae02f709740a919eaf18d51d116-6f2543a681879944-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
@@ -1292,7 +1303,9 @@
       "RequestUri": "https://documentstorageleithy.blob.core.windows.net/target859132197/Document1.txt",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "If-Match": "0x8D954D89E59E9ED",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "0e8b46f1557261d16f0b163d130b5e98",
         "x-ms-date": "Sun, 01 Aug 2021 10:39:29 GMT",

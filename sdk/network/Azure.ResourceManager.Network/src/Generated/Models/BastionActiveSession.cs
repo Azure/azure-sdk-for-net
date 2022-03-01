@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The user name who is active on this session. </summary>
         public string UserName { get; }
         /// <summary> The IP Address of the target. </summary>
-        public string TargetIpAddress { get; }
+        public string TargetIPAddress { get; }
         /// <summary> The protocol used to connect to the target. </summary>
         public BastionConnectProtocol? Protocol { get; }
         /// <summary> The resource id of the target. </summary>

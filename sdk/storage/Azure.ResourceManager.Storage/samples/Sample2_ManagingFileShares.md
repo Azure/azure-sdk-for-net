@@ -13,21 +13,22 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
+using Azure.Core;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
 
 ```C# Snippet:Managing_StorageAccounts_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
-```C# Snippet:Managing_StorageAccounts_GetResourceGroupContainer
+```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+AzureLocation location = AzureLocation.WestUS2;
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -40,9 +41,9 @@ Kind kind = Kind.Storage;
 string location = "westus2";
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
-StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-StorageAccountCreateOperation accountCreateOperation = await accountContainer.CreateOrUpdateAsync(accountName, parameters);
+ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
@@ -50,8 +51,7 @@ StorageAccount storageAccount = accountCreateOperation.Value;
 Then we need to get the file service, which is a singleton resource and the name is "default"
 
 ```C# Snippet:Managing_FileShares_GetFileService
-FileServiceContainer fileServiceContainer = storageAccount.GetFileServices();
-FileService fileService = await fileServiceContainer.GetAsync("default");
+FileService fileService = await storageAccount.GetFileService().GetAsync();
 ```
 
 
@@ -60,18 +60,18 @@ Now that we have the file service, we can manage the file shares inside this sto
 ***Create a file share***
 
 ```C# Snippet:Managing_FileShares_CreateFileShare
-FileShareContainer fileShareContainer = fileService.GetFileShares();
+FileShareCollection fileShareCollection = fileService.GetFileShares();
 string fileShareName = "myFileShare";
 FileShareData fileShareData = new FileShareData();
-FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(fileShareName, fileShareData);
+ArmOperation<FileShare> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
 FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 
 ***List all file shares***
 
 ```C# Snippet:Managing_FileShares_ListFileShares
-FileShareContainer fileShareContainer = fileService.GetFileShares();
-AsyncPageable<FileShare> response = fileShareContainer.GetAllAsync();
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+AsyncPageable<FileShare> response = fileShareCollection.GetAllAsync();
 await foreach (FileShare fileShare in response)
 {
     Console.WriteLine(fileShare.Id.Name);
@@ -81,21 +81,21 @@ await foreach (FileShare fileShare in response)
 ***Get a file share***
 
 ```C# Snippet:Managing_FileShares_GetFileShare
-FileShareContainer fileShareContainer = fileService.GetFileShares();
-FileShare fileShare= await fileShareContainer.GetAsync("myFileShare");
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+FileShare fileShare= await fileShareCollection.GetAsync("myFileShare");
 Console.WriteLine(fileShare.Id.Name);
 ```
 
 ***Try to get a file share if it exists***
 
 ```C# Snippet:Managing_FileShares_GetFileShareIFExists
-FileShareContainer fileShareContainer = fileService.GetFileShares();
-FileShare fileShare = await fileShareContainer.GetIfExistsAsync("foo");
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+FileShare fileShare = await fileShareCollection.GetIfExistsAsync("foo");
 if (fileShare != null)
 {
     Console.WriteLine(fileShare.Id.Name);
 }
-if (await fileShareContainer.CheckIfExistsAsync("bar"))
+if (await fileShareCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("file share 'bar' exists");
 }
@@ -104,9 +104,9 @@ if (await fileShareContainer.CheckIfExistsAsync("bar"))
 ***Delete a file share***
 
 ```C# Snippet:Managing_FileShares_DeleteFileShare
-FileShareContainer fileShareContainer = fileService.GetFileShares();
-FileShare fileShare = await fileShareContainer.GetAsync("myFileShare");
-await fileShare.DeleteAsync();
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+FileShare fileShare = await fileShareCollection.GetAsync("myFileShare");
+await fileShare.DeleteAsync(true);
 ```
 
 ## Next steps

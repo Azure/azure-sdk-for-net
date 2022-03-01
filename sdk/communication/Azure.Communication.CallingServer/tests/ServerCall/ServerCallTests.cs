@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyStartRecordingResponse);
 
-            Response<StartCallRecordingResult> result = await serverCall.StartRecordingAsync(sampleCallBackUri);
+            Response<StartRecordingResult> result = await serverCall.StartRecordingAsync(sampleCallBackUri);
             Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyStartRecordingResponse);
 
-            StartCallRecordingResult result = serverCall.StartRecording(sampleCallBackUri);
+            StartRecordingResult result = serverCall.StartRecording(sampleCallBackUri);
             Assert.AreEqual("dummyRecordingId", result.RecordingId);
         }
 
@@ -72,16 +72,16 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_StartRecordingLatestVersion))]
-        public void StartRecordingLatestVersion_Returns200Ok(Uri sampleCallBackUri, RecordingContentType? recordingContentType, RecordingChannelType recordingChannelType, RecordingFormatType recordingFormatType)
+        public void StartRecordingLatestVersion_Returns200Ok(Uri sampleCallBackUri, RecordingContent? recordingContentType, RecordingChannel recordingChannelType, RecordingFormat recordingFormatType)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyStartRecordingResponse);
 
-            StartCallRecordingResult result = serverCall.StartRecording(sampleCallBackUri, recordingContentType, recordingChannelType, recordingFormatType);
+            StartRecordingResult result = serverCall.StartRecording(sampleCallBackUri, recordingContentType, recordingChannelType, recordingFormatType);
             Assert.AreEqual("dummyRecordingId", result.RecordingId);
         }
 
         [TestCaseSource(nameof(TestData_StartRecordingLatestVersion))]
-        public void StartRecordingAsyncLatestVersion_Returns404NotFound(Uri sampleCallBackUri, RecordingContentType? recordingContentType, RecordingChannelType recordingChannelType, RecordingFormatType recordingFormatType)
+        public void StartRecordingAsyncLatestVersion_Returns404NotFound(Uri sampleCallBackUri, RecordingContent? recordingContentType, RecordingChannel recordingChannelType, RecordingFormat recordingFormatType)
         {
             ServerCall serverCall = CreateMockServerCall(404);
 
@@ -91,7 +91,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_StartRecordingLatestVersion))]
-        public void StartRecordingLatestVersion_Returns404NotFound(Uri sampleCallBackUri, RecordingContentType? recordingContentType, RecordingChannelType recordingChannelType, RecordingFormatType recordingFormatType)
+        public void StartRecordingLatestVersion_Returns404NotFound(Uri sampleCallBackUri, RecordingContent? recordingContentType, RecordingChannel recordingChannelType, RecordingFormat recordingFormatType)
         {
             ServerCall serverCall = CreateMockServerCall(404);
 
@@ -395,9 +395,9 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     new Uri("https://somecallbackurl"),
-                    RecordingContentType.Audio,
-                    RecordingChannelType.Mixed,
-                    RecordingFormatType.Mp3
+                    RecordingContent.Audio,
+                    RecordingChannel.Mixed,
+                    RecordingFormat.Mp3
                 },
             };
         }

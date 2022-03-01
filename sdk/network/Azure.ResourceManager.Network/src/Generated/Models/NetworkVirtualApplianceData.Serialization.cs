@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -40,8 +45,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(NvaSku))
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
-                writer.WriteObjectValue(VirtualHub);
+                JsonSerializer.Serialize(writer, VirtualHub);
             }
             if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
@@ -90,23 +93,23 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkVirtualApplianceData DeserializeNetworkVirtualApplianceData(JsonElement element)
         {
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<VirtualApplianceSkuProperties> nvaSku = default;
             Optional<string> addressPrefix = default;
             Optional<IList<string>> bootStrapConfigurationBlobs = default;
-            Optional<Models.SubResource> virtualHub = default;
+            Optional<WritableSubResource> virtualHub = default;
             Optional<IList<string>> cloudInitConfigurationBlobs = default;
             Optional<string> cloudInitConfiguration = default;
             Optional<long> virtualApplianceAsn = default;
             Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
-            Optional<IReadOnlyList<Models.SubResource>> virtualApplianceSites = default;
-            Optional<IReadOnlyList<Models.SubResource>> inboundSecurityRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,12 +120,17 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -153,11 +161,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -206,7 +209,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualHub = Models.SubResource.DeserializeSubResource(property0.Value);
+                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("cloudInitConfigurationBlobs"))
@@ -261,10 +264,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             virtualApplianceSites = array;
                             continue;
@@ -276,10 +279,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             inboundSecurityRules = array;
                             continue;
@@ -298,7 +301,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), identity, etag.Value, nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub.Value, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
+            return new NetworkVirtualApplianceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), identity, etag.Value, nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
         }
     }
 }

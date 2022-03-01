@@ -1,6 +1,6 @@
 # Release History
 
-## 11.4.0-beta.4 (Unreleased)
+## 11.4.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.4.0-beta.6 (2022-02-08)
+
+### Features Added
+- Added `Unk` as an `OcrSkillLanguage` value. The values are used to set the default language code for the [OCR cognitive skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr).
+- Support for [`AzureMachineLearningSkill`](https://docs.microsoft.com/azure/search/cognitive-search-aml-skill). The AML skill allows you to extend AI enrichment with a custom [Azure Machine Learning](https://docs.microsoft.com/azure/machine-learning/overview-what-is-azure-machine-learning) (AML) model. Once an AML model is [trained and deployed](https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace), an AML skill integrates it into AI enrichment.
+
+## 11.4.0-beta.5 (2021-11-09)
+
+### Features Added
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview). `SearchOptions` now support specifying `SemanticSettings` to influence the search behavior.
+
+### Breaking Changes
+- Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
+- Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
+
+## 11.4.0-beta.4 (2021-10-05)
+
+### Features Added
+- Added APIs to [reset documents](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-docs-preview) and [skills](https://docs.microsoft.com/azure/search/search-howto-run-reset-indexers#reset-skills-preview).
+
+### Breaking Changes
+- Renamed `QueryAnswer` to `QueryAnswerType` in `SearchOptions`.
+- Renamed `QueryCaption` to `QueryCaptionType` in `SearchOptions`.
+- Renamed `QuerySpeller` to `QuerySpellerType` in `SearchOptions`.
+- Renamed `QueryCaptionHighlight` to `QueryCaptionHighlightEnabled` in `SearchOptions`.
 
 ## 11.4.0-beta.3 (2021-09-07)
 

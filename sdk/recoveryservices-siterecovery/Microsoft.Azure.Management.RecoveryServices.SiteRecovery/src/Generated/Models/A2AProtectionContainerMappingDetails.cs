@@ -37,12 +37,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Enabled'</param>
         /// <param name="automationAccountArmId">The automation account arm
         /// id.</param>
+        /// <param name="automationAccountAuthenticationType">A value
+        /// indicating the type authentication to use for automation Account.
+        /// Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'</param>
         /// <param name="scheduleName">The schedule arm name.</param>
         /// <param name="jobScheduleName">The job schedule arm name.</param>
-        public A2AProtectionContainerMappingDetails(string agentAutoUpdateStatus = default(string), string automationAccountArmId = default(string), string scheduleName = default(string), string jobScheduleName = default(string))
+        public A2AProtectionContainerMappingDetails(string agentAutoUpdateStatus = default(string), string automationAccountArmId = default(string), string automationAccountAuthenticationType = default(string), string scheduleName = default(string), string jobScheduleName = default(string))
         {
             AgentAutoUpdateStatus = agentAutoUpdateStatus;
             AutomationAccountArmId = automationAccountArmId;
+            AutomationAccountAuthenticationType = automationAccountAuthenticationType;
             ScheduleName = scheduleName;
             JobScheduleName = jobScheduleName;
             CustomInit();
@@ -65,6 +70,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "automationAccountArmId")]
         public string AutomationAccountArmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the type authentication to use for
+        /// automation Account. Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'
+        /// </summary>
+        [JsonProperty(PropertyName = "automationAccountAuthenticationType")]
+        public string AutomationAccountAuthenticationType { get; set; }
 
         /// <summary>
         /// Gets or sets the schedule arm name.

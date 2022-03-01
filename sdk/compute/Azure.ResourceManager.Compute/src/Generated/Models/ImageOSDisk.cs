@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
@@ -15,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osState"> The OS State. </param>
         public ImageOSDisk(OperatingSystemTypes osType, OperatingSystemStateTypes osState)
         {
-            OsType = osType;
-            OsState = osState;
+            OSType = osType;
+            OSState = osState;
         }
 
         /// <summary> Initializes a new instance of ImageOSDisk. </summary>
@@ -29,15 +32,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="osState"> The OS State. </param>
-        internal ImageOSDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, OperatingSystemTypes osType, OperatingSystemStateTypes osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
+        internal ImageOSDisk(WritableSubResource snapshot, WritableSubResource managedDisk, Uri blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, WritableSubResource diskEncryptionSet, OperatingSystemTypes osType, OperatingSystemStateTypes osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
         {
-            OsType = osType;
-            OsState = osState;
+            OSType = osType;
+            OSState = osState;
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes OsType { get; set; }
+        public OperatingSystemTypes OSType { get; set; }
         /// <summary> The OS State. </summary>
-        public OperatingSystemStateTypes OsState { get; set; }
+        public OperatingSystemStateTypes OSState { get; set; }
     }
 }

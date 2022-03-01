@@ -25,7 +25,8 @@ namespace Management.HDInsight.Tests
 
             var request = new ClusterMonitoringRequest
             {
-                WorkspaceId = CommonData.WorkspaceId
+                WorkspaceId = CommonData.WorkspaceId,
+                PrimaryKey = "primarykey"
             };
 
             HDInsightClient.Extensions.EnableMonitoring(CommonData.ResourceGroupName, clusterName, request);

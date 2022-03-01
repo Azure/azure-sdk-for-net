@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static PrivateEndpointConnectionItem DeserializePrivateEndpointConnectionItem(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionItem(id, etag.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnectionItem(id.Value, etag.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

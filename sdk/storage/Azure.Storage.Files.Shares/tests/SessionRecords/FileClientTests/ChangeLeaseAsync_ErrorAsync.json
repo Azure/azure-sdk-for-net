@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "951f0748-8ebc-0f07-f046-f2047e870736",
         "x-ms-date": "Tue, 26 Jan 2021 19:32:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "951f0748-8ebc-0f07-f046-f2047e870736",
         "x-ms-request-id": "13bb6204-701a-005c-251a-f48f9a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "13bb6207-701a-005c-261a-f48f9a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "x-ms-lease-id": "1b663fbe-c8d3-3898-0a24-d05882c7aeec",
         "x-ms-proposed-lease-id": "f0ff04b3-6e88-f82d-73e9-edba97aba64a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -110,7 +110,7 @@
         "x-ms-client-request-id": "d342c092-75d0-50d6-126d-a8e9dbdda15e",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "13bb6208-701a-005c-271a-f48f9a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
@@ -133,7 +133,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:32:45 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -146,7 +146,7 @@
         ],
         "x-ms-client-request-id": "d7274027-d269-8e79-eeb0-e9b749317ae6",
         "x-ms-request-id": "13bb620a-701a-005c-281a-f48f9a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Azure backup restore request
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("AzureBackupRestoreRequest")]
     public partial class AzureBackupRestoreRequest
     {
         /// <summary>

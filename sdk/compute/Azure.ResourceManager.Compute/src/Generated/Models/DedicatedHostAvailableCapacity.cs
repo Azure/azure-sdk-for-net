@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Dedicated host unutilized capacity. </summary>
-    public partial class DedicatedHostAvailableCapacity
+    internal partial class DedicatedHostAvailableCapacity
     {
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>
         internal DedicatedHostAvailableCapacity()
         {
-            AllocatableVMs = new ChangeTrackingList<DedicatedHostAllocatableVM>();
+            AllocatableVms = new ChangeTrackingList<DedicatedHostAllocatableVm>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>
-        /// <param name="allocatableVMs"> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </param>
-        internal DedicatedHostAvailableCapacity(IReadOnlyList<DedicatedHostAllocatableVM> allocatableVMs)
+        /// <param name="allocatableVms"> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </param>
+        internal DedicatedHostAvailableCapacity(IReadOnlyList<DedicatedHostAllocatableVm> allocatableVms)
         {
-            AllocatableVMs = allocatableVMs;
+            AllocatableVms = allocatableVms;
         }
 
         /// <summary> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </summary>
-        public IReadOnlyList<DedicatedHostAllocatableVM> AllocatableVMs { get; }
+        public IReadOnlyList<DedicatedHostAllocatableVm> AllocatableVms { get; }
     }
 }

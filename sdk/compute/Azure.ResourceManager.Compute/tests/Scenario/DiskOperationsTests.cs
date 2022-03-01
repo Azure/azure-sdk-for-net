@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<Disk> CreateDiskAsync(string diskName)
         {
-            var container = (await CreateResourceGroupAsync()).GetDisks();
+            var collection = (await CreateResourceGroupAsync()).GetDisks();
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
-            var lro = await container.CreateOrUpdateAsync(diskName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, diskName, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(diskName);
-            await disk.DeleteAsync();
+            await disk.DeleteAsync(true);
         }
 
         [TestCase]
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var disk = await CreateDiskAsync(diskName);
 
             var newDiskSize = 20;
-            var update = new DiskUpdate()
+            var update = new DiskUpdateOptions()
             {
                 DiskSizeGB = newDiskSize
             };
-            var lro = await disk.UpdateAsync(update);
+            var lro = await disk.UpdateAsync(true, update);
             Disk updatedDisk = lro.Value;
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);

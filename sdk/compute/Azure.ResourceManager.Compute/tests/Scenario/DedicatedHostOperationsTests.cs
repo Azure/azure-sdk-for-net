@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
         {
-            var container = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
+            var collection = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await container.CreateOrUpdateAsync(groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
             return lro.Value;
         }
 
         private async Task<DedicatedHost> CreateDedicatedHostAsync(string hostName)
         {
             var hostGroupName = Recording.GenerateAssetName("testDHG-");
-            var container = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
+            var collection = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
-            var lro = await container.CreateOrUpdateAsync(hostName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, hostName, input);
             return lro.Value;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var hostName = Recording.GenerateAssetName("testHost-");
             var dedicatedHost = await CreateDedicatedHostAsync(hostName);
-            await dedicatedHost.DeleteAsync();
+            await dedicatedHost.DeleteAsync(true);
         }
 
         [TestCase]
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostName = Recording.GenerateAssetName("testHost-");
             DedicatedHost dedicatedHost = await CreateDedicatedHostAsync(hostName);
             var updatedAutoReplaceOnFailure = false;
-            var update = new DedicatedHostUpdate()
+            var update = new DedicatedHostUpdateOptions()
             {
                 AutoReplaceOnFailure = updatedAutoReplaceOnFailure
             };
-            var lro = await dedicatedHost.UpdateAsync(update);
+            var lro = await dedicatedHost.UpdateAsync(true, update);
             DedicatedHost updatedHost = lro.Value;
 
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);

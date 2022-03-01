@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3c5d7e20-1245-c4ee-99d5-c4a7b45f7b5c",
         "x-ms-date": "Thu, 03 Jun 2021 21:32:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3c5d7e20-1245-c4ee-99d5-c4a7b45f7b5c",
         "x-ms-request-id": "f1be6205-e01a-0023-6bbf-585072000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "3917056552249722909*6811422022089678740",
         "x-ms-request-id": "f1be6207-e01a-0023-6cbf-585072000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -92,7 +92,7 @@
         "x-ms-client-request-id": "14982ca6-a8fe-1a30-fa45-203978741de9",
         "x-ms-date": "Thu, 03 Jun 2021 21:32:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -106,7 +106,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "14982ca6-a8fe-1a30-fa45-203978741de9",
         "x-ms-request-id": "f1be6208-e01a-0023-6dbf-585072000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://kasobolcanadacentral.file.core.windows.net/\" ShareName=\"test-share-69ec0b9c-aa28-6359-e5b9-811a7b79a710\" DirectoryPath=\"\"><Entries><Directory><Name>test-dire¢t Ø®ϒ%3A-cfadc948-6be9-7ba2-48ef-9ba331872133</Name><Properties /></Directory></Entries><NextMarker /></EnumerationResults>"
     },
@@ -125,7 +125,7 @@
         "x-ms-date": "Thu, 03 Jun 2021 21:32:44 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "4bafc6c3-7eb2-0b13-600a-70205d066489",
         "x-ms-request-id": "f1be6209-e01a-0023-6ebf-585072000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

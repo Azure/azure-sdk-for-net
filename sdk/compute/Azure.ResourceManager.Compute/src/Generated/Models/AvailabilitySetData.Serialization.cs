@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                writer.WriteObjectValue(ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -67,16 +67,17 @@ namespace Azure.ResourceManager.Compute
 
         internal static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<int> platformUpdateDomainCount = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IList<Models.SubResource>> virtualMachines = default;
-            Optional<Models.SubResource> proximityPlacementGroup = default;
+            Optional<IList<WritableSubResource>> virtualMachines = default;
+            Optional<WritableSubResource> proximityPlacementGroup = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -118,6 +119,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -156,10 +162,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             virtualMachines = array;
                             continue;
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proximityPlacementGroup = Models.SubResource.DeserializeSubResource(property0.Value);
+                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("statuses"))
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new AvailabilitySetData(id, name, type, tags, location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup.Value, Optional.ToList(statuses));
+            return new AvailabilitySetData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
         }
     }
 }

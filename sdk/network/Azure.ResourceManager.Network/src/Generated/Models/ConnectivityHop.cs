@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information about a hop between the source and the destination. </summary>
-    public partial class ConnectivityHop : Resources.Models.SubResource
+    public partial class ConnectivityHop
     {
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
         internal ConnectivityHop()
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
-        /// <param name="id"> The id. </param>
         /// <param name="type"> The type of the hop. </param>
+        /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
         /// <param name="nextHopIds"> List of next hop identifiers. </param>
@@ -34,9 +33,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="links"> List of hop links. </param>
         /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHop(string id, string type, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues) : base(id)
+        internal ConnectivityHop(string type, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
         {
             Type = type;
+            Id = id;
             Address = address;
             ResourceId = resourceId;
             NextHopIds = nextHopIds;
@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of the hop. </summary>
         public string Type { get; }
+        /// <summary> The ID of the hop. </summary>
+        public string Id { get; }
         /// <summary> The IP address of the hop. </summary>
         public string Address { get; }
         /// <summary> The ID of the resource corresponding to this hop. </summary>

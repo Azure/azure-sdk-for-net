@@ -122,6 +122,16 @@ namespace Microsoft.Azure.Management.HDInsight
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the HDInsightManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -371,8 +381,10 @@ namespace Microsoft.Azure.Management.HDInsight
             ScriptExecutionHistory = new ScriptExecutionHistoryOperations(this);
             Operations = new Operations(this);
             VirtualMachines = new VirtualMachinesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-06-01-preview";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -389,6 +401,7 @@ namespace Microsoft.Azure.Management.HDInsight
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -402,6 +415,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

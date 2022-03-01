@@ -1,2450 +1,497 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZpcnR1YWxNYWNoaW5lcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZpcnR1YWxNYWNoaW5lcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c7823036-09b3-45b6-8b0e-18a3cc3210b8"
+          "98865fd7-e8de-4050-a15f-84d392e2a635"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-request-id": [
-          "4ed24eae-4910-42dd-8699-a179c0b284e7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "9378bbf2-37c4-48cf-a8ce-fa028dad8b64"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233413Z:9378bbf2-37c4-48cf-a8ce-fa028dad8b64"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:34:13 GMT"
-        ],
-        "Content-Length": [
-          "1639"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "302"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines/501d070b-bbf9-f6e1-ec39-b90f63efaa65\",\n      \"name\": \"501d070b-bbf9-f6e1-ec39-b90f63efaa65\",\n      \"properties\": {\n        \"displayName\": \"TNT55-NSX-APP03\",\n        \"vmType\": \"MP\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines\"\n    },\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines/501d4823-7de6-0c1f-ec19-91596e4a3826\",\n      \"name\": \"501d4823-7de6-0c1f-ec19-91596e4a3826\",\n      \"properties\": {\n        \"displayName\": \"TNT55-NSX-APP01\",\n        \"vmType\": \"REGULAR\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines\"\n    },\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines/501d5348-4479-2431-ac01-e7c5aa6b6eb3\",\n      \"name\": \"501d5348-4479-2431-ac01-e7c5aa6b6eb3\",\n      \"properties\": {\n        \"displayName\": \"TNT55-NSX-APP02\",\n        \"vmType\": \"MP\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines\"\n    },\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/virtualMachines/529f52a3-3770-57ba-e4ba-b9d2a792ad21\",\n      \"name\": \"529f52a3-3770-57ba-e4ba-b9d2a792ad21\",\n      \"properties\": {\n        \"displayName\": \"TNT55-VCENTER\",\n        \"vmType\": \"REGULAR\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/virtualMachines/vm1\",\r\n      \"name\": \"vm1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/virtualMachines\",\r\n      \"properties\": {\r\n        \"displayName\": \"vm1\",\r\n        \"vmType\": \"REGULAR\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"sourceVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"sourceVmGroup\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0ab4e44b-1d71-44ab-8a39-c001ccdb3ea4"
+          "01fee1e3-995a-4048-a3d4-3cf14839551c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "108"
+          "64"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "61058359-8095-4063-bb51-7daf80214e07"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "bb5c6652-d013-4732-8dfd-96d8445059cb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233415Z:bb5c6652-d013-4732-8dfd-96d8445059cb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:34:14 GMT"
-        ],
-        "Content-Length": [
-          "389"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"sourceVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Building\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
-        ],
-        "x-ms-request-id": [
-          "1331cd5b-4821-4e9f-ac48-c8a00be446f1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "39b6b0f3-6c75-4f86-ac7d-2b26772a3d1f"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233425Z:39b6b0f3-6c75-4f86-ac7d-2b26772a3d1f"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:34:25 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "355"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Building\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/vmGroups/vmGroup1\",\r\n  \"name\": \"vmGroup1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\",\r\n  \"properties\": {\r\n    \"displayName\": \"vmGroup1\",\r\n    \"members\": [\r\n      \"564d43da-fefc-2a3b-1d92-42855622fa50\"\r\n    ],\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-request-id": [
-          "184ff3fd-31d4-4adf-aa61-749ac3c1b954"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "b9c8457d-0880-4753-b80a-6be82fe468e9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233436Z:b9c8457d-0880-4753-b80a-6be82fe468e9"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:34:35 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
-        ],
-        "x-ms-request-id": [
-          "df9a0e1a-aa82-484b-99f5-b969bbfc09ad"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "6ed2f8d9-775d-4ee9-ba1a-34604f006ea8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233446Z:6ed2f8d9-775d-4ee9-ba1a-34604f006ea8"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:34:45 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
-        ],
-        "x-ms-request-id": [
-          "551fbda6-2689-48b9-acd0-c0be085a8539"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "1e86c413-d929-48f4-a021-5eb8dab945a0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233456Z:1e86c413-d929-48f4-a021-5eb8dab945a0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:34:55 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-request-id": [
-          "2eea3af6-feeb-4ace-96e2-405e7ffa3973"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "831ec73f-d4ec-46f9-a81b-76d073f1abb3"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233506Z:831ec73f-d4ec-46f9-a81b-76d073f1abb3"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:05 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvMzc1NGRlYTQtYWY5OC00ZjRlLThhNzctM2Y0MzhiZDNkZDRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
-        ],
-        "x-ms-request-id": [
-          "ee9b9bf6-2952-431c-ab9d-f33ed9e2c6e1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "ac4d73ae-7b93-41dc-8074-4c2c941ab6a2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233517Z:ac4d73ae-7b93-41dc-8074-4c2c941ab6a2"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:16 GMT"
-        ],
-        "Content-Length": [
-          "869"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:35:09.3948915-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"name\": \"3754dea4-af98-4f4e-8a77-3f438bd3dd4c\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n    \"name\": \"sourceVmGroup\",\n    \"properties\": {\n      \"displayName\": \"sourceVmGroup\",\n      \"members\": [\n        \"TNT55-NSX-APP03\"\n      ],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"status\": \"ERROR\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n  },\n  \"startTime\": \"2021-05-25T16:34:15.2786195-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "x-ms-request-id": [
-          "47f9ce97-c594-42f8-b796-134df10e0ec2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "bc66e57e-71cd-4186-961d-60f27f27f8ab"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233517Z:bc66e57e-71cd-4186-961d-60f27f27f8ab"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:17 GMT"
-        ],
-        "Content-Length": [
-          "420"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"sourceVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"status\": \"ERROR\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "44e161bd-0b0d-454c-82eb-af9bc3cf1c8c"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-request-id": [
-          "ea261d33-ad96-43b8-9799-bf9fa68cc1f1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "6aac412f-95c1-4dcc-bd98-9f983a0b9145"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233530Z:6aac412f-95c1-4dcc-bd98-9f983a0b9145"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:29 GMT"
-        ],
-        "Content-Length": [
-          "420"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"sourceVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"status\": \"ERROR\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
-        ],
-        "x-ms-request-id": [
-          "251a9aec-ae47-498b-ad99-925b47b97ce3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c6a0009d-a6b7-4c69-a38f-dd606adaec04"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233633Z:c6a0009d-a6b7-4c69-a38f-dd606adaec04"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:33 GMT"
-        ],
-        "Content-Length": [
-          "422"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"modifiedVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 1,\n    \"status\": \"ERROR\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"destVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP01\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"destVmGroup\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d672601c-8015-4fa9-83d0-4a9bdc324749"
+          "bea085d6-5136-4cb0-aedb-f8f98352f908"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "106"
+          "62"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/85ed5f87-677b-451c-806c-5bc2d25e263b?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "43a652d8-692f-44f5-ba2b-e140b7ec9c12"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "7250cb30-3f29-4075-b66c-3ae78aca6323"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233518Z:7250cb30-3f29-4075-b66c-3ae78aca6323"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:35:18 GMT"
-        ],
-        "Content-Length": [
-          "383"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup\",\n  \"name\": \"destVmGroup\",\n  \"properties\": {\n    \"displayName\": \"destVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP01\"\n    ],\n    \"provisioningState\": \"Building\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/85ed5f87-677b-451c-806c-5bc2d25e263b?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwL29wZXJhdGlvbnN0YXR1c2VzLzg1ZWQ1Zjg3LTY3N2ItNDUxYy04MDZjLTViYzJkMjVlMjYzYj9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-request-id": [
-          "523cd7be-a2c5-450d-84af-90ed3aefe4b2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c027cc67-61ed-44dd-8dbb-fb4afd304f4f"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233529Z:c027cc67-61ed-44dd-8dbb-fb4afd304f4f"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:28 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "863"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "355"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:35:21.1813064-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/85ed5f87-677b-451c-806c-5bc2d25e263b\",\n  \"name\": \"85ed5f87-677b-451c-806c-5bc2d25e263b\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup\",\n    \"name\": \"destVmGroup\",\n    \"properties\": {\n      \"displayName\": \"destVmGroup\",\n      \"members\": [\n        \"TNT55-NSX-APP01\"\n      ],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"status\": \"SUCCESS\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n  },\n  \"startTime\": \"2021-05-25T16:35:18.3372301-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/vmGroups/vmGroup1\",\r\n  \"name\": \"vmGroup1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\",\r\n  \"properties\": {\r\n    \"displayName\": \"vmGroup1\",\r\n    \"members\": [\r\n      \"564d43da-fefc-2a3b-1d92-42855622fa50\"\r\n    ],\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
-        ],
-        "x-ms-request-id": [
-          "d104fcbc-1bd3-404d-b32b-a9968a2b1791"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3555358b-0861-4f0e-a9a7-e65850fcb89b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233529Z:3555358b-0861-4f0e-a9a7-e65850fcb89b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:29 GMT"
-        ],
-        "Content-Length": [
-          "416"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup\",\n  \"name\": \"destVmGroup\",\n  \"properties\": {\n    \"displayName\": \"destVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP01\"\n    ],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ef5a8bf-2df3-4122-9deb-a287b1b6fc3c"
+          "52faf6d2-8680-4b06-9ba1-7dd33bef3f3c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11989"
-        ],
-        "x-ms-request-id": [
-          "b0a2473a-0ade-449c-b2e0-f3e9be490a6d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "a67103a5-10a3-4257-bbe2-6dde31804d14"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233529Z:a67103a5-10a3-4257-bbe2-6dde31804d14"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:35:29 GMT"
-        ],
-        "Content-Length": [
-          "849"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "365"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destvmgroup\",\n      \"name\": \"destvmgroup\",\n      \"properties\": {\n        \"displayName\": \"destVmGroup\",\n        \"members\": [\n          \"TNT55-NSX-APP01\"\n        ],\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"status\": \"SUCCESS\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n    },\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourcevmgroup\",\n      \"name\": \"sourcevmgroup\",\n      \"properties\": {\n        \"displayName\": \"sourceVmGroup\",\n        \"members\": [\n          \"TNT55-NSX-APP03\"\n        ],\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"status\": \"ERROR\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/vmGroups/vmGroup1\",\r\n      \"name\": \"cloud1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\",\r\n      \"properties\": {\r\n        \"displayName\": \"vmGroup1\",\r\n        \"members\": [\r\n          \"564d43da-fefc-2a3b-1d92-42855622fa50\"\r\n        ],\r\n        \"status\": \"SUCCESS\",\r\n        \"revision\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6b650f65-00e9-4ac5-b562-5635fb708fc8"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:40 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "353"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/vmGroups/vmGroup1\",\r\n  \"name\": \"cloud1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\",\r\n  \"properties\": {\r\n    \"displayName\": \"vmGroup1\",\r\n    \"members\": [\r\n      \"564d43da-fefc-2a3b-1d92-42855622fa50\"\r\n    ],\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"modifiedVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedVmGroup\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "152ce0c5-c500-4d3c-989d-a84b4ffd329a"
+          "76502df3-de1a-41c4-a95d-93e688c17ec5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "110"
+          "66"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "68dda32c-c4f6-4914-8991-7cc4f6c6f749"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "97c049ad-bbdb-4b94-b08f-5f757627ca7e"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233531Z:97c049ad-bbdb-4b94-b08f-5f757627ca7e"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:35:31 GMT"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "353"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/vmGroups/vmGroup1\",\r\n  \"name\": \"cloud1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\",\r\n  \"properties\": {\r\n    \"displayName\": \"vmGroup1\",\r\n    \"members\": [\r\n      \"564d43da-fefc-2a3b-1d92-42855622fa50\"\r\n    ],\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 2\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"portMirroring\",\r\n    \"direction\": \"BIDIRECTIONAL\",\r\n    \"source\": \"vmGroup1\",\r\n    \"destination\": \"vmGroup1\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8b2dc35c-c950-4cd3-9514-be31f36d3ca1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "158"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:40 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
         ],
         "Content-Length": [
           "421"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"modifiedVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Building\",\n    \"revision\": 0,\n    \"status\": \"ERROR\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-request-id": [
-          "af4e7371-33b8-443e-92ee-e1f3d0cde85b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "a6ed2917-d88f-4f71-a71d-144b2eeb9984"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233541Z:a6ed2917-d88f-4f71-a71d-144b2eeb9984"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:41 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Building\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/portMirroringProfiles/portMirroring1\",\r\n  \"name\": \"portMirroring1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\",\r\n  \"properties\": {\r\n    \"displayName\": \"portMirroring1\",\r\n    \"direction\": \"BIDIRECTIONAL\",\r\n    \"source\": \"vmGroup1\",\r\n    \"destination\": \"vmGroup2\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11986"
-        ],
-        "x-ms-request-id": [
-          "b02a518d-4bf0-4f52-88ca-dacbf815139f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "919409d5-4181-4736-bbcc-09e3560c3914"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233551Z:919409d5-4181-4736-bbcc-09e3560c3914"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:35:51 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
-        ],
-        "x-ms-request-id": [
-          "856db5d9-a9e5-46b7-a8a2-273bf39d8377"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "1b35d231-61cf-449a-923c-2bcb7942bddb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233602Z:1b35d231-61cf-449a-923c-2bcb7942bddb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:01 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11984"
-        ],
-        "x-ms-request-id": [
-          "5459a9e6-8ebf-43a3-8fc7-867f07e6f8c0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "5808911a-3e37-4b10-8585-dac24626104b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233612Z:5808911a-3e37-4b10-8585-dac24626104b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:11 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
-        ],
-        "x-ms-request-id": [
-          "dac6120f-6a4a-4876-92b5-276ac8e735fa"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "7dc4d143-95d4-456b-bb6f-072a5d674191"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233622Z:7dc4d143-95d4-456b-bb6f-072a5d674191"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:22 GMT"
-        ],
-        "Content-Length": [
-          "386"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvOTQ2MzRjYzYtMGIzMy00ODE0LTk1ZmYtNjNiODZjZDljMTAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
-        ],
-        "x-ms-request-id": [
-          "5e11ca2a-7cc9-4ca6-965c-fdcff014d103"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "f9c8c1e3-d35c-47cc-bd1a-3af7a8acd677"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233632Z:f9c8c1e3-d35c-47cc-bd1a-3af7a8acd677"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:32 GMT"
-        ],
-        "Content-Length": [
-          "871"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:36:29.1206434-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"name\": \"94634cc6-0b33-4814-95ff-63b86cd9c103\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n    \"name\": \"sourceVmGroup\",\n    \"properties\": {\n      \"displayName\": \"modifiedVmGroup\",\n      \"members\": [\n        \"TNT55-NSX-APP03\"\n      ],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 1,\n      \"status\": \"ERROR\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n  },\n  \"startTime\": \"2021-05-25T16:35:31.4885933-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"portMirroring\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"source\": \"sourceVmGroup\",\n    \"destination\": \"destVmGroup\"\n  }\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "71e07350-f4ce-4b94-8426-0bfe6a398e2a"
+          "546f78cb-fd82-4247-a518-a16159bf9e81"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "159"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/dd441673-f691-49bd-b8ef-c671e30e8eec?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "06a23971-8736-4205-9d67-9d882e4ada69"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3f09c1d7-62aa-48cc-b6d0-91f1f69d86ce"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233634Z:3f09c1d7-62aa-48cc-b6d0-91f1f69d86ce"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:36:34 GMT"
-        ],
-        "Content-Length": [
-          "466"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destVmGroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"portMirroring\",\n    \"provisioningState\": \"Building\",\n    \"source\": \"sourceVmGroup\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/dd441673-f691-49bd-b8ef-c671e30e8eec?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nL29wZXJhdGlvbnN0YXR1c2VzL2RkNDQxNjczLWY2OTEtNDliZC1iOGVmLWM2NzFlMzBlOGVlYz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
-        ],
-        "x-ms-request-id": [
-          "91383e6a-2805-4305-aefc-e49852ca4429"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "5e4b3306-27ca-491e-b4ee-36d0e5d3838a"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233645Z:5e4b3306-27ca-491e-b4ee-36d0e5d3838a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:44 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "954"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "425"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:36:36.3971093-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/dd441673-f691-49bd-b8ef-c671e30e8eec\",\n  \"name\": \"dd441673-f691-49bd-b8ef-c671e30e8eec\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n    \"name\": \"portMirroring\",\n    \"properties\": {\n      \"destination\": \"destvmgroup\",\n      \"direction\": \"BIDIRECTIONAL\",\n      \"displayName\": \"portMirroring\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"source\": \"sourcevmgroup\",\n      \"status\": \"\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n  },\n  \"startTime\": \"2021-05-25T16:36:34.2363833-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/portMirroringProfiles/portMirroring1\",\r\n      \"name\": \"cloud1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\",\r\n      \"properties\": {\r\n        \"displayName\": \"portMirroring1\",\r\n        \"direction\": \"BIDIRECTIONAL\",\r\n        \"source\": \"vmGroup1\",\r\n        \"destination\": \"vmGroup2\",\r\n        \"status\": \"SUCCESS\",\r\n        \"revision\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
-        ],
-        "x-ms-request-id": [
-          "1413e7db-3903-4eb1-a511-b3136b671ce5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "f101c20c-9233-41f9-ae64-6317787a11a4"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233645Z:f101c20c-9233-41f9-ae64-6317787a11a4"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:45 GMT"
-        ],
-        "Content-Length": [
-          "492"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destvmgroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"portMirroring\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"source\": \"sourcevmgroup\",\n    \"status\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "869f299c-903a-4f04-b5b5-37a8060bfb7a"
+          "14064d21-69b9-41d3-8ed6-bb86b74f7d62"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
-        ],
-        "x-ms-request-id": [
-          "1e1b7213-0cf4-45f7-858c-53af0bbe09f0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "06730923-9238-41eb-9e69-a4f757329037"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233646Z:06730923-9238-41eb-9e69-a4f757329037"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:36:46 GMT"
-        ],
-        "Content-Length": [
-          "492"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destvmgroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"portMirroring\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"source\": \"sourcevmgroup\",\n    \"status\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11975"
-        ],
-        "x-ms-request-id": [
-          "494970d8-dd95-465f-8ca8-6fc0e219d5b6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c50d75fc-d16d-4703-b519-fccd2bc1d7bb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233700Z:c50d75fc-d16d-4703-b519-fccd2bc1d7bb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:59 GMT"
-        ],
-        "Content-Length": [
-          "500"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destvmgroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"modifiedPortMirroring\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 1,\n    \"source\": \"sourcevmgroup\",\n    \"status\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "dc041631-28aa-4238-a5d0-321fe8186cab"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
-        ],
-        "x-ms-request-id": [
-          "6c424f8c-df13-40c3-8a05-398978b97101"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "fe99939c-3644-4ee4-ba65-5077a8115cff"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233646Z:fe99939c-3644-4ee4-ba65-5077a8115cff"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:46 GMT"
-        ],
-        "Content-Length": [
-          "504"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portmirroring\",\n      \"name\": \"portmirroring\",\n      \"properties\": {\n        \"destination\": \"destvmgroup\",\n        \"direction\": \"BIDIRECTIONAL\",\n        \"displayName\": \"portMirroring\",\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"source\": \"sourcevmgroup\",\n        \"status\": \"\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n    }\n  ]\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"modifiedPortMirroring\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"source\": \"sourceVmGroup\",\n    \"destination\": \"destVmGroup\"\n  }\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "9505359a-e7d1-4895-a930-681962e77d4a"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "167"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/79c44591-a4e6-459a-9257-62d968a57ecd?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "47f40133-c6b9-4681-bf77-688c33664ceb"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "009905c9-12d5-4cb2-90e7-eb21d0cfdbd8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233648Z:009905c9-12d5-4cb2-90e7-eb21d0cfdbd8"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:48 GMT"
-        ],
-        "Content-Length": [
-          "499"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destVmGroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"modifiedPortMirroring\",\n    \"provisioningState\": \"Building\",\n    \"revision\": 0,\n    \"source\": \"sourceVmGroup\",\n    \"status\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/79c44591-a4e6-459a-9257-62d968a57ecd?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nL29wZXJhdGlvbnN0YXR1c2VzLzc5YzQ0NTkxLWE0ZTYtNDU5YS05MjU3LTYyZDk2OGE1N2VjZD9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
-        ],
-        "x-ms-request-id": [
-          "c456ba37-5dc9-4686-9821-44bd979c1915"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "07e3752f-bd5b-40ac-b805-0e479a633574"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233659Z:07e3752f-bd5b-40ac-b805-0e479a633574"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:36:59 GMT"
-        ],
-        "Content-Length": [
-          "962"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:36:57.0457522-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/79c44591-a4e6-459a-9257-62d968a57ecd\",\n  \"name\": \"79c44591-a4e6-459a-9257-62d968a57ecd\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n    \"name\": \"portMirroring\",\n    \"properties\": {\n      \"destination\": \"destvmgroup\",\n      \"direction\": \"BIDIRECTIONAL\",\n      \"displayName\": \"modifiedPortMirroring\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 1,\n      \"source\": \"sourcevmgroup\",\n      \"status\": \"\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n  },\n  \"startTime\": \"2021-05-25T16:36:48.5639385-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4e269e93-daa3-4f5c-b9c3-0c51e980ac09"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationresults/7316d87a-763a-466d-8c40-e01f83d9e824?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/7316d87a-763a-466d-8c40-e01f83d9e824?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "c814f83f-9a8c-47be-a11d-19546cd863f0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "43d96eee-05f1-4eaf-b2db-e7f4578184ea"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233700Z:43d96eee-05f1-4eaf-b2db-e7f4578184ea"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:00 GMT"
-        ],
-        "Content-Length": [
-          "499"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring\",\n  \"name\": \"portMirroring\",\n  \"properties\": {\n    \"destination\": \"destvmgroup\",\n    \"direction\": \"BIDIRECTIONAL\",\n    \"displayName\": \"modifiedPortMirroring\",\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 1,\n    \"source\": \"sourcevmgroup\",\n    \"status\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/7316d87a-763a-466d-8c40-e01f83d9e824?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nL29wZXJhdGlvbnN0YXR1c2VzLzczMTZkODdhLTc2M2EtNDY2ZC04YzQwLWUwMWY4M2Q5ZTgyND9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11974"
-        ],
-        "x-ms-request-id": [
-          "3ebd2b17-a3cc-49e3-beb9-d55321faeb03"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "d8e37090-8795-451c-8951-41a07734e283"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233711Z:d8e37090-8795-451c-8951-41a07734e283"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:10 GMT"
-        ],
-        "Content-Length": [
-          "448"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:37:06.9717667-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationstatuses/7316d87a-763a-466d-8c40-e01f83d9e824\",\n  \"name\": \"7316d87a-763a-466d-8c40-e01f83d9e824\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:37:00.7178187-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring/operationresults/7316d87a-763a-466d-8c40-e01f83d9e824?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nL29wZXJhdGlvbnJlc3VsdHMvNzMxNmQ4N2EtNzYzYS00NjZkLThjNDAtZTAxZjgzZDllODI0P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11973"
-        ],
-        "x-ms-request-id": [
-          "ee92ad90-1a72-49be-af83-a1f9229f07a6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "2bce07f6-f845-43da-8615-0c68a0fe84fa"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233711Z:2bce07f6-f845-43da-8615-0c68a0fe84fa"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:10 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "88c83d5e-d447-4413-9ab6-8b03f572112a"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationresults/d6b712aa-a929-479a-8ec9-a13f5ab6275e?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/d6b712aa-a929-479a-8ec9-a13f5ab6275e?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "0d4413de-66a5-468d-97ae-65662ec41c40"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "31a4643b-b645-4a4f-b903-b4ccb25cdb62"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233713Z:31a4643b-b645-4a4f-b903-b4ccb25cdb62"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:13 GMT"
+          "application/json"
         ],
         "Content-Length": [
           "421"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup\",\n  \"name\": \"sourceVmGroup\",\n  \"properties\": {\n    \"displayName\": \"modifiedVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP03\"\n    ],\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 1,\n    \"status\": \"ERROR\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/d6b712aa-a929-479a-8ec9-a13f5ab6275e?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9uc3RhdHVzZXMvZDZiNzEyYWEtYTkyOS00NzlhLThlYzktYTEzZjVhYjYyNzVlP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11972"
-        ],
-        "x-ms-request-id": [
-          "72b8b4ba-9603-4ee5-912f-45cb04fdd69e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "d9904359-1f03-4982-a71d-51330575f44a"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233723Z:d9904359-1f03-4982-a71d-51330575f44a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:23 GMT"
-        ],
-        "Content-Length": [
-          "435"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:37:13.9450961-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationstatuses/d6b712aa-a929-479a-8ec9-a13f5ab6275e\",\n  \"name\": \"d6b712aa-a929-479a-8ec9-a13f5ab6275e\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:37:13.4048584-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/portMirroringProfiles/portMirroring1\",\r\n  \"name\": \"portMirroring1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\",\r\n  \"properties\": {\r\n    \"displayName\": \"portMirroring1\",\r\n    \"direction\": \"BIDIRECTIONAL\",\r\n    \"source\": \"vmGroup1\",\r\n    \"destination\": \"vmGroup2\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup/operationresults/d6b712aa-a929-479a-8ec9-a13f5ab6275e?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXAvb3BlcmF0aW9ucmVzdWx0cy9kNmI3MTJhYS1hOTI5LTQ3OWEtOGVjOS1hMTNmNWFiNjI3NWU/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11971"
-        ],
-        "x-ms-request-id": [
-          "6e9cbc58-06af-4170-9eb7-e9d7a804165f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "5a4887ba-da8c-486a-b271-320dc514f73b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233723Z:5a4887ba-da8c-486a-b271-320dc514f73b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:23 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedPortMirroring\",\r\n    \"direction\": \"BIDIRECTIONAL\",\r\n    \"source\": \"vmGroup1\",\r\n    \"destination\": \"vmGroup1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "115173fa-fee6-4bdb-bb21-e2e4dbfebd01"
+          "4a7c1a5e-7abb-4707-bab0-586dbb0d43c5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationresults/f0767a50-36fc-40aa-b2dc-d8ac58643b63?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14997"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/f0767a50-36fc-40aa-b2dc-d8ac58643b63?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "7fd51ddf-5cea-438f-a5f6-1f730698c98e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3570b80d-2907-45ca-a527-00caf266032d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233725Z:3570b80d-2907-45ca-a527-00caf266032d"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:37:24 GMT"
-        ],
-        "Content-Length": [
-          "415"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup\",\n  \"name\": \"destVmGroup\",\n  \"properties\": {\n    \"displayName\": \"destVmGroup\",\n    \"members\": [\n      \"TNT55-NSX-APP01\"\n    ],\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 0,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/vmGroups\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/f0767a50-36fc-40aa-b2dc-d8ac58643b63?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwL29wZXJhdGlvbnN0YXR1c2VzL2YwNzY3YTUwLTM2ZmMtNDBhYS1iMmRjLWQ4YWM1ODY0M2I2Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        "Content-Length": [
+          "166"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11970"
-        ],
-        "x-ms-request-id": [
-          "8e2988ae-a555-4aa1-8e1f-deb33947873d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "138fc686-18d1-44b8-84c9-26b68a904c43"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233735Z:138fc686-18d1-44b8-84c9-26b68a904c43"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:37:34 GMT"
-        ],
-        "Content-Length": [
-          "433"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "421"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:37:25.9361092-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationstatuses/f0767a50-36fc-40aa-b2dc-d8ac58643b63\",\n  \"name\": \"f0767a50-36fc-40aa-b2dc-d8ac58643b63\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:37:25.4239872-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/portMirroringProfiles/portMirroring1\",\r\n  \"name\": \"portMirroring1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/portMirroringProfiles\",\r\n  \"properties\": {\r\n    \"displayName\": \"portMirroring1\",\r\n    \"direction\": \"BIDIRECTIONAL\",\r\n    \"source\": \"vmGroup1\",\r\n    \"destination\": \"vmGroup2\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 2\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup/operationresults/f0767a50-36fc-40aa-b2dc-d8ac58643b63?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwL29wZXJhdGlvbnJlc3VsdHMvZjA3NjdhNTAtMzZmYy00MGFhLWIyZGMtZDhhYzU4NjQzYjYzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/portMirroringProfiles/portMirroring?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3BvcnRNaXJyb3JpbmdQcm9maWxlcy9wb3J0TWlycm9yaW5nP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9ecfc15a-ed39-4774-9d5f-905ce6ab06cc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11969"
-        ],
-        "x-ms-request-id": [
-          "c7b381a8-dcde-45cf-9795-142f5ce70d55"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "e87d36b2-cd91-4861-a28f-3769c9d8efcf"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20210525T233735Z:e87d36b2-cd91-4861-a28f-3769c9d8efcf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:37:35 GMT"
+          "Fri, 12 Nov 2021 17:41:40 GMT"
         ],
         "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "0"
         ]
       },
-      "ResponseBody": "null",
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/sourceVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL3NvdXJjZVZtR3JvdXA/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dfd0497f-18cf-413e-82ee-b49d302654b0"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:40 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/vmGroups/destVmGroup?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L3ZtR3JvdXBzL2Rlc3RWbUdyb3VwP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "beb348db-1a2b-4d37-a4bd-89f7ee86cecd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:40 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "2fdcc35c-1cea-4759-8cbd-d3d02f37745d"
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
   }
 }

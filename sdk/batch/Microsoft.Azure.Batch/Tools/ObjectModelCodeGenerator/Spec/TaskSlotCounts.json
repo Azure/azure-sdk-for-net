@@ -2,7 +2,7 @@
   "Name": "TaskSlotCounts",
   "ProtocolName": "Models.TaskSlotCounts",
   "SummaryComment": "The number of TaskSlots required by Tasks per state.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

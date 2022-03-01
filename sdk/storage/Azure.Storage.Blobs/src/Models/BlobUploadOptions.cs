@@ -69,5 +69,12 @@ namespace Azure.Storage.Blobs.Models
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
+
+        ///// <summary>
+        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        ///// hashing on uploads.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

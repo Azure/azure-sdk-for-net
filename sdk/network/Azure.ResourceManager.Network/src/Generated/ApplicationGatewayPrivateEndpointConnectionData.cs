@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ApplicationGatewayPrivateEndpointConnection data model. </summary>
-    public partial class ApplicationGatewayPrivateEndpointConnectionData : WritableSubResource
+    public partial class ApplicationGatewayPrivateEndpointConnectionData : SubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the private endpoint connection on an application gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>

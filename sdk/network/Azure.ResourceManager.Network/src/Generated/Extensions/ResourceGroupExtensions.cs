@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -20,650 +19,541 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region ApplicationGateway
-        /// <summary> Gets an object representing a ApplicationGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayContainer" /> object. </returns>
-        public static ApplicationGatewayContainer GetApplicationGateways(this ResourceGroup resourceGroup)
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return new ApplicationGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ApplicationSecurityGroup
-        /// <summary> Gets an object representing a ApplicationSecurityGroupContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationSecurityGroupContainer" /> object. </returns>
-        public static ApplicationSecurityGroupContainer GetApplicationSecurityGroups(this ResourceGroup resourceGroup)
-        {
-            return new ApplicationSecurityGroupContainer(resourceGroup);
-        }
-        #endregion
-
-        #region AzureFirewall
-        /// <summary> Gets an object representing a AzureFirewallContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AzureFirewallContainer" /> object. </returns>
-        public static AzureFirewallContainer GetAzureFirewalls(this ResourceGroup resourceGroup)
-        {
-            return new AzureFirewallContainer(resourceGroup);
-        }
-        #endregion
-
-        #region BastionHost
-        /// <summary> Gets an object representing a BastionHostContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="BastionHostContainer" /> object. </returns>
-        public static BastionHostContainer GetBastionHosts(this ResourceGroup resourceGroup)
-        {
-            return new BastionHostContainer(resourceGroup);
-        }
-        #endregion
-
-        #region CustomIpPrefix
-        /// <summary> Gets an object representing a CustomIpPrefixContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefixContainer" /> object. </returns>
-        public static CustomIpPrefixContainer GetCustomIpPrefixes(this ResourceGroup resourceGroup)
-        {
-            return new CustomIpPrefixContainer(resourceGroup);
-        }
-        #endregion
-
-        #region DdosCustomPolicy
-        /// <summary> Gets an object representing a DdosCustomPolicyContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DdosCustomPolicyContainer" /> object. </returns>
-        public static DdosCustomPolicyContainer GetDdosCustomPolicies(this ResourceGroup resourceGroup)
-        {
-            return new DdosCustomPolicyContainer(resourceGroup);
-        }
-        #endregion
-
-        #region DdosProtectionPlan
-        /// <summary> Gets an object representing a DdosProtectionPlanContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DdosProtectionPlanContainer" /> object. </returns>
-        public static DdosProtectionPlanContainer GetDdosProtectionPlans(this ResourceGroup resourceGroup)
-        {
-            return new DdosProtectionPlanContainer(resourceGroup);
-        }
-        #endregion
-
-        #region DscpConfiguration
-        /// <summary> Gets an object representing a DscpConfigurationContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DscpConfigurationContainer" /> object. </returns>
-        public static DscpConfigurationContainer GetDscpConfigurations(this ResourceGroup resourceGroup)
-        {
-            return new DscpConfigurationContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ExpressRouteCircuit
-        /// <summary> Gets an object representing a ExpressRouteCircuitContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCircuitContainer" /> object. </returns>
-        public static ExpressRouteCircuitContainer GetExpressRouteCircuits(this ResourceGroup resourceGroup)
-        {
-            return new ExpressRouteCircuitContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ExpressRouteCrossConnection
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCrossConnectionContainer" /> object. </returns>
-        public static ExpressRouteCrossConnectionContainer GetExpressRouteCrossConnections(this ResourceGroup resourceGroup)
-        {
-            return new ExpressRouteCrossConnectionContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ExpressRoutePort
-        /// <summary> Gets an object representing a ExpressRoutePortContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRoutePortContainer" /> object. </returns>
-        public static ExpressRoutePortContainer GetExpressRoutePorts(this ResourceGroup resourceGroup)
-        {
-            return new ExpressRoutePortContainer(resourceGroup);
-        }
-        #endregion
-
-        #region FirewallPolicy
-        /// <summary> Gets an object representing a FirewallPolicyContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="FirewallPolicyContainer" /> object. </returns>
-        public static FirewallPolicyContainer GetFirewallPolicies(this ResourceGroup resourceGroup)
-        {
-            return new FirewallPolicyContainer(resourceGroup);
-        }
-        #endregion
-
-        #region IpAllocation
-        /// <summary> Gets an object representing a IpAllocationContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="IpAllocationContainer" /> object. </returns>
-        public static IpAllocationContainer GetIpAllocations(this ResourceGroup resourceGroup)
-        {
-            return new IpAllocationContainer(resourceGroup);
-        }
-        #endregion
-
-        #region IpGroup
-        /// <summary> Gets an object representing a IpGroupContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="IpGroupContainer" /> object. </returns>
-        public static IpGroupContainer GetIpGroups(this ResourceGroup resourceGroup)
-        {
-            return new IpGroupContainer(resourceGroup);
-        }
-        #endregion
-
-        #region LoadBalancer
-        /// <summary> Gets an object representing a LoadBalancerContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LoadBalancerContainer" /> object. </returns>
-        public static LoadBalancerContainer GetLoadBalancers(this ResourceGroup resourceGroup)
-        {
-            return new LoadBalancerContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NatGateway
-        /// <summary> Gets an object representing a NatGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NatGatewayContainer" /> object. </returns>
-        public static NatGatewayContainer GetNatGateways(this ResourceGroup resourceGroup)
-        {
-            return new NatGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NetworkInterface
-        /// <summary> Gets an object representing a NetworkInterfaceContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceContainer" /> object. </returns>
-        public static NetworkInterfaceContainer GetNetworkInterfaces(this ResourceGroup resourceGroup)
-        {
-            return new NetworkInterfaceContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NetworkProfile
-        /// <summary> Gets an object representing a NetworkProfileContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkProfileContainer" /> object. </returns>
-        public static NetworkProfileContainer GetNetworkProfiles(this ResourceGroup resourceGroup)
-        {
-            return new NetworkProfileContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NetworkSecurityGroup
-        /// <summary> Gets an object representing a NetworkSecurityGroupContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityGroupContainer" /> object. </returns>
-        public static NetworkSecurityGroupContainer GetNetworkSecurityGroups(this ResourceGroup resourceGroup)
-        {
-            return new NetworkSecurityGroupContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NetworkVirtualAppliance
-        /// <summary> Gets an object representing a NetworkVirtualApplianceContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkVirtualApplianceContainer" /> object. </returns>
-        public static NetworkVirtualApplianceContainer GetNetworkVirtualAppliances(this ResourceGroup resourceGroup)
-        {
-            return new NetworkVirtualApplianceContainer(resourceGroup);
-        }
-        #endregion
-
-        #region NetworkWatcher
-        /// <summary> Gets an object representing a NetworkWatcherContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="NetworkWatcherContainer" /> object. </returns>
-        public static NetworkWatcherContainer GetNetworkWatchers(this ResourceGroup resourceGroup)
-        {
-            return new NetworkWatcherContainer(resourceGroup);
-        }
-        #endregion
-
-        #region PrivateEndpoint
-        /// <summary> Gets an object representing a PrivateEndpointContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointContainer" /> object. </returns>
-        public static PrivateEndpointContainer GetPrivateEndpoints(this ResourceGroup resourceGroup)
-        {
-            return new PrivateEndpointContainer(resourceGroup);
-        }
-        #endregion
-
-        #region PrivateLinkService
-        /// <summary> Gets an object representing a PrivateLinkServiceContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PrivateLinkServiceContainer" /> object. </returns>
-        public static PrivateLinkServiceContainer GetPrivateLinkServices(this ResourceGroup resourceGroup)
-        {
-            return new PrivateLinkServiceContainer(resourceGroup);
-        }
-        #endregion
-
-        #region PublicIPAddress
-        /// <summary> Gets an object representing a PublicIPAddressContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPAddressContainer" /> object. </returns>
-        public static PublicIPAddressContainer GetPublicIPAddresses(this ResourceGroup resourceGroup)
-        {
-            return new PublicIPAddressContainer(resourceGroup);
-        }
-        #endregion
-
-        #region PublicIPPrefix
-        /// <summary> Gets an object representing a PublicIPPrefixContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PublicIPPrefixContainer" /> object. </returns>
-        public static PublicIPPrefixContainer GetPublicIPPrefixes(this ResourceGroup resourceGroup)
-        {
-            return new PublicIPPrefixContainer(resourceGroup);
-        }
-        #endregion
-
-        #region RouteFilter
-        /// <summary> Gets an object representing a RouteFilterContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RouteFilterContainer" /> object. </returns>
-        public static RouteFilterContainer GetRouteFilters(this ResourceGroup resourceGroup)
-        {
-            return new RouteFilterContainer(resourceGroup);
-        }
-        #endregion
-
-        #region RouteTable
-        /// <summary> Gets an object representing a RouteTableContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RouteTableContainer" /> object. </returns>
-        public static RouteTableContainer GetRouteTables(this ResourceGroup resourceGroup)
-        {
-            return new RouteTableContainer(resourceGroup);
-        }
-        #endregion
-
-        #region SecurityPartnerProvider
-        /// <summary> Gets an object representing a SecurityPartnerProviderContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SecurityPartnerProviderContainer" /> object. </returns>
-        public static SecurityPartnerProviderContainer GetSecurityPartnerProviders(this ResourceGroup resourceGroup)
-        {
-            return new SecurityPartnerProviderContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ServiceEndpointPolicy
-        /// <summary> Gets an object representing a ServiceEndpointPolicyContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServiceEndpointPolicyContainer" /> object. </returns>
-        public static ServiceEndpointPolicyContainer GetServiceEndpointPolicies(this ResourceGroup resourceGroup)
-        {
-            return new ServiceEndpointPolicyContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetworkContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkContainer" /> object. </returns>
-        public static VirtualNetworkContainer GetVirtualNetworks(this ResourceGroup resourceGroup)
-        {
-            return new VirtualNetworkContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualNetworkGateway
-        /// <summary> Gets an object representing a VirtualNetworkGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkGatewayContainer" /> object. </returns>
-        public static VirtualNetworkGatewayContainer GetVirtualNetworkGateways(this ResourceGroup resourceGroup)
-        {
-            return new VirtualNetworkGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualNetworkGatewayConnection
-        /// <summary> Gets an object representing a VirtualNetworkGatewayConnectionContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionContainer" /> object. </returns>
-        public static VirtualNetworkGatewayConnectionContainer GetVirtualNetworkGatewayConnections(this ResourceGroup resourceGroup)
-        {
-            return new VirtualNetworkGatewayConnectionContainer(resourceGroup);
-        }
-        #endregion
-
-        #region LocalNetworkGateway
-        /// <summary> Gets an object representing a LocalNetworkGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LocalNetworkGatewayContainer" /> object. </returns>
-        public static LocalNetworkGatewayContainer GetLocalNetworkGateways(this ResourceGroup resourceGroup)
-        {
-            return new LocalNetworkGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualNetworkTap
-        /// <summary> Gets an object representing a VirtualNetworkTapContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkTapContainer" /> object. </returns>
-        public static VirtualNetworkTapContainer GetVirtualNetworkTaps(this ResourceGroup resourceGroup)
-        {
-            return new VirtualNetworkTapContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualRouter
-        /// <summary> Gets an object representing a VirtualRouterContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualRouterContainer" /> object. </returns>
-        public static VirtualRouterContainer GetVirtualRouters(this ResourceGroup resourceGroup)
-        {
-            return new VirtualRouterContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWANContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualWANContainer" /> object. </returns>
-        public static VirtualWANContainer GetVirtualWANs(this ResourceGroup resourceGroup)
-        {
-            return new VirtualWANContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VpnSite
-        /// <summary> Gets an object representing a VpnSiteContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnSiteContainer" /> object. </returns>
-        public static VpnSiteContainer GetVpnSites(this ResourceGroup resourceGroup)
-        {
-            return new VpnSiteContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VpnServerConfiguration
-        /// <summary> Gets an object representing a VpnServerConfigurationContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnServerConfigurationContainer" /> object. </returns>
-        public static VpnServerConfigurationContainer GetVpnServerConfigurations(this ResourceGroup resourceGroup)
-        {
-            return new VpnServerConfigurationContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VirtualHub
-        /// <summary> Gets an object representing a VirtualHubContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualHubContainer" /> object. </returns>
-        public static VirtualHubContainer GetVirtualHubs(this ResourceGroup resourceGroup)
-        {
-            return new VirtualHubContainer(resourceGroup);
-        }
-        #endregion
-
-        #region VpnGateway
-        /// <summary> Gets an object representing a VpnGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VpnGatewayContainer" /> object. </returns>
-        public static VpnGatewayContainer GetVpnGateways(this ResourceGroup resourceGroup)
-        {
-            return new VpnGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region P2SVpnGateway
-        /// <summary> Gets an object representing a P2SVpnGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="P2SVpnGatewayContainer" /> object. </returns>
-        public static P2SVpnGatewayContainer GetP2SVpnGateways(this ResourceGroup resourceGroup)
-        {
-            return new P2SVpnGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region ExpressRouteGateway
-        /// <summary> Gets an object representing a ExpressRouteGatewayContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ExpressRouteGatewayContainer" /> object. </returns>
-        public static ExpressRouteGatewayContainer GetExpressRouteGateways(this ResourceGroup resourceGroup)
-        {
-            return new ExpressRouteGatewayContainer(resourceGroup);
-        }
-        #endregion
-
-        #region WebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a WebApplicationFirewallPolicyContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WebApplicationFirewallPolicyContainer" /> object. </returns>
-        public static WebApplicationFirewallPolicyContainer GetWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
-        {
-            return new WebApplicationFirewallPolicyContainer(resourceGroup);
-        }
-        #endregion
-
-        #region AvailableDelegation
-        private static AvailableDelegationsRestOperations GetAvailableDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new AvailableDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
+            return resourceGroup.GetCachedClient((client) =>
             {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
         }
 
-        /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Gets a collection of ApplicationGateways in the ApplicationGateway. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AvailableDelegation> GetAvailableDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of ApplicationGateways and their operations over a ApplicationGateway. </returns>
+        public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroup resourceGroup)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAllNextPage(nextLink, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(resourceGroup).GetApplicationGateways();
         }
 
-        /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Gets a collection of ApplicationSecurityGroups in the ApplicationSecurityGroup. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ApplicationSecurityGroups and their operations over a ApplicationSecurityGroup. </returns>
+        public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetApplicationSecurityGroups();
+        }
+
+        /// <summary> Gets a collection of AzureFirewalls in the AzureFirewall. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AzureFirewalls and their operations over a AzureFirewall. </returns>
+        public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAzureFirewalls();
+        }
+
+        /// <summary> Gets a collection of BastionHosts in the BastionHost. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of BastionHosts and their operations over a BastionHost. </returns>
+        public static BastionHostCollection GetBastionHosts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetBastionHosts();
+        }
+
+        /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
+        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetCustomIPPrefixes();
+        }
+
+        /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DdosCustomPolicies and their operations over a DdosCustomPolicy. </returns>
+        public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDdosCustomPolicies();
+        }
+
+        /// <summary> Gets a collection of DdosProtectionPlans in the DdosProtectionPlan. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DdosProtectionPlans and their operations over a DdosProtectionPlan. </returns>
+        public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDdosProtectionPlans();
+        }
+
+        /// <summary> Gets a collection of DscpConfigurations in the DscpConfiguration. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DscpConfigurations and their operations over a DscpConfiguration. </returns>
+        public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDscpConfigurations();
+        }
+
+        /// <summary> Gets a collection of ExpressRouteCircuits in the ExpressRouteCircuit. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ExpressRouteCircuits and their operations over a ExpressRouteCircuit. </returns>
+        public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetExpressRouteCircuits();
+        }
+
+        /// <summary> Gets a collection of ExpressRouteCrossConnections in the ExpressRouteCrossConnection. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ExpressRouteCrossConnections and their operations over a ExpressRouteCrossConnection. </returns>
+        public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetExpressRouteCrossConnections();
+        }
+
+        /// <summary> Gets a collection of ExpressRoutePorts in the ExpressRoutePort. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ExpressRoutePorts and their operations over a ExpressRoutePort. </returns>
+        public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetExpressRoutePorts();
+        }
+
+        /// <summary> Gets a collection of FirewallPolicies in the FirewallPolicy. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of FirewallPolicies and their operations over a FirewallPolicy. </returns>
+        public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetFirewallPolicies();
+        }
+
+        /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
+        public static IPAllocationCollection GetIPAllocations(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetIPAllocations();
+        }
+
+        /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
+        public static IPGroupCollection GetIPGroups(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetIPGroups();
+        }
+
+        /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of LoadBalancers and their operations over a LoadBalancer. </returns>
+        public static LoadBalancerCollection GetLoadBalancers(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetLoadBalancers();
+        }
+
+        /// <summary> Gets a collection of NatGateways in the NatGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NatGateways and their operations over a NatGateway. </returns>
+        public static NatGatewayCollection GetNatGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNatGateways();
+        }
+
+        /// <summary> Gets a collection of NetworkInterfaces in the NetworkInterface. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkInterfaces and their operations over a NetworkInterface. </returns>
+        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNetworkInterfaces();
+        }
+
+        /// <summary> Gets a collection of NetworkProfiles in the NetworkProfile. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkProfiles and their operations over a NetworkProfile. </returns>
+        public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNetworkProfiles();
+        }
+
+        /// <summary> Gets a collection of NetworkSecurityGroups in the NetworkSecurityGroup. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkSecurityGroups and their operations over a NetworkSecurityGroup. </returns>
+        public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNetworkSecurityGroups();
+        }
+
+        /// <summary> Gets a collection of NetworkVirtualAppliances in the NetworkVirtualAppliance. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkVirtualAppliances and their operations over a NetworkVirtualAppliance. </returns>
+        public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNetworkVirtualAppliances();
+        }
+
+        /// <summary> Gets a collection of NetworkWatchers in the NetworkWatcher. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkWatchers and their operations over a NetworkWatcher. </returns>
+        public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetNetworkWatchers();
+        }
+
+        /// <summary> Gets a collection of PrivateEndpoints in the PrivateEndpoint. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PrivateEndpoints and their operations over a PrivateEndpoint. </returns>
+        public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetPrivateEndpoints();
+        }
+
+        /// <summary> Gets a collection of PrivateLinkServices in the PrivateLinkService. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PrivateLinkServices and their operations over a PrivateLinkService. </returns>
+        public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetPrivateLinkServices();
+        }
+
+        /// <summary> Gets a collection of PublicIPAddresses in the PublicIPAddress. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PublicIPAddresses and their operations over a PublicIPAddress. </returns>
+        public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetPublicIPAddresses();
+        }
+
+        /// <summary> Gets a collection of PublicIPPrefixes in the PublicIPPrefix. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PublicIPPrefixes and their operations over a PublicIPPrefix. </returns>
+        public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetPublicIPPrefixes();
+        }
+
+        /// <summary> Gets a collection of RouteFilters in the RouteFilter. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RouteFilters and their operations over a RouteFilter. </returns>
+        public static RouteFilterCollection GetRouteFilters(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetRouteFilters();
+        }
+
+        /// <summary> Gets a collection of RouteTables in the RouteTable. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RouteTables and their operations over a RouteTable. </returns>
+        public static RouteTableCollection GetRouteTables(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetRouteTables();
+        }
+
+        /// <summary> Gets a collection of SecurityPartnerProviders in the SecurityPartnerProvider. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SecurityPartnerProviders and their operations over a SecurityPartnerProvider. </returns>
+        public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetSecurityPartnerProviders();
+        }
+
+        /// <summary> Gets a collection of ServiceEndpointPolicies in the ServiceEndpointPolicy. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ServiceEndpointPolicies and their operations over a ServiceEndpointPolicy. </returns>
+        public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetServiceEndpointPolicies();
+        }
+
+        /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
+        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualNetworks();
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkGateways in the VirtualNetworkGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualNetworkGateways and their operations over a VirtualNetworkGateway. </returns>
+        public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualNetworkGateways();
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkGatewayConnections in the VirtualNetworkGatewayConnection. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualNetworkGatewayConnections and their operations over a VirtualNetworkGatewayConnection. </returns>
+        public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualNetworkGatewayConnections();
+        }
+
+        /// <summary> Gets a collection of LocalNetworkGateways in the LocalNetworkGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of LocalNetworkGateways and their operations over a LocalNetworkGateway. </returns>
+        public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetLocalNetworkGateways();
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkTaps in the VirtualNetworkTap. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualNetworkTaps and their operations over a VirtualNetworkTap. </returns>
+        public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualNetworkTaps();
+        }
+
+        /// <summary> Gets a collection of VirtualRouters in the VirtualRouter. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualRouters and their operations over a VirtualRouter. </returns>
+        public static VirtualRouterCollection GetVirtualRouters(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualRouters();
+        }
+
+        /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualWans();
+        }
+
+        /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VpnSites and their operations over a VpnSite. </returns>
+        public static VpnSiteCollection GetVpnSites(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVpnSites();
+        }
+
+        /// <summary> Gets a collection of VpnServerConfigurations in the VpnServerConfiguration. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VpnServerConfigurations and their operations over a VpnServerConfiguration. </returns>
+        public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVpnServerConfigurations();
+        }
+
+        /// <summary> Gets a collection of VirtualHubs in the VirtualHub. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualHubs and their operations over a VirtualHub. </returns>
+        public static VirtualHubCollection GetVirtualHubs(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVirtualHubs();
+        }
+
+        /// <summary> Gets a collection of VpnGateways in the VpnGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VpnGateways and their operations over a VpnGateway. </returns>
+        public static VpnGatewayCollection GetVpnGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetVpnGateways();
+        }
+
+        /// <summary> Gets a collection of P2SVpnGateways in the P2SVpnGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of P2SVpnGateways and their operations over a P2SVpnGateway. </returns>
+        public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetP2SVpnGateways();
+        }
+
+        /// <summary> Gets a collection of ExpressRouteGateways in the ExpressRouteGateway. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ExpressRouteGateways and their operations over a ExpressRouteGateway. </returns>
+        public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetExpressRouteGateways();
+        }
+
+        /// <summary> Gets a collection of WebApplicationFirewallPolicies in the WebApplicationFirewallPolicy. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of WebApplicationFirewallPolicies and their operations over a WebApplicationFirewallPolicy. </returns>
+        public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetWebApplicationFirewallPolicies();
+        }
+
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsByResourceGroupAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllByResourceGroupAsync(resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
         }
 
-        /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AvailableDelegation> GetAvailableDelegationsByResourceGroup(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAllByResourceGroup(resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAllByResourceGroupNextPage(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegations(location, cancellationToken);
         }
 
-        #endregion
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAvailableServiceAliasesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAvailableServiceAliases(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypes(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        public async static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            return await GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitForCompletion, location, parameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            return GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitForCompletion, location, parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetExtensionClient(resourceGroup).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
+        }
     }
 }

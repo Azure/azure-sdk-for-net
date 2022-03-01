@@ -87,8 +87,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// resources by the user.</param>
         /// <param name="identity">Identity information for the
         /// resource.</param>
-        /// <param name="sku">The Sku pricing tier for the domain.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), IdentityInfo identity = default(IdentityInfo), ResourceSku sku = default(ResourceSku))
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), IdentityInfo identity = default(IdentityInfo))
         {
             Tags = tags;
             PublicNetworkAccess = publicNetworkAccess;
@@ -97,7 +96,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
             AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
             Identity = identity;
-            Sku = sku;
             CustomInit();
         }
 
@@ -193,12 +191,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Sku pricing tier for the domain.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
 
     }
 }

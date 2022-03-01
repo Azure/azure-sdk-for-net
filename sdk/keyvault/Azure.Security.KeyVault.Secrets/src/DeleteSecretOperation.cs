@@ -2,35 +2,35 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
     /// A long-running operation for <see cref="SecretClient.StartDeleteSecret(string, CancellationToken)"/> or <see cref="SecretClient.StartDeleteSecretAsync(string, CancellationToken)"/>.
     /// </summary>
-    public class DeleteSecretOperation : Operation<DeletedSecret>
+    public class DeleteSecretOperation : Operation<DeletedSecret>, IOperation
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
         private readonly KeyVaultPipeline _pipeline;
+        private readonly OperationInternal _operationInternal;
         private readonly DeletedSecret _value;
-        private Response _response;
-        private bool _completed;
 
         internal DeleteSecretOperation(KeyVaultPipeline pipeline, Response<DeletedSecret> response)
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _response = response.GetRawResponse();
+            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
 
-            // The recoveryId is only returned if soft-delete is enabled.
+            // The recoveryId is only returned if soft delete is enabled.
             if (_value.RecoveryId is null)
             {
-                _completed = true;
+                // If soft delete is not enabled, deleting is immediate so set success accordingly.
+                _operationInternal.SetState(OperationState.Success(response.GetRawResponse()));
             }
         }
 
@@ -50,33 +50,20 @@ namespace Azure.Security.KeyVault.Secrets
         public override DeletedSecret Value => _value;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _completed;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
         public override bool HasValue => true;
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
+        public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            if (!_completed)
+            if (!HasCompleted)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteSecretOperation)}.{nameof(UpdateStatus)}");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
-                    _completed = CheckCompleted(_response);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return _operationInternal.UpdateStatus(cancellationToken);
             }
 
             return GetRawResponse();
@@ -85,22 +72,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            if (!_completed)
+            if (!HasCompleted)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteSecretOperation)}.{nameof(UpdateStatus)}");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name).ConfigureAwait(false);
-                    _completed = await CheckCompletedAsync(_response).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
             }
 
             return GetRawResponse();
@@ -114,34 +88,27 @@ namespace Azure.Security.KeyVault.Secrets
         public override ValueTask<Response<DeletedSecret>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private async ValueTask<bool> CheckCompletedAsync(Response response)
+        async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            Response response = async
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
+
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the secret was deleted.
-                    return true;
+                    return OperationState.Success(response);
 
                 case 404:
-                    return false;
+                    return OperationState.Pending(response);
 
                 default:
-                    throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-            }
-        }
-        private bool CheckCompleted(Response response)
-        {
-            switch (response.Status)
-            {
-                case 200:
-                case 403: // Access denied but proof the secret was deleted.
-                    return true;
+                    RequestFailedException ex = async
+                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
+                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
 
-                case 404:
-                    return false;
-
-                default:
-                    throw _pipeline.Diagnostics.CreateRequestFailedException(response);
+                    return OperationState.Failure(response, ex);
             }
         }
     }

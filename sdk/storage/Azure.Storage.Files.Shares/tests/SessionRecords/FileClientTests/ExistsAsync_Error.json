@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2020-12-06&ss=f&srt=s&se=2021-01-26T20%3A29%3A49Z&sp=r&sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2021-04-10&ss=f&srt=s&se=2021-01-26T20%3A29%3A49Z&sp=r&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "48a8d1ed-2edd-60a4-1383-00f2c274c31c",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 400,

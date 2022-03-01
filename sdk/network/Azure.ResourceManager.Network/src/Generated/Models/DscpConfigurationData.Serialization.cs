@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -18,6 +17,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -34,8 +38,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Markings))
@@ -48,21 +50,21 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpRanges))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpRanges)
+                foreach (var item in SourceIPRanges)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpRanges))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in DestinationIpRanges)
+                foreach (var item in DestinationIPRanges)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -100,14 +102,14 @@ namespace Azure.ResourceManager.Network
         internal static DscpConfigurationData DeserializeDscpConfigurationData(JsonElement element)
         {
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<IList<int>> markings = default;
-            Optional<IList<QosIpRange>> sourceIpRanges = default;
-            Optional<IList<QosIpRange>> destinationIpRanges = default;
+            Optional<IList<QosIPRange>> sourceIpRanges = default;
+            Optional<IList<QosIPRange>> destinationIpRanges = default;
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
@@ -120,6 +122,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -150,11 +157,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -188,10 +190,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<QosIpRange> array = new List<QosIpRange>();
+                            List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIpRange.DeserializeQosIpRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
                             sourceIpRanges = array;
                             continue;
@@ -203,10 +205,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<QosIpRange> array = new List<QosIpRange>();
+                            List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIpRange.DeserializeQosIpRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
                             destinationIpRanges = array;
                             continue;
@@ -290,7 +292,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DscpConfigurationData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(markings), Optional.ToList(sourceIpRanges), Optional.ToList(destinationIpRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(markings), Optional.ToList(sourceIpRanges), Optional.ToList(destinationIpRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

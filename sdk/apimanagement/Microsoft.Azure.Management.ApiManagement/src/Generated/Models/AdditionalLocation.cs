@@ -47,6 +47,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Internal Virtual Network in a particular additional location.
         /// Available only for Basic, Standard, Premium and Isolated
         /// SKU.</param>
+        /// <param name="publicIpAddressId">Public Standard SKU IP V4 based IP
+        /// address to be associated with Virtual Network deployed service in
+        /// the location. Supported only for Premium SKU being deployed in
+        /// Virtual Network.</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration for the location.</param>
         /// <param name="gatewayRegionalUrl">Gateway URL of the API Management
@@ -54,16 +58,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="disableGateway">Property only valid for an Api
         /// Management service deployed in multiple locations. This can be used
         /// to disable the gateway in this additional location.</param>
-        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> zones = default(IList<string>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?))
+        /// <param name="platformVersion">Compute Platform Version running the
+        /// service. Possible values include: 'undetermined', 'stv1', 'stv2',
+        /// 'mtv1'</param>
+        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> zones = default(IList<string>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?), string platformVersion = default(string))
         {
             Location = location;
             Sku = sku;
             Zones = zones;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
+            PublicIpAddressId = publicIpAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUrl = gatewayRegionalUrl;
             DisableGateway = disableGateway;
+            PlatformVersion = platformVersion;
             CustomInit();
         }
 
@@ -110,6 +119,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<string> PrivateIPAddresses { get; private set; }
 
         /// <summary>
+        /// Gets or sets public Standard SKU IP V4 based IP address to be
+        /// associated with Virtual Network deployed service in the location.
+        /// Supported only for Premium SKU being deployed in Virtual Network.
+        /// </summary>
+        [JsonProperty(PropertyName = "publicIpAddressId")]
+        public string PublicIpAddressId { get; set; }
+
+        /// <summary>
         /// Gets or sets virtual network configuration for the location.
         /// </summary>
         [JsonProperty(PropertyName = "virtualNetworkConfiguration")]
@@ -128,6 +145,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "disableGateway")]
         public bool? DisableGateway { get; set; }
+
+        /// <summary>
+        /// Gets compute Platform Version running the service. Possible values
+        /// include: 'undetermined', 'stv1', 'stv2', 'mtv1'
+        /// </summary>
+        [JsonProperty(PropertyName = "platformVersion")]
+        public string PlatformVersion { get; private set; }
 
         /// <summary>
         /// Validate the object.

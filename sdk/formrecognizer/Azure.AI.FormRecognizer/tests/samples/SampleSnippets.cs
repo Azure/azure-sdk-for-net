@@ -3,23 +3,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Tests;
-using Azure.AI.FormRecognizer.Training;
+using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.FormRecognizer.Samples
+namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class Snippets : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public void CreateFormRecognizerClient()
+        public void CreateDocumentAnalysisClient()
         {
-            #region Snippet:CreateFormRecognizerClient
+            #region Snippet:CreateDocumentAnalysisClient
 #if SNIPPET
             string endpoint = "<endpoint>";
             string apiKey = "<apiKey>";
@@ -28,27 +26,27 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
 #endif
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
             #endregion
         }
 
         [Test]
-        public void CreateFormRecognizerClientTokenCredential()
+        public void CreateDocumentAnalysisClientTokenCredential()
         {
-            #region Snippet:CreateFormRecognizerClientTokenCredential
+            #region Snippet:CreateDocumentAnalysisClientTokenCredential
 #if SNIPPET
             string endpoint = "<endpoint>";
 #else
             string endpoint = TestEnvironment.Endpoint;
 #endif
-            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
         [Test]
-        public void CreateFormTrainingClient()
+        public void CreateDocumentModelAdministrationClient()
         {
-            #region Snippet:CreateFormTrainingClient
+            #region Snippet:CreateDocumentModelAdministrationClient
 #if SNIPPET
             string endpoint = "<endpoint>";
             string apiKey = "<apiKey>";
@@ -57,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
 #endif
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormTrainingClient(new Uri(endpoint), credential);
+            var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -68,17 +66,36 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
-            #region Snippet:FormRecognizerBadRequest
+            #region Snippet:DocumentAnalysisBadRequest
             try
             {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
+                await operation.WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
                 Console.WriteLine(e.ToString());
             }
+            #endregion
+        }
+
+        [Test]
+        public void CreateDocumentAnalysisClients()
+        {
+            #region Snippet:CreateDocumentAnalysisClients
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+#endif
+            var credential = new AzureKeyCredential(apiKey);
+
+            var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
+            var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
     }

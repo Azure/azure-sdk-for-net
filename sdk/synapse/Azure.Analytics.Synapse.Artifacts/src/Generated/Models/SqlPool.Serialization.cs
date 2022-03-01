@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
-                writer.WriteStringValue(CreateMode);
+                writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(CreationDate))
             {
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<string> restorePointInTime = default;
-            Optional<string> createMode = default;
+            Optional<CreateMode> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -203,7 +203,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("createMode"))
                         {
-                            createMode = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createMode = new CreateMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -220,7 +225,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, createMode.Value, Optional.ToNullable(creationDate));
+            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
         }
 
         internal partial class SqlPoolConverter : JsonConverter<SqlPool>

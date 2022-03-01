@@ -1,5 +1,11 @@
 # Release History
 
+## 14.1.0 (2021-11-01)
+
+### Bug Fixes
+
+- Fixes a breaking type ambiguity in BatchAccountIdentity's constructor, introduced in v14.0.0.
+
 ## 14.0.0 (2021-08-01)
 
 ### REST API version

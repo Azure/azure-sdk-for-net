@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The SubResourceWithColocationStatus. </summary>
-    public partial class SubResourceWithColocationStatus : WritableSubResource
+    public partial class SubResourceWithColocationStatus : SubResource
     {
         /// <summary> Initializes a new instance of SubResourceWithColocationStatus. </summary>
         public SubResourceWithColocationStatus()
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of SubResourceWithColocationStatus. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
         internal SubResourceWithColocationStatus(string id, InstanceViewStatus colocationStatus) : base(id)
         {

@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
@@ -17,6 +18,7 @@ namespace Azure.Security.KeyVault.Keys
     /// structure that represents a cryptographic key.
     /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18">JSON Web Key (JWK)</see>.
     /// </summary>
+    [JsonConverter(typeof(JsonWebKeyConverter))]
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
         private const string KeyIdPropertyName = "kid";
@@ -36,6 +38,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string KPropertyName = "k";
         private const string TPropertyName = "key_hsm";
 
+        private static readonly JsonEncodedText s_keyIdPropertyNameBytes = JsonEncodedText.Encode(KeyIdPropertyName);
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_keyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
         private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
@@ -259,7 +262,7 @@ namespace Azure.Security.KeyVault.Keys
                     return D != null;
                 }
 
-                if (KeyType == KeyType.Oct)
+                if (KeyType == KeyType.Oct || KeyType == KeyType.OctHsm)
                 {
                     return K != null;
                 }
@@ -428,8 +431,12 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal void WriteProperties(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json, bool withId = false)
         {
+            if (Id != null && withId)
+            {
+                json.WriteString(s_keyIdPropertyNameBytes, Id);
+            }
             if (KeyType != default)
             {
                 json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());

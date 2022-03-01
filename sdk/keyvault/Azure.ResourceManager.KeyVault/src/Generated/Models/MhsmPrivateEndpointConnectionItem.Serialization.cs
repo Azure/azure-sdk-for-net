@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static MhsmPrivateEndpointConnectionItem DeserializeMhsmPrivateEndpointConnectionItem(JsonElement element)
         {
-            Optional<MhsmPrivateEndpoint> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             Optional<MhsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = MhsmPrivateEndpoint.DeserializeMhsmPrivateEndpoint(property0.Value);
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new MhsmPrivateEndpointConnectionItem(privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MhsmPrivateEndpointConnectionItem(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : WritableSubResource
+    public partial class ApplicationGatewayHttpListener : SubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the HTTP listener that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(string id, string name, string etag, string type, SubResource frontendIPConfiguration, SubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, SubResource sslCertificate, SubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, SubResource firewallPolicy, IList<string> hostNames) : base(id)
+        internal ApplicationGatewayHttpListener(string id, string name, string etag, string type, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -62,17 +62,65 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Frontend IP configuration resource of an application gateway. </summary>
-        public SubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Frontend port resource of an application gateway. </summary>
-        public SubResource FrontendPort { get; set; }
+        internal WritableSubResource FrontendPort { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendPortId
+        {
+            get => FrontendPort is null ? default : FrontendPort.Id;
+            set
+            {
+                if (FrontendPort is null)
+                    FrontendPort = new WritableSubResource();
+                FrontendPort.Id = value;
+            }
+        }
+
         /// <summary> Protocol of the HTTP listener. </summary>
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name of HTTP listener. </summary>
         public string HostName { get; set; }
         /// <summary> SSL certificate resource of an application gateway. </summary>
-        public SubResource SslCertificate { get; set; }
+        internal WritableSubResource SslCertificate { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SslCertificateId
+        {
+            get => SslCertificate is null ? default : SslCertificate.Id;
+            set
+            {
+                if (SslCertificate is null)
+                    SslCertificate = new WritableSubResource();
+                SslCertificate.Id = value;
+            }
+        }
+
         /// <summary> SSL profile resource of the application gateway. </summary>
-        public SubResource SslProfile { get; set; }
+        internal WritableSubResource SslProfile { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SslProfileId
+        {
+            get => SslProfile is null ? default : SslProfile.Id;
+            set
+            {
+                if (SslProfile is null)
+                    SslProfile = new WritableSubResource();
+                SslProfile.Id = value;
+            }
+        }
+
         /// <summary> Applicable only if protocol is https. Enables SNI for multi-hosting. </summary>
         public bool? RequireServerNameIndication { get; set; }
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
@@ -80,7 +128,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Custom error configurations of the HTTP listener. </summary>
         public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public SubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
+
         /// <summary> List of Host names for HTTP Listener that allows special wildcard characters as well. </summary>
         public IList<string> HostNames { get; }
     }

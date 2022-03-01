@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Samples
@@ -12,12 +13,12 @@ namespace Microsoft.Azure.WebJobs.Samples
         [FunctionName("WebPubSubTriggerFunction")]
         public static void Run(
             ILogger logger,
-            [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context,
-            string message,
-            MessageDataType dataType)
+            [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
+            string data,
+            WebPubSubDataType dataType)
         {
-            logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-                context.UserId, message, dataType);
+            logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+                request.ConnectionContext.UserId, data, dataType);
         }
     }
     #endregion

@@ -503,7 +503,40 @@ namespace Azure.Storage.Files.DataLake
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                Position = options.Position
+                Position = options.Position,
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
+        }
+
+        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobDownloadOptions()
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
+        }
+
+        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+            return new BlobDownloadToOptions()
+            {
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferOptions = options.TransferOptions,
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 
@@ -547,7 +580,7 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
@@ -563,21 +596,21 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 

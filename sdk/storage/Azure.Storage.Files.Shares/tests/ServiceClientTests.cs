@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
-            Uri uri = GetServiceClient_SharedKey().Uri;
+            Uri uri = SharesClientBuilder.GetServiceClient_SharedKey().Uri;
 
             // Act
             var sasClient = InstrumentClient(new ShareServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
-            Uri uri = GetServiceClient_SharedKey().Uri;
+            Uri uri = SharesClientBuilder.GetServiceClient_SharedKey().Uri;
             uri = new Uri(uri.ToString() + "?" + sas);
 
             // Act
@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
 
             // Act
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetPropertiesAsync()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             _ = properties.Value.Cors.ToArray();
             properties.Value.Cors.Clear();
@@ -139,7 +139,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
 
             // Act
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             ShareServiceClient fakeService = InstrumentClient(
                 new ShareServiceClient(
@@ -186,7 +186,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListSharesSegmentAsync()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
 
             // Ensure at least one share
             await using DisposingShare test = await GetTestShareAsync(service);
@@ -206,12 +206,11 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        [Ignore("#10044: Re-enable failing Storage tests")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
         public async Task ListSharesSegmentAsync_Premium()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_Premium();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
             string shareName = GetNewShareName();
 
             // Ensure at least one premium share
@@ -220,20 +219,17 @@ namespace Azure.Storage.Files.Shares.Tests
                 shareName: shareName);
             ShareClient share = test.Share;
 
-            var shares = new List<ShareItem>();
-            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
-            {
-                shares.AddRange(page.Values);
-            }
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).FirstOrDefault();
 
             // Assert
-            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
             Assert.IsNotNull(premiumShareItem.Properties.ETag);
             Assert.IsNotNull(premiumShareItem.Properties.LastModified);
             Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedEgressMBps);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIngressMBps);
             Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIops);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedBandwidthMiBps);
             Assert.IsNotNull(premiumShareItem.Properties.QuotaInGB);
         }
 
@@ -241,7 +237,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListSharesSegmentAsync_Metadata()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Ensure at least one share
@@ -268,7 +264,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListSharesSegmentAsync_Deleted()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SoftDelete();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             await share.CreateAsync();
             await share.DeleteAsync();
@@ -287,7 +283,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListSharesSegmentAsync_AccessTier()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
 
             // Ensure at least one share
             await using DisposingShare test = await GetTestShareAsync(service);
@@ -339,7 +335,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
@@ -362,7 +358,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             try
             {
                 ShareClient share = InstrumentClient((await service.CreateShareAsync(name)).Value);
@@ -379,7 +375,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DeleteShareAsync()
         {
             var name = GetNewShareName();
-            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient((await service.CreateShareAsync(name)).Value);
 
             await service.DeleteShareAsync(name, false);
@@ -392,7 +388,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UndeleteShareAsync()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SoftDelete();
             string shareName = GetNewShareName();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             await share.CreateAsync();
@@ -420,7 +416,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task UndeleteShareAsync_Error()
         {
             // Arrange
-            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SoftDelete();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             string fakeVersion = "01D60F8BB59A4652";
 
@@ -616,7 +612,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString, new ShareClientOptions()).Object;
             mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString).Object;
             mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
-            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), Tenants.GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
             mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
         }
     }

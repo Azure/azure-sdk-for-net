@@ -79,6 +79,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "AmazonMWSObject": return AmazonMWSObjectDataset.DeserializeAmazonMWSObjectDataset(element);
+                    case "AmazonRdsForOracleTable": return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element);
+                    case "AmazonRdsForSqlServerTable": return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element);
                     case "AmazonRedshiftTable": return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element);
                     case "AmazonS3Object": return AmazonS3Dataset.DeserializeAmazonS3Dataset(element);
                     case "Avro": return AvroDataset.DeserializeAvroDataset(element);

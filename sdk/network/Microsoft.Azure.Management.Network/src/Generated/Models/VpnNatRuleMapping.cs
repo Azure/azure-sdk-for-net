@@ -31,9 +31,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="addressSpace">Address space for Vpn NatRule
         /// mapping.</param>
-        public VpnNatRuleMapping(string addressSpace = default(string))
+        /// <param name="portRange">Port range for Vpn NatRule mapping.</param>
+        public VpnNatRuleMapping(string addressSpace = default(string), string portRange = default(string))
         {
             AddressSpace = addressSpace;
+            PortRange = portRange;
             CustomInit();
         }
 
@@ -47,6 +49,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "addressSpace")]
         public string AddressSpace { get; set; }
+
+        /// <summary>
+        /// Gets or sets port range for Vpn NatRule mapping.
+        /// </summary>
+        [JsonProperty(PropertyName = "portRange")]
+        public string PortRange { get; set; }
 
     }
 }

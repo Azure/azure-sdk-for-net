@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "56299ed7-f1e5-aac6-127f-789ca876e997",
         "x-ms-date": "Wed, 17 Feb 2021 02:19:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "56299ed7-f1e5-aac6-127f-789ca876e997",
         "x-ms-request-id": "c65fe112-301e-0072-7cd3-04dd8d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "d4d35c60-5465-7cd9-2b03-42ba2cc2cceb",
         "x-ms-date": "Wed, 17 Feb 2021 02:19:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -60,7 +60,7 @@
         ],
         "x-ms-client-request-id": "d4d35c60-5465-7cd9-2b03-42ba2cc2cceb",
         "x-ms-request-id": "c65fe124-301e-0072-08d3-04dd8d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "4c3b13df-14a2-2b32-1e34-feb587583d7d",
         "x-ms-date": "Wed, 17 Feb 2021 02:19:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -93,7 +93,7 @@
         "x-ms-client-request-id": "4c3b13df-14a2-2b32-1e34-feb587583d7d",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "c65fe135-301e-0072-14d3-04dd8d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",

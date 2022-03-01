@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="accountDetails">Account details of the data to be
         /// transferred</param>
-        public DataImportDetails(DataAccountDetails accountDetails)
+        /// <param name="logCollectionLevel">Level of the logs to be collected.
+        /// Possible values include: 'Error', 'Verbose'</param>
+        public DataImportDetails(DataAccountDetails accountDetails, LogCollectionLevel? logCollectionLevel = default(LogCollectionLevel?))
         {
             AccountDetails = accountDetails;
+            LogCollectionLevel = logCollectionLevel;
             CustomInit();
         }
 
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "accountDetails")]
         public DataAccountDetails AccountDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets level of the logs to be collected. Possible values
+        /// include: 'Error', 'Verbose'
+        /// </summary>
+        [JsonProperty(PropertyName = "logCollectionLevel")]
+        public LogCollectionLevel? LogCollectionLevel { get; set; }
 
         /// <summary>
         /// Validate the object.

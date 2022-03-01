@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Tasks of Jobs created under this schedule.</param>
         /// <param name="priority">The priority of Jobs created under this
         /// schedule.</param>
+        /// <param name="allowTaskPreemption">Whether Tasks in this job can be
+        /// preempted by other high priority jobs</param>
         /// <param name="maxParallelTasks">The maximum number of tasks that can
         /// be executed in parallel for the job.</param>
         /// <param name="displayName">The display name for Jobs created under
@@ -68,9 +70,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Manager, Job Preparation and Job Release Tasks).</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// each Job created under this schedule as metadata.</param>
-        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), int? maxParallelTasks = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), bool? allowTaskPreemption = default(bool?), int? maxParallelTasks = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
+            AllowTaskPreemption = allowTaskPreemption;
             MaxParallelTasks = maxParallelTasks;
             DisplayName = displayName;
             UsesTaskDependencies = usesTaskDependencies;
@@ -104,6 +107,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether Tasks in this job can be preempted by other
+        /// high priority jobs
+        /// </summary>
+        /// <remarks>
+        /// If the value is set to True, other high priority jobs submitted to
+        /// the system will take precedence and will be able requeue tasks from
+        /// this job. You can update a job's allowTaskPreemption after it has
+        /// been created using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "allowTaskPreemption")]
+        public bool? AllowTaskPreemption { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tasks that can be executed in

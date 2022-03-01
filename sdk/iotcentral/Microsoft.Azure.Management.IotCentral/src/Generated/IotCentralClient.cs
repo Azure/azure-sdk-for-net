@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.IotCentral
             Apps = new AppsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-01";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

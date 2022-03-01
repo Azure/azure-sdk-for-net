@@ -45,6 +45,28 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///
         /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
         ///
+        public static bool TryExtractDiagnosticId(IReadOnlyDictionary<string, object> properties, out string id)
+        {
+            id = null;
+
+            if (properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            {
+                id = stringId;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///   Extracts a diagnostic id from a message's properties.
+        /// </summary>
+        ///
+        /// <param name="properties">The properties holding the diagnostic id.</param>
+        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
+        ///
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
         public static bool TryExtractDiagnosticId(IDictionary<string, object> properties, out string id)
         {
             id = null;
@@ -60,10 +82,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public DiagnosticScope CreateScope(
             string activityName,
-            string kindAttribute)
+            DiagnosticScope.ActivityKind kind)
         {
-            DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute);
+            DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
@@ -78,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 using DiagnosticScope messageScope = CreateScope(
                     DiagnosticProperty.MessageActivityName,
-                    DiagnosticProperty.ProducerKind);
+                    DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

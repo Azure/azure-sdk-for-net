@@ -49,6 +49,11 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 UserMetadata = options.UserMetadata;
             }
+
+            if (options.MaxMessageSizeInKilobytes != null)
+            {
+                MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes.Value;
+            }
         }
 
         /// <summary>
@@ -162,7 +167,8 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         /// <summary>
         /// Defines whether ordering needs to be maintained. If true, messages sent to topic will be
-        /// forwarded to the subscription in order.
+        /// forwarded to the subscription in order. For partitioned topics, defaults to false, and
+        /// setting it to true has no effect.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
         public bool SupportOrdering { get; set; }
@@ -191,6 +197,13 @@ namespace Azure.Messaging.ServiceBus.Administration
                 _userMetadata = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the maximum message size, in kilobytes, for messages sent to this topic.
+        /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
+        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// </summary>
+        public long? MaxMessageSizeInKilobytes { get; set; }
 
         internal bool IsAnonymousAccessible { get; set; }
 
@@ -244,7 +257,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && EnableSubscriptionPartitioning == other.EnableSubscriptionPartitioning
                 && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
                     || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules)))
+                && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules))
+                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
             {
                 return true;
             }

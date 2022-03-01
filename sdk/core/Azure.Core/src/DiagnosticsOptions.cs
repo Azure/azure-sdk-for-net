@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace Azure.Core
 {
     /// <summary>
-    /// Exposes client options related to logging, telemetry and distributed tracing.
+    /// Exposes client options related to logging, telemetry, and distributed tracing.
     /// </summary>
     public class DiagnosticsOptions
     {
@@ -44,9 +44,13 @@ namespace Azure.Core
                 "Retry-After",
                 "Server",
                 "Transfer-Encoding",
-                "User-Agent"
+                "User-Agent",
+                "WWW-Authenticate" // OAuth Challenge header.
             };
-            LoggedQueryParameters = new List<string>();
+            LoggedQueryParameters = new List<string>
+            {
+                "api-version"
+            };
         }
 
         internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
@@ -89,7 +93,7 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get; set; } = 4 * 1024;
 
         /// <summary>
-        /// Gets a list of headers names that are not redacted during logging.
+        /// Gets a list of header names that are not redacted during logging.
         /// </summary>
         public IList<string> LoggedHeaderNames { get; internal set; }
 
@@ -99,7 +103,7 @@ namespace Azure.Core
         public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
+        /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
         /// </summary>
         public string? ApplicationId
         {

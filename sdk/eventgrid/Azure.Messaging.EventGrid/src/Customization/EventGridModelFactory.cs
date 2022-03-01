@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -22,10 +24,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobError"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MediaJobError MediaJobError(MediaJobErrorCode? code = default, string message = default, MediaJobErrorCategory? category = default, MediaJobRetry? retry = default, IReadOnlyList<MediaJobErrorDetail> details = default)
+        public static MediaJobError MediaJobError(MediaJobErrorCode? code, string message, MediaJobErrorCategory? category, MediaJobRetry? retry, IReadOnlyList<MediaJobErrorDetail> details)
         {
-            details ??= new List<MediaJobErrorDetail>();
-            return new MediaJobError(code, message, category, retry, details);
+            return MediaJobError(code, message, category, retry, (IEnumerable<MediaJobErrorDetail>) details);
         }
 
         /// <summary> Initializes new instance of MediaJobFinishedEventData class. </summary>
@@ -35,11 +36,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
+        public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs)
         {
-            correlationData ??= new Dictionary<string, string>();
-            outputs ??= new List<MediaJobOutput>();
-            return new MediaJobFinishedEventData(previousState, state, correlationData, outputs);
+            return MediaJobFinishedEventData(previousState, state, correlationData, (IEnumerable<MediaJobOutput>) outputs);
         }
 
         /// <summary> Initializes new instance of MediaJobCanceledEventData class. </summary>
@@ -49,11 +48,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
+        public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs)
         {
-            correlationData ??= new Dictionary<string, string>();
-            outputs ??= new List<MediaJobOutput>();
-            return new MediaJobCanceledEventData(previousState, state, correlationData, outputs);
+            return MediaJobCanceledEventData(previousState, state, correlationData, (IEnumerable<MediaJobOutput>) outputs);
         }
 
         /// <summary> Initializes new instance of MediaJobErroredEventData class. </summary>
@@ -63,11 +60,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
+        public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs)
         {
-            correlationData ??= new Dictionary<string, string>();
-            outputs ??= new List<MediaJobOutput>();
-            return new MediaJobErroredEventData(previousState, state, correlationData, outputs);
+            return MediaJobErroredEventData(previousState, state, correlationData, (IEnumerable<MediaJobOutput>) outputs);
         }
 
         /// <summary> Initializes new instance of MapsGeofenceEventProperties class. </summary>
@@ -77,12 +72,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceEventProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsGeofenceEventProperties MapsGeofenceEventProperties(IReadOnlyList<string> expiredGeofenceGeometryId = default, IReadOnlyList<MapsGeofenceGeometry> geometries = default, IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
+        public static MapsGeofenceEventProperties MapsGeofenceEventProperties(IReadOnlyList<string> expiredGeofenceGeometryId, IReadOnlyList<MapsGeofenceGeometry> geometries, IReadOnlyList<string> invalidPeriodGeofenceGeometryId, bool? isEventPublished)
         {
-            expiredGeofenceGeometryId ??= new List<string>();
-            geometries ??= new List<MapsGeofenceGeometry>();
-            invalidPeriodGeofenceGeometryId ??= new List<string>();
-            return new MapsGeofenceEventProperties(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished);
+            return MapsGeofenceEventProperties((IEnumerable<string>) expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished);
         }
 
         /// <summary> Initializes new instance of AcsChatThreadCreatedWithUserEventData class. </summary>
@@ -96,11 +88,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyList<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
-            properties ??= new Dictionary<string, object>();
-            participants ??= new List<AcsChatThreadParticipantProperties>();
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, participants);
+            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, (IEnumerable<AcsChatThreadParticipantProperties>) participants);
         }
 
         /// <summary> Initializes new instance of AcsChatThreadCreatedEventData class. </summary>
@@ -113,11 +103,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyList<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
-            properties ??= new Dictionary<string, object>();
-            participants ??= new List<AcsChatThreadParticipantProperties>();
-            return new AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, participants);
+            return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, (IEnumerable<AcsChatThreadParticipantProperties>) participants);
         }
 
         /// <summary> Initializes new instance of AcsSmsDeliveryReportReceivedEventData class. </summary>
@@ -131,20 +119,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="tag"> Customer Content. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsDeliveryReportReceivedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = default, string @from = default, string to = default, string deliveryStatus = default, string deliveryStatusDetails = default, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default, DateTimeOffset? receivedTimestamp = default, string tag = default)
+        public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag)
         {
-            deliveryAttempts ??= new List<AcsSmsDeliveryAttemptProperties>();
-            return new AcsSmsDeliveryReportReceivedEventData(messageId, @from, to, deliveryStatus, deliveryStatusDetails, deliveryAttempts, receivedTimestamp, tag);
+            return AcsSmsDeliveryReportReceivedEventData(messageId, @from, to, deliveryStatus, deliveryStatusDetails, (IEnumerable<AcsSmsDeliveryAttemptProperties>) deliveryAttempts, receivedTimestamp, tag);
         }
 
         /// <summary> Initializes new instance of AcsRecordingStorageInfoProperties class. </summary>
         /// <param name="recordingChunks"> List of details of recording chunks information. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingStorageInfoProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks = default)
+        public static AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks)
         {
-            recordingChunks ??= new List<AcsRecordingChunkInfoProperties>();
-            return new AcsRecordingStorageInfoProperties(recordingChunks);
+            return AcsRecordingStorageInfoProperties((IEnumerable<AcsRecordingChunkInfoProperties>) recordingChunks);
         }
 
         /// <summary> Initializes new instance of ResourceWriteSuccessEventData class. </summary>
@@ -331,9 +317,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody)
         {
-            return new AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
+            return AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
@@ -348,9 +334,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody)
         {
-            return new AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
+            return AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>
@@ -367,9 +353,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, DateTimeOffset? editTime)
         {
-            return new AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
+            return AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEditedInThreadEventData. </summary>
@@ -385,9 +371,139 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, DateTimeOffset? editTime)
         {
-            return new AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
+            return AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        {
+            return MediaLiveEventIngestHeartbeatEventData(trackType, trackName, default, default, bitrate, incomingBitrate, default, default, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="transcriptionLanguage"> Gets the Live Transcription language. </param>
+        /// <param name="transcriptionState"> Gets the Live Transcription state. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="ingestDriftValue"> Gets the track ingest drift value. </param>
+        /// <param name="lastFragmentArrivalTime"> Gets the arrival UTC time of the last fragment. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = null, long? incomingBitrate = null, int? ingestDriftValue = null, DateTimeOffset? lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
+        {
+            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? Constants.MediaEvents.NotApplicable : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
+        /// <param name="channelLatency"> The channel latency. </param>
+        /// <param name="latencyResultCode"> The latency result code. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
+        {
+            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency == null ? Constants.MediaEvents.NotApplicable : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
+        }
+
+        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
+        /// <param name="recordingStartTime"> The time at which the recording started. </param>
+        /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
+        /// <param name="sessionEndReason"> The reason for ending recording session. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, string sessionEndReason)
+        {
+            return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo: recordingStorageInfo, recordingStartTime: recordingStartTime, recordingDurationMs: recordingDurationMs, sessionEndReason: sessionEndReason, recordingChannelType: null);
+        }
+
+        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
+        /// <param name="documentId"> The documentId of the recording chunk. </param>
+        /// <param name="index"> The index of the recording chunk. </param>
+        /// <param name="endReason"> The reason for ending the recording chunk. </param>
+        /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
+        /// <param name="contentLocation"> The location of the content for this chunk. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation)
+        {
+            return AcsRecordingChunkInfoProperties(documentId: documentId, index: index, endReason: endReason, metadataLocation: metadataLocation, contentLocation: contentLocation, deleteLocation: null);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryEventData. </summary>
+        /// <param name="id"> The event ID. </param>
+        /// <param name="timestamp"> The time at which the event occurred. </param>
+        /// <param name="action"> The action that encompasses the provided event. </param>
+        /// <param name="target"> The target of the event. </param>
+        /// <param name="request"> The request that generated the event. </param>
+        /// <param name="actor"> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </param>
+        /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryEventData ContainerRegistryEventData(string id, DateTimeOffset? timestamp, string action, ContainerRegistryEventTarget target, ContainerRegistryEventRequest request, ContainerRegistryEventActor actor, ContainerRegistryEventSource source)
+        {
+            return ContainerRegistryEventData(id: id, timestamp: timestamp, action: action, target: target, request: request, actor: actor, source: source, location: null);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventData. </summary>
+        /// <param name="id"> The event ID. </param>
+        /// <param name="timestamp"> The time at which the event occurred. </param>
+        /// <param name="action"> The action that encompasses the provided event. </param>
+        /// <param name="target"> The target of the event. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerRegistryArtifactEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryArtifactEventData ContainerRegistryArtifactEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, ContainerRegistryArtifactEventTarget target = null)
+        {
+            return ContainerRegistryArtifactEventData(id: id, timestamp: timestamp, action: action, target: target, location: null);
+        }
+
+        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <param name="clientRequestId"> The client request ID. </param>
+        /// <param name="clientIpAddress"> The client IP address. </param>
+        /// <param name="method"> The request method. </param>
+        /// <param name="url"> The url used in the request. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceHttpRequest"/> instance for mocking. </returns>
+        public static ResourceHttpRequest ResourceHttpRequest(string clientRequestId = null, string clientIpAddress = null, RequestMethod? method = null, string url = null)
+        {
+            return new ResourceHttpRequest(clientRequestId, clientIpAddress, method?.Method, url);
+        }
+
+        /// <summary> Initializes a new instance of StorageDirectoryDeletedEventData. </summary>
+        /// <param name="api"> The name of the API/operation that triggered this event. </param>
+        /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
+        /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
+        /// <param name="url"> The path to the deleted directory. </param>
+        /// <param name="recursive"> Is this event for a recursive delete operation. </param>
+        /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name. </param>
+        /// <param name="identity"> The identity of the requester that triggered this event. </param>
+        /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageDirectoryDeletedEventData"/> instance for mocking. </returns>
+        public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, bool? recursive = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        {
+            return new StorageDirectoryDeletedEventData(api, clientRequestId, requestId, url, recursive?.ToString(), sequencer, identity, storageDiagnostics);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

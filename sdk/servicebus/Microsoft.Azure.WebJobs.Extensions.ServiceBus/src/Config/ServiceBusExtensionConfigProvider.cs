@@ -75,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             }
 
             // Set the default exception handler for background exceptions
-            // coming from MessageReceivers.
-            Options.ExceptionHandler = (e) =>
+            // if not already set.
+            Options.ProcessErrorAsync ??= (e) =>
             {
                 LogExceptionReceivedEvent(e, _loggerFactory);
                 return Task.CompletedTask;

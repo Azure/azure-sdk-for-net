@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData
+    public class EventData : BinaryContent
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -42,7 +42,11 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="BinaryData" />
         /// <seealso cref="EventData.Properties" />
         ///
-        public BinaryData EventBody => _amqpMessage.GetEventBody();
+        public BinaryData EventBody
+        {
+            get => _amqpMessage.GetEventBody();
+            set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
+        }
 
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
@@ -67,7 +71,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public string ContentType
+        public new string ContentType
         {
             get
             {
@@ -93,6 +97,39 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///    This member is intended to allow the string-based <see cref="ContentType" /> in this class to be
+        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="BinaryContent" />
+        ///    base class.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ContentType? ContentTypeCore
+        {
+            get => new ContentType(ContentType);
+            set => ContentType = value.ToString();
+        }
+
+        /// <summary>
+        ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
+        ///   in order to inherit from <see cref="BinaryContent"/>.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
+
+        /// <summary>
+        ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        ///   the <see cref="BinaryContent"/> abstraction.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
+        /// <summary>
         ///   An application-defined value that uniquely identifies the event.  The identifier is
         ///   a free-form value and can reflect a GUID or an identifier derived from the application
         ///   context.
@@ -110,7 +147,6 @@ namespace Azure.Messaging.EventHubs
         ///   how Event Hubs identifies the event.
         /// </remarks>
         ///
-
         public string MessageId
         {
             get
@@ -150,7 +186,6 @@ namespace Azure.Messaging.EventHubs
         ///   telemetry, distributed tracing, or logging.
         /// </remarks>
         ///
-
         public string CorrelationId
         {
             get
@@ -423,6 +458,14 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
         ///
         public EventData(BinaryData eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        public EventData() : this(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: null)
         {
         }
 

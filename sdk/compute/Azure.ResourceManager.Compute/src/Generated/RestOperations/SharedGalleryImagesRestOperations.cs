@@ -19,35 +19,37 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class SharedGalleryImagesRestOperations
     {
-        private string subscriptionId;
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SharedGalleryImagesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public SharedGalleryImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public SharedGalleryImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-07-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListRequest(string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
@@ -55,25 +57,30 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/sharedGalleries/", false);
             uri.AppendPath(galleryUniqueName, true);
             uri.AppendPath("/images", false);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (sharedTo != null)
             {
                 uri.AppendQuery("sharedTo", sharedTo.Value.ToString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> List shared gallery images by subscription id or tenant id. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageList>> GetAllAsync(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        public async Task<Response<SharedGalleryImageList>> ListAsync(string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllRequest(location, galleryUniqueName, sharedTo);
+            using var message = CreateListRequest(subscriptionId, location, galleryUniqueName, sharedTo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,18 +102,23 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> List shared gallery images by subscription id or tenant id. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGalleryImageList> GetAll(string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        public Response<SharedGalleryImageList> List(string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -116,7 +128,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllRequest(location, galleryUniqueName, sharedTo);
+            using var message = CreateListRequest(subscriptionId, location, galleryUniqueName, sharedTo);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,17 +140,17 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetRequest(string location, string galleryUniqueName, string galleryImageName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string location, string galleryUniqueName, string galleryImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
@@ -147,21 +159,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryUniqueName, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageData>> GetAsync(string location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public async Task<Response<SharedGalleryImageData>> GetAsync(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -175,7 +192,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetRequest(location, galleryUniqueName, galleryImageName);
+            using var message = CreateGetRequest(subscriptionId, location, galleryUniqueName, galleryImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -189,18 +206,23 @@ namespace Azure.ResourceManager.Compute
                 case 404:
                     return Response.FromValue((SharedGalleryImageData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response<SharedGalleryImageData> Get(string location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public Response<SharedGalleryImageData> Get(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
@@ -214,7 +236,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetRequest(location, galleryUniqueName, galleryImageName);
+            using var message = CreateGetRequest(subscriptionId, location, galleryUniqueName, galleryImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -228,36 +250,41 @@ namespace Azure.ResourceManager.Compute
                 case 404:
                     return Response.FromValue((SharedGalleryImageData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> List shared gallery images by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageList>> GetAllNextPageAsync(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        public async Task<Response<SharedGalleryImageList>> ListNextPageAsync(string nextLink, string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (location == null)
             {
@@ -268,7 +295,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, location, galleryUniqueName, sharedTo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -280,22 +307,27 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> List shared gallery images by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGalleryImageList> GetAllNextPage(string nextLink, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        public Response<SharedGalleryImageList> ListNextPage(string nextLink, string subscriptionId, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (location == null)
             {
@@ -306,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryUniqueName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, location, galleryUniqueName, sharedTo);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, location, galleryUniqueName, sharedTo);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -318,7 +350,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
         internal ConfigurationStoreListResult()
         {
-            Value = new ChangeTrackingList<ConfigurationStore>();
+            Value = new ChangeTrackingList<ConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal ConfigurationStoreListResult(IReadOnlyList<ConfigurationStore> value, string nextLink)
+        internal ConfigurationStoreListResult(IReadOnlyList<ConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<ConfigurationStore> Value { get; }
+        public IReadOnlyList<ConfigurationStoreData> Value { get; }
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }

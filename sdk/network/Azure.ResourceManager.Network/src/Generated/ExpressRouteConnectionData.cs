@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteConnection data model. </summary>
-    public partial class ExpressRouteConnectionData : WritableSubResource
+    public partial class ExpressRouteConnectionData : Models.SubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
         /// <param name="name"> The name of the resource. </param>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
         /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(string id, string name, ProvisioningState? provisioningState, ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, RoutingConfiguration routingConfiguration) : base(id)
+        internal ExpressRouteConnectionData(string id, string name, ProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, RoutingConfiguration routingConfiguration) : base(id)
         {
             Name = name;
             ProvisioningState = provisioningState;
@@ -54,7 +55,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the express route connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The ExpressRoute circuit peering. </summary>
-        public ExpressRouteCircuitPeeringId ExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                    ExpressRouteCircuitPeering = new WritableSubResource();
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> Authorization key to establish the connection. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The routing weight associated to the connection. </summary>

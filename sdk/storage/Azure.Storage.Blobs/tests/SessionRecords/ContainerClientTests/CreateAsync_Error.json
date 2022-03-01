@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "896da20a-41e8-c137-5481-41886f284993",
         "x-ms-date": "Wed, 17 Feb 2021 02:29:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "896da20a-41e8-c137-5481-41886f284993",
         "x-ms-request-id": "d40188b9-401e-001a-4ed4-04bb1d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "da9c5566-be2b-caf1-0df3-70b911897775",
         "x-ms-date": "Wed, 17 Feb 2021 02:29:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "da9c5566-be2b-caf1-0df3-70b911897775",
         "x-ms-error-code": "ContainerAlreadyExists",
         "x-ms-request-id": "d40188d2-401e-001a-64d4-04bb1d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerAlreadyExists</Code><Message>The specified container already exists.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "19226da5-6e8b-9d68-7559-d8d319f59eaf",
         "x-ms-date": "Wed, 17 Feb 2021 02:29:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "19226da5-6e8b-9d68-7559-d8d319f59eaf",
         "x-ms-request-id": "d40188e1-401e-001a-6fd4-04bb1d000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

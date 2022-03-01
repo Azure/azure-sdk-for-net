@@ -30,7 +30,7 @@ namespace Management.HDInsight.Tests
         public static void ValidateCluster(string expectedClustername, ClusterCreateParametersExtended expectedParameters, Cluster actualCluster)
         {
             Assert.Equal(expectedClustername, actualCluster.Name);
-            Assert.Equal(expectedParameters.Properties.Tier, actualCluster.Properties.Tier);
+            Assert.Equal(expectedParameters.Properties.Tier, actualCluster.Properties.Tier, ignoreCase:true);
             Assert.NotNull(actualCluster.Etag);
             Assert.EndsWith(expectedClustername, actualCluster.Id);
             Assert.Equal("Running", actualCluster.Properties.ClusterState);
@@ -185,9 +185,9 @@ namespace Management.HDInsight.Tests
             var identity = new ClusterIdentity
             {
                 Type = ResourceIdentityType.UserAssigned,
-                UserAssignedIdentities = new Dictionary<string, ClusterIdentityUserAssignedIdentitiesValue>
+                UserAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
                 {
-                    { msiResourceId, new ClusterIdentityUserAssignedIdentitiesValue() }
+                    { msiResourceId, new UserAssignedIdentity() }
                 }
             };
 

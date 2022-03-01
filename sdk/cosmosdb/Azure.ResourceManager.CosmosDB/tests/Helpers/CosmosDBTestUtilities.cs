@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     {
         internal const string ResourceGroupPrefix = "Default-CosmosDB-";
         internal const string Location = "West US";
-        public static async Task TryRegisterResourceGroupAsync(ResourceGroupContainer resourceGroupsOperations, string location, string resourceGroupName)
+        public static async Task TryRegisterResourceGroupAsync(ResourceGroupCollection resourceGroupsOperations, string location, string resourceGroupName)
         {
-            await resourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            await resourceGroupsOperations.CreateOrUpdateAsync(true, resourceGroupName, new ResourceGroupData(location));
         }
     }
 }

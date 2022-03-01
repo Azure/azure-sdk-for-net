@@ -138,6 +138,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 HttpResponseMessage response = await SendEventGridRequest(host, NotificationRequest.Replace("[blobPathPlaceHolder]", _resolvedContainerName + "/" + TestBlobName), "Notification");
                 Assert.True(response.StatusCode == HttpStatusCode.Accepted);
                 Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+
+                // wait for all messages to be processed
+                await TestHelpers.Await(() =>
+                {
+                    var log = host.GetTestLoggerProvider().GetAllLogMessages()
+                        .Where(x => x != default && x.FormattedMessage != default)
+                        .FirstOrDefault(x => x.FormattedMessage.Contains($"(Reason='New blob detected({BlobTriggerSource.EventGrid})"));
+                    return log != null;
+                }, 5000, 1000);
             }
         }
 
@@ -150,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             using (host)
             {
                 host.Start();
-                await Task.Delay(5000); // Wait util all logs a re populated
+                await Task.Delay(5000); // Wait util all logs are populated
                 var log = host.GetTestLoggerProvider().GetAllLogMessages()
                     .FirstOrDefault(x => x.Level == Microsoft.Extensions.Logging.LogLevel.Error && x.FormattedMessage == $"PageBlobClient is not supported with {nameof(BlobTriggerSource.EventGrid)}");
                 Assert.IsNotNull(log);

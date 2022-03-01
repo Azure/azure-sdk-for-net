@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs
             return stream;
         }
 
-        private static EncryptionData GetAndValidateEncryptionDataOrDefault(Metadata metadata)
+        internal static EncryptionData GetAndValidateEncryptionDataOrDefault(Metadata metadata)
         {
             if (metadata == default)
             {

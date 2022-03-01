@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionItem(MhsmPrivateEndpoint privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState)
+        internal MhsmPrivateEndpointConnectionItem(SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -27,7 +30,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Properties of the private endpoint object. </summary>
-        public MhsmPrivateEndpoint PrivateEndpoint { get; }
+        internal SubResource PrivateEndpoint { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint.Id;
+        }
+
         /// <summary> Approval state of the private link connection. </summary>
         public MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>

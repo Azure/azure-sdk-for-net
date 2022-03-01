@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("extendedLocation");
                 writer.WriteObjectValue(ExtendedLocation);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -39,15 +44,13 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -73,10 +76,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableBgp");
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsDefined(EnablePrivateIpAddress))
+            if (Optional.IsDefined(EnablePrivateIPAddress))
             {
                 writer.WritePropertyName("enablePrivateIpAddress");
-                writer.WriteBooleanValue(EnablePrivateIpAddress.Value);
+                writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
             if (Optional.IsDefined(Active))
             {
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite");
-                writer.WriteObjectValue(GatewayDefaultSite);
+                JsonSerializer.Serialize(writer, GatewayDefaultSite);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -139,13 +142,13 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<IList<VirtualNetworkGatewayIPConfiguration>> ipConfigurations = default;
             Optional<VirtualNetworkGatewayType> gatewayType = default;
             Optional<VpnType> vpnType = default;
@@ -153,7 +156,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableBgp = default;
             Optional<bool> enablePrivateIpAddress = default;
             Optional<bool> activeActive = default;
-            Optional<SubResource> gatewayDefaultSite = default;
+            Optional<WritableSubResource> gatewayDefaultSite = default;
             Optional<VirtualNetworkGatewaySku> sku = default;
             Optional<VpnClientConfiguration> vpnClientConfiguration = default;
             Optional<BgpSettings> bgpSettings = default;
@@ -174,12 +177,17 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -210,11 +218,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -308,7 +311,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            gatewayDefaultSite = SubResource.DeserializeSubResource(property0.Value);
+                            gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("sku"))
@@ -415,7 +418,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIpAddress), Optional.ToNullable(activeActive), gatewayDefaultSite.Value, sku.Value, vpnClientConfiguration.Value, bgpSettings.Value, customRoutes.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat));
+            return new VirtualNetworkGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIpAddress), Optional.ToNullable(activeActive), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, bgpSettings.Value, customRoutes.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat));
         }
     }
 }

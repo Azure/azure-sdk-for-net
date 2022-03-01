@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,14 +19,17 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The Attachments service client. </summary>
     public partial class AttachmentsClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
-        private HttpPipeline _pipeline;
-        private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of AttachmentsClient for mocking. </summary>
         protected AttachmentsClient()
@@ -35,27 +40,449 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AttachmentsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
+
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAttachmentAsync(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAttachmentRequest(farmerId, attachmentId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAttachment(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.GetAttachment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAttachmentRequest(farmerId, attachmentId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <param name="attachmentId"> ID of the attachment resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   farmerId: string,
+        ///   resourceId: string,
+        ///   resourceType: string,
+        ///   originalFileName: string,
+        ///   id: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   eTag: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response CreateOrUpdate(string farmerId, string attachmentId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="attachmentId"> ID of the attachment. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Delete(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.Download");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Download(string farmerId, string attachmentId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+
+            using var scope = ClientDiagnostics.CreateScope("AttachmentsClient.Download");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="resourceIds"> Resource Ids of the resource. </param>
+        /// <param name="resourceTypes"> Resource Types of the resource. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -78,7 +505,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   nextLink: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -96,6 +522,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+        public virtual AsyncPageable<BinaryData> GetAttachmentsByFarmerIdAsync(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAttachmentsByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAttachmentsByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes"> Resource Types of the resource. </param>
@@ -115,42 +561,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -173,7 +586,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   nextLink: string
         /// }
         /// </code>
-        /// 
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -191,93 +603,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="resourceIds"> Resource Ids of the resource. </param>
-        /// <param name="resourceTypes"> Resource Types of the resource. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        public virtual Pageable<BinaryData> GetAttachmentsByFarmerId(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.ListByFarmerId");
-            scope.Start();
-            try
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
+                do
                 {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAttachmentsByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAttachmentsByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetAttachmentsByFarmerIdRequest(string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/attachments", false);
             if (resourceIds != null)
             {
-                uri.AppendQueryDelimited("resourceIds", resourceIds, ",", true);
+                foreach (var param in resourceIds)
+                {
+                    uri.AppendQuery("resourceIds", param, true);
+                }
             }
             if (resourceTypes != null)
             {
-                uri.AppendQueryDelimited("resourceTypes", resourceTypes, ",", true);
+                foreach (var param in resourceTypes)
+                {
+                    uri.AppendQuery("resourceTypes", param, true);
+                }
             }
             if (ids != null)
             {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
             }
             if (names != null)
             {
-                uri.AppendQueryDelimited("names", names, ",", true);
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
             }
             if (propertyFilters != null)
             {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
             }
             if (statuses != null)
             {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
             }
             if (minCreatedDateTime != null)
             {
@@ -303,597 +698,141 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateGetAttachmentRequest(string farmerId, string attachmentId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateGetRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateGetRequest(string farmerId, string attachmentId)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/attachments/", false);
             uri.AppendPath(attachmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string attachmentId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string attachmentId, RequestContent content, RequestContext context)
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// 
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="attachmentId"> ID of the attachment resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(string farmerId, string attachmentId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, attachmentId, content);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string attachmentId, RequestContent content)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/attachments/", false);
             uri.AppendPath(attachmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
-        /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateDeleteRequest(string farmerId, string attachmentId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response Delete(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDeleteRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Delete");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateDeleteRequest(string farmerId, string attachmentId)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/attachments/", false);
             uri.AppendPath(attachmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        internal HttpMessage CreateDownloadRequest(string farmerId, string attachmentId, RequestContext context)
         {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response Download(string farmerId, string attachmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            using HttpMessage message = CreateDownloadRequest(farmerId, attachmentId);
-            RequestOptions.Apply(options, message);
-            using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private HttpMessage CreateDownloadRequest(string farmerId, string attachmentId)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/attachments/", false);
             uri.AppendPath(attachmentId, true);
             uri.AppendPath("/file", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream, application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateGetAttachmentsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200201 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    201 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

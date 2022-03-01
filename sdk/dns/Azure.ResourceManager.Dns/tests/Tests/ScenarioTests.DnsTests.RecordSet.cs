@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
+    [Ignore("These tests will work once the conversion to new track 2 is complete")]
     public class ScenarioTestsRecordSets : DnsManagementClientBase
     {
         private string location;
@@ -52,7 +53,7 @@ namespace Azure.Management.Dns.Tests
         {
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
-                InitializeClients();
+                await InitializeClients();
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
@@ -61,7 +62,7 @@ namespace Azure.Management.Dns.Tests
             }
             else if (setupRun)
             {
-                initNewRecord();
+                await initNewRecord();
             }
         }
 

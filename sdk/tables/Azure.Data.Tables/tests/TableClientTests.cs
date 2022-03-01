@@ -23,6 +23,7 @@ namespace Azure.Data.Tables.Tests
         private const string TableName = "someTableName";
         private const string AccountName = "someaccount";
         private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+        private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/" + TableName);
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
         private MockTransport _transport;
         private TableClient client { get; set; }
@@ -105,14 +106,50 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidConnStrings()
         {
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName, TableName };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, TableName };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{TableName};", AccountName, TableName };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName, TableName };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, TableName };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;", AccountName, AccountName };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{AccountName};", AccountName, AccountName };
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName, TableName };
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
+                AccountName,
+                TableName
+            };
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;",
+                AccountName,
+                TableName
+            };
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{TableName};",
+                AccountName,
+                TableName
+            };
+            yield return new object[]
+            {
+                $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;", AccountName, TableName
+            };
+            yield return new object[]
+            {
+                $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;",
+                AccountName,
+                TableName
+            };
+            yield return new object[]
+            {
+                $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/;",
+                AccountName,
+                AccountName
+            };
+            yield return new object[]
+            {
+                $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.microsoft.scloud:443/{AccountName};",
+                AccountName,
+                AccountName
+            };
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName, TableName
+            };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net", AccountName, TableName };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}", AccountName, TableName };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}", AccountName, TableName };
@@ -241,7 +278,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(
                 token.StartsWith(
-                    $"{Parms.TableName}={TableName.ToLowerInvariant()}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
+                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -402,6 +439,40 @@ namespace Azure.Data.Tables.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => client.CreateIfNotExistsAsync());
         }
 
+        private static IEnumerable<object[]> TableClientsWithTableNameInUri()
+        {
+            var tokenTransport = TableAlreadyExistsTransport();
+            var tokenTransport2 = TableAlreadyExistsTransport();
+            var sharedKeyTransport = TableAlreadyExistsTransport();
+            var connStrTransport = TableAlreadyExistsTransport();
+            var devTransport = TableAlreadyExistsTransport();
+
+            var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
+            var connStringClient = new TableClient(
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
+                TableName,
+                new TableClientOptions { Transport = connStrTransport });
+            var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName, new TableClientOptions { Transport = devTransport });
+            var tokenCredClient = new TableClient(_urlWithTableName, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
+            var tokenCredClientFromServiceClient = new TableServiceClient(_urlWithTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport2 }).GetTableClient(TableName);
+
+            yield return new object[] { sharedKeyClient, sharedKeyTransport };
+            yield return new object[] { connStringClient, connStrTransport };
+            yield return new object[] { devStorageClient, devTransport };
+            yield return new object[] { tokenCredClient, tokenTransport };
+            yield return new object[] { tokenCredClientFromServiceClient, tokenTransport2 };
+        }
+
+        [TestCaseSource(nameof(TableClientsWithTableNameInUri))]
+        public void CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
+        {
+            client = InstrumentClient(tableClient);
+
+            client.CreateIfNotExistsAsync();
+
+            Assert.That(transport.SingleRequest.Uri.Path, Does.Not.Contain(TableName), "Path should not contain the table name");
+        }
+
         private static IEnumerable<object[]> TableClients()
         {
             var cred = new TableSharedKeyCredential(AccountName, Secret);
@@ -411,9 +482,11 @@ namespace Azure.Data.Tables.Tests
                 $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
                 TableName);
             var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName);
+            var fromTableServiceClient = new TableServiceClient(_url, cred).GetTableClient(TableName);
             yield return new object[] { sharedKeyClient, cred };
             yield return new object[] { connStringClient, cred };
             yield return new object[] { devStorageClient, devCred };
+            yield return new object[] { fromTableServiceClient, cred };
         }
 
         [TestCaseSource(nameof(TableClients))]
@@ -426,7 +499,73 @@ namespace Azure.Data.Tables.Tests
             var actualSas = client.GenerateSasUri(permissions, expires);
 
             Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            CollectionAssert.Contains(actualSas.Segments, TableName);
         }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(
+            [Values(true, false, null)] bool? setDisableSwitch,
+            [Values(true, false, null)] bool? setDisableEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            string getEntityResponse =
+                "{\"odata.etag\": \"2021-03-23T18%3A28%3A39.9160983Z\", \"PartitionKey\": \"somPartition\", \"RowKey\": \"01\", \"Timestamp\": \"2021-03-23T18:28:39.9160983Z\"}";
+            try
+            {
+                if (setDisableSwitch.HasValue)
+                {
+                    ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntitySwitchName, setDisableSwitch.Value.ToString());
+                }
+                if (setDisableEnvVar.HasValue)
+                {
+                    env = new TestEnvVar(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnGetEntityEnvVar, setDisableEnvVar.Value.ToString());
+                }
+                var response = new MockResponse(200);
+                response.SetContent(getEntityResponse);
+                var transport = new MockTransport(_ => response);
+                var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+                await client.GetEntityAsync<TableEntity>("fo'o", "ba'r");
+
+                if (setDisableSwitch.HasValue)
+                {
+                    if (setDisableSwitch.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+                else
+                {
+                    if (setDisableEnvVar.HasValue && setDisableEnvVar.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
+        }
+
+        private static MockTransport TableAlreadyExistsTransport() =>
+            new(
+                _ => throw new RequestFailedException(
+                    (int)HttpStatusCode.Conflict,
+                    null,
+                    TableErrorCode.TableAlreadyExists.ToString(),
+                    null));
 
         public class EnumEntity : ITableEntity
         {

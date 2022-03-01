@@ -51,6 +51,9 @@ namespace Azure.Data.Tables.Tests
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
             Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+
+            // GetEntity works also
+            await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
         }
 
         /// <summary>
@@ -127,7 +130,6 @@ namespace Azure.Data.Tables.Tests
                 InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
-
             Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
 
             // Validate that we are not able to upsert an entity to the table.
@@ -143,6 +145,63 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public void ValidateSasCredentialsWithGenerateSasUri()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only Read permissions using GenerateSasUri.
+            var sasBuilderClient = new TableClient(new Uri(ServiceUri), tableName, credential);
+            var sasUri = sasBuilderClient.GenerateSasUri(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Create the TableServiceClient using the SAS URI.
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri, InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are not able to upsert an entity to the table.
+            var ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () =>
+                    await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+            }
+            else
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            var newTableName = tableName + "A";
+            await service.CreateTableAsync(newTableName);
+            // Build a shared access signature with only Read permissions using GenerateSasUri.
+            var sasBuilderClient = new TableClient(new Uri(ServiceUri), newTableName, credential);
+            var sasUri = sasBuilderClient.GenerateSasUri(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Create the TableServiceClient using the SAS URI.
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri, InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+            await service.DeleteTableAsync(newTableName);
         }
 
         /// <summary>
@@ -1105,6 +1164,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToCreate[i].DoubleTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToCreate[i].GuidTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToCreate[i].Int64TypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].UInt64TypeProperty, Is.EqualTo(entitiesToCreate[i].UInt64TypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToCreate[i].IntTypeProperty), "The entities should be equivalent");
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
@@ -1186,6 +1246,42 @@ namespace Azure.Data.Tables.Tests
         {
             TableEntity entityResults;
             List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TableEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task StronglyTypedModelDoubleNaNRoundTrips()
+        {
+            TestEntity entityResults;
+            List<TestEntity> entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0].DoubleTypeProperty = Double.NaN;
+
+            // Upsert the new entities.
+
+            await UpsertTestEntities(entitiesToCreate, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Get the single entity by PartitionKey and RowKey.
+
+            entityResults = (await client.GetEntityAsync<TestEntity>(PartitionKeyValue, "01").ConfigureAwait(false)).Value;
+
+            Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
+        }
+
+        [RecordedTest]
+        public async Task TableEntityDoubleNaNRoundTrips()
+        {
+            TableEntity entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate[0][DoubleTypePropertyName] = Double.NaN;
 
             // Upsert the new entities.
 

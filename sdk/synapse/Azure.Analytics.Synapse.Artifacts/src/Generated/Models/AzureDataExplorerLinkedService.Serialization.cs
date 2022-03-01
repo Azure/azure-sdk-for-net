@@ -56,14 +56,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint");
             writer.WriteObjectValue(Endpoint);
-            writer.WritePropertyName("servicePrincipalId");
-            writer.WriteObjectValue(ServicePrincipalId);
-            writer.WritePropertyName("servicePrincipalKey");
-            writer.WriteObjectValue(ServicePrincipalKey);
+            if (Optional.IsDefined(ServicePrincipalId))
+            {
+                writer.WritePropertyName("servicePrincipalId");
+                writer.WriteObjectValue(ServicePrincipalId);
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey");
+                writer.WriteObjectValue(ServicePrincipalKey);
+            }
             writer.WritePropertyName("database");
             writer.WriteObjectValue(Database);
-            writer.WritePropertyName("tenant");
-            writer.WriteObjectValue(Tenant);
+            if (Optional.IsDefined(Tenant))
+            {
+                writer.WritePropertyName("tenant");
+                writer.WriteObjectValue(Tenant);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -81,10 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
             object endpoint = default;
-            object servicePrincipalId = default;
-            SecretBase servicePrincipalKey = default;
+            Optional<object> servicePrincipalId = default;
+            Optional<SecretBase> servicePrincipalKey = default;
             object database = default;
-            object tenant = default;
+            Optional<object> tenant = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -155,11 +164,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("servicePrincipalId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             servicePrincipalId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
@@ -170,6 +189,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("tenant"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             tenant = property0.Value.GetObject();
                             continue;
                         }
@@ -179,7 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, servicePrincipalId, servicePrincipalKey, database, tenant);
+            return new AzureDataExplorerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, servicePrincipalId.Value, servicePrincipalKey.Value, database, tenant.Value);
         }
 
         internal partial class AzureDataExplorerLinkedServiceConverter : JsonConverter<AzureDataExplorerLinkedService>

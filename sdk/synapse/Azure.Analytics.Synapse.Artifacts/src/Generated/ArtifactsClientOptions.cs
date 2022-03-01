@@ -13,13 +13,19 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Client options for ArtifactsClient. </summary>
     public partial class ArtifactsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2019_06_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_11_01_preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2019-06-01-preview". </summary>
-            V2019_06_01_preview = 1,
+            /// <summary> Service version "2020-12-01". </summary>
+            V2020_12_01 = 1,
+            /// <summary> Service version "2021-06-01-preview". </summary>
+            V2021_06_01_preview = 2,
+            /// <summary> Service version "2021-07-01-preview". </summary>
+            V2021_07_01_preview = 3,
+            /// <summary> Service version "2021-11-01-preview". </summary>
+            V2021_11_01_preview = 4,
         }
 
         internal string Version { get; }
@@ -29,7 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             Version = version switch
             {
-                ServiceVersion.V2019_06_01_preview => "2019-06-01-preview",
+                ServiceVersion.V2020_12_01 => "2020-12-01",
+                ServiceVersion.V2021_06_01_preview => "2021-06-01-preview",
+                ServiceVersion.V2021_07_01_preview => "2021-07-01-preview",
+                ServiceVersion.V2021_11_01_preview => "2021-11-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

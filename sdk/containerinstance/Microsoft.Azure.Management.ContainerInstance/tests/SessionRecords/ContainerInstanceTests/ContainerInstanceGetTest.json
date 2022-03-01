@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourcegroups/aci_rg5057?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlZ3JvdXBzL2FjaV9yZzUwNTc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourcegroups/aci_rg4878?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlZ3JvdXBzL2FjaV9yZzQ4Nzg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "05b7d081-760b-4fbf-8455-9e9c76f3dbfe"
+          "4f91c507-f708-45ce-be3c-e2be7eb81aa2"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "d67f8a64-8325-47ed-ba19-786fa73f539c"
+          "ceee24c1-88c6-4f73-a34e-e6a15cace266"
         ],
         "x-ms-correlation-request-id": [
-          "d67f8a64-8325-47ed-ba19-786fa73f539c"
+          "ceee24c1-88c6-4f73-a34e-e6a15cace266"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184618Z:d67f8a64-8325-47ed-ba19-786fa73f539c"
+          "WESTUS2:20211013T212734Z:ceee24c1-88c6-4f73-a34e-e6a15cace266"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 17 Sep 2021 18:46:17 GMT"
+          "Wed, 13 Oct 2021 21:27:34 GMT"
         ],
         "Content-Length": [
           "173"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057\",\r\n  \"name\": \"aci_rg5057\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878\",\r\n  \"name\": \"aci_rg4878\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzUwNTcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrMTgxP2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
+      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875?api-version=2021-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzQ4NzgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrNDg3NT9hcGktdmVyc2lvbj0yMDIxLTA5LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"properties\": {\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk181\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\",\r\n              \"secureValue\": \"secretValue1\"\r\n            }\r\n          ],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk181\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\",\r\n        \"workspaceKey\": \"workspacekey\"\r\n      }\r\n    },\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk181init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\",\r\n              \"secureValue\": \"secretValue1\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestBody": "{\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"properties\": {\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\",\r\n              \"secureValue\": \"secretValue1\"\r\n            }\r\n          ],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk4875\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\",\r\n        \"workspaceKey\": \"workspacekey\"\r\n      }\r\n    },\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\",\r\n              \"secureValue\": \"secretValue1\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c71d5537-5c14-464e-ad14-52ed10d40a6f"
+          "b9f565ad-01c4-4c60-a7fe-223d06092190"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,13 +82,13 @@
           "FxVersion/4.6.30411.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/5.0.0.0"
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/6.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1993"
+          "1996"
         ]
       },
       "ResponseHeaders": {
@@ -99,25 +99,25 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/providers/Microsoft.ContainerInstance/locations/westus/operations/1995f30d-535a-42ff-800d-2f2b3d273674?api-version=2018-06-01"
+          "https://management.azure.com/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/providers/Microsoft.ContainerInstance/locations/westus/operations/291ec9b7-a751-4a53-9710-03eefc3ccfa8?api-version=2018-06-01"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests-pt5m": [
-          "199"
+          "197"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests-pt1h": [
-          "472"
+          "466"
         ],
         "x-ms-request-id": [
-          "westus:1995f30d-535a-42ff-800d-2f2b3d273674"
+          "westus:291ec9b7-a751-4a53-9710-03eefc3ccfa8"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "b04a763e-4d3b-4794-b856-d692850a0431"
+          "585a1445-601c-4755-841b-3f40f07ca029"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184624Z:b04a763e-4d3b-4794-b856-d692850a0431"
+          "WESTUS2:20211013T212741Z:585a1445-601c-4755-841b-3f40f07ca029"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -126,10 +126,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 17 Sep 2021 18:46:24 GMT"
+          "Wed, 13 Oct 2021 21:27:41 GMT"
         ],
         "Content-Length": [
-          "1386"
+          "1392"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -138,12 +138,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Pending\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk181\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk181init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk181\",\r\n      \"fqdn\": \"acinetsdk181.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Pending\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"ec4ab0e4-5778-452b-b1e7-af99d25c243b\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181\",\r\n  \"name\": \"acinetsdk181\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Pending\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk4875\",\r\n      \"fqdn\": \"acinetsdk4875.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Pending\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"e11ea240-c4e3-49b5-ab87-02fc486aa9ee\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875\",\r\n  \"name\": \"acinetsdk4875\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/providers/Microsoft.ContainerInstance/locations/westus/operations/1995f30d-535a-42ff-800d-2f2b3d273674?api-version=2018-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVySW5zdGFuY2UvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zLzE5OTVmMzBkLTUzNWEtNDJmZi04MDBkLTJmMmIzZDI3MzY3ND9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/providers/Microsoft.ContainerInstance/locations/westus/operations/291ec9b7-a751-4a53-9710-03eefc3ccfa8?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVySW5zdGFuY2UvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zLzI5MWVjOWI3LWE3NTEtNGE1My05NzEwLTAzZWVmYzNjY2ZhOD9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -151,7 +151,7 @@
           "FxVersion/4.6.30411.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/5.0.0.0"
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/6.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -165,16 +165,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus:d992bb0d-6f06-40a5-b93a-f11af26aafed"
+          "westus:3edcfc96-9866-46fc-a08e-6c25a53aaff4"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "e76f80b9-9ddf-4c62-947d-563ca0ed6c87"
+          "c457471a-ad6d-4a33-9905-140a300775f1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184654Z:e76f80b9-9ddf-4c62-947d-563ca0ed6c87"
+          "WESTUS2:20211013T212812Z:c457471a-ad6d-4a33-9905-140a300775f1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,10 +183,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 17 Sep 2021 18:46:53 GMT"
+          "Wed, 13 Oct 2021 21:28:11 GMT"
         ],
         "Content-Length": [
-          "242"
+          "720"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,12 +195,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181\",\r\n  \"status\": \"Pending\",\r\n  \"startTime\": \"2021-09-17T18:46:24.1038409Z\",\r\n  \"properties\": {\r\n    \"events\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-10-13T21:27:41.336344Z\",\r\n  \"properties\": {\r\n    \"events\": [\r\n      {\r\n        \"count\": 1,\r\n        \"firstTimestamp\": \"2021-10-13T21:27:46Z\",\r\n        \"lastTimestamp\": \"2021-10-13T21:27:46Z\",\r\n        \"name\": \"Pulling\",\r\n        \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n        \"type\": \"Normal\"\r\n      },\r\n      {\r\n        \"count\": 1,\r\n        \"firstTimestamp\": \"2021-10-13T21:27:48Z\",\r\n        \"lastTimestamp\": \"2021-10-13T21:27:48Z\",\r\n        \"name\": \"Pulled\",\r\n        \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n        \"type\": \"Normal\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/providers/Microsoft.ContainerInstance/locations/westus/operations/1995f30d-535a-42ff-800d-2f2b3d273674?api-version=2018-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVySW5zdGFuY2UvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zLzE5OTVmMzBkLTUzNWEtNDJmZi04MDBkLTJmMmIzZDI3MzY3ND9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875?api-version=2021-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzQ4NzgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrNDg3NT9hcGktdmVyc2lvbj0yMDIxLTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -208,7 +208,7 @@
           "FxVersion/4.6.30411.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/5.0.0.0"
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/6.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -222,16 +222,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus:00310fc4-6c29-4f23-998d-211d67219e73"
+          "westus:7ef2b24a-13aa-42f0-82af-44aeac7cdc1f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "5225449c-a116-4a67-a8f5-047f3ca3f7d6"
+          "a08b7a4a-433b-4224-a04d-a518ae6ee698"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184724Z:5225449c-a116-4a67-a8f5-047f3ca3f7d6"
+          "WESTUS2:20211013T212812Z:a08b7a4a-433b-4224-a04d-a518ae6ee698"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -240,10 +240,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 17 Sep 2021 18:47:24 GMT"
+          "Wed, 13 Oct 2021 21:28:12 GMT"
         ],
         "Content-Length": [
-          "874"
+          "2233"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -252,74 +252,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-09-17T18:46:24.1038409Z\",\r\n  \"properties\": {\r\n    \"events\": [\r\n      {\r\n        \"count\": 1,\r\n        \"firstTimestamp\": \"2021-09-17T18:46:30Z\",\r\n        \"lastTimestamp\": \"2021-09-17T18:46:30Z\",\r\n        \"name\": \"Pulling\",\r\n        \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n        \"type\": \"Normal\"\r\n      },\r\n      {\r\n        \"count\": 1,\r\n        \"firstTimestamp\": \"2021-09-17T18:46:32Z\",\r\n        \"lastTimestamp\": \"2021-09-17T18:46:32Z\",\r\n        \"name\": \"Pulled\",\r\n        \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n        \"type\": \"Normal\"\r\n      },\r\n      {\r\n        \"count\": 1,\r\n        \"firstTimestamp\": \"2021-09-17T18:46:58Z\",\r\n        \"lastTimestamp\": \"2021-09-17T18:46:58Z\",\r\n        \"name\": \"Started\",\r\n        \"message\": \"Started container\",\r\n        \"type\": \"Normal\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2021-10-13T21:28:01.493Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-10-13T21:27:46Z\",\r\n                \"lastTimestamp\": \"2021-10-13T21:27:46Z\",\r\n                \"name\": \"Pulling\",\r\n                \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-10-13T21:27:48Z\",\r\n                \"lastTimestamp\": \"2021-10-13T21:27:48Z\",\r\n                \"name\": \"Pulled\",\r\n                \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Terminated\",\r\n              \"startTime\": \"2021-10-13T21:27:55.112Z\",\r\n              \"exitCode\": 0,\r\n              \"finishTime\": \"2021-10-13T21:28:00.504Z\",\r\n              \"detailStatus\": \"Completed\"\r\n            },\r\n            \"events\": []\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"ip\": \"104.42.137.114\",\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk4875\",\r\n      \"fqdn\": \"acinetsdk4875.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Running\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"e11ea240-c4e3-49b5-ab87-02fc486aa9ee\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875\",\r\n  \"name\": \"acinetsdk4875\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzUwNTcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrMTgxP2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30411.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/5.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "westus:794d7d4e-9c00-4119-8f61-c07dd3c323e8"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-correlation-request-id": [
-          "f896fc7d-f9f9-4cca-ae11-dddb8a89a1b8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184724Z:f896fc7d-f9f9-4cca-ae11-dddb8a89a1b8"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 17 Sep 2021 18:47:24 GMT"
-        ],
-        "Content-Length": [
-          "2377"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk181\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2021-09-17T18:46:58.778Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:30Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:30Z\",\r\n                \"name\": \"Pulling\",\r\n                \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:32Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:32Z\",\r\n                \"name\": \"Pulled\",\r\n                \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:58Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:58Z\",\r\n                \"name\": \"Started\",\r\n                \"message\": \"Started container\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk181init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Terminated\",\r\n              \"startTime\": \"2021-09-17T18:46:39.9Z\",\r\n              \"exitCode\": 0,\r\n              \"finishTime\": \"2021-09-17T18:46:48.299Z\",\r\n              \"detailStatus\": \"Completed\"\r\n            },\r\n            \"events\": []\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"ip\": \"13.64.73.217\",\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk181\",\r\n      \"fqdn\": \"acinetsdk181.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Running\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"ec4ab0e4-5778-452b-b1e7-af99d25c243b\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181\",\r\n  \"name\": \"acinetsdk181\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181?api-version=2021-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzUwNTcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrMTgxP2FwaS12ZXJzaW9uPTIwMjEtMDctMDE=",
+      "RequestUri": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875?api-version=2021-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEyOGY1ZTUtYWE0NS00NmZlLTkwYzgtMDUzY2E0OWFiNGI1L3Jlc291cmNlR3JvdXBzL2FjaV9yZzQ4NzgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvYWNpbmV0c2RrNDg3NT9hcGktdmVyc2lvbj0yMDIxLTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f29c155-e480-4879-9316-e9cb6335c494"
+          "32ee63a1-8d55-4f45-8ed5-d8ac2abdcd9a"
         ],
         "Accept-Language": [
           "en-US"
@@ -328,7 +271,7 @@
           "FxVersion/4.6.30411.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/5.0.0.0"
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/6.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -342,16 +285,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus:16ed91e2-b96c-4b58-b68a-0fffa13829d4"
+          "westus:cf9feb31-5cc5-44c6-8ac9-c131640b1094"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "8b113868-586e-47a1-83db-6d862d93f689"
+          "7c9ddafb-9eab-4f26-8563-cf9ed97f64ca"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210917T184725Z:8b113868-586e-47a1-83db-6d862d93f689"
+          "WESTUS2:20211013T212812Z:7c9ddafb-9eab-4f26-8563-cf9ed97f64ca"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -360,10 +303,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 17 Sep 2021 18:47:24 GMT"
+          "Wed, 13 Oct 2021 21:28:12 GMT"
         ],
         "Content-Length": [
-          "2377"
+          "2233"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -372,16 +315,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk181\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2021-09-17T18:46:58.778Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:30Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:30Z\",\r\n                \"name\": \"Pulling\",\r\n                \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:32Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:32Z\",\r\n                \"name\": \"Pulled\",\r\n                \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-09-17T18:46:58Z\",\r\n                \"lastTimestamp\": \"2021-09-17T18:46:58Z\",\r\n                \"name\": \"Started\",\r\n                \"message\": \"Started container\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk181init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Terminated\",\r\n              \"startTime\": \"2021-09-17T18:46:39.9Z\",\r\n              \"exitCode\": 0,\r\n              \"finishTime\": \"2021-09-17T18:46:48.299Z\",\r\n              \"detailStatus\": \"Completed\"\r\n            },\r\n            \"events\": []\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"ip\": \"13.64.73.217\",\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk181\",\r\n      \"fqdn\": \"acinetsdk181.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Running\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"ec4ab0e4-5778-452b-b1e7-af99d25c243b\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg5057/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk181\",\r\n  \"name\": \"acinetsdk181\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Standard\",\r\n    \"encryptionProperties\": {\r\n      \"vaultBaseUrl\": \"https://cloudaci-cloudtest.vault.azure.net/\",\r\n      \"keyName\": \"testencryptionkey\",\r\n      \"keyVersion\": \"804d3f1d5ce2456b9bc3dc9e35aaa67e\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"while true; do sleep 10; done\"\r\n          ],\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2021-10-13T21:28:01.493Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-10-13T21:27:46Z\",\r\n                \"lastTimestamp\": \"2021-10-13T21:27:46Z\",\r\n                \"name\": \"Pulling\",\r\n                \"message\": \"pulling image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2021-10-13T21:27:48Z\",\r\n                \"lastTimestamp\": \"2021-10-13T21:27:48Z\",\r\n                \"name\": \"Pulled\",\r\n                \"message\": \"Successfully pulled image \\\"alpine@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a\\\"\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          },\r\n          \"livenessProbe\": {\r\n            \"exec\": {\r\n              \"command\": [\r\n                \"ls\"\r\n              ]\r\n            },\r\n            \"periodSeconds\": 20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"initContainers\": [\r\n      {\r\n        \"name\": \"acinetsdk4875init\",\r\n        \"properties\": {\r\n          \"image\": \"alpine\",\r\n          \"command\": [\r\n            \"/bin/sh\",\r\n            \"-c\",\r\n            \"sleep 5\"\r\n          ],\r\n          \"environmentVariables\": [\r\n            {\r\n              \"name\": \"secretEnv\"\r\n            }\r\n          ],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Terminated\",\r\n              \"startTime\": \"2021-10-13T21:27:55.112Z\",\r\n              \"exitCode\": 0,\r\n              \"finishTime\": \"2021-10-13T21:28:00.504Z\",\r\n              \"detailStatus\": \"Completed\"\r\n            },\r\n            \"events\": []\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"restartPolicy\": \"Never\",\r\n    \"ipAddress\": {\r\n      \"ports\": [\r\n        {\r\n          \"protocol\": \"TCP\",\r\n          \"port\": 80\r\n        }\r\n      ],\r\n      \"ip\": \"104.42.137.114\",\r\n      \"type\": \"Public\",\r\n      \"dnsNameLabel\": \"acinetsdk4875\",\r\n      \"fqdn\": \"acinetsdk4875.westus.azurecontainer.io\"\r\n    },\r\n    \"osType\": \"Linux\",\r\n    \"instanceView\": {\r\n      \"events\": [],\r\n      \"state\": \"Running\"\r\n    },\r\n    \"diagnostics\": {\r\n      \"logAnalytics\": {\r\n        \"workspaceId\": \"workspaceid\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"principalId\": \"e11ea240-c4e3-49b5-ab87-02fc486aa9ee\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/aci_rg4878/providers/Microsoft.ContainerInstance/containerGroups/acinetsdk4875\",\r\n  \"name\": \"acinetsdk4875\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "CreateResourceGroup": [
-      "aci_rg5057"
+      "aci_rg4878"
     ],
     "ContainerInstanceGetTest": [
-      "acinetsdk181"
+      "acinetsdk4875"
     ]
   },
   "Variables": {

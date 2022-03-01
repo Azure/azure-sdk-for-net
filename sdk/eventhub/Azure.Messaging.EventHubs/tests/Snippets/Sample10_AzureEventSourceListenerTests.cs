@@ -45,13 +45,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
-                var eventData = new EventData("This is an event body");
-
-                if (!eventBatch.TryAdd(eventData))
+                var events = new[]
                 {
-                    throw new Exception($"The event could not be added.");
-                }
+                    new EventData("EventOne"),
+                    new EventData("EventTwo")
+                };
+
+                await producer.SendAsync(events);
             }
             finally
             {
@@ -83,13 +83,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
-                var eventData = new EventData("This is an event body");
-
-                if (!eventBatch.TryAdd(eventData))
+                var events = new[]
                 {
-                    throw new Exception($"The event could not be added.");
-                }
+                    new EventData("EventOne"),
+                    new EventData("EventTwo")
+                };
+
+                await producer.SendAsync(events);
             }
             finally
             {
@@ -138,13 +138,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
-                var eventData = new EventData("This is an event body");
-
-                if (!eventBatch.TryAdd(eventData))
+                var events = new[]
                 {
-                    throw new Exception($"The event could not be added.");
-                }
+                    new EventData("EventOne"),
+                    new EventData("EventTwo")
+                };
+
+                await producer.SendAsync(events);
             }
             finally
             {
@@ -200,13 +200,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
-                var eventData = new EventData("This is an event body");
-
-                if (!eventBatch.TryAdd(eventData))
+                var events = new[]
                 {
-                    throw new Exception($"The event could not be added.");
-                }
+                    new EventData("EventOne"),
+                    new EventData("EventTwo")
+                };
+
+                await producer.SendAsync(events);
             }
             finally
             {

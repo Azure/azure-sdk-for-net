@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
@@ -22,6 +24,8 @@ namespace Azure.Storage.Tests
         private const string s_operationName = "PartitionedUploaderTests.Operation";
         private readonly object s_objectArgs = "an object";
         private readonly IProgress<long> s_progress = new Progress<long>();
+        // TODO #27253
+        //private readonly UploadTransactionalHashingOptions s_hashingOptions = new UploadTransactionalHashingOptions();
         private readonly CancellationToken s_cancellation = new CancellationToken();
 
         public PartitionedUploaderTests(bool async)
@@ -33,7 +37,7 @@ namespace Azure.Storage.Tests
         {
             var mock = new Mock<PartitionedUploader<object, object>.CreateScope>(MockBehavior.Strict);
             mock.Setup(del => del(s_operationName))
-                .Returns(new Core.Pipeline.DiagnosticScope(s_operationName, new DiagnosticListener("Azure.Storage.Tests")));
+                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", s_operationName, new DiagnosticListener("Azure.Storage.Tests"), DiagnosticScope.ActivityKind.Client));
             return mock;
         }
 
@@ -129,12 +133,80 @@ namespace Azure.Storage.Tests
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = 1 // sequential upload
                 },
+                // TODO #27253
+                //s_hashingOptions,
                 operationName: s_operationName);
 
-            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
+            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
 
             // assert streams were actually sent to delegates; the delegates themselves threw if conditions weren't met
             Assert.Greater(singleUpload.Invocations.Count + uploadPartition.Invocations.Count, 0);
+        }
+
+        [Test]
+        public async Task InterpretsLengthNonSeekableStream([Values(true, false)] bool oneshot)
+        {
+            // Arrange
+            const int dataSize = Constants.KB;
+            const int numPartitions = 2;
+            var data = TestHelper.GetRandomBuffer(dataSize);
+            int blockSize = oneshot ? dataSize * 2 : dataSize / numPartitions;
+
+            var stream = new Mock<MemoryStream>(MockBehavior.Loose, data);
+            stream.CallBase = true;
+
+            // make stream unseekable (can't get length from stream)
+            stream.SetupGet(s => s.CanSeek).Returns(false);
+            stream.SetupGet(s => s.Position).Throws(new NotSupportedException());
+            stream.SetupSet(s => s.Position = default).Throws(new NotSupportedException());
+            stream.Setup(s => s.Seek(It.IsAny<long>(), It.IsAny<SeekOrigin>())).Throws(new NotSupportedException());
+            stream.SetupGet(s => s.Length).Throws(new NotSupportedException());
+            stream.Setup(s => s.SetLength(It.IsAny<long>())).Throws(new NotSupportedException());
+
+            // confirm our stream cannot give a length
+            Assert.Throws<NotSupportedException>(() => _ = stream.Object.Length);
+
+            var createScope = GetMockCreateScope();
+            var initializeDestination = GetMockInitializeDestinationInternal();
+            var singleUpload = GetMockSingleUploadInternal(dataSize);
+            var uploadPartition = GetMockUploadPartitionInternal(blockSize);
+            var commitPartitions = GetMockCommitPartitionedUploadInternal();
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                new PartitionedUploader<object, object>.Behaviors
+                {
+                    Scope = createScope.Object,
+                    InitializeDestination = initializeDestination.Object,
+                    SingleUpload = singleUpload.Object,
+                    UploadPartition = uploadPartition.Object,
+                    CommitPartitionedUpload = commitPartitions.Object
+                },
+                new StorageTransferOptions()
+                {
+                    InitialTransferSize = blockSize,
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = 1
+                },
+                // TODO #27253
+                //s_hashingOptions,
+                operationName: s_operationName);
+
+            // Act
+            // give uploader an expected content length for unseekable stream
+            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, dataSize, s_objectArgs, s_progress, IsAsync, s_cancellation);
+
+            // Assert
+            if (oneshot)
+            {
+                Assert.AreEqual(1, singleUpload.Invocations.Count);
+                Assert.IsEmpty(uploadPartition.Invocations);
+                Assert.IsEmpty(commitPartitions.Invocations);
+            }
+            else
+            {
+                Assert.IsEmpty(singleUpload.Invocations);
+                Assert.AreEqual(numPartitions, uploadPartition.Invocations.Count);
+                Assert.AreEqual(1, commitPartitions.Invocations.Count);
+            }
         }
     }
 }

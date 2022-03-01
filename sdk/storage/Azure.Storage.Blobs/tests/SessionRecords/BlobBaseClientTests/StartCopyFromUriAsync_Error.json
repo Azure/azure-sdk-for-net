@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "c301061f-b0ae-a198-1376-62e4a39d3911",
         "x-ms-date": "Wed, 17 Feb 2021 02:07:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "c301061f-b0ae-a198-1376-62e4a39d3911",
         "x-ms-request-id": "a0991691-f01e-0099-76d1-04a57f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-copy-source": "https://seanmcccanary3.blob.core.windows.net/test-container-b3a491da-37fd-c265-a95d-04d73db3461f/test-blob-414e52e6-302e-98f9-e993-7b83d0531397",
         "x-ms-date": "Wed, 17 Feb 2021 02:07:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "1532cb63-03e5-635f-e20e-8a4cc8b6ba26",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "a09916a1-f01e-0099-04d1-04a57f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -86,7 +86,7 @@
         "x-ms-client-request-id": "12e0a712-5891-3db4-f5c7-79b4dffc2655",
         "x-ms-date": "Wed, 17 Feb 2021 02:07:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -99,7 +99,7 @@
         ],
         "x-ms-client-request-id": "12e0a712-5891-3db4-f5c7-79b4dffc2655",
         "x-ms-request-id": "a09916a9-f01e-0099-0ad1-04a57f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

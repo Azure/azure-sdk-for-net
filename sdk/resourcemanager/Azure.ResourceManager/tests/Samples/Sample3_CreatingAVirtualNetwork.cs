@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -13,12 +14,13 @@ namespace Azure.ResourceManager.Tests.Samples
         public async Task CreateResourceGroupAsync()
         {
             #region Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
-            
-            string rgName = "myResourceGroup";
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            ResourceGroupCreateOrUpdateOperation operation = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+
+            string resourceGroupName = "myResourceGroup";
+            ResourceGroupData resourceGroupData = new ResourceGroupData(AzureLocation.WestUS2);
+            ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(true, resourceGroupName, resourceGroupData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }

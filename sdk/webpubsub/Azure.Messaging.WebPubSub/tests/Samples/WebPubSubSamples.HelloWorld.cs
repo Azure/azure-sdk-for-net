@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading;
+using System.Linq;
+using System.Web.UI;
+
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.WebPubSub;
 using Azure.Rest.WebPubSub.Tests;
-using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
@@ -17,11 +18,10 @@ namespace Azure.Template.Tests.Samples
     {
         public void HelloWorld()
         {
-            var endpoint = TestEnvironment.Endpoint;
-            var key = TestEnvironment.Key;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:WebPubSubHelloWorld
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
             serviceClient.SendToAll("Hello World!");
             #endregion
@@ -29,10 +29,12 @@ namespace Azure.Template.Tests.Samples
 
         public void Authenticate()
         {
-            var endpoint = TestEnvironment.Endpoint;
-            var key = TestEnvironment.Key;
+            var connectionString = TestEnvironment.ConnectionString;
+            var endpoint = ParseConnectionString(connectionString)["Endpoint"];
+            var key = ParseConnectionString(connectionString)["AccessKey"];
 
             #region Snippet:WebPubSubAuthenticate
+            // Create a WebPubSubServiceClient that will authenticate using a key credential.
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
             #endregion
         }
@@ -48,11 +50,10 @@ namespace Azure.Template.Tests.Samples
 
         public void JsonMessage()
         {
-            var endpoint = TestEnvironment.Endpoint;
-            var key = TestEnvironment.Key;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:WebPubSubSendJson
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
             serviceClient.SendToAll(RequestContent.Create(
                     new
@@ -66,11 +67,10 @@ namespace Azure.Template.Tests.Samples
 
         public void BinaryMessage()
         {
-            var endpoint = TestEnvironment.Endpoint;
-            var key = TestEnvironment.Key;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:WebPubSubSendBinary
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
             serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);
@@ -79,11 +79,10 @@ namespace Azure.Template.Tests.Samples
 
         public void AddUserToGroup()
         {
-            var endpoint = TestEnvironment.Endpoint;
-            var key = TestEnvironment.Key;
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new WebPubSubServiceClient(connectionString, "some_hub");
 
-            var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
-
+            #region Snippet:WebPubSubAddUserToGroup
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
@@ -93,6 +92,20 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
+            #endregion
+        }
+
+        private static Dictionary<string, string> ParseConnectionString(string connectionString)
+        {
+            return connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(pair =>
+            {
+                var map = pair.Split('=');
+                if (map.Length != 2)
+                {
+                    return default;
+                }
+                return new KeyValuePair<string, string>(map[0], map[1]);
+            }).Where(s => !string.IsNullOrEmpty(s.Key)).ToDictionary(p => p.Key, p => p.Value, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

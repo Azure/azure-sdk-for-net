@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load balancer backend addresses. </summary>
@@ -22,12 +25,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
-        internal LoadBalancerBackendAddress(string name, SubResource virtualNetwork, SubResource subnet, string ipAddress, SubResource networkInterfaceIPConfiguration, SubResource loadBalancerFrontendIPConfiguration)
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
         }
@@ -35,14 +38,56 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Name of the backend address. </summary>
         public string Name { get; set; }
         /// <summary> Reference to an existing virtual network. </summary>
-        public SubResource VirtualNetwork { get; set; }
+        internal WritableSubResource VirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
+            set
+            {
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
+            }
+        }
+
         /// <summary> Reference to an existing subnet. </summary>
-        public SubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> Reference to IP address defined in network interfaces. </summary>
-        public SubResource NetworkInterfaceIPConfiguration { get; }
+        internal WritableSubResource NetworkInterfaceIPConfiguration { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkInterfaceIPConfigurationId
+        {
+            get => NetworkInterfaceIPConfiguration.Id;
+            set => NetworkInterfaceIPConfiguration.Id = value;
+        }
+
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
-        public SubResource LoadBalancerFrontendIPConfiguration { get; set; }
+        internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        {
+            get => LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
+            set
+            {
+                if (LoadBalancerFrontendIPConfiguration is null)
+                    LoadBalancerFrontendIPConfiguration = new WritableSubResource();
+                LoadBalancerFrontendIPConfiguration.Id = value;
+            }
+        }
     }
 }

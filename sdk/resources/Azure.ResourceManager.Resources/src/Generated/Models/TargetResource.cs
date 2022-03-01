@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Target resource. </summary>
-    public partial class TargetResource : SubResource
+    public partial class TargetResource
     {
         /// <summary> Initializes a new instance of TargetResource. </summary>
         internal TargetResource()
@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of TargetResource. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> The ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        internal TargetResource(string id, string resourceName, string resourceType) : base(id)
+        internal TargetResource(string id, string resourceName, string resourceType)
         {
+            Id = id;
             ResourceName = resourceName;
             ResourceType = resourceType;
         }
 
+        /// <summary> The ID of the resource. </summary>
+        public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string ResourceName { get; }
         /// <summary> The type of the resource. </summary>

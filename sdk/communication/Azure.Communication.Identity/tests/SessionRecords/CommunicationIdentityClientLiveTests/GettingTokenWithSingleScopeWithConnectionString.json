@@ -1,60 +1,60 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-31-preview1",
+      "RequestUri": "https://sanitized.communication.azure.net/identities?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-c690dacb6ab67949a54252e023b34c4c-7eaade6f3c83f948-00",
+        "traceparent": "00-bd03d1996af5804b9a79801f07f619be-eadee6f6589ce046-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210622.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20211027.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.22488)"
         ],
-        "x-ms-client-request-id": "b53b446da92f850fcdd3f577305ddb7e",
+        "x-ms-client-request-id": "835faf8d4a638126f736f4edd3f37b5e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 22 Jun 2021 22:01:54 GMT",
+        "x-ms-date": "Wed, 27 Oct 2021 05:20:52 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
+        "Content-Length": "101",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 22 Jun 2021 22:01:54 GMT",
-        "MS-CV": "sWAtSjdeckCKAuIpkH0KlA.0",
+        "Date": "Wed, 27 Oct 2021 05:20:52 GMT",
+        "MS-CV": "otazihC0v0ukcNJ\u002BPoOQEA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00l3SYAAAAADFhNbaB/ZHRJMfpW4ZMPchWVZSMzBFREdFMDMxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0teF4YQAAAADiGAH9sWlLQJ3vFe8z9vfAUFJHMDFFREdFMDkxMABmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "b53b446da92f850fcdd3f577305ddb7e",
-        "X-Processing-Time": "95ms"
+        "x-ms-client-request-id": "835faf8d4a638126f736f4edd3f37b5e",
+        "X-Processing-Time": "91ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000a-d5a0-2241-edbe-a43a0d00d5a3"
+          "id": "8:acs:a5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-6013-503d-83fe-08482200338b"
         }
       }
     },
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/identities/8%3Aacs%3Aac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000a-d5a0-2241-edbe-a43a0d00d5a3/:issueAccessToken?api-version=2021-03-31-preview1",
+      "RequestUri": "https://sanitized.communication.azure.net/identities/8%3Aacs%3Aa5ba7870-ef05-4e2b-9901-7751faa29e20_0000000d-6013-503d-83fe-08482200338b/:issueAccessToken?api-version=2021-10-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "19",
         "Content-Type": "application/json",
-        "traceparent": "00-feff0336a6068640933e447a50f70125-4741dc8b9d783249-00",
+        "traceparent": "00-0779992e823a214c9a9be79ca9e8df7e-c7eb4de1e113d246-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210622.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20211027.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.22488)"
         ],
-        "x-ms-client-request-id": "b13e3fd21d7a79e5dfb55051e6baa501",
+        "x-ms-client-request-id": "1c380ccf62f17fdbb2c6d3ec404dcda3",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 22 Jun 2021 22:01:54 GMT",
+        "x-ms-date": "Wed, 27 Oct 2021 05:20:53 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -64,26 +64,26 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview",
+        "Content-Length": "69",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 22 Jun 2021 22:01:54 GMT",
-        "MS-CV": "Reg9gHwmP0Cxy0t69wCTuw.0",
+        "Date": "Wed, 27 Oct 2021 05:20:52 GMT",
+        "MS-CV": "i/\u002BezVp0\u002B0aDW4CF3cmvfg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00l3SYAAAAAAk/eZwk/ImQIV3HjVTv4P6WVZSMzBFREdFMDMxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0teF4YQAAAADOe/Xy3mL5Q6NJjoT0uetQUFJHMDFFREdFMDkxMABmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "b13e3fd21d7a79e5dfb55051e6baa501",
-        "X-Processing-Time": "151ms"
+        "x-ms-client-request-id": "1c380ccf62f17fdbb2c6d3ec404dcda3",
+        "X-Processing-Time": "99ms"
       },
       "ResponseBody": {
         "token": "Sanitized",
-        "expiresOn": "2021-06-23T22:01:53.771647\u002B00:00"
+        "expiresOn": "2021-10-28T05:20:53.6952912\u002B00:00"
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "248871862"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "746359209"
   }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Tests
         [SetUp]
         public async Task SetUpAsync()
         {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
             _rg = rgOp.Value;
             _rg = await _rg.AddTagAsync("key1", "value1");
             _rg = await _rg.AddTagAsync("key2", "value2");
@@ -38,15 +39,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestAddTags(string key, string value, IDictionary<string, string> tags)
         {
-            if (key is null)
+            if (key is null || value is null)
             {
-                var ex = Assert.ThrowsAsync<ArgumentException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("key provided cannot be null or a whitespace"));
-            }
-            else if (value is null)
-            {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
+                var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
+                Assert.That(ex.Message.Contains("Value cannot be null"));
             }
             else
             {

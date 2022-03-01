@@ -3,16 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 #nullable enable
 
@@ -23,14 +21,25 @@ namespace Azure.Core.Pipeline
         private const string DefaultMessage = "Service request failed.";
 
         private readonly HttpMessageSanitizer _sanitizer;
-        public ClientDiagnostics(ClientOptions options) : base(
-            options.GetType().Namespace!,
-            GetResourceProviderNamespace(options.GetType().Assembly),
-            options.Diagnostics.IsDistributedTracingEnabled)
+
+        public ClientDiagnostics(ClientOptions options)
+                    : this(options.GetType().Namespace!,
+                    GetResourceProviderNamespace(options.GetType().Assembly),
+                    options.Diagnostics)
         {
-            _sanitizer = new HttpMessageSanitizer(
-                options.Diagnostics.LoggedQueryParameters.ToArray(),
-                options.Diagnostics.LoggedHeaderNames.ToArray());
+        }
+
+        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
+        {
+            _sanitizer = CreateMessageSanitizer(diagnosticsOptions);
+        }
+
+        internal static HttpMessageSanitizer CreateMessageSanitizer(DiagnosticsOptions diagnostics)
+        {
+            return new HttpMessageSanitizer(
+                diagnostics.LoggedQueryParameters.ToArray(),
+                diagnostics.LoggedHeaderNames.ToArray());
         }
 
         /// <summary>
@@ -39,73 +48,58 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected virtual void ExtractFailureContent(
+        protected virtual ResponseError? ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
-            ref string? message,
-            ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
+        {
+            return ExtractAzureErrorContent(content);
+        }
+
+        internal static ResponseError? ExtractAzureErrorContent(string? content)
         {
             try
             {
                 // Optimistic check for JSON object we expect
                 if (content == null ||
-                    !content.StartsWith("{", StringComparison.OrdinalIgnoreCase)) return;
+                    !content.StartsWith("{", StringComparison.OrdinalIgnoreCase)) return null;
 
-                string? parsedMessage = null;
-                using JsonDocument document = JsonDocument.Parse(content);
-                if (document.RootElement.TryGetProperty("error", out var errorProperty))
-                {
-                    if (errorProperty.TryGetProperty("code", out var codeProperty))
-                    {
-                        errorCode = codeProperty.GetString();
-                    }
-                    if (errorProperty.TryGetProperty("message", out var messageProperty))
-                    {
-                        parsedMessage = messageProperty.GetString();
-                    }
-                }
-
-                // Make sure we parsed a message so we don't overwrite the value with null
-                if (parsedMessage != null)
-                {
-                    message = parsedMessage;
-                }
+                return JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
             }
             catch (Exception)
             {
                 // Ignore any failures - unexpected content will be
                 // included verbatim in the detailed error message
             }
+
+            return null;
         }
 
-        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
+        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
-            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
+            error ??= ExtractFailureContent(content, response.Headers, ref additionalInfo);
+            return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
-        public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
+        public RequestFailedException CreateRequestFailedException(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             string? content = ReadContentAsync(response, false).EnsureCompleted();
-            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
-            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
+            error ??= ExtractFailureContent(content, response.Headers, ref additionalInfo);
+
+            return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
-        public RequestFailedException CreateRequestFailedExceptionWithContent(
+        private RequestFailedException CreateRequestFailedExceptionWithContent(
             Response response,
-            string? message = null,
+            ResponseError? error = null,
             string? content = null,
-            string? errorCode = null,
             IDictionary<string, string>? additionalInfo = null,
             Exception? innerException = null)
         {
-            var formatMessage = CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
-            var exception = new RequestFailedException(response.Status, formatMessage, errorCode, innerException);
+            var formatMessage = CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
+            var exception = new RequestFailedException(response.Status, formatMessage, error?.Code, innerException);
 
             if (additionalInfo != null)
             {
@@ -118,16 +112,18 @@ namespace Azure.Core.Pipeline
             return exception;
         }
 
-        public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
+        public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, ResponseError? error, IDictionary<string, string>? additionalInfo, bool async)
         {
             var content = await ReadContentAsync(response, async).ConfigureAwait(false);
-            return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
+            return CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
         }
 
-        public string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo)
+        internal static string CreateRequestFailedMessageWithContent(Response response, ResponseError? error, string? content, IDictionary<string, string>? additionalInfo, HttpMessageSanitizer sanitizer)
         {
-            StringBuilder messageBuilder = new StringBuilder()
-                .AppendLine(message ?? DefaultMessage)
+            StringBuilder messageBuilder = new StringBuilder();
+
+            messageBuilder
+                .AppendLine(error?.Message ?? DefaultMessage)
                 .Append("Status: ")
                 .Append(response.Status.ToString(CultureInfo.InvariantCulture));
 
@@ -142,10 +138,10 @@ namespace Azure.Core.Pipeline
                 messageBuilder.AppendLine();
             }
 
-            if (!string.IsNullOrWhiteSpace(errorCode))
+            if (!string.IsNullOrWhiteSpace(error?.Code))
             {
                 messageBuilder.Append("ErrorCode: ")
-                    .Append(errorCode)
+                    .Append(error?.Code)
                     .AppendLine();
             }
 
@@ -177,14 +173,14 @@ namespace Azure.Core.Pipeline
 
             foreach (HttpHeader responseHeader in response.Headers)
             {
-                string headerValue = _sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                string headerValue = sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
                 messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
             }
 
             return messageBuilder.ToString();
         }
 
-        private static async ValueTask<string?> ReadContentAsync(Response response, bool async)
+        internal static async ValueTask<string?> ReadContentAsync(Response response, bool async)
         {
             string? content = null;
 
@@ -213,6 +209,12 @@ namespace Azure.Core.Pipeline
             }
 
             return null;
+        }
+
+        private class ErrorResponse
+        {
+            [JsonPropertyName("error")]
+            public ResponseError? Error { get; set; }
         }
     }
 }

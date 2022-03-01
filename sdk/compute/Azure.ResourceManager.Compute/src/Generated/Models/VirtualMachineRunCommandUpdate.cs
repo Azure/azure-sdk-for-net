@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The timeout in seconds to execute the run command. </summary>
         public int? TimeoutInSeconds { get; set; }
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. </summary>
-        public string OutputBlobUri { get; set; }
+        public Uri OutputBlobUri { get; set; }
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. </summary>
-        public string ErrorBlobUri { get; set; }
+        public Uri ErrorBlobUri { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The virtual machine run command instance view. </summary>

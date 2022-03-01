@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -74,6 +73,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures");
+                writer.WriteBooleanValue(SuppressFailures.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<string> name = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
@@ -93,6 +97,7 @@ namespace Azure.ResourceManager.Compute
             Optional<object> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<IList<string>> provisionAfterExtensions = default;
+            Optional<bool> suppressFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -199,11 +204,21 @@ namespace Azure.ResourceManager.Compute
                             provisionAfterExtensions = array;
                             continue;
                         }
+                        if (property0.NameEquals("suppressFailures"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            suppressFailures = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetExtensionData(id, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions));
+            return new VirtualMachineScaleSetExtensionData(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), Optional.ToNullable(suppressFailures));
         }
     }
 }

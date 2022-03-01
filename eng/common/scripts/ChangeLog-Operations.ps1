@@ -352,3 +352,14 @@ function Remove-EmptySections {
     $ChangeLogEntry.ReleaseContent = $sanitizedReleaseContent.ToArray()
   }
 }
+
+function  Get-LatestReleaseDateFromChangeLog
+{
+  param (
+    [Parameter(Mandatory = $true)]
+    $ChangeLogLocation
+  )
+  $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
+  $latestVersion = $changeLogEntries[0].ReleaseStatus.Trim("()")
+  return ($latestVersion -as [DateTime])
+}

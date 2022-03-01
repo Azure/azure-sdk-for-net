@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Providers = new ChangeTrackingList<ProviderData>();
             Dependencies = new ChangeTrackingList<Dependency>();
-            OutputResources = new ChangeTrackingList<ResourceReference>();
-            ValidatedResources = new ChangeTrackingList<ResourceReference>();
+            OutputResources = new ChangeTrackingList<SubResource>();
+            ValidatedResources = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of DeploymentPropertiesExtended. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ErrorDetail error)
+        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -87,15 +87,22 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
         public DeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
-        public DebugSetting DebugSetting { get; }
+        internal DebugSetting DebugSetting { get; }
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
+        public string DebugSettingDetailLevel
+        {
+            get => DebugSetting.DetailLevel;
+            set => DebugSetting.DetailLevel = value;
+        }
+
         /// <summary> The deployment on error behavior. </summary>
         public OnErrorDeploymentExtended OnErrorDeployment { get; }
         /// <summary> The hash produced for the template. </summary>
         public string TemplateHash { get; }
         /// <summary> Array of provisioned resources. </summary>
-        public IReadOnlyList<ResourceReference> OutputResources { get; }
+        public IReadOnlyList<SubResource> OutputResources { get; }
         /// <summary> Array of validated resources. </summary>
-        public IReadOnlyList<ResourceReference> ValidatedResources { get; }
+        public IReadOnlyList<SubResource> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
         public ErrorDetail Error { get; }
     }

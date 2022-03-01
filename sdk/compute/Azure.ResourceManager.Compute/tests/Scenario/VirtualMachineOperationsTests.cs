@@ -16,22 +16,13 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
-        {
-            var container = await GetVirtualMachineContainerAsync();
-            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await container.CreateOrUpdateAsync(vmName, input);
-            return lro.Value;
-        }
-
         [TestCase]
         [RecordedTest]
         public async Task Delete()
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            await vm.DeleteAsync();
+            await vm.DeleteAsync(true);
         }
 
         [TestCase]
@@ -51,24 +42,24 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            // Create a PPG here and add this PPG to this virtual machine using Update
-            var ppgName = Recording.GenerateAssetName("testPPG-");
-            var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
-            var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
-            var ppg = ppgLRO.Value;
+            //// Create a PPG here and add this PPG to this virtual machine using Update
+            //var ppgName = Recording.GenerateAssetName("testPPG-");
+            //var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
+            //var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
+            //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
-            await vm.DeallocateAsync();
-            var update = new VirtualMachineUpdate()
+            await vm.DeallocateAsync(true);
+            var update = new VirtualMachineUpdateOptions()
             {
-                ProximityPlacementGroup = new SubResource()
+                HardwareProfile = new HardwareProfile
                 {
-                    Id = ppg.Id
+                    VmSize = VirtualMachineSizeTypes.StandardF1
                 }
             };
-            var lro = await vm.UpdateAsync(update);
+            var lro = await vm.UpdateAsync(true, update);
             VirtualMachine updatedVM = lro.Value;
 
-            Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
+            Assert.AreEqual(VirtualMachineSizeTypes.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
         }
 
         [TestCase]
@@ -77,7 +68,51 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            await vm.PowerOffAsync();
+            await vm.PowerOffAsync(true);
+        }
+
+        [RecordedTest]
+        public async Task BootDiagnostic()
+        {
+            string vmName = Recording.GenerateAssetName("testVM-");
+            VirtualMachine virtualMachine = await CreateVirtualMachineAsync(vmName);
+            Assert.IsNull(virtualMachine.Data.BootDiagnostics);
+
+            VirtualMachineUpdateOptions updateOptions = new VirtualMachineUpdateOptions();
+            updateOptions.BootDiagnostics = new BootDiagnostics();
+            updateOptions.BootDiagnostics.Enabled = true;
+            virtualMachine = (await virtualMachine.UpdateAsync(true, updateOptions)).Value;
+            Assert.AreEqual(true, virtualMachine.Data.BootDiagnostics.Enabled);
+
+            updateOptions.BootDiagnostics = null;
+            virtualMachine = (await virtualMachine.UpdateAsync(true, updateOptions)).Value;
+            var originalBootDiag = virtualMachine.Data.BootDiagnostics;
+            var originalEnabled = virtualMachine.Data.BootDiagnostics?.Enabled;
+
+            string vmName2 = Recording.GenerateAssetName("testVM-");
+            VirtualMachine virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
+            Assert.IsNull(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics);
+
+            VirtualMachineUpdateOptions updateOptions2 = new VirtualMachineUpdateOptions();
+            updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();
+            updateOptions2.DiagnosticsProfile.BootDiagnostics= new BootDiagnostics();
+            updateOptions2.DiagnosticsProfile.BootDiagnostics.Enabled = true;
+            virtualMachine2 = (await virtualMachine2.UpdateAsync(true, updateOptions2)).Value;
+            Assert.AreEqual(true, virtualMachine2.Data.DiagnosticsProfile.BootDiagnostics.Enabled);
+
+            updateOptions2.DiagnosticsProfile.BootDiagnostics = null;
+            virtualMachine2 = (await virtualMachine2.UpdateAsync(true, updateOptions2)).Value;
+            var newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
+            var newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
+            Assert.AreEqual(originalBootDiag is null, newBootDiag is null);
+            Assert.AreEqual(originalEnabled, newEnabled);
+
+            updateOptions2.DiagnosticsProfile = null;
+            virtualMachine2 = (await virtualMachine2.UpdateAsync(true, updateOptions2)).Value;
+            newBootDiag = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics;
+            newEnabled = virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics?.Enabled;
+            Assert.AreEqual(originalBootDiag is null, newBootDiag is null);
+            Assert.AreEqual(originalEnabled, newEnabled);
         }
     }
 }

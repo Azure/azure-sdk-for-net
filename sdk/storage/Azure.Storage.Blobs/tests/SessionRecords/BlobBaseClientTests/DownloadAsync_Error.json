@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "ed6b02a3-65a5-51d8-9301-d882f815b21d",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "ed6b02a3-65a5-51d8-9301-d882f815b21d",
         "x-ms-request-id": "33975c8f-901e-0042-56df-117fe7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-client-request-id": "725072b4-2a13-fc1c-ab2d-dabf194068b3",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "725072b4-2a13-fc1c-ab2d-dabf194068b3",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d01-901e-0042-3bdf-117fe7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -71,7 +71,7 @@
         "x-ms-client-request-id": "77e46b72-fb8f-ee11-c312-19880abc8e73",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "77e46b72-fb8f-ee11-c312-19880abc8e73",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d12-901e-0042-49df-117fe7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "ae4df2b0-f15c-9724-a17b-55f4d3dfe661",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -116,7 +116,7 @@
         "x-ms-client-request-id": "ae4df2b0-f15c-9724-a17b-55f4d3dfe661",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "33975d1f-901e-0042-55df-117fe7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\n",
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "18d83d71-e06f-0416-745e-6b4505e4f42a",
         "x-ms-date": "Fri, 05 Mar 2021 16:47:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -145,7 +145,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "18d83d71-e06f-0416-745e-6b4505e4f42a",
         "x-ms-request-id": "33975d3b-901e-0042-6cdf-117fe7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

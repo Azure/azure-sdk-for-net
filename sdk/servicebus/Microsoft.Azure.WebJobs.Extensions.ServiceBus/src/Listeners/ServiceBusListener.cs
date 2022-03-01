@@ -42,6 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly string _functionId;
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
+        private Lazy<string> _details;
 
         public ServiceBusListener(
             string functionId,
@@ -107,6 +108,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
+
+            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
+                $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -138,6 +142,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
             }
             _started = true;
+
+            _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -177,9 +183,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     _started = false;
                 }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"ServiceBus listener exception during stopping ({_details.Value})");
+                    throw;
+                }
                 finally
                 {
                     _stopAsyncSemaphore.Release();
+                    _logger.LogDebug($"ServiceBus listener stopped ({_details.Value})");
                 }
             }
         }
@@ -245,8 +257,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.MessageActions = actions;
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
@@ -266,11 +277,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.MessageActions = actions;
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
+
+                if (actions.ShouldReleaseSession)
+                {
+                    args.ReleaseSession();
+                }
+
                 await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
@@ -297,7 +313,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        _logger.LogInformation("Message processing has been stopped or cancelled");
+                        _logger.LogInformation($"Message processing has been stopped or cancelled ({_details.Value})");
                         return;
                     }
 
@@ -328,16 +344,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     if (messages.Count > 0)
                     {
+                        var actions = _isSessionsEnabled
+                            ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
+                            : new ServiceBusMessageActions(receiver);
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
-                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
-                        if (_isSessionsEnabled)
-                        {
-                            input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver);
-                        }
-                        else
-                        {
-                            input.MessageActions = new ServiceBusMessageActions(receiver);
-                        }
+                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
+                            messagesArray,
+                            actions,
+                            _client.Value);
+
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
 
                         // Complete batch of messages only if the execution was successful
@@ -349,7 +364,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }
@@ -366,7 +381,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }
@@ -376,6 +391,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 }
 
                                 await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                            }
+                        }
+
+                        if (_isSessionsEnabled)
+                        {
+                            if (((ServiceBusSessionMessageActions)actions).ShouldReleaseSession)
+                            {
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                         }
                     }
@@ -397,12 +421,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     when(cancellationToken.IsCancellationRequested)
                 {
                     // Ignore as we are stopping the host
-                    _logger.LogInformation("Message processing has been stopped or cancelled");
+                    _logger.LogInformation($"Message processing has been stopped or cancelled ({_details.Value})");
                 }
                 catch (Exception ex)
                 {
                     // Log another exception
-                    _logger.LogError(ex, $"An unhandled exception occurred in the message batch receive loop");
+                    _logger.LogError(ex, $"An unhandled exception occurred in the message batch receive loop ({_details.Value})");
 
                     if (_isSessionsEnabled && receiver != null)
                     {

@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         /// <param name="virtualNetworkSubnetId">The ARM resource id of the
         /// virtual network subnet.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="ignoreMissingVnetServiceEndpoint">Create firewall rule
         /// before the virtual network has vnet service endpoint
         /// enabled.</param>

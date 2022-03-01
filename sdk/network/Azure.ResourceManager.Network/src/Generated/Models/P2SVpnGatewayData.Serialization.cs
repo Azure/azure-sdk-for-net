@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -34,14 +39,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
-                writer.WriteObjectValue(VirtualHub);
+                JsonSerializer.Serialize(writer, VirtualHub);
             }
             if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
             {
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnServerConfiguration))
             {
                 writer.WritePropertyName("vpnServerConfiguration");
-                writer.WriteObjectValue(VpnServerConfiguration);
+                JsonSerializer.Serialize(writer, VpnServerConfiguration);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -85,16 +88,16 @@ namespace Azure.ResourceManager.Network
         internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element)
         {
             Optional<string> etag = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
-            Optional<SubResource> virtualHub = default;
+            Optional<WritableSubResource> virtualHub = default;
             Optional<IList<P2SConnectionConfiguration>> p2SConnectionConfigurations = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
-            Optional<SubResource> vpnServerConfiguration = default;
+            Optional<WritableSubResource> vpnServerConfiguration = default;
             Optional<VpnClientConnectionHealth> vpnClientConnectionHealth = default;
             Optional<IList<string>> customDnsServers = default;
             Optional<bool> isRoutingPreferenceInternet = default;
@@ -103,6 +106,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -135,11 +143,6 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -156,7 +159,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualHub = SubResource.DeserializeSubResource(property0.Value);
+                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("p2SConnectionConfigurations"))
@@ -201,7 +204,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vpnServerConfiguration = SubResource.DeserializeSubResource(property0.Value);
+                            vpnServerConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConnectionHealth"))
@@ -243,7 +246,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new P2SVpnGatewayData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualHub.Value, Optional.ToList(p2SConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration.Value, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
+            return new P2SVpnGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualHub, Optional.ToList(p2SConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
         }
     }
 }

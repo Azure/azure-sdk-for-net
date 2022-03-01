@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointCollectionListResult. </summary>
         internal RestorePointCollectionListResult()
         {
-            Value = new ChangeTrackingList<RestorePointCollectionData>();
+            Value = new ChangeTrackingList<RestorePointGroupData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointCollectionListResult. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
-        internal RestorePointCollectionListResult(IReadOnlyList<RestorePointCollectionData> value, string nextLink)
+        internal RestorePointCollectionListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the list of restore point collections. </summary>
-        public IReadOnlyList<RestorePointCollectionData> Value { get; }
+        public IReadOnlyList<RestorePointGroupData> Value { get; }
         /// <summary> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </summary>
         public string NextLink { get; }
     }

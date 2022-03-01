@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -22,8 +21,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkTap))
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<VirtualNetworkTapData> virtualNetworkTap = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkInterfaceTapConfigurationData(id, name.Value, etag.Value, type.Value, virtualNetworkTap.Value, Optional.ToNullable(provisioningState));
+            return new NetworkInterfaceTapConfigurationData(id.Value, name.Value, etag.Value, type.Value, virtualNetworkTap.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

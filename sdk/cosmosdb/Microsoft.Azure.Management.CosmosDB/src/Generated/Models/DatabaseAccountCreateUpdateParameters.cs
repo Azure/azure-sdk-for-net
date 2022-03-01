@@ -99,16 +99,22 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds">An array that contains
         /// the Resource Ids for Network Acl Bypass for the Cosmos DB
         /// account.</param>
+        /// <param name="diagnosticLogSettings">The Object representing the
+        /// different Diagnostic log settings for the Cosmos DB
+        /// Account.</param>
         /// <param name="disableLocalAuth">Opt-out of local authentication and
         /// ensure only MSI and AAD can be used exclusively for
         /// authentication.</param>
         /// <param name="restoreParameters">Parameters to indicate the
         /// information about the restore.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters))
-            : base(id, name, type, location, tags)
+        /// <param name="capacity">The object that represents all properties
+        /// related to capacity enforcement on an account.</param>
+        /// <param name="enableMaterializedViews">Flag to indicate whether to
+        /// enable MaterializedViews on the Cosmos DB account</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), DiagnosticLogSettings diagnosticLogSettings = default(DiagnosticLogSettings), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters), Capacity capacity = default(Capacity), bool? enableMaterializedViews = default(bool?))
+            : base(id, name, type, location, tags, identity)
         {
             Kind = kind;
-            Identity = identity;
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
             IpRules = ipRules;
@@ -132,8 +138,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
+            DiagnosticLogSettings = diagnosticLogSettings;
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
+            Capacity = capacity;
+            EnableMaterializedViews = enableMaterializedViews;
             CustomInit();
         }
         /// <summary>
@@ -156,11 +165,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the consistency policy for the Cosmos DB account.
@@ -320,6 +324,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public IList<string> NetworkAclBypassResourceIds { get; set; }
 
         /// <summary>
+        /// Gets or sets the Object representing the different Diagnostic log
+        /// settings for the Cosmos DB Account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diagnosticLogSettings")]
+        public DiagnosticLogSettings DiagnosticLogSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets opt-out of local authentication and ensure only MSI
         /// and AAD can be used exclusively for authentication.
         /// </summary>
@@ -332,6 +343,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.restoreParameters")]
         public RestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object that represents all properties related to
+        /// capacity enforcement on an account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacity")]
+        public Capacity Capacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether to enable MaterializedViews
+        /// on the Cosmos DB account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableMaterializedViews")]
+        public bool? EnableMaterializedViews { get; set; }
 
         /// <summary>
         /// The offer type for the database
@@ -374,6 +399,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (Capacity != null)
+            {
+                Capacity.Validate();
             }
         }
     }

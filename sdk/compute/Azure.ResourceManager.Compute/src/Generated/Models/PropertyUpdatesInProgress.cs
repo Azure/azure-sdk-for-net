@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the disk for which update is pending. </summary>
-    public partial class PropertyUpdatesInProgress
+    internal partial class PropertyUpdatesInProgress
     {
         /// <summary> Initializes a new instance of PropertyUpdatesInProgress. </summary>
         internal PropertyUpdatesInProgress()

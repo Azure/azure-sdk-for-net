@@ -27,7 +27,9 @@ namespace Azure.AI.FormRecognizer.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new FormRecognizerRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..containerUrl");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 
         /// <summary>
@@ -119,12 +121,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             string trainingFiles = containerType switch
             {
-                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
-                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
-                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
-                _ => TestEnvironment.BlobContainerSasUrl,
+                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrlV2,
+                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrlV2,
+                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrlV2,
+                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrlV2,
+                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrlV2,
+                _ => TestEnvironment.BlobContainerSasUrlV2,
             };
             var trainingFilesUri = new Uri(trainingFiles);
 

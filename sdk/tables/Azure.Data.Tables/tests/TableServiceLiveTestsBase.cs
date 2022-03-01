@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,16 +24,15 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
-        }
-
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
-        {
-            _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                });
         }
 
         protected TableServiceClient service { get; private set; }
@@ -66,7 +66,9 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
-            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
+            { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()
@@ -112,19 +114,8 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
-            service = _endpointType switch
-            {
-                TableEndpointType.StorageAAD => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        TestEnvironment.Credential,
-                        options)),
-                _ => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        new TableSharedKeyCredential(AccountName, AccountKey),
-                        options))
-            };
+
+            service = CreateService(ServiceUri, options);
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -132,6 +123,23 @@ namespace Azure.Data.Tables.Tests
 
             client = InstrumentClient(service.GetTableClient(tableName));
             connectionStringClient = InstrumentClient(new TableClient(ConnectionString, tableName, options));
+        }
+
+        internal TableServiceClient CreateService(string serviceUri, TableClientOptions options)
+        {
+            return _endpointType switch
+            {
+                TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                _ => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        new TableSharedKeyCredential(AccountName, AccountKey),
+                        options))
+            };
         }
 
         [TearDown]
@@ -234,6 +242,7 @@ namespace Azure.Data.Tables.Tests
                             GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                             BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                             Int64TypeProperty = long.Parse(number),
+                            UInt64TypeProperty = ulong.Parse(number),
                             DoubleTypeProperty = double.Parse($"{number}.0"),
                             IntTypeProperty = n,
                         };
@@ -371,6 +380,7 @@ namespace Azure.Data.Tables.Tests
             public byte[] BinaryTypeProperty { get; set; }
 
             public long Int64TypeProperty { get; set; }
+            public ulong UInt64TypeProperty { get; set; }
 
             public double DoubleTypeProperty { get; set; }
 

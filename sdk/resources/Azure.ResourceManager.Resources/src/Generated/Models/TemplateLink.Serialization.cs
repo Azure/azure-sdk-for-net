@@ -5,9 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -19,7 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(RelativePath))
             {
@@ -36,23 +41,31 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("queryString");
                 writer.WriteStringValue(QueryString);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static TemplateLink DeserializeTemplateLink(JsonElement element)
         {
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
+            Optional<string> id = default;
             Optional<string> relativePath = default;
             Optional<string> contentVersion = default;
             Optional<string> queryString = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("relativePath"))
@@ -70,13 +83,8 @@ namespace Azure.ResourceManager.Resources.Models
                     queryString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new TemplateLink(id, uri.Value, relativePath.Value, contentVersion.Value, queryString.Value);
+            return new TemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value);
         }
     }
 }

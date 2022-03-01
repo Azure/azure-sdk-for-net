@@ -134,6 +134,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; }
 
         /// <summary>
+        /// Gets the IGraphResourcesOperations.
+        /// </summary>
+        IGraphResourcesOperations GraphResources { get; }
+
+        /// <summary>
         /// Gets the ISqlResourcesOperations.
         /// </summary>
         ISqlResourcesOperations SqlResources { get; }
@@ -157,6 +162,26 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IGremlinResourcesOperations.
         /// </summary>
         IGremlinResourcesOperations GremlinResources { get; }
+
+        /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the IDataTransferJobsOperations.
+        /// </summary>
+        IDataTransferJobsOperations DataTransferJobs { get; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        ICassandraClustersOperations CassandraClusters { get; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        ICassandraDataCentersOperations CassandraDataCenters { get; }
 
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.
@@ -207,6 +232,36 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IRestorableMongodbResourcesOperations.
         /// </summary>
         IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableGremlinDatabasesOperations.
+        /// </summary>
+        IRestorableGremlinDatabasesOperations RestorableGremlinDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableGremlinGraphsOperations.
+        /// </summary>
+        IRestorableGremlinGraphsOperations RestorableGremlinGraphs { get; }
+
+        /// <summary>
+        /// Gets the IRestorableGremlinResourcesOperations.
+        /// </summary>
+        IRestorableGremlinResourcesOperations RestorableGremlinResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableTablesOperations.
+        /// </summary>
+        IRestorableTablesOperations RestorableTables { get; }
+
+        /// <summary>
+        /// Gets the IRestorableTableResourcesOperations.
+        /// </summary>
+        IRestorableTableResourcesOperations RestorableTableResources { get; }
+
+        /// <summary>
+        /// Gets the IServiceOperations.
+        /// </summary>
+        IServiceOperations Service { get; }
 
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,6 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
@@ -26,18 +27,21 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static JitApproverDefinition DeserializeJitApproverDefinition(JsonElement element)
         {
+            string id = default;
             Optional<JitApproverType> type = default;
             Optional<string> displayName = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -51,11 +55,6 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("displayName"))
                 {
                     displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
             }

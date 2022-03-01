@@ -7,8 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -22,19 +22,22 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering");
-                writer.WriteObjectValue(ExpressRouteCircuitPeering);
+                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("peerExpressRouteCircuitPeering");
-                writer.WriteObjectValue(PeerExpressRouteCircuitPeering);
+                JsonSerializer.Serialize(writer, PeerExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -46,10 +49,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationKey");
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Optional.IsDefined(Ipv6CircuitConnectionConfig))
+            if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig");
-                writer.WriteObjectValue(Ipv6CircuitConnectionConfig);
+                writer.WriteObjectValue(IPv6CircuitConnectionConfig);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -60,12 +63,12 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
-            Optional<SubResource> expressRouteCircuitPeering = default;
-            Optional<SubResource> peerExpressRouteCircuitPeering = default;
+            Optional<string> id = default;
+            Optional<WritableSubResource> expressRouteCircuitPeering = default;
+            Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
             Optional<string> addressPrefix = default;
             Optional<string> authorizationKey = default;
-            Optional<Ipv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
+            Optional<IPv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteCircuitPeering = SubResource.DeserializeSubResource(property0.Value);
+                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("peerExpressRouteCircuitPeering"))
@@ -116,7 +119,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            peerExpressRouteCircuitPeering = SubResource.DeserializeSubResource(property0.Value);
+                            peerExpressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"))
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6CircuitConnectionConfig = Ipv6CircuitConnectionConfig.DeserializeIpv6CircuitConnectionConfig(property0.Value);
+                            ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitConnectionStatus"))
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitConnectionData(id, name.Value, etag.Value, type.Value, expressRouteCircuitPeering.Value, peerExpressRouteCircuitPeering.Value, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitConnectionData(id.Value, name.Value, etag.Value, type.Value, expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

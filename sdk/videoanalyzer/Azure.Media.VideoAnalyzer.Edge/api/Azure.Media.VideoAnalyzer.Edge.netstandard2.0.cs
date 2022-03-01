@@ -16,6 +16,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         public CredentialsBase() { }
     }
+    public partial class DiscoveredOnvifDevice
+    {
+        public DiscoveredOnvifDevice() { }
+        public System.Collections.Generic.IList<string> Endpoints { get { throw null; } }
+        public string RemoteIPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+        public string ServiceIdentifier { get { throw null; } set { } }
+    }
+    public partial class DiscoveredOnvifDeviceCollection
+    {
+        public DiscoveredOnvifDeviceCollection() { }
+        public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.DiscoveredOnvifDevice> Value { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.DiscoveredOnvifDeviceCollection Deserialize(string json) { throw null; }
+    }
     public partial class EndpointBase
     {
         public EndpointBase(string url) { }
@@ -64,6 +78,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode left, Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode (string value) { throw null; }
         public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode left, Azure.Media.VideoAnalyzer.Edge.Models.GrpcExtensionDataTransferMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class H264Configuration
+    {
+        public H264Configuration() { }
+        public float? GovLength { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.H264Profile? Profile { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct H264Profile : System.IEquatable<Azure.Media.VideoAnalyzer.Edge.Models.H264Profile>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public H264Profile(string value) { throw null; }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile Baseline { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile Extended { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile High { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.H264Profile Main { get { throw null; } }
+        public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.H264Profile other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.H264Profile left, Azure.Media.VideoAnalyzer.Edge.Models.H264Profile right) { throw null; }
+        public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.H264Profile (string value) { throw null; }
+        public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.H264Profile left, Azure.Media.VideoAnalyzer.Edge.Models.H264Profile right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HttpExtension : Azure.Media.VideoAnalyzer.Edge.Models.ExtensionProcessorBase
@@ -157,6 +197,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode left, Azure.Media.VideoAnalyzer.Edge.Models.ImageScaleMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class IotHubDeviceConnection
+    {
+        public IotHubDeviceConnection(string deviceId) { }
+        public Azure.Media.VideoAnalyzer.Edge.Models.CredentialsBase Credentials { get { throw null; } set { } }
+        public string DeviceId { get { throw null; } set { } }
+    }
     public partial class IotHubMessageSink : Azure.Media.VideoAnalyzer.Edge.Models.SinkNodeBase
     {
         public IotHubMessageSink(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs, string hubOutputName) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput>)) { }
@@ -241,6 +287,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState left, Azure.Media.VideoAnalyzer.Edge.Models.LivePipelineState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MediaProfile
+    {
+        public MediaProfile() { }
+        public object MediaUri { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoderConfiguration VideoEncoderConfiguration { get { throw null; } set { } }
+    }
+    public partial class MediaUri
+    {
+        public MediaUri() { }
+        public string Uri { get { throw null; } set { } }
+    }
     public partial class MethodRequest
     {
         public MethodRequest() { }
@@ -277,6 +335,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity left, Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity right) { throw null; }
         public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity (string value) { throw null; }
         public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity left, Azure.Media.VideoAnalyzer.Edge.Models.MotionDetectionSensitivity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class Mpeg4Configuration
+    {
+        public Mpeg4Configuration() { }
+        public float? GovLength { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile? Profile { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Mpeg4Profile : System.IEquatable<Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Mpeg4Profile(string value) { throw null; }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile ASP { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile SP { get { throw null; } }
+        public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile left, Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile right) { throw null; }
+        public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile (string value) { throw null; }
+        public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile left, Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NamedLineBase
@@ -330,6 +412,63 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         public ObjectTrackingProcessor(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput>)) { }
         public Azure.Media.VideoAnalyzer.Edge.Models.ObjectTrackingAccuracy? Accuracy { get { throw null; } set { } }
+    }
+    public partial class OnvifDevice
+    {
+        public OnvifDevice() { }
+        public Azure.Media.VideoAnalyzer.Edge.Models.OnvifDns Dns { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.OnvifHostName Hostname { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.MediaProfile> MediaProfiles { get { throw null; } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTime SystemDateTime { get { throw null; } set { } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.OnvifDevice Deserialize(string json) { throw null; }
+    }
+    public partial class OnvifDeviceDiscoverRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequest
+    {
+        public OnvifDeviceDiscoverRequest() { }
+        public string DiscoveryDuration { get { throw null; } set { } }
+    }
+    public partial class OnvifDeviceGetRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequest
+    {
+        public OnvifDeviceGetRequest(Azure.Media.VideoAnalyzer.Edge.Models.EndpointBase endpoint) { }
+        public Azure.Media.VideoAnalyzer.Edge.Models.EndpointBase Endpoint { get { throw null; } set { } }
+    }
+    public partial class OnvifDns
+    {
+        public OnvifDns() { }
+        public bool? FromDhcp { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Ipv4Address { get { throw null; } }
+        public System.Collections.Generic.IList<string> Ipv6Address { get { throw null; } }
+    }
+    public partial class OnvifHostName
+    {
+        public OnvifHostName() { }
+        public bool? FromDhcp { get { throw null; } set { } }
+        public string Hostname { get { throw null; } set { } }
+    }
+    public partial class OnvifSystemDateTime
+    {
+        public OnvifSystemDateTime() { }
+        public string Time { get { throw null; } set { } }
+        public string TimeZone { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType? Type { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OnvifSystemDateTimeType : System.IEquatable<Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OnvifSystemDateTimeType(string value) { throw null; }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType Manual { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType Ntp { get { throw null; } }
+        public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType left, Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType right) { throw null; }
+        public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType (string value) { throw null; }
+        public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType left, Azure.Media.VideoAnalyzer.Edge.Models.OnvifSystemDateTimeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OutputSelector
     {
@@ -463,6 +602,59 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public ProcessorNodeBase(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) { }
         public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> Inputs { get { throw null; } }
         public string Name { get { throw null; } set { } }
+    }
+    public partial class RateControl
+    {
+        public RateControl() { }
+        public float? BitRateLimit { get { throw null; } set { } }
+        public float? EncodingInterval { get { throw null; } set { } }
+        public float? FrameRateLimit { get { throw null; } set { } }
+        public bool? GuaranteedFrameRate { get { throw null; } set { } }
+    }
+    public partial class RemoteDeviceAdapter
+    {
+        public RemoteDeviceAdapter(string name) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapterProperties Properties { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.SystemData SystemData { get { throw null; } set { } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapter Deserialize(string json) { throw null; }
+    }
+    public partial class RemoteDeviceAdapterCollection
+    {
+        public RemoteDeviceAdapterCollection() { }
+        public string ContinuationToken { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapter> Value { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapterCollection Deserialize(string json) { throw null; }
+    }
+    public partial class RemoteDeviceAdapterDeleteRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequestEmptyBodyBase
+    {
+        public RemoteDeviceAdapterDeleteRequest(string name) : base (default(string)) { }
+    }
+    public partial class RemoteDeviceAdapterGetRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequestEmptyBodyBase
+    {
+        public RemoteDeviceAdapterGetRequest(string name) : base (default(string)) { }
+    }
+    public partial class RemoteDeviceAdapterListRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequest
+    {
+        public RemoteDeviceAdapterListRequest() { }
+    }
+    public partial class RemoteDeviceAdapterProperties
+    {
+        public RemoteDeviceAdapterProperties(Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapterTarget target, Azure.Media.VideoAnalyzer.Edge.Models.IotHubDeviceConnection iotHubDeviceConnection) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.IotHubDeviceConnection IotHubDeviceConnection { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapterTarget Target { get { throw null; } set { } }
+    }
+    public partial class RemoteDeviceAdapterSetRequest : Azure.Media.VideoAnalyzer.Edge.Models.MethodRequest
+    {
+        public RemoteDeviceAdapterSetRequest(Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapter remoteDeviceAdapter) { }
+        public Azure.Media.VideoAnalyzer.Edge.Models.RemoteDeviceAdapter RemoteDeviceAdapter { get { throw null; } set { } }
+        public override string GetPayloadAsJson() { throw null; }
+    }
+    public partial class RemoteDeviceAdapterTarget
+    {
+        public RemoteDeviceAdapterTarget(string host) { }
+        public string Host { get { throw null; } set { } }
     }
     public partial class RtspSource : Azure.Media.VideoAnalyzer.Edge.Models.SourceNodeBase
     {
@@ -671,10 +863,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class SpatialAnalysisTypedOperationBase : Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationBase
     {
         public SpatialAnalysisTypedOperationBase() { }
+        public string CalibrationConfiguration { get { throw null; } set { } }
+        public string CameraCalibratorNodeConfiguration { get { throw null; } set { } }
         public string CameraConfiguration { get { throw null; } set { } }
         public string Debug { get { throw null; } set { } }
         public string DetectorNodeConfiguration { get { throw null; } set { } }
         public string EnableFaceMaskClassifier { get { throw null; } set { } }
+        public string TrackerNodeConfiguration { get { throw null; } set { } }
+    }
+    public partial class SymmetricKeyCredentials : Azure.Media.VideoAnalyzer.Edge.Models.CredentialsBase
+    {
+        public SymmetricKeyCredentials(string key) { }
+        public string Key { get { throw null; } set { } }
     }
     public partial class SystemData
     {
@@ -708,8 +908,49 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         public VideoCreationProperties() { }
         public string Description { get { throw null; } set { } }
+        public string RetentionPeriod { get { throw null; } set { } }
         public string SegmentLength { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
+    }
+    public partial class VideoEncoderConfiguration
+    {
+        public VideoEncoderConfiguration() { }
+        public Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding? Encoding { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.H264Configuration H264 { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Configuration Mpeg4 { get { throw null; } set { } }
+        public float? Quality { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.RateControl RateControl { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.VideoResolution Resolution { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VideoEncoding : System.IEquatable<Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VideoEncoding(string value) { throw null; }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding H264 { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding Jpeg { get { throw null; } }
+        public static Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding Mpeg4 { get { throw null; } }
+        public bool Equals(Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding left, Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding right) { throw null; }
+        public static implicit operator Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding (string value) { throw null; }
+        public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding left, Azure.Media.VideoAnalyzer.Edge.Models.VideoEncoding right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VideoPublishingOptions
+    {
+        public VideoPublishingOptions() { }
+        public string EnableVideoPreviewImage { get { throw null; } set { } }
+    }
+    public partial class VideoResolution
+    {
+        public VideoResolution() { }
+        public float? Height { get { throw null; } set { } }
+        public float? Width { get { throw null; } set { } }
     }
     public partial class VideoSink : Azure.Media.VideoAnalyzer.Edge.Models.SinkNodeBase
     {
@@ -718,5 +959,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public string LocalMediaCachePath { get { throw null; } set { } }
         public Azure.Media.VideoAnalyzer.Edge.Models.VideoCreationProperties VideoCreationProperties { get { throw null; } set { } }
         public string VideoName { get { throw null; } set { } }
+        public Azure.Media.VideoAnalyzer.Edge.Models.VideoPublishingOptions VideoPublishingOptions { get { throw null; } set { } }
     }
 }

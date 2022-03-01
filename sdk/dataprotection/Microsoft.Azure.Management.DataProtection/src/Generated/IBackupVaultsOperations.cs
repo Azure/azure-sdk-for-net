@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns resource collection belonging to a resource group.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a resource belonging to a resource group.
         /// </summary>
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupVaultResource>> PatchWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupVaultResource>> UpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// API to check for resource name availability
         /// </summary>
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupVaultResource>> BeginPatchWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupVaultResource>> BeginUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns resource collection belonging to a subscription.
         /// </summary>
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns resource collection belonging to a resource group.
         /// </summary>
@@ -298,6 +298,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetResourcesInResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BackupVaultResource>>> GetInResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

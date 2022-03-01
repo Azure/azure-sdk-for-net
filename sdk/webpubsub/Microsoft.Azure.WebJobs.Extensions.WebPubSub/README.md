@@ -15,12 +15,12 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 Install the Web PubSub extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub
 ```
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://review.docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance?branch=release-azure-web-pubsub) to create an Azure Web PubSub instance.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance) to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
@@ -30,13 +30,13 @@ You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal]
 
 The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
-For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `ConnectionStringSetting = <connection_name>` in function binding attributes:
+For the local development use the `local.settings.json` file to store the connection string, `<connection-string>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection-string>` in function binding attributes:
 
 ```json
 {
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "<connection_name>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
+    "<connection-string>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
   }
 }
 ```
@@ -56,7 +56,7 @@ Please follow the [output binding tutorial](#functions-that-uses-web-pubsub-outp
 
 Please follow the [trigger binding tutorial](#functions-that-uses-web-pubsub-trigger) to learn about triggering an Azure Function when an event is sent from service upstream.
 
-In `Connect` and `Message` events, function will respect return values to send back service. Then service will depend on the response to proceed the request or else. The responses and events are paired. For example, `Connect` will only respect `ConnectResponse` or `ErrorResponse`, and ignore other returns. When `ErrorResponse` is returned, service will drop client connection. Please follow the [trigger binding return value tutorial](#functions-that-uses-web-pubsub-trigger-return-value) to learn about using the trigger return value.
+In `Connect` and `UserEvent` events, function will respect return values to send back service. Then service will depend on the response to proceed the request or else. The responses and events are paired. For example, `Connect` will only respect `ConnectEventResponse` or `EventErrorResponse`, and ignore other returns. When `EventErrorResponse` is returned, service will drop client connection. Please follow the [trigger binding return value tutorial](#functions-that-uses-web-pubsub-trigger-return-value) to learn about using the trigger return value.
 
 ## Examples
 
@@ -68,7 +68,7 @@ public static class WebPubSubConnectionBindingFunction
     [FunctionName("WebPubSubConnectionBindingFunction")]
     public static WebPubSubConnection Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-        [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}")] WebPubSubConnection connection)
+        [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}", Connection = "<connection-string>")] WebPubSubConnection connection)
     {
         Console.WriteLine("login");
         return connection;
@@ -84,13 +84,9 @@ public static class WebPubSubOutputBindingFunction
     [FunctionName("WebPubSubOutputBindingFunction")]
     public static async Task RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-        [WebPubSub(Hub = "hub")] IAsyncCollector<WebPubSubOperation> operation)
+        [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubAction> action)
     {
-        await operation.AddAsync(new SendToAll
-        {
-            Message = BinaryData.FromString("Hello Web PubSub"),
-            DataType = MessageDataType.Text
-        });
+        await action.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
     }
 }
 ```
@@ -103,12 +99,12 @@ public static class WebPubSubTriggerFunction
     [FunctionName("WebPubSubTriggerFunction")]
     public static void Run(
         ILogger logger,
-        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context,
-        string message,
-        MessageDataType dataType)
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request,
+        string data,
+        WebPubSubDataType dataType)
     {
-        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
-            context.UserId, message, dataType);
+        logger.LogInformation("Request from: {user}, data: {data}, dataType: {dataType}",
+            request.ConnectionContext.UserId, data, dataType);
     }
 }
 ```
@@ -119,14 +115,10 @@ public static class WebPubSubTriggerFunction
 public static class WebPubSubTriggerReturnValueFunction
 {
     [FunctionName("WebPubSubTriggerReturnValueFunction")]
-    public static MessageResponse Run(
-        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context)
+    public static UserEventResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
     {
-        return new MessageResponse
-        {
-            Message = BinaryData.FromString("ack"),
-            DataType = MessageDataType.Text
-        };
+        return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
     }
 }
 ```

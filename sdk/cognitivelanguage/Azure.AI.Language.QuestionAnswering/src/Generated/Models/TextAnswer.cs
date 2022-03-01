@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Represents answer result. </summary>
     public partial class TextAnswer
@@ -17,17 +17,17 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Initializes a new instance of TextAnswer. </summary>
         /// <param name="answer"> Answer. </param>
-        /// <param name="confidenceScore"> answer confidence score, value ranges from 0 to 1. </param>
+        /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
-        /// <param name="answerSpan"> Answer span object with respect to user&apos;s question. </param>
+        /// <param name="shortAnswer"> Answer span object with respect to user&apos;s question. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
-        internal TextAnswer(string answer, double? confidenceScore, string id, AnswerSpan answerSpan, int? offset, int? length)
+        internal TextAnswer(string answer, double? confidence, string id, AnswerSpan shortAnswer, int? offset, int? length)
         {
             Answer = answer;
-            ConfidenceScore = confidenceScore;
+            Confidence = confidence;
             Id = id;
-            AnswerSpan = answerSpan;
+            ShortAnswer = shortAnswer;
             Offset = offset;
             Length = length;
         }
@@ -35,11 +35,11 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Answer. </summary>
         public string Answer { get; }
         /// <summary> answer confidence score, value ranges from 0 to 1. </summary>
-        public double? ConfidenceScore { get; }
+        public double? Confidence { get; }
         /// <summary> record ID. </summary>
         public string Id { get; }
         /// <summary> Answer span object with respect to user&apos;s question. </summary>
-        public AnswerSpan AnswerSpan { get; }
+        public AnswerSpan ShortAnswer { get; }
         /// <summary> The sentence offset from the start of the document. </summary>
         public int? Offset { get; }
         /// <summary> The length of the sentence. </summary>

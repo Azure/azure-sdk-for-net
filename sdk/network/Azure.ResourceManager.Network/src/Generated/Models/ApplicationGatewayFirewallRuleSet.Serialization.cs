@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -33,8 +37,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(RuleSetType))
@@ -63,17 +65,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFirewallRuleSet DeserializeApplicationGatewayFirewallRuleSet(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
             Optional<IList<ApplicationGatewayFirewallRuleGroup>> ruleGroups = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -102,11 +109,6 @@ namespace Azure.ResourceManager.Network.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -157,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRuleSet(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
         }
     }
 }

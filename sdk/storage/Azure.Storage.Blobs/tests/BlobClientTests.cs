@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -99,11 +100,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobClient(httpUri, GetOAuthCredential()),
+                () => new BlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -116,7 +117,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 CustomerProvidedKey = customerProvidedKey
             };
-            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigDefault.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
@@ -132,12 +133,12 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = TestConfigDefault.EncryptionScope
+                EncryptionScope = Tenants.TestConfigDefault.EncryptionScope
             };
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                () => new BlobClient(new Uri(Tenants.TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
@@ -789,7 +790,7 @@ namespace Azure.Storage.Blobs.Test
 
             var name = GetNewBlobName();
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
-            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            var credential = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
             await blob.StagedUploadInternal(
@@ -824,7 +825,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var name = GetNewBlobName();
                 BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
-                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+                var credential = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
                 blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
                 await blob.StagedUploadInternal(
@@ -1186,8 +1187,8 @@ namespace Azure.Storage.Blobs.Test
             options.Diagnostics.IsLoggingEnabled = false;
 
             BlobServiceClient service = new BlobServiceClient(
-                new Uri(TestConfigDefault.BlobServiceEndpoint),
-                GetNewSharedKeyCredentials(),
+                new Uri(Tenants.TestConfigDefault.BlobServiceEndpoint),
+                Tenants.GetNewSharedKeyCredentials(),
                 options);
 
             await using DisposingContainer test = await GetTestContainerAsync(service);
@@ -1341,12 +1342,12 @@ namespace Azure.Storage.Blobs.Test
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.
-            var mock = new Mock<BlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
-            mock = new Mock<BlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            var mock = new Mock<BlobClient>(Tenants.TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlobClient>(Tenants.TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
     }
 }

@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceTapConfiguration data model. </summary>
-    public partial class NetworkInterfaceTapConfigurationData : WritableSubResource
+    public partial class NetworkInterfaceTapConfigurationData : SubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
         public NetworkInterfaceTapConfigurationData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Sub Resource type. </param>

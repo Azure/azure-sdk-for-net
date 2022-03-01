@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the Route data model. </summary>
-    public partial class RouteData : WritableSubResource
+    public partial class RouteData : SubResource
     {
         /// <summary> Initializes a new instance of RouteData. </summary>
         public RouteData()
@@ -19,23 +18,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of RouteData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The type of the resource. </param>
         /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
-        /// <param name="nextHopIpAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
+        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(string id, string name, string etag, string type, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIpAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
+        internal RouteData(string id, string name, string etag, string type, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
         {
             Name = name;
             Etag = etag;
             Type = type;
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             ProvisioningState = provisioningState;
             HasBgpOverride = hasBgpOverride;
         }
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
         public RouteNextHopType? NextHopType { get; set; }
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
         /// <summary> The provisioning state of the route resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>

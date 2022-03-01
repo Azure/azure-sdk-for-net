@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,15 +15,20 @@ namespace Azure.ResourceManager.Compute.Models
         internal static RunCommandDocumentBase DeserializeRunCommandDocumentBase(JsonElement element)
         {
             string schema = default;
+            string id = default;
             OperatingSystemTypes osType = default;
             string label = default;
             string description = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"))
                 {
                     schema = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("osType"))
@@ -42,13 +46,8 @@ namespace Azure.ResourceManager.Compute.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new RunCommandDocumentBase(id, schema, osType, label, description);
+            return new RunCommandDocumentBase(schema, id, osType, label, description);
         }
     }
 }

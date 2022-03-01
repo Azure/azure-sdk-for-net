@@ -33,6 +33,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("containerName");
                 writer.WriteStringValue(ContainerName);
             }
+            if (Optional.IsDefined(UploadedTimestamp))
+            {
+                writer.WritePropertyName("uploadedTimestamp");
+                writer.WriteStringValue(UploadedTimestamp.Value, "O");
+            }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");

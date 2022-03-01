@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     public partial class BasePrediction
     {
@@ -18,8 +18,8 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "workflow": return WorkflowPrediction.DeserializeWorkflowPrediction(element);
-                    case "conversation": return DeepstackPrediction.DeserializeDeepstackPrediction(element);
+                    case "workflow": return OrchestratorPrediction.DeserializeOrchestratorPrediction(element);
+                    case "conversation": return ConversationPrediction.DeserializeConversationPrediction(element);
                 }
             }
             ProjectKind projectKind = default;

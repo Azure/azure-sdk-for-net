@@ -13,6 +13,7 @@ namespace Azure.Identity
     internal abstract class ManagedIdentitySource
     {
         internal const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        internal const string UnexpectedResponse = "Managed Identity response was not in the expected format. See the inner exception for details.";
         private ManagedIdentityResponseClassifier _responseClassifier;
 
         protected ManagedIdentitySource(CredentialPipeline pipeline)
@@ -27,7 +28,7 @@ namespace Azure.Identity
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             using Request request = CreateRequest(context.Scopes);
-            using HttpMessage message = new HttpMessage(request, _responseClassifier);
+            using HttpMessage message = CreateHttpMessage(request);
             if (async)
             {
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -40,27 +41,48 @@ namespace Azure.Identity
             return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AccessToken> HandleResponseAsync(
+            bool async,
+            TokenRequestContext context,
+            Response response,
+            CancellationToken cancellationToken)
         {
-            using JsonDocument json = async
-                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                : JsonDocument.Parse(response.ContentStream);
-            if (response.Status == 200)
+            string message;
+            Exception exception = null;
+            try
             {
-                return GetTokenFromResponse(json.RootElement);
+                using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+                if (response.Status == 200)
+                {
+                    return GetTokenFromResponse(json.RootElement);
+                }
+
+                message = GetMessageFromResponse(json.RootElement);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+                message = UnexpectedResponse;
             }
 
-            string message = GetMessageFromResponse(json.RootElement);
+            var responseError = new ResponseError(null, message);
             throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
+                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, responseError, innerException: exception).ConfigureAwait(false)
+                : Pipeline.Diagnostics.CreateRequestFailedException(response, responseError, innerException: exception);
         }
 
         protected abstract Request CreateRequest(string[] scopes);
 
+        protected virtual HttpMessage CreateHttpMessage(Request request)
+        {
+            return new HttpMessage(request, _responseClassifier);
+        }
+
         protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
         {
-            if (response?.ContentStream == null)
+            if (response?.ContentStream == null || !response.ContentStream.CanRead || response.ContentStream.Length == 0)
             {
                 return null;
             }

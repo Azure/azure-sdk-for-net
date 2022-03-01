@@ -7,8 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -27,8 +27,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowVirtualNetworkAccess))
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork");
-                writer.WriteObjectValue(RemoteVirtualNetwork);
+                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
             if (Optional.IsDefined(RemoteAddressSpace))
             {
@@ -95,12 +98,12 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<bool> allowVirtualNetworkAccess = default;
             Optional<bool> allowForwardedTraffic = default;
             Optional<bool> allowGatewayTransit = default;
             Optional<bool> useRemoteGateways = default;
-            Optional<SubResource> remoteVirtualNetwork = default;
+            Optional<WritableSubResource> remoteVirtualNetwork = default;
             Optional<AddressSpace> remoteAddressSpace = default;
             Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
             Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
@@ -187,7 +190,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            remoteVirtualNetwork = SubResource.DeserializeSubResource(property0.Value);
+                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("remoteAddressSpace"))
@@ -269,7 +272,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringData(id, name.Value, etag.Value, type.Value, Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork.Value, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), resourceGuid.Value);
+            return new VirtualNetworkPeeringData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), resourceGuid.Value);
         }
     }
 }

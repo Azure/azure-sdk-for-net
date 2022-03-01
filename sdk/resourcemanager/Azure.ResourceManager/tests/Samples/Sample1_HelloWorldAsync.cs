@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GettingDefaultSubscription()
+        public async Task GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
         }
@@ -27,21 +27,34 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_Async_SpecificSubscription
             string subscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionCollection subscriptions = client.GetSubscriptions();
+            Subscription subscription = await subscriptions.GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_SpecificSubscription
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void RetrieveResourceGroupContainer()
+        public async Task GettingSpecifiedDefaultSubscriptionAsync()
         {
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
-            #region Snippet:Hello_World_Async_ResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            #endregion Snippet:Hello_World_Async_ResourceGroupContainer
+            #region Snippet:Hello_World_Async_SpecifyDefaultSubscription
+            string defaultSubscriptionId = "your-subscription-id";
+            ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            Console.WriteLine(subscription.Id);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void RetrieveResourceGroupCollection()
+        {
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = client.GetDefaultSubscription();
+            #region Snippet:Hello_World_Async_ResourceGroupCollection
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+            #endregion Snippet:Hello_World_Async_ResourceGroupCollection
         }
     }
 }

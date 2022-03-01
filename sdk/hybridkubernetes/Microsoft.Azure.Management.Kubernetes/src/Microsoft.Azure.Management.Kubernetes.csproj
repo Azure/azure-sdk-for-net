@@ -8,7 +8,7 @@
     <Description>
       Provides developers with libraries for the hybrid kubernetes platform under Azure Resource manager to deploy Connected Clusters resource. Note: This client library is for Connected Clusters under Azure Resource Manager.
     </Description>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.1.0-beta.1</Version>
     <AssemblyName>Microsoft.Azure.Management.Kubernetes</AssemblyName>
     <PackageTags>management;kubernetes;</PackageTags>
     <PackageReleaseNotes>

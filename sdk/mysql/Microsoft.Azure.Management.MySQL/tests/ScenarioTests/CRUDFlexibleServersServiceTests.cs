@@ -21,7 +21,7 @@ namespace MySQL.Tests.ScenarioTests
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
+                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.FlexibleServerLocation);
                 var client = Utilities.GetMySQLFlexibleServersManagementClient(context, clientHandler);
                 var createResult = CreateMySQLFlexibleServersInstance(context, client, resourceGroup, ServerName);
             }
@@ -37,7 +37,7 @@ namespace MySQL.Tests.ScenarioTests
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
+                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.FlexibleServerLocation);
                 var client = Utilities.GetMySQLFlexibleServersManagementClient(context, clientHandler);
                 var createResult = CreateMySQLFlexibleServersInstance(context, client, resourceGroup, ServerName);
                 var getResult = client.Servers.Get(resourceGroup.Name, ServerName);
@@ -54,7 +54,7 @@ namespace MySQL.Tests.ScenarioTests
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
+                var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.FlexibleServerLocation);
                 var client = Utilities.GetMySQLFlexibleServersManagementClient(context, clientHandler);
                 var createResult = CreateMySQLFlexibleServersInstance(context, client, resourceGroup, ServerName);
                 var getResult = client.Servers.Get(resourceGroup.Name, ServerName);

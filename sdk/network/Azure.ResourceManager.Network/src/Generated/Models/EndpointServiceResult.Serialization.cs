@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,8 +15,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WriteEndObject();
         }
 
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EndpointServiceResult(id, name.Value, type.Value);
+            return new EndpointServiceResult(id.Value, name.Value, type.Value);
         }
     }
 }

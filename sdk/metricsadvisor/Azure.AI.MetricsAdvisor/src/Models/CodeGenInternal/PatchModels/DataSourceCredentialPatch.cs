@@ -11,8 +11,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WritePropertyName("dataSourceCredentialType");
             writer.WriteStringValue(DataSourceCredentialType.ToString());
-            writer.WriteNullStringValue("dataSourceCredentialName", DataSourceCredentialName);
-            writer.WriteNullStringValue("dataSourceCredentialDescription", DataSourceCredentialDescription);
+            writer.WriteNullObjectValue("dataSourceCredentialName", DataSourceCredentialName);
+            writer.WriteNullObjectValue("dataSourceCredentialDescription", DataSourceCredentialDescription);
         }
 
         // Full qualification must be used so CodeGen skips the generation of this method.

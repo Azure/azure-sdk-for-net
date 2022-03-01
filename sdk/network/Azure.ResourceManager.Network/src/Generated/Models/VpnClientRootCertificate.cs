@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client root certificate of virtual network gateway. </summary>
-    public partial class VpnClientRootCertificate : WritableSubResource
+    public partial class VpnClientRootCertificate : SubResource
     {
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="publicCertData"> The certificate public data. </param>

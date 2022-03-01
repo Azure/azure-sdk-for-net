@@ -16,12 +16,11 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClientOptions"/>.
         /// </summary>
-        public SchemaRegistryClientOptions(ServiceVersion version = ServiceVersion.V2020_09_01_preview)
+        public SchemaRegistryClientOptions(ServiceVersion version = ServiceVersion.V2021_10)
         {
             Version = version switch
             {
-                ServiceVersion.V2017_04 => "2017-04",
-                ServiceVersion.V2020_09_01_preview => "2020-09-01-preview",
+                ServiceVersion.V2021_10 => "2021-10",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
         }
@@ -32,17 +31,11 @@ namespace Azure.Data.SchemaRegistry
         public enum ServiceVersion
         {
             /// <summary>
-            /// Version 2017-04 of the Schema Registry service.
+            /// Version 2021-10 of the Schema Registry service.
             /// </summary>
-#pragma warning disable CA1707 // Remove the underscores from member name
-            V2017_04 = 1,
-            /// <summary>
-            /// Version 2020-09-01-preview of the Schema Registry service.
-            /// </summary>
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
-            V2020_09_01_preview = 2
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
-#pragma warning restore
+#pragma warning disable CA1707
+            V2021_10 = 1
+#pragma warning restore CA1707
         }
     }
 }

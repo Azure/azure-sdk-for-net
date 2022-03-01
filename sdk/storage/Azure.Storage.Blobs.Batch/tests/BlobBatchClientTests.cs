@@ -11,22 +11,30 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using System.Text.RegularExpressions;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class BlobBatchClientTests : BlobTestBase
     {
+        private static Regex pattern = new Regex(@"sig=\S+\s", RegexOptions.Compiled);
+
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // Batch delimiters are random so disable body comparison
-            Matcher = new RecordMatcher(compareBodies: false);
-            Sanitizer = new BatchStorageRecordedTestSanitizer();
+            CompareBodies = false;
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
 
         [SetUp]
@@ -220,7 +228,7 @@ namespace Azure.Storage.Blobs.Test
             // Create a container using SAS for Auth
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            var serviceClient = GetServiceClient_SharedKey();
+            var serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
             var sas = GetAccountSasCredentials().SasToken;
             var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
             await using TestScenario scenario = Scenario(sasServiceClient);
@@ -342,7 +350,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -424,7 +432,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -581,9 +589,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task Delete_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
-                GetServiceClient_SharedKey().Uri,
+                BlobsClientBuilder.GetServiceClient_SharedKey().Uri,
                 GetOptions()));
             BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
             using BlobBatch batch = blobBatchClient.CreateBatch();
@@ -702,7 +710,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -784,7 +792,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName
             };
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
             {
                 BlobContainerName = containerName,
@@ -1018,9 +1026,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetBlobAccessTier_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
-                GetServiceClient_SharedKey().Uri,
+                BlobsClientBuilder.GetServiceClient_SharedKey().Uri,
                 GetOptions()));
             BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
             using BlobBatch batch = blobBatchClient.CreateBatch();
@@ -1038,7 +1046,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion SetBlobAccessTier
 
         #region Scenario helper
-        private TestScenario Scenario() => Scenario(GetServiceClient_SharedKey());
+        private TestScenario Scenario() => Scenario(BlobsClientBuilder.GetServiceClient_SharedKey());
         private TestScenario Scenario(BlobServiceClient client) => new TestScenario(this, client);
 
         /// <summary>

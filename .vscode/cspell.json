@@ -32,22 +32,17 @@
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
-    "sdk/compute/*/api/*.cs",
-    "sdk/containerregistry/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/sqlmanagement/*/api/*.cs",
-    "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
@@ -62,12 +57,15 @@
     "deserializes",
     "diagnoser",
     "dont",
+    "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
+    "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
@@ -75,22 +73,24 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
     "referer",
     "renormalize",
     "retriable",
+    "signup",
+    "skus",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
@@ -98,11 +98,64 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
+    },
+    {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp",
+        "vmguest"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
-        "nigiri"
+        "nigiri",
+        "qnas"
       ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Cpus",
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
+      ]
+    },
+    {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
@@ -111,39 +164,48 @@
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
+        "Azfw",
+        "Conditon",
         "Ddos",
         "ddos",
+        "Dnat",
         "Dscp",
         "dscp",
-        "Mbps",
-        "Snat",
-        "Nics",
-        "Fqdns",
-        "Unprepare",
-        "Skus",
-        "WAFV",
         "Eapmscha",
         "Eaptls",
-        "TLSDHEDSS", 
-        "TLSDHERSA",
-        "Dnat",
-        "Azfw",
-        "Vxlan",
+        "Fqdns",
+        "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
+        "Mbps",
+        "Nics",
         "Owasp",
-        "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Snat",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
+        "Wans"
       ]
     },
     {
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
+        "echsm",
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "rsahsm",
+        "setsas",
+        "mhsm",
+        "mhsmip"
       ]
     },
     {
@@ -151,10 +213,24 @@
       "words": ["Puid"]
     },
     {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "CIAS",
+        "Droppeded",
+        "Nchar",
+        "Ntext",
+        "Nvarchar",
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
+      ]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",
         "Bangla",
+        "Beider",
         "Bokmaal",
         "Cyrl",
         "Decompounder",
@@ -170,7 +246,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {
@@ -184,8 +261,49 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "updation",
+        "usql",
+        "vertica",
+        "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
       ]
     },
     {
@@ -197,6 +315,20 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

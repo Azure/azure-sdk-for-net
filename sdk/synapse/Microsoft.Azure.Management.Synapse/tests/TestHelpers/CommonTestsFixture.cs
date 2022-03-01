@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.Management.Synapse.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 
 namespace Microsoft.Azure.Management.Synapse.Tests
 {
@@ -107,6 +109,36 @@ namespace Microsoft.Azure.Management.Synapse.Tests
         /// </summary>
         public string UpdatedEndIpAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets kusto sku.
+        /// </summary>
+        public AzureSku KustoSku { get; set; }
+
+        /// <summary>
+        /// Gets or sets updated kusto sku.
+        /// </summary>
+        public AzureSku UpdatedKustoSku { get; set; }
+
+        /// <summary>
+        /// Gets or sets kusto database soft delete period.
+        /// </summary>
+        public TimeSpan? SoftDeletePeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets kusto database hot cache period.
+        /// </summary>
+        public TimeSpan? HotCachePeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets kusto database updated soft delete period.
+        /// </summary>
+        public TimeSpan? UpdatedSoftDeletePeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets kusto database updated hot cache period.
+        /// </summary>
+        public TimeSpan? UpdatedHotCachePeriod { get; set; }
+
         public const string WorkspaceType = "Microsoft.Synapse/workspaces";
         public const string SqlpoolType = "Microsoft.Synapse/workspaces/sqlPools";
         public const string SparkpoolType = "Microsoft.Synapse/workspaces/bigDataPools";
@@ -133,6 +165,20 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             EndIpAddress = "255.255.255.255";
             UpdatedStartIpAddress = "10.0.0.0";
             UpdatedEndIpAddress = "255.0.0.0";
+            KustoSku = new AzureSku
+            {
+                Name = "Storage optimized",
+                Size = "Medium"
+            };
+            UpdatedKustoSku = new AzureSku
+            {
+                Name = "Storage optimized",
+                Size = "Large"
+            };
+            SoftDeletePeriod = TimeSpan.FromDays(4);
+            HotCachePeriod = TimeSpan.FromDays(2);
+            UpdatedSoftDeletePeriod = TimeSpan.FromDays(6);
+            UpdatedHotCachePeriod = TimeSpan.FromDays(3);
         }
     }
 }

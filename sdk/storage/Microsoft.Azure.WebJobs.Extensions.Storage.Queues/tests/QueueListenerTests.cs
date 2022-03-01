@@ -516,7 +516,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.False(processorFactoryInvoked);
             Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
             QueueProcessorOptions processorFactoryContext = null;
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
             // if poison message watcher not specified, event not subscribed to
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.False(poisonMessageHandlerInvoked);
         }
 

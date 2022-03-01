@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>5.0.0-beta.6</Version>
+    <Version>5.0.0</Version>
     <Description>This extension adds bindings for Storage</Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
     <NoWarn>$(NoWarn);IDT002</NoWarn>
@@ -12,15 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Azure.Storage.Queues" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" LinkBase="Shared" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

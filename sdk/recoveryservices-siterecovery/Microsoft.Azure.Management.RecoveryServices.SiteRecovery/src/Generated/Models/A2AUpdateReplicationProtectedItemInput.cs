@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// proximity placement group Id.</param>
         /// <param name="recoveryVirtualMachineScaleSetId">The recovery virtual
         /// machine scale set Id.</param>
-        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string tfoAzureVMName = default(string), string recoveryProximityPlacementGroupId = default(string), string recoveryVirtualMachineScaleSetId = default(string))
+        /// <param name="recoveryCapacityReservationGroupId">The recovery
+        /// capacity reservation group Id.</param>
+        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string tfoAzureVMName = default(string), string recoveryProximityPlacementGroupId = default(string), string recoveryVirtualMachineScaleSetId = default(string), string recoveryCapacityReservationGroupId = default(string))
         {
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TfoAzureVMName = tfoAzureVMName;
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
+            RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             CustomInit();
         }
 
@@ -115,6 +118,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryVirtualMachineScaleSetId")]
         public string RecoveryVirtualMachineScaleSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery capacity reservation group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryCapacityReservationGroupId")]
+        public string RecoveryCapacityReservationGroupId { get; set; }
 
     }
 }

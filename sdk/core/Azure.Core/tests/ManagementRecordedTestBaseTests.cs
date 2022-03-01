@@ -48,7 +48,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var operation = (await sub.GetLroAsync()).Value;
+            var operation = (await sub.GetLroAsync(true)).Value;
             var result = operation.Method();
 
             Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var response = (await sub.GetLroAsync()).Value;
+            var response = (await sub.GetLroAsync(true)).Value;
             var result = response.Method();
 
             Assert.AreEqual("TestResourceProxy", response.GetType().Name);
@@ -72,9 +72,9 @@ namespace Azure.Core.Tests.Management
         public void ValidateInstrumentGetContainer()
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var testResources = client.GetTestResourceContainer();
+            var testResources = client.GetTestResourceCollection();
 
-            Assert.AreEqual("TestResourceContainerProxy", testResources.GetType().Name);
+            Assert.AreEqual("TestResourceCollectionProxy", testResources.GetType().Name);
             Assert.AreEqual("success", testResources.Method());
         }
 
@@ -93,8 +93,20 @@ namespace Azure.Core.Tests.Management
         public async Task ValidateInstrumentPageable()
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var testResources = client.GetTestResourceContainer();
+            var testResources = client.GetTestResourceCollection();
             await foreach (var item in testResources.GetAllAsync())
+            {
+                Assert.AreEqual("TestResourceProxy", item.GetType().Name);
+                Assert.AreEqual("success", item.Method());
+            }
+        }
+
+        [Test]
+        public async Task ValidateInstrumentEnumerable()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceCollection();
+            await foreach (var item in testResources)
             {
                 Assert.AreEqual("TestResourceProxy", item.GetType().Name);
                 Assert.AreEqual("success", item.Method());
@@ -106,7 +118,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync();
+            var testResourceOp = await rgOp.GetLroAsync(true);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -125,7 +137,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync());
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync(true));
         }
 
         [Test]
@@ -133,18 +145,8 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(true);
+            var testResourceOp = await rgOp.GetLroAsync(true, true);
             Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
-        }
-
-        [Test]
-        public async Task ValidateLroWrapper()
-        {
-            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            TestResource rgOp = client.GetTestResource();
-            TestResource testResource = await rgOp.LroWrapperAsync();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.AreEqual("success", testResource.Method());
         }
 
         [Test]
@@ -152,22 +154,10 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync();
+            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
-        }
-
-        [Test]
-        public async Task ValidateSkipWait()
-        {
-            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            TestResource rgOp = client.GetTestResource();
-            Stopwatch timer = Stopwatch.StartNew();
-            TestResource testResource = await rgOp.LroWrapperAsync();
-            timer.Stop();
-            //method waits for 10 seconds so timer should easily be less than half of that if we skip
-            Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
         }
 
         [Test]
@@ -175,12 +165,42 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync();
+            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
             Stopwatch timer = Stopwatch.StartNew();
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             timer.Stop();
             //method waits for 10 seconds so timer should easily be less than half of that if we skip
             Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
+        }
+
+        [Test]
+        public void ValidateForwardClientCallTrue()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.DoesNotThrowAsync( async () => testResource = await testResource.GetForwardsCallTrueAsync());
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+        }
+
+        [Test]
+        public void ValidateForwardClientCallFalse()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
+            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+        }
+
+        [Test]
+        public void ValidateForwardClientCallDefault()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
+            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
         }
     }
 }

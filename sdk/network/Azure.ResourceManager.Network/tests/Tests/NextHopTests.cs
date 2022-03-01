@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Network.Tests
             //Create Network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
-            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
-            string sourceIPAddress = networkInterfaceContainer
-                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
+            var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
+            string sourceIPAddress = networkInterfaceCollection
+                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IPConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
             //Use DestinationIPAddress from Route Table
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.Network.Tests
 
             NextHopParameters nhProperties2 = new NextHopParameters(vm.Id, sourceIPAddress, "12.11.12.14");
 
-            var networkWatcherContainer = resourceGroup.GetNetworkWatchers();
-            var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");
-            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties1);
+            var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
+            var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
+            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 
-            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties2);
+            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties2);
             Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
 
             Response<RouteTable> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");
 
             //Validation
-            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIpAddress);
+            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIPAddress);
             Assert.AreEqual(routeTable.Value.Id, getNextHop1.Value.RouteTableId);
             Assert.AreEqual("Internet", getNextHop2.Value.NextHopType.ToString());
             Assert.AreEqual("System Route", getNextHop2.Value.RouteTableId);

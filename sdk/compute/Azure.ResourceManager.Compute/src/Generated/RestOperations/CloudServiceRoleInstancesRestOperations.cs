@@ -20,35 +20,37 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class CloudServiceRoleInstancesRestOperations
     {
-        private string subscriptionId;
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of CloudServiceRoleInstancesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public CloudServiceRoleInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public CloudServiceRoleInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-03-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -57,21 +59,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(cloudServiceName, true);
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -85,7 +92,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,18 +101,23 @@ namespace Azure.ResourceManager.Compute
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -119,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,17 +140,17 @@ namespace Azure.ResourceManager.Compute
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -147,26 +159,31 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(cloudServiceName, true);
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Gets a role instance from a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response<RoleInstance>> GetAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response<RoleInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -180,31 +197,38 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, cloudServiceName, roleInstanceName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoleInstance value = default;
+                        RoleInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleInstance.DeserializeRoleInstance(document.RootElement);
+                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RoleInstanceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a role instance from a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response<RoleInstance> Get(string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response<RoleInstanceData> Get(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -218,29 +242,31 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, cloudServiceName, roleInstanceName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoleInstance value = default;
+                        RoleInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleInstance.DeserializeRoleInstance(document.RootElement);
+                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RoleInstanceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetInstanceViewRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateGetInstanceViewRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -250,21 +276,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
             uri.AppendPath("/instanceView", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response<RoleInstanceView>> GetInstanceViewAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response<RoleInstanceView>> GetInstanceViewAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -278,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetInstanceViewRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateGetInstanceViewRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -290,18 +321,23 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response<RoleInstanceView> GetInstanceView(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response<RoleInstanceView> GetInstanceView(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -315,7 +351,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetInstanceViewRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateGetInstanceViewRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -327,17 +363,17 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -345,25 +381,30 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
             uri.AppendPath(cloudServiceName, true);
             uri.AppendPath("/roleInstances", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<RoleInstanceListResult>> GetAllAsync(string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public async Task<Response<RoleInstanceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -373,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, cloudServiceName, expand);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, cloudServiceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -385,18 +426,23 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<RoleInstanceListResult> GetAll(string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public Response<RoleInstanceListResult> List(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -406,7 +452,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, cloudServiceName, expand);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, cloudServiceName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -418,17 +464,17 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRestartRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -438,21 +484,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response> RestartAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -466,7 +517,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateRestartRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,18 +525,23 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response Restart(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response Restart(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -499,7 +555,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateRestartRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateRestartRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -507,17 +563,17 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateReimageRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -527,21 +583,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response> ReimageAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -555,7 +616,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateReimageRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -563,18 +624,23 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response Reimage(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response Reimage(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -588,7 +654,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateReimageRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -596,17 +662,17 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRebuildRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateRebuildRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -616,21 +682,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
             uri.AppendPath("/rebuild", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response> RebuildAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response> RebuildAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -644,7 +715,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateRebuildRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateRebuildRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -652,18 +723,23 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response Rebuild(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response Rebuild(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -677,7 +753,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateRebuildRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateRebuildRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -685,17 +761,17 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetRemoteDesktopFileRequest(string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        internal HttpMessage CreateGetRemoteDesktopFileRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -705,21 +781,26 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/roleInstances/", false);
             uri.AppendPath(roleInstanceName, true);
             uri.AppendPath("/remoteDesktopFile", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/x-rdp");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public async Task<Response<Stream>> GetRemoteDesktopFileAsync(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public async Task<Response<Stream>> GetRemoteDesktopFileAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -733,7 +814,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetRemoteDesktopFileRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateGetRemoteDesktopFileRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -743,18 +824,23 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleInstanceName"/> is null. </exception>
-        public Response<Stream> GetRemoteDesktopFile(string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
+        public Response<Stream> GetRemoteDesktopFile(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -768,7 +854,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(roleInstanceName));
             }
 
-            using var message = CreateGetRemoteDesktopFileRequest(resourceGroupName, cloudServiceName, roleInstanceName);
+            using var message = CreateGetRemoteDesktopFileRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -778,36 +864,41 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<RoleInstanceListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public async Task<Response<RoleInstanceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -818,7 +909,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, cloudServiceName, expand);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -830,22 +921,27 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<RoleInstanceListResult> GetAllNextPage(string nextLink, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
+        public Response<RoleInstanceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -856,7 +952,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, cloudServiceName, expand);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -868,7 +964,7 @@ namespace Azure.ResourceManager.Compute
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

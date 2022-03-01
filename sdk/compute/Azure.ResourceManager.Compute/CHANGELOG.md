@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,52 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2022-01-29)
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added Resource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Couple of renamings.
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+- Class `OSFamilyCollection` and `OSVersionCollection` now implement the `IEnumerable<T>` and `IAsyncEnumerable<T>`
+- Class `VirtualMachineExtensionImageCollection` now implements the `IEnumerable<T>`
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+- Constructor of `OSFamilyCollection`, `OSVersionCollection` no longer accept `location` as their first parameter
+- Constructor of `VirtualMachineExtensionImageCollection` no longer accepts `location` and `publisher` as its first two parameters
+- Method `GetOSFamilies` and `GetOSVersions` in `SubscriptionExtensions` now accept an extra parameter `location`
+- Method `GetVirtualMachineExtensionImages` in `SubscriptionExtensions` now accepts two extra parameters `location` and `publisher`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -30,7 +76,7 @@ The package name has been changed from `Microsoft.Azure.Management.Compute` to `
 Example: Create a VM:
 
 Before upgrade:
-```csharp
+```C#
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -150,11 +196,7 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 ```
 
 After upgrade:
-```csharp
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+```C# Snippet:Changelog_New
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
@@ -162,12 +204,16 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using System.Linq;
+using Azure.Core;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = Location.WestUS;
+var location = AzureLocation.WestUS;
 // Create ResourceGroup
-ResourceGroup resourceGroup = await armClient.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
+ResourceGroup resourceGroup = rgOperation.Value;
 
 // Create AvailabilitySet
 var availabilitySetData = new AvailabilitySetData(location)
@@ -176,13 +222,13 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", availabilitySetData);
+ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
+AvailabilitySet availabilitySet = asetOperation.Value;
 
 // Create VNet
 var vnetData = new VirtualNetworkData()
 {
     Location = location,
-    AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
     Subnets =
     {
         new SubnetData()
@@ -192,15 +238,17 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
-VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vmName + "_vent", vnetData);
+vnetData.AddressPrefixes.Add("10.0.0.0/16");
+ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
+VirtualNetwork vnet = vnetOperation.Value;
 
 // Create Network interface
 var nicData = new NetworkInterfaceData()
 {
     Location = location,
-    IpConfigurations =
+    IPConfigurations =
     {
-        new NetworkInterfaceIPConfiguration()
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "Primary",
             Primary = true,
@@ -209,18 +257,19 @@ var nicData = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface nic = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(vmName + "_nic", nicData);
+ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
+NetworkInterface nic = nicOperation.Value;
 
 var vmData = new VirtualMachineData(location)
 {
-    AvailabilitySet = new Compute.Models.SubResource() { Id = availabilitySet.Id },
+    AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
     NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-    OsProfile = new OSProfile
+    OSProfile = new OSProfile
     {
         ComputerName = "testVM",
         AdminUsername = "username",
         AdminPassword = "(YourPassword)",
-        LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
+        LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
     },
     StorageProfile = new StorageProfile()
     {
@@ -234,7 +283,8 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-VirtualMachine vm = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData);
+ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
+VirtualMachine vm = vmOperation.Value;
 ```
 
 #### Object Model Changes
@@ -242,7 +292,7 @@ VirtualMachine vm = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync
 Example: Create a Virtual Machine Extension
 
 Before upgrade:
-```csharp
+```C#
 var vmExtension = new VirtualMachineExtension
             {
                 Location = "westus",
@@ -260,12 +310,12 @@ var vmExtension = new VirtualMachineExtension
 ```
 
 After upgrade:
-```csharp
-var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+```C# Snippet:Changelog_CreateVMExtension
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",
-    VirtualMachineExtensionType = "VMAccessAgent",
+    TypePropertiesType = "VMAccessAgent",
     TypeHandlerVersion = "2.0",
     AutoUpgradeMinorVersion = true,
     ForceUpdateTag = "RerunExtension",

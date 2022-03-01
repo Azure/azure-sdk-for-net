@@ -734,6 +734,51 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public void GetDetectionConfigurationsWithOptionalSkip()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var options = new GetDetectionConfigurationsOptions()
+            {
+                Skip = SkipSamples
+            };
+
+            AsyncPageable<AnomalyDetectionConfiguration> configs = adminClient.GetDetectionConfigurationsAsync(MetricId);
+            AsyncPageable<AnomalyDetectionConfiguration> configsWithSkip = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
+            var getConfigsCount = configs.ToEnumerableAsync().Result.Count;
+            var getConfigsWithSkipCount = configsWithSkip.ToEnumerableAsync().Result.Count;
+
+            Assert.That(getConfigsCount, Is.EqualTo(getConfigsWithSkipCount + SkipSamples));
+        }
+
+        [RecordedTest]
+        public async Task GetDetectionConfigurationsWithOptionalMaxPageSize()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var options = new GetDetectionConfigurationsOptions()
+            {
+                MaxPageSize = MaxPageSizeSamples
+            };
+
+            AsyncPageable<AnomalyDetectionConfiguration> configsWithMaxPageSize = adminClient.GetDetectionConfigurationsAsync(MetricId, options);
+
+            var configCount = 0;
+
+            await foreach (Page<AnomalyDetectionConfiguration> page in configsWithMaxPageSize.AsPages())
+            {
+                Assert.That(page.Values.Count, Is.LessThanOrEqualTo(MaxPageSizeSamples));
+
+                if (++configCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(configCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task DeleteDetectionConfiguration(bool useTokenCredential)

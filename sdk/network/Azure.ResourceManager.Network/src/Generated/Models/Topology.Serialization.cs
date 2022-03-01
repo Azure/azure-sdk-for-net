@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,12 +16,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Topology DeserializeTopology(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<IReadOnlyList<TopologyResource>> resources = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("createdDateTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -58,13 +62,8 @@ namespace Azure.ResourceManager.Network.Models
                     resources = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new Topology(id, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
+            return new Topology(id.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
         }
     }
 }

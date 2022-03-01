@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +20,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("publicCertData");
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             string publicCertData = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientRootCertificate(id, name.Value, etag.Value, publicCertData, Optional.ToNullable(provisioningState));
+            return new VpnClientRootCertificate(id.Value, name.Value, etag.Value, publicCertData, Optional.ToNullable(provisioningState));
         }
     }
 }

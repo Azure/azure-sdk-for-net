@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Usage details for subnet. </summary>
-    public partial class VirtualNetworkUsage : Resources.Models.SubResource
+    public partial class VirtualNetworkUsage
     {
         /// <summary> Initializes a new instance of VirtualNetworkUsage. </summary>
         internal VirtualNetworkUsage()
@@ -18,14 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkUsage. </summary>
-        /// <param name="id"> The id. </param>
         /// <param name="currentValue"> Indicates number of IPs used from the Subnet. </param>
+        /// <param name="id"> Subnet identifier. </param>
         /// <param name="limit"> Indicates the size of the subnet. </param>
         /// <param name="name"> The name containing common and localized value for usage. </param>
         /// <param name="unit"> Usage units. Returns &apos;Count&apos;. </param>
-        internal VirtualNetworkUsage(string id, double? currentValue, double? limit, VirtualNetworkUsageName name, string unit) : base(id)
+        internal VirtualNetworkUsage(double? currentValue, string id, double? limit, VirtualNetworkUsageName name, string unit)
         {
             CurrentValue = currentValue;
+            Id = id;
             Limit = limit;
             Name = name;
             Unit = unit;
@@ -33,6 +32,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Indicates number of IPs used from the Subnet. </summary>
         public double? CurrentValue { get; }
+        /// <summary> Subnet identifier. </summary>
+        public string Id { get; }
         /// <summary> Indicates the size of the subnet. </summary>
         public double? Limit { get; }
         /// <summary> The name containing common and localized value for usage. </summary>

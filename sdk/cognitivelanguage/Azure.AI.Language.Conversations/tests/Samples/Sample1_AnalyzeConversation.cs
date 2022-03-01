@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -11,24 +10,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [RecordedTest]
         [SyncOnly]
-        public void QueryKnowledgeBase()
+        [RecordedTest]
+        public void AnalyzeConversation()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversation
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -38,25 +37,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
         }
 
-        [RecordedTest]
         [AsyncOnly]
-        public async Task QueryKnowledgeBaseAsync()
+        [RecordedTest]
+        public async Task AnalyzeConversationAsync()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions("We'll have 2 plates of seared salmon nigiri.");
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Menu",
-                "production",
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                conversationsProject);
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "We'll have 2 plates of seared salmon nigiri.");
+                "We'll have 2 plates of seared salmon nigiri.",
+                TestEnvironment.Project);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

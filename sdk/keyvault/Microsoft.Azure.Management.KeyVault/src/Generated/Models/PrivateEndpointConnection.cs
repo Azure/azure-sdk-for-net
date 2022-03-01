@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// endpoint connection. Possible values include: 'Succeeded',
         /// 'Creating', 'Updating', 'Deleting', 'Failed',
         /// 'Disconnected'</param>
-        public PrivateEndpointConnection(PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
+        /// <param name="etag">Modified whenever there is a change in the state
+        /// of private endpoint connection.</param>
+        public PrivateEndpointConnection(PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string), string etag = default(string))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
+            Etag = etag;
             CustomInit();
         }
 
@@ -73,6 +76,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets modified whenever there is a change in the state of
+        /// private endpoint connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; set; }
 
     }
 }

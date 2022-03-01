@@ -29,6 +29,31 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
+        public void ThrowsWithTableNameInUri()
+        {
+            var badService = CreateService(ServiceUri + "/" + tableName, InstrumentClientOptions(new TableClientOptions()));
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.CreateTableIfNotExistsAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.DeleteTableAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.QueryAsync().ToEnumerableAsync());
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.CreateTableAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
         public async Task CreateTableIfNotExists()
         {
             // Call CreateTableIfNotExists when the table already exists.

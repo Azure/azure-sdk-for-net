@@ -1,7 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
+### Other Changes
+- 'Deprecates' (read discourage) the use of PhoneNumbersModelFactory.PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
+
+## 1.1.0-beta.1 (2022-01-24)
+### Features Added
+- Add support of Denmark (DK) and United Kingdom (GB) phone number acquisitions.
+
+## 1.0.2 (2021-10-05)
+- Dependency versions updated.
 
 ## 1.0.1 (2021-05-25)
 - Dependency versions updated.

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,16 +17,21 @@ namespace Azure.ResourceManager.Network.Models
         internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element)
         {
             Optional<string> name = default;
+            Optional<string> id = default;
             Optional<DateTimeOffset> captureStartTime = default;
             Optional<PcStatus> packetCaptureStatus = default;
             Optional<string> stopReason = default;
             Optional<IReadOnlyList<PcError>> packetCaptureError = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("captureStartTime"))
@@ -70,13 +74,8 @@ namespace Azure.ResourceManager.Network.Models
                     packetCaptureError = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new PacketCaptureQueryStatusResult(id, name.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError));
+            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError));
         }
     }
 }

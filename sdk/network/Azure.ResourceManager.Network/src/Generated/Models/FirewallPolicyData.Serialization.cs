@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -40,14 +45,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(BasePolicy))
             {
                 writer.WritePropertyName("basePolicy");
-                writer.WriteObjectValue(BasePolicy);
+                JsonSerializer.Serialize(writer, BasePolicy);
             }
             if (Optional.IsDefined(ThreatIntelMode))
             {
@@ -96,17 +99,17 @@ namespace Azure.ResourceManager.Network
         internal static FirewallPolicyData DeserializeFirewallPolicyData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
-            Optional<IReadOnlyList<Models.SubResource>> ruleCollectionGroups = default;
+            Optional<IReadOnlyList<WritableSubResource>> ruleCollectionGroups = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<Models.SubResource> basePolicy = default;
-            Optional<IReadOnlyList<Models.SubResource>> firewalls = default;
-            Optional<IReadOnlyList<Models.SubResource>> childPolicies = default;
+            Optional<WritableSubResource> basePolicy = default;
+            Optional<IReadOnlyList<WritableSubResource>> firewalls = default;
+            Optional<IReadOnlyList<WritableSubResource>> childPolicies = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
             Optional<FirewallPolicyInsights> insights = default;
@@ -129,7 +132,12 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -162,11 +170,6 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -183,10 +186,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             ruleCollectionGroups = array;
                             continue;
@@ -208,7 +211,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            basePolicy = Models.SubResource.DeserializeSubResource(property0.Value);
+                            basePolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("firewalls"))
@@ -218,10 +221,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             firewalls = array;
                             continue;
@@ -233,10 +236,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             childPolicies = array;
                             continue;
@@ -325,7 +328,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FirewallPolicyData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy.Value, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, dnsSettings.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, dnsSettings.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
         }
     }
 }

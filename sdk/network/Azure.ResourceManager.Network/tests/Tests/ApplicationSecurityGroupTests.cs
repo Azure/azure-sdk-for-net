@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
@@ -16,20 +17,24 @@ namespace Azure.ResourceManager.Network.Tests
     public class ApplicationSecurityGroupTests
         : NetworkServiceClientTestBase
     {
-        public ApplicationSecurityGroupTests(bool isAsync) : base(isAsync)
+        private Subscription _subscription;
+
+        public ApplicationSecurityGroupTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
-        public async Task<ApplicationSecurityGroupContainer> GetContainer()
+        public async Task<ApplicationSecurityGroupCollection> GetCollection()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_application_security_group_"));
             return resourceGroup.GetApplicationSecurityGroups();
@@ -39,18 +44,18 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task ApplicationSecurityGroupApiTest()
         {
-            var container = await GetContainer();
+            var collection = await GetCollection();
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
             // create
-            var applicationSecurityGroupResponse = await container.CreateOrUpdate(name, new ApplicationSecurityGroupData()
+            var applicationSecurityGroupResponse = (await collection.CreateOrUpdateAsync(true, name, new ApplicationSecurityGroupData()
             {
                 Location = TestEnvironment.Location,
-            }).WaitForCompletionAsync();
+            })).Value;
 
-            Assert.True(await container.CheckIfExistsAsync(name));
+            Assert.True(await collection.ExistsAsync(name));
 
-            var applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            var applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.IsEmpty(applicationSecurityGroupData.Tags);
 
@@ -58,8 +63,8 @@ namespace Azure.ResourceManager.Network.Tests
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
 
             // update
-            applicationSecurityGroupResponse = await container.CreateOrUpdate(name, applicationSecurityGroupData).WaitForCompletionAsync();
-            applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            applicationSecurityGroupResponse = await (await collection.CreateOrUpdateAsync(true, name, applicationSecurityGroupData)).WaitForCompletionAsync();
+            applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(2));
@@ -67,8 +72,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // get
-            applicationSecurityGroupResponse = await container.GetAsync(name);
-            applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            applicationSecurityGroupResponse = await collection.GetAsync(name);
+            applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(2));
@@ -76,16 +81,16 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(tags)).Value.Data;
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag2", "value2");
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.SetTagsAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // list
-            var applicationSecurityGroups = await container.GetAllAsync().ToEnumerableAsync();
+            var applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.That(applicationSecurityGroups, Has.Count.EqualTo(1));
             var applicationSecurityGroup = applicationSecurityGroups[0];
             applicationSecurityGroupData = applicationSecurityGroup.Data;
@@ -95,15 +100,15 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await applicationSecurityGroup.DeleteAsync();
+            await applicationSecurityGroup.DeleteAsync(true);
 
-            Assert.False(await container.CheckIfExistsAsync(name));
+            Assert.False(await collection.ExistsAsync(name));
 
-            applicationSecurityGroups = await container.GetAllAsync().ToEnumerableAsync();
+            applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
 
             // list all
-            applicationSecurityGroups = await ArmClient.DefaultSubscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
+            applicationSecurityGroups = await _subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
         }
 

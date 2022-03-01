@@ -1,54 +1,42 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/274e24b1-b301-2088-4af9-c573d62a3cc4?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210820.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "7d8fdd92866dc194f5fa8ed6bc0c2f04",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220124.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1d4cb3d5fd111f9998fea58424253dbf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 200,
+      "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "129",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 Aug 2021 22:57:43 GMT",
+        "Date": "Tue, 25 Jan 2022 05:44:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4e0c6d1d-6f78-45fc-b84f-998f78c3d5e3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "4e0c6d1d-6f78-45fc-b84f-998f78c3d5e3",
-        "x-ms-routing-request-id": "WESTUS2:20210820T225744Z:4e0c6d1d-6f78-45fc-b84f-998f78c3d5e3"
+        "x-ms-correlation-request-id": "c2208b84-a2bc-4805-9e1c-d74aa1105c7e",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "c2208b84-a2bc-4805-9e1c-d74aa1105c7e",
+        "x-ms-routing-request-id": "WESTUS2:20220125T054448Z:c2208b84-a2bc-4805-9e1c-d74aa1105c7e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "authorizationSource": "RoleBased",
-        "managedByTenants": [],
-        "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-        "state": "Enabled",
-        "subscriptionPolicies": {
-          "locationPlacementId": "Internal_2014-09-01",
-          "quotaId": "Internal_2014-09-01",
-          "spendingLimit": "Off"
+        "error": {
+          "code": "SubscriptionNotFound",
+          "message": "The subscription \u0027274e24b1-b301-2088-4af9-c573d62a3cc4\u0027 could not be found."
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1274397941",
+    "RandomSeed": "334487857",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
   }
 }

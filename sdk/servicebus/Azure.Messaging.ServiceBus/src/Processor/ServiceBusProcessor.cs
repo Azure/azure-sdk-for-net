@@ -76,6 +76,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
+        /// <value>
+        /// The receive mode is specified using <see cref="ServiceBusProcessorOptions.ReceiveMode"/>
+        /// and has a default mode of <see cref="ServiceBusReceiveMode.PeekLock"/>.
+        /// </value>
         public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
@@ -88,6 +92,10 @@ namespace Azure.Messaging.ServiceBus
         /// during processing. This is intended to help maximize throughput by allowing the
         /// processor to receive from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <value>
+        /// The prefetch count is specified using <see cref="ServiceBusProcessorOptions.PrefetchCount"/>
+        /// and has a default value of 0.
+        /// </value>
         public virtual int PrefetchCount { get; }
 
         /// <summary>
@@ -110,8 +118,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Gets the maximum number of concurrent calls to the
         /// <see cref="ProcessMessageAsync"/> message handler the processor should initiate.
         /// </summary>
-        ///
-        /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <value>
+        /// The number of maximum concurrent calls is specified using <see cref="ServiceBusProcessorOptions.MaxConcurrentCalls"/>
+        /// and has a default value of 1.
+        /// </value>
         public virtual int MaxConcurrentCalls => _maxConcurrentCalls;
         private volatile int _maxConcurrentCalls;
         private int _currentConcurrentCalls;
@@ -137,20 +147,22 @@ namespace Azure.Messaging.ServiceBus
         /// If the message handler triggers an exception and did not settle the message,
         /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
         /// </remarks>
-        ///
-        /// <value>true to complete the message processing automatically on
-        /// successful execution of the operation; otherwise, false.</value>
+        /// <value>
+        /// The option to auto complete messages is specified using <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
+        /// and has a default value of <c>true</c>.
+        /// </value>
         public virtual bool AutoCompleteMessages { get; }
 
         /// <summary>
         /// Gets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
-        ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
-        ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        /// <value>
+        /// The maximum duration for lock renewal is specified using <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/>
+        /// and has a default value of 5 minutes.
+        /// </value>
         public virtual TimeSpan MaxAutoLockRenewalDuration { get; }
 
         /// <summary>
@@ -187,7 +199,8 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        internal readonly List<(Task Task, CancellationTokenSource Cts, ReceiverManager ReceiverManager)> _tasks = new();
+        internal List<(Task Task, CancellationTokenSource Cts)> TaskTuples { get; private set; } = new();
+
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
         private CancellationTokenSource _handlerCts = new();
         private readonly int _processorCount = Environment.ProcessorCount;
@@ -364,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != default)
                 {
@@ -376,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
 
             remove
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != value)
                 {
@@ -774,6 +787,7 @@ namespace Azure.Messaging.ServiceBus
                         // do this before the synchronous Wait call as that does not respect the TCS.
                         if (linkedHandlerTcs.IsCancellationRequested)
                         {
+                            linkedHandlerTcs.Dispose();
                             linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
                             break;
                         }
@@ -787,6 +801,7 @@ namespace Azure.Messaging.ServiceBus
                             }
                             catch (OperationCanceledException)
                             {
+                                linkedHandlerTcs.Dispose();
                                 // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
                                 linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
                                 // allow the loop to wake up when tcs is signaled
@@ -797,18 +812,32 @@ namespace Azure.Messaging.ServiceBus
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                        // Instead of using the array overload which allocates an array, we use the overload that has two parameters
+                        // and pass in CancellationToken.None. This should be safe since CanBeCanceled will return false.
+                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
-                        _tasks.Add(
+                        TaskTuples.Add(
                             (
                                 ReceiveAndProcessMessagesAsync(receiverManager, linkedCts.Token),
-                                linkedCts,
-                                receiverManager)
+                                linkedCts)
                         );
 
-                        if (_tasks.Count > _maxConcurrentCalls)
+                        if (TaskTuples.Count > _maxConcurrentCalls)
                         {
-                            _tasks.RemoveAll(t => t.Task.IsCompleted);
+                            List<(Task Task, CancellationTokenSource Cts)> remaining = new();
+                            foreach (var tuple in TaskTuples)
+                            {
+                                if (tuple.Task.IsCompleted)
+                                {
+                                    tuple.Cts.Dispose();
+                                }
+                                else
+                                {
+                                    remaining.Add(tuple);
+                                }
+                            }
+
+                            TaskTuples = remaining;
                         }
                     }
                 }
@@ -856,16 +885,16 @@ namespace Azure.Messaging.ServiceBus
                 {
                     // await all tasks using WhenAll so that we ensure every task finishes even if there are exceptions
                     // (rather than try/catch each await)
-                    await Task.WhenAll(_tasks.Select(t => t.Task)).ConfigureAwait(false);
+                    await Task.WhenAll(TaskTuples.Select(t => t.Task)).ConfigureAwait(false);
                 }
                 finally
                 {
-                    foreach (var (_, tcs, _) in _tasks)
+                    foreach (var (_, cts) in TaskTuples)
                     {
-                        tcs.Dispose();
+                        cts.Dispose();
                     }
 
-                    _tasks.Clear();
+                    TaskTuples.Clear();
 
                     linkedHandlerTcs.Dispose();
                 }
@@ -1016,20 +1045,12 @@ namespace Azure.Messaging.ServiceBus
             // decreasing concurrency
             else if (diff < 0)
             {
-                var activeTasks = _tasks.Where(t => !t.Task.IsCompleted).ToList();
+                var activeTasks = TaskTuples.Where(t => !t.Task.IsCompleted).ToList();
                 int excessTasks = activeTasks.Count - _maxConcurrentCalls;
 
                 // cancel excess tasks
                 for (int i = 0; i < excessTasks; i++)
                 {
-                    if (IsSessionProcessor)
-                    {
-                        // Session managers have CTS that are managed internally when a new
-                        // session is accepted. Cancel these in addition to the CTS that we pass
-                        // from the processor. We can't combine them because sessions should not always
-                        // be canceled when the linkedToken is canceled (i.e. when StopProcessingAsync is called).
-                        ((SessionReceiverManager) activeTasks[i].ReceiverManager).CancelSession();
-                    }
                     activeTasks[i].Cts.Cancel();
                 }
 

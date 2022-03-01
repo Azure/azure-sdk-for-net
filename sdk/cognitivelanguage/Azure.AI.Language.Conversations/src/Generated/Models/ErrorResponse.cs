@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> Error response. </summary>
     internal partial class ErrorResponse

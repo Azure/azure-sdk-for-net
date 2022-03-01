@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="createOption">This enumerates the possible sources of
         /// a disk's creation. Possible values include: 'Empty', 'Attach',
-        /// 'FromImage', 'Import', 'Copy', 'Restore', 'Upload'</param>
+        /// 'FromImage', 'Import', 'Copy', 'Restore', 'Upload', 'CopyStart',
+        /// 'ImportSecure', 'UploadPreparedSecure'</param>
         /// <param name="storageAccountId">Required if createOption is Import.
         /// The Azure Resource Manager identifier of the storage account
         /// containing the blob to import as a disk.</param>
@@ -55,7 +56,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="logicalSectorSize">Logical sector size in bytes for
         /// Ultra disks. Supported values are 512 ad 4096. 4096 is the
         /// default.</param>
-        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?))
+        /// <param name="securityDataUri">If createOption is ImportSecure, this
+        /// is the URI of a blob to be imported into VM guest state.</param>
+        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), string securityDataUri = default(string))
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -66,6 +69,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SourceUniqueId = sourceUniqueId;
             UploadSizeBytes = uploadSizeBytes;
             LogicalSectorSize = logicalSectorSize;
+            SecurityDataUri = securityDataUri;
             CustomInit();
         }
 
@@ -77,7 +81,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets this enumerates the possible sources of a disk's
         /// creation. Possible values include: 'Empty', 'Attach', 'FromImage',
-        /// 'Import', 'Copy', 'Restore', 'Upload'
+        /// 'Import', 'Copy', 'Restore', 'Upload', 'CopyStart', 'ImportSecure',
+        /// 'UploadPreparedSecure'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
@@ -140,6 +145,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "logicalSectorSize")]
         public int? LogicalSectorSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets if createOption is ImportSecure, this is the URI of a
+        /// blob to be imported into VM guest state.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityDataUri")]
+        public string SecurityDataUri { get; set; }
 
         /// <summary>
         /// Validate the object.

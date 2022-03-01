@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGatewayNatRule data model. </summary>
-    public partial class VirtualNetworkGatewayNatRuleData : WritableSubResource
+    public partial class VirtualNetworkGatewayNatRuleData : SubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
         public VirtualNetworkGatewayNatRuleData()
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Network
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
-            IpConfigurationId = ipConfigurationId;
+            IPConfigurationId = ipConfigurationId;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
@@ -63,6 +62,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The private IP address external mapping for NAT. </summary>
         public IList<VpnNatRuleMapping> ExternalMappings { get; }
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
-        public string IpConfigurationId { get; set; }
+        public string IPConfigurationId { get; set; }
     }
 }

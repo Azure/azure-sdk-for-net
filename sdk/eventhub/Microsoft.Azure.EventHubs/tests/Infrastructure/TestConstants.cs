@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         internal const string AuthorityHostEnvironmentVariableName = "AZURE_AUTHORITY_HOST";
         internal const string ServiceManagementUrlEnvironmentVariableName = "SERVICE_MANAGEMENT_URL";
         internal const string ResourceManagerEnvironmentVariableName = "RESOURCE_MANAGER_URL";
-        internal const string StorageEndpointSuffixEnvironmentVariableName = "STORAGE_ENDPOINT_SUFFIX";
+        internal const string StorageEndpointSuffixEnvironmentVariableName = "EVENTHUB_STORAGE_ENDPOINT_SUFFIX";
         internal const string EventHubsNamespaceConnectionStringEnvironmentVariable = "EVENTHUB_NAMESPACE_CONNECTION_STRING";
         internal const string StorageConnectionStringEnvironmentVariable = "EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING";
 

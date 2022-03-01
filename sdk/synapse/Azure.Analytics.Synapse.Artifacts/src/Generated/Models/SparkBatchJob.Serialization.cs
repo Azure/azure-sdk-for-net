@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int id = default;
             Optional<string> appId = default;
             Optional<IReadOnlyDictionary<string, string>> appInfo = default;
-            Optional<string> state = default;
+            Optional<LivyStates> state = default;
             Optional<IReadOnlyList<string>> log = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -180,7 +180,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    state = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new LivyStates(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("log"))
@@ -199,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), state.Value, Optional.ToList(log));
+            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
         }
 
         internal partial class SparkBatchJobConverter : JsonConverter<SparkBatchJob>

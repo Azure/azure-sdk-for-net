@@ -14,8 +14,6 @@ namespace Azure.Security.KeyVault
             allowedHeaderNames.Add("x-ms-keyvault-network-info");
             allowedHeaderNames.Add("x-ms-keyvault-region");
             allowedHeaderNames.Add("x-ms-keyvault-service-version");
-
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("api-version");
         }
     }
 }

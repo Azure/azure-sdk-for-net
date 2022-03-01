@@ -5,27 +5,19 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Request for a CommunicationRelayConfiguration. </summary>
     internal partial class CommunicationRelayConfigurationRequest
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfigurationRequest. </summary>
-        /// <param name="id"> An existing ACS identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CommunicationRelayConfigurationRequest(string id)
+        public CommunicationRelayConfigurationRequest()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
         }
 
-        /// <summary> An existing ACS identity. </summary>
-        public string Id { get; }
+        /// <summary> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </summary>
+        public string Id { get; set; }
+        /// <summary> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </summary>
+        public RouteType? RouteType { get; set; }
     }
 }

@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,28 +27,28 @@
           "CognitiveServices.ComputerVision.Adult=1,CognitiveServices.ComputerVision.Categories=1,CognitiveServices.ComputerVision.Color=1,CognitiveServices.ComputerVision.Faces=1,CognitiveServices.ComputerVision.ImageType=1,CognitiveServices.ComputerVision.Tags=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "2324"
+          "230"
         ],
         "apim-request-id": [
-          "7f06a34f-b019-4ae1-a923-0b877b93a559"
+          "944d770f-3c80-48dd-ba83-142fdda5cccf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:30 GMT"
+          "Thu, 04 Nov 2021 04:51:37 GMT"
         ],
         "Content-Length": [
-          "1853"
+          "1854"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"categories\": [\r\n    {\r\n      \"name\": \"building_\",\r\n      \"score\": 0.640625\r\n    },\r\n    {\r\n      \"name\": \"outdoor_house\",\r\n      \"score\": 0.31640625\r\n    }\r\n  ],\r\n  \"adult\": {\r\n    \"isAdultContent\": false,\r\n    \"isRacyContent\": false,\r\n    \"isGoryContent\": false,\r\n    \"adultScore\": 0.0013707621255889535,\r\n    \"racyScore\": 0.0023683577310293913,\r\n    \"goreScore\": 0.00077587529085576534\r\n  },\r\n  \"color\": {\r\n    \"dominantColorForeground\": \"Green\",\r\n    \"dominantColorBackground\": \"Green\",\r\n    \"dominantColors\": [\r\n      \"Green\",\r\n      \"White\"\r\n    ],\r\n    \"accentColor\": \"448318\",\r\n    \"isBwImg\": false,\r\n    \"isBWImg\": false\r\n  },\r\n  \"imageType\": {\r\n    \"clipArtType\": 0,\r\n    \"lineDrawingType\": 0\r\n  },\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"grass\",\r\n      \"confidence\": 0.99688816070556641\r\n    },\r\n    {\r\n      \"name\": \"outdoor\",\r\n      \"confidence\": 0.99628782272338867\r\n    },\r\n    {\r\n      \"name\": \"building\",\r\n      \"confidence\": 0.98478734493255615\r\n    },\r\n    {\r\n      \"name\": \"plant\",\r\n      \"confidence\": 0.98159998655319214\r\n    },\r\n    {\r\n      \"name\": \"property\",\r\n      \"confidence\": 0.97830420732498169\r\n    },\r\n    {\r\n      \"name\": \"home\",\r\n      \"confidence\": 0.9670950174331665\r\n    },\r\n    {\r\n      \"name\": \"house\",\r\n      \"confidence\": 0.96516358852386475\r\n    },\r\n    {\r\n      \"name\": \"real estate\",\r\n      \"confidence\": 0.964593768119812\r\n    },\r\n    {\r\n      \"name\": \"sky\",\r\n      \"confidence\": 0.96457135677337646\r\n    },\r\n    {\r\n      \"name\": \"siding\",\r\n      \"confidence\": 0.9455188512802124\r\n    },\r\n    {\r\n      \"name\": \"porch\",\r\n      \"confidence\": 0.9431384801864624\r\n    },\r\n    {\r\n      \"name\": \"yard\",\r\n      \"confidence\": 0.941170334815979\r\n    },\r\n    {\r\n      \"name\": \"cottage\",\r\n      \"confidence\": 0.90947520732879639\r\n    },\r\n    {\r\n      \"name\": \"garden buildings\",\r\n      \"confidence\": 0.89480429887771606\r\n    },\r\n    {\r\n      \"name\": \"door\",\r\n      \"confidence\": 0.893147349357605\r\n    },\r\n    {\r\n      \"name\": \"lawn\",\r\n      \"confidence\": 0.889878511428833\r\n    },\r\n    {\r\n      \"name\": \"window\",\r\n      \"confidence\": 0.889106035232544\r\n    },\r\n    {\r\n      \"name\": \"farmhouse\",\r\n      \"confidence\": 0.88872992992401123\r\n    },\r\n    {\r\n      \"name\": \"tree\",\r\n      \"confidence\": 0.88284313678741455\r\n    },\r\n    {\r\n      \"name\": \"backyard\",\r\n      \"confidence\": 0.87526524066925049\r\n    },\r\n    {\r\n      \"name\": \"driveway\",\r\n      \"confidence\": 0.85069841146469116\r\n    },\r\n    {\r\n      \"name\": \"shed\",\r\n      \"confidence\": 0.85023629665374756\r\n    },\r\n    {\r\n      \"name\": \"roof\",\r\n      \"confidence\": 0.84931045770645142\r\n    },\r\n    {\r\n      \"name\": \"land lot\",\r\n      \"confidence\": 0.84485441446304321\r\n    }\r\n  ],\r\n  \"faces\": [],\r\n  \"requestId\": \"7f06a34f-b019-4ae1-a923-0b877b93a559\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"categories\": [\r\n    {\r\n      \"name\": \"building_\",\r\n      \"score\": 0.640625\r\n    },\r\n    {\r\n      \"name\": \"outdoor_house\",\r\n      \"score\": 0.31640625\r\n    }\r\n  ],\r\n  \"adult\": {\r\n    \"isAdultContent\": false,\r\n    \"isRacyContent\": false,\r\n    \"isGoryContent\": false,\r\n    \"adultScore\": 0.0013707628240808845,\r\n    \"racyScore\": 0.002368359360843897,\r\n    \"goreScore\": 0.0007758756983093917\r\n  },\r\n  \"color\": {\r\n    \"dominantColorForeground\": \"Green\",\r\n    \"dominantColorBackground\": \"Green\",\r\n    \"dominantColors\": [\r\n      \"Green\",\r\n      \"White\"\r\n    ],\r\n    \"accentColor\": \"448318\",\r\n    \"isBwImg\": false,\r\n    \"isBWImg\": false\r\n  },\r\n  \"imageType\": {\r\n    \"clipArtType\": 0,\r\n    \"lineDrawingType\": 0\r\n  },\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"grass\",\r\n      \"confidence\": 0.9968881607055664\r\n    },\r\n    {\r\n      \"name\": \"outdoor\",\r\n      \"confidence\": 0.9962877631187439\r\n    },\r\n    {\r\n      \"name\": \"building\",\r\n      \"confidence\": 0.9847874045372009\r\n    },\r\n    {\r\n      \"name\": \"plant\",\r\n      \"confidence\": 0.9815999269485474\r\n    },\r\n    {\r\n      \"name\": \"property\",\r\n      \"confidence\": 0.9783041477203369\r\n    },\r\n    {\r\n      \"name\": \"home\",\r\n      \"confidence\": 0.967095136642456\r\n    },\r\n    {\r\n      \"name\": \"house\",\r\n      \"confidence\": 0.9651638269424438\r\n    },\r\n    {\r\n      \"name\": \"real estate\",\r\n      \"confidence\": 0.9645938873291016\r\n    },\r\n    {\r\n      \"name\": \"sky\",\r\n      \"confidence\": 0.9645713567733765\r\n    },\r\n    {\r\n      \"name\": \"siding\",\r\n      \"confidence\": 0.945518970489502\r\n    },\r\n    {\r\n      \"name\": \"porch\",\r\n      \"confidence\": 0.943138599395752\r\n    },\r\n    {\r\n      \"name\": \"yard\",\r\n      \"confidence\": 0.9411703944206238\r\n    },\r\n    {\r\n      \"name\": \"cottage\",\r\n      \"confidence\": 0.9094752073287964\r\n    },\r\n    {\r\n      \"name\": \"garden buildings\",\r\n      \"confidence\": 0.8948042392730713\r\n    },\r\n    {\r\n      \"name\": \"door\",\r\n      \"confidence\": 0.8931467533111572\r\n    },\r\n    {\r\n      \"name\": \"lawn\",\r\n      \"confidence\": 0.8898786306381226\r\n    },\r\n    {\r\n      \"name\": \"window\",\r\n      \"confidence\": 0.8891065120697021\r\n    },\r\n    {\r\n      \"name\": \"farmhouse\",\r\n      \"confidence\": 0.8887302279472351\r\n    },\r\n    {\r\n      \"name\": \"tree\",\r\n      \"confidence\": 0.8828421831130981\r\n    },\r\n    {\r\n      \"name\": \"backyard\",\r\n      \"confidence\": 0.8752654790878296\r\n    },\r\n    {\r\n      \"name\": \"driveway\",\r\n      \"confidence\": 0.8506985902786255\r\n    },\r\n    {\r\n      \"name\": \"shed\",\r\n      \"confidence\": 0.8502359390258789\r\n    },\r\n    {\r\n      \"name\": \"roof\",\r\n      \"confidence\": 0.8493107557296753\r\n    },\r\n    {\r\n      \"name\": \"land lot\",\r\n      \"confidence\": 0.8448545932769775\r\n    }\r\n  ],\r\n  \"faces\": [],\r\n  \"requestId\": \"944d770f-3c80-48dd-ba83-142fdda5cccf\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-05-01\"\r\n}",
       "StatusCode": 200
     }
   ],

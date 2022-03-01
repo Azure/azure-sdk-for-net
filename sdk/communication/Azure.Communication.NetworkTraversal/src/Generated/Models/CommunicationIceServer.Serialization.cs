@@ -5,19 +5,42 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    public partial class CommunicationIceServer
+    [JsonConverter(typeof(CommunicationIceServerConverter))]
+    public partial class CommunicationIceServer : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("urls");
+            writer.WriteStartArray();
+            foreach (var item in Urls)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("username");
+            writer.WriteStringValue(Username);
+            writer.WritePropertyName("credential");
+            writer.WriteStringValue(Credential);
+            writer.WritePropertyName("routeType");
+            writer.WriteStringValue(RouteType.ToString());
+            writer.WriteEndObject();
+        }
+
         internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element)
         {
-            IReadOnlyList<string> urls = default;
+            IList<string> urls = default;
             string username = default;
             string credential = default;
+            RouteType routeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urls"))
@@ -40,8 +63,26 @@ namespace Azure.Communication.NetworkTraversal
                     credential = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("routeType"))
+                {
+                    routeType = new RouteType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CommunicationIceServer(urls, username, credential);
+            return new CommunicationIceServer(urls, username, credential, routeType);
+        }
+
+        internal partial class CommunicationIceServerConverter : JsonConverter<CommunicationIceServer>
+        {
+            public override void Write(Utf8JsonWriter writer, CommunicationIceServer model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CommunicationIceServer Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCommunicationIceServer(document.RootElement);
+            }
         }
     }
 }

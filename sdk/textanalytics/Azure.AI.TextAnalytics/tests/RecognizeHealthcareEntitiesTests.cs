@@ -355,6 +355,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
@@ -367,12 +368,27 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = default;
 
-            await operation.CancelAsync();
+            await TestRetryHelper.RetryAsync(async () =>
+            {
+                try
+                {
+                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+                    await operation.CancelAsync();
+                    await operation.WaitForCompletionAsync();
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
+                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
+                    return (Response)null;
+                }
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
+                // If we get here, that means that the operation completed successfully and didn't cancel.
+                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
+            },
+            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -400,7 +416,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsFalse(operation.HasValue);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
-            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
 
             await operation.WaitForCompletionAsync();
 
@@ -410,7 +426,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             // try async
-            //There most be 1 page
+            //There must be 1 page
             List<AnalyzeHealthcareEntitiesResultCollection> asyncPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, asyncPages.Count);
 
@@ -418,7 +434,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, asyncPages[0].Count);
 
             // try sync
-            //There most be 1 page
+            //There must be 1 page
             List<AnalyzeHealthcareEntitiesResultCollection> pages = operation.GetValues().AsEnumerable().ToList();
             Assert.AreEqual(1, pages.Count);
 

@@ -5,39 +5,21 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class DataFlowDebugCommandRequest
     {
         /// <summary> Initializes a new instance of DataFlowDebugCommandRequest. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="commandPayload"> The command payload object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="commandPayload"/> is null. </exception>
-        public DataFlowDebugCommandRequest(string sessionId, object commandPayload)
+        public DataFlowDebugCommandRequest()
         {
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-            if (commandPayload == null)
-            {
-                throw new ArgumentNullException(nameof(commandPayload));
-            }
-
-            SessionId = sessionId;
-            CommandPayload = commandPayload;
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
-        /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; set; }
-        /// <summary> The command name. </summary>
-        public string CommandName { get; set; }
+        public string SessionId { get; set; }
+        /// <summary> The command type. </summary>
+        public DataFlowDebugCommandType? Command { get; set; }
         /// <summary> The command payload object. </summary>
-        public object CommandPayload { get; }
+        public DataFlowDebugCommandPayload CommandPayload { get; set; }
     }
 }

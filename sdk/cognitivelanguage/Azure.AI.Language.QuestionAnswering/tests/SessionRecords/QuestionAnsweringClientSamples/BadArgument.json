@@ -1,36 +1,44 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=invalid-knowledgebase\u0026deploymentName=test\u0026api-version=2021-07-15-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=invalid-knowledgebase\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "46",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210923.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": [
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
+        ],
         "x-ms-client-request-id": "8aa8310b156e16cf6b60da1cb46762d4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "question": "Does this knowledge base exist?"
       },
-      "StatusCode": 400,
+      "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "a50d986a-019b-4677-9128-23975a9f9666",
-        "Content-Length": "106",
+        "apim-request-id": "9d8a63bb-3459-40f7-95f1-c08284589de0",
+        "Content-Length": "234",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTransaction=1",
-        "Date": "Thu, 23 Sep 2021 23:29:35 GMT",
+        "Date": "Thu, 28 Oct 2021 20:05:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "545"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "111"
       },
       "ResponseBody": [
         "{\n",
         "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022BadArgument\u0022,\n",
-        "    \u0022message\u0022: \u0022Please verify azure search service is up.\u0022\n",
+        "    \u0022code\u0022: \u0022ProjectNotFound\u0022,\n",
+        "    \u0022message\u0022: \u0022The specified project was not found.\u0022,\n",
+        "    \u0022details\u0022: [\n",
+        "      {\n",
+        "        \u0022code\u0022: \u0022ProjectNotFound\u0022,\n",
+        "        \u0022message\u0022: \u002225ecf357fc3a4f25bcb3b720e2abb7cd\u0022\n",
+        "      }\n",
+        "    ]\n",
         "  }\n",
         "}"
       ]

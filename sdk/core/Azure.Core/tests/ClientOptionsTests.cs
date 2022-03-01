@@ -93,6 +93,16 @@ namespace Azure.Core.Tests
             var options = new TestClientOptions();
 
             Assert.IsInstanceOf<HttpWebRequestTransport>(options.Transport);
+            Assert.IsFalse(options.IsCustomTransportSet);
+        }
+
+        [Test]
+        public void IsCustomTransportSetIsTrueAfterCallingTransportSetter()
+        {
+            var options = new TestClientOptions();
+            options.Transport = new MockTransport();
+
+            Assert.IsTrue(options.IsCustomTransportSet);
         }
 
         [Test]
@@ -109,6 +119,7 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.IsFalse(options.IsCustomTransportSet);
             }
             finally
             {
@@ -130,6 +141,7 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.IsFalse(options.IsCustomTransportSet);
             }
             finally
             {

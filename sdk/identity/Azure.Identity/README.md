@@ -34,8 +34,6 @@ Developers using Visual Studio Code can use the [Azure Account Extension](https:
 
 To authenticate in Visual Studio Code, first ensure the [Azure Account Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) is installed. Once the extension is installed, press `F1` to open the command palette and run the `Azure: Sign In` command.
 
-![Visual Studio Code Account Sign In][vs_code_login_image]
-
 #### Authenticating via the Azure CLI
 Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Applications using the `DefaultAzureCredential` or the `AzureCliCredential` can then use this account to authenticate calls in their application when running locally.
 
@@ -81,8 +79,6 @@ The `DefaultAzureCredential` will attempt to authenticate via the following mech
  - Interactive - If enabled the `DefaultAzureCredential` will interactively authenticate the developer via the current system's default browser.
 
 ## Examples
-
-You can find more examples of using various credentials in [Azure Identity Examples Wiki page](https://github.com/Azure/azure-sdk-for-net/wiki/Azure-Identity-Examples).
 
 ### Authenticating with the `DefaultAzureCredential`
 
@@ -190,6 +186,7 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 |`AZURE_CLIENT_ID`|id of an Azure Active Directory application
 |`AZURE_TENANT_ID`|id of the application's Azure Active Directory tenant
 |`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PEM-encoded certificate file including private key (without password protection)
+|`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
 #### Username and password
 |variable name|value
@@ -203,7 +200,7 @@ client secret and certificate are both present, the client secret will be used.
 
 ## Troubleshooting
 
-See the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/troubleshooting.md) for details on how to diagnose various failure scenarios.
+See the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ### Error Handling
 Errors arising from authentication can be raised on any service client method which makes a request to the service. This is because the first time the token is requested from the credential is on the first call to the service, and any subsequent calls might need to refresh the token. In order to distinguish these failures from failures in the service client Azure Identity classes raise the `AuthenticationFailedException` with details to the source of the error in the exception message as well as possibly the error message. Depending on the application these errors may or may not be recoverable.
@@ -272,6 +269,12 @@ This ensures that the recommendation of reusing credential instances is always s
 Many of the client libraries listed [here](https://azure.github.io/azure-sdk/releases/latest/dotnet.html) support authenticating with `TokenCredential` and the Azure Identity library.
 There you will also find links where you can learn more about their use, including additional documentation and samples.
 
+### Known Issues
+
+This library does not currently support scenarios relating to the [AAD B2C](https://docs.microsoft.com/azure/active-directory-b2c/overview) service.
+
+Currently open issues for the Azure.Identity library can be found [here](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aissue+is%3Aopen+label%3AAzure.Identity).
+
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
@@ -299,7 +302,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
 [identity_api_docs]: https://docs.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
 [vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsLoginDialog.png
-[vs_code_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsCodeLoginCommand.png
 [azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLogin.png
 [azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
 [default_azure_credential_authflow_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/DefaultAzureCredentialAuthenticationFlow.png

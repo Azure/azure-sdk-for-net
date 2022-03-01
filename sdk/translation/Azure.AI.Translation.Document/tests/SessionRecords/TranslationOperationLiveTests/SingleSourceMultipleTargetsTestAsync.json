@@ -5,6 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-c8acdeef7e976b41a5ce504f9b9e8cec-694e470269725b44-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
@@ -31,8 +32,10 @@
       "RequestUri": "https://nourdocuments.blob.core.windows.net/source179339698/Document1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "27",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-64e74015f78c3a4d91ea1fbbe57a3734-9cb6136567860040-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
@@ -63,7 +66,9 @@
       "RequestUri": "https://nourdocuments.blob.core.windows.net/target1031722108?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-6e330a2c5fb5694b9fa84b8e803178c9-1776d38a665a6c4d-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
@@ -90,7 +95,9 @@
       "RequestUri": "https://nourdocuments.blob.core.windows.net/target1193092975?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-31b5cd547fb9304791939b402d063096-f6d5299131925b4c-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
@@ -117,7 +124,9 @@
       "RequestUri": "https://nourdocuments.blob.core.windows.net/target1677185926?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "traceparent": "00-1613d5914cb8014b86bd98130ef4983e-1b396497b70ae148-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",

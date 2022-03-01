@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "e84df253-417d-9526-3d6a-51c5b9af96cc",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:56 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "e84df253-417d-9526-3d6a-51c5b9af96cc",
         "x-ms-request-id": "cc50bf75-e01a-0003-4c77-6b3ba6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:56 GMT",
         "x-ms-lease-id": "68893cd1-7343-e761-a05f-c6b7d0092ce9",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "16064ed3-045f-e0c9-9065-471d7a6fc434",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "cc50bf77-e01a-0003-4d77-6b3ba6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the file share.\n",
@@ -85,7 +85,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:57 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -99,7 +99,7 @@
         ],
         "x-ms-client-request-id": "81e3b19c-1603-2a8a-f8b3-ca0994537211",
         "x-ms-request-id": "cc50bf78-e01a-0003-4e77-6b3ba6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

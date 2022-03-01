@@ -20,7 +20,6 @@ namespace Azure.Identity.Tests
         public void ClearDiscoveryCache()
         {
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
-            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         [Test]
@@ -107,18 +106,21 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [TestCaseSource("RegionalAuthorityTestData")]
-        public void VerifyMsalClientRegionalAuthority(RegionalAuthority? regionalAuthority)
+        public void VerifyMsalClientRegionalAuthority()
         {
-            var expectedTenantId = Guid.NewGuid().ToString();
+            RegionalAuthority?[] authorities = {null, RegionalAuthority.AutoDiscoverRegion, RegionalAuthority.USWest};
 
-            var expectedClientId = Guid.NewGuid().ToString();
+            foreach (RegionalAuthority? regionalAuthority in authorities)
+            {
+                var expectedTenantId = Guid.NewGuid().ToString();
+                var expectedClientId = Guid.NewGuid().ToString();
+                var expectedClientSecret = Guid.NewGuid().ToString();
 
-            var expectedClientSecret = Guid.NewGuid().ToString();
+                var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret,
+                    new ClientSecretCredentialOptions {RegionalAuthority = regionalAuthority});
 
-            var cred = new ClientSecretCredential(expectedTenantId, expectedClientId, expectedClientSecret, new ClientSecretCredentialOptions { RegionalAuthority = regionalAuthority });
-
-            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+            }
         }
     }
 }

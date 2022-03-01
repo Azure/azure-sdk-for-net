@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -29,29 +28,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the OperationExtendedInfo class.
-        /// </summary>
-        /// <param name="objectType">This property will be used as the
-        /// discriminator for deciding the specific types in the polymorphic
-        /// chain of types.</param>
-        public OperationExtendedInfo(string objectType = default(string))
-        {
-            ObjectType = objectType;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets this property will be used as the discriminator for
-        /// deciding the specific types in the polymorphic chain of types.
-        /// </summary>
-        [JsonProperty(PropertyName = "objectType")]
-        public string ObjectType { get; set; }
 
     }
 }

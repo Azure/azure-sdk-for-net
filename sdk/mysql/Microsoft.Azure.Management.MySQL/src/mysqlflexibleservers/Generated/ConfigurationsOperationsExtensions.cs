@@ -120,6 +120,52 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             }
 
             /// <summary>
+            /// Update a list of configurations in a given server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for updating a list of server configuration.
+            /// </param>
+            public static ConfigurationListResult BatchUpdate(this IConfigurationsOperations operations, string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters)
+            {
+                return operations.BatchUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a list of configurations in a given server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for updating a list of server configuration.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigurationListResult> BatchUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BatchUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all the configurations in a given server.
             /// </summary>
             /// <param name='operations'>
@@ -206,6 +252,52 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             public static async Task<Configuration> BeginUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, string configurationName, Configuration parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a list of configurations in a given server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for updating a list of server configuration.
+            /// </param>
+            public static ConfigurationListResult BeginBatchUpdate(this IConfigurationsOperations operations, string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters)
+            {
+                return operations.BeginBatchUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a list of configurations in a given server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for updating a list of server configuration.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigurationListResult> BeginBatchUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string serverName, ConfigurationListForBatchUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginBatchUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

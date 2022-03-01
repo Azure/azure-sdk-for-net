@@ -14,7 +14,8 @@
     <Compile Include="$(MSBuildThisfileDirectory)Diagnostics\*.cs" Link="SharedSource\Diagnostics\%(Filename)%(Extension)" />
 
     <!-- Reference Azure.Core shared source normally included in the properties import -->
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)"/>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)"/>
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="SharedSource\Azure.Core\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Initializes a new instance of <see cref="MessageProcessor"/>.
         /// </summary>
         /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use for processing messages from Service Bus.</param>
-        public MessageProcessor(ServiceBusProcessor processor)
+        protected internal MessageProcessor(ServiceBusProcessor processor)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }

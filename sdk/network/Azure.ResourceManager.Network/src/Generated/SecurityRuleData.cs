@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the SecurityRule data model. </summary>
-    public partial class SecurityRuleData : WritableSubResource
+    public partial class SecurityRuleData : SubResource
     {
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>
         public SecurityRuleData()
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The type of the resource. </param>

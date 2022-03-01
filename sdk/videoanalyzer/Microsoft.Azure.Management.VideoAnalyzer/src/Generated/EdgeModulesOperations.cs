@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         public VideoAnalyzerClient Client { get; private set; }
 
         /// <summary>
-        /// List edge module resources.
+        /// List all existing edge module resources.
         /// </summary>
         /// <remarks>
-        /// List all of the existing edge module resources for a given Video Analyzer
-        /// account.
+        /// List all existing edge module resources, along with their JSON
+        /// representations.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -63,16 +63,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <param name='accountName'>
         /// The Azure Video Analyzer account name.
         /// </param>
-        /// <param name='filter'>
-        /// Restricts the set of items returned.
-        /// </param>
         /// <param name='top'>
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to
         /// but not greater than the specified value n.
-        /// </param>
-        /// <param name='orderby'>
-        /// Specifies the key by which the result collection should be ordered.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -95,7 +89,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EdgeModuleEntity>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string filter = default(string), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EdgeModuleEntity>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -122,10 +116,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (accountName == null)
             {
@@ -151,9 +141,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -168,17 +156,9 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
             if (top != null)
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderby)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -304,8 +284,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// Retrieves an existing edge module resource.
         /// </summary>
         /// <remarks>
-        /// Retrieves a specific existing edge module resource in the given Video
-        /// Analyzer account.
+        /// Retrieves an existing edge module resource with the given name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -314,7 +293,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to retrieve.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -363,10 +342,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -554,7 +529,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to create or update.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -603,10 +578,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -815,7 +786,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module to be deleted.
+        /// The Edge Module name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -861,10 +832,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -1034,7 +1001,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='edgeModuleName'>
-        /// The name of the edge module used to create a new provisioning token.
+        /// The Edge Module name.
         /// </param>
         /// <param name='expirationDate'>
         /// The desired expiration date of the registration token. The Azure Video
@@ -1088,10 +1055,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -1268,11 +1231,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// List edge module resources.
+        /// List all existing edge module resources.
         /// </summary>
         /// <remarks>
-        /// List all of the existing edge module resources for a given Video Analyzer
-        /// account.
+        /// List all existing edge module resources, along with their JSON
+        /// representations.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

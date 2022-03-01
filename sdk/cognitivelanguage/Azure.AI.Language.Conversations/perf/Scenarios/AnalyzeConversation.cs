@@ -17,12 +17,12 @@ namespace Azure.AI.Language.Conversations.Perf.Scenarios
 
         public override void Run(CancellationToken cancellationToken)
         {
-            Client.AnalyzeConversation(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
+            Client.AnalyzeConversation("We'll have 2 plates of seared salmon nigiri.", TestEnvironment.Project);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await Client.AnalyzeConversationAsync(TestEnvironment.ProjectName, TestEnvironment.DeploymentName, "We'll have 2 plates of seared salmon nigiri.");
+            await Client.AnalyzeConversationAsync("We'll have 2 plates of seared salmon nigiri.", TestEnvironment.Project);
         }
 
         public class ConversationAnalysisClient : PerfOptions

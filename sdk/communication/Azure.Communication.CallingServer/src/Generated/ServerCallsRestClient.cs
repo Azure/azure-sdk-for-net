@@ -19,10 +19,12 @@ namespace Azure.Communication.CallingServer
 {
     internal partial class ServerCallsRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ServerCallsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -32,9 +34,9 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-08-30-preview")
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -44,11 +46,11 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/participants", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -92,7 +94,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -123,7 +125,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -133,12 +135,12 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/participants/", false);
             uri.AppendPath(participantId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -167,7 +169,7 @@ namespace Azure.Communication.CallingServer
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -194,21 +196,21 @@ namespace Azure.Communication.CallingServer
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType)
+        internal HttpMessage CreateStartRecordingRequest(string serverCallId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/recordings", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -233,7 +235,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StartRecordingResult>> StartRecordingAsync(string serverCallId, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -246,13 +248,13 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        StartCallRecordingResult value = default;
+                        StartRecordingResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartCallRecordingResult.DeserializeStartCallRecordingResult(document.RootElement);
+                        value = StartRecordingResult.DeserializeStartRecordingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -264,7 +266,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> Optional, mp4 by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public Response<StartCallRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public Response<StartRecordingResult> StartRecording(string serverCallId, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -277,13 +279,13 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        StartCallRecordingResult value = default;
+                        StartRecordingResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartCallRecordingResult.DeserializeStartCallRecordingResult(document.RootElement);
+                        value = StartRecordingResult.DeserializeStartRecordingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -293,12 +295,12 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -332,7 +334,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -364,7 +366,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -374,12 +376,12 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -408,7 +410,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -435,7 +437,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -445,13 +447,13 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
             uri.AppendPath("/:pause", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -480,7 +482,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -507,7 +509,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -517,13 +519,13 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
             uri.AppendPath("/:resume", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -552,7 +554,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -579,7 +581,7 @@ namespace Azure.Communication.CallingServer
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -589,11 +591,11 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/:join", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -630,7 +632,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public async Task<Response<JoinCallResultInternal>> JoinCallAsync(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
@@ -658,7 +660,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -670,7 +672,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public Response<JoinCallResultInternal> JoinCall(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
@@ -698,7 +700,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -708,11 +710,11 @@ namespace Azure.Communication.CallingServer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/serverCalls/", false);
             uri.AppendPath(serverCallId, true);
             uri.AppendPath("/:playAudio", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -763,7 +765,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -800,7 +802,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,22 +15,30 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WritePropertyName("accessPolicy");
                 writer.WriteObjectValue(AccessPolicy);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static SignedIdentifier DeserializeSignedIdentifier(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<AccessPolicy> accessPolicy = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("accessPolicy"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -42,13 +49,8 @@ namespace Azure.ResourceManager.Storage.Models
                     accessPolicy = AccessPolicy.DeserializeAccessPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new SignedIdentifier(id, accessPolicy.Value);
+            return new SignedIdentifier(id.Value, accessPolicy.Value);
         }
     }
 }

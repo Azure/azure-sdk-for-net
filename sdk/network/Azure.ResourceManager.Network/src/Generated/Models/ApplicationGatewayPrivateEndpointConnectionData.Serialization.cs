@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -22,8 +21,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<PrivateEndpointData> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayPrivateEndpointConnectionData(id, name.Value, etag.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value);
+            return new ApplicationGatewayPrivateEndpointConnectionData(id.Value, name.Value, etag.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value);
         }
     }
 }

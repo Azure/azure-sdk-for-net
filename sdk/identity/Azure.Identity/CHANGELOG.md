@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.5 (Unreleased)
+## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.1 (2022-02-11)
+
+### Features Added
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_.
+- `ManagedIdentityCredential` now supports accepting a `ResourceIdentifier` argument to specify a User Assigned Managed Identity by resource Id rather than client Id. `DefaultAzureCredential` also supports this via the `ManagedIdentityResourceId` property of `DefaultAzureCredentialOptions`.
+- Added `ClientAssertionCredential` for authenticating service principals with a presigned client assetion.
+
+### Bugs Fixed
+- Fixed `AuthenticationFailedException` from `AzurePowerSheellCredential` when not logged in on non-windows platforms [#23498](https://github.com/Azure/azure-sdk-for-net/issues/23498)
+- Fixed `ManagedIdentityCredential` response parsing to handle non-json responses [#24158](https://github.com/Azure/azure-sdk-for-net/issues/24158)
+
+### Other Changes
+- Upgraded MSAL dependency to version 4.39.0
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Trevor Lacey _([GitHub](https://github.com/trevorlacey-msft))_
+
+## 1.5.0 (2021-10-14)
+
+### Breaking Changes from 1.5.0-beta.4
+- The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
+- Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Renamed struct `TokenCacheDetails` to `TokenCacheData`.
+- Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
+- Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.
+
+### Bugs Fixed
+- Fixed issue with `AuthorizationCodeCredential` not specifying correct redirectUrl (Issue [#24183](https://github.com/Azure/azure-sdk-for-net/issues/24183))
+
+### Other Changes
+- Updated error messages to include links to the Azure.Identity troubleshooting guide.
 
 ## 1.5.0-beta.4 (2021-09-08)
 
@@ -25,7 +61,7 @@
 ### Other Changes
 
 - Updated credentials using `MsalConfidentialClient` to include MSAL log output in logs
-- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when IsPIILoggingEnabled` is set to true.
+- Added additional logging to `AzureCliCredential`, `AzurePowerShellCredential`, `VisualStudioCrednetial`, and `VisualStudioCodeCredential` when `IsPIILoggingEnabled` is set to true.
 
 ## 1.5.0-beta.3 (2021-08-10)
 
@@ -33,7 +69,7 @@
 
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
-- Tomas Pajurek _([tpajurek-dtml](https://github.com/tpajurek-dtml))_
+- Tomas Pajurek _([tpajurek-dtml](https://github.com/tomas-pajurek))_
 
 ### Features Added
 
@@ -48,10 +84,16 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Bugs Fixed
 
 - Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
-- Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tpajurek-dtml](https://github.com/tpajurek-dtml))_.
+- Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tomas-pajurek](https://github.com/tomas-pajurek))_.
 - Handled an additional error scenario for AzureCliCredential that prompts developers to run `az login` when needed. [#21758](https://github.com/Azure/azure-sdk-for-net/issues/21758)
 - Fixed an issue in `EnvironmentCredential` where the supplied `options` were not getting properly applied. [#22787](https://github.com/Azure/azure-sdk-for-net/issues/22787)
 - Fixed DateTime parsing to use the current culture in AzurePowerShellCredential. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
+
+## 1.4.1 (2021-08-04)
+
+### Fixes and improvements
+
+- Fixed issue resulting in duplicate event source names when executing in Azure Functions
 
 ## 1.5.0-beta.2 (2021-07-12)
 

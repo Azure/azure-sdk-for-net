@@ -57,7 +57,37 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AzureBackupRecoveryPointResource>>> GetListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AzureBackupRecoveryPointResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, ODataQuery<RecoveryPointsFilters> odataQuery = default(ODataQuery<RecoveryPointsFilters>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a Recovery Point using recoveryPointId for a Datasource.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='backupInstanceName'>
+        /// The name of the backup instance
+        /// </param>
+        /// <param name='recoveryPointId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AzureBackupRecoveryPointResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of Recovery Points for a DataSource in a vault.
         /// </summary>
@@ -79,6 +109,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AzureBackupRecoveryPointResource>>> GetListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AzureBackupRecoveryPointResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

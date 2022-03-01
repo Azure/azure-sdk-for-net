@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,15 +14,21 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A Class representing a SharedGallery along with the instance operations that can be performed on it. </summary>
     public partial class SharedGallery : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SharedGalleriesRestOperations _restClient;
+        /// <summary> Generate the resource identifier of a <see cref="SharedGallery"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string galleryUniqueName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _sharedGalleryClientDiagnostics;
+        private readonly SharedGalleriesRestOperations _sharedGalleryRestClient;
         private readonly SharedGalleryData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGallery"/> class for mocking. </summary>
@@ -31,42 +37,29 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SharedGallery"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SharedGallery(ArmResource options, SharedGalleryData resource)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SharedGallery(ArmClient client, SharedGalleryData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SharedGallery"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGallery(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SharedGallery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SharedGallery"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGallery(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SharedGalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
+            _sharedGalleryRestClient = new SharedGalleriesRestOperations(_sharedGalleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -83,18 +76,36 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of SharedGalleryImages in the SharedGalleryImage. </summary>
+        /// <returns> An object representing collection of SharedGalleryImages and their operations over a SharedGalleryImage. </returns>
+        public virtual SharedGalleryImageCollection GetSharedGalleryImages()
+        {
+            return new SharedGalleryImageCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
+        /// Operation Id: SharedGalleries_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SharedGallery>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGallery.Get");
+            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGallery.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SharedGallery(this, response.Value), response.GetRawResponse());
+                    throw await _sharedGalleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,47 +114,29 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
+        /// Operation Id: SharedGalleries_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SharedGallery> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGallery.Get");
+            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGallery.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SharedGallery(this, response.Value), response.GetRawResponse());
+                    throw _sharedGalleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Gets a list of SharedGalleryImages in the SharedGallery. </summary>
-        /// <returns> An object representing collection of SharedGalleryImages and their operations over a SharedGallery. </returns>
-        public SharedGalleryImageContainer GetSharedGalleryImages()
-        {
-            return new SharedGalleryImageContainer(this);
         }
     }
 }

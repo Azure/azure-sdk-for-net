@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullNumberValue("changePercentage", ChangePercentage);
-            writer.WriteNullNumberValue("shiftPoint", ShiftPoint);
-            writer.WriteNullBooleanValue("withinRange", WithinRange);
+            writer.WriteNullObjectValue("changePercentage", ChangePercentage);
+            writer.WriteNullObjectValue("shiftPoint", ShiftPoint);
+            writer.WriteNullObjectValue("withinRange", WithinRange);
             writer.WriteNullStringValue("anomalyDetectorDirection", AnomalyDetectorDirection);
             writer.WriteNullObjectValue("suppressCondition", SuppressCondition);
             writer.WriteEndObject();

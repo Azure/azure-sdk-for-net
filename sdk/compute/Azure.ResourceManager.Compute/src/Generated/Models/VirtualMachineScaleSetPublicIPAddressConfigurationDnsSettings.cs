@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machines scale sets network configuration&apos;s DNS settings. </summary>
-    public partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings
+    internal partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings. </summary>
         /// <param name="domainNameLabel"> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </param>

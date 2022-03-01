@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,13 +19,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
         public FirewallPolicyData()
         {
-            RuleCollectionGroups = new ChangeTrackingList<Models.SubResource>();
-            Firewalls = new ChangeTrackingList<Models.SubResource>();
-            ChildPolicies = new ChangeTrackingList<Models.SubResource>();
+            RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
+            Firewalls = new ChangeTrackingList<WritableSubResource>();
+            ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity identity, IReadOnlyList<Models.SubResource> ruleCollectionGroups, ProvisioningState? provisioningState, Models.SubResource basePolicy, IReadOnlyList<Models.SubResource> firewalls, IReadOnlyList<Models.SubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, type, location, tags)
+        internal FirewallPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, ProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -66,17 +67,29 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The identity of the firewall policy. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
-        public IReadOnlyList<Models.SubResource> RuleCollectionGroups { get; }
+        public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; }
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The parent firewall policy from which rules are inherited. </summary>
-        public Models.SubResource BasePolicy { get; set; }
+        internal WritableSubResource BasePolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BasePolicyId
+        {
+            get => BasePolicy is null ? default : BasePolicy.Id;
+            set
+            {
+                if (BasePolicy is null)
+                    BasePolicy = new WritableSubResource();
+                BasePolicy.Id = value;
+            }
+        }
+
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
-        public IReadOnlyList<Models.SubResource> Firewalls { get; }
+        public IReadOnlyList<WritableSubResource> Firewalls { get; }
         /// <summary> List of references to Child Firewall Policies. </summary>
-        public IReadOnlyList<Models.SubResource> ChildPolicies { get; }
+        public IReadOnlyList<WritableSubResource> ChildPolicies { get; }
         /// <summary> The operation mode for Threat Intelligence. </summary>
         public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
         /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
@@ -84,14 +97,48 @@ namespace Azure.ResourceManager.Network
         /// <summary> Insights on Firewall Policy. </summary>
         public FirewallPolicyInsights Insights { get; set; }
         /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        public FirewallPolicySnat Snat { get; set; }
+        internal FirewallPolicySnat Snat { get; set; }
+        /// <summary> List of private IP addresses/IP address ranges to not be SNAT. </summary>
+        public IList<string> SnatPrivateRanges
+        {
+            get
+            {
+                if (Snat is null)
+                    Snat = new FirewallPolicySnat();
+                return Snat.PrivateRanges;
+            }
+        }
+
         /// <summary> DNS Proxy Settings definition. </summary>
         public DnsSettings DnsSettings { get; set; }
         /// <summary> The configuration for Intrusion detection. </summary>
         public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
         /// <summary> TLS Configuration definition. </summary>
-        public FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+        internal FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+        /// <summary> The CA used for intermediate CA generation. </summary>
+        public FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority
+        {
+            get => TransportSecurity is null ? default : TransportSecurity.CertificateAuthority;
+            set
+            {
+                if (TransportSecurity is null)
+                    TransportSecurity = new FirewallPolicyTransportSecurity();
+                TransportSecurity.CertificateAuthority = value;
+            }
+        }
+
         /// <summary> The Firewall Policy SKU. </summary>
-        public FirewallPolicySku Sku { get; set; }
+        internal FirewallPolicySku Sku { get; set; }
+        /// <summary> Tier of Firewall Policy. </summary>
+        public FirewallPolicySkuTier? SkuTier
+        {
+            get => Sku is null ? default : Sku.Tier;
+            set
+            {
+                if (Sku is null)
+                    Sku = new FirewallPolicySku();
+                Sku.Tier = value;
+            }
+        }
     }
 }

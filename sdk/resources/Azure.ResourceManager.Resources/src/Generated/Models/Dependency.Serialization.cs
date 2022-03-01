@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,9 +16,9 @@ namespace Azure.ResourceManager.Resources.Models
         internal static Dependency DeserializeDependency(JsonElement element)
         {
             Optional<IReadOnlyList<BasicDependency>> dependsOn = default;
+            Optional<string> id = default;
             Optional<string> resourceType = default;
             Optional<string> resourceName = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dependsOn"))
@@ -37,6 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                     dependsOn = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("resourceType"))
                 {
                     resourceType = property.Value.GetString();
@@ -47,13 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new Dependency(id, Optional.ToList(dependsOn), resourceType.Value, resourceName.Value);
+            return new Dependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
         }
     }
 }

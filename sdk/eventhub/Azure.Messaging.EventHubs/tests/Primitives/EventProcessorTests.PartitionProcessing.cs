@@ -1532,6 +1532,60 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task CreatePartitionProcessorProcessingTaskLogsTheStartingPosition()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partition = new EventProcessorPartition { PartitionId = "4" };
+            var expectedEevntPosition = EventPosition.FromSequenceNumber(332);
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), new EventProcessorOptions()) { CallBase = true };
+
+            mockLogger
+                .Setup(log => log.EventProcessorPartitionProcessingEventPositionDetermined(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(() => completionSource.TrySetResult(true));
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(EmptyBatch);
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, expectedEevntPosition);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockLogger
+                .Verify(log => log.EventProcessorPartitionProcessingEventPositionDetermined(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    expectedEevntPosition.ToString()),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreatePartitionProcessorProcessingTaskDoesNotReplaceTheConsumerOnFatalExceptions()
         {
             using var cancellationSource = new CancellationTokenSource();

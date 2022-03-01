@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,22 +15,30 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerConfiguration DeserializeLoadBalancerConfiguration(JsonElement element)
         {
+            Optional<string> id = default;
             string name = default;
             LoadBalancerConfigurationProperties properties = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -42,13 +49,8 @@ namespace Azure.ResourceManager.Compute.Models
                     properties = LoadBalancerConfigurationProperties.DeserializeLoadBalancerConfigurationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new LoadBalancerConfiguration(id, name, properties);
+            return new LoadBalancerConfiguration(id.Value, name, properties);
         }
     }
 }

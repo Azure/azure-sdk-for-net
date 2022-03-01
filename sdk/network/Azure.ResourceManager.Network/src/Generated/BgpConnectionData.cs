@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BgpConnection data model. </summary>
-    public partial class BgpConnectionData : WritableSubResource
+    public partial class BgpConnectionData : SubResource
     {
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
         public BgpConnectionData()
@@ -19,21 +18,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the connection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Connection type. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIp"> Peer IP. </param>
+        /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(string id, string name, string etag, string type, long? peerAsn, string peerIp, ProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
+        internal BgpConnectionData(string id, string name, string etag, string type, long? peerAsn, string peerIP, ProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
         {
             Name = name;
             Etag = etag;
             Type = type;
             PeerAsn = peerAsn;
-            PeerIp = peerIp;
+            PeerIP = peerIP;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
         }
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>
-        public string PeerIp { get; set; }
+        public string PeerIP { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of the VirtualHub to Peer. </summary>

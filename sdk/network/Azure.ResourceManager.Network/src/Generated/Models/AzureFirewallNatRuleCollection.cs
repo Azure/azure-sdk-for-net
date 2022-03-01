@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NAT rule collection resource. </summary>
-    public partial class AzureFirewallNatRuleCollection : WritableSubResource
+    public partial class AzureFirewallNatRuleCollection : SubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
         public AzureFirewallNatRuleCollection()
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the NAT rule collection resource. </param>
@@ -45,7 +44,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the NAT rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a NAT rule collection. </summary>
-        public AzureFirewallNatRCAction Action { get; set; }
+        internal AzureFirewallNatRCAction Action { get; set; }
+        /// <summary> The type of action. </summary>
+        public AzureFirewallNatRCActionType? ActionType
+        {
+            get => Action is null ? default : Action.Type;
+            set
+            {
+                if (Action is null)
+                    Action = new AzureFirewallNatRCAction();
+                Action.Type = value;
+            }
+        }
+
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
         public IList<AzureFirewallNatRule> Rules { get; }
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>

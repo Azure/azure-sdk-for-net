@@ -27,11 +27,16 @@ namespace Azure.Identity
         internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
 
         private readonly string _clientId;
+        private readonly string _resourceId;
         private readonly Uri _imdsEndpoint;
 
-        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)
+        private TimeSpan? _imdsNetworkTimeout;
+
+        internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
-            _clientId = clientId;
+            _clientId = options.ClientId;
+            _resourceId = options.ResourceIdentifier?.ToString();
+            _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
 			{
@@ -60,10 +65,23 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(_clientId))
             {
-                request.Uri.AppendQuery("client_id", _clientId);
+                request.Uri.AppendQuery(Constants.ManagedIdentityClientId, _clientId);
+            }
+            if (!string.IsNullOrEmpty(_resourceId))
+            {
+                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
             }
 
             return request;
+        }
+
+        protected override HttpMessage CreateHttpMessage(Request request)
+        {
+            HttpMessage message = base.CreateHttpMessage(request);
+
+            message.NetworkTimeout = _imdsNetworkTimeout;
+
+            return message;
         }
 
         public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
@@ -88,6 +106,9 @@ namespace Azure.Identity
 
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
+            // if we got a response from IMDS we can stop limiting the network timeout
+            _imdsNetworkTimeout = null;
+
             // handle error status codes indicating managed identity is not available
             var baseMessage = response.Status switch
             {
@@ -99,7 +120,7 @@ namespace Azure.Identity
 
             if (baseMessage != null)
             {
-                string message = await Pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, baseMessage, null, null, async).ConfigureAwait(false);
+                string message = await Pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, new ResponseError(null, baseMessage), null, async).ConfigureAwait(false);
 
                 var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
 

@@ -401,6 +401,40 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions" />
+        ///   methods related to the partition key.
+        /// </summary>
+        ///
+        [Test]
+        public void PartitionKeyCanBeSet()
+        {
+            var partitionKey = "fake-key";
+            var message = CreateFullyPopulatedDataBodyMessage();
+
+            Assert.That(message.GetPartitionKey(), Is.Not.EqualTo(partitionKey), "The starting partition key should differ from the value being set.");
+
+            message.SetPartitionKey(partitionKey);
+            Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions" />
+        ///   methods related to the enqueue time.
+        /// </summary>
+        ///
+        [Test]
+        public void EnqueueTimeCanBeSet()
+        {
+            var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
+            var message = CreateFullyPopulatedDataBodyMessage();
+
+            Assert.That(message.GetEnqueuedTime(), Is.Not.EqualTo(enqueueTime), "The starting enqueue time should differ from the value being set.");
+
+            message.SetEnqueuedTime(enqueueTime);
+            Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
+        }
+
+        /// <summary>
         ///   Creates a fully populated message with a consistent set of
         ///   test data.
         /// </summary>

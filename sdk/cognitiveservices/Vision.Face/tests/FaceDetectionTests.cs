@@ -44,7 +44,8 @@ namespace FaceSDK.Tests
                             FaceAttributeType.Makeup,
                             FaceAttributeType.Noise,
                             FaceAttributeType.Occlusion,
-                            FaceAttributeType.Smile
+                            FaceAttributeType.Smile,
+                            FaceAttributeType.QualityForRecognition
                             },
                         detectionModel: detectionModel,
                         recognitionModel: recognitionModel,
@@ -89,6 +90,7 @@ namespace FaceSDK.Tests
                     Assert.Equal(BlurLevel.Low, face.FaceAttributes.Blur.BlurLevel);
                     Assert.Equal(ExposureLevel.GoodExposure, face.FaceAttributes.Exposure.ExposureLevel);
                     Assert.Equal(NoiseLevel.Medium, face.FaceAttributes.Noise.NoiseLevel);
+                    Assert.Equal(QualityForRecognition.Medium, face.FaceAttributes.QualityForRecognition);
 
                     // Ensure face landmarks are de-serialized correctly.
                     var landMarks = face.FaceLandmarks;

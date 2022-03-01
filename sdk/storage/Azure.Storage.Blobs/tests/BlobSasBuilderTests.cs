@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -270,9 +271,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        [TestCase("FTPUCALXDWR")]
-        [TestCase("rwdxlacuptf")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IFTPUCALYXDWR")]
+        [TestCase("rwdxylacuptfi")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -287,6 +288,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
+
+            Assert.AreEqual("rwdxylacuptfi", accountSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 
@@ -319,9 +322,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        [TestCase("TLXDWMECAR")]
-        [TestCase("racwdxltme")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IEMFTLYXDWCAR")]
+        [TestCase("racwdxyltfmei")]
         public async Task ContainerPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -337,6 +340,8 @@ namespace Azure.Storage.Blobs.Test
             blobSasBuilder.SetPermissions(
                 rawPermissions: permissionsString,
                 normalize: true);
+
+            Assert.AreEqual("racwdxyltfmei", blobSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 
@@ -473,7 +478,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
 
@@ -511,7 +516,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_CorrelationId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);

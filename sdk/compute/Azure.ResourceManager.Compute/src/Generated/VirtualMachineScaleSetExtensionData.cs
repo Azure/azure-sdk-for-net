@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineScaleSetExtension data model. </summary>
-    public partial class VirtualMachineScaleSetExtensionData : SubResource
+    public partial class VirtualMachineScaleSetExtensionData : SubResourceReadOnly
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionData. </summary>
         public VirtualMachineScaleSetExtensionData()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        internal VirtualMachineScaleSetExtensionData(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, IList<string> provisionAfterExtensions) : base(id)
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        internal VirtualMachineScaleSetExtensionData(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures) : base(id)
         {
             Name = name;
             Type = type;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Compute
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             ProvisionAfterExtensions = provisionAfterExtensions;
+            SuppressFailures = suppressFailures;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -74,5 +76,7 @@ namespace Azure.ResourceManager.Compute
         public string ProvisioningState { get; }
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
         public IList<string> ProvisionAfterExtensions { get; }
+        /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
+        public bool? SuppressFailures { get; set; }
     }
 }

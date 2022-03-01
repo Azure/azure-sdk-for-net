@@ -18,7 +18,7 @@ namespace Azure.Identity
     /// This credential is designed for applications deployed to Azure <see cref="DefaultAzureCredential"/> is
     /// better suited to local development). It authenticates service principals and managed identities..
     /// </remarks>
-    public class AzureApplicationCredential : TokenCredential
+    internal class AzureApplicationCredential : TokenCredential
     {
         private readonly ChainedTokenCredential _credential;
 

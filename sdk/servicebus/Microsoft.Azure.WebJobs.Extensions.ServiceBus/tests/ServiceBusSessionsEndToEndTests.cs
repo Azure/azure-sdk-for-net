@@ -7,7 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
@@ -442,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
+        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -452,6 +454,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         sbOptions.AutoCompleteMessages = autoComplete;
                         sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
                         sbOptions.MaxConcurrentSessions = 1;
+                        sbOptions.EnableCrossEntityTransactions = enableCrossEntityTransaction;
+                        if (maxMessages != null)
+                        {
+                            sbOptions.MaxMessageBatchSize = maxMessages.Value;
+                        }
                     }))
                 .ConfigureServices(services =>
                 {
@@ -485,6 +492,64 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            var host = BuildSessionHost<TestCrossEntityTransaction>(enableCrossEntityTransaction: true);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestMultiple_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+            var host = BuildSessionHost<TestCrossEntityTransactionBatch>(enableCrossEntityTransaction: true);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_ReleaseSession()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            var host = BuildSessionHost<TestSingleReleaseSession>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestMultiple_ReleaseSession()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            var host = BuildSessionHost<TestMultipleReleaseSession>(maxMessages: 1);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
                 await host.StopAsync();
             }
         }
@@ -778,6 +843,115 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class TestCrossEntityTransaction
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusSessionMessageActions sessionActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sessionActions.CompleteMessageAsync(message);
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = await client.AcceptNextSessionAsync(_firstQueueScope.QueueName);
+                // Assert.IsNull(receiver1);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                Assert.IsNotNull(receiver2);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransactionBatch
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusSessionMessageActions sessionActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sessionActions.CompleteMessageAsync(messages.First());
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = await client.AcceptNextSessionAsync(_firstQueueScope.QueueName);
+                // Assert.IsNull(receiver1);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                Assert.IsNotNull(receiver2);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestSingleReleaseSession
+        {
+            private static int count = 0;
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual("session1", message.SessionId);
+                        sessionActions.ReleaseSession();
+                        break;
+                    case 1:
+                    case 2:
+                        Assert.AreEqual("session2", message.SessionId);
+                        break;
+                    case 3:
+                        Assert.AreEqual("session1", message.SessionId);
+                        _waitHandle1.Set();
+                        break;
+                }
+
+                count++;
+            }
+        }
+
+        public class TestMultipleReleaseSession
+        {
+            private static int count = 0;
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                var message = messages.Single();
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual("session1", message.SessionId);
+                        sessionActions.ReleaseSession();
+                        break;
+                    case 1:
+                    case 2:
+                        Assert.AreEqual("session2", message.SessionId);
+                        break;
+                    case 3:
+                        Assert.AreEqual("session1", message.SessionId);
+                        _waitHandle1.Set();
+                        break;
+                }
+
+                count++;
+            }
+        }
+
         public class CustomMessagingProvider : MessagingProvider
         {
             public const string CustomMessagingCategory = "CustomMessagingProvider";
@@ -826,7 +1000,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     _logger = logger;
                 }
 
-                public override async Task<bool> BeginProcessingMessageAsync(
+                protected internal override async Task<bool> BeginProcessingMessageAsync(
                     ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
@@ -834,7 +1008,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     return await base.BeginProcessingMessageAsync(actions, message, cancellationToken);
                 }
 
-                public override async Task CompleteProcessingMessageAsync(
+                protected internal override async Task CompleteProcessingMessageAsync(
                     ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message,
                     Executors.FunctionResult result,

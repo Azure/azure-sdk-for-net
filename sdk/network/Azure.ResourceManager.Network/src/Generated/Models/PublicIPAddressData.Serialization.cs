@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -54,8 +59,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicIPAllocationMethod))
@@ -78,25 +81,25 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("ddosSettings");
                 writer.WriteObjectValue(DdosSettings);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags");
                 writer.WriteStartArray();
-                foreach (var item in IpTags)
+                foreach (var item in IPTags)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix");
-                writer.WriteObjectValue(PublicIPPrefix);
+                JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
@@ -134,23 +137,23 @@ namespace Azure.ResourceManager.Network
 
         internal static PublicIPAddressData DeserializePublicIPAddressData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             Optional<PublicIPAddressSku> sku = default;
             Optional<string> etag = default;
             Optional<IList<string>> zones = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
             Optional<IPAllocationMethod> publicIPAllocationMethod = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<IPConfiguration> ipConfiguration = default;
             Optional<PublicIPAddressDnsSettings> dnsSettings = default;
             Optional<DdosSettings> ddosSettings = default;
-            Optional<IList<IpTag>> ipTags = default;
+            Optional<IList<IPTag>> ipTags = default;
             Optional<string> ipAddress = default;
-            Optional<SubResource> publicIPPrefix = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -201,6 +204,11 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -229,11 +237,6 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -302,10 +305,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpTag> array = new List<IpTag>();
+                            List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpTag.DeserializeIpTag(item));
+                                array.Add(IPTag.DeserializeIPTag(item));
                             }
                             ipTags = array;
                             continue;
@@ -322,7 +325,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPPrefix = SubResource.DeserializeSubResource(property0.Value);
+                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("idleTimeoutInMinutes"))
@@ -404,7 +407,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPAddressData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix.Value, Optional.ToNullable(idleTimeoutInMinutes), resourceGuid.Value, Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), resourceGuid.Value, Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

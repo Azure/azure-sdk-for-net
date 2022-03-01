@@ -27,6 +27,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
     public partial class Sample4_EncryptDecypt : SampleFixture { }
     public partial class Sample5_SignVerify : SampleFixture { }
     public partial class Sample6_WrapUnwrap : SampleFixture { }
+    public partial class Sample7_SerializeJsonWebKey : SampleFixture { }
+    public partial class Sample8_KeyRotation : SampleFixture { }
     public partial class Snippets : SampleFixture { }
 #pragma warning restore SA1402 // File may only contain a single type
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
         /// <param name="connectionType"> Gateway connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1"/> is null. </exception>
-        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkGatewayConnectionType connectionType)
+        public VirtualNetworkGatewayConnectionListEntity(WritableSubResource virtualNetworkGateway1, VirtualNetworkGatewayConnectionType connectionType)
         {
             if (virtualNetworkGateway1 == null)
             {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             ConnectionType = connectionType;
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peer"> The reference to peerings resource. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
-        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
+        /// <param name="iPsecPolicies"> The IPSec Policies to be considered by this connection. </param>
         /// <param name="trafficSelectorPolicies"> The Traffic Selector Policies to be considered by this connection. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
-        internal VirtualNetworkGatewayConnectionListEntity(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkConnectionGatewayReference virtualNetworkGateway2, VirtualNetworkConnectionGatewayReference localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, SubResource peer, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayConnectionListEntity(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string authorizationKey, WritableSubResource virtualNetworkGateway1, WritableSubResource virtualNetworkGateway2, WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, type, location, tags)
         {
             Etag = etag;
             AuthorizationKey = authorizationKey;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             Peer = peer;
             EnableBgp = enableBgp;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
-            IpsecPolicies = ipsecPolicies;
+            IPsecPolicies = iPsecPolicies;
             TrafficSelectorPolicies = trafficSelectorPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -91,11 +92,47 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The authorizationKey. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The reference to virtual network gateway resource. </summary>
-        public VirtualNetworkConnectionGatewayReference VirtualNetworkGateway1 { get; set; }
+        internal WritableSubResource VirtualNetworkGateway1 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkGateway1Id
+        {
+            get => VirtualNetworkGateway1 is null ? default : VirtualNetworkGateway1.Id;
+            set
+            {
+                if (VirtualNetworkGateway1 is null)
+                    VirtualNetworkGateway1 = new WritableSubResource();
+                VirtualNetworkGateway1.Id = value;
+            }
+        }
+
         /// <summary> The reference to virtual network gateway resource. </summary>
-        public VirtualNetworkConnectionGatewayReference VirtualNetworkGateway2 { get; set; }
+        internal WritableSubResource VirtualNetworkGateway2 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkGateway2Id
+        {
+            get => VirtualNetworkGateway2 is null ? default : VirtualNetworkGateway2.Id;
+            set
+            {
+                if (VirtualNetworkGateway2 is null)
+                    VirtualNetworkGateway2 = new WritableSubResource();
+                VirtualNetworkGateway2.Id = value;
+            }
+        }
+
         /// <summary> The reference to local network gateway resource. </summary>
-        public VirtualNetworkConnectionGatewayReference LocalNetworkGateway2 { get; set; }
+        internal WritableSubResource LocalNetworkGateway2 { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LocalNetworkGateway2Id
+        {
+            get => LocalNetworkGateway2 is null ? default : LocalNetworkGateway2.Id;
+            set
+            {
+                if (LocalNetworkGateway2 is null)
+                    LocalNetworkGateway2 = new WritableSubResource();
+                LocalNetworkGateway2.Id = value;
+            }
+        }
+
         /// <summary> Gateway connection type. </summary>
         public VirtualNetworkGatewayConnectionType ConnectionType { get; set; }
         /// <summary> Connection protocol used for this connection. </summary>
@@ -115,13 +152,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ingress bytes transferred in this connection. </summary>
         public long? IngressBytesTransferred { get; }
         /// <summary> The reference to peerings resource. </summary>
-        public SubResource Peer { get; set; }
+        internal WritableSubResource Peer { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PeerId
+        {
+            get => Peer is null ? default : Peer.Id;
+            set
+            {
+                if (Peer is null)
+                    Peer = new WritableSubResource();
+                Peer.Id = value;
+            }
+        }
+
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableBgp { get; set; }
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; }
+        public IList<IPsecPolicy> IPsecPolicies { get; }
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
         /// <summary> The resource GUID property of the virtual network gateway connection resource. </summary>

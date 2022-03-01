@@ -1,6 +1,12 @@
 # Release History
 
-## 5.7.0-beta.1 (Unreleased)
+## 5.7.0-beta.4 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
@@ -9,6 +15,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Enhanced README documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events dispatched for processing.
+
+## 5.7.0-beta.2 (2022-01-13)
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for processor load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+## 5.7.0-beta.1 (2021-11-09)
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessorClient` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessorClient` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+## 5.6.2 (2021-10-05)
+
+### Bugs Fixed
+
+- Dependencies have been updated to resolve an error when creating `EventSource` instances when used with Xamarin.
 
 ## 5.6.1 (2021-09-08)
 

@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
-                writer.WriteObjectValue(AvailabilitySet);
+                JsonSerializer.Serialize(writer, AvailabilitySet);
             }
             if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                writer.WriteObjectValue(VirtualMachineScaleSet);
+                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                writer.WriteObjectValue(ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
-                writer.WriteObjectValue(Host);
+                JsonSerializer.Serialize(writer, Host);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup");
-                writer.WriteObjectValue(HostGroup);
+                JsonSerializer.Serialize(writer, HostGroup);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -156,22 +156,33 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("userData");
                 writer.WriteStringValue(UserData);
             }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation");
+                writer.WriteObjectValue(CapacityReservation);
+            }
+            if (Optional.IsDefined(ApplicationProfile))
+            {
+                writer.WritePropertyName("applicationProfile");
+                writer.WriteObjectValue(ApplicationProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
-            Optional<Plan> plan = default;
+            Optional<Models.Plan> plan = default;
             Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<StorageProfile> storageProfile = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
@@ -179,14 +190,14 @@ namespace Azure.ResourceManager.Compute
             Optional<NetworkProfile> networkProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<Models.SubResource> availabilitySet = default;
-            Optional<Models.SubResource> virtualMachineScaleSet = default;
-            Optional<Models.SubResource> proximityPlacementGroup = default;
+            Optional<WritableSubResource> availabilitySet = default;
+            Optional<WritableSubResource> virtualMachineScaleSet = default;
+            Optional<WritableSubResource> proximityPlacementGroup = default;
             Optional<VirtualMachinePriorityTypes> priority = default;
             Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
-            Optional<Models.SubResource> host = default;
-            Optional<Models.SubResource> hostGroup = default;
+            Optional<WritableSubResource> host = default;
+            Optional<WritableSubResource> hostGroup = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineInstanceView> instanceView = default;
             Optional<string> licenseType = default;
@@ -195,6 +206,8 @@ namespace Azure.ResourceManager.Compute
             Optional<int> platformFaultDomain = default;
             Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
+            Optional<CapacityReservationProfile> capacityReservation = default;
+            Optional<ApplicationProfile> applicationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -204,7 +217,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = Plan.DeserializePlan(property.Value);
+                    plan = Models.Plan.DeserializePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"))
@@ -229,7 +242,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -254,7 +267,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -274,7 +287,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -285,6 +298,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -373,7 +391,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilitySet = Models.SubResource.DeserializeSubResource(property0.Value);
+                            availabilitySet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineScaleSet"))
@@ -383,7 +401,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineScaleSet = Models.SubResource.DeserializeSubResource(property0.Value);
+                            virtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"))
@@ -393,7 +411,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proximityPlacementGroup = Models.SubResource.DeserializeSubResource(property0.Value);
+                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("priority"))
@@ -433,7 +451,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            host = Models.SubResource.DeserializeSubResource(property0.Value);
+                            host = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostGroup"))
@@ -443,7 +461,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostGroup = Models.SubResource.DeserializeSubResource(property0.Value);
+                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -501,11 +519,31 @@ namespace Azure.ResourceManager.Compute
                             userData = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("capacityReservation"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("applicationProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, tags, location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet.Value, virtualMachineScaleSet.Value, proximityPlacementGroup.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host.Value, hostGroup.Value, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value);
+            return new VirtualMachineData(id, name, type, systemData, tags, location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value);
         }
     }
 }

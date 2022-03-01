@@ -211,6 +211,7 @@ Let's start by importing our namespaces.
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
+using Azure.Core.GeoJson;
 ```
 
 We'll then create a `SearchClient` to access our hotels search index.
@@ -243,6 +244,29 @@ public class Hotel
     [JsonPropertyName("HotelName")]
     [SearchableField(IsFilterable = true, IsSortable = true)]
     public string Name { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true)]
+    public GeoPoint GeoLocation { get; set; }
+
+    // Complex fields are included automatically in an index if not ignored.
+    public HotelAddress Address { get; set; }
+}
+
+public class HotelAddress
+{
+    public string StreetAddress { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string City { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string StateProvince { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string Country { get; set; }
+
+    [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+    public string PostalCode { get; set; }
 }
 ```
 
@@ -299,7 +323,10 @@ SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 
 You can use the `SearchIndexClient` to create a search index. Fields can be
 defined from a model class using `FieldBuilder`. Indexes can also define
-suggesters, lexical analyzers, and more:
+suggesters, lexical analyzers, and more.
+
+Using the [`Hotel` sample](#use-c-types-for-search-results) above,
+which defines both simple and complex fields:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));

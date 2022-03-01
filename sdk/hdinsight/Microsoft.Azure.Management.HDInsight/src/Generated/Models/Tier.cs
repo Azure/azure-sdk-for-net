@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Tier.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Tier
+    public static class Tier
     {
-        [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Premium")]
-        Premium
-    }
-    internal static class TierEnumExtension
-    {
-        internal static string ToSerializedValue(this Tier? value)
-        {
-            return value == null ? null : ((Tier)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this Tier value)
-        {
-            switch( value )
-            {
-                case Tier.Standard:
-                    return "Standard";
-                case Tier.Premium:
-                    return "Premium";
-            }
-            return null;
-        }
-
-        internal static Tier? ParseTier(this string value)
-        {
-            switch( value )
-            {
-                case "Standard":
-                    return Tier.Standard;
-                case "Premium":
-                    return Tier.Premium;
-            }
-            return null;
-        }
+        public const string Standard = "Standard";
+        public const string Premium = "Premium";
     }
 }

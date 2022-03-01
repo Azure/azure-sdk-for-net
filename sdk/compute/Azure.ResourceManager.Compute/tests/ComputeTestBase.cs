@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -12,10 +13,9 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class ComputeTestBase : ManagementRecordedTestBase<ComputeTestEnvironment>
     {
-        protected Location DefaultLocation => Location.WestUS2;
+        protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
-
+        protected Subscription DefaultSubscription { get; private set; }
         public ComputeTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -25,15 +25,17 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
         protected async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

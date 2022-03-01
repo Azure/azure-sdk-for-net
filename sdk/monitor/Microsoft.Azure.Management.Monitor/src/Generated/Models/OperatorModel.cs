@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
     public static class OperatorModel
     {
         public const string Equals = "Equals";
-        public const string NotEquals = "NotEquals";
         public const string GreaterThan = "GreaterThan";
         public const string GreaterThanOrEqual = "GreaterThanOrEqual";
         public const string LessThan = "LessThan";

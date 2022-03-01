@@ -36,13 +36,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// editions</param>
         /// <param name="supportedServerVersions">A list of supported server
         /// versions.</param>
-        /// <param name="status">The status of the capability.</param>
-        public ServerEditionCapability(string name = default(string), IList<StorageEditionCapability> supportedStorageEditions = default(IList<StorageEditionCapability>), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>), string status = default(string))
+        public ServerEditionCapability(string name = default(string), IList<StorageEditionCapability> supportedStorageEditions = default(IList<StorageEditionCapability>), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
         {
             Name = name;
             SupportedStorageEditions = supportedStorageEditions;
             SupportedServerVersions = supportedServerVersions;
-            Status = status;
             CustomInit();
         }
 
@@ -68,12 +66,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedServerVersions")]
         public IList<ServerVersionCapability> SupportedServerVersions { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the capability.
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
 
     }
 }

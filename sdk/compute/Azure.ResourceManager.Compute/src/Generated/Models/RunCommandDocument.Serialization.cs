@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<string> script = default;
             Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
             string schema = default;
+            string id = default;
             OperatingSystemTypes osType = default;
             string label = default;
             string description = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"))
@@ -55,6 +54,11 @@ namespace Azure.ResourceManager.Compute.Models
                     schema = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("osType"))
                 {
                     osType = property.Value.GetString().ToOperatingSystemTypes();
@@ -70,13 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new RunCommandDocument(id, schema, osType, label, description, script, Optional.ToList(parameters));
+            return new RunCommandDocument(schema, id, osType, label, description, script, Optional.ToList(parameters));
         }
     }
 }

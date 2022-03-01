@@ -12,6 +12,15 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
+    public partial class StorageCrc64NonCryptographicHashAlgorithm
+    {
+        internal StorageCrc64NonCryptographicHashAlgorithm() { }
+        public void Append(System.ReadOnlySpan<byte> source) { }
+        public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
+        public byte[] GetCurrentHash() { throw null; }
+        protected void GetCurrentHashCore(System.Span<byte> destination) { }
+        public void Reset() { }
+    }
     public static partial class StorageExtensions
     {
         public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
@@ -133,7 +142,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2020-10-02";
+        public const string DefaultSasVersion = "2021-04-10";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

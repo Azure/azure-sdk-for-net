@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -22,8 +21,15 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a ManagementPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ManagementPolicy : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagementPoliciesRestOperations _restClient;
+        /// <summary> Generate the resource identifier of a <see cref="ManagementPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string managementPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _managementPolicyClientDiagnostics;
+        private readonly ManagementPoliciesRestOperations _managementPolicyRestClient;
         private readonly ManagementPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class for mocking. </summary>
@@ -32,42 +38,29 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagementPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagementPolicy(ArmResource options, ManagementPolicyData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ManagementPolicy(ArmClient client, ManagementPolicyData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ManagementPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ManagementPolicy"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _managementPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string managementPolicyApiVersion);
+            _managementPolicyRestClient = new ManagementPoliciesRestOperations(_managementPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/managementPolicies";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -84,18 +77,28 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary>
+        /// Gets the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Get");
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _managementPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagementPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,18 +107,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Gets the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Get");
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managementPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
+                    throw _managementPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,33 +131,21 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementPolicyDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Delete");
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.Delete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementPolicyDeleteOperation(response);
+                var response = await _managementPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -162,17 +157,81 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementPolicyDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Delete");
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.Delete");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ManagementPolicyDeleteOperation(response);
+                var response = _managementPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new StorageArmOperation(response);
+                if (waitForCompletion)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets the managementpolicy to the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public async virtual Task<ArmOperation<ManagementPolicy>> CreateOrUpdateAsync(bool waitForCompletion, ManagementPolicyData properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _managementPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageArmOperation<ManagementPolicy>(Response.FromValue(new ManagementPolicy(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets the managementpolicy to the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual ArmOperation<ManagementPolicy> CreateOrUpdate(bool waitForCompletion, ManagementPolicyData properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _managementPolicyClientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _managementPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
+                var operation = new StorageArmOperation<ManagementPolicy>(Response.FromValue(new ManagementPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

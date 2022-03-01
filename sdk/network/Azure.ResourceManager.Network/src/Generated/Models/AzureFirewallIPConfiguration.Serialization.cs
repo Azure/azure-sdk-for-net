@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,19 +21,22 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress");
-                writer.WriteObjectValue(PublicIPAddress);
+                JsonSerializer.Serialize(writer, PublicIPAddress);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,10 +47,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> privateIPAddress = default;
-            Optional<SubResource> subnet = default;
-            Optional<SubResource> publicIPAddress = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<WritableSubResource> publicIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = SubResource.DeserializeSubResource(property0.Value);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = SubResource.DeserializeSubResource(property0.Value);
+                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -119,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallIPConfiguration(id, name.Value, etag.Value, type.Value, privateIPAddress.Value, subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new AzureFirewallIPConfiguration(id.Value, name.Value, etag.Value, type.Value, privateIPAddress.Value, subnet, publicIPAddress, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -13,13 +13,15 @@ namespace Microsoft.Azure.Management.LabServices.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An Azure resource.
+    /// Resource
     /// </summary>
+    /// <remarks>
+    /// Common fields that are returned in the response for all Azure Resource
+    /// Manager resources
+    /// </remarks>
     public partial class Resource : IResource
     {
         /// <summary>
@@ -33,18 +35,17 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            Location = location;
-            Tags = tags;
             CustomInit();
         }
 
@@ -54,34 +55,25 @@ namespace Microsoft.Azure.Management.LabServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the identifier of the resource.
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the resource.
+        /// Gets the name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource.
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

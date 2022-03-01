@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "6c05c88f-eb73-06fd-2870-9ae6d49b9a43",
         "x-ms-date": "Wed, 17 Feb 2021 02:07:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "6c05c88f-eb73-06fd-2870-9ae6d49b9a43",
         "x-ms-request-id": "8c827cfa-201e-008a-7dd1-048173000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 02:07:28 GMT",
         "x-ms-requires-sync": "true",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "5fbe75be-b045-529b-0ae3-b2c34bbb16bf",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "8c827d35-201e-008a-30d1-048173000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified blob does not exist.\n",
@@ -87,7 +87,7 @@
         "x-ms-client-request-id": "9336f239-9e26-f9fb-4164-2031bffac85c",
         "x-ms-date": "Wed, 17 Feb 2021 02:07:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "9336f239-9e26-f9fb-4164-2031bffac85c",
         "x-ms-request-id": "8c827d66-201e-008a-60d1-048173000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

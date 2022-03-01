@@ -2,7 +2,7 @@
   "Name": "VirtualMachineInfo",
   "ProtocolName": "Models.VirtualMachineInfo",
   "SummaryComment": "Info about the current state of the virtual machine.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "IsUsedInCollections": true,
   "Properties": [
     {

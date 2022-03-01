@@ -4,7 +4,7 @@
   "SummaryComment": "A user account for remote access to a compute node.",
   "ParentPathVariables": [ "parentPoolId", "parentNodeId" ],
   "IsTopLevelObject": true,
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

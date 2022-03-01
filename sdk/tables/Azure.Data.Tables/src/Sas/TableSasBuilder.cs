@@ -41,13 +41,13 @@ namespace Azure.Data.Tables.Sas
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
-            TableName = tableName.ToLowerInvariant();
+            TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions.ToLowerInvariant();
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared access signature.
         /// </summary>
         /// <param name="sasUri">The Uri containing a SAS token to parse.</param>
         /// <returns></returns>
@@ -256,7 +256,7 @@ namespace Azure.Data.Tables.Sas
         /// </returns>
         private static string GetCanonicalName(string account, string tableName) =>
             // Table: "/table/account/tablename"
-            string.Join("", new[] { "/table/", account, "/", tableName });
+            string.Join("", new[] { "/table/", account, "/", tableName.ToLowerInvariant() });
 
         /// <summary>
         /// Returns a string that represents the current object.

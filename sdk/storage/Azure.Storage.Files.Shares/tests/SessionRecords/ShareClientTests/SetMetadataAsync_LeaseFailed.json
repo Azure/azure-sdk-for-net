@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "fe685d52-a0dc-7c04-0d0e-a0172b8cc1e6",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "fe685d52-a0dc-7c04-0d0e-a0172b8cc1e6",
         "x-ms-request-id": "21a5d4b7-701a-0087-0777-6b49a7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -67,7 +67,7 @@
         "x-ms-client-request-id": "a84c26fb-11b0-db49-ee02-f212a0df653b",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "21a5d4ba-701a-0087-0877-6b49a7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the file share.\n",
@@ -89,7 +89,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:40 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -103,7 +103,7 @@
         ],
         "x-ms-client-request-id": "f12a6eba-de84-0ceb-8545-47668a14f966",
         "x-ms-request-id": "21a5d4c3-701a-0087-0e77-6b49a7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

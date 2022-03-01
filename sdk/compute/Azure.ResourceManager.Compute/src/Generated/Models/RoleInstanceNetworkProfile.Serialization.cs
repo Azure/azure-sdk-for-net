@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RoleInstanceNetworkProfile
+    internal partial class RoleInstanceNetworkProfile
     {
         internal static RoleInstanceNetworkProfile DeserializeRoleInstanceNetworkProfile(JsonElement element)
         {
-            Optional<IReadOnlyList<SubResource>> networkInterfaces = default;
+            Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                     }
                     networkInterfaces = array;
                     continue;

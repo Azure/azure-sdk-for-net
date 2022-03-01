@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='disk'>
         /// Disk object supplied in the body of the Put disk operation.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='disk'>
         /// Disk object supplied in the body of the Patch disk operation.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get disk access operation.
@@ -721,7 +721,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -745,7 +745,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='disk'>
         /// Disk object supplied in the body of the Put disk operation.
@@ -793,7 +793,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 disk.Validate();
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -977,7 +977,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='disk'>
         /// Disk object supplied in the body of the Patch disk operation.
@@ -1021,7 +1021,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "disk");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1205,7 +1205,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1239,7 +1239,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1380,7 +1380,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get disk access operation.
@@ -1428,7 +1428,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 grantAccessData.Validate();
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1594,7 +1594,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='diskName'>
         /// The name of the managed disk that is being created. The name can't be
         /// changed after the disk is created. Supported characters for the name are
-        /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+        /// a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1628,7 +1628,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskName");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

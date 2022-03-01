@@ -7,6 +7,8 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.QueueStorage/preview/2018-03-28/queue.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ### Don't include queue name or message ID path - we have direct URIs.

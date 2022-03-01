@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,8 +16,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WriteEndObject();
         }
 
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> contentVersion = default;
             Optional<object> parameters = default;
             Optional<IReadOnlyList<object>> resources = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"))
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineCaptureResult(id, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
+            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
         }
     }
 }

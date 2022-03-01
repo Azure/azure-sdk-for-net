@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "216",
+        "Content-Length": "117",
         "Content-Type": "application/json",
-        "traceparent": "00-d717943e8899924085436f44f6954067-2ccedff53d88a943-00",
+        "traceparent": "00-16b92ded7ac0524099f79653d639b871-df8e762822b53145-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "6d41977614fabfa0e581cdfe6ec10adf",
         "x-ms-return-client-request-id": "true"
@@ -20,21 +20,21 @@
         "name": "tnufhitt",
         "type": "azureblob",
         "credentials": {
-          "connectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net"
+          "connectionString": "Sanitized"
         },
         "container": {
-          "name": "hryadfhv"
+          "name": "rjckjnoe"
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "6d419776-14fa-bfa0-e581-cdfe6ec10adf",
-        "Content-Length": "387",
+        "Content-Length": "394",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Jul 2021 20:05:35 GMT",
-        "elapsed-time": "80",
-        "ETag": "W/\u00220x8D93D94C1B9FEAA\u0022",
+        "Date": "Fri, 01 Oct 2021 19:44:03 GMT",
+        "elapsed-time": "57",
+        "ETag": "W/\u00220x8D98513D2FCD496\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/datasources(\u0027tnufhitt\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
@@ -46,16 +46,16 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#datasources/$entity",
-        "@odata.etag": "\u00220x8D93D94C1B9FEAA\u0022",
+        "@odata.etag": "\u00220x8D98513D2FCD496\u0022",
         "name": "tnufhitt",
         "description": null,
         "type": "azureblob",
         "subtype": null,
         "credentials": {
-          "connectionString": null
+          "connectionString": "Sanitized"
         },
         "container": {
-          "name": "hryadfhv",
+          "name": "rjckjnoe",
           "query": null
         },
         "dataChangeDetectionPolicy": null,
@@ -72,10 +72,10 @@
         "api-key": "Sanitized",
         "Content-Length": "76",
         "Content-Type": "application/json",
-        "traceparent": "00-d463913f498c194c9593cc1f1b7e823c-a6e3d4240ac5954e-00",
+        "traceparent": "00-741f08077af9f640af56b3b228c35513-22579712bf7d6d4f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "3ee4de424fcff29c8e30f4957851a581",
         "x-ms-return-client-request-id": "true"
@@ -83,7 +83,7 @@
       "RequestBody": {
         "name": "hoxoyjdj",
         "dataSourceName": "tnufhitt",
-        "targetIndexName": "tcmulcbn"
+        "targetIndexName": "heniiowi"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -91,9 +91,9 @@
         "client-request-id": "3ee4de42-4fcf-f29c-8e30-f4957851a581",
         "Content-Length": "365",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Jul 2021 20:05:35 GMT",
-        "elapsed-time": "339",
-        "ETag": "W/\u00220x8D93D94C1E13CDA\u0022",
+        "Date": "Fri, 01 Oct 2021 19:44:25 GMT",
+        "elapsed-time": "21634",
+        "ETag": "W/\u00220x8D98513DFC74311\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/indexers(\u0027hoxoyjdj\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
@@ -105,12 +105,12 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexers/$entity",
-        "@odata.etag": "\u00220x8D93D94C1E13CDA\u0022",
+        "@odata.etag": "\u00220x8D98513DFC74311\u0022",
         "name": "hoxoyjdj",
         "description": null,
         "dataSourceName": "tnufhitt",
         "skillsetName": null,
-        "targetIndexName": "tcmulcbn",
+        "targetIndexName": "heniiowi",
         "disabled": null,
         "schedule": null,
         "parameters": null,
@@ -128,12 +128,12 @@
         "api-key": "Sanitized",
         "Content-Length": "202",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D93D94C1E13CDA\u0022",
+        "If-Match": "\u00220x8D98513DFC74311\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-725aa8ea57074e4582167291e92569a3-f6729b6f79400546-00",
+        "traceparent": "00-eafc6fc48598764984923b33a07e4a54-ca1804b537977248-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "586dc1430e6f715c3948eb4695f8a235",
         "x-ms-return-client-request-id": "true"
@@ -142,10 +142,10 @@
         "name": "hoxoyjdj",
         "description": "Updated description",
         "dataSourceName": "tnufhitt",
-        "targetIndexName": "tcmulcbn",
+        "targetIndexName": "heniiowi",
         "fieldMappings": [],
         "outputFieldMappings": [],
-        "@odata.etag": "\u00220x8D93D94C1E13CDA\u0022"
+        "@odata.etag": "\u00220x8D98513DFC74311\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -153,9 +153,9 @@
         "client-request-id": "586dc143-0e6f-715c-3948-eb4695f8a235",
         "Content-Length": "382",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Jul 2021 20:05:37 GMT",
-        "elapsed-time": "238",
-        "ETag": "W/\u00220x8D93D94C220743B\u0022",
+        "Date": "Fri, 01 Oct 2021 19:44:25 GMT",
+        "elapsed-time": "393",
+        "ETag": "W/\u00220x8D98513E029710C\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -166,12 +166,12 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexers/$entity",
-        "@odata.etag": "\u00220x8D93D94C220743B\u0022",
+        "@odata.etag": "\u00220x8D98513E029710C\u0022",
         "name": "hoxoyjdj",
         "description": "Updated description",
         "dataSourceName": "tnufhitt",
         "skillsetName": null,
-        "targetIndexName": "tcmulcbn",
+        "targetIndexName": "heniiowi",
         "disabled": null,
         "schedule": null,
         "parameters": null,
@@ -187,10 +187,10 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-e30670eb774bd64d91546dae84730016-cff826f1d4e7a246-00",
+        "traceparent": "00-42b1de01df7eef498aedaef54ef190b5-a275c883d283014f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "1c2b7f4b613095efe5db703ecd7567b7",
         "x-ms-return-client-request-id": "true"
@@ -200,10 +200,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "1c2b7f4b-6130-95ef-e5db-703ecd7567b7",
-        "Content-Length": "2157",
+        "Content-Length": "2189",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Jul 2021 20:05:47 GMT",
-        "elapsed-time": "18",
+        "Date": "Fri, 01 Oct 2021 19:44:36 GMT",
+        "elapsed-time": "14",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -220,12 +220,12 @@
           "status": "success",
           "statusDetail": null,
           "errorMessage": null,
-          "startTime": "2021-07-02T20:05:37.328Z",
-          "endTime": "2021-07-02T20:05:37.713Z",
+          "startTime": "2021-10-01T19:44:26.084Z",
+          "endTime": "2021-10-01T19:44:27.928Z",
           "itemsProcessed": 10,
           "itemsFailed": 0,
-          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:37.333Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:26.116Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "mode": "indexingAllDocs",
           "errors": [],
           "warnings": [],
@@ -236,12 +236,12 @@
             "status": "success",
             "statusDetail": null,
             "errorMessage": null,
-            "startTime": "2021-07-02T20:05:37.328Z",
-            "endTime": "2021-07-02T20:05:37.713Z",
+            "startTime": "2021-10-01T19:44:26.084Z",
+            "endTime": "2021-10-01T19:44:27.928Z",
             "itemsProcessed": 10,
             "itemsFailed": 0,
-            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:37.333Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:26.116Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
             "mode": "indexingAllDocs",
             "errors": [],
             "warnings": [],
@@ -255,11 +255,12 @@
         },
         "currentState": {
           "mode": "indexingAllDocs",
-          "allDocsInitialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:37.333Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "allDocsFinalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "allDocsInitialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:26.116Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "allDocsFinalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "resetDocsInitialTrackingState": null,
           "resetDocsFinalTrackingState": null,
-          "resetDocumentKeys": []
+          "resetDocumentKeys": [],
+          "resetDatasourceDocumentIds": []
         }
       }
     },
@@ -269,10 +270,10 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-0bf50946ea2c544fa0af67f371387bf3-f5b07f6b56c8a64d-00",
+        "traceparent": "00-ac82124fc1fb7d47927129c02aa9917c-dfa2dace4f15994c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "3780faa3f2d233518172058763555c95",
         "x-ms-return-client-request-id": "true"
@@ -283,8 +284,8 @@
         "Cache-Control": "no-cache",
         "client-request-id": "3780faa3-f2d2-3351-8172-058763555c95",
         "Content-Length": "0",
-        "Date": "Fri, 02 Jul 2021 20:05:47 GMT",
-        "elapsed-time": "29",
+        "Date": "Fri, 01 Oct 2021 19:44:36 GMT",
+        "elapsed-time": "37",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "3780faa3-f2d2-3351-8172-058763555c95",
@@ -299,10 +300,10 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-88dfaf9e249b154db4e54eaf3b22b39c-964a63b58e460d4d-00",
+        "traceparent": "00-fa873be4c484f945b588d5049e17de7a-66e452d9fc113441-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "f849be8d8926e150d1d873949d1ea4c4",
         "x-ms-return-client-request-id": "true"
@@ -312,9 +313,9 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "f849be8d-8926-e150-d1d8-73949d1ea4c4",
-        "Content-Length": "2805",
+        "Content-Length": "2843",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Jul 2021 20:05:57 GMT",
+        "Date": "Fri, 01 Oct 2021 19:44:46 GMT",
         "elapsed-time": "14",
         "Expires": "-1",
         "OData-Version": "4.0",
@@ -332,12 +333,12 @@
           "status": "success",
           "statusDetail": null,
           "errorMessage": null,
-          "startTime": "2021-07-02T20:05:47.389Z",
-          "endTime": "2021-07-02T20:05:47.604Z",
+          "startTime": "2021-10-01T19:44:41.041Z",
+          "endTime": "2021-10-01T19:44:41.416Z",
           "itemsProcessed": 10,
           "itemsFailed": 0,
-          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-07-02T20:05:07.333Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:47.389Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-10-01T19:43:56.116Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:41.041Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "mode": "indexingAllDocs",
           "errors": [],
           "warnings": [],
@@ -348,12 +349,12 @@
             "status": "success",
             "statusDetail": null,
             "errorMessage": null,
-            "startTime": "2021-07-02T20:05:47.389Z",
-            "endTime": "2021-07-02T20:05:47.604Z",
+            "startTime": "2021-10-01T19:44:41.041Z",
+            "endTime": "2021-10-01T19:44:41.416Z",
             "itemsProcessed": 10,
             "itemsFailed": 0,
-            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-07-02T20:05:07.333Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:47.389Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-10-01T19:43:56.116Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:41.041Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
             "mode": "indexingAllDocs",
             "errors": [],
             "warnings": [],
@@ -363,12 +364,12 @@
             "status": "success",
             "statusDetail": null,
             "errorMessage": null,
-            "startTime": "2021-07-02T20:05:37.328Z",
-            "endTime": "2021-07-02T20:05:37.713Z",
+            "startTime": "2021-10-01T19:44:26.084Z",
+            "endTime": "2021-10-01T19:44:27.928Z",
             "itemsProcessed": 10,
             "itemsFailed": 0,
-            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:37.333Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:07.3333079\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:26.116Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:43:56.1160137\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
             "mode": "indexingAllDocs",
             "errors": [],
             "warnings": [],
@@ -382,24 +383,25 @@
         },
         "currentState": {
           "mode": "indexingAllDocs",
-          "allDocsInitialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-07-02T20:05:07.333Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-07-02T20:05:47.389Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "allDocsFinalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-07-02T20:05:17.389213\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "allDocsInitialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00222021-10-01T19:43:56.116Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-10-01T19:44:41.041Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "allDocsFinalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-10-01T19:44:11.0411954\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "resetDocsInitialTrackingState": null,
           "resetDocsFinalTrackingState": null,
-          "resetDocumentKeys": []
+          "resetDocumentKeys": [],
+          "resetDatasourceDocumentIds": []
         }
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027tcmulcbn\u0027)/docs/$count?api-version=2021-04-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027heniiowi\u0027)/docs/$count?api-version=2021-04-30-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-f874428569854f4ea1b2eaebee86c29a-e2f1f60daa16d544-00",
+        "traceparent": "00-4996cf1b33e6a9459cb30ca429c5a47a-5222ee53e68d4548-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "9aa334e06a7759632ef79abe5c68318f",
         "x-ms-return-client-request-id": "true"
@@ -411,8 +413,8 @@
         "client-request-id": "9aa334e0-6a77-5963-2ef7-9abe5c68318f",
         "Content-Length": "5",
         "Content-Type": "text/plain",
-        "Date": "Fri, 02 Jul 2021 20:05:57 GMT",
-        "elapsed-time": "26",
+        "Date": "Fri, 01 Oct 2021 19:44:46 GMT",
+        "elapsed-time": "11",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -424,15 +426,15 @@
       "ResponseBody": "\uFEFF10"
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027tcmulcbn\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027heniiowi\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-406b0bea9b5a0441b77adaeb4c35f0a3-ff04baff74067d44-00",
+        "traceparent": "00-b0e9d471296d46478a09d34996378e40-6866180e814b2446-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20211001.1",
+          "(.NET 5.0.10; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "0fb0da7e6e2b1a91a99e66fa7ebc9563",
         "x-ms-return-client-request-id": "true"
@@ -442,8 +444,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "0fb0da7e-6e2b-1a91-a99e-66fa7ebc9563",
-        "Date": "Fri, 02 Jul 2021 20:05:57 GMT",
-        "elapsed-time": "132",
+        "Date": "Fri, 01 Oct 2021 19:44:46 GMT",
+        "elapsed-time": "171",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "0fb0da7e-6e2b-1a91-a99e-66fa7ebc9563",
@@ -454,9 +456,9 @@
     }
   ],
   "Variables": {
-    "BlobContainerName": "hryadfhv",
+    "BlobContainerName": "rjckjnoe",
     "RandomSeed": "939854059",
-    "SearchIndexName": "tcmulcbn",
+    "SearchIndexName": "heniiowi",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
     "SEARCH_SERVICE_NAME": "mohitc-acs",

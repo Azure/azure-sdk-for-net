@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -33,8 +38,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PredefinedPolicies))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PredefinedPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -78,17 +81,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayAvailableSslOptions DeserializeApplicationGatewayAvailableSslOptions(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceIdentifier id = default;
-            Optional<IList<SubResource>> predefinedPolicies = default;
+            Optional<IList<WritableSubResource>> predefinedPolicies = default;
             Optional<ApplicationGatewaySslPolicyName> defaultPolicy = default;
             Optional<IList<ApplicationGatewaySslCipherSuite>> availableCipherSuites = default;
             Optional<IList<ApplicationGatewaySslProtocol>> availableProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -119,11 +127,6 @@ namespace Azure.ResourceManager.Network.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -140,10 +143,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             predefinedPolicies = array;
                             continue;
@@ -192,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableSslOptions(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
+            return new ApplicationGatewayAvailableSslOptions(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToList(predefinedPolicies), Optional.ToNullable(defaultPolicy), Optional.ToList(availableCipherSuites), Optional.ToList(availableProtocols));
         }
     }
 }

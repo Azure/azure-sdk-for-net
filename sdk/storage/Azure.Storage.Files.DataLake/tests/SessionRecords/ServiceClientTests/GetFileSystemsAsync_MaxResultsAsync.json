@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "03b2a871-750a-58de-1547-e9c593631b89",
         "x-ms-date": "Wed, 17 Feb 2021 22:20:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "03b2a871-750a-58de-1547-e9c593631b89",
         "x-ms-request-id": "bfda5c6c-601e-000c-257b-05e857000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "0b723233-c56e-d3f7-dd02-5899b189ee94",
         "x-ms-date": "Wed, 17 Feb 2021 22:20:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         ],
         "x-ms-client-request-id": "0b723233-c56e-d3f7-dd02-5899b189ee94",
         "x-ms-request-id": "bfda5ceb-601e-000c-157b-05e857000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "372131b0-420e-c6d8-e611-436ed276c3e2",
         "x-ms-date": "Wed, 17 Feb 2021 22:20:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -96,7 +96,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "372131b0-420e-c6d8-e611-436ed276c3e2",
         "x-ms-request-id": "bfda5d6a-601e-000c-0f7b-05e857000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seannse.blob.core.windows.net/\"><MaxResults>1</MaxResults><Containers><Container><Name>adlstest1</Name><Properties><Last-Modified>Wed, 27 Nov 2019 19:10:42 GMT</Last-Modified><Etag>\"0x8D7736D7FBAC550\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold></Properties></Container></Containers><NextMarker>/seannse/container10</NextMarker></EnumerationResults>"
     },
@@ -114,7 +114,7 @@
         "x-ms-client-request-id": "80e9f760-b667-b685-ca73-cf6cb6aa5124",
         "x-ms-date": "Wed, 17 Feb 2021 22:20:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -127,7 +127,7 @@
         ],
         "x-ms-client-request-id": "80e9f760-b667-b685-ca73-cf6cb6aa5124",
         "x-ms-request-id": "bfda5ddc-601e-000c-797b-05e857000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

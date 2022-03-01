@@ -172,6 +172,48 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
+            /// The List operation gets information about the private endpoint connections
+            /// associated with the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group that contains the key vault.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the key vault.
+            /// </param>
+            public static IPage<PrivateEndpointConnection> ListByResource(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string vaultName)
+            {
+                return operations.ListByResourceAsync(resourceGroupName, vaultName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The List operation gets information about the private endpoint connections
+            /// associated with the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group that contains the key vault.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the key vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PrivateEndpointConnection>> ListByResourceAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceWithHttpMessagesAsync(resourceGroupName, vaultName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified private endpoint connection associated with the key
             /// vault.
             /// </summary>
@@ -214,6 +256,42 @@ namespace Microsoft.Azure.Management.KeyVault
             public static async Task<PrivateEndpointConnection> BeginDeleteAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vaultName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The List operation gets information about the private endpoint connections
+            /// associated with the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PrivateEndpointConnection> ListByResourceNext(this IPrivateEndpointConnectionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The List operation gets information about the private endpoint connections
+            /// associated with the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PrivateEndpointConnection>> ListByResourceNextAsync(this IPrivateEndpointConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

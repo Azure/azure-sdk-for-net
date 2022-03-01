@@ -215,6 +215,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [RecordedTest]
+        public async Task RecognizeLinkedEntitiesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>()
+                {
+                    new RecognizeLinkedEntitiesAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "RecognizeLinkedEntitiesWithDisabledServiceLogs"
+                    },
+                    new RecognizeLinkedEntitiesAction()
+                    {
+                        ActionName = "RecognizeLinkedEntities"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+
+            Assert.IsNotNull(RecognizeLinkedEntitiesActionsResults);
+
+            IList<string> expected = new List<string> { "RecognizeLinkedEntities", "RecognizeLinkedEntitiesWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, RecognizeLinkedEntitiesActionsResults.Select(result => result.ActionName));
+        }
+
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
