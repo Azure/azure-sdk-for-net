@@ -10,7 +10,7 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class MetricsDataTests
     {
@@ -55,7 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal(name, metricData.Metrics.First().Name);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
             Assert.Equal(dataPointType, metricData.Metrics.First().DataPointType);
-            Assert.Empty(metricData.Properties);
+            // Properties will contain _MS.AggregationIntervalMs
+            Assert.Equal(1, metricData.Properties.Count);
         }
 
         [InlineData(MetricType.DoubleSum)]

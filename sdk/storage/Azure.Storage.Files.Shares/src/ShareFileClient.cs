@@ -1011,6 +1011,49 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileCopyInfo> StartCopy(
+            Uri sourceUri,
+            ShareFileCopyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            StartCopyInternal(
+                sourceUri: sourceUri,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission,
+                filePermissionCopyMode: options?.FilePermissionCopyMode,
+                ignoreReadOnly: options?.IgnoreReadOnly,
+                setArchiveAttribute: options?.SetArchiveAttribute,
+                conditions: options?.Conditions,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
@@ -1050,16 +1093,19 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileCopyInfo> StartCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            PermissionCopyMode? filePermissionCopyMode = default,
-            bool? ignoreReadOnly = default,
-            bool? setArchiveAttribute = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyMode? filePermissionCopyMode,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             StartCopyInternal(
                 sourceUri,
                 metadata,
@@ -1069,6 +1115,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly,
                 setArchiveAttribute,
                 conditions,
+                copyableFileSmbProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1114,9 +1161,53 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
                 conditions: default,
+                copyableFileSmbProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+            Uri sourceUri,
+            ShareFileCopyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await StartCopyInternal(
+                sourceUri: sourceUri,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission,
+                filePermissionCopyMode: options?.FilePermissionCopyMode,
+                ignoreReadOnly: options?.IgnoreReadOnly,
+                setArchiveAttribute: options?.SetArchiveAttribute,
+                conditions: options?.Conditions,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                async: true,
+                cancellationToken: cancellationToken).
+                ConfigureAwait(false);
 
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
@@ -1167,16 +1258,19 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            PermissionCopyMode? filePermissionCopyMode = default,
-            bool? ignoreReadOnly = default,
-            bool? setArchiveAttribute = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyMode? filePermissionCopyMode,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await StartCopyInternal(
                 sourceUri,
                 metadata,
@@ -1186,6 +1280,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly,
                 setArchiveAttribute,
                 conditions,
+                copyableFileSmbProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1231,6 +1326,7 @@ namespace Azure.Storage.Files.Shares
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
                 conditions: default,
+                copyableFileSmbProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1271,6 +1367,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
+        /// </param>
+        /// <param name="copyableFileSmbProperties">
+        /// SMB properties to copy from the source file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1296,6 +1395,7 @@ namespace Azure.Storage.Files.Shares
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
             ShareFileRequestConditions conditions,
+            CopyableFileSmbProperties? copyableFileSmbProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1314,13 +1414,64 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileStartCopyHeaders> response;
 
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes) == CopyableFileSmbProperties.FileAttributes
+                        && smbProperties?.FileAttributes != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.");
+                    }
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn) == CopyableFileSmbProperties.CreatedOn
+                        && smbProperties?.FileCreatedOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.");
+                    }
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn) == CopyableFileSmbProperties.LastWrittenOn
+                        && smbProperties?.FileLastWrittenOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.");
+                    }
+
+                    string fileAttributes = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes)
+                        == CopyableFileSmbProperties.FileAttributes)
+                    {
+                        fileAttributes = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileAttributes = smbProperties?.FileAttributes?.ToAttributesString();
+                    }
+
+                    string fileCreatedOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn)
+                        == CopyableFileSmbProperties.CreatedOn)
+                    {
+                        fileCreatedOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileCreatedOn = smbProperties?.FileCreatedOn.ToFileDateTimeString();
+                    }
+
+                    string fileLastWrittenOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn)
+                        == CopyableFileSmbProperties.LastWrittenOn)
+                    {
+                        fileLastWrittenOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileLastWrittenOn = smbProperties?.FileLastWrittenOn.ToFileDateTimeString();
+                    }
+
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
                         FilePermissionCopyMode = filePermissionCopyMode,
                         IgnoreReadOnly = ignoreReadOnly,
-                        FileAttributes = smbProperties?.FileAttributes?.ToAttributesString(),
-                        FileCreationTime = smbProperties?.FileCreatedOn.ToFileDateTimeString(),
-                        FileLastWriteTime = smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        FileAttributes = fileAttributes,
+                        FileCreationTime = fileCreatedOn,
+                        FileLastWriteTime = fileLastWrittenOn,
                         SetArchiveAttribute = setArchiveAttribute
                     };
 

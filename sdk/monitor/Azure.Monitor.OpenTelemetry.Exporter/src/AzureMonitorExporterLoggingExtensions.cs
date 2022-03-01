@@ -3,8 +3,6 @@
 
 using System;
 
-using Azure.Monitor.OpenTelemetry.Exporter;
-
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 

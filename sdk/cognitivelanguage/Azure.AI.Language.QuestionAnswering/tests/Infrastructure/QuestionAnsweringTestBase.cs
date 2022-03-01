@@ -19,9 +19,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             : base(isAsync, mode)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
-            Matcher = new RecordMatcher(compareBodies: false);
+            CompareBodies = false;
 
-            Sanitizer = new QuestionAnsweringRecordedTestSanitizer();
+            SanitizedHeaders.Add(QuestionAnsweringClient.AuthorizationHeader);
             ServiceVersion = serviceVersion;
         }
 

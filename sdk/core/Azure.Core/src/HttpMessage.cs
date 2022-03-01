@@ -85,7 +85,7 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal void ApplyRequestContext(RequestContext? context, CoreResponseClassifier? classifier)
+        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)
             {
