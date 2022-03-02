@@ -10,31 +10,27 @@
 
 namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// The properties of a storage account for a container registry. Only
-    /// applicable to Classic SKU.
-    /// </summary>
-    public partial class StorageAccountProperties
+    public partial class PipelineTriggerProperties
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the PipelineTriggerProperties class.
         /// </summary>
-        public StorageAccountProperties()
+        public PipelineTriggerProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the PipelineTriggerProperties class.
         /// </summary>
-        /// <param name="id">The resource ID of the storage account.</param>
-        public StorageAccountProperties(string id)
+        /// <param name="sourceTrigger">The source trigger properties of the
+        /// pipeline.</param>
+        public PipelineTriggerProperties(PipelineSourceTriggerProperties sourceTrigger = default(PipelineSourceTriggerProperties))
         {
-            Id = id;
+            SourceTrigger = sourceTrigger;
             CustomInit();
         }
 
@@ -44,22 +40,22 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account.
+        /// Gets or sets the source trigger properties of the pipeline.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "sourceTrigger")]
+        public PipelineSourceTriggerProperties SourceTrigger { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (SourceTrigger != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                SourceTrigger.Validate();
             }
         }
     }
