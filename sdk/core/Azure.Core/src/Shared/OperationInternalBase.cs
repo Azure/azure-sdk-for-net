@@ -100,8 +100,8 @@ namespace Azure.Core
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
-        /// is then use as the wait interval.
-        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms".
+        /// is then used as the wait interval.
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
         ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
@@ -146,8 +146,8 @@ namespace Azure.Core
         /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
-        /// is then use as the wait interval.
-        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms".
+        /// is then used as the wait interval.
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>

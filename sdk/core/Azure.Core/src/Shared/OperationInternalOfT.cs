@@ -77,7 +77,7 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="fallbackStrategy">The fallback delay strategy when retry after header is not present.  Default is <see cref="ConstantDelayStrategy"/>.</param>
+        /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
@@ -135,8 +135,8 @@ namespace Azure.Core
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
-        /// is then use as the wait interval.
-        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms".
+        /// is then used as the wait interval.
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
         ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
@@ -182,7 +182,7 @@ namespace Azure.Core
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
         /// is then use as the wait interval.
-        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms".
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
         ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
