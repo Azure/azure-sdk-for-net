@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         private readonly int _capacity;
-        internal readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
+        private readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
         private readonly Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>> _map;
         private readonly object _syncLock;
 
