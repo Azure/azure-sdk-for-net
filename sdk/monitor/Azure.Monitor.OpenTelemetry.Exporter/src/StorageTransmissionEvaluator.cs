@@ -38,8 +38,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds current export duration in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void UpdateExportDuration(double currentExportDuration)
+        internal void AddExportDurationToDataSample(double currentBatchExportDuration)
         {
+            _currentBatchExportDuration = currentBatchExportDuration;
+
             _exportDurationIndex++;
 
             // if we run out of elements, start from beginning
@@ -49,47 +51,59 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             _exportDurationRunningSum -= _exportDurationsInSeconds[_exportDurationIndex];
-            _exportDurationsInSeconds[_exportDurationIndex] = currentExportDuration;
-            _exportDurationRunningSum += currentExportDuration;
+            _exportDurationsInSeconds[_exportDurationIndex] = currentBatchExportDuration;
+            _exportDurationRunningSum += currentBatchExportDuration;
         }
 
         /// <summary>
         /// Adds current export time interval in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
+        internal void AddExportIntervalToDataSample(double exportIntervalInSeconds)
+        {
+            _exportIntervalIndex++;
+
+            // if we run out of elements, start from beginning
+            if (_exportIntervalIndex == _sampleSize)
+            {
+                _exportIntervalIndex = 0;
+            }
+
+            // We have now enough samples to calculate avg.
+            if (!_enoughSampleSize && _exportIntervalIndex == _sampleSize - 1)
+            {
+                _enoughSampleSize = true;
+            }
+
+            _exportIntervalRunningSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
+            _exportIntervalsInSeconds[_exportIntervalIndex] = exportIntervalInSeconds;
+            _exportIntervalRunningSum += exportIntervalInSeconds;
+        }
+
+        /// <summary>
+        /// Calculates current export interval and adds it to data sample.
+        /// </summary>
         internal void UpdateExportInterval()
         {
             long curExportTimestampTicks = Stopwatch.GetTimestamp();
 
             // todo: check if this can fail
-            double exportIntervalSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
+            double exportIntervalInSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
 
             _prevExportTimestampTicks = curExportTimestampTicks;
 
             // If total time elapsed > 2 days
             // Set exportIntervalSeconds to 0
             // This can happen if there was no export in 2 days of application run.
-            if (exportIntervalSeconds > 172800)
+            if (exportIntervalInSeconds > 172800)
             {
-                exportIntervalSeconds = 0;
+                exportIntervalInSeconds = 0;
             }
 
-            _exportIntervalIndex++;
-
-            // if we run out of elements, start from beginning
-            // This also means we now have enough samples to start calculating avg.
-            if (_exportIntervalIndex == _sampleSize)
-            {
-                _enoughSampleSize = true;
-                _exportIntervalIndex = 0;
-            }
-
-            _exportIntervalRunningSum -= _exportIntervalsInSeconds[_exportIntervalIndex];
-            _exportIntervalsInSeconds[_exportIntervalIndex] = exportIntervalSeconds;
-            _exportIntervalRunningSum += exportIntervalSeconds;
+            AddExportIntervalToDataSample(exportIntervalInSeconds);
         }
 
-        internal long MaxFilesToTransmitFromStorage()
+        internal long GetMaxFilesToTransmitFromStorage()
         {
             long totalFiles = 0;
 
@@ -117,7 +131,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             return (sum / length);
         }
-
-        internal double CurrentBatchExportDuration { get => _currentBatchExportDuration; set => _currentBatchExportDuration = value; }
     }
 }
