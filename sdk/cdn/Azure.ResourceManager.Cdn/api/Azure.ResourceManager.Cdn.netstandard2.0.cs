@@ -954,9 +954,9 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public enum AfdQueryStringCachingBehavior
     {
-        IgnoreQueryString = 0,
-        UseQueryString = 1,
-        NotSet = 2,
+        NotSet = 0,
+        IgnoreQueryString = 1,
+        UseQueryString = 2,
     }
     public partial class AfdRouteUpdateOptions
     {
@@ -2715,10 +2715,10 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public enum QueryStringCachingBehavior
     {
-        IgnoreQueryString = 0,
-        BypassCaching = 1,
-        UseQueryString = 2,
-        NotSet = 3,
+        NotSet = 0,
+        IgnoreQueryString = 1,
+        BypassCaching = 2,
+        UseQueryString = 3,
     }
     public partial class QueryStringMatchConditionParameters
     {

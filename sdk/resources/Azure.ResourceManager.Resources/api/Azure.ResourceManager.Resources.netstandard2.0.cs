@@ -503,9 +503,9 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public enum ApplicationLockLevel
     {
-        CanNotDelete = 0,
-        ReadOnly = 1,
-        None = 2,
+        None = 0,
+        CanNotDelete = 1,
+        ReadOnly = 2,
     }
     public partial class ApplicationManagedIdentity
     {
@@ -517,10 +517,10 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public enum ApplicationManagedIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationManagementMode : System.IEquatable<Azure.ResourceManager.Resources.Models.ApplicationManagementMode>

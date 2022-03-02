@@ -4140,10 +4140,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public enum ResourceIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     public partial class ResourceInstanceViewStatus
     {
@@ -4193,9 +4193,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public enum ResourceSkuCapacityScaleType
     {
-        Automatic = 0,
-        Manual = 1,
-        None = 2,
+        None = 0,
+        Automatic = 1,
+        Manual = 2,
     }
     public partial class ResourceSkuCosts
     {
@@ -5260,8 +5260,8 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public enum VirtualMachineScaleSetSkuScaleType
     {
-        Automatic = 0,
-        None = 1,
+        None = 0,
+        Automatic = 1,
     }
     public partial class VirtualMachineScaleSetStorageProfile
     {

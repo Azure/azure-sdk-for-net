@@ -4894,20 +4894,20 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum CertificateOrderActionType
     {
-        CertificateIssued = 0,
-        CertificateOrderCanceled = 1,
-        CertificateOrderCreated = 2,
-        CertificateRevoked = 3,
-        DomainValidationComplete = 4,
-        FraudDetected = 5,
-        OrgNameChange = 6,
-        OrgValidationComplete = 7,
-        SanDrop = 8,
-        FraudCleared = 9,
-        CertificateExpired = 10,
-        CertificateExpirationWarning = 11,
-        FraudDocumentationRequired = 12,
-        Unknown = 13,
+        Unknown = 0,
+        CertificateIssued = 1,
+        CertificateOrderCanceled = 2,
+        CertificateOrderCreated = 3,
+        CertificateRevoked = 4,
+        DomainValidationComplete = 5,
+        FraudDetected = 6,
+        OrgNameChange = 7,
+        OrgValidationComplete = 8,
+        SanDrop = 9,
+        FraudCleared = 10,
+        CertificateExpired = 11,
+        CertificateExpirationWarning = 12,
+        FraudDocumentationRequired = 13,
     }
     public partial class CertificateOrderContact
     {
@@ -5476,23 +5476,23 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum DomainStatus
     {
-        Active = 0,
-        Awaiting = 1,
-        Cancelled = 2,
-        Confiscated = 3,
-        Disabled = 4,
-        Excluded = 5,
-        Expired = 6,
-        Failed = 7,
-        Held = 8,
-        Locked = 9,
-        Parked = 10,
-        Pending = 11,
-        Reserved = 12,
-        Reverted = 13,
-        Suspended = 14,
-        Transferred = 15,
-        Unknown = 16,
+        Unknown = 0,
+        Active = 1,
+        Awaiting = 2,
+        Cancelled = 3,
+        Confiscated = 4,
+        Disabled = 5,
+        Excluded = 6,
+        Expired = 7,
+        Failed = 8,
+        Held = 9,
+        Locked = 10,
+        Parked = 11,
+        Pending = 12,
+        Reserved = 13,
+        Reverted = 14,
+        Suspended = 15,
+        Transferred = 16,
         Unlocked = 17,
         Unparked = 18,
         Updated = 19,
@@ -5843,11 +5843,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum InsightStatus
     {
-        Critical = 0,
-        Warning = 1,
-        Info = 2,
-        Success = 3,
-        None = 4,
+        None = 0,
+        Critical = 1,
+        Warning = 2,
+        Info = 3,
+        Success = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IpFilterTag : System.IEquatable<Azure.ResourceManager.AppService.Models.IpFilterTag>
@@ -5914,17 +5914,17 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum KeyVaultSecretStatus
     {
-        Initialized = 0,
-        WaitingOnCertificateOrder = 1,
-        Succeeded = 2,
-        CertificateOrderFailed = 3,
-        OperationNotPermittedOnKeyVault = 4,
-        AzureServiceUnauthorizedToAccessKeyVault = 5,
-        KeyVaultDoesNotExist = 6,
-        KeyVaultSecretDoesNotExist = 7,
-        UnknownError = 8,
-        ExternalPrivateKey = 9,
-        Unknown = 10,
+        Unknown = 0,
+        Initialized = 1,
+        WaitingOnCertificateOrder = 2,
+        Succeeded = 3,
+        CertificateOrderFailed = 4,
+        OperationNotPermittedOnKeyVault = 5,
+        AzureServiceUnauthorizedToAccessKeyVault = 6,
+        KeyVaultDoesNotExist = 7,
+        KeyVaultSecretDoesNotExist = 8,
+        UnknownError = 9,
+        ExternalPrivateKey = 10,
     }
     public partial class KubeEnvironmentProfile
     {
@@ -6043,10 +6043,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum ManagedServiceIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     public partial class MetricAvailability
     {
@@ -6374,9 +6374,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum PublicCertificateLocation
     {
-        CurrentUserMy = 0,
-        LocalMachineMy = 1,
-        Unknown = 2,
+        Unknown = 0,
+        CurrentUserMy = 1,
+        LocalMachineMy = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublishingProfileFormat : System.IEquatable<Azure.ResourceManager.AppService.Models.PublishingProfileFormat>
@@ -6887,9 +6887,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public enum SiteRuntimeState
     {
-        Ready = 0,
-        Stopped = 1,
-        Unknown = 2,
+        Unknown = 0,
+        Ready = 1,
+        Stopped = 2,
     }
     public partial class SiteSeal
     {

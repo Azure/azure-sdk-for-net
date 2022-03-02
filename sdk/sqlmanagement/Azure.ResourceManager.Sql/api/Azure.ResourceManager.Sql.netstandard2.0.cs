@@ -4228,10 +4228,10 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum AutomaticTuningMode
     {
-        Inherit = 0,
-        Custom = 1,
-        Auto = 2,
-        Unspecified = 3,
+        Unspecified = 0,
+        Inherit = 1,
+        Custom = 2,
+        Auto = 3,
     }
     public enum AutomaticTuningOptionModeActual
     {
@@ -4254,9 +4254,9 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum AutomaticTuningServerMode
     {
-        Custom = 0,
-        Auto = 1,
-        Unspecified = 2,
+        Unspecified = 0,
+        Custom = 1,
+        Auto = 2,
     }
     public partial class AutomaticTuningServerOptions
     {

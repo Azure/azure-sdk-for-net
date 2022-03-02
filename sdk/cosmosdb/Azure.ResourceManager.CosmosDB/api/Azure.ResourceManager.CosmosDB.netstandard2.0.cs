@@ -2281,10 +2281,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public enum ResourceIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     public partial class RestorableLocationResource
     {

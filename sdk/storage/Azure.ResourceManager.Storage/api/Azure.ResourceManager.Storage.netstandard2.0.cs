@@ -1966,9 +1966,9 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public enum PublicAccess
     {
-        Container = 0,
-        Blob = 1,
-        None = 2,
+        None = 0,
+        Container = 1,
+        Blob = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Storage.Models.PublicNetworkAccess>

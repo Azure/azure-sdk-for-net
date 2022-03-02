@@ -631,15 +631,15 @@ namespace Azure.ResourceManager.EventHubs.Models
     }
     public enum EntityStatus
     {
-        Active = 0,
-        Disabled = 1,
-        Restoring = 2,
-        SendDisabled = 3,
-        ReceiveDisabled = 4,
-        Creating = 5,
-        Deleting = 6,
-        Renaming = 7,
-        Unknown = 8,
+        Unknown = 0,
+        Active = 1,
+        Disabled = 2,
+        Restoring = 3,
+        SendDisabled = 4,
+        ReceiveDisabled = 5,
+        Creating = 6,
+        Deleting = 7,
+        Renaming = 8,
     }
     public partial class EventHubDestination
     {
@@ -795,10 +795,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     }
     public enum ResourceIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     public enum RoleDisasterRecovery
     {
