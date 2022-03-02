@@ -828,7 +828,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string lockToken,
                 string deadLetterSource,
                 DateTime expiresAtUtc,
+                DateTimeOffset expiresAt,
                 DateTime enqueuedTimeUtc,
+                DateTimeOffset enqueuedTime,
+                DateTimeOffset lockedUntil,
                 string contentType,
                 string replyTo,
                 string to,
@@ -852,8 +855,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("application/json", contentType);
                 Assert.AreEqual("value", applicationProperties["key"]);
                 Assert.AreEqual("value", userProperties["key"]);
-                Assert.IsTrue(expiresAtUtc > DateTime.UtcNow);
-                Assert.IsTrue(enqueuedTimeUtc < DateTime.UtcNow);
+                Assert.Greater(expiresAtUtc, DateTime.UtcNow);
+                Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
+                Assert.Greater(enqueuedTimeUtc, DateTime.UtcNow);
+                Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
+                Assert.Greater(lockedUntil, DateTimeOffset.UtcNow);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
@@ -1063,7 +1069,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string[] lockTokenArray,
                 string[] deadLetterSourceArray,
                 DateTime[] expiresAtUtcArray,
+                DateTimeOffset[] expiresAtArray,
                 DateTime[] enqueuedTimeUtcArray,
+                DateTimeOffset[] enqueuedTimeArray,
+                DateTimeOffset[] lockedUntilArray,
                 string[] contentTypeArray,
                 string[] replyToArray,
                 string[] toArray,
@@ -1087,8 +1096,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual("application/json", contentTypeArray[i]);
                     Assert.AreEqual("value", applicationPropertiesArray[i]["key"]);
                     Assert.AreEqual("value", userPropertiesArray[i]["key"]);
-                    Assert.IsTrue(expiresAtUtcArray[i] > DateTime.UtcNow);
-                    Assert.IsTrue(enqueuedTimeUtcArray[i] < DateTime.UtcNow);
+                    Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
+                    Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
+                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
+                    Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeArray[i]);
+                    Assert.Greater(lockedUntilArray[i], DateTimeOffset.UtcNow);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
@@ -1404,6 +1416,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
+                    // validate that manual lock renewal works
+                    var initialLockedUntil = msg.LockedUntil;
+                    await messageActions.RenewMessageLockAsync(msg);
+                    Assert.Greater(msg.LockedUntil, initialLockedUntil);
+
                     await messageActions.CompleteMessageAsync(msg);
                 }
                 _drainValidationPostDelay.Set();
