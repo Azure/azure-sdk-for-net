@@ -520,26 +520,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel left, Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.IdentityType Application { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.IdentityType Key { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.IdentityType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.IdentityType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.IdentityType left, Azure.ResourceManager.KeyVault.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityType left, Azure.ResourceManager.KeyVault.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IPRule
     {
         public IPRule(string value) { }
@@ -752,11 +732,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class MhsmPrivateLinkResourceListResult
-    {
-        internal MhsmPrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkResource> Value { get { throw null; } }
-    }
     public partial class MhsmPrivateLinkServiceConnectionState
     {
         public MhsmPrivateLinkServiceConnectionState() { }
@@ -870,11 +845,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public partial class PrivateLinkServiceConnectionState
     {

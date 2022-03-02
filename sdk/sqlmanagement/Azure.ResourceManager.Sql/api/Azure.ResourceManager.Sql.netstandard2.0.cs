@@ -4476,26 +4476,6 @@ namespace Azure.ResourceManager.Sql.Models
         public string RestorePointLabel { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Sql.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.CreatedByType left, Azure.ResourceManager.Sql.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.CreatedByType left, Azure.ResourceManager.Sql.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreateMode : System.IEquatable<Azure.ResourceManager.Sql.Models.CreateMode>
     {
         private readonly object _dummy;
@@ -5022,26 +5002,6 @@ namespace Azure.ResourceManager.Sql.Models
         Disabled = 0,
         Enabled = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.Sql.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.IdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.IdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.IdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.IdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.IdentityType left, Azure.ResourceManager.Sql.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.IdentityType left, Azure.ResourceManager.Sql.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum ImplementationMethod
     {
         TSql = 0,
@@ -5157,11 +5117,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.InstancePoolLicenseType left, Azure.ResourceManager.Sql.Models.InstancePoolLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InstancePoolUpdateOptions
-    {
-        public InstancePoolUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class InstancePoolUsage
     {
         internal InstancePoolUsage() { }
@@ -5207,11 +5162,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.JobAgentState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.JobAgentState left, Azure.ResourceManager.Sql.Models.JobAgentState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class JobAgentUpdateOptions
-    {
-        public JobAgentUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobExecutionLifecycle : System.IEquatable<Azure.ResourceManager.Sql.Models.JobExecutionLifecycle>

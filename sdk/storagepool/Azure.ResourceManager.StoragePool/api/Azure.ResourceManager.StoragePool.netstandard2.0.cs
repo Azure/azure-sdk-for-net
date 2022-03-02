@@ -132,26 +132,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         public string InitiatorIqn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MappedLuns { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.StoragePool.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.StoragePool.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StoragePool.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StoragePool.Models.CreatedByType left, Azure.ResourceManager.StoragePool.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StoragePool.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StoragePool.Models.CreatedByType left, Azure.ResourceManager.StoragePool.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DiskPoolCreate : Azure.ResourceManager.Models.ResourceData
     {
         public DiskPoolCreate(Azure.ResourceManager.StoragePool.Models.Sku sku, string location, string subnetId) { }

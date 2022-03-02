@@ -2328,11 +2328,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
     }
-    public partial class CloudServiceUpdateOptions
-    {
-        public CloudServiceUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudServiceUpgradeMode : System.IEquatable<Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode>
     {
@@ -2557,11 +2552,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DiffDiskOptions? Option { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiffDiskPlacement? Placement { get { throw null; } set { } }
     }
-    public partial class DiskAccessUpdateOptions
-    {
-        public DiskAccessUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskCreateOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskCreateOption>
     {
@@ -2640,24 +2630,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes left, Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes left, Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiskEncryptionSetIdentityType : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiskEncryptionSetIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DiskEncryptionSettings
@@ -3735,10 +3707,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Uri VhdUri { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
-    public partial class OSDiskImageEncryption : Azure.ResourceManager.Compute.Models.DiskImageEncryption
-    {
-        public OSDiskImageEncryption() { }
-    }
     public partial class OSFamilyProperties
     {
         internal OSFamilyProperties() { }
@@ -3928,11 +3896,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PrivateLinkResource> Value { get { throw null; } }
-    }
     public partial class PrivateLinkServiceConnectionState
     {
         public PrivateLinkServiceConnectionState() { }
@@ -3962,10 +3925,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType left, Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ProximityPlacementGroupUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public ProximityPlacementGroupUpdateOptions() { }
     }
     public partial class PublicIPAddressSku
     {
@@ -4137,13 +4096,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public RequestRateByIntervalInput(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMins intervalLength) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
         public Azure.ResourceManager.Compute.Models.IntervalInMins IntervalLength { get { throw null; } }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public partial class ResourceInstanceViewStatus
     {
@@ -4896,11 +4848,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
-    public partial class VirtualMachineExtensionsListResult
-    {
-        internal VirtualMachineExtensionsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Value { get { throw null; } }
-    }
     public partial class VirtualMachineExtensionUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public VirtualMachineExtensionUpdateOptions() { }
@@ -5365,11 +5312,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineScaleSetVmExtensionsListResult
-    {
-        internal VirtualMachineScaleSetVmExtensionsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionData> Value { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVmExtensionsSummary
     {

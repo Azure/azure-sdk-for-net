@@ -678,26 +678,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.CleanupOptions left, Azure.ResourceManager.Resources.Models.CleanupOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Resources.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class Dependency
     {
         internal Dependency() { }
@@ -913,12 +893,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
     }
-    public partial class JitRequestListResult
-    {
-        internal JitRequestListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.JitRequestData> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitRequestState : System.IEquatable<Azure.ResourceManager.Resources.Models.JitRequestState>
     {
@@ -942,11 +916,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.JitRequestState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitRequestState left, Azure.ResourceManager.Resources.Models.JitRequestState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class JitRequestUpdateOptions
-    {
-        public JitRequestUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class JitSchedulingPolicy
     {
@@ -1053,11 +1022,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ProvisioningState left, Azure.ResourceManager.Resources.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptLogsList
-    {
-        internal ScriptLogsList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLogData> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptProvisioningState : System.IEquatable<Azure.ResourceManager.Resources.Models.ScriptProvisioningState>
     {
@@ -1089,24 +1053,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.DateTimeOffset? ExpirationTime { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScriptType : System.IEquatable<Azure.ResourceManager.Resources.Models.ScriptType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScriptType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.ScriptType AzureCLI { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.ScriptType AzurePowerShell { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.ScriptType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.ScriptType left, Azure.ResourceManager.Resources.Models.ScriptType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.ScriptType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.ScriptType left, Azure.ResourceManager.Resources.Models.ScriptType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StatusMessage
     {

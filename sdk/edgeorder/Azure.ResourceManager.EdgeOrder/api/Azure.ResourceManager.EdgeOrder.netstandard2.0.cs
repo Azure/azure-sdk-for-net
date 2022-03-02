@@ -265,24 +265,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.MeteringType? MeteringType { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BillingType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.BillingType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BillingType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.BillingType Pav2 { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.BillingType Purchase { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.BillingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.BillingType left, Azure.ResourceManager.EdgeOrder.Models.BillingType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.BillingType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.BillingType left, Azure.ResourceManager.EdgeOrder.Models.BillingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CancellationReason
     {
         public CancellationReason(string reason) { }
@@ -332,26 +314,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal CostInformation() { }
         public string BillingInfoUrl { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.BillingMeterDetails> BillingMeterDetails { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.CreatedByType left, Azure.ResourceManager.EdgeOrder.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.CreatedByType left, Azure.ResourceManager.EdgeOrder.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CustomerSubscriptionDetails
     {

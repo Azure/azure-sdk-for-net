@@ -6041,13 +6041,6 @@ namespace Azure.ResourceManager.AppService.Models
         Integrated = 0,
         Classic = 1,
     }
-    public enum ManagedServiceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
-    }
     public partial class MetricAvailability
     {
         internal MetricAvailability() { }
@@ -6297,11 +6290,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class PrivateLinkResourcesWrapper
-    {
-        internal PrivateLinkResourcesWrapper() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public partial class ProcessThreadInfo : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {

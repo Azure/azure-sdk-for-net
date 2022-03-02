@@ -315,26 +315,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public RegenerateKeyOptions() { }
         public string Id { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType left, Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType left, Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class Sku
     {
         public Sku(string name) { }

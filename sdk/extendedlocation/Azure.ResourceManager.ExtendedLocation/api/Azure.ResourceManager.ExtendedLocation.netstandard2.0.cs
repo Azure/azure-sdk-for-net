@@ -72,26 +72,6 @@ namespace Azure.ResourceManager.ExtendedLocation
 }
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.ExtendedLocation.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.ExtendedLocation.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.ExtendedLocation.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.ExtendedLocation.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.ExtendedLocation.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ExtendedLocation.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ExtendedLocation.Models.CreatedByType left, Azure.ResourceManager.ExtendedLocation.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ExtendedLocation.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ExtendedLocation.Models.CreatedByType left, Azure.ResourceManager.ExtendedLocation.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CustomLocationOperation
     {
         internal CustomLocationOperation() { }
@@ -151,24 +131,6 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public static bool operator ==(Azure.ResourceManager.ExtendedLocation.Models.HostType left, Azure.ResourceManager.ExtendedLocation.Models.HostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ExtendedLocation.Models.HostType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ExtendedLocation.Models.HostType left, Azure.ResourceManager.ExtendedLocation.Models.HostType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType left, Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType left, Azure.ResourceManager.ExtendedLocation.Models.ResourceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

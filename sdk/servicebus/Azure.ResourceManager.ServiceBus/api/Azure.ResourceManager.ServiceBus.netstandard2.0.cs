@@ -615,26 +615,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string To { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.CreatedByType left, Azure.ResourceManager.ServiceBus.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.CreatedByType left, Azure.ResourceManager.ServiceBus.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DefaultAction : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.DefaultAction>
     {
         private readonly object _dummy;
@@ -723,13 +703,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string KeyVersion { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
     }
-    public enum ManagedServiceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
-    }
     public partial class MessageCountDetails
     {
         internal MessageCountDetails() { }
@@ -811,12 +784,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class PrivateLinkResourcesListResult
-    {
-        internal PrivateLinkResourcesListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public enum ProvisioningStateDisasterRecovery
     {
@@ -902,10 +869,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
-    }
-    public partial class SqlRuleAction : Azure.ResourceManager.ServiceBus.Models.FilterAction
-    {
-        public SqlRuleAction() { }
     }
     public enum UnavailableReason
     {

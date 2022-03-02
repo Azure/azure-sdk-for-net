@@ -1582,26 +1582,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public float? Ts { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.CreatedByType left, Azure.ResourceManager.CosmosDB.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.CreatedByType left, Azure.ResourceManager.CosmosDB.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreateMode : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CreateMode>
     {
         private readonly object _dummy;
@@ -1808,13 +1788,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ExcludedPath() { }
         public string Path { get { throw null; } set { } }
     }
-    public partial class ExtendedResourceProperties
-    {
-        public ExtendedResourceProperties() { }
-        public string Etag { get { throw null; } }
-        public string Rid { get { throw null; } }
-        public float? Ts { get { throw null; } }
-    }
     public partial class FailoverPolicies
     {
         public FailoverPolicies(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.FailoverPolicy> failoverPoliciesValue) { }
@@ -1995,24 +1968,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? Healthy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairRunIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairSchedules { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedCassandraResourceIdentityType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedCassandraResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType left, Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType left, Azure.ResourceManager.CosmosDB.Models.ManagedCassandraResourceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MetricAvailability
     {
@@ -2278,13 +2233,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public RegionForOnlineOffline(string region) { }
         public string Region { get { throw null; } }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public partial class RestorableLocationResource
     {

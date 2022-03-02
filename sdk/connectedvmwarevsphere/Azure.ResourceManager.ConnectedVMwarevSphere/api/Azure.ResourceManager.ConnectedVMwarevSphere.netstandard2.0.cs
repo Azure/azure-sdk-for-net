@@ -655,26 +655,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskMode : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskMode>
     {
         private readonly object _dummy;
@@ -772,24 +752,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public int? MemorySizeMB { get { throw null; } set { } }
         public int? NumCoresPerSocket { get { throw null; } set { } }
         public int? NumCpus { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InventoryType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.InventoryType>
