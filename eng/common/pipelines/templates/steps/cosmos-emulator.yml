@@ -9,4 +9,28 @@ steps:
       arguments: >
         -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
         -StartParameters "${{ parameters.StartParameters }}"
-    displayName: Install and Launch Public Cosmos DB Emulator
+        -Stage "Install"
+      pwsh: true
+    displayName: Install Public Cosmos DB Emulator
+
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Cosmos-Emulator.ps1
+      arguments: >
+        -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
+        -StartParameters "${{ parameters.StartParameters }}"
+        -Stage "Launch"
+      pwsh: true
+    displayName: Launch Public Cosmos DB Emulator
+    continueOnError: true
+
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Cosmos-Emulator.ps1
+      arguments: >
+        -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
+        -StartParameters "${{ parameters.StartParameters }}"
+        -Stage "Launch"
+      pwsh: true
+    displayName: Retry Launch of Public Cosmos DB Emulator
+    condition: failed()

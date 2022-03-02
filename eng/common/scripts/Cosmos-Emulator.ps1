@@ -10,11 +10,17 @@ Uri for downloading the cosmosdb-emulator
 
 .PARAMETER StartParameters
 Parameter with which to launch the cosmosdb-emulator
+
+.PARAMETER Stage
+Determines what part of the script to run. Has to be either Install or Launch
 #>
 [CmdletBinding()]
 Param (
   [string] $EmulatorMsiUrl = "https://aka.ms/cosmosdb-emulator",
-  [string] $StartParameters
+  [string] $StartParameters,
+  [Parameter(Mandatory=$True)]
+  [ValidateSet('Install', 'Launch')]
+  [string] $Stage
 )
 
 $targetDir = Join-Path $Env:Temp AzureCosmosEmulator
@@ -22,42 +28,42 @@ $logFile = Join-Path $Env:Temp log.txt
 $productName = "Azure Cosmos DB Emulator"
 $emulator = (Join-Path $targetDir (Join-Path $productName "Microsoft.Azure.Cosmos.Emulator.exe"))
 
-$downloadTryCount = 0
-New-Item $targetDir -Type Directory
-New-Item $logFile -Type File
-do
+if ($Stage -eq "Install")
 {
-  # Download and Extract Public Cosmos DB Emulator
-  Write-Host "Downloading and extracting Cosmos DB Emulator - $EmulatorMsiUrl"
-  Write-Host "Target Directory $targetDir"
-  Write-Host "Log File $logFile"
+  $downloadTryCount = 0
+  New-Item $targetDir -Type Directory
+  New-Item $logFile -Type File
+  do
+  {
+    # Download and Extract Public Cosmos DB Emulator
+    Write-Host "Downloading and extracting Cosmos DB Emulator - $EmulatorMsiUrl"
+    Write-Host "Target Directory $targetDir"
+    Write-Host "Log File $logFile"
 
-  $downloadTryCount++
-  Write-Host "Download Try Count: $downloadTryCount"
-  Remove-Item -Path (Join-Path $targetDir '*') -Recurse
-  Clear-Content -Path $logFile
+    $downloadTryCount++
+    Write-Host "Download Try Count: $downloadTryCount"
+    Remove-Item -Path (Join-Path $targetDir '*') -Recurse
+    Clear-Content -Path $logFile
 
-  $installProcess  = Start-Process msiexec -Wait -PassThru -ArgumentList "/a $EmulatorMsiUrl TARGETDIR=$targetDir /qn /liew $logFile"
-  Get-Content $logFile
-  Write-Host "Exit Code: $($installProcess.ExitCode)"
+    $installProcess  = Start-Process msiexec -Wait -PassThru -ArgumentList "/a $EmulatorMsiUrl TARGETDIR=$targetDir /qn /liew $logFile"
+    Get-Content $logFile
+    Write-Host "Exit Code: $($installProcess.ExitCode)"
+  }
+  while(($installProcess.ExitCode -ne 0) -and ($downloadTryCount -lt 3))
+
+  if(Test-Path (Join-Path $Env:LOCALAPPDATA CosmosDbEmulator))
+  {
+    Write-Host "Deleting Cosmos DB Emulator data"
+    Remove-Item -Recurse -Force $Env:LOCALAPPDATA\CosmosDbEmulator
+  }
+
+  Write-Host "Getting Cosmos DB Emulator Version"
+  $fileVersion = Get-ChildItem $emulator
+  Write-Host $emulator $fileVersion.VersionInfo
 }
-while(($installProcess.ExitCode -ne 0) -and ($downloadTryCount -lt 3))
 
-if(Test-Path (Join-Path $Env:LOCALAPPDATA CosmosDbEmulator))
+if ($Stage -eq "Launch")
 {
-  Write-Host "Deleting Cosmos DB Emulator data"
-  Remove-Item -Recurse -Force $Env:LOCALAPPDATA\CosmosDbEmulator
-}
-
-Write-Host "Getting Cosmos DB Emulator Version"
-$fileVersion = Get-ChildItem $emulator
-Write-Host $emulator $fileVersion.VersionInfo
-
-$launchTryCount = 0
-do 
-{
-  $launchTryCount++
-  Write-Host "Launch Try Count: $launchTryCount"
   Write-Host "Launching Cosmos DB Emulator"
   if (!(Test-Path $emulator)) {
     Write-Error "The emulator is not installed where expected at '$emulator'"
@@ -132,6 +138,4 @@ do
   }
   until ($complete.Invoke())
   Write-Error "The emulator failed to reach Running status within ${Timeout} seconds"
-  Write-Host "Retrying emulator launch"
 }
-while(($result -ne "running") -and ($launchTryCount -lt 3))
