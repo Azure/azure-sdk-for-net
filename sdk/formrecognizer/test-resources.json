@@ -62,7 +62,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('trainingDataContainer'))]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -71,7 +71,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('trainingDataContainer'), '-v3')]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -80,7 +80,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('multipageTrainingDataContainer'))]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -89,7 +89,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('multipageTrainingDataContainer'), '-v3')]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -98,7 +98,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('selectionMarkTrainingDataContainer'))]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -107,7 +107,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('selectionMarkTrainingDataContainer'), '-v3')]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -116,7 +116,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesVariableRowsDataContainer'))]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -125,7 +125,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesVariableRowsDataContainer'), '-v3')]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -134,7 +134,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesFixedRowsDataContainer'))]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
@@ -143,7 +143,7 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesFixedRowsDataContainer'), '-v3')]",
-                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT6H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
