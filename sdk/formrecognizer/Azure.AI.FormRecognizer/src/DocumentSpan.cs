@@ -5,9 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    // TODO: should it be a struct?
     [CodeGenModel("DocumentSpan")]
-    public partial class DocumentSpan
+    public readonly partial struct DocumentSpan
     {
     }
 }

@@ -50,16 +50,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
                     Location = "eastus",
-                    AddressSpace = new AddressSpace()
-                    {
-                        AddressPrefixes = { "10.0.0.0/16", }
-                    },
-                    DhcpOptions = new DhcpOptions()
-                    {
-                        DnsServers = { "10.1.1.1", "10.1.2.4" }
-                    },
                     Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
                 };
+                vnetData.AddressPrefixes.Add("10.0.0.0/16");
+                vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
+                vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
                 VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, VnetName, vnetData)).Value;
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {

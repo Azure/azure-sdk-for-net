@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }

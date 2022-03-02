@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Describes the cloud service role sku. </summary>
         public CloudServiceRoleSku Sku { get; }
         /// <summary> Gets the properties. </summary>
-        public CloudServiceRoleProperties Properties { get; }
+        internal CloudServiceRoleProperties Properties { get; }
+        /// <summary> Specifies the ID which uniquely identifies a cloud service role. </summary>
+        public string CloudServiceRoleUniqueId
+        {
+            get => Properties.UniqueId;
+        }
     }
 }

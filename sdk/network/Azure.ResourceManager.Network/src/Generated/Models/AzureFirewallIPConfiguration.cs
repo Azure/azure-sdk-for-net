@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -46,9 +47,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
         public string PrivateIPAddress { get; }
         /// <summary> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </summary>
-        public WritableSubResource PublicIPAddress { get; set; }
+        internal WritableSubResource PublicIPAddress { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            set
+            {
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the Azure firewall IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

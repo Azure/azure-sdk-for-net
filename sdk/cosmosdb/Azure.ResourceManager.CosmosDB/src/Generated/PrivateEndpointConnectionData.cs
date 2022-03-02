@@ -37,7 +37,19 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        public PrivateEndpointProperty PrivateEndpoint { get; set; }
+        internal PrivateEndpointProperty PrivateEndpoint { get; set; }
+        /// <summary> Resource id of the private endpoint. </summary>
+        public string PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new PrivateEndpointProperty();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Group id of the private endpoint. </summary>

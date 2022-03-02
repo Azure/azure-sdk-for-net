@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DeviceUpdate
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public PrivateLinkServiceProxy() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation> GroupConnectivityInformation { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.SubResource RemotePrivateEndpointConnection { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RemotePrivateEndpointConnectionId { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

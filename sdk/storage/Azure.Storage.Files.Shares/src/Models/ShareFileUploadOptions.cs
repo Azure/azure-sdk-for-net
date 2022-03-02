@@ -21,9 +21,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
 
-        /// <summary>
-        /// Options for transactional hash content verification.
-        /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        ///// <summary>
+        ///// Options for transactional hash content verification.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

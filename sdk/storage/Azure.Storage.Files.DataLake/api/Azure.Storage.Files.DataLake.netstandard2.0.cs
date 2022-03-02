@@ -462,7 +462,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileAppendOptions() { }
         public string LeaseId { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.UploadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
     public enum DataLakeFileExpirationOrigin
     {
@@ -476,20 +475,17 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.UploadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
     public partial class DataLakeFileReadOptions
     {
         public DataLakeFileReadOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
     public partial class DataLakeFileReadToOptions
     {
         public DataLakeFileReadToOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }
     public partial class DataLakeFileScheduleDeletionOptions
@@ -510,7 +506,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.UploadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public string Umask { get { throw null; } set { } }
     }
@@ -577,7 +572,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
     }
     public partial class DataLakeQueryArrowField
     {

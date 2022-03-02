@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>2.0.0-preview</Version>
+		<Version>2.1.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
@@ -16,6 +16,7 @@ New features:
 - Backup storage redundancy now has GeoZone option and this is why API version upgrade was needed (2021-05-01-preview) for following operations: ManagedInstances, Databases, LongTermRetentionBackups, LongTermRetentionManagedInstanceBackups,
 RestorableDroppedDatabases, RestorableDroppedManagedDatabases, ServerConnecionPolicies
 - ManagedInstances StorageAccountType parameter is now replaced with RequestedBackupStorageRedundancy and CurrentBackupStorageRedundancy
+- Add IPv6 firewall rules management API (2021-08-01-preview)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

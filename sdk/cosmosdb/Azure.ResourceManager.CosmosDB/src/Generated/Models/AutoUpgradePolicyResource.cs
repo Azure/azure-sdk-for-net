@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB resource auto-upgrade policy. </summary>
-    public partial class AutoUpgradePolicyResource
+    internal partial class AutoUpgradePolicyResource
     {
         /// <summary> Initializes a new instance of AutoUpgradePolicyResource. </summary>
         public AutoUpgradePolicyResource()

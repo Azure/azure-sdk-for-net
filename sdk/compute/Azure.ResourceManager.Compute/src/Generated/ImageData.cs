@@ -46,7 +46,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The extended location of the Image. </summary>
         public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The source virtual machine from which Image is created. </summary>
-        public WritableSubResource SourceVirtualMachine { get; set; }
+        internal WritableSubResource SourceVirtualMachine { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVirtualMachineId
+        {
+            get => SourceVirtualMachine is null ? default : SourceVirtualMachine.Id;
+            set
+            {
+                if (SourceVirtualMachine is null)
+                    SourceVirtualMachine = new WritableSubResource();
+                SourceVirtualMachine.Id = value;
+            }
+        }
+
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ImageStorageProfile StorageProfile { get; set; }
         /// <summary> The provisioning state. </summary>

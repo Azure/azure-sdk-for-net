@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -55,7 +56,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public WritableSubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
         public NetworkInterfaceIPConfigurationData BackendIPConfiguration { get; }
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>

@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, VirtualMachineReimageParameters parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, VirtualMachineReimageOptions parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachine.Reimage");
             scope.Start();
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Reimage(bool waitForCompletion, VirtualMachineReimageParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(bool waitForCompletion, VirtualMachineReimageOptions parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachine.Reimage");
             scope.Start();
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.Compute
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.Compute
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(Client, originalResponse.Value), originalResponse.GetRawResponse());

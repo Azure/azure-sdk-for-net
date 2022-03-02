@@ -293,7 +293,7 @@ namespace Azure.Core.Tests
             var context = new RequestContext();
             context.AddClassifier(404, isError: false);
 
-            HttpMessage message = pipeline.CreateMessage(context, DpgClassifier.Instance);
+            HttpMessage message = pipeline.CreateMessage(context, ResponseClassifier200204304);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
@@ -344,18 +344,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        /// <summary>
-        /// Example DPG classifier for testing purposes.
-        /// </summary>
-        private sealed class DpgClassifier : CoreResponseClassifier
-        {
-            private static CoreResponseClassifier _instance;
-            public static CoreResponseClassifier Instance => _instance ??= new DpgClassifier();
-
-            public DpgClassifier() : base(stackalloc int[] { 200, 204, 304 })
-            {
-            }
-        }
+        // How classifiers will be generated in DPG.
+        private static ResponseClassifier _responseClassifier200204304;
+        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
         #endregion
 
     }
