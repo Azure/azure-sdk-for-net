@@ -223,7 +223,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         ///</summary>
         internal static string GetDbDependencyTarget(this AzMonList tagObjects)
         {
-            string target = tagObjects.GetDependencyTarget(PartBType.Db);
+            string target = tagObjects.GetDependencyTarget(OperationType.Db);
             string dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
@@ -246,16 +246,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
-        internal static string GetDependencyTarget(this AzMonList tagObjects, PartBType type)
+        internal static string GetDependencyTarget(this AzMonList tagObjects, OperationType type)
         {
             string target;
             string defaultPort;
             switch (type)
             {
-                case PartBType.Http:
+                case OperationType.Http:
                     defaultPort = GetDefaultHttpPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString());
                     break;
-                case PartBType.Db:
+                case OperationType.Db:
                     defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
                     break;
                 default:
@@ -270,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return target;
             }
 
-            if (type == PartBType.Http)
+            if (type == OperationType.Http)
             {
                 var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
                 if (!string.IsNullOrWhiteSpace(httpHost))
