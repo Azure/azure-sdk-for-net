@@ -248,18 +248,12 @@ namespace Sql.Tests
                 dbInput = new Database()
                 {
                     Location = server.Location,
-                    ElasticPoolId = null
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4")
                 };
                 var returnedDb = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
                 // Verify database has the same value for replica count as pool
                 Assert.Equal(2, returnedDb.HighAvailabilityReplicaCount);
-
-                // Get the Elastic Pool Database Activity List
-                var activity = sqlClient.ElasticPoolDatabaseActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
-                Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
-                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
-                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE").Count());
             }
         }
     }
