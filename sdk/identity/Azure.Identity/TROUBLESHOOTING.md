@@ -216,8 +216,7 @@ az account get-access-token --output json --resource https://management.core.win
 ```
 >Note that output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
 
-<a name="TroubleshootAzurePowerShellCredential"></a>
-## Troubleshooting `AzurePowershellCredential` Authentication Issues
+## Troubleshoot `AzurePowerShellCredential` Authentication Issues
 
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
