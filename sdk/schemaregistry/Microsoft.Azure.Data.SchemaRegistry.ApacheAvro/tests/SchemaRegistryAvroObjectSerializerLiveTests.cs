@@ -18,19 +18,11 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
-    public class SchemaRegistryAvroObjectSerializerLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
+    public class SchemaRegistryAvroObjectSerializerLiveTests : SchemaRegistryAvroObjectSerializerLiveTestBase
     {
         public SchemaRegistryAvroObjectSerializerLiveTests(bool isAsync) : base(isAsync)
         {
-            TestDiagnostics = false;
         }
-
-        private SchemaRegistryClient CreateClient() =>
-            InstrumentClient(new SchemaRegistryClient(
-                TestEnvironment.SchemaRegistryEndpoint,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new SchemaRegistryClientOptions())
-            ));
 
         [RecordedTest]
         public async Task CanSerializeAndDeserialize()
@@ -224,7 +216,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 #endif
             #endregion
 
-            Assert.IsFalse(((BinaryContent) eventData).IsReadOnly);
+            Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
             Assert.AreEqual("avro/binary", contentType[0]);
