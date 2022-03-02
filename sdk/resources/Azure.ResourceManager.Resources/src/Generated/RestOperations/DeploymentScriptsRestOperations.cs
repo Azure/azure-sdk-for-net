@@ -159,13 +159,10 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(options);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -176,8 +173,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -190,6 +187,10 @@ namespace Azure.ResourceManager.Resources
             if (scriptName == null)
             {
                 throw new ArgumentNullException(nameof(scriptName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, options);
@@ -214,8 +215,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="options"/> is null. </exception>
+        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -228,6 +229,10 @@ namespace Azure.ResourceManager.Resources
             if (scriptName == null)
             {
                 throw new ArgumentNullException(nameof(scriptName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, options);

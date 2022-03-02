@@ -252,13 +252,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -269,8 +266,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
-        public async Task<Response<ResourcePoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourcePoolName"/> or <paramref name="body"/> is null. </exception>
+        public async Task<Response<ResourcePoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -283,6 +280,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (resourcePoolName == null)
             {
                 throw new ArgumentNullException(nameof(resourcePoolName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourcePoolName, body);
@@ -307,8 +308,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourcePoolName"/> is null. </exception>
-        public Response<ResourcePoolData> Update(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourcePoolName"/> or <paramref name="body"/> is null. </exception>
+        public Response<ResourcePoolData> Update(string subscriptionId, string resourceGroupName, string resourcePoolName, ResourcePatch body, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -321,6 +322,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (resourcePoolName == null)
             {
                 throw new ArgumentNullException(nameof(resourcePoolName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourcePoolName, body);

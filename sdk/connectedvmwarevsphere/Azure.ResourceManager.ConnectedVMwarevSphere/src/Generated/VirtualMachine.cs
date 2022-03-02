@@ -215,8 +215,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<VirtualMachine>> UpdateAsync(bool waitForCompletion, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<VirtualMachine>> UpdateAsync(bool waitForCompletion, VirtualMachineUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachine.Update");
             scope.Start();
             try
@@ -242,8 +245,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VirtualMachine> Update(bool waitForCompletion, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<VirtualMachine> Update(bool waitForCompletion, VirtualMachineUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachine.Update");
             scope.Start();
             try

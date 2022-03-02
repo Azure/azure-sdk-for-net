@@ -200,8 +200,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TemplateSpec>> UpdateAsync(TemplateSpecUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<TemplateSpec>> UpdateAsync(TemplateSpecUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try
@@ -223,8 +226,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateSpec> Update(TemplateSpecUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<TemplateSpec> Update(TemplateSpecUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try

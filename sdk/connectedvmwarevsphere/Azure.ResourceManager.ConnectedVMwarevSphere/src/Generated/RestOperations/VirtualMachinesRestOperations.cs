@@ -252,13 +252,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(options);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -269,8 +266,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -283,6 +280,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (virtualMachineName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, options);
@@ -303,8 +304,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -317,6 +318,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (virtualMachineName == null)
             {
                 throw new ArgumentNullException(nameof(virtualMachineName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, options);

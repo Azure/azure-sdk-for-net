@@ -191,8 +191,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Application>> UpdateAsync(ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<Application>> UpdateAsync(ApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _applicationClientDiagnostics.CreateScope("Application.Update");
             scope.Start();
             try
@@ -214,8 +217,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Application> Update(ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<Application> Update(ApplicationUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _applicationClientDiagnostics.CreateScope("Application.Update");
             scope.Start();
             try

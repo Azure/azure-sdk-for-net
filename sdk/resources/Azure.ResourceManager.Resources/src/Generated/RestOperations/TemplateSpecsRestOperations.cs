@@ -169,13 +169,10 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(options);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -186,8 +183,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="options"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
-        public async Task<Response<TemplateSpecData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response<TemplateSpecData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -200,6 +197,10 @@ namespace Azure.ResourceManager.Resources
             if (templateSpecName == null)
             {
                 throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, options);
@@ -224,8 +225,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="options"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
-        public Response<TemplateSpecData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="options"/> is null. </exception>
+        public Response<TemplateSpecData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -238,6 +239,10 @@ namespace Azure.ResourceManager.Resources
             if (templateSpecName == null)
             {
                 throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, options);

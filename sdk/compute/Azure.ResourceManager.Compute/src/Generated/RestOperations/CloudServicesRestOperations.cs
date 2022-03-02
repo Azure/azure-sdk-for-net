@@ -154,13 +154,10 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(options);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -171,8 +168,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="options"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, CloudServiceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, CloudServiceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -185,6 +182,10 @@ namespace Azure.ResourceManager.Compute
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServiceName, options);
@@ -204,8 +205,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="options"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string cloudServiceName, CloudServiceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string cloudServiceName, CloudServiceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -218,6 +219,10 @@ namespace Azure.ResourceManager.Compute
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServiceName, options);

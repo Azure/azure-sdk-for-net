@@ -204,8 +204,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentScript>> UpdateAsync(DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<DeploymentScript>> UpdateAsync(DeploymentScriptUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
@@ -227,8 +230,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentScript> Update(DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<DeploymentScript> Update(DeploymentScriptUpdateOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
