@@ -175,7 +175,7 @@ function Confirm-ChangeLogEntry {
   $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
   if ($status -as [DateTime])
   {
-    LogDebug "Verifying like its a release build because the changelog entry has a valid date."
+    LogDebug "Verifying like it's a release build because the changelog entry has a valid date."
     return Confirm-LikeForRelease -changeLogEntry $changeLogEntry
   }
 
