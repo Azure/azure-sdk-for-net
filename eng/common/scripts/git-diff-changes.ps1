@@ -14,7 +14,7 @@
 #>
 [CmdletBinding()]
 param (
-  [string] $SourceCommittish = ${env:BUILD_SOURCEVERSION},
+  [string] $SourceCommittish = "${env:BUILD_SOURCEVERSION}",
   [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
 
@@ -27,9 +27,10 @@ if ($TargetCommittish -eq "origin/") {
 Write-Host "git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff $TargetCommittish...$SourceCommittish --name-only --diff-filter=d"
 $changedFiles = (git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff "$TargetCommittish...$SourceCommittish"  --name-only --diff-filter=d)
 if(!$changedFiles) {
-Write-Host "No changed files in git diff between $TargetCommittish and $SourceCommittish"
+    Write-Host "No changed files in git diff between $TargetCommittish and $SourceCommittish"
 }
+Write-Host "Here are the diff files:"
 foreach ($file in $changedFiles) {
-Write-Host "The diff file is: $file"
+    Write-Host "    $file"
 }
 return $changedFiles
