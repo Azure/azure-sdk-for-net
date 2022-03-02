@@ -184,10 +184,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
             var exception = CreateException(1);
             logger.LogWarning(exception, exception.Message);
@@ -207,10 +207,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
             Exception innerException1 = new ArgumentException("Inner1");
             Exception innerException2 = new ArgumentException("Inner2");
@@ -239,10 +239,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
             var innerException1 = new Exception("Inner1");
 
@@ -272,10 +272,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
             int numberOfExceptions = 15;
             int maxNumberOfExceptionsAllowed = 10;
@@ -313,6 +313,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     numberOfExceptions+1,
                     maxNumberOfExceptionsAllowed),
                 lastExceptionInList.Message);
+        }
+
+        [Theory]
+        [InlineData(LogLevel.Information)]
+        [InlineData(LogLevel.Warning)]
+        [InlineData(LogLevel.Critical)]
+        [InlineData(LogLevel.Error)]
+        public void ValidateTelemetryExceptionData(LogLevel logLevel)
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
+
+            var ex = new Exception("Message");
+            logger.Log(logLevel, ex, "Message");
+
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+
+            Assert.Equal(2, exceptionData.Version);
+            Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);
+            Assert.Empty(exceptionData.Properties);
+            Assert.Empty(exceptionData.Measurements);
+            Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", exceptionData.ProblemId);
+            Assert.Equal(1, exceptionData.Exceptions.Count);
+            Assert.Equal("Message", exceptionData.Exceptions[0].Message);
+            Assert.Null(exceptionData.Exceptions[0].Stack);
+            Assert.Equal(ex.GetHashCode(), exceptionData.Exceptions[0].Id);
+            Assert.Empty(exceptionData.Exceptions[0].ParsedStack);
+            Assert.True(exceptionData.Exceptions[0].HasFullStack);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
