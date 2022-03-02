@@ -29,10 +29,6 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
