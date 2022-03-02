@@ -70,18 +70,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        internal int ComputeSize()
-        {
-            int size = 0;
-            foreach (KeyValuePair<TKey, TValue> kvp in _linkedList)
-            {
-                size += kvp.Key.ToString().Length * sizeof(char);
-                size += kvp.Value.ToString().Length * sizeof(char);
-            }
-
-            return size;
-        }
-
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _linkedList.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
