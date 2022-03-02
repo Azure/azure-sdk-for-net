@@ -188,7 +188,15 @@
   
   <!--TODO: end-->
 
-  <!-- *********** Management Client Library Override section ************* -->
+  <!-- *********** Files needed for LRO ************* -->
+  <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+    
+    <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />

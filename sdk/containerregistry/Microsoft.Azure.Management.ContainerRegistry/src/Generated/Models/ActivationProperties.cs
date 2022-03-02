@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of a package type.
+    /// The activation properties of the connected registry.
     /// </summary>
-    public partial class PackageType
+    public partial class ActivationProperties
     {
         /// <summary>
-        /// Initializes a new instance of the PackageType class.
+        /// Initializes a new instance of the ActivationProperties class.
         /// </summary>
-        public PackageType()
+        public ActivationProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PackageType class.
+        /// Initializes a new instance of the ActivationProperties class.
         /// </summary>
-        /// <param name="name">The name of the package type.</param>
-        /// <param name="endpoint">The endpoint of the package type.</param>
-        public PackageType(string name = default(string), string endpoint = default(string))
+        /// <param name="status">The activation status of the connected
+        /// registry. Possible values include: 'Active', 'Inactive'</param>
+        public ActivationProperties(string status = default(string))
         {
-            Name = name;
-            Endpoint = endpoint;
+            Status = status;
             CustomInit();
         }
 
@@ -44,16 +43,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the package type.
+        /// Gets the activation status of the connected registry. Possible
+        /// values include: 'Active', 'Inactive'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets the endpoint of the package type.
-        /// </summary>
-        [JsonProperty(PropertyName = "endpoint")]
-        public string Endpoint { get; private set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

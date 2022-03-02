@@ -262,6 +262,11 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool IsRunningSynchronously { get { throw null; } }
     }
+    public enum WaitUntil
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace Azure.Core
 {
@@ -293,13 +298,19 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CanadaEast { get { throw null; } }
         public static Azure.Core.AzureLocation CentralIndia { get { throw null; } }
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS2 { get { throw null; } }
         public static Azure.Core.AzureLocation FranceCentral { get { throw null; } }
         public static Azure.Core.AzureLocation FranceSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyCentral { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
@@ -308,6 +319,7 @@ namespace Azure.Core
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -320,6 +332,12 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
         public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
         public static Azure.Core.AzureLocation UKWest { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDEast { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovArizona { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovIowa { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovTexas { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovVirginia { get { throw null; } }
         public static Azure.Core.AzureLocation WestCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation WestEurope { get { throw null; } }
         public static Azure.Core.AzureLocation WestIndia { get { throw null; } }

@@ -5,6 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -45,28 +46,12 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
