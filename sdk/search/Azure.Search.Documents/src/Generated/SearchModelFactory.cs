@@ -87,20 +87,5 @@ namespace Azure.Search.Documents.Models
 
             return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
         }
-
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="aliasCounter"> Total number of aliases. </param>
-        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
-        /// <param name="indexCounter"> Total number of indexes. </param>
-        /// <param name="indexerCounter"> Total number of indexers. </param>
-        /// <param name="dataSourceCounter"> Total number of data sources. </param>
-        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
-        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
-        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = null, SearchResourceCounter documentCounter = null, SearchResourceCounter indexCounter = null, SearchResourceCounter indexerCounter = null, SearchResourceCounter dataSourceCounter = null, SearchResourceCounter storageSizeCounter = null, SearchResourceCounter synonymMapCounter = null, SearchResourceCounter skillsetCounter = null)
-        {
-            return new SearchServiceCounters(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
-        }
     }
 }
