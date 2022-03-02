@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal enum PartBType
+    internal enum OperationType
     {
         Unknown,
         Azure,
