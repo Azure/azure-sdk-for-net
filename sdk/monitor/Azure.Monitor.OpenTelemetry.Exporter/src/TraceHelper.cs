@@ -50,12 +50,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, ref AzMonList PartCTags)
+        internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, ref AzMonList UnMappedTags)
         {
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            for (int i = 0; i < PartCTags.Length; i++)
+            for (int i = 0; i < UnMappedTags.Length; i++)
             {
-                destination.Add(PartCTags[i].Key, PartCTags[i].Value?.ToString());
+                destination.Add(UnMappedTags[i].Key, UnMappedTags[i].Value?.ToString());
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Converts Activity Links to custom property with key as _MS.links.
         /// Value will be a JSON string formatted as [{"operation_Id":"{TraceId}","id":"{SpanId}"}].
         /// </summary>
-        internal static void AddActivityLinksToPartCTags(IEnumerable<ActivityLink> links, ref AzMonList PartCTags)
+        internal static void AddActivityLinksToProperties(IEnumerable<ActivityLink> links, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
             // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
@@ -109,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 linksJson.Append(']');
 
-                AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
+                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
             }
         }
 
@@ -117,8 +117,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             var monitorTags = new TagEnumerationState
             {
-                PartBTags = AzMonList.Initialize(),
-                PartCTags = AzMonList.Initialize()
+                MappedTags = AzMonList.Initialize(),
+                UnMappedTags = AzMonList.Initialize()
             };
 
             monitorTags.ForEach(activity.TagObjects);
