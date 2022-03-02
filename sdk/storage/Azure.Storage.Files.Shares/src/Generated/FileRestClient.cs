@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (copyFileSmbInfo?.IgnoreReadOnly != null)
             {
-                request.Headers.Add("x-ms-file-copy-ignore-read-only", copyFileSmbInfo.IgnoreReadOnly.Value);
+                request.Headers.Add("x-ms-file-copy-ignore-readonly", copyFileSmbInfo.IgnoreReadOnly.Value);
             }
             if (copyFileSmbInfo?.FileAttributes != null)
             {
