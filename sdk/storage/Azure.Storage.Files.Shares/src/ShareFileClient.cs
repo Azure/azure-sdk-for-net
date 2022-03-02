@@ -1434,6 +1434,12 @@ namespace Azure.Storage.Files.Shares
                         throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.");
                     }
 
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn) == CopyableFileSmbProperties.ChangedOn
+                        && smbProperties?.FileChangedOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileChangedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.ChangedOn)} cannot both be set.");
+                    }
+
                     string fileAttributes = null;
                     if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes)
                         == CopyableFileSmbProperties.FileAttributes)
@@ -1467,6 +1473,17 @@ namespace Azure.Storage.Files.Shares
                         fileLastWrittenOn = smbProperties?.FileLastWrittenOn.ToFileDateTimeString();
                     }
 
+                    string fileChangedOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn)
+                        == CopyableFileSmbProperties.ChangedOn)
+                    {
+                        fileChangedOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileChangedOn = smbProperties?.FileChangedOn.ToFileDateTimeString();
+                    }
+
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
                         FilePermissionCopyMode = filePermissionCopyMode,
@@ -1474,7 +1491,7 @@ namespace Azure.Storage.Files.Shares
                         FileAttributes = fileAttributes,
                         FileCreationTime = fileCreatedOn,
                         FileLastWriteTime = fileLastWrittenOn,
-                        FileChangeTime = smbProperties?.FileChangedOn.ToFileDateTimeString(),
+                        FileChangeTime = fileChangedOn,
                         SetArchiveAttribute = setArchiveAttribute
                     };
 

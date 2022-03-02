@@ -1633,6 +1633,33 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task StartCopyAsync_CopySourceFileChanagedOnError()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testDest.File;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                SmbPropertiesToCopy = CopyableFileSmbProperties.ChangedOn,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileChangedOn = Recording.UtcNow
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                dest.StartCopyAsync(
+                    sourceUri: source.Uri,
+                    options: options),
+                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileChangedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.ChangedOn)} cannot both be set.",
+                e.Message));
+        }
+
+        [RecordedTest]
         public async Task StartCopyAsync_CopySourceFileAttributesError()
         {
             // Arrange
@@ -1660,6 +1687,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         public async Task StartCopyAsync_CopySourceFileSmbPropertiesAll()
         {
             // Arrange
@@ -1693,6 +1721,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(
                 sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
                 destPropertiesResponse.Value.SmbProperties.FileAttributes);
+
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
+                destPropertiesResponse.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]

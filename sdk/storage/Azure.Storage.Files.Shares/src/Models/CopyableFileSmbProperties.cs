@@ -32,6 +32,11 @@ namespace Azure.Storage.Files.Shares.Models
         LastWrittenOn = 4,
 
         /// <summary>
+        /// Changed On.
+        /// </summary>
+        ChangedOn = 8,
+
+        /// <summary>
         /// All.
         /// </summary>
         All = ~None
