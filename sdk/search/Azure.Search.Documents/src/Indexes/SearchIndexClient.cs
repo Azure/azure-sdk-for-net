@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes
     /// <summary>
     /// Azure Cognitive Search client that can be used to manage indexes on a Search service.
     /// </summary>
-    public class SearchIndexClient
+    public partial class SearchIndexClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
