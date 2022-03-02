@@ -15,5 +15,5 @@ These sample programs show how to use the C# client libraries for Azure Communic
 
 <!--
  You can find samples for each of these functions below.
- - [Generate user tokens](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.ShortCodes/samples/Sample1_ShortCodesClient.md)
+ - [Get a Short Code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.ShortCodes/samples/Sample1_ShortCodesClient.md)
 -->

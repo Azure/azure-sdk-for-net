@@ -10,8 +10,10 @@ namespace Azure.Communication.ShortCodes.Tests
 {
     public class ShortCodesClientLiveTestBase : RecordedTestBase<ShortCodesClientTestEnvironment>
     {
-        public ShortCodesClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new ShortCodesClientRecordedTestSanitizer();
+        public ShortCodesClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        {
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         /// <summary>
         /// Creates a <see cref="ShortCodesClient" /> with the connectionstring via environment
