@@ -167,7 +167,7 @@ function Confirm-ChangeLogEntry {
 
   if ($ForRelease -eq $True)
   {
-    LogDebug "Verifying like its a release build because ForRelease paramert is set to true"
+    LogDebug "Verifying like it's a release build because ForRelease parameter is set to true"
     return Confirm-LikeForRelease -changeLogEntry $changeLogEntry
   }
 
