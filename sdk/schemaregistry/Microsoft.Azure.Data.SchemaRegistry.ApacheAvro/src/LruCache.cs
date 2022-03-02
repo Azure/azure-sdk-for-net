@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
@@ -8,24 +9,26 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
     /// </summary>
-    /// <typeparam name="K">The type of key</typeparam>
-    /// <typeparam name="V">The type of value</typeparam>
-    internal class LruCache<K,V>
+    /// <typeparam name="TKey">The type of key</typeparam>
+    /// <typeparam name="TValue">The type of value</typeparam>
+    internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         private readonly int _capacity;
-        private readonly LinkedList<KeyValuePair<K, V>> _linkedList;
-        private readonly Dictionary<K, LinkedListNode<KeyValuePair<K, V>>> _map;
+        internal readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
+        private readonly Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>> _map;
         private readonly object _syncLock;
+
+        internal int Count => _linkedList.Count;
 
         public LruCache(int capacity)
         {
             _capacity = capacity;
-            _linkedList = new LinkedList<KeyValuePair<K, V>>();
-            _map = new Dictionary<K, LinkedListNode<KeyValuePair<K, V>>>();
+            _linkedList = new LinkedList<KeyValuePair<TKey, TValue>>();
+            _map = new Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>>();
             _syncLock = new object();
         }
 
-        public bool TryGet(K key, out V value)
+        public bool TryGet(TKey key, out TValue value)
         {
             lock (_syncLock)
             {
@@ -37,12 +40,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                     return true;
                 }
 
-                value = default(V);
+                value = default(TValue);
                 return false;
             }
         }
 
-        public void AddOrUpdate(K key, V val)
+        public void AddOrUpdate(TKey key, TValue val)
         {
             lock (_syncLock)
             {
@@ -53,18 +56,34 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 }
 
                 // add new node
-                var node = new LinkedListNode<KeyValuePair<K, V>>(new KeyValuePair<K, V>(key, val));
+                var node = new LinkedListNode<KeyValuePair<TKey, TValue>>(new KeyValuePair<TKey, TValue>(key, val));
                 _linkedList.AddFirst(node);
                 _map[key] = node;
 
                 if (_map.Count > _capacity)
                 {
                     // remove least recently used node
-                    LinkedListNode<KeyValuePair<K, V>> last = _linkedList.Last;
+                    LinkedListNode<KeyValuePair<TKey, TValue>> last = _linkedList.Last;
                     _linkedList.RemoveLast();
                     _map.Remove(last.Value.Key);
                 }
             }
         }
+
+        internal int ComputeSize()
+        {
+            int size = 0;
+            foreach (KeyValuePair<TKey, TValue> kvp in _linkedList)
+            {
+                size += kvp.Key.ToString().Length * sizeof(char);
+                size += kvp.Value.ToString().Length * sizeof(char);
+            }
+
+            return size;
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _linkedList.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
