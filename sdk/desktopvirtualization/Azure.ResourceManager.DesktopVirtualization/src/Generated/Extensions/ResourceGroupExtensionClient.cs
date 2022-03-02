@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of Workspaces in the Workspace. </summary>
-        /// <returns> An object representing collection of Workspaces and their operations over a Workspace. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of VirtualWorkspaces in the VirtualWorkspace. </summary>
+        /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspace. </returns>
+        public virtual VirtualWorkspaceCollection GetVirtualWorkspaces()
         {
-            return new WorkspaceCollection(Client, Id);
+            return new VirtualWorkspaceCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of ScalingPlans in the ScalingPlan. </summary>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return new ScalingPlanCollection(Client, Id);
         }
 
-        /// <summary> Gets a collection of ApplicationGroups in the ApplicationGroup. </summary>
-        /// <returns> An object representing collection of ApplicationGroups and their operations over a ApplicationGroup. </returns>
-        public virtual ApplicationGroupCollection GetApplicationGroups()
+        /// <summary> Gets a collection of VirtualApplicationGroups in the VirtualApplicationGroup. </summary>
+        /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroup. </returns>
+        public virtual VirtualApplicationGroupCollection GetVirtualApplicationGroups()
         {
-            return new ApplicationGroupCollection(Client, Id);
+            return new VirtualApplicationGroupCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of HostPools in the HostPool. </summary>

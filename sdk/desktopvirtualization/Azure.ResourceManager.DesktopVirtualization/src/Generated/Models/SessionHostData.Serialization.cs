@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(OsVersion))
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion");
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
             if (Optional.IsDefined(SxSStackVersion))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> virtualMachineId = default;
             Optional<string> resourceId = default;
             Optional<string> assignedUser = default;
-            Optional<Status> status = default;
+            Optional<SessionHostStatus> status = default;
             Optional<DateTimeOffset> statusTimestamp = default;
             Optional<string> osVersion = default;
             Optional<string> sxSStackVersion = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new SessionHostStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("statusTimestamp"))

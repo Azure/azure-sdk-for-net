@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> The type of single sign on Secret Type. </summary>
-    public readonly partial struct SSOSecretType : IEquatable<SSOSecretType>
+    public readonly partial struct SsoSecretType : IEquatable<SsoSecretType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SSOSecretType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoSecretType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SSOSecretType(string value)
+        public SsoSecretType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private const string CertificateInKeyVaultValue = "CertificateInKeyVault";
 
         /// <summary> SharedKey. </summary>
-        public static SSOSecretType SharedKey { get; } = new SSOSecretType(SharedKeyValue);
+        public static SsoSecretType SharedKey { get; } = new SsoSecretType(SharedKeyValue);
         /// <summary> Certificate. </summary>
-        public static SSOSecretType Certificate { get; } = new SSOSecretType(CertificateValue);
+        public static SsoSecretType Certificate { get; } = new SsoSecretType(CertificateValue);
         /// <summary> SharedKeyInKeyVault. </summary>
-        public static SSOSecretType SharedKeyInKeyVault { get; } = new SSOSecretType(SharedKeyInKeyVaultValue);
+        public static SsoSecretType SharedKeyInKeyVault { get; } = new SsoSecretType(SharedKeyInKeyVaultValue);
         /// <summary> CertificateInKeyVault. </summary>
-        public static SSOSecretType CertificateInKeyVault { get; } = new SSOSecretType(CertificateInKeyVaultValue);
-        /// <summary> Determines if two <see cref="SSOSecretType"/> values are the same. </summary>
-        public static bool operator ==(SSOSecretType left, SSOSecretType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SSOSecretType"/> values are not the same. </summary>
-        public static bool operator !=(SSOSecretType left, SSOSecretType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SSOSecretType"/>. </summary>
-        public static implicit operator SSOSecretType(string value) => new SSOSecretType(value);
+        public static SsoSecretType CertificateInKeyVault { get; } = new SsoSecretType(CertificateInKeyVaultValue);
+        /// <summary> Determines if two <see cref="SsoSecretType"/> values are the same. </summary>
+        public static bool operator ==(SsoSecretType left, SsoSecretType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SsoSecretType"/> values are not the same. </summary>
+        public static bool operator !=(SsoSecretType left, SsoSecretType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SsoSecretType"/>. </summary>
+        public static implicit operator SsoSecretType(string value) => new SsoSecretType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SSOSecretType other && Equals(other);
+        public override bool Equals(object obj) => obj is SsoSecretType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(SSOSecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SsoSecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

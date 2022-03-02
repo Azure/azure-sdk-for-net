@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the Workspace data model. </summary>
-    public partial class WorkspaceData : ResourceModelWithAllowedPropertySet
+    /// <summary> A class representing the VirtualWorkspace data model. </summary>
+    public partial class VirtualWorkspaceData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of WorkspaceData. </summary>
+        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public WorkspaceData(AzureLocation location) : base(location)
+        public VirtualWorkspaceData(AzureLocation location) : base(location)
         {
             ApplicationGroupReferences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceData. </summary>
+        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of MsixPackageApplications. </summary>
         /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
         /// <param name="description"> Description of Package Application. </param>
-        /// <param name="appUserModelID"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
+        /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
         /// <param name="friendlyName"> User friendly name. </param>
         /// <param name="iconImageName"> User friendly name. </param>
         /// <param name="rawIcon"> the icon a 64 bit string as a byte array. </param>
         /// <param name="rawPng"> the icon a 64 bit string as a byte array. </param>
-        internal MsixPackageApplications(string appId, string description, string appUserModelID, string friendlyName, string iconImageName, byte[] rawIcon, byte[] rawPng)
+        internal MsixPackageApplications(string appId, string description, string appUserModelId, string friendlyName, string iconImageName, byte[] rawIcon, byte[] rawPng)
         {
             AppId = appId;
             Description = description;
-            AppUserModelID = appUserModelID;
+            AppUserModelId = appUserModelId;
             FriendlyName = friendlyName;
             IconImageName = iconImageName;
             RawIcon = rawIcon;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Description of Package Application. </summary>
         public string Description { get; set; }
         /// <summary> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </summary>
-        public string AppUserModelID { get; set; }
+        public string AppUserModelId { get; set; }
         /// <summary> User friendly name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> User friendly name. </summary>

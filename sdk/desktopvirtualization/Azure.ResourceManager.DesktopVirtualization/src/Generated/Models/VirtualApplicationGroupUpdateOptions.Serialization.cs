@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ApplicationGroupUpdateOptions : IUtf8JsonSerializable
+    public partial class VirtualApplicationGroupUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGroupUpdateOptions DeserializeApplicationGroupUpdateOptions(JsonElement element)
+        internal static VirtualApplicationGroupUpdateOptions DeserializeVirtualApplicationGroupUpdateOptions(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new ApplicationGroupUpdateOptions(id, name, type, systemData, Optional.ToDictionary(tags), description.Value, friendlyName.Value);
+            return new VirtualApplicationGroupUpdateOptions(id, name, type, systemData, Optional.ToDictionary(tags), description.Value, friendlyName.Value);
         }
     }
 }

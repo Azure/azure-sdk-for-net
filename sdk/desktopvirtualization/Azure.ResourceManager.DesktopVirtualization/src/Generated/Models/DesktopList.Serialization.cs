@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static DesktopList DeserializeDesktopList(JsonElement element)
         {
-            Optional<IReadOnlyList<DesktopData>> value = default;
+            Optional<IReadOnlyList<VirtualDesktopData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DesktopData> array = new List<DesktopData>();
+                    List<VirtualDesktopData> array = new List<VirtualDesktopData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopData.DeserializeDesktopData(item));
+                        array.Add(VirtualDesktopData.DeserializeVirtualDesktopData(item));
                     }
                     value = array;
                     continue;

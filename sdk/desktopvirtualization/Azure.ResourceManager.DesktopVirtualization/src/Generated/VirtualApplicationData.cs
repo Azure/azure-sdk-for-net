@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the Application data model. </summary>
-    public partial class ApplicationData : ResourceData
+    /// <summary> A class representing the VirtualApplication data model. </summary>
+    public partial class VirtualApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationData. </summary>
+        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
-        public ApplicationData(CommandLineSetting commandLineSetting)
+        public VirtualApplicationData(CommandLineSetting commandLineSetting)
         {
             CommandLineSetting = commandLineSetting;
         }
 
-        /// <summary> Initializes a new instance of ApplicationData. </summary>
+        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="iconIndex"> Index of the icon. </param>
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, CommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, byte[] iconContent) : base(id, name, type, systemData)
+        internal VirtualApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, CommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, byte[] iconContent) : base(id, name, type, systemData)
         {
             ObjectId = objectId;
             Description = description;

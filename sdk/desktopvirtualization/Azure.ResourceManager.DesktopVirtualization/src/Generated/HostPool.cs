@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
         /// <returns> An async collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
 
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
         /// <returns> A collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
 

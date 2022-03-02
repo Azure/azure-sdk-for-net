@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class ApplicationData : IUtf8JsonSerializable
+    public partial class VirtualApplicationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteEndObject();
         }
 
-        internal static ApplicationData DeserializeApplicationData(JsonElement element)
+        internal static VirtualApplicationData DeserializeVirtualApplicationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new ApplicationData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
+            return new VirtualApplicationData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
         }
     }
 }

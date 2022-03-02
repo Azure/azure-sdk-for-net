@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<WorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceData)null, message.Response);
+                    return Response.FromValue((VirtualWorkspaceData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public Response<WorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<VirtualWorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceData)null, message.Response);
+                    return Response.FromValue((VirtualWorkspaceData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceData workspace)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceData workspace)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="workspace"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
-        public async Task<Response<WorkspaceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceData workspace, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualWorkspaceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                 case 201:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="workspace"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
-        public Response<WorkspaceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceData workspace, CancellationToken cancellationToken = default)
+        public Response<VirtualWorkspaceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                 case 201:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<WorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
-        public Response<WorkspaceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Response<VirtualWorkspaceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, VirtualWorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        WorkspaceData value = default;
+                        VirtualWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
+                        value = VirtualWorkspaceData.DeserializeVirtualWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

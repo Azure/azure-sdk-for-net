@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="lastUpdateTime"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, Status? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateTime, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, type, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateTime, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, type, systemData)
         {
             ObjectId = objectId;
             LastHeartBeat = lastHeartBeat;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             AssignedUser = assignedUser;
             Status = status;
             StatusTimestamp = statusTimestamp;
-            OsVersion = osVersion;
+            OSVersion = osVersion;
             SxSStackVersion = sxSStackVersion;
             UpdateState = updateState;
             LastUpdateTime = lastUpdateTime;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> User assigned to SessionHost. </summary>
         public string AssignedUser { get; set; }
         /// <summary> Status for a SessionHost. </summary>
-        public Status? Status { get; set; }
+        public SessionHostStatus? Status { get; set; }
         /// <summary> The timestamp of the status. </summary>
         public DateTimeOffset? StatusTimestamp { get; }
         /// <summary> The version of the OS on the session host. </summary>
-        public string OsVersion { get; set; }
+        public string OSVersion { get; set; }
         /// <summary> The version of the side by side stack on the session host. </summary>
         public string SxSStackVersion { get; set; }
         /// <summary> Update state of a SessionHost. </summary>

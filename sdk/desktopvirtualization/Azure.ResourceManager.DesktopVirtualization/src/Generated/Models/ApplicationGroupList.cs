@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ApplicationGroupList. </summary>
         internal ApplicationGroupList()
         {
-            Value = new ChangeTrackingList<ApplicationGroupData>();
+            Value = new ChangeTrackingList<VirtualApplicationGroupData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGroupList. </summary>
         /// <param name="value"> List of ApplicationGroup definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal ApplicationGroupList(IReadOnlyList<ApplicationGroupData> value, string nextLink)
+        internal ApplicationGroupList(IReadOnlyList<VirtualApplicationGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of ApplicationGroup definitions. </summary>
-        public IReadOnlyList<ApplicationGroupData> Value { get; }
+        public IReadOnlyList<VirtualApplicationGroupData> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

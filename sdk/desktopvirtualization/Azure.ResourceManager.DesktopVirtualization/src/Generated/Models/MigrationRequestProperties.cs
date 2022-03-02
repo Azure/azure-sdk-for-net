@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of MigrationRequestProperties. </summary>
         /// <param name="operation"> The type of operation for migration. </param>
         /// <param name="migrationPath"> The path to the legacy object to migrate. </param>
-        internal MigrationRequestProperties(Operation? operation, string migrationPath)
+        internal MigrationRequestProperties(MigrationOperation? operation, string migrationPath)
         {
             Operation = operation;
             MigrationPath = migrationPath;
         }
 
         /// <summary> The type of operation for migration. </summary>
-        public Operation? Operation { get; set; }
+        public MigrationOperation? Operation { get; set; }
         /// <summary> The path to the legacy object to migrate. </summary>
         public string MigrationPath { get; set; }
     }

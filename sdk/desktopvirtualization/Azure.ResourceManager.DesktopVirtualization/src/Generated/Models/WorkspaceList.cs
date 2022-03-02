@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<VirtualWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         /// <param name="value"> List of Workspace definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal WorkspaceList(IReadOnlyList<WorkspaceData> value, string nextLink)
+        internal WorkspaceList(IReadOnlyList<VirtualWorkspaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Workspace definitions. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        public IReadOnlyList<VirtualWorkspaceData> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

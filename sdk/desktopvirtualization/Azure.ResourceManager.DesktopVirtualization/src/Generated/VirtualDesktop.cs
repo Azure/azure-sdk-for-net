@@ -18,42 +18,42 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a Desktop along with the instance operations that can be performed on it. </summary>
-    public partial class Desktop : ArmResource
+    /// <summary> A Class representing a VirtualDesktop along with the instance operations that can be performed on it. </summary>
+    public partial class VirtualDesktop : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="Desktop"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="VirtualDesktop"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _desktopClientDiagnostics;
-        private readonly DesktopsRestOperations _desktopRestClient;
-        private readonly DesktopData _data;
+        private readonly ClientDiagnostics _virtualDesktopDesktopsClientDiagnostics;
+        private readonly DesktopsRestOperations _virtualDesktopDesktopsRestClient;
+        private readonly VirtualDesktopData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Desktop"/> class for mocking. </summary>
-        protected Desktop()
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktop"/> class for mocking. </summary>
+        protected VirtualDesktop()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Desktop"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "VirtualDesktop"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Desktop(ArmClient client, DesktopData data) : this(client, data.Id)
+        internal VirtualDesktop(ArmClient client, VirtualDesktopData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Desktop"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktop"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Desktop(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualDesktop(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _desktopClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceType, out string desktopApiVersion);
-            _desktopRestClient = new DesktopsRestOperations(_desktopClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, desktopApiVersion);
+            _virtualDesktopDesktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string virtualDesktopDesktopsApiVersion);
+            _virtualDesktopDesktopsRestClient = new DesktopsRestOperations(_virtualDesktopDesktopsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualDesktopDesktopsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DesktopData Data
+        public virtual VirtualDesktopData Data
         {
             get
             {
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Desktops_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Desktop>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualDesktop>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _desktopClientDiagnostics.CreateScope("Desktop.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktop.Get");
             scope.Start();
             try
             {
-                var response = await _desktopRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _desktopClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    throw await _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,16 +113,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Desktops_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Desktop> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VirtualDesktop> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _desktopClientDiagnostics.CreateScope("Desktop.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktop.Get");
             scope.Start();
             try
             {
-                var response = _desktopRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _desktopClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    throw _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="options"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Desktop>> UpdateAsync(DesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualDesktop>> UpdateAsync(VirtualDesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _desktopClientDiagnostics.CreateScope("Desktop.Update");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktop.Update");
             scope.Start();
             try
             {
-                var response = await _desktopRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                var response = await _virtualDesktopDesktopsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="options"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Desktop> Update(DesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualDesktop> Update(VirtualDesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _desktopClientDiagnostics.CreateScope("Desktop.Update");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktop.Update");
             scope.Start();
             try
             {
-                var response = _desktopRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                var response = _virtualDesktopDesktopsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

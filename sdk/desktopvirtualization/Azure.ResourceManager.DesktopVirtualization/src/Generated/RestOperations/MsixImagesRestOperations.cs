@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateExpandRequest(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI)
+        internal HttpMessage CreateExpandRequest(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixImageURI"/> is null. </exception>
-        public async Task<Response<ExpandMsixImageList>> ExpandAsync(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpandMsixImageList>> ExpandAsync(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixImageURI"/> is null. </exception>
-        public Response<ExpandMsixImageList> Expand(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public Response<ExpandMsixImageList> Expand(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateExpandNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI)
+        internal HttpMessage CreateExpandNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixImageURI"/> is null. </exception>
-        public async Task<Response<ExpandMsixImageList>> ExpandNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpandMsixImageList>> ExpandNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixImageURI"/> is null. </exception>
-        public Response<ExpandMsixImageList> ExpandNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageURI msixImageURI, CancellationToken cancellationToken = default)
+        public Response<ExpandMsixImageList> ExpandNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

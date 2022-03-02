@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AppUserModelID))
+            if (Optional.IsDefined(AppUserModelId))
             {
                 writer.WritePropertyName("appUserModelID");
-                writer.WriteStringValue(AppUserModelID);
+                writer.WriteStringValue(AppUserModelId);
             }
             if (Optional.IsDefined(FriendlyName))
             {

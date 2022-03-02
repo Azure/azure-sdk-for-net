@@ -21,25 +21,25 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of Workspace and their operations over its parent. </summary>
-    public partial class WorkspaceCollection : ArmCollection, IEnumerable<Workspace>, IAsyncEnumerable<Workspace>
+    /// <summary> A class representing collection of VirtualWorkspace and their operations over its parent. </summary>
+    public partial class VirtualWorkspaceCollection : ArmCollection, IEnumerable<VirtualWorkspace>, IAsyncEnumerable<VirtualWorkspace>
     {
-        private readonly ClientDiagnostics _workspaceClientDiagnostics;
-        private readonly WorkspacesRestOperations _workspaceRestClient;
+        private readonly ClientDiagnostics _virtualWorkspaceWorkspacesClientDiagnostics;
+        private readonly WorkspacesRestOperations _virtualWorkspaceWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class for mocking. </summary>
-        protected WorkspaceCollection()
+        /// <summary> Initializes a new instance of the <see cref="VirtualWorkspaceCollection"/> class for mocking. </summary>
+        protected VirtualWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", Workspace.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Workspace.ResourceType, out string workspaceApiVersion);
-            _workspaceRestClient = new WorkspacesRestOperations(_workspaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workspaceApiVersion);
+            _virtualWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(VirtualWorkspace.ResourceType, out string virtualWorkspaceWorkspacesApiVersion);
+            _virtualWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(_virtualWorkspaceWorkspacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
-        public async virtual Task<ArmOperation<Workspace>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, WorkspaceData workspace, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualWorkspace>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(workspace, nameof(workspace));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<Workspace>(Response.FromValue(new Workspace(Client, response), response.GetRawResponse()));
+                var response = await _virtualWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken).ConfigureAwait(false);
+                var operation = new DesktopVirtualizationArmOperation<VirtualWorkspace>(Response.FromValue(new VirtualWorkspace(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
-        public virtual ArmOperation<Workspace> CreateOrUpdate(bool waitForCompletion, string workspaceName, WorkspaceData workspace, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualWorkspace> CreateOrUpdate(bool waitForCompletion, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(workspace, nameof(workspace));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<Workspace>(Response.FromValue(new Workspace(Client, response), response.GetRawResponse()));
+                var response = _virtualWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken);
+                var operation = new DesktopVirtualizationArmOperation<VirtualWorkspace>(Response.FromValue(new VirtualWorkspace(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<Workspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualWorkspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _workspaceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Workspace(Client, response.Value), response.GetRawResponse());
+                    throw await _virtualWorkspaceWorkspacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,18 +155,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<Workspace> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWorkspace> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var response = _virtualWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                    throw _workspaceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Workspace(Client, response.Value), response.GetRawResponse());
+                    throw _virtualWorkspaceWorkspacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Workspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Workspace> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWorkspace> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Workspace>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualWorkspace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualWorkspaceWorkspacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualWorkspaceWorkspacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +223,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Workspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Workspace> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWorkspace> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Workspace> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualWorkspace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualWorkspaceWorkspacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualWorkspaceWorkspacesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Exists");
             scope.Start();
             try
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Exists");
             scope.Start();
             try
             {
@@ -322,18 +322,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<Workspace>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualWorkspace>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetIfExists");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<Workspace>(null, response.GetRawResponse());
-                return Response.FromValue(new Workspace(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualWorkspace>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,18 +351,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<Workspace> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWorkspace> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetIfExists");
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _virtualWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Workspace>(null, response.GetRawResponse());
-                return Response.FromValue(new Workspace(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualWorkspace>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        IEnumerator<Workspace> IEnumerable<Workspace>.GetEnumerator()
+        IEnumerator<VirtualWorkspace> IEnumerable<VirtualWorkspace>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Workspace> IAsyncEnumerable<Workspace>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualWorkspace> IAsyncEnumerable<VirtualWorkspace>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

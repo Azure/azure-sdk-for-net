@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Status for a SessionHost. </summary>
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct SessionHostStatus : IEquatable<SessionHostStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Status(string value)
+        public SessionHostStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -36,41 +36,41 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private const string NeedsAssistanceValue = "NeedsAssistance";
 
         /// <summary> Session Host has passed all the health checks and is available to handle connections. </summary>
-        public static Status Available { get; } = new Status(AvailableValue);
+        public static SessionHostStatus Available { get; } = new SessionHostStatus(AvailableValue);
         /// <summary> Session Host is either turned off or has failed critical health checks which is causing service not to be able to route connections to this session host. Note this replaces previous &apos;NoHeartBeat&apos; status. </summary>
-        public static Status Unavailable { get; } = new Status(UnavailableValue);
+        public static SessionHostStatus Unavailable { get; } = new SessionHostStatus(UnavailableValue);
         /// <summary> Session Host is shutdown - RD Agent reported session host to be stopped or deallocated. </summary>
-        public static Status Shutdown { get; } = new Status(ShutdownValue);
+        public static SessionHostStatus Shutdown { get; } = new SessionHostStatus(ShutdownValue);
         /// <summary> The Session Host is unavailable because it is currently disconnected. </summary>
-        public static Status Disconnected { get; } = new Status(DisconnectedValue);
+        public static SessionHostStatus Disconnected { get; } = new SessionHostStatus(DisconnectedValue);
         /// <summary> Session Host is unavailable because currently an upgrade of RDAgent/side-by-side stack is in progress. Note: this state will be removed once the upgrade completes and the host is able to accept connections. </summary>
-        public static Status Upgrading { get; } = new Status(UpgradingValue);
+        public static SessionHostStatus Upgrading { get; } = new SessionHostStatus(UpgradingValue);
         /// <summary> Session Host is unavailable because the critical component upgrade (agent, side-by-side stack, etc.) failed. </summary>
-        public static Status UpgradeFailed { get; } = new Status(UpgradeFailedValue);
+        public static SessionHostStatus UpgradeFailed { get; } = new SessionHostStatus(UpgradeFailedValue);
         /// <summary> The Session Host is not heart beating. </summary>
-        public static Status NoHeartbeat { get; } = new Status(NoHeartbeatValue);
+        public static SessionHostStatus NoHeartbeat { get; } = new SessionHostStatus(NoHeartbeatValue);
         /// <summary> SessionHost is not joined to domain. </summary>
-        public static Status NotJoinedToDomain { get; } = new Status(NotJoinedToDomainValue);
+        public static SessionHostStatus NotJoinedToDomain { get; } = new SessionHostStatus(NotJoinedToDomainValue);
         /// <summary> SessionHost&apos;s domain trust relationship lost. </summary>
-        public static Status DomainTrustRelationshipLost { get; } = new Status(DomainTrustRelationshipLostValue);
+        public static SessionHostStatus DomainTrustRelationshipLost { get; } = new SessionHostStatus(DomainTrustRelationshipLostValue);
         /// <summary> SxS stack installed on the SessionHost is not ready to receive connections. </summary>
-        public static Status SxSStackListenerNotReady { get; } = new Status(SxSStackListenerNotReadyValue);
+        public static SessionHostStatus SxSStackListenerNotReady { get; } = new SessionHostStatus(SxSStackListenerNotReadyValue);
         /// <summary> FSLogix is in an unhealthy state on the session host. </summary>
-        public static Status FSLogixNotHealthy { get; } = new Status(FSLogixNotHealthyValue);
+        public static SessionHostStatus FSLogixNotHealthy { get; } = new SessionHostStatus(FSLogixNotHealthyValue);
         /// <summary> New status to inform admins that the health on their endpoint needs to be fixed. The connections might not fail, as these issues are not fatal. </summary>
-        public static Status NeedsAssistance { get; } = new Status(NeedsAssistanceValue);
-        /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
-        public static bool operator ==(Status left, Status right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>
-        public static bool operator !=(Status left, Status right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
-        public static implicit operator Status(string value) => new Status(value);
+        public static SessionHostStatus NeedsAssistance { get; } = new SessionHostStatus(NeedsAssistanceValue);
+        /// <summary> Determines if two <see cref="SessionHostStatus"/> values are the same. </summary>
+        public static bool operator ==(SessionHostStatus left, SessionHostStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SessionHostStatus"/> values are not the same. </summary>
+        public static bool operator !=(SessionHostStatus left, SessionHostStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SessionHostStatus"/>. </summary>
+        public static implicit operator SessionHostStatus(string value) => new SessionHostStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Status other && Equals(other);
+        public override bool Equals(object obj) => obj is SessionHostStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Status other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SessionHostStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

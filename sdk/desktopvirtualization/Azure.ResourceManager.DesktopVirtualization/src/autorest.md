@@ -12,9 +12,48 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/49af362e33d89967d777
 tag: package-2021-07
 output-folder: Generated/
 clear-output-folder: true
-mgmt-debug:
-  show-request-path: true
 modelerfour:
   flatten-payloads: false
-
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+directive:
+  - rename-model:
+      from: Application
+      to: VirtualApplication
+  - rename-model:
+      from: ApplicationGroup
+      to: VirtualApplicationGroup
+  - rename-model:
+      from: Desktop
+      to: VirtualDesktop
+  - rename-model:
+      from: DesktopGroup
+      to: VirtualDesktopGroup
+  - rename-model:
+      from: Workspace
+      to: VirtualWorkspace
+  - from: swagger-document
+    where: "$.definitions.MigrationRequestProperties.properties.operation"
+    transform: >
+      $["x-ms-enum"]["name"] = "MigrationOperation"
+  - from: swagger-document
+    where: "$.definitions.SessionHostProperties.properties.status"
+    transform: >
+      $["x-ms-enum"]["name"] = "SessionHostStatus"
 ```

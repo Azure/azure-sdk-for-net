@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("preferredAppGroupType");
             writer.WriteStringValue(PreferredAppGroupType.ToString());
-            if (Optional.IsDefined(StartVMOnConnect))
+            if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect");
-                writer.WriteBooleanValue(StartVMOnConnect.Value);
+                writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
             if (Optional.IsDefined(MigrationRequest))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> ssoadfsAuthority = default;
             Optional<string> ssoClientId = default;
             Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<SSOSecretType> ssoSecretType = default;
+            Optional<SsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVMOnConnect = default;
             Optional<MigrationRequestProperties> migrationRequest = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ssoSecretType = new SSOSecretType(property0.Value.GetString());
+                            ssoSecretType = new SsoSecretType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("preferredAppGroupType"))

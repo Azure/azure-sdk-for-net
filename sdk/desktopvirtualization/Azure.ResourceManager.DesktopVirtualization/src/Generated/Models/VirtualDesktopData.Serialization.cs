@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class DesktopData : IUtf8JsonSerializable
+    public partial class VirtualDesktopData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteEndObject();
         }
 
-        internal static DesktopData DeserializeDesktopData(JsonElement element)
+        internal static VirtualDesktopData DeserializeVirtualDesktopData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new DesktopData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value);
+            return new VirtualDesktopData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value);
         }
     }
 }

@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the Desktop data model. </summary>
-    public partial class DesktopData : ResourceData
+    /// <summary> A class representing the VirtualDesktop data model. </summary>
+    public partial class VirtualDesktopData : ResourceData
     {
-        /// <summary> Initializes a new instance of DesktopData. </summary>
-        public DesktopData()
+        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        public VirtualDesktopData()
         {
         }
 
-        /// <summary> Initializes a new instance of DesktopData. </summary>
+        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="friendlyName"> Friendly name of Desktop. </param>
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> The icon a 64 bit string as a byte array. </param>
-        internal DesktopData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, byte[] iconContent) : base(id, name, type, systemData)
+        internal VirtualDesktopData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, byte[] iconContent) : base(id, name, type, systemData)
         {
             ObjectId = objectId;
             Description = description;

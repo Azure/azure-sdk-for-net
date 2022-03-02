@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             );
         }
 
-        /// <summary> Gets a collection of Workspaces in the Workspace. </summary>
+        /// <summary> Gets a collection of VirtualWorkspaces in the VirtualWorkspace. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Workspaces and their operations over a Workspace. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspace. </returns>
+        public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetWorkspaces();
+            return GetExtensionClient(resourceGroup).GetVirtualWorkspaces();
         }
 
         /// <summary> Gets a collection of ScalingPlans in the ScalingPlan. </summary>
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetExtensionClient(resourceGroup).GetScalingPlans();
         }
 
-        /// <summary> Gets a collection of ApplicationGroups in the ApplicationGroup. </summary>
+        /// <summary> Gets a collection of VirtualApplicationGroups in the VirtualApplicationGroup. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ApplicationGroups and their operations over a ApplicationGroup. </returns>
-        public static ApplicationGroupCollection GetApplicationGroups(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroup. </returns>
+        public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetApplicationGroups();
+            return GetExtensionClient(resourceGroup).GetVirtualApplicationGroups();
         }
 
         /// <summary> Gets a collection of HostPools in the HostPool. </summary>

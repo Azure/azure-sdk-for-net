@@ -20,25 +20,25 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of Desktop and their operations over its parent. </summary>
-    public partial class DesktopCollection : ArmCollection, IEnumerable<Desktop>, IAsyncEnumerable<Desktop>
+    /// <summary> A class representing collection of VirtualDesktop and their operations over its parent. </summary>
+    public partial class VirtualDesktopCollection : ArmCollection, IEnumerable<VirtualDesktop>, IAsyncEnumerable<VirtualDesktop>
     {
-        private readonly ClientDiagnostics _desktopClientDiagnostics;
-        private readonly DesktopsRestOperations _desktopRestClient;
+        private readonly ClientDiagnostics _virtualDesktopDesktopsClientDiagnostics;
+        private readonly DesktopsRestOperations _virtualDesktopDesktopsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DesktopCollection"/> class for mocking. </summary>
-        protected DesktopCollection()
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktopCollection"/> class for mocking. </summary>
+        protected VirtualDesktopCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DesktopCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktopCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DesktopCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualDesktopCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _desktopClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", Desktop.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Desktop.ResourceType, out string desktopApiVersion);
-            _desktopRestClient = new DesktopsRestOperations(_desktopClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, desktopApiVersion);
+            _virtualDesktopDesktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualDesktop.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(VirtualDesktop.ResourceType, out string virtualDesktopDesktopsApiVersion);
+            _virtualDesktopDesktopsRestClient = new DesktopsRestOperations(_virtualDesktopDesktopsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualDesktopDesktopsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApplicationGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationGroup.ResourceType), nameof(id));
+            if (id.ResourceType != VirtualApplicationGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualApplicationGroup.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public async virtual Task<Response<Desktop>> GetAsync(string desktopName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualDesktop>> GetAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Get");
             scope.Start();
             try
             {
-                var response = await _desktopRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _desktopClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    throw await _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public virtual Response<Desktop> Get(string desktopName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualDesktop> Get(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Get");
             scope.Start();
             try
             {
-                var response = _desktopRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken);
+                var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken);
                 if (response.Value == null)
-                    throw _desktopClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    throw _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Desktops_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Desktop" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Desktop> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualDesktop" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualDesktop> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Desktop>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualDesktop>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.GetAll");
+                using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _desktopRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Desktop(Client, value)), null, response.GetRawResponse());
+                    var response = await _virtualDesktopDesktopsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualDesktop(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Desktops_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Desktop" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Desktop> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualDesktop" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualDesktop> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Desktop> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualDesktop> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.GetAll");
+                using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _desktopRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Desktop(Client, value)), null, response.GetRawResponse());
+                    var response = _virtualDesktopDesktopsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualDesktop(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.Exists");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Exists");
             scope.Start();
             try
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.Exists");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Exists");
             scope.Start();
             try
             {
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public async virtual Task<Response<Desktop>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualDesktop>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.GetIfExists");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _desktopRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<Desktop>(null, response.GetRawResponse());
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualDesktop>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,18 +254,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public virtual Response<Desktop> GetIfExists(string desktopName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualDesktop> GetIfExists(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
-            using var scope = _desktopClientDiagnostics.CreateScope("DesktopCollection.GetIfExists");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _desktopRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken);
+                var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Desktop>(null, response.GetRawResponse());
-                return Response.FromValue(new Desktop(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualDesktop>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        IEnumerator<Desktop> IEnumerable<Desktop>.GetEnumerator()
+        IEnumerator<VirtualDesktop> IEnumerable<VirtualDesktop>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Desktop> IAsyncEnumerable<Desktop>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualDesktop> IAsyncEnumerable<VirtualDesktop>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

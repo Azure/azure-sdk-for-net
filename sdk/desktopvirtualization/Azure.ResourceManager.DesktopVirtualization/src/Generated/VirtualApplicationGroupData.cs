@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the ApplicationGroup data model. </summary>
-    public partial class ApplicationGroupData : ResourceModelWithAllowedPropertySet
+    /// <summary> A class representing the VirtualApplicationGroup data model. </summary>
+    public partial class VirtualApplicationGroupData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of ApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="hostPoolArmPath"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolArmPath"/> is null. </exception>
-        public ApplicationGroupData(AzureLocation location, string hostPoolArmPath, ApplicationGroupType applicationGroupType) : base(location)
+        public VirtualApplicationGroupData(AzureLocation location, string hostPoolArmPath, ApplicationGroupType applicationGroupType) : base(location)
         {
             if (hostPoolArmPath == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ApplicationGroupType = applicationGroupType;
         }
 
-        /// <summary> Initializes a new instance of ApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
         /// <param name="migrationRequest"> The registration info of HostPool. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal ApplicationGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, string hostPoolArmPath, string workspaceArmPath, ApplicationGroupType applicationGroupType, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, string hostPoolArmPath, string workspaceArmPath, ApplicationGroupType applicationGroupType, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

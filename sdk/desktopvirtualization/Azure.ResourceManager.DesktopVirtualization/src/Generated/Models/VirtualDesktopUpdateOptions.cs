@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Desktop properties that can be patched. </summary>
-    public partial class DesktopUpdateOptions
+    public partial class VirtualDesktopUpdateOptions
     {
-        /// <summary> Initializes a new instance of DesktopUpdateOptions. </summary>
-        public DesktopUpdateOptions()
+        /// <summary> Initializes a new instance of VirtualDesktopUpdateOptions. </summary>
+        public VirtualDesktopUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

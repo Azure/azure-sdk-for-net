@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is null. </exception>
-        public async Task<Response<ApplicationGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualApplicationGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationGroupData)null, message.Response);
+                    return Response.FromValue((VirtualApplicationGroupData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is null. </exception>
-        public Response<ApplicationGroupData> Get(string subscriptionId, string resourceGroupName, string applicationGroupName, CancellationToken cancellationToken = default)
+        public Response<VirtualApplicationGroupData> Get(string subscriptionId, string resourceGroupName, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationGroupData)null, message.Response);
+                    return Response.FromValue((VirtualApplicationGroupData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupData applicationGroup)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupData applicationGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroup"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationGroup"/> is null. </exception>
-        public async Task<Response<ApplicationGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualApplicationGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                 case 201:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroup"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationGroup"/> is null. </exception>
-        public Response<ApplicationGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
+        public Response<VirtualApplicationGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                 case 201:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is null. </exception>
-        public async Task<Response<ApplicationGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualApplicationGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is null. </exception>
-        public Response<ApplicationGroupData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, ApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Response<VirtualApplicationGroupData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        ApplicationGroupData value = default;
+                        VirtualApplicationGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
+                        value = VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

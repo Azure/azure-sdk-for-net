@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class WorkspaceData : IUtf8JsonSerializable
+    public partial class VirtualWorkspaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceData DeserializeWorkspaceData(JsonElement element)
+        internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element)
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new WorkspaceData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPcResource));
+            return new VirtualWorkspaceData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPcResource));
         }
     }
 }

@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
-        /// <param name="startVMOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
+        /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="migrationRequest"> The registration info of HostPool. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal HostPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, LoadBalancerType loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SSOSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVMOnConnect, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal HostPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, LoadBalancerType loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
             SsoSecretType = ssoSecretType;
             PreferredAppGroupType = preferredAppGroupType;
-            StartVMOnConnect = startVMOnConnect;
+            StartVmOnConnect = startVmOnConnect;
             MigrationRequest = migrationRequest;
             CloudPcResource = cloudPcResource;
         }
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
         public string SsoClientSecretKeyVaultPath { get; set; }
         /// <summary> The type of single sign on Secret Type. </summary>
-        public SSOSecretType? SsoSecretType { get; set; }
+        public SsoSecretType? SsoSecretType { get; set; }
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
         public PreferredAppGroupType PreferredAppGroupType { get; set; }
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
-        public bool? StartVMOnConnect { get; set; }
+        public bool? StartVmOnConnect { get; set; }
         /// <summary> The registration info of HostPool. </summary>
         public MigrationRequestProperties MigrationRequest { get; set; }
         /// <summary> Is cloud pc resource. </summary>

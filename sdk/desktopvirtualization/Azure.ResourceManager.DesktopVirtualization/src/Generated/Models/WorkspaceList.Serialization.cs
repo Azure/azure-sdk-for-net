@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static WorkspaceList DeserializeWorkspaceList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<VirtualWorkspaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<VirtualWorkspaceData> array = new List<VirtualWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item));
                     }
                     value = array;
                     continue;

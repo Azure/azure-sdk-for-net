@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Workspace> GetWorkspacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualWorkspace> GetVirtualWorkspacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetWorkspacesAsync(cancellationToken);
+            return GetExtensionClient(subscription).GetVirtualWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Workspace> GetWorkspaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualWorkspace> GetVirtualWorkspaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetWorkspaces(cancellationToken);
+            return GetExtensionClient(subscription).GetVirtualWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationGroup> GetApplicationGroupsAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualApplicationGroup> GetVirtualApplicationGroupsAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetApplicationGroupsAsync(filter, cancellationToken);
+            return GetExtensionClient(subscription).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationGroup> GetApplicationGroups(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualApplicationGroup> GetVirtualApplicationGroups(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetApplicationGroups(filter, cancellationToken);
+            return GetExtensionClient(subscription).GetVirtualApplicationGroups(filter, cancellationToken);
         }
 
         /// <summary>

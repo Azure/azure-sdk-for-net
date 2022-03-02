@@ -156,9 +156,10 @@
 	{
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
-        "logix",
+        "adfs",
+		"fslogix",
         "msix",
-        "ssoadfs",
+        "sso",
         "unhide"
       ]
     },

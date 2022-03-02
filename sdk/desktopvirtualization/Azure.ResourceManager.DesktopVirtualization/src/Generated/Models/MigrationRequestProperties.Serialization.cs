@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static MigrationRequestProperties DeserializeMigrationRequestProperties(JsonElement element)
         {
-            Optional<Operation> operation = default;
+            Optional<MigrationOperation> operation = default;
             Optional<string> migrationPath = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operation = new Operation(property.Value.GetString());
+                    operation = new MigrationOperation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationPath"))

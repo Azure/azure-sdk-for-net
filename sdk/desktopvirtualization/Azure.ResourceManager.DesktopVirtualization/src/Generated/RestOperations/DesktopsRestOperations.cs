@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is null. </exception>
-        public async Task<Response<DesktopData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualDesktopData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        DesktopData value = default;
+                        VirtualDesktopData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DesktopData.DeserializeDesktopData(document.RootElement);
+                        value = VirtualDesktopData.DeserializeVirtualDesktopData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DesktopData)null, message.Response);
+                    return Response.FromValue((VirtualDesktopData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is null. </exception>
-        public Response<DesktopData> Get(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, CancellationToken cancellationToken = default)
+        public Response<VirtualDesktopData> Get(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        DesktopData value = default;
+                        VirtualDesktopData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DesktopData.DeserializeDesktopData(document.RootElement);
+                        value = VirtualDesktopData.DeserializeVirtualDesktopData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DesktopData)null, message.Response);
+                    return Response.FromValue((VirtualDesktopData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, DesktopUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is null. </exception>
-        public async Task<Response<DesktopData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, DesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualDesktopData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        DesktopData value = default;
+                        VirtualDesktopData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DesktopData.DeserializeDesktopData(document.RootElement);
+                        value = VirtualDesktopData.DeserializeVirtualDesktopData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="options"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is null. </exception>
-        public Response<DesktopData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, DesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Response<VirtualDesktopData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -258,9 +258,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        DesktopData value = default;
+                        VirtualDesktopData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DesktopData.DeserializeDesktopData(document.RootElement);
+                        value = VirtualDesktopData.DeserializeVirtualDesktopData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

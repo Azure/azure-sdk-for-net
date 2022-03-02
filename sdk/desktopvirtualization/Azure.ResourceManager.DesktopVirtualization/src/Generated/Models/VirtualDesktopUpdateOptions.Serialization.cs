@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopUpdateOptions : IUtf8JsonSerializable
+    public partial class VirtualDesktopUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

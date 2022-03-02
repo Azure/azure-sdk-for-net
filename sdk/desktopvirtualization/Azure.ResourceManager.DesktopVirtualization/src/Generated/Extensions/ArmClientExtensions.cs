@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region Workspace
-        /// <summary> Gets an object representing a Workspace along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualWorkspace
+        /// <summary> Gets an object representing a VirtualWorkspace along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Workspace" /> object. </returns>
-        public static Workspace GetWorkspace(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWorkspace" /> object. </returns>
+        public static VirtualWorkspace GetVirtualWorkspace(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Workspace.ValidateResourceId(id);
-                return new Workspace(client, id);
+                VirtualWorkspace.ValidateResourceId(id);
+                return new VirtualWorkspace(client, id);
             }
             );
         }
@@ -45,49 +45,49 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
         #endregion
 
-        #region ApplicationGroup
-        /// <summary> Gets an object representing a ApplicationGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualApplicationGroup
+        /// <summary> Gets an object representing a VirtualApplicationGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGroup" /> object. </returns>
-        public static ApplicationGroup GetApplicationGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationGroup" /> object. </returns>
+        public static VirtualApplicationGroup GetVirtualApplicationGroup(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ApplicationGroup.ValidateResourceId(id);
-                return new ApplicationGroup(client, id);
+                VirtualApplicationGroup.ValidateResourceId(id);
+                return new VirtualApplicationGroup(client, id);
             }
             );
         }
         #endregion
 
-        #region Application
-        /// <summary> Gets an object representing a Application along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualApplication
+        /// <summary> Gets an object representing a VirtualApplication along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Application" /> object. </returns>
-        public static Application GetApplication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplication" /> object. </returns>
+        public static VirtualApplication GetVirtualApplication(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Application.ValidateResourceId(id);
-                return new Application(client, id);
+                VirtualApplication.ValidateResourceId(id);
+                return new VirtualApplication(client, id);
             }
             );
         }
         #endregion
 
-        #region Desktop
-        /// <summary> Gets an object representing a Desktop along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualDesktop
+        /// <summary> Gets an object representing a VirtualDesktop along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Desktop" /> object. </returns>
-        public static Desktop GetDesktop(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualDesktop" /> object. </returns>
+        public static VirtualDesktop GetVirtualDesktop(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Desktop.ValidateResourceId(id);
-                return new Desktop(client, id);
+                VirtualDesktop.ValidateResourceId(id);
+                return new VirtualDesktop(client, id);
             }
             );
         }

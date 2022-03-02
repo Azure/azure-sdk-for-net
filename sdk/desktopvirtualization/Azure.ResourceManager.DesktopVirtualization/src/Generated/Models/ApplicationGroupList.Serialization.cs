@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static ApplicationGroupList DeserializeApplicationGroupList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationGroupData>> value = default;
+            Optional<IReadOnlyList<VirtualApplicationGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationGroupData> array = new List<ApplicationGroupData>();
+                    List<VirtualApplicationGroupData> array = new List<VirtualApplicationGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGroupData.DeserializeApplicationGroupData(item));
+                        array.Add(VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(item));
                     }
                     value = array;
                     continue;

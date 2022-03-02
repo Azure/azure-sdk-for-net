@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
-        /// <param name="startVMOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
-        internal HostPoolUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, LoadBalancerType? loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfoPatch registrationInfo, string vmTemplate, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SSOSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVMOnConnect) : base(id, name, type, systemData)
+        /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
+        internal HostPoolUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, LoadBalancerType? loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfoPatch registrationInfo, string vmTemplate, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect) : base(id, name, type, systemData)
         {
             Tags = tags;
             FriendlyName = friendlyName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
             SsoSecretType = ssoSecretType;
             PreferredAppGroupType = preferredAppGroupType;
-            StartVMOnConnect = startVMOnConnect;
+            StartVmOnConnect = startVmOnConnect;
         }
 
         /// <summary> tags to be updated. </summary>
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
         public string SsoClientSecretKeyVaultPath { get; set; }
         /// <summary> The type of single sign on Secret Type. </summary>
-        public SSOSecretType? SsoSecretType { get; set; }
+        public SsoSecretType? SsoSecretType { get; set; }
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
         public PreferredAppGroupType? PreferredAppGroupType { get; set; }
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
-        public bool? StartVMOnConnect { get; set; }
+        public bool? StartVmOnConnect { get; set; }
     }
 }

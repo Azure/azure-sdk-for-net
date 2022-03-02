@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Workspace properties that can be patched. </summary>
-    public partial class WorkspaceUpdateOptions
+    public partial class VirtualWorkspaceUpdateOptions
     {
-        /// <summary> Initializes a new instance of WorkspaceUpdateOptions. </summary>
-        public WorkspaceUpdateOptions()
+        /// <summary> Initializes a new instance of VirtualWorkspaceUpdateOptions. </summary>
+        public VirtualWorkspaceUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ApplicationGroupReferences = new ChangeTrackingList<string>();

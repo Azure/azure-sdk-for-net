@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Application properties that can be patched. </summary>
-    public partial class ApplicationUpdateOptions
+    public partial class VirtualApplicationUpdateOptions
     {
-        /// <summary> Initializes a new instance of ApplicationUpdateOptions. </summary>
-        public ApplicationUpdateOptions()
+        /// <summary> Initializes a new instance of VirtualApplicationUpdateOptions. </summary>
+        public VirtualApplicationUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

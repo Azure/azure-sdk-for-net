@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
-    public partial class MsixImageURI
+    public partial class MsixImageUri
     {
-        /// <summary> Initializes a new instance of MsixImageURI. </summary>
-        public MsixImageURI()
+        /// <summary> Initializes a new instance of MsixImageUri. </summary>
+        public MsixImageUri()
         {
         }
 
