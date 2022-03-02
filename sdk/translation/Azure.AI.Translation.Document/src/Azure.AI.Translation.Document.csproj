@@ -6,6 +6,7 @@
     <Version>1.0.0-beta.7</Version>
     <PackageTags>Microsoft Azure Document Translation</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,10 +28,6 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
