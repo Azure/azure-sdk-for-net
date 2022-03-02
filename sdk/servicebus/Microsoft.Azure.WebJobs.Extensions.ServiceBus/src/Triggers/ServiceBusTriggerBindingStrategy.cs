@@ -96,7 +96,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // for backcompat
             AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             AddBindingContractMember(contract, "LockedUntil", typeof(DateTimeOffset), isSingleDispatch);
-            AddBindingContractMember(contract, "SessionLockedUntil", typeof(DateTimeOffset), isSingleDispatch);
 
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
