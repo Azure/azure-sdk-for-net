@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Tests
             var defaultValue = default(ArmEnvironment);
             Assert.IsNull(defaultValue.BaseUri);
             Assert.IsNull(defaultValue.Audience);
+            Assert.IsNull(defaultValue.DefaultScope);
         }
 
         [TestCase]

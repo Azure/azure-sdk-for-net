@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
             Etag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SiteKey = siteKey;
             AddressSpace = addressSpace;
             BgpProperties = bgpProperties;
@@ -56,15 +56,38 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualWAN to which the vpnSite belongs. </summary>
-        public WritableSubResource VirtualWan { get; set; }
+        internal WritableSubResource VirtualWan { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualWanId
+        {
+            get => VirtualWan is null ? default : VirtualWan.Id;
+            set
+            {
+                if (VirtualWan is null)
+                    VirtualWan = new WritableSubResource();
+                VirtualWan.Id = value;
+            }
+        }
+
         /// <summary> The device properties. </summary>
         public DeviceProperties DeviceProperties { get; set; }
         /// <summary> The ip-address for the vpn-site. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
-        public AddressSpace AddressSpace { get; set; }
+        internal AddressSpace AddressSpace { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> AddressPrefixes
+        {
+            get
+            {
+                if (AddressSpace is null)
+                    AddressSpace = new AddressSpace();
+                return AddressSpace.AddressPrefixes;
+            }
+        }
+
         /// <summary> The set of bgp properties. </summary>
         public BgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site resource. </summary>
@@ -74,6 +97,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of all vpn site links. </summary>
         public IList<VpnSiteLinkData> VpnSiteLinks { get; }
         /// <summary> Office365 Policy. </summary>
-        public O365PolicyProperties O365Policy { get; set; }
+        internal O365PolicyProperties O365Policy { get; set; }
+        /// <summary> Office365 breakout categories. </summary>
+        public O365BreakOutCategoryPolicies O365BreakOutCategories
+        {
+            get => O365Policy is null ? default : O365Policy.BreakOutCategories;
+            set
+            {
+                if (O365Policy is null)
+                    O365Policy = new O365PolicyProperties();
+                O365Policy.BreakOutCategories = value;
+            }
+        }
     }
 }

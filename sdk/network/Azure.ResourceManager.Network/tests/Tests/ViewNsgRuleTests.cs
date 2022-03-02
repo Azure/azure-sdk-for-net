@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
             //Response<NetworkWatcher> createNetworkWatcher = await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
-            string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(true, new SecurityGroupViewParameters(vm.Id));
+            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVmSecurityRulesAsync(true, new SecurityGroupViewParameters(vm.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier

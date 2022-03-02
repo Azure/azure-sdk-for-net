@@ -1133,10 +1133,10 @@ namespace Azure.ResourceManager.Network.Tests
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Associate the nic with LB
-            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
+            nic1.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
@@ -1157,9 +1157,9 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the associations
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
             Assert.AreEqual(2, getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations.Count);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(nic1.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(nic1.Data.IPConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
             AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();

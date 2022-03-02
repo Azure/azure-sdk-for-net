@@ -80,6 +80,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobOperationName AbortCopyBlob { get; } = new BlobOperationName("AbortCopyBlob");
 
         /// <summary>
+        /// Set Blob Tags.
+        /// </summary>
+        public static BlobOperationName SetBlobTags { get; } = new BlobOperationName("SetBlobTags");
+
+        /// <summary>
+        /// Create Restore Point Marker.
+        /// </summary>
+        public static BlobOperationName CreateRestorePointMarker { get; } = new BlobOperationName("CreateRestorePointMarker");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobOperationName"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>

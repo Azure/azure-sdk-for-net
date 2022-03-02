@@ -51,13 +51,61 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Default backend address pool resource of URL path map. </summary>
-        public WritableSubResource DefaultBackendAddressPool { get; set; }
+        internal WritableSubResource DefaultBackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultBackendAddressPoolId
+        {
+            get => DefaultBackendAddressPool is null ? default : DefaultBackendAddressPool.Id;
+            set
+            {
+                if (DefaultBackendAddressPool is null)
+                    DefaultBackendAddressPool = new WritableSubResource();
+                DefaultBackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> Default backend http settings resource of URL path map. </summary>
-        public WritableSubResource DefaultBackendHttpSettings { get; set; }
+        internal WritableSubResource DefaultBackendHttpSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultBackendHttpSettingsId
+        {
+            get => DefaultBackendHttpSettings is null ? default : DefaultBackendHttpSettings.Id;
+            set
+            {
+                if (DefaultBackendHttpSettings is null)
+                    DefaultBackendHttpSettings = new WritableSubResource();
+                DefaultBackendHttpSettings.Id = value;
+            }
+        }
+
         /// <summary> Default Rewrite rule set resource of URL path map. </summary>
-        public WritableSubResource DefaultRewriteRuleSet { get; set; }
+        internal WritableSubResource DefaultRewriteRuleSet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultRewriteRuleSetId
+        {
+            get => DefaultRewriteRuleSet is null ? default : DefaultRewriteRuleSet.Id;
+            set
+            {
+                if (DefaultRewriteRuleSet is null)
+                    DefaultRewriteRuleSet = new WritableSubResource();
+                DefaultRewriteRuleSet.Id = value;
+            }
+        }
+
         /// <summary> Default redirect configuration resource of URL path map. </summary>
-        public WritableSubResource DefaultRedirectConfiguration { get; set; }
+        internal WritableSubResource DefaultRedirectConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultRedirectConfigurationId
+        {
+            get => DefaultRedirectConfiguration is null ? default : DefaultRedirectConfiguration.Id;
+            set
+            {
+                if (DefaultRedirectConfiguration is null)
+                    DefaultRedirectConfiguration = new WritableSubResource();
+                DefaultRedirectConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Path rule of URL path map resource. </summary>
         public IList<ApplicationGatewayPathRule> PathRules { get; }
         /// <summary> The provisioning state of the URL path map resource. </summary>

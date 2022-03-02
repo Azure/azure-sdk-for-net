@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> The type of the resource. </param>
         /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
-        /// <param name="nextHopIpAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
+        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(string id, string name, string etag, string type, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIpAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
+        internal RouteData(string id, string name, string etag, string type, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
         {
             Name = name;
             Etag = etag;
             Type = type;
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             ProvisioningState = provisioningState;
             HasBgpOverride = hasBgpOverride;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
         public RouteNextHopType? NextHopType { get; set; }
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
         /// <summary> The provisioning state of the route resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>

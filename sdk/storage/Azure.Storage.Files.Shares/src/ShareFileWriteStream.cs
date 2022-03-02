@@ -20,12 +20,16 @@ namespace Azure.Storage.Files.Shares
             long bufferSize,
             long position,
             ShareFileRequestConditions conditions,
-            IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            IProgress<long> progressHandler
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions
+            ) : base(
                 position,
                 bufferSize,
-                progressHandler,
-                hashingOptions)
+                progressHandler
+                // TODO #27253
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;
@@ -46,10 +50,12 @@ namespace Azure.Storage.Files.Shares
                     content: _buffer,
                     options: new ShareFileUploadRangeOptions
                     {
-                        TransactionalHashingOptions = _hashingOptions,
+                        // TODO #27253
+                        //TransactionalHashingOptions = _hashingOptions,
                         ProgressHandler = _progressHandler,
                         Conditions = _conditions
                     },
+                    rangeContentMD5: default,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

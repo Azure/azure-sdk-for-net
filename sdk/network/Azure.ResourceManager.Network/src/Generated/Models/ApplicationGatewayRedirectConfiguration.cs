@@ -59,7 +59,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> HTTP redirection type. </summary>
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>
-        public WritableSubResource TargetListener { get; set; }
+        internal WritableSubResource TargetListener { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetListenerId
+        {
+            get => TargetListener is null ? default : TargetListener.Id;
+            set
+            {
+                if (TargetListener is null)
+                    TargetListener = new WritableSubResource();
+                TargetListener.Id = value;
+            }
+        }
+
         /// <summary> Url to redirect the request to. </summary>
         public string TargetUrl { get; set; }
         /// <summary> Include path in the redirected url. </summary>

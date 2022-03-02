@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("policySettings");
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(RateLimitRules))
+            if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules");
-                writer.WriteObjectValue(RateLimitRules);
+                writer.WriteObjectValue(RateLimitSettings);
             }
-            if (Optional.IsDefined(CustomRules))
+            if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules");
-                writer.WriteObjectValue(CustomRules);
+                writer.WriteObjectValue(CustomSettings);
             }
             if (Optional.IsDefined(ManagedRules))
             {

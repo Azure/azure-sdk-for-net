@@ -39,7 +39,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets default authentication scope.
         /// </summary>
-        public string DefaultScope => GetScope(".default");
+        public string DefaultScope { get; }
 
         /// <summary>
         /// Construct an <see cref="ArmEnvironment"/> using the given value.
@@ -53,11 +53,7 @@ namespace Azure.ResourceManager
 
             BaseUri = baseUri;
             Audience = audience;
-        }
-
-        private string GetScope(string permission)
-        {
-            return $"{Audience}/{permission}";
+            DefaultScope = $"{Audience}/.default";
         }
 
         /// <summary> Determines if two <see cref="ArmEnvironment"/> values are the same. </summary>
@@ -77,10 +73,7 @@ namespace Azure.ResourceManager
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            int hash = 17;
-            hash = hash * 23 + BaseUri.GetHashCode();
-            hash = hash * 23 + Audience.GetHashCode();
-            return hash;
+            return HashCodeBuilder.Combine(BaseUri, Audience);
         }
 
         /// <inheritdoc />

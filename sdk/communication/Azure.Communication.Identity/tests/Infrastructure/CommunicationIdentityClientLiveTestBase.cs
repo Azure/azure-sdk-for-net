@@ -14,7 +14,10 @@ namespace Azure.Communication.Identity.Tests
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new CommunicationIdentityClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..token");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment

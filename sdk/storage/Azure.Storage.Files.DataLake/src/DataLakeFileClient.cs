@@ -1731,6 +1731,7 @@ namespace Azure.Storage.Files.DataLake
                 content,
                 offset,
                 options,
+                rangeContentMD5: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1777,6 +1778,7 @@ namespace Azure.Storage.Files.DataLake
                 content,
                 offset,
                 options,
+                rangeContentMD5: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1839,13 +1841,14 @@ namespace Azure.Storage.Files.DataLake
             {
                 options = new DataLakeFileAppendOptions()
                 {
-                    TransactionalHashingOptions = contentHash != default
-                    ? new UploadTransactionalHashingOptions()
-                    {
-                        Algorithm = TransactionalHashAlgorithm.MD5,
-                        PrecalculatedHash = contentHash
-                    }
-                    : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = contentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = contentHash
+                    //    }
+                    //    : default,
                     LeaseId = leaseId,
                     ProgressHandler = progressHandler
                 };
@@ -1854,6 +1857,7 @@ namespace Azure.Storage.Files.DataLake
                 content,
                 offset,
                 options,
+                contentHash,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1917,13 +1921,14 @@ namespace Azure.Storage.Files.DataLake
             {
                 options = new DataLakeFileAppendOptions()
                 {
-                    TransactionalHashingOptions = contentHash != default
-                    ? new UploadTransactionalHashingOptions()
-                    {
-                        Algorithm = TransactionalHashAlgorithm.MD5,
-                        PrecalculatedHash = contentHash
-                    }
-                    : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = contentHash != default
+                    //    ? new UploadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5,
+                    //        PrecalculatedHash = contentHash
+                    //    }
+                    //    : default,
                     LeaseId = leaseId,
                     ProgressHandler = progressHandler
                 };
@@ -1932,6 +1937,7 @@ namespace Azure.Storage.Files.DataLake
                 content,
                 offset,
                 options,
+                contentHash,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1958,6 +1964,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional parameters.
         /// </param>
+        /// <param name="rangeContentMD5">
+        /// Optional transactional MD5 hash for the appended content.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1977,13 +1986,15 @@ namespace Azure.Storage.Files.DataLake
             Stream content,
             long? offset,
             DataLakeFileAppendOptions options,
+            byte[] rangeContentMD5,
             bool async,
             CancellationToken cancellationToken)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                // TODO #27253
+                //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
                 content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2007,8 +2018,9 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            // TODO #27253
+                            transactionalContentHash: rangeContentMD5, // hashResult?.MD5,
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
                             leaseId: options?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2019,8 +2031,9 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            // TODO #27253
+                            transactionalContentHash: rangeContentMD5, // hashResult?.MD5,
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
                             leaseId: options?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -3929,7 +3942,8 @@ namespace Azure.Storage.Files.DataLake
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                options.TransactionalHashingOptions,
+                // TODO #27253
+                //options.TransactionalHashingOptions,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4151,7 +4165,7 @@ namespace Azure.Storage.Files.DataLake
         /// result of a query against the file.
         /// </summary>
         /// <param name="querySqlExpression">
-        /// The query.
+        /// The query. For a sample SQL query expression, see <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-query-acceleration-how-to?tabs=dotnet%2Cpowershell#retrieve-data-by-using-a-filter">this </see>article.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4201,7 +4215,7 @@ namespace Azure.Storage.Files.DataLake
         /// result of a query against the file.
         /// </summary>
         /// <param name="querySqlExpression">
-        /// The query.
+        /// The query. For a sample SQL query expression, see <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-query-acceleration-how-to?tabs=dotnet%2Cpowershell#retrieve-data-by-using-a-filter">this </see>article.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4680,7 +4694,8 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions,
+                    // TODO #27253
+                    // options?.TransactionalHashingOptions,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -4698,13 +4713,15 @@ namespace Azure.Storage.Files.DataLake
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                hashingOptions,
+                // TODO #27253
+                //hashingOptions,
                 arrayPool,
                 operationName);
 
@@ -4722,7 +4739,7 @@ namespace Azure.Storage.Files.DataLake
                         args.Conditions,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, hashingOptions, operationName, async, cancellationToken) =>
+                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -4738,8 +4755,10 @@ namespace Azure.Storage.Files.DataLake
                         {
                             LeaseId = args.Conditions?.LeaseId,
                             ProgressHandler = progressHandler,
-                            TransactionalHashingOptions = hashingOptions
+                            // TODO #27253
+                            //TransactionalHashingOptions = hashingOptions
                         },
+                        rangeContentMD5: default,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -4754,7 +4773,7 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, hashingOptions, async, cancellationToken)
+                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
                         offset,
@@ -4762,8 +4781,10 @@ namespace Azure.Storage.Files.DataLake
                         {
                             LeaseId = args.Conditions?.LeaseId,
                             ProgressHandler = progressHandler,
-                            TransactionalHashingOptions = hashingOptions
+                            // TODO #27253
+                            //TransactionalHashingOptions = hashingOptions
                         },
+                        rangeContentMD5: default,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>

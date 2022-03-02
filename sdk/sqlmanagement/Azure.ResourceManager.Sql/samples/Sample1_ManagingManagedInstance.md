@@ -62,10 +62,6 @@ var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, 
 var vnetData = new VirtualNetworkData()
 {
     Location = AzureLocation.WestUS2,
-    AddressSpace = new AddressSpace()
-    {
-        AddressPrefixes = { "10.10.0.0/16", }
-    },
     Subnets =
     {
         new SubnetData()
@@ -81,6 +77,7 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
+vnetData.AddressPrefixes.Add("10.10.0.0/16");
 string vnetName = "myVnet";
 var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";

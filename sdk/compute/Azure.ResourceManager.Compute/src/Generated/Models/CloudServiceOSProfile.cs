@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the OS profile for the cloud service. </summary>
-    public partial class CloudServiceOSProfile
+    internal partial class CloudServiceOSProfile
     {
         /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
         public CloudServiceOSProfile()

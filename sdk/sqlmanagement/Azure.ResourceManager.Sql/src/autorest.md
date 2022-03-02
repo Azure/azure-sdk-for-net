@@ -12,11 +12,24 @@ public-clients: false
 head-as-boolean: false
 clear-output-folder: true
 modelerfour:
-  lenient-model-deduplication: true
   seal-single-value-enum-by-default: true
 skip-csproj: true
-mgmt-debug:
-  show-request-path: true
+
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
