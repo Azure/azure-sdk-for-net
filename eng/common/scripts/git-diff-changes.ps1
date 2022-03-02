@@ -17,7 +17,7 @@ param (
   [string] $SourceCommittish = ${env:BUILD_SOURCEVERSION},
   [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
-# Git PR diff: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons
+# Git PR diff: https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-comparing-branches-in-pull-requests#three-dot-and-two-dot-git-diff-comparisons
 Write-Host "git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff $TargetCommittish...$SourceCommittish --name-only --diff-filter=d"
 $changedFiles = (git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff "$TargetCommittish...$SourceCommittish"  --name-only --diff-filter=d)
 if(!$changedFiles) {
