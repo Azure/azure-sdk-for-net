@@ -3,6 +3,7 @@
     <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -41,22 +42,10 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>
