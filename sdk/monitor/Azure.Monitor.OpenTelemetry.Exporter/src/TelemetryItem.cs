@@ -12,8 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-
-        private static readonly IReadOnlyDictionary<TelemetryType, string> s_partA_Name_Mapping = new Dictionary<TelemetryType, string>
+        private static readonly IReadOnlyDictionary<TelemetryType, string> s_telemetryItem_Name_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "Request",
             [TelemetryType.Dependency] = "RemoteDependency",
@@ -21,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
         {
-            Name = s_partA_Name_Mapping[activity.GetTelemetryType()];
+            Name = s_telemetryItem_Name_Mapping[activity.GetTelemetryType()];
             Time = FormatUtcTimestamp(activity.StartTimeUtc);
             Tags = new ChangeTrackingDictionary<string, string>();
 
@@ -32,14 +31,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             // todo: update swagger to include this key.
-            Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref monitorTags.PartBTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.PartBTags);
+                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.MappedTags);
             }
 
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
