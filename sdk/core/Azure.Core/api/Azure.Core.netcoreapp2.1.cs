@@ -262,6 +262,11 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool IsRunningSynchronously { get { throw null; } }
     }
+    public enum WaitUntil
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace Azure.Core
 {
