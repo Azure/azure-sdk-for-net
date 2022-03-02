@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public partial class KeyClientLiveTests
     {
         [Test]
+        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task ReleaseCreatedKey()
@@ -40,6 +41,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task ReleaseUpdatedKey()
@@ -73,6 +75,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [Test]
         [KeyVaultOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/26792 is resolved.
+        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
+        [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task UpdateReleasePolicy([Values] bool immutable)
         {

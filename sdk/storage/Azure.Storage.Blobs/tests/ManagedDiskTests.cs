@@ -31,8 +31,8 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [SetUp]
         public void Setup()
         {
-            snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
-            snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
+            snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => SanitizeUri(v)));
+            snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => SanitizeUri(v)));
             snapshot1Size = long.Parse(Recording.GetVariable(nameof(snapshot1Size), ManagedDiskFixture.Instance.Snapshot1?.Data.DiskSizeBytes.ToString()));
         }
 

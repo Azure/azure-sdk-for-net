@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostName = Recording.GenerateAssetName("testHost-");
             DedicatedHost dedicatedHost = await CreateDedicatedHostAsync(hostName);
             var updatedAutoReplaceOnFailure = false;
-            var update = new DedicatedHostUpdate()
+            var update = new DedicatedHostUpdateOptions()
             {
                 AutoReplaceOnFailure = updatedAutoReplaceOnFailure
             };

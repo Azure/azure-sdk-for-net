@@ -8,7 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Trace;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class RemoteDependencyDataTests
     {
@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref monitorTags).Type;
-            var expectedType = RemoteDependencyData.SqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
+            var expectedType = RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
 
             Assert.Equal(expectedType, remoteDependencyDataType);
         }

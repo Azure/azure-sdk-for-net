@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal StorageQueue(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string storageQueueQueueApiVersion);
+            TryGetApiVersion(ResourceType, out string storageQueueQueueApiVersion);
             _storageQueueQueueRestClient = new QueueRestOperations(_storageQueueQueueClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -192,10 +192,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
         public async virtual Task<Response<StorageQueue>> UpdateAsync(StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
+            Argument.AssertNotNull(queue, nameof(queue));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Update");
             scope.Start();
@@ -221,10 +218,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
         public virtual Response<StorageQueue> Update(StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
+            Argument.AssertNotNull(queue, nameof(queue));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Update");
             scope.Start();

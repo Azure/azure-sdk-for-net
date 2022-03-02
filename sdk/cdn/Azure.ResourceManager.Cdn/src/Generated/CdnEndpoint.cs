@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
             _cdnEndpointRestClient = new CdnEndpointsRestOperations(_cdnEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -211,22 +211,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="options"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, EndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, CdnEndpointUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,22 +241,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="options"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<CdnEndpoint> Update(bool waitForCompletion, EndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<CdnEndpoint> Update(bool waitForCompletion, CdnEndpointUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -386,10 +380,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
         public async virtual Task<ArmOperation> PurgeContentAsync(bool waitForCompletion, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
-            if (contentFilePaths == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilePaths));
-            }
+            Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
             scope.Start();
@@ -419,10 +410,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
         public virtual ArmOperation PurgeContent(bool waitForCompletion, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
-            if (contentFilePaths == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilePaths));
-            }
+            Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
             scope.Start();
@@ -452,10 +440,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
         public async virtual Task<ArmOperation> LoadContentAsync(bool waitForCompletion, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
-            if (contentFilePaths == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilePaths));
-            }
+            Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
             scope.Start();
@@ -485,10 +470,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
         public virtual ArmOperation LoadContent(bool waitForCompletion, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
-            if (contentFilePaths == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilePaths));
-            }
+            Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
             scope.Start();
@@ -517,10 +499,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainProperties"/> is null. </exception>
         public async virtual Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
         {
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
             scope.Start();
@@ -546,10 +525,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainProperties"/> is null. </exception>
         public virtual Response<ValidateCustomDomainOutput> ValidateCustomDomain(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
         {
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
             scope.Start();
@@ -660,21 +636,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<CdnEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -697,21 +667,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CdnEndpoint> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -733,10 +697,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<CdnEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
             scope.Start();
@@ -744,7 +705,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -766,10 +727,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CdnEndpoint> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
             scope.Start();
@@ -777,7 +735,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -799,17 +757,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<CdnEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -831,17 +786,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CdnEndpoint> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());

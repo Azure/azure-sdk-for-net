@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(database);
         }
 
-        protected async Task<GremlinDatabase> CreateGremlinDatabase(AutoscaleSettings autoscale)
+        internal async Task<GremlinDatabase> CreateGremlinDatabase(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("gremlin-db-");
             return await CreateGremlinDatabase(_databaseName, autoscale, _databaseAccount.GetGremlinDatabases());

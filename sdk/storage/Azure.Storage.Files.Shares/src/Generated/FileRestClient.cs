@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
         public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10", string fileRangeWriteFromUrl = "update")
         {
             _url = url ?? throw new ArgumentNullException(nameof(url));
@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/> or <paramref name="fileLastWriteTime"/> is null. </exception>
         public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
@@ -157,7 +157,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/> or <paramref name="fileLastWriteTime"/> is null. </exception>
         public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
@@ -455,7 +455,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/> or <paramref name="fileLastWriteTime"/> is null. </exception>
         public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, long? fileContentLength = null, string filePermission = null, string filePermissionKey = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
@@ -494,7 +494,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/>, or <paramref name="fileLastWriteTime"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/>, <paramref name="fileCreationTime"/> or <paramref name="fileLastWriteTime"/> is null. </exception>
         public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout = null, long? fileContentLength = null, string filePermission = null, string filePermissionKey = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (copyFileSmbInfo?.IgnoreReadOnly != null)
             {
-                request.Headers.Add("x-ms-file-copy-ignore-read-only", copyFileSmbInfo.IgnoreReadOnly.Value);
+                request.Headers.Add("x-ms-file-copy-ignore-readonly", copyFileSmbInfo.IgnoreReadOnly.Value);
             }
             if (copyFileSmbInfo?.FileAttributes != null)
             {

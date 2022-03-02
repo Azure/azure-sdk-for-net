@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of WorkerPoolResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of HostingEnvironmentWorkerPool and their operations over its parent. </summary>
     public partial class HostingEnvironmentWorkerPoolCollection : ArmCollection, IEnumerable<HostingEnvironmentWorkerPool>, IAsyncEnumerable<HostingEnvironmentWorkerPool>
     {
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentWorkerPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentWorkerPool.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HostingEnvironmentWorkerPool.ResourceType, out string hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
+            TryGetApiVersion(HostingEnvironmentWorkerPool.ResourceType, out string hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
             _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -59,15 +59,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public async virtual Task<ArmOperation<HostingEnvironmentWorkerPool>> CreateOrUpdateAsync(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
-            if (workerPoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolEnvelope));
-            }
+            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -95,15 +92,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
         public virtual ArmOperation<HostingEnvironmentWorkerPool> CreateOrUpdate(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
-            if (workerPoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolEnvelope));
-            }
+            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentWorkerPool>> GetAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPool> Get(string workerPoolName, CancellationToken cancellationToken = default)
         {
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string workerPoolName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentWorkerPool>> GetIfExistsAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPool> GetIfExists(string workerPoolName, CancellationToken cancellationToken = default)
         {

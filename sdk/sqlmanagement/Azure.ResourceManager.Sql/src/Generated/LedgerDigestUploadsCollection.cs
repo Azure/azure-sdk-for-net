@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal LedgerDigestUploadsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LedgerDigestUploads.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LedgerDigestUploads.ResourceType, out string ledgerDigestUploadsLedgerDigestUploadsApiVersion);
+            TryGetApiVersion(LedgerDigestUploads.ResourceType, out string ledgerDigestUploadsLedgerDigestUploadsApiVersion);
             _ledgerDigestUploadsLedgerDigestUploadsRestClient = new LedgerDigestUploadsRestOperations(_ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ledgerDigestUploadsLedgerDigestUploadsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<LedgerDigestUploads>> CreateOrUpdateAsync(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadsCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<LedgerDigestUploads> CreateOrUpdate(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadsCollection.CreateOrUpdate");
             scope.Start();

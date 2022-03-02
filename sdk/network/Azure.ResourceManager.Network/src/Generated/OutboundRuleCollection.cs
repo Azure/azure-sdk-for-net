@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         internal OutboundRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _outboundRuleLoadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", OutboundRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OutboundRule.ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
+            TryGetApiVersion(OutboundRule.ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
             _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundRuleLoadBalancerOutboundRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public async virtual Task<Response<OutboundRule>> GetAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual Response<OutboundRule> Get(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public async virtual Task<Response<OutboundRule>> GetIfExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual Response<OutboundRule> GetIfExists(string outboundRuleName, CancellationToken cancellationToken = default)
         {

@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Compute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _oSVersionCloudServiceOperatingSystemsClientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _oSVersionCloudServiceOperatingSystemsRestClient;
+        private readonly ClientDiagnostics _osVersionCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _osVersionCloudServiceOperatingSystemsRestClient;
         private readonly OSVersionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="OSVersion"/> class for mocking. </summary>
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OSVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
-            _oSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_osVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<OSVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.Get");
             scope.Start();
             try
             {
-                var response = await _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OSVersion> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.Get");
             scope.Start();
             try
             {
-                var response = _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

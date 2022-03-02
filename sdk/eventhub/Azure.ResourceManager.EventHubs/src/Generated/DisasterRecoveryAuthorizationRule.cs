@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         internal DisasterRecoveryAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
+            TryGetApiVersion(ResourceType, out string disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

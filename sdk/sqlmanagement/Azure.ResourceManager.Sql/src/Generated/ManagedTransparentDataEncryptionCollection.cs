@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedTransparentDataEncryptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedTransparentDataEncryption.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedTransparentDataEncryption.ResourceType, out string managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
+            TryGetApiVersion(ManagedTransparentDataEncryption.ResourceType, out string managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
             _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(_managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ManagedTransparentDataEncryption>> CreateOrUpdateAsync(bool waitForCompletion, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ManagedTransparentDataEncryption> CreateOrUpdate(bool waitForCompletion, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.CreateOrUpdate");
             scope.Start();

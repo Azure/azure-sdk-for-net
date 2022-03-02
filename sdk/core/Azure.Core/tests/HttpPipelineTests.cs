@@ -267,7 +267,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CustomClassifierSetsResponseIsError()
+        public async Task PipelineClassifierSetsResponseIsError()
         {
             var mockTransport = new MockTransport(
                 new MockResponse(404));
@@ -278,6 +278,28 @@ namespace Azure.Core.Tests
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            Assert.IsFalse(response.IsError);
+        }
+
+        [Test]
+        public async Task RequestContextClassifierSetsResponseIsError()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(404));
+
+            var pipeline = new HttpPipeline(mockTransport, default);
+
+            var context = new RequestContext();
+            context.AddClassifier(404, isError: false);
+
+            HttpMessage message = pipeline.CreateMessage(context, ResponseClassifier200204304);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Response response = message.Response;
 
             Assert.IsFalse(response.IsError);
         }
@@ -321,6 +343,10 @@ namespace Azure.Core.Tests
                 return IsRetriableResponse(message);
             }
         }
+
+        // How classifiers will be generated in DPG.
+        private static ResponseClassifier _responseClassifier200204304;
+        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
         #endregion
 
     }

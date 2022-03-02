@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="domainNameLabel"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
         public async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string subscriptionId, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="domainNameLabel"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
         public Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(string subscriptionId, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateSupportedSecurityProvidersRequest(string subscriptionId, string resourceGroupName, string virtualWANName)
+        internal HttpMessage CreateSupportedSecurityProvidersRequest(string subscriptionId, string resourceGroupName, string virtualWanName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
-            uri.AppendPath(virtualWANName, true);
+            uri.AppendPath(virtualWanName, true);
             uri.AppendPath("/supportedSecurityProviders", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gives the supported security providers for the virtual wan. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN for which supported security providers are needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN for which supported security providers are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualWANName"/> is null. </exception>
-        public async Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualWanName"/> is null. </exception>
+        public async Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(string subscriptionId, string resourceGroupName, string virtualWanName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
 
-            using var message = CreateSupportedSecurityProvidersRequest(subscriptionId, resourceGroupName, virtualWANName);
+            using var message = CreateSupportedSecurityProvidersRequest(subscriptionId, resourceGroupName, virtualWanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gives the supported security providers for the virtual wan. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN for which supported security providers are needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN for which supported security providers are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualWANName"/> is null. </exception>
-        public Response<VirtualWanSecurityProviders> SupportedSecurityProviders(string subscriptionId, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualWanName"/> is null. </exception>
+        public Response<VirtualWanSecurityProviders> SupportedSecurityProviders(string subscriptionId, string resourceGroupName, string virtualWanName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
 
-            using var message = CreateSupportedSecurityProvidersRequest(subscriptionId, resourceGroupName, virtualWANName);
+            using var message = CreateSupportedSecurityProvidersRequest(subscriptionId, resourceGroupName, virtualWanName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams)
+        internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileParameters vpnClientParams)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
-            uri.AppendPath(virtualWANName, true);
+            uri.AppendPath(virtualWanName, true);
             uri.AppendPath("/GenerateVpnProfile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
-        public async Task<Response> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWanName"/> or <paramref name="vpnClientParams"/> is null. </exception>
+        public async Task<Response> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
             if (vpnClientParams == null)
             {
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var message = CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(subscriptionId, resourceGroupName, virtualWANName, vpnClientParams);
+            using var message = CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(subscriptionId, resourceGroupName, virtualWanName, vpnClientParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
-        public Response Generatevirtualwanvpnserverconfigurationvpnprofile(string subscriptionId, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWanName"/> or <paramref name="vpnClientParams"/> is null. </exception>
+        public Response Generatevirtualwanvpnserverconfigurationvpnprofile(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -312,16 +312,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
             if (vpnClientParams == null)
             {
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var message = CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(subscriptionId, resourceGroupName, virtualWANName, vpnClientParams);
+            using var message = CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(subscriptionId, resourceGroupName, virtualWanName, vpnClientParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

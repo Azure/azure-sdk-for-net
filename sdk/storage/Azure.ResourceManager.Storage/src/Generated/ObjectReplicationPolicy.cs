@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal ObjectReplicationPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _objectReplicationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string objectReplicationPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string objectReplicationPolicyApiVersion);
             _objectReplicationPolicyRestClient = new ObjectReplicationPoliciesRestOperations(_objectReplicationPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, objectReplicationPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

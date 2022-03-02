@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal DataWarehouseUserActivities(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataWarehouseUserActivitiesDataWarehouseUserActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
+            TryGetApiVersion(ResourceType, out string dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
             _dataWarehouseUserActivitiesDataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(_dataWarehouseUserActivitiesDataWarehouseUserActivitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

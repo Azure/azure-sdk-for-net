@@ -34,7 +34,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
         /// <param name="workspaceName"> Name of the workspace. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         public QuotasRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
         {
             _subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));

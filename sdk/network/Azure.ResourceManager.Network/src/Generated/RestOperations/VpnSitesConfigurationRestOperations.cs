@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateDownloadRequest(string subscriptionId, string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request)
+        internal HttpMessage CreateDownloadRequest(string subscriptionId, string resourceGroupName, string virtualWanName, GetVpnSitesConfigurationRequest request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
-            uri.AppendPath(virtualWANName, true);
+            uri.AppendPath(virtualWanName, true);
             uri.AppendPath("/vpnConfiguration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
-        public async Task<Response> DownloadAsync(string subscriptionId, string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWanName"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response> DownloadAsync(string subscriptionId, string resourceGroupName, string virtualWanName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateDownloadRequest(subscriptionId, resourceGroupName, virtualWANName, request);
+            using var message = CreateDownloadRequest(subscriptionId, resourceGroupName, virtualWanName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
-        public Response Download(string subscriptionId, string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualWanName"/> or <paramref name="request"/> is null. </exception>
+        public Response Download(string subscriptionId, string resourceGroupName, string virtualWanName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (virtualWANName == null)
+            if (virtualWanName == null)
             {
-                throw new ArgumentNullException(nameof(virtualWANName));
+                throw new ArgumentNullException(nameof(virtualWanName));
             }
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateDownloadRequest(subscriptionId, resourceGroupName, virtualWANName, request);
+            using var message = CreateDownloadRequest(subscriptionId, resourceGroupName, virtualWanName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

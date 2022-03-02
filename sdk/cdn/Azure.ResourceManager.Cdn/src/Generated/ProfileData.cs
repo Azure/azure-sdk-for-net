@@ -50,7 +50,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
-        public Models.Sku Sku { get; set; }
+        internal Models.Sku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public SkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new Models.Sku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the profile. </summary>

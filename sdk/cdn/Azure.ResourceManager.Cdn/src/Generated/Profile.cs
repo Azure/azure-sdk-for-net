@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
         internal Profile(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string profileApiVersion);
+            TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
             _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _afdProfilesRestClient = new AfdProfilesRestOperations(_afdProfilesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -228,72 +228,6 @@ namespace Azure.ResourceManager.Cdn
                 var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing CDN profile with the specified profile name under the specified subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
-        /// Operation Id: Profiles_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<Profile>> UpdateAsync(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
-        {
-            if (profileUpdateParameters == null)
-            {
-                throw new ArgumentNullException(nameof(profileUpdateParameters));
-            }
-
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing CDN profile with the specified profile name under the specified subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
-        /// Operation Id: Profiles_Update
-        /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<Profile> Update(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
-        {
-            if (profileUpdateParameters == null)
-            {
-                throw new ArgumentNullException(nameof(profileUpdateParameters));
-            }
-
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -574,21 +508,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public async virtual Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAfdProfileAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
             scope.Start();
@@ -619,21 +544,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/>, or <paramref name="protocols"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public virtual Response<MetricsResponse> GetLogAnalyticsMetricsAfdProfile(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
             scope.Start();
@@ -664,14 +580,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAfdProfileAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
             scope.Start();
@@ -702,14 +612,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public virtual Response<RankingsResponse> GetLogAnalyticsRankingsAfdProfile(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
             scope.Start();
@@ -829,10 +733,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAfdProfileAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
             scope.Start();
@@ -864,10 +765,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetricsAfdProfile(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
             scope.Start();
@@ -899,14 +797,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAfdProfileAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
             scope.Start();
@@ -938,14 +830,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankingsAfdProfile(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
             scope.Start();
@@ -972,21 +858,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<Profile>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1009,21 +889,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<Profile> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1045,10 +919,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<Profile>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.SetTags");
             scope.Start();
@@ -1056,7 +927,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1078,10 +949,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<Profile> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.SetTags");
             scope.Start();
@@ -1089,7 +957,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1111,17 +979,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<Profile>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1143,17 +1008,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<Profile> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(Client, originalResponse.Value), originalResponse.GetRawResponse());

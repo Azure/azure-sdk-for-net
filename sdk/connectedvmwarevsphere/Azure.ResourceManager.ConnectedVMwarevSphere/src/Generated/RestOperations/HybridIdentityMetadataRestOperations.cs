@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> CreateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Create(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Get(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/>, or <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="metadataName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualMachineName, string metadataName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByVmAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByVm(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByVmNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the vm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByVmNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterApiVersion);
+            TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterApiVersion);
             _eventHubClusterRestClient = new EventHubClustersRestOperations(_eventHubClusterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
             _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterClustersApiVersion);
+            TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterClustersApiVersion);
             _eventHubClusterClustersRestClient = new ClustersRestOperations(_eventHubClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -65,15 +65,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<EventHubCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -101,15 +98,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<EventHubCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -135,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<EventHubCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -164,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<EventHubCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -277,7 +271,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -304,7 +298,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -331,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<EventHubCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -360,7 +354,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<EventHubCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {

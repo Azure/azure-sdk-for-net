@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseSchemaTableColumn(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            TryGetApiVersion(ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
             _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(_serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
             _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
             _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it in the ServerDatabaseSchemaTableColumn. </summary>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public virtual ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel()
+        /// <summary> Gets a collection of ServerDatabaseSchemaTableColumnSensitivityLabels in the ServerDatabaseSchemaTableColumnSensitivityLabel. </summary>
+        /// <returns> An object representing collection of ServerDatabaseSchemaTableColumnSensitivityLabels and their operations over a ServerDatabaseSchemaTableColumnSensitivityLabel. </returns>
+        public virtual ServerDatabaseSchemaTableColumnSensitivityLabelCollection GetServerDatabaseSchemaTableColumnSensitivityLabels()
         {
-            return new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, new ResourceIdentifier(Id.ToString() + "/sensitivityLabels/current"));
+            return new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id);
         }
 
         /// <summary>

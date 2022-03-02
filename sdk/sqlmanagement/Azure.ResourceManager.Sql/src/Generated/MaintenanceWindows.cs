@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal MaintenanceWindows(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _maintenanceWindowsMaintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
             _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_maintenanceWindowsMaintenanceWindowsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -92,10 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         public async virtual Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.Get");
             scope.Start();
@@ -123,10 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         public virtual Response<MaintenanceWindows> Get(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.Get");
             scope.Start();
@@ -156,14 +150,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.CreateOrUpdate");
             scope.Start();
@@ -194,14 +182,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.CreateOrUpdate");
             scope.Start();

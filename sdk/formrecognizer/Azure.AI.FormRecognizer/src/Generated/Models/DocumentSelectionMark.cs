@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,14 +17,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="span"/> is null. </exception>
         internal DocumentSelectionMark(V3SelectionMarkState statePrivate, DocumentSpan span, float confidence)
         {
-            if (span == null)
-            {
-                throw new ArgumentNullException(nameof(span));
-            }
-
             StatePrivate = statePrivate;
             BoundingBoxPrivate = new ChangeTrackingList<float>();
             Span = span;

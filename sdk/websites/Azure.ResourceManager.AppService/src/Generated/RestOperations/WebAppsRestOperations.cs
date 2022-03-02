@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebSiteData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebSiteData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async Task<Response<WebSiteData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public Response<WebSiteData> Update(string subscriptionId, string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string subscriptionId, string resourceGroupName, string name, string hostName = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CustomHostnameAnalysisResult> AnalyzeCustomHostname(string subscriptionId, string resourceGroupName, string name, string hostName = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response> ApplySlotConfigToProductionAsync(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response ApplySlotConfigToProduction(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupItemData>> BackupAsync(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupItemData> Backup(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<BackupItemCollection> ListBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         public async Task<Response<BackupItemData>> GetBackupStatusAsync(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         public Response<BackupItemData> GetBackupStatus(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         public async Task<Response> DeleteBackupAsync(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         public Response DeleteBackup(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of backup. </param>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupItemData>> ListBackupStatusSecretsAsync(string subscriptionId, string resourceGroupName, string name, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of backup. </param>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupItemData> ListBackupStatusSecrets(string subscriptionId, string resourceGroupName, string name, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response> RestoreAsync(string subscriptionId, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public Response Restore(string subscriptionId, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1481,7 +1481,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PublishingCredentialsPoliciesCollection>> ListBasicPublishingCredentialsPoliciesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PublishingCredentialsPoliciesCollection> ListBasicPublishingCredentialsPolicies(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> GetFtpAllowedAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1615,7 +1615,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> GetFtpAllowed(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1722,7 +1722,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1784,7 +1784,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> GetScmAllowedAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> GetScmAllowed(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1888,7 +1888,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteConfigResourceCollection>> ListConfigurationsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteConfigResourceCollection> ListConfigurations(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2092,7 +2092,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         public async Task<Response<StringDictionary>> UpdateApplicationSettingsAsync(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         public Response<StringDictionary> UpdateApplicationSettings(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2196,7 +2196,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListApplicationSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2233,7 +2233,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<StringDictionary> ListApplicationSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2296,7 +2296,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteAuthSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettings"/> is null. </exception>
         public async Task<Response<SiteAuthSettings>> UpdateAuthSettingsAsync(string subscriptionId, string resourceGroupName, string name, SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2338,7 +2338,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteAuthSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettings"/> is null. </exception>
         public Response<SiteAuthSettings> UpdateAuthSettings(string subscriptionId, string resourceGroupName, string name, SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2400,7 +2400,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2437,7 +2437,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteAuthSettings> GetAuthSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2500,7 +2500,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2542,7 +2542,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2604,7 +2604,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2641,7 +2641,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteAuthSettingsV2> GetAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2704,7 +2704,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="azureStorageAccounts"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="azureStorageAccounts"/> is null. </exception>
         public async Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsAsync(string subscriptionId, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="azureStorageAccounts"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="azureStorageAccounts"/> is null. </exception>
         public Response<AzureStoragePropertyDictionaryResource> UpdateAzureStorageAccounts(string subscriptionId, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2808,7 +2808,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<AzureStoragePropertyDictionaryResource>> ListAzureStorageAccountsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2845,7 +2845,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<AzureStoragePropertyDictionaryResource> ListAzureStorageAccounts(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2908,7 +2908,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -2950,7 +2950,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupRequest> UpdateBackupConfiguration(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3012,7 +3012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3044,7 +3044,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response DeleteBackupConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3097,7 +3097,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<BackupRequest>> GetBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3134,7 +3134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<BackupRequest> GetBackupConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3229,7 +3229,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3289,7 +3289,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettingKey"/> is null. </exception>
         public async Task<Response<ApiKeyVaultReferenceData>> GetAppSettingKeyVaultReferenceAsync(string subscriptionId, string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3333,7 +3333,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettingKey"/> is null. </exception>
         public Response<ApiKeyVaultReferenceData> GetAppSettingKeyVaultReference(string subscriptionId, string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3397,7 +3397,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3434,7 +3434,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3494,7 +3494,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionStringKey"/> is null. </exception>
         public async Task<Response<ApiKeyVaultReferenceData>> GetSiteConnectionStringKeyVaultReferenceAsync(string subscriptionId, string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3538,7 +3538,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionStringKey"/> is null. </exception>
         public Response<ApiKeyVaultReferenceData> GetSiteConnectionStringKeyVaultReference(string subscriptionId, string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3607,7 +3607,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStrings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionStrings"/> is null. </exception>
         public async Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsAsync(string subscriptionId, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3649,7 +3649,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionStrings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionStrings"/> is null. </exception>
         public Response<ConnectionStringDictionary> UpdateConnectionStrings(string subscriptionId, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3711,7 +3711,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ConnectionStringDictionary>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3748,7 +3748,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ConnectionStringDictionary> ListConnectionStrings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3806,7 +3806,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteLogsConfigData>> GetDiagnosticLogsConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3845,7 +3845,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteLogsConfigData> GetDiagnosticLogsConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3910,7 +3910,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteLogsConfig"/> is null. </exception>
         public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigAsync(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -3952,7 +3952,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteLogsConfig"/> is null. </exception>
         public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfig(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4019,7 +4019,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="metadata"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="metadata"/> is null. </exception>
         public async Task<Response<StringDictionary>> UpdateMetadataAsync(string subscriptionId, string resourceGroupName, string name, StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4061,7 +4061,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="metadata"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="metadata"/> is null. </exception>
         public Response<StringDictionary> UpdateMetadata(string subscriptionId, string resourceGroupName, string name, StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4123,7 +4123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListMetadataAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4160,7 +4160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<StringDictionary> ListMetadata(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4218,7 +4218,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> ListPublishingCredentialsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4250,7 +4250,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response ListPublishingCredentials(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4308,7 +4308,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="pushSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="pushSettings"/> is null. </exception>
         public async Task<Response<PushSettings>> UpdateSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4350,7 +4350,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="pushSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="pushSettings"/> is null. </exception>
         public Response<PushSettings> UpdateSitePushSettings(string subscriptionId, string resourceGroupName, string name, PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4412,7 +4412,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PushSettings>> ListSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4449,7 +4449,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PushSettings> ListSitePushSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4507,7 +4507,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SlotConfigNamesResourceData>> ListSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4546,7 +4546,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SlotConfigNamesResourceData> ListSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4611,7 +4611,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotConfigNames"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
         public async Task<Response<SlotConfigNamesResourceData>> UpdateSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4653,7 +4653,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotConfigNames"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
         public Response<SlotConfigNamesResourceData> UpdateSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4715,7 +4715,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteConfigData>> GetConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4754,7 +4754,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteConfigData> GetConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4819,7 +4819,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
         public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4861,7 +4861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
         public Response<SiteConfigData> CreateOrUpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4928,7 +4928,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
         public async Task<Response<SiteConfigData>> UpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -4970,7 +4970,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
         public Response<SiteConfigData> UpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5032,7 +5032,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteConfigurationSnapshotInfoCollection>> ListConfigurationSnapshotInfoAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5069,7 +5069,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteConfigurationSnapshotInfoCollection> ListConfigurationSnapshotInfo(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5129,7 +5129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="snapshotId"/> is null. </exception>
         public async Task<Response<SiteConfigData>> GetConfigurationSnapshotAsync(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5173,7 +5173,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="snapshotId"/> is null. </exception>
         public Response<SiteConfigData> GetConfigurationSnapshot(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5240,7 +5240,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="snapshotId"/> is null. </exception>
         public async Task<Response> RecoverSiteConfigurationSnapshotAsync(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5277,7 +5277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="snapshotId"/> is null. </exception>
         public Response RecoverSiteConfigurationSnapshot(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5334,7 +5334,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<Stream>> GetWebSiteContainerLogsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5371,7 +5371,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<Stream> GetWebSiteContainerLogs(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5429,7 +5429,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<Stream>> GetContainerLogsZipAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5466,7 +5466,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<Stream> GetContainerLogsZip(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5524,7 +5524,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ContinuousWebJobCollection>> ListContinuousWebJobsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5561,7 +5561,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ContinuousWebJobCollection> ListContinuousWebJobs(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5621,7 +5621,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<ContinuousWebJobData>> GetContinuousWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5665,7 +5665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<ContinuousWebJobData> GetContinuousWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5731,7 +5731,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> DeleteContinuousWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5769,7 +5769,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response DeleteContinuousWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5830,7 +5830,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> StartContinuousWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5867,7 +5867,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response StartContinuousWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5927,7 +5927,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> StopContinuousWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -5964,7 +5964,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response StopContinuousWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6021,7 +6021,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<DeploymentCollection>> ListDeploymentsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6058,7 +6058,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<DeploymentCollection> ListDeployments(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6118,7 +6118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<DeploymentData>> GetDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6162,7 +6162,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public Response<DeploymentData> GetDeployment(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6233,7 +6233,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/>, or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public async Task<Response<DeploymentData>> CreateDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6280,7 +6280,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/>, or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public Response<DeploymentData> CreateDeployment(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6348,7 +6348,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6386,7 +6386,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public Response DeleteDeployment(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6447,7 +6447,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<DeploymentData>> ListDeploymentLogAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6489,7 +6489,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         public Response<DeploymentData> ListDeploymentLog(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6556,7 +6556,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<RestoreRequest>> DiscoverBackupAsync(string subscriptionId, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6598,7 +6598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public Response<RestoreRequest> DiscoverBackup(string subscriptionId, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6660,7 +6660,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6697,7 +6697,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<IdentifierCollection> ListDomainOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6757,7 +6757,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public async Task<Response<IdentifierData>> GetDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6801,7 +6801,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public Response<IdentifierData> GetDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6872,7 +6872,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6919,7 +6919,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -6987,7 +6987,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public async Task<Response> DeleteDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7025,7 +7025,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public Response DeleteDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7090,7 +7090,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7137,7 +7137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<IdentifierData> UpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7203,7 +7203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<MSDeployStatusData>> GetMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7242,7 +7242,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<MSDeployStatusData> GetMSDeployStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7307,7 +7307,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="msDeploy"/> is null. </exception>
         public async Task<Response> CreateMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7344,7 +7344,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="msDeploy"/> is null. </exception>
         public Response CreateMSDeployOperation(string subscriptionId, string resourceGroupName, string name, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7401,7 +7401,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<MsDeployLog>> GetMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7438,7 +7438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<MsDeployLog> GetMSDeployLog(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7496,7 +7496,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeCollection>> ListFunctionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7533,7 +7533,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<FunctionEnvelopeCollection> ListFunctions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7591,7 +7591,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<string>> GetFunctionsAdminTokenAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7628,7 +7628,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<string> GetFunctionsAdminToken(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7688,7 +7688,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeData>> GetFunctionAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7732,7 +7732,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public Response<FunctionEnvelopeData> GetFunction(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7803,7 +7803,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public async Task<Response> CreateFunctionAsync(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7845,7 +7845,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public Response CreateFunction(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7908,7 +7908,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response> DeleteFunctionAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -7945,7 +7945,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public Response DeleteFunction(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8012,7 +8012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8065,7 +8065,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public Response<KeyInfo> CreateOrUpdateFunctionSecret(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8141,7 +8141,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is null. </exception>
         public async Task<Response> DeleteFunctionSecretAsync(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8183,7 +8183,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is null. </exception>
         public Response DeleteFunctionSecret(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8247,7 +8247,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListFunctionKeysAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8289,7 +8289,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public Response<StringDictionary> ListFunctionKeys(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8354,7 +8354,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<FunctionSecrets>> ListFunctionSecretsAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8396,7 +8396,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public Response<FunctionSecrets> ListFunctionSecrets(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8458,7 +8458,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<HostKeys>> ListHostKeysAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8495,7 +8495,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<HostKeys> ListHostKeys(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8553,7 +8553,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> ListSyncStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8585,7 +8585,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response ListSyncStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8638,7 +8638,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> SyncFunctionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8670,7 +8670,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response SyncFunctions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8733,7 +8733,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8786,7 +8786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public Response<KeyInfo> CreateOrUpdateHostSecret(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8862,7 +8862,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public async Task<Response> DeleteHostSecretAsync(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8904,7 +8904,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public Response DeleteHostSecret(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -8965,7 +8965,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<HostNameBindingCollection>> ListHostNameBindingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9002,7 +9002,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<HostNameBindingCollection> ListHostNameBindings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9062,7 +9062,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is null. </exception>
         public async Task<Response<HostNameBindingData>> GetHostNameBindingAsync(string subscriptionId, string resourceGroupName, string name, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9106,7 +9106,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is null. </exception>
         public Response<HostNameBindingData> GetHostNameBinding(string subscriptionId, string resourceGroupName, string name, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9177,7 +9177,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/>, or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
         public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingAsync(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9224,7 +9224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/>, or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
         public Response<HostNameBindingData> CreateOrUpdateHostNameBinding(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9292,7 +9292,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is null. </exception>
         public async Task<Response> DeleteHostNameBindingAsync(string subscriptionId, string resourceGroupName, string name, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9330,7 +9330,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is null. </exception>
         public Response DeleteHostNameBinding(string subscriptionId, string resourceGroupName, string name, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9393,7 +9393,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> GetHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9442,7 +9442,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public Response<HybridConnectionData> GetHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9520,7 +9520,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9572,7 +9572,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<HybridConnectionData> CreateOrUpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9647,7 +9647,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public async Task<Response> DeleteHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9689,7 +9689,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public Response DeleteHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9760,7 +9760,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> UpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9812,7 +9812,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<HybridConnectionData> UpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9882,7 +9882,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> ListHybridConnectionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9919,7 +9919,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<HybridConnectionData> ListHybridConnections(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -9977,7 +9977,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> ListRelayServiceConnectionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10014,7 +10014,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> ListRelayServiceConnections(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10074,7 +10074,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> GetRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10118,7 +10118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> GetRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10189,7 +10189,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10236,7 +10236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10304,7 +10304,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is null. </exception>
         public async Task<Response> DeleteRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10341,7 +10341,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is null. </exception>
         public Response DeleteRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10405,7 +10405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10452,7 +10452,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10518,7 +10518,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppInstanceStatusCollection>> ListInstanceIdentifiersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10555,7 +10555,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppInstanceStatusCollection> ListInstanceIdentifiers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10615,7 +10615,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<WebSiteInstanceStatusData>> GetInstanceInfoAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10659,7 +10659,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<WebSiteInstanceStatusData> GetInstanceInfo(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10726,7 +10726,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10770,7 +10770,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<MSDeployStatusData> GetInstanceMsDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10842,7 +10842,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         public async Task<Response> CreateInstanceMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10884,7 +10884,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         public Response CreateInstanceMSDeployOperation(string subscriptionId, string resourceGroupName, string name, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10948,7 +10948,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<MsDeployLog>> GetInstanceMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -10990,7 +10990,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<MsDeployLog> GetInstanceMSDeployLog(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11055,7 +11055,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListInstanceProcessesAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11097,7 +11097,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<ProcessInfoCollection> ListInstanceProcesses(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11164,7 +11164,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessInfoData>> GetInstanceProcessAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11213,7 +11213,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessInfoData> GetInstanceProcess(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11286,7 +11286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response> DeleteInstanceProcessAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11328,7 +11328,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response DeleteInstanceProcess(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11395,7 +11395,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<Stream>> GetInstanceProcessDumpAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11440,7 +11440,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<Stream> GetInstanceProcessDump(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11510,7 +11510,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListInstanceProcessModulesAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11557,7 +11557,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListInstanceProcessModules(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11631,7 +11631,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoData>> GetInstanceProcessModuleAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11685,7 +11685,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public Response<ProcessModuleInfoData> GetInstanceProcessModule(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11763,7 +11763,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListInstanceProcessThreadsAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11810,7 +11810,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListInstanceProcessThreads(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11876,7 +11876,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteCloneability>> IsCloneableAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11913,7 +11913,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteCloneability> IsCloneable(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -11971,7 +11971,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListSiteBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12008,7 +12008,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<BackupItemCollection> ListSiteBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12066,7 +12066,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<FunctionSecrets>> ListSyncFunctionTriggersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12103,7 +12103,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<FunctionSecrets> ListSyncFunctionTriggers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12168,7 +12168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/>, or <paramref name="migrationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
         public async Task<Response> MigrateStorageAsync(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12210,7 +12210,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/>, or <paramref name="migrationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
         public Response MigrateStorage(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12276,7 +12276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="migrationRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="migrationRequestEnvelope"/> is null. </exception>
         public async Task<Response> MigrateMySqlAsync(string subscriptionId, string resourceGroupName, string name, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12313,7 +12313,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="migrationRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="migrationRequestEnvelope"/> is null. </exception>
         public Response MigrateMySql(string subscriptionId, string resourceGroupName, string name, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12370,7 +12370,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<MigrateMySqlStatusData>> GetMigrateMySqlStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12407,7 +12407,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<MigrateMySqlStatusData> GetMigrateMySqlStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12465,7 +12465,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> GetSwiftVirtualNetworkConnectionAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12504,7 +12504,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> GetSwiftVirtualNetworkConnection(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12572,7 +12572,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12617,7 +12617,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12679,7 +12679,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteSwiftVirtualNetworkAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12711,7 +12711,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response DeleteSwiftVirtualNetwork(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12772,7 +12772,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12817,7 +12817,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12881,7 +12881,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         public async Task<Response<NetworkFeaturesData>> ListNetworkFeaturesAsync(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12923,7 +12923,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         public Response<NetworkFeaturesData> ListNetworkFeatures(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -12987,7 +12987,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13035,7 +13035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13118,7 +13118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<string>> StartWebSiteNetworkTraceAsync(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13158,7 +13158,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<string> StartWebSiteNetworkTrace(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13231,7 +13231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StartWebSiteNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13267,7 +13267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response StartWebSiteNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13321,7 +13321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StopWebSiteNetworkTraceAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13354,7 +13354,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response StopWebSiteNetworkTrace(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13410,7 +13410,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13457,7 +13457,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraces(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13526,7 +13526,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13574,7 +13574,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13644,7 +13644,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13691,7 +13691,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13758,7 +13758,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> GenerateNewSitePublishingPasswordAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13791,7 +13791,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response GenerateNewSitePublishingPassword(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13850,7 +13850,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PerfMonCounterCollection>> ListPerfMonCountersAsync(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13888,7 +13888,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PerfMonCounterCollection> ListPerfMonCounters(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13946,7 +13946,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -13983,7 +13983,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SitePhpErrorLogFlag> GetSitePhpErrorLogFlag(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14041,7 +14041,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> ListPremierAddOnsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14078,7 +14078,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PremierAddOnData> ListPremierAddOns(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14138,7 +14138,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> GetPremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14182,7 +14182,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public Response<PremierAddOnData> GetPremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14253,7 +14253,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> AddPremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14300,7 +14300,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public Response<PremierAddOnData> AddPremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14368,7 +14368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public async Task<Response> DeletePremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14405,7 +14405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public Response DeletePremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14469,7 +14469,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> UpdatePremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14516,7 +14516,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public Response<PremierAddOnData> UpdatePremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14582,7 +14582,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateAccessData>> GetPrivateAccessAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14621,7 +14621,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateAccessData> GetPrivateAccess(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14686,7 +14686,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="access"/> is null. </exception>
         public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetAsync(string subscriptionId, string resourceGroupName, string name, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14728,7 +14728,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="access"/> is null. </exception>
         public Response<PrivateAccessData> PutPrivateAccessVnet(string subscriptionId, string resourceGroupName, string name, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14790,7 +14790,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14827,7 +14827,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionList(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14887,7 +14887,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionARMResourceData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -14931,7 +14931,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response<RemotePrivateEndpointConnectionARMResourceData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15002,7 +15002,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15045,7 +15045,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15109,7 +15109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15148,7 +15148,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response DeletePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15207,7 +15207,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15244,7 +15244,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15302,7 +15302,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListProcessesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15339,7 +15339,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ProcessInfoCollection> ListProcesses(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15399,7 +15399,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessInfoData>> GetProcessAsync(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15443,7 +15443,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessInfoData> GetProcess(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15509,7 +15509,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response> DeleteProcessAsync(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15546,7 +15546,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response DeleteProcess(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15606,7 +15606,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<Stream>> GetProcessDumpAsync(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15646,7 +15646,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<Stream> GetProcessDump(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15709,7 +15709,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListProcessModulesAsync(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15751,7 +15751,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListProcessModules(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15818,7 +15818,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoData>> GetProcessModuleAsync(string subscriptionId, string resourceGroupName, string name, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15867,7 +15867,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public Response<ProcessModuleInfoData> GetProcessModule(string subscriptionId, string resourceGroupName, string name, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15938,7 +15938,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListProcessThreadsAsync(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -15980,7 +15980,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListProcessThreads(string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16042,7 +16042,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PublicCertificateCollection>> ListPublicCertificatesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16079,7 +16079,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PublicCertificateCollection> ListPublicCertificates(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16139,7 +16139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public async Task<Response<PublicCertificateData>> GetPublicCertificateAsync(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16183,7 +16183,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public Response<PublicCertificateData> GetPublicCertificate(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16254,7 +16254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/>, or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateAsync(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16301,7 +16301,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/>, or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public Response<PublicCertificateData> CreateOrUpdatePublicCertificate(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16369,7 +16369,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public async Task<Response> DeletePublicCertificateAsync(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16407,7 +16407,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public Response DeletePublicCertificate(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16470,7 +16470,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16510,7 +16510,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         public Response<Stream> ListPublishingProfileXmlWithSecrets(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16570,7 +16570,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> ResetProductionSlotConfigAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16602,7 +16602,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response ResetProductionSlotConfig(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16665,7 +16665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string name, bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16699,7 +16699,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Restart(string subscriptionId, string resourceGroupName, string name, bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16757,7 +16757,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response> RestoreFromBackupBlobAsync(string subscriptionId, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16795,7 +16795,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
         public Response RestoreFromBackupBlob(string subscriptionId, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16858,7 +16858,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="restoreRequest"/> is null. </exception>
         public async Task<Response> RestoreFromDeletedAppAsync(string subscriptionId, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16896,7 +16896,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="restoreRequest"/> is null. </exception>
         public Response RestoreFromDeletedApp(string subscriptionId, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16959,7 +16959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="restoreRequest"/> is null. </exception>
         public async Task<Response> RestoreSnapshotAsync(string subscriptionId, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -16997,7 +16997,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="restoreRequest"/> is null. </exception>
         public Response RestoreSnapshot(string subscriptionId, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17055,7 +17055,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoCollection>> ListSiteExtensionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17092,7 +17092,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteExtensionInfoCollection> ListSiteExtensions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17152,7 +17152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoData>> GetSiteExtensionAsync(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17196,7 +17196,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response<SiteExtensionInfoData> GetSiteExtension(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17262,7 +17262,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response> InstallSiteExtensionAsync(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17300,7 +17300,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response InstallSiteExtension(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17360,7 +17360,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response> DeleteSiteExtensionAsync(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17397,7 +17397,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response DeleteSiteExtension(string subscriptionId, string resourceGroupName, string name, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17454,7 +17454,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppCollection>> ListSlotsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17491,7 +17491,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppCollection> ListSlots(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17551,7 +17551,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<WebSiteData>> GetSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17595,7 +17595,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<WebSiteData> GetSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17666,7 +17666,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async Task<Response> CreateOrUpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17709,7 +17709,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public Response CreateOrUpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17783,7 +17783,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> DeleteSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17823,7 +17823,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response DeleteSlot(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17888,7 +17888,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async Task<Response<WebSiteData>> UpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -17936,7 +17936,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public Response<WebSiteData> UpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18011,7 +18011,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18054,7 +18054,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<CustomHostnameAnalysisResult> AnalyzeCustomHostnameSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18124,7 +18124,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response> ApplySlotConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18166,7 +18166,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response ApplySlotConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18235,7 +18235,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a backup for the production slot. </param>
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupItemData>> BackupSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18282,7 +18282,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a backup for the production slot. </param>
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupItemData> BackupSlot(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18351,7 +18351,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18393,7 +18393,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<BackupItemCollection> ListBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18460,7 +18460,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         public async Task<Response<BackupItemData>> GetBackupStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18509,7 +18509,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         public Response<BackupItemData> GetBackupStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18582,7 +18582,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete a backup of the production slot. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         public async Task<Response> DeleteBackupSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18624,7 +18624,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete a backup of the production slot. </param>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         public Response DeleteBackupSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18696,7 +18696,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of backup. </param>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupItemData>> ListBackupStatusSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18748,7 +18748,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of backup. </param>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupItemData> ListBackupStatusSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18829,7 +18829,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response> RestoreSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18877,7 +18877,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
         public Response RestoreSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18946,7 +18946,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PublishingCredentialsPoliciesCollection>> ListBasicPublishingCredentialsPoliciesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -18988,7 +18988,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PublishingCredentialsPoliciesCollection> ListBasicPublishingCredentialsPoliciesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19053,7 +19053,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> GetFtpAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19097,7 +19097,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> GetFtpAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19169,7 +19169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19216,7 +19216,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19285,7 +19285,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> GetScmAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19329,7 +19329,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> GetScmAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19401,7 +19401,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19448,7 +19448,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
         public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19517,7 +19517,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteConfigResourceCollection>> ListConfigurationsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19559,7 +19559,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteConfigResourceCollection> ListConfigurationsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19629,7 +19629,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the application settings for the production slot. </param>
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="appSettings"/> is null. </exception>
         public async Task<Response<StringDictionary>> UpdateApplicationSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19676,7 +19676,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the application settings for the production slot. </param>
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="appSettings"/> is null. </exception>
         public Response<StringDictionary> UpdateApplicationSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19745,7 +19745,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the application settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListApplicationSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19787,7 +19787,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the application settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<StringDictionary> ListApplicationSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19857,7 +19857,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteAuthSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettings"/> is null. </exception>
         public async Task<Response<SiteAuthSettings>> UpdateAuthSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19904,7 +19904,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteAuthSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettings"/> is null. </exception>
         public Response<SiteAuthSettings> UpdateAuthSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -19973,7 +19973,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteAuthSettings>> GetAuthSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20015,7 +20015,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteAuthSettings> GetAuthSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20085,7 +20085,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20132,7 +20132,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20201,7 +20201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20243,7 +20243,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteAuthSettingsV2> GetAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20313,7 +20313,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the Azure storage account configurations for the production slot. </param>
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="azureStorageAccounts"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="azureStorageAccounts"/> is null. </exception>
         public async Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20360,7 +20360,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the Azure storage account configurations for the production slot. </param>
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="azureStorageAccounts"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="azureStorageAccounts"/> is null. </exception>
         public Response<AzureStoragePropertyDictionaryResource> UpdateAzureStorageAccountsSlot(string subscriptionId, string resourceGroupName, string name, string slot, AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20429,7 +20429,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the Azure storage account configurations for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<AzureStoragePropertyDictionaryResource>> ListAzureStorageAccountsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20471,7 +20471,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the Azure storage account configurations for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<AzureStoragePropertyDictionaryResource> ListAzureStorageAccountsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20541,7 +20541,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the backup configuration for the production slot. </param>
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<BackupRequest>> UpdateBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20588,7 +20588,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the backup configuration for the production slot. </param>
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public Response<BackupRequest> UpdateBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20657,7 +20657,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the backup configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> DeleteBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20694,7 +20694,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the backup configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response DeleteBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20754,7 +20754,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the backup configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<BackupRequest>> GetBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20796,7 +20796,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the backup configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<BackupRequest> GetBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20861,7 +20861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20903,7 +20903,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -20970,7 +20970,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="appSettingKey"/> is null. </exception>
         public async Task<Response<ApiKeyVaultReferenceData>> GetAppSettingKeyVaultReferenceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21019,7 +21019,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="appSettingKey"/> is null. </exception>
         public Response<ApiKeyVaultReferenceData> GetAppSettingKeyVaultReferenceSlot(string subscriptionId, string resourceGroupName, string name, string slot, string appSettingKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21090,7 +21090,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21132,7 +21132,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21199,7 +21199,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionStringKey"/> is null. </exception>
         public async Task<Response<ApiKeyVaultReferenceData>> GetSiteConnectionStringKeyVaultReferenceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21248,7 +21248,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStringKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionStringKey"/> is null. </exception>
         public Response<ApiKeyVaultReferenceData> GetSiteConnectionStringKeyVaultReferenceSlot(string subscriptionId, string resourceGroupName, string name, string slot, string connectionStringKey, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21324,7 +21324,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the connection settings for the production slot. </param>
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStrings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionStrings"/> is null. </exception>
         public async Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21371,7 +21371,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the connection settings for the production slot. </param>
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionStrings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionStrings"/> is null. </exception>
         public Response<ConnectionStringDictionary> UpdateConnectionStringsSlot(string subscriptionId, string resourceGroupName, string name, string slot, ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21440,7 +21440,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the connection settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ConnectionStringDictionary>> ListConnectionStringsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21482,7 +21482,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the connection settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ConnectionStringDictionary> ListConnectionStringsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21547,7 +21547,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the logging configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteLogsConfigData>> GetDiagnosticLogsConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21591,7 +21591,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the logging configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteLogsConfigData> GetDiagnosticLogsConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21663,7 +21663,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteLogsConfig"/> is null. </exception>
         public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21710,7 +21710,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteLogsConfig"/> is null. </exception>
         public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfigSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21784,7 +21784,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the metadata for the production slot. </param>
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="metadata"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="metadata"/> is null. </exception>
         public async Task<Response<StringDictionary>> UpdateMetadataSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21831,7 +21831,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the metadata for the production slot. </param>
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="metadata"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="metadata"/> is null. </exception>
         public Response<StringDictionary> UpdateMetadataSlot(string subscriptionId, string resourceGroupName, string name, string slot, StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21900,7 +21900,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the metadata for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListMetadataSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -21942,7 +21942,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the metadata for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<StringDictionary> ListMetadataSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22007,7 +22007,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing credentials for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> ListPublishingCredentialsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22044,7 +22044,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing credentials for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response ListPublishingCredentialsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22109,7 +22109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="pushSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="pushSettings"/> is null. </exception>
         public async Task<Response<PushSettings>> UpdateSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22156,7 +22156,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="pushSettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="pushSettings"/> is null. </exception>
         public Response<PushSettings> UpdateSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22225,7 +22225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PushSettings>> ListSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22267,7 +22267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PushSettings> ListSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22332,7 +22332,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteConfigData>> GetConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22376,7 +22376,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteConfigData> GetConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22448,7 +22448,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
         public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22495,7 +22495,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
         public Response<SiteConfigData> CreateOrUpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22569,7 +22569,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
         public async Task<Response<SiteConfigData>> UpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22616,7 +22616,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
         public Response<SiteConfigData> UpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22685,7 +22685,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteConfigurationSnapshotInfoCollection>> ListConfigurationSnapshotInfoSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22727,7 +22727,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteConfigurationSnapshotInfoCollection> ListConfigurationSnapshotInfoSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22794,7 +22794,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="snapshotId"/> is null. </exception>
         public async Task<Response<SiteConfigData>> GetConfigurationSnapshotSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22843,7 +22843,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="snapshotId"/> is null. </exception>
         public Response<SiteConfigData> GetConfigurationSnapshotSlot(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22917,7 +22917,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="snapshotId"/> is null. </exception>
         public async Task<Response> RecoverSiteConfigurationSnapshotSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -22959,7 +22959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="snapshotId"/> is null. </exception>
         public Response RecoverSiteConfigurationSnapshotSlot(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23023,7 +23023,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<Stream>> GetWebSiteContainerLogsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23065,7 +23065,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<Stream> GetWebSiteContainerLogsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23130,7 +23130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<Stream>> GetContainerLogsZipSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23172,7 +23172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<Stream> GetContainerLogsZipSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23237,7 +23237,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ContinuousWebJobCollection>> ListContinuousWebJobsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23279,7 +23279,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ContinuousWebJobCollection> ListContinuousWebJobsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23346,7 +23346,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<ContinuousWebJobData>> GetContinuousWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23395,7 +23395,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<ContinuousWebJobData> GetContinuousWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23468,7 +23468,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> DeleteContinuousWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23511,7 +23511,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response DeleteContinuousWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23579,7 +23579,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> StartContinuousWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23621,7 +23621,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response StartContinuousWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23688,7 +23688,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> StopContinuousWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23730,7 +23730,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response StopContinuousWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23794,7 +23794,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<DeploymentCollection>> ListDeploymentsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23836,7 +23836,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<DeploymentCollection> ListDeploymentsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23903,7 +23903,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<DeploymentData>> GetDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -23952,7 +23952,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public Response<DeploymentData> GetDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24030,7 +24030,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/>, or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public async Task<Response<DeploymentData>> CreateDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24082,7 +24082,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> ID of an existing deployment. </param>
         /// <param name="deployment"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/>, or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
         public Response<DeploymentData> CreateDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24157,7 +24157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24200,7 +24200,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public Response DeleteDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24268,7 +24268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<DeploymentData>> ListDeploymentLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24315,7 +24315,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         public Response<DeploymentData> ListDeploymentLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24389,7 +24389,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will perform discovery for the production slot. </param>
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response<RestoreRequest>> DiscoverBackupSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24436,7 +24436,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will perform discovery for the production slot. </param>
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public Response<RestoreRequest> DiscoverBackupSlot(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24505,7 +24505,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24547,7 +24547,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<IdentifierCollection> ListDomainOwnershipIdentifiersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24614,7 +24614,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public async Task<Response<IdentifierData>> GetDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24663,7 +24663,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public Response<IdentifierData> GetDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24741,7 +24741,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24793,7 +24793,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24868,7 +24868,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public async Task<Response> DeleteDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24911,7 +24911,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public Response DeleteDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -24983,7 +24983,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25035,7 +25035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/>, or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public Response<IdentifierData> UpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25108,7 +25108,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<MSDeployStatusData>> GetMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25152,7 +25152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<MSDeployStatusData> GetMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25224,7 +25224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="msDeploy"/> is null. </exception>
         public async Task<Response> CreateMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25266,7 +25266,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="msDeploy"/> is null. </exception>
         public Response CreateMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25330,7 +25330,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<MsDeployLog>> GetMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25372,7 +25372,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<MsDeployLog> GetMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25437,7 +25437,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeCollection>> ListInstanceFunctionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25479,7 +25479,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<FunctionEnvelopeCollection> ListInstanceFunctionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25544,7 +25544,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<string>> GetFunctionsAdminTokenSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25586,7 +25586,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<string> GetFunctionsAdminTokenSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25653,7 +25653,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeData>> GetInstanceFunctionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25702,7 +25702,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public Response<FunctionEnvelopeData> GetInstanceFunctionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25780,7 +25780,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public async Task<Response> CreateInstanceFunctionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25827,7 +25827,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public Response CreateInstanceFunctionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25897,7 +25897,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response> DeleteInstanceFunctionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -25939,7 +25939,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public Response DeleteInstanceFunctionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26013,7 +26013,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26071,7 +26071,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26154,7 +26154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is null. </exception>
         public async Task<Response> DeleteFunctionSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26201,7 +26201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is null. </exception>
         public Response DeleteFunctionSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26272,7 +26272,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<StringDictionary>> ListFunctionKeysSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26319,7 +26319,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public Response<StringDictionary> ListFunctionKeysSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26391,7 +26391,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public async Task<Response<FunctionSecrets>> ListFunctionSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26438,7 +26438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         public Response<FunctionSecrets> ListFunctionSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26507,7 +26507,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<HostKeys>> ListHostKeysSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26549,7 +26549,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<HostKeys> ListHostKeysSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26614,7 +26614,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> ListSyncStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26651,7 +26651,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response ListSyncStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26711,7 +26711,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> SyncFunctionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26748,7 +26748,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response SyncFunctionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26818,7 +26818,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26876,7 +26876,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public Response<KeyInfo> CreateOrUpdateHostSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -26959,7 +26959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public async Task<Response> DeleteHostSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27006,7 +27006,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, or <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public Response DeleteHostSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27074,7 +27074,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<HostNameBindingCollection>> ListHostNameBindingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27116,7 +27116,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<HostNameBindingCollection> ListHostNameBindingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27183,7 +27183,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is null. </exception>
         public async Task<Response<HostNameBindingData>> GetHostNameBindingSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27232,7 +27232,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is null. </exception>
         public Response<HostNameBindingData> GetHostNameBindingSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27310,7 +27310,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/>, or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
         public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27362,7 +27362,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/>, or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
         public Response<HostNameBindingData> CreateOrUpdateHostNameBindingSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27437,7 +27437,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is null. </exception>
         public async Task<Response> DeleteHostNameBindingSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27480,7 +27480,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is null. </exception>
         public Response DeleteHostNameBindingSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27550,7 +27550,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> GetHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27604,7 +27604,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public Response<HybridConnectionData> GetHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27689,7 +27689,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27746,7 +27746,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<HybridConnectionData> CreateOrUpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27828,7 +27828,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public async Task<Response> DeleteHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27875,7 +27875,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public Response DeleteHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -27953,7 +27953,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> UpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28010,7 +28010,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
         /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<HybridConnectionData> UpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28087,7 +28087,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<HybridConnectionData>> ListHybridConnectionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28129,7 +28129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<HybridConnectionData> ListHybridConnectionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28194,7 +28194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get hybrid connections for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> ListRelayServiceConnectionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28236,7 +28236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get hybrid connections for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> ListRelayServiceConnectionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28303,7 +28303,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> GetRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28352,7 +28352,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> GetRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28430,7 +28430,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28482,7 +28482,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28557,7 +28557,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is null. </exception>
         public async Task<Response> DeleteRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28599,7 +28599,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is null. </exception>
         public Response DeleteRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28670,7 +28670,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28722,7 +28722,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28795,7 +28795,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<WebAppInstanceStatusCollection>> ListInstanceIdentifiersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28837,7 +28837,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<WebAppInstanceStatusCollection> ListInstanceIdentifiersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28904,7 +28904,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<WebSiteInstanceStatusData>> GetInstanceInfoSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -28953,7 +28953,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<WebSiteInstanceStatusData> GetInstanceInfoSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29027,7 +29027,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29076,7 +29076,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<MSDeployStatusData> GetInstanceMsDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29155,7 +29155,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         public async Task<Response> CreateInstanceMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29202,7 +29202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="msDeploy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         public Response CreateInstanceMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29273,7 +29273,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<MsDeployLog>> GetInstanceMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29320,7 +29320,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="instanceId"> ID of web app instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<MsDeployLog> GetInstanceMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29392,7 +29392,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListInstanceProcessesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29439,7 +29439,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<ProcessInfoCollection> ListInstanceProcessesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29513,7 +29513,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessInfoData>> GetInstanceProcessSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29567,7 +29567,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessInfoData> GetInstanceProcessSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29647,7 +29647,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response> DeleteInstanceProcessSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29694,7 +29694,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response DeleteInstanceProcessSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29768,7 +29768,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<Stream>> GetInstanceProcessDumpSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29818,7 +29818,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<Stream> GetInstanceProcessDumpSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29895,7 +29895,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListInstanceProcessModulesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -29947,7 +29947,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListInstanceProcessModulesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30028,7 +30028,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoData>> GetInstanceProcessModuleSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30087,7 +30087,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public Response<ProcessModuleInfoData> GetInstanceProcessModuleSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30172,7 +30172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListInstanceProcessThreadsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30224,7 +30224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListInstanceProcessThreadsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30297,7 +30297,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns information on the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteCloneability>> IsCloneableSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30339,7 +30339,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns information on the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteCloneability> IsCloneableSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30404,7 +30404,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListSiteBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30446,7 +30446,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<BackupItemCollection> ListSiteBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30511,7 +30511,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<FunctionSecrets>> ListSyncFunctionTriggersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30553,7 +30553,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<FunctionSecrets> ListSyncFunctionTriggersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30618,7 +30618,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<MigrateMySqlStatusData>> GetMigrateMySqlStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30662,7 +30662,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<MigrateMySqlStatusData> GetMigrateMySqlStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30729,7 +30729,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> GetSwiftVirtualNetworkConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30773,7 +30773,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> GetSwiftVirtualNetworkConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30848,7 +30848,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30898,7 +30898,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -30967,7 +30967,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the connection for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> DeleteSwiftVirtualNetworkSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31004,7 +31004,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the connection for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response DeleteSwiftVirtualNetworkSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31072,7 +31072,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31122,7 +31122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31193,7 +31193,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get network features for the production slot. </param>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         public async Task<Response<NetworkFeaturesData>> ListNetworkFeaturesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31242,7 +31242,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get network features for the production slot. </param>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         public Response<NetworkFeaturesData> ListNetworkFeaturesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31315,7 +31315,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31368,7 +31368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31458,7 +31458,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<string>> StartWebSiteNetworkTraceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31503,7 +31503,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<string> StartWebSiteNetworkTraceSlot(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31583,7 +31583,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StartWebSiteNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31624,7 +31624,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StartWebSiteNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31685,7 +31685,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for this web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StopWebSiteNetworkTraceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31723,7 +31723,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for this web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StopWebSiteNetworkTraceSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31786,7 +31786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31838,7 +31838,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31914,7 +31914,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -31967,7 +31967,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32044,7 +32044,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32096,7 +32096,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get an operation for the production slot. </param>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32170,7 +32170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API generate a new publishing password for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> GenerateNewSitePublishingPasswordSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32208,7 +32208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API generate a new publishing password for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response GenerateNewSitePublishingPasswordSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32274,7 +32274,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PerfMonCounterCollection>> ListPerfMonCountersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32317,7 +32317,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PerfMonCounterCollection> ListPerfMonCountersSlot(string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32382,7 +32382,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32424,7 +32424,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SitePhpErrorLogFlag> GetSitePhpErrorLogFlagSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32489,7 +32489,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the premier add-ons for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> ListPremierAddOnsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32531,7 +32531,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the premier add-ons for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PremierAddOnData> ListPremierAddOnsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32598,7 +32598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> GetPremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32647,7 +32647,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public Response<PremierAddOnData> GetPremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32725,7 +32725,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> AddPremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32777,7 +32777,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public Response<PremierAddOnData> AddPremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32852,7 +32852,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public async Task<Response> DeletePremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32894,7 +32894,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is null. </exception>
         public Response DeletePremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -32965,7 +32965,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public async Task<Response<PremierAddOnData>> UpdatePremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33017,7 +33017,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/>, or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public Response<PremierAddOnData> UpdatePremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33090,7 +33090,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PrivateAccessData>> GetPrivateAccessSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33134,7 +33134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PrivateAccessData> GetPrivateAccessSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33206,7 +33206,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="access"/> is null. </exception>
         public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33253,7 +33253,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="access"/> is null. </exception>
         public Response<PrivateAccessData> PutPrivateAccessVnetSlot(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33322,7 +33322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33364,7 +33364,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionListSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33431,7 +33431,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionARMResourceData>> GetPrivateEndpointConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33480,7 +33480,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response<RemotePrivateEndpointConnectionARMResourceData> GetPrivateEndpointConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33558,7 +33558,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public async Task<Response> ApproveOrRejectPrivateEndpointConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33606,7 +33606,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         public Response ApproveOrRejectPrivateEndpointConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33677,7 +33677,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33721,7 +33721,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The String to use. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response DeletePrivateEndpointConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33787,7 +33787,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33829,7 +33829,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33894,7 +33894,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListProcessesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -33936,7 +33936,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ProcessInfoCollection> ListProcessesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34003,7 +34003,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessInfoData>> GetProcessSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34052,7 +34052,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessInfoData> GetProcessSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34125,7 +34125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response> DeleteProcessSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34167,7 +34167,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response DeleteProcessSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34234,7 +34234,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<Stream>> GetProcessDumpSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34279,7 +34279,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<Stream> GetProcessDumpSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34349,7 +34349,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListProcessModulesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34396,7 +34396,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListProcessModulesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34470,7 +34470,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoData>> GetProcessModuleSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34524,7 +34524,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="processId"/>, or <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="processId"/> or <paramref name="baseAddress"/> is null. </exception>
         public Response<ProcessModuleInfoData> GetProcessModuleSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, string baseAddress, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34602,7 +34602,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListProcessThreadsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34649,7 +34649,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListProcessThreadsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34718,7 +34718,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PublicCertificateCollection>> ListPublicCertificatesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34760,7 +34760,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PublicCertificateCollection> ListPublicCertificatesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34827,7 +34827,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public async Task<Response<PublicCertificateData>> GetPublicCertificateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34876,7 +34876,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public Response<PublicCertificateData> GetPublicCertificateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -34954,7 +34954,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/>, or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35006,7 +35006,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/>, or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public Response<PublicCertificateData> CreateOrUpdatePublicCertificateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35081,7 +35081,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public async Task<Response> DeletePublicCertificateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35124,7 +35124,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publicCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is null. </exception>
         public Response DeletePublicCertificateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35194,7 +35194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35239,7 +35239,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         public Response<Stream> ListPublishingProfileXmlWithSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35306,7 +35306,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API resets configuration settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> ResetSlotConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35343,7 +35343,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API resets configuration settings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response ResetSlotConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35413,7 +35413,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> RestartSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35452,7 +35452,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response RestartSlot(string subscriptionId, string resourceGroupName, string name, string slot, bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35517,7 +35517,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will restore a backup of the production slot. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public async Task<Response> RestoreFromBackupBlobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35560,7 +35560,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will restore a backup of the production slot. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
         public Response RestoreFromBackupBlobSlot(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35630,7 +35630,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="restoreRequest"/> is null. </exception>
         public async Task<Response> RestoreFromDeletedAppSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35673,7 +35673,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="restoreRequest"/> is null. </exception>
         public Response RestoreFromDeletedAppSlot(string subscriptionId, string resourceGroupName, string name, string slot, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35743,7 +35743,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="restoreRequest"/> is null. </exception>
         public async Task<Response> RestoreSnapshotSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35786,7 +35786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="restoreRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="restoreRequest"/> is null. </exception>
         public Response RestoreSnapshotSlot(string subscriptionId, string resourceGroupName, string name, string slot, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35851,7 +35851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoCollection>> ListSiteExtensionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35893,7 +35893,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteExtensionInfoCollection> ListSiteExtensionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -35960,7 +35960,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoData>> GetSiteExtensionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36009,7 +36009,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response<SiteExtensionInfoData> GetSiteExtensionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36082,7 +36082,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response> InstallSiteExtensionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36125,7 +36125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response InstallSiteExtensionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36192,7 +36192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public async Task<Response> DeleteSiteExtensionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36234,7 +36234,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteExtensionId"/> is null. </exception>
         public Response DeleteSiteExtensionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36303,7 +36303,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response<SlotDifferenceCollection>> ListSlotDifferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36350,7 +36350,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response<SlotDifferenceCollection> ListSlotDifferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36424,7 +36424,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response> SwapSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36467,7 +36467,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response SwapSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36532,7 +36532,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36574,7 +36574,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36639,7 +36639,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsFromDRSecondarySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36681,7 +36681,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsFromDRSecondarySlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36746,7 +36746,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the source control configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteSourceControlData>> GetSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36792,7 +36792,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the source control configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteSourceControlData> GetSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36866,7 +36866,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public async Task<Response> CreateOrUpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36910,7 +36910,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public Response CreateOrUpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -36981,7 +36981,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the source control configuration for the production slot. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> DeleteSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37020,7 +37020,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the source control configuration for the production slot. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response DeleteSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37086,7 +37086,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public async Task<Response<SiteSourceControlData>> UpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37135,7 +37135,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public Response<SiteSourceControlData> UpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37206,7 +37206,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will start the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StartSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37243,7 +37243,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will start the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StartSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37318,7 +37318,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StartNetworkTraceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37359,7 +37359,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StartNetworkTraceSlot(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37420,7 +37420,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will stop the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StopSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37457,7 +37457,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will stop the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StopSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37517,7 +37517,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for this web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> StopNetworkTraceSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37555,7 +37555,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for this web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response StopNetworkTraceSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37616,7 +37616,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> SyncRepositorySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37653,7 +37653,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response SyncRepositorySlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37713,7 +37713,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response> SyncFunctionTriggersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37750,7 +37750,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response SyncFunctionTriggersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37810,7 +37810,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<TriggeredWebJobCollection>> ListTriggeredWebJobsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37852,7 +37852,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<TriggeredWebJobCollection> ListTriggeredWebJobsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37919,7 +37919,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredWebJobData>> GetTriggeredWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -37968,7 +37968,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredWebJobData> GetTriggeredWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38041,7 +38041,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes web job for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> DeleteTriggeredWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38084,7 +38084,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes web job for the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response DeleteTriggeredWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38152,7 +38152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryCollection>> ListTriggeredWebJobHistorySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38199,7 +38199,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredJobHistoryCollection> ListTriggeredWebJobHistorySlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38273,7 +38273,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="webJobName"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="webJobName"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryData>> GetTriggeredWebJobHistorySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38327,7 +38327,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="webJobName"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="webJobName"/> or <paramref name="id"/> is null. </exception>
         public Response<TriggeredJobHistoryData> GetTriggeredWebJobHistorySlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38405,7 +38405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> RunTriggeredWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38447,7 +38447,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response RunTriggeredWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38516,7 +38516,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38559,7 +38559,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsagesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38624,7 +38624,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get virtual network connections for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VnetInfoResourceData>>> ListVnetConnectionsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38671,7 +38671,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get virtual network connections for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<IReadOnlyList<VnetInfoResourceData>> ListVnetConnectionsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38743,7 +38743,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production slot. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> GetVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38792,7 +38792,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production slot. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is null. </exception>
         public Response<VnetInfoResourceData> GetVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38870,7 +38870,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38922,7 +38922,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetInfoResourceData> CreateOrUpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -38997,7 +38997,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the connection for the production slot. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is null. </exception>
         public async Task<Response> DeleteVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39039,7 +39039,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the connection for the production slot. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is null. </exception>
         public Response DeleteVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39110,7 +39110,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39162,7 +39162,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetInfoResourceData> UpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39240,7 +39240,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> GetVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39294,7 +39294,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<VnetGatewayData> GetVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39379,7 +39379,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39436,7 +39436,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39523,7 +39523,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39580,7 +39580,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetGatewayData> UpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39657,7 +39657,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<WebJobCollection>> ListWebJobsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39699,7 +39699,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<WebJobCollection> ListWebJobsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39766,7 +39766,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<WebJobData>> GetWebJobSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39815,7 +39815,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<WebJobData> GetWebJobSlot(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39888,7 +39888,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response<SlotDifferenceCollection>> ListSlotDifferencesFromProductionAsync(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39930,7 +39930,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response<SlotDifferenceCollection> ListSlotDifferencesFromProduction(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -39997,7 +39997,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response> SwapSlotWithProductionAsync(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40035,7 +40035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response SwapSlotWithProduction(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40093,7 +40093,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40130,7 +40130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshots(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40188,7 +40188,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsFromDRSecondaryAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40225,7 +40225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsFromDRSecondary(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40283,7 +40283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteSourceControlData>> GetSourceControlAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40324,7 +40324,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteSourceControlData> GetSourceControl(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40391,7 +40391,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public async Task<Response> CreateOrUpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40430,7 +40430,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public Response CreateOrUpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40494,7 +40494,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> DeleteSourceControlAsync(string subscriptionId, string resourceGroupName, string name, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40528,7 +40528,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response DeleteSourceControl(string subscriptionId, string resourceGroupName, string name, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40587,7 +40587,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public async Task<Response<SiteSourceControlData>> UpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40631,7 +40631,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
         public Response<SiteSourceControlData> UpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40695,7 +40695,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40727,7 +40727,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Start(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40795,7 +40795,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StartNetworkTraceAsync(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40831,7 +40831,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response StartNetworkTrace(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40885,7 +40885,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40917,7 +40917,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response Stop(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -40970,7 +40970,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> StopNetworkTraceAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41003,7 +41003,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response StopNetworkTrace(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41057,7 +41057,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> SyncRepositoryAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41089,7 +41089,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response SyncRepository(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41142,7 +41142,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response> SyncFunctionTriggersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41174,7 +41174,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response SyncFunctionTriggers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41227,7 +41227,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<TriggeredWebJobCollection>> ListTriggeredWebJobsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41264,7 +41264,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<TriggeredWebJobCollection> ListTriggeredWebJobs(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41324,7 +41324,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredWebJobData>> GetTriggeredWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41368,7 +41368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredWebJobData> GetTriggeredWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41434,7 +41434,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> DeleteTriggeredWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41472,7 +41472,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response DeleteTriggeredWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41533,7 +41533,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryCollection>> ListTriggeredWebJobHistoryAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41575,7 +41575,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredJobHistoryCollection> ListTriggeredWebJobHistory(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41642,7 +41642,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="webJobName"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="webJobName"/> or <paramref name="id"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryData>> GetTriggeredWebJobHistoryAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41691,7 +41691,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="webJobName"/>, or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="webJobName"/> or <paramref name="id"/> is null. </exception>
         public Response<TriggeredJobHistoryData> GetTriggeredWebJobHistory(string subscriptionId, string resourceGroupName, string name, string webJobName, string id, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41762,7 +41762,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response> RunTriggeredWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41799,7 +41799,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response RunTriggeredWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41861,7 +41861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41899,7 +41899,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsages(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41957,7 +41957,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<IReadOnlyList<VnetInfoResourceData>>> ListVnetConnectionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -41999,7 +41999,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<IReadOnlyList<VnetInfoResourceData>> ListVnetConnections(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42064,7 +42064,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> GetVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42108,7 +42108,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         public Response<VnetInfoResourceData> GetVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42179,7 +42179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42226,7 +42226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetInfoResourceData> CreateOrUpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42294,7 +42294,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         public async Task<Response> DeleteVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42331,7 +42331,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         public Response DeleteVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42395,7 +42395,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42442,7 +42442,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetInfoResourceData> UpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42513,7 +42513,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> GetVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42562,7 +42562,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         public Response<VnetGatewayData> GetVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42640,7 +42640,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42692,7 +42692,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42772,7 +42772,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42824,7 +42824,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public Response<VnetGatewayData> UpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42894,7 +42894,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebJobCollection>> ListWebJobsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42931,7 +42931,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebJobCollection> ListWebJobs(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -42991,7 +42991,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<WebJobData>> GetWebJobAsync(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -43035,7 +43035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<WebJobData> GetWebJob(string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -43171,7 +43171,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<WebAppCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43209,7 +43209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<WebAppCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43261,7 +43261,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43303,7 +43303,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<BackupItemCollection> ListBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43359,7 +43359,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PublishingCredentialsPoliciesCollection>> ListBasicPublishingCredentialsPoliciesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43401,7 +43401,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PublishingCredentialsPoliciesCollection> ListBasicPublishingCredentialsPoliciesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43457,7 +43457,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteConfigResourceCollection>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43499,7 +43499,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteConfigResourceCollection> ListConfigurationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43555,7 +43555,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43597,7 +43597,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43653,7 +43653,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43695,7 +43695,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43751,7 +43751,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteConfigurationSnapshotInfoCollection>> ListConfigurationSnapshotInfoNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43793,7 +43793,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteConfigurationSnapshotInfoCollection> ListConfigurationSnapshotInfoNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43849,7 +43849,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ContinuousWebJobCollection>> ListContinuousWebJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43891,7 +43891,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ContinuousWebJobCollection> ListContinuousWebJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43947,7 +43947,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<DeploymentCollection>> ListDeploymentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -43989,7 +43989,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<DeploymentCollection> ListDeploymentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44045,7 +44045,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44087,7 +44087,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<IdentifierCollection> ListDomainOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44143,7 +44143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeCollection>> ListFunctionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44185,7 +44185,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<FunctionEnvelopeCollection> ListFunctionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44241,7 +44241,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<HostNameBindingCollection>> ListHostNameBindingsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44283,7 +44283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<HostNameBindingCollection> ListHostNameBindingsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44339,7 +44339,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppInstanceStatusCollection>> ListInstanceIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44381,7 +44381,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppInstanceStatusCollection> ListInstanceIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44438,7 +44438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListInstanceProcessesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44485,7 +44485,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<ProcessInfoCollection> ListInstanceProcessesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44547,7 +44547,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListInstanceProcessModulesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44599,7 +44599,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListInstanceProcessModulesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44665,7 +44665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListInstanceProcessThreadsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44717,7 +44717,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListInstanceProcessThreadsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44781,7 +44781,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListSiteBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44823,7 +44823,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<BackupItemCollection> ListSiteBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44880,7 +44880,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PerfMonCounterCollection>> ListPerfMonCountersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44923,7 +44923,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PerfMonCounterCollection> ListPerfMonCountersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -44979,7 +44979,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45021,7 +45021,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45077,7 +45077,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListProcessesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45119,7 +45119,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<ProcessInfoCollection> ListProcessesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45176,7 +45176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListProcessModulesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45223,7 +45223,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListProcessModulesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45284,7 +45284,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListProcessThreadsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45331,7 +45331,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListProcessThreadsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45391,7 +45391,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<PublicCertificateCollection>> ListPublicCertificatesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45433,7 +45433,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<PublicCertificateCollection> ListPublicCertificatesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45489,7 +45489,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoCollection>> ListSiteExtensionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45531,7 +45531,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SiteExtensionInfoCollection> ListSiteExtensionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45587,7 +45587,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebAppCollection>> ListSlotsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45629,7 +45629,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebAppCollection> ListSlotsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45686,7 +45686,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45733,7 +45733,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<BackupItemCollection> ListBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45794,7 +45794,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PublishingCredentialsPoliciesCollection>> ListBasicPublishingCredentialsPoliciesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45841,7 +45841,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PublishingCredentialsPoliciesCollection> ListBasicPublishingCredentialsPoliciesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45902,7 +45902,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteConfigResourceCollection>> ListConfigurationsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -45949,7 +45949,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteConfigResourceCollection> ListConfigurationsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46010,7 +46010,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46057,7 +46057,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46118,7 +46118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46165,7 +46165,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46226,7 +46226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteConfigurationSnapshotInfoCollection>> ListConfigurationSnapshotInfoSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46273,7 +46273,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteConfigurationSnapshotInfoCollection> ListConfigurationSnapshotInfoSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46334,7 +46334,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ContinuousWebJobCollection>> ListContinuousWebJobsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46381,7 +46381,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ContinuousWebJobCollection> ListContinuousWebJobsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46442,7 +46442,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<DeploymentCollection>> ListDeploymentsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46489,7 +46489,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<DeploymentCollection> ListDeploymentsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46550,7 +46550,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46597,7 +46597,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<IdentifierCollection> ListDomainOwnershipIdentifiersSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46658,7 +46658,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<FunctionEnvelopeCollection>> ListInstanceFunctionsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46705,7 +46705,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<FunctionEnvelopeCollection> ListInstanceFunctionsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46766,7 +46766,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<HostNameBindingCollection>> ListHostNameBindingsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46813,7 +46813,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<HostNameBindingCollection> ListHostNameBindingsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46874,7 +46874,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<WebAppInstanceStatusCollection>> ListInstanceIdentifiersSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46921,7 +46921,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets the production slot instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<WebAppInstanceStatusCollection> ListInstanceIdentifiersSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -46983,7 +46983,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListInstanceProcessesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47035,7 +47035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="instanceId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         public Response<ProcessInfoCollection> ListInstanceProcessesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47102,7 +47102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListInstanceProcessModulesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47159,7 +47159,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListInstanceProcessModulesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47230,7 +47230,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListInstanceProcessThreadsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47287,7 +47287,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListInstanceProcessThreadsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47356,7 +47356,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<BackupItemCollection>> ListSiteBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47403,7 +47403,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get backups of the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<BackupItemCollection> ListSiteBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47465,7 +47465,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PerfMonCounterCollection>> ListPerfMonCountersSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47513,7 +47513,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PerfMonCounterCollection> ListPerfMonCountersSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47574,7 +47574,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionCollection>> GetPrivateEndpointConnectionListSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47621,7 +47621,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the site deployment slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PrivateEndpointConnectionCollection> GetPrivateEndpointConnectionListSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47682,7 +47682,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<ProcessInfoCollection>> ListProcessesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47729,7 +47729,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<ProcessInfoCollection> ListProcessesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47791,7 +47791,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessModuleInfoCollection>> ListProcessModulesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47843,7 +47843,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessModuleInfoCollection> ListProcessModulesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47909,7 +47909,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public async Task<Response<ProcessThreadInfoCollection>> ListProcessThreadsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -47961,7 +47961,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="processId"/> is null. </exception>
         public Response<ProcessThreadInfoCollection> ListProcessThreadsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48026,7 +48026,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<PublicCertificateCollection>> ListPublicCertificatesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48073,7 +48073,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API gets hostname bindings for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<PublicCertificateCollection> ListPublicCertificatesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48134,7 +48134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SiteExtensionInfoCollection>> ListSiteExtensionsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48181,7 +48181,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SiteExtensionInfoCollection> ListSiteExtensionsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48243,7 +48243,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response<SlotDifferenceCollection>> ListSlotDifferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48295,7 +48295,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the source slot. If a slot is not specified, the production slot is used as the source slot. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response<SlotDifferenceCollection> ListSlotDifferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48360,7 +48360,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48407,7 +48407,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48468,7 +48468,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsFromDRSecondarySlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48515,7 +48515,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Website Name. </param>
         /// <param name="slot"> Website Slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsFromDRSecondarySlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48576,7 +48576,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<TriggeredWebJobCollection>> ListTriggeredWebJobsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48623,7 +48623,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<TriggeredWebJobCollection> ListTriggeredWebJobsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48685,7 +48685,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryCollection>> ListTriggeredWebJobHistorySlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48737,7 +48737,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API uses the production slot. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredJobHistoryCollection> ListTriggeredWebJobHistorySlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48803,7 +48803,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48851,7 +48851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsagesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48912,7 +48912,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public async Task<Response<WebJobCollection>> ListWebJobsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -48959,7 +48959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         public Response<WebJobCollection> ListWebJobsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49020,7 +49020,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public async Task<Response<SlotDifferenceCollection>> ListSlotDifferencesFromProductionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49067,7 +49067,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slotSwapEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotSwapEntity"/> is null. </exception>
         public Response<SlotDifferenceCollection> ListSlotDifferencesFromProductionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49127,7 +49127,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49169,7 +49169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49225,7 +49225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<SnapshotCollection>> ListSnapshotsFromDRSecondaryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49267,7 +49267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<SnapshotCollection> ListSnapshotsFromDRSecondaryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49323,7 +49323,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<TriggeredWebJobCollection>> ListTriggeredWebJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49365,7 +49365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<TriggeredWebJobCollection> ListTriggeredWebJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49422,7 +49422,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public async Task<Response<TriggeredJobHistoryCollection>> ListTriggeredWebJobHistoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49469,7 +49469,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="webJobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="webJobName"/> is null. </exception>
         public Response<TriggeredJobHistoryCollection> ListTriggeredWebJobHistoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string webJobName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49530,7 +49530,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<CsmUsageQuotaCollection>> ListUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49573,7 +49573,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<CsmUsageQuotaCollection> ListUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49629,7 +49629,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public async Task<Response<WebJobCollection>> ListWebJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -49671,7 +49671,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         public Response<WebJobCollection> ListWebJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

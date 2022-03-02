@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="ipConfigName"/> is null. </exception>
-        public async Task<Response<HubIpConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="ipConfigName"/> is null. </exception>
+        public async Task<Response<HubIPConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        HubIpConfigurationData value = default;
+                        HubIPConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement);
+                        value = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HubIpConfigurationData)null, message.Response);
+                    return Response.FromValue((HubIPConfigurationData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="ipConfigName"/> is null. </exception>
-        public Response<HubIpConfigurationData> Get(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="ipConfigName"/> is null. </exception>
+        public Response<HubIPConfigurationData> Get(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        HubIpConfigurationData value = default;
+                        HubIPConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HubIpConfigurationData.DeserializeHubIpConfigurationData(document.RootElement);
+                        value = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HubIpConfigurationData)null, message.Response);
+                    return Response.FromValue((HubIPConfigurationData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIpConfigurationData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIPConfigurationData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="parameters"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="ipConfigName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="ipConfigName"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIPConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="parameters"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="ipConfigName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, <paramref name="ipConfigName"/> or <paramref name="parameters"/> is null. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, HubIPConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="ipConfigName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/> or <paramref name="ipConfigName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualHubName, string ipConfigName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -391,8 +391,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<ListVirtualHubIpConfigurationResults>> ListAsync(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public async Task<Response<ListVirtualHubIPConfigurationResults>> ListAsync(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListVirtualHubIpConfigurationResults value = default;
+                        ListVirtualHubIPConfigurationResults value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListVirtualHubIpConfigurationResults.DeserializeListVirtualHubIpConfigurationResults(document.RootElement);
+                        value = ListVirtualHubIPConfigurationResults.DeserializeListVirtualHubIPConfigurationResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -428,8 +428,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<ListVirtualHubIpConfigurationResults> List(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public Response<ListVirtualHubIPConfigurationResults> List(string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListVirtualHubIpConfigurationResults value = default;
+                        ListVirtualHubIPConfigurationResults value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListVirtualHubIpConfigurationResults.DeserializeListVirtualHubIpConfigurationResults(document.RootElement);
+                        value = ListVirtualHubIPConfigurationResults.DeserializeListVirtualHubIPConfigurationResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -480,8 +480,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<ListVirtualHubIpConfigurationResults>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public async Task<Response<ListVirtualHubIPConfigurationResults>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListVirtualHubIpConfigurationResults value = default;
+                        ListVirtualHubIPConfigurationResults value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListVirtualHubIpConfigurationResults.DeserializeListVirtualHubIpConfigurationResults(document.RootElement);
+                        value = ListVirtualHubIPConfigurationResults.DeserializeListVirtualHubIPConfigurationResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -522,8 +522,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<ListVirtualHubIpConfigurationResults> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public Response<ListVirtualHubIPConfigurationResults> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ListVirtualHubIpConfigurationResults value = default;
+                        ListVirtualHubIPConfigurationResults value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListVirtualHubIpConfigurationResults.DeserializeListVirtualHubIpConfigurationResults(document.RootElement);
+                        value = ListVirtualHubIPConfigurationResults.DeserializeListVirtualHubIPConfigurationResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

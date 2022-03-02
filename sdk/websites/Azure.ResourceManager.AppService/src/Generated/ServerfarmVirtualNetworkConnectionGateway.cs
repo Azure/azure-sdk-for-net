@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmVirtualNetworkConnectionGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            TryGetApiVersion(ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
             _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(_serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

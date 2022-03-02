@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/>, or <paramref name="orderId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/> or <paramref name="orderId"/> is null. </exception>
         public OrderItemResourceData(AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, string orderId) : base(location)
         {
             if (orderItemDetails == null)

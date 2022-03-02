@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/>, or <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         public async Task<Response<TldLegalAgreementCollection>> ListAgreementsAsync(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/>, or <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         public Response<TldLegalAgreementCollection> ListAgreements(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/>, or <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         public async Task<Response<TldLegalAgreementCollection>> ListAgreementsNextPageAsync(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/>, or <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         public Response<TldLegalAgreementCollection> ListAgreementsNextPage(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

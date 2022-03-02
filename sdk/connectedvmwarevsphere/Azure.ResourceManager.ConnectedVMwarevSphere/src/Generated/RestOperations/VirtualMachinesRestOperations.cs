@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response<VirtualMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response<VirtualMachineData> Get(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdate body)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
+            if (options != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
+                content.JsonWriter.WriteObjectValue(options);
                 request.Content = content;
             }
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
-        /// <param name="body"> Resource properties to update. </param>
+        /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdate body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(virtualMachineName));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, body);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
-        /// <param name="body"> Resource properties to update. </param>
+        /// <param name="options"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdate body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(virtualMachineName));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, body);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualMachineName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineOptions body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response Stop(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineOptions body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response Start(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         public Response Restart(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualMachinesList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualMachinesList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

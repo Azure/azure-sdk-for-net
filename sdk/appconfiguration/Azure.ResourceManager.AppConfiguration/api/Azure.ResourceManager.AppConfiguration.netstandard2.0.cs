@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore> Update(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore> Update(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConfigurationStoreCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.IEnumerable
     {
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
-        public Azure.ResourceManager.AppConfiguration.Models.EncryptionProperties Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.PrivateEndpointConnectionReference> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.AppConfiguration.Models.Sku Sku { get { throw null; } set { } }
+        public string SkuName { get { throw null; } set { } }
     }
     public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public partial class ConfigurationStoreUpdateOptions
     {
         public ConfigurationStoreUpdateOptions() { }
-        public Azure.ResourceManager.AppConfiguration.Models.EncryptionProperties Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.AppConfiguration.Models.Sku Sku { get { throw null; } set { } }
+        public string SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -224,11 +224,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus left, Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class EncryptionProperties
-    {
-        public EncryptionProperties() { }
-        public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
     }
     public partial class KeyValue
     {
@@ -264,7 +259,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public partial class PrivateEndpointConnectionReference : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateEndpointConnectionReference() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }

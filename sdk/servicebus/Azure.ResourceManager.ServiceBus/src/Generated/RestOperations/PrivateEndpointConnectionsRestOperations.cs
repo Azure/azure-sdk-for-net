@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public Response<PrivateEndpointConnectionListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="parameters"> Parameters supplied to update Status of PrivateEndpoint Connection to namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="parameters"> Parameters supplied to update Status of PrivateEndpoint Connection to namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<PrivateEndpointConnectionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public Response<PrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public Response<PrivateEndpointConnectionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

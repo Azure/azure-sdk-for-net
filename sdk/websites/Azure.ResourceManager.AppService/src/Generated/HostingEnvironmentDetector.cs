@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentDetector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
             _hostingEnvironmentDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

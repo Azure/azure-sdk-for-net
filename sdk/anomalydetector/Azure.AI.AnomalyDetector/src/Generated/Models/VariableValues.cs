@@ -18,7 +18,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="name"> variable name. </param>
         /// <param name="timestamps"> timestamps. </param>
         /// <param name="values"> values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="timestamps"/>, or <paramref name="values"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
         public VariableValues(string name, IEnumerable<string> timestamps, IEnumerable<float> values)
         {
             if (name == null)

@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.EventHubs
     public partial class PrivateEndpointConnectionData : Azure.ResourceManager.EventHubs.Models.ProxyResource
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.ConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EndPointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -685,10 +685,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class KeyVaultProperties
     {
         public KeyVaultProperties() { }
-        public Azure.ResourceManager.EventHubs.Models.UserAssignedIdentityProperties Identity { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkRuleIPAction : System.IEquatable<Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         public NetworkRuleSetVirtualNetworkRules() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource Subnet { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateLinkConnectionStatus : System.IEquatable<Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus>
@@ -896,10 +896,5 @@ namespace Azure.ResourceManager.EventHubs.Models
         NameInUse = 3,
         NameInLockdown = 4,
         TooManyNamespaceInCurrentSubscription = 5,
-    }
-    public partial class UserAssignedIdentityProperties
-    {
-        public UserAssignedIdentityProperties() { }
-        public string UserAssignedIdentity { get { throw null; } set { } }
     }
 }

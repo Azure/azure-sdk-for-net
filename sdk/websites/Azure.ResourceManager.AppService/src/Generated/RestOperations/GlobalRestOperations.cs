@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response> GetSubscriptionOperationWithAsyncResponseAsync(string subscriptionId, string location, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         public Response GetSubscriptionOperationWithAsyncResponse(string subscriptionId, string location, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)

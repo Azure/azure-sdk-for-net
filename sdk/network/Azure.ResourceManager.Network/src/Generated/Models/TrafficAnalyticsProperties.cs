@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-    public partial class TrafficAnalyticsProperties
+    internal partial class TrafficAnalyticsProperties
     {
         /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
         public TrafficAnalyticsProperties()

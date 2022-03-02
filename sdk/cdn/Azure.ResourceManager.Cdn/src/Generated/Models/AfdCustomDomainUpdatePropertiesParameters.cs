@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -20,6 +21,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
         public AfdCustomDomainHttpsParameters TlsSettings { get; set; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        public WritableSubResource AzureDnsZone { get; set; }
+        internal WritableSubResource AzureDnsZone { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureDnsZoneId
+        {
+            get => AzureDnsZone is null ? default : AzureDnsZone.Id;
+            set
+            {
+                if (AzureDnsZone is null)
+                    AzureDnsZone = new WritableSubResource();
+                AzureDnsZone.Id = value;
+            }
+        }
     }
 }

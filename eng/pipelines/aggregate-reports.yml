@@ -149,25 +149,9 @@ stages:
               ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
               PublishAnalysisLogs: false
 
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-            displayName: 'Run CredScan'
-            inputs:
-              suppressionsFile: 'eng\CredScanSuppression.json'
-            condition: succeededOrFailed()
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Post Analysis (CredScan)'
-            inputs:
-              GdnBreakAllTools: false
-              GdnBreakGdnToolCredScan: true
-              GdnBreakGdnToolCredScanSeverity: Error
-              GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-              GdnBreakBaselines: baseline  
-              # Used for generating baseline file
-              # GdnBreakOutputBaselineFile: dotnet
-              # GdnBreakOutputBaseline: baseline
-            condition: succeededOrFailed()
-            continueOnError: true
+          - template: /eng/common/pipelines/templates/steps/credscan.yml
+            parameters:
+              BaselineFilePath: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'

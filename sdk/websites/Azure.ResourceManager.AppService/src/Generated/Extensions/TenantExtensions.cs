@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -158,8 +159,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -177,8 +178,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -196,8 +197,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
@@ -215,8 +216,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this Tenant tenant, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {

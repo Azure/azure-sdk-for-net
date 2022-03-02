@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         internal PrivateDnsZoneGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateDnsZoneGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string privateDnsZoneGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string privateDnsZoneGroupApiVersion);
             _privateDnsZoneGroupRestClient = new PrivateDnsZoneGroupsRestOperations(_privateDnsZoneGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateDnsZoneGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

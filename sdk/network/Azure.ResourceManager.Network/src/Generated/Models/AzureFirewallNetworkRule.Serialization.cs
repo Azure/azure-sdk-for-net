@@ -76,21 +76,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpGroups))
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
                 writer.WritePropertyName("destinationIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in DestinationIpGroups)
+                foreach (var item in DestinationIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal LongTermRetentionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _longTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LongTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LongTermRetentionPolicy.ResourceType, out string longTermRetentionPolicyApiVersion);
+            TryGetApiVersion(LongTermRetentionPolicy.ResourceType, out string longTermRetentionPolicyApiVersion);
             _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(_longTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, longTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<LongTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<LongTermRetentionPolicy> CreateOrUpdate(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();

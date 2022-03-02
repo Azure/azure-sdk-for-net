@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstancePrivateEndpointConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstancePrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedInstancePrivateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string managedInstancePrivateEndpointConnectionApiVersion);
             _managedInstancePrivateEndpointConnectionRestClient = new ManagedInstancePrivateEndpointConnectionsRestOperations(_managedInstancePrivateEndpointConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstancePrivateEndpointConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
