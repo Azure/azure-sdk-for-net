@@ -1776,7 +1776,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public SearchAlias(string name, System.Collections.Generic.IEnumerable<string> indexes) { }
         public SearchAlias(string name, string index) { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<string> Indexes { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }

@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchAlias
     {
         [CodeGenMember("etag")]
-        private string _etag;
+        private readonly string _etag;
 
         /// <summary>
         /// The <see cref="Azure.ETag"/> of the <see cref="SearchAlias"/>.
@@ -18,7 +18,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public ETag? ETag
         {
             get => _etag is null ? null : new ETag(_etag);
-            set => _etag = value?.ToString();
         }
 
         /// <summary> Initializes a new instance of SearchAlias. </summary>
