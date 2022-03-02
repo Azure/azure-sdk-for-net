@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Linq;
 using Avro;
 using Azure.Core.Diagnostics;
 
@@ -42,13 +40,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         [NonEvent]
-        public virtual void CacheUpdated(LruCache<string, (Schema Schema, int SchemaLength)> idToSchemaCache, LruCache<Schema, (string SchemaId, int SchemaLength)> schemaToIdCache)
+        public virtual void CacheUpdated(LruCache<string, Schema> idToSchemaCache, LruCache<Schema, string> schemaToIdCache)
         {
             if (IsEnabled())
             {
-                int totalSchemaLength = idToSchemaCache.Sum(kvp => kvp.Value.SchemaLength);
-                totalSchemaLength += schemaToIdCache.Sum(kvp => kvp.Value.SchemaLength);
-                CacheUpdatedCore(idToSchemaCache.Count + schemaToIdCache.Count, totalSchemaLength);
+                CacheUpdatedCore(idToSchemaCache.Count + schemaToIdCache.Count, idToSchemaCache.TotalLength + schemaToIdCache.TotalLength);
             }
         }
 

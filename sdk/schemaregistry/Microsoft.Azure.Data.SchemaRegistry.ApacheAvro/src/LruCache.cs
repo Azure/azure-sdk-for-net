@@ -15,16 +15,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     {
         private readonly int _capacity;
         private readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
-        private readonly Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>> _map;
+        private readonly Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue>> Node, int Length)> _map;
         private readonly object _syncLock;
 
         internal int Count => _linkedList.Count;
+
+        internal int TotalLength { get; private set; }
 
         public LruCache(int capacity)
         {
             _capacity = capacity;
             _linkedList = new LinkedList<KeyValuePair<TKey, TValue>>();
-            _map = new Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>>();
+            _map = new Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue>>, int)>();
             _syncLock = new object();
         }
 
@@ -32,8 +34,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             lock (_syncLock)
             {
-                if (_map.TryGetValue(key, out var node))
+                if (_map.TryGetValue(key, out var mapValue))
                 {
+                    var node = mapValue.Node;
                     value = node.Value.Value;
                     _linkedList.Remove(node);
                     _linkedList.AddFirst(node);
@@ -45,27 +48,31 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        public void AddOrUpdate(TKey key, TValue val)
+        public void AddOrUpdate(TKey key, TValue val, int length)
         {
             lock (_syncLock)
             {
-                if (_map.TryGetValue(key, out var existingNode))
+                if (_map.TryGetValue(key, out var existingValue))
                 {
                     // remove node - we will re-add a new node for this key at the head of the list, as the value may be different
-                    _linkedList.Remove(existingNode);
+                    _linkedList.Remove(existingValue.Node);
+                    TotalLength -= _map[key].Length;
                 }
 
                 // add new node
                 var node = new LinkedListNode<KeyValuePair<TKey, TValue>>(new KeyValuePair<TKey, TValue>(key, val));
                 _linkedList.AddFirst(node);
-                _map[key] = node;
+                _map[key] = (node, length);
+                TotalLength += length;
 
                 if (_map.Count > _capacity)
                 {
                     // remove least recently used node
                     LinkedListNode<KeyValuePair<TKey, TValue>> last = _linkedList.Last;
                     _linkedList.RemoveLast();
+                    var toRemove = _map[last.Value.Key];
                     _map.Remove(last.Value.Key);
+                    TotalLength -= toRemove.Length;
                 }
             }
         }

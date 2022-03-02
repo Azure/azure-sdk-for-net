@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private const int RecordFormatIndicatorLength = 4;
         private const int SchemaIdLength = 32;
         private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
-        private readonly LruCache<string, (Schema Schema, int SchemaLength)> _idToSchemaMap = new(CacheCapacity);
-        private readonly LruCache<Schema, (string SchemaId, int SchemaLength)> _schemaToIdMap = new(CacheCapacity);
+        private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
+        private readonly LruCache<Schema, string> _schemaToIdMap = new(CacheCapacity);
 
         private enum SupportedType
         {
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             if (_schemaToIdMap.TryGet(schema, out var value))
             {
-                return value.SchemaId;
+                return value;
             }
 
             SchemaProperties schemaProperties;
@@ -194,8 +194,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             string id = schemaProperties.Id;
 
-            _schemaToIdMap.AddOrUpdate(schema, (id, schemaString.Length));
-            _idToSchemaMap.AddOrUpdate(id, (schema, schemaString.Length));
+            _schemaToIdMap.AddOrUpdate(schema, id, schemaString.Length);
+            _idToSchemaMap.AddOrUpdate(id, schema, schemaString.Length);
             SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
             return id;
         }
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             if (_idToSchemaMap.TryGet(schemaId, out var cachedSchema))
             {
-                return cachedSchema.Schema;
+                return cachedSchema;
             }
 
             string schemaDefinition;
@@ -392,8 +392,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
             }
             var schema = Schema.Parse(schemaDefinition);
-            _idToSchemaMap.AddOrUpdate(schemaId, (schema, schemaDefinition.Length));
-            _schemaToIdMap.AddOrUpdate(schema, (schemaId, schemaDefinition.Length));
+            _idToSchemaMap.AddOrUpdate(schemaId, schema, schemaDefinition.Length);
+            _schemaToIdMap.AddOrUpdate(schema, schemaId, schemaDefinition.Length);
             SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
             return schema;
         }
