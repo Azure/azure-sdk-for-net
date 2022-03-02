@@ -4,19 +4,19 @@
 using System;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    internal sealed partial class BlobsCheckpointStore
+    internal sealed partial class BlobCheckpointStoreInternal
     {
         /// <summary>
-        /// Initializes the <see cref="BlobsCheckpointStore"/> type.
+        /// Initializes the <see cref="BlobCheckpointStoreInternal"/> type.
         /// </summary>
 #pragma warning disable CA1810 // Initialize static fields inline
-        static BlobsCheckpointStore()
+        static BlobCheckpointStoreInternal()
         {
             BlobsResourceDoesNotExist = Resources.BlobsResourceDoesNotExist;
         }
@@ -72,36 +72,6 @@ namespace Azure.Messaging.EventHubs.Processor
             Logger.ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>
-        ///   Indicates that an attempt to retrieve a list of checkpoints has completed.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
-        /// <param name="checkpointCount">The amount of checkpoints received from the storage service.</param>
-        ///
-        partial void ListCheckpointsComplete(string fullyQualifiedNamespace,
-                                             string eventHubName,
-                                             string consumerGroup,
-                                             int checkpointCount) =>
-            Logger.ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpointCount);
-
-        /// <summary>
-        ///   Indicates that an unhandled exception was encountered while retrieving a list of checkpoints.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="exception">The exception that occurred.</param>
-        ///
-        partial void ListCheckpointsError(string fullyQualifiedNamespace,
-                                          string eventHubName,
-                                          string consumerGroup,
-                                          Exception exception) =>
-            Logger.ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
-
-        /// <summary>
         ///   Indicates that invalid checkpoint data was found during an attempt to retrieve a list of checkpoints.
         /// </summary>
         ///
@@ -115,19 +85,6 @@ namespace Azure.Messaging.EventHubs.Processor
                                             string eventHubName,
                                             string consumerGroup) =>
             Logger.InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
-
-        /// <summary>
-        ///   Indicates that an attempt to retrieve a list of checkpoints has started.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
-        ///
-        partial void ListCheckpointsStart(string fullyQualifiedNamespace,
-                                          string eventHubName,
-                                          string consumerGroup) =>
-            Logger.ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while updating a checkpoint.
@@ -266,7 +223,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Logger.ClaimOwnershipStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier);
 
         /// <summary>
-        ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
+        ///   Indicates that a <see cref="BlobCheckpointStoreInternal" /> was created.
         /// </summary>
         ///
         /// <param name="typeName">The type name for the checkpoint store.</param>
