@@ -9,16 +9,4 @@ steps:
       arguments: >
         -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
         -StartParameters "${{ parameters.StartParameters }}"
-        -Stage "Install"
-      pwsh: true
-    displayName: Download and Extract Cosmos DB Emulator
-
-  - task: Powershell@2
-    inputs:
-      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Cosmos-Emulator.ps1
-      arguments: >
-        -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
-        -StartParameters "${{ parameters.StartParameters }}"
-        -Stage "Launch"
-      pwsh: true
-    displayName: Start Cosmos DB Emulator
+    displayName: Install and Launch Public Cosmos DB Emulator
