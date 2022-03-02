@@ -180,6 +180,9 @@ namespace Compute.Tests
         {
             string expectedId = "/SharedGalleries/" + GalleryUniqueName + "/Images/" + GalleryImageName + "/Versions/" + GalleryImageVersionName;
             Assert.Equal(expectedId, sharedGalleryImageVersion.UniqueId);
+            Assert.NotNull(sharedGalleryImageVersion.StorageProfile);
+            Assert.NotNull(sharedGalleryImageVersion.ExcludeFromLatest);
+            Assert.NotNull(sharedGalleryImageVersion.StorageProfile.OsDiskImage);
         }
     }
 }
