@@ -389,6 +389,7 @@ namespace Azure.Storage.Files.Shares.Models
         FileAttributes = 1,
         CreatedOn = 2,
         LastWrittenOn = 4,
+        ChangedOn = 8,
     }
     public enum CopyStatus
     {

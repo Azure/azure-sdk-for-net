@@ -6204,6 +6204,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
                         FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileChangeTime = options?.SmbProperties?.FileChangedOn.ToFileDateTimeString(),
                         FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
