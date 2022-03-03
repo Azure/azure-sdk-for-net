@@ -128,10 +128,7 @@ In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 using Microsoft.Azure.ApplicationInsights.Query.Models
 
 // code omitted for brevity
-HttpResponseMessage response = await client.QueryAsync(
-  "<appId>", 
-  "AzureActivity | top 10 by TimeGenerated").
-  ConfigureAwait(false).Response;
+MetricsResult result = client.Metrics.GetAsync("<appId>", "<metricId>").Result;
 ```
 
 In `Azure.Monitor.Query` v1.0.x:
@@ -143,19 +140,7 @@ using Azure.Monitor.Query.Models;
 
 // code omitted for brevity
 
-Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-	workspaceId,
-	"AzureActivity | top 10 by TimeGenerated",
-	new QueryTimeRange(TimeSpan.FromDays(1)));
-LogsTable table = response.Value.Table;
-IReadOnlyList<LogsTableRow> rows = table.Rows;
-
-foreach (LogsTableRow row in rows)
-{
-    Console.WriteLine(row.GetString(0)); // Access a particular element with index
-    Console.WriteLine(row.GetTimeSpan(1)); 
-    Console.WriteLine(row.ToString());
-}
+MetricsQueryResult result = await client.QueryResourceAsync("<resourceId>",new[]{ "<metricName>" }).Value;
 ```
 
 ## Additional samples
