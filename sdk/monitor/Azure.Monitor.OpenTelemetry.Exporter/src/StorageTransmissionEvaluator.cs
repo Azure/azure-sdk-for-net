@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             // Array to store time interval in seconds between each export
             _exportIntervalsInSeconds = new double[sampleSize];
-            _prevExportTimestampTicks = Stopwatch.GetTimestamp();
+            _prevExportTimestampTicks = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
         }
 
         /// <summary>
@@ -85,10 +85,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         internal void UpdateExportInterval()
         {
-            long curExportTimestampTicks = Stopwatch.GetTimestamp();
+            long curExportTimestampTicks = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
 
             // todo: check if this can fail
-            double exportIntervalInSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
+            // double exportIntervalInSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
+
+            double exportIntervalInSeconds = curExportTimestampTicks - _prevExportTimestampTicks;
 
             _prevExportTimestampTicks = curExportTimestampTicks;
 
