@@ -3,6 +3,8 @@ namespace Azure.ResourceManager.AppConfiguration
     public static partial class ArmClientExtensions
     {
         public static Azure.ResourceManager.AppConfiguration.ConfigurationStore GetConfigurationStore(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore GetDeletedConfigurationStore(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.KeyValue GetKeyValue(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.PrivateLinkResource GetPrivateLinkResource(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -23,12 +25,11 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppConfiguration.Models.ApiKey> GetKeys(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.Models.ApiKey> GetKeysAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.Models.KeyValue> GetKeyValue(Azure.ResourceManager.AppConfiguration.Models.ListKeyValueOptions listKeyValueOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.Models.KeyValue>> GetKeyValueAsync(Azure.ResourceManager.AppConfiguration.Models.ListKeyValueOptions listKeyValueOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.KeyValueCollection GetKeyValues() { throw null; }
         public virtual Azure.ResourceManager.AppConfiguration.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.ResourceManager.AppConfiguration.PrivateLinkResourceCollection GetPrivateLinkResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.Models.ApiKey> RegenerateKey(Azure.ResourceManager.AppConfiguration.Models.RegenerateKeyOptions regenerateKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.Models.ApiKey>> RegenerateKeyAsync(Azure.ResourceManager.AppConfiguration.Models.RegenerateKeyOptions regenerateKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.Models.ApiKey> RegenerateKey(Azure.ResourceManager.AppConfiguration.Models.RegenerateKeyOptions regenerateKeyParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.Models.ApiKey>> RegenerateKeyAsync(Azure.ResourceManager.AppConfiguration.Models.RegenerateKeyOptions regenerateKeyParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,7 +57,10 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResource
     {
         public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.AppConfiguration.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public bool? EnablePurgeProtection { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.EncryptionProperties Encryption { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -64,6 +68,84 @@ namespace Azure.ResourceManager.AppConfiguration
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.Sku Sku { get { throw null; } set { } }
+        public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
+    }
+    public partial class DeletedConfigurationStore : Azure.ResourceManager.Core.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DeletedConfigurationStore() { }
+        public virtual Azure.ResourceManager.AppConfiguration.DeletedConfigurationStoreData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string configStoreName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.Models.DeletedConfigurationStorePurgeDeletedOperation PurgeDeleted(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppConfiguration.Models.DeletedConfigurationStorePurgeDeletedOperation> PurgeDeletedAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DeletedConfigurationStoreCollection : Azure.ResourceManager.Core.ArmCollection
+    {
+        protected DeletedConfigurationStoreCollection() { }
+        public virtual Azure.Response<bool> Exists(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore> Get(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore>> GetAsync(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore> GetIfExists(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore>> GetIfExistsAsync(string location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DeletedConfigurationStoreData : Azure.ResourceManager.Models.Resource
+    {
+        internal DeletedConfigurationStoreData() { }
+        public string ConfigurationStoreId { get { throw null; } }
+        public System.DateTimeOffset? DeletionDate { get { throw null; } }
+        public string Location { get { throw null; } }
+        public bool? PurgeProtectionEnabled { get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class KeyValue : Azure.ResourceManager.Core.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected KeyValue() { }
+        public virtual Azure.ResourceManager.AppConfiguration.KeyValueData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.Models.KeyValueDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppConfiguration.Models.KeyValueDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class KeyValueCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.KeyValue>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.KeyValue>, System.Collections.IEnumerable
+    {
+        protected KeyValueCollection() { }
+        public virtual Azure.ResourceManager.AppConfiguration.Models.KeyValueCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData keyValueParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppConfiguration.Models.KeyValueCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData keyValueParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue> Get(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppConfiguration.KeyValue> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.KeyValue> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue>> GetAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue> GetIfExists(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue>> GetIfExistsAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppConfiguration.KeyValue> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.KeyValue>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppConfiguration.KeyValue> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.KeyValue>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class KeyValueData : Azure.ResourceManager.Models.Resource
+    {
+        public KeyValueData() { }
+        public string ContentType { get { throw null; } set { } }
+        public string ETag { get { throw null; } }
+        public string Key { get { throw null; } }
+        public string Label { get { throw null; } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
+        public bool? Locked { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string Value { get { throw null; } set { } }
     }
     public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
     {
@@ -147,6 +229,9 @@ namespace Azure.ResourceManager.AppConfiguration
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.Models.NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppConfiguration.Models.CheckNameAvailabilityParameters checkNameAvailabilityParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppConfiguration.ConfigurationStore> GetConfigurationStores(this Azure.ResourceManager.Resources.Subscription subscription, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.ConfigurationStore> GetConfigurationStoresAsync(this Azure.ResourceManager.Resources.Subscription subscription, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.DeletedConfigurationStoreCollection GetDeletedConfigurationStores(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore> GetDeletedConfigurationStores(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.DeletedConfigurationStore> GetDeletedConfigurationStoresAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -242,6 +327,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public partial class ConfigurationStoreUpdateOptions
     {
         public ConfigurationStoreUpdateOptions() { }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public bool? EnablePurgeProtection { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.EncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -268,34 +355,76 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus left, Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.CreatedByType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CreatedByType(string value) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.Models.CreatedByType Application { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.CreatedByType Key { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.CreatedByType ManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.CreatedByType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.CreatedByType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.CreatedByType left, Azure.ResourceManager.AppConfiguration.Models.CreatedByType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.CreatedByType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.CreatedByType left, Azure.ResourceManager.AppConfiguration.Models.CreatedByType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum CreateMode
+    {
+        Recover = 0,
+        Default = 1,
+    }
+    public partial class DeletedConfigurationStorePurgeDeletedOperation : Azure.Operation
+    {
+        protected DeletedConfigurationStorePurgeDeletedOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class EncryptionProperties
     {
         public EncryptionProperties() { }
         public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
     }
-    public partial class KeyValue
+    public partial class KeyValueCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.KeyValue>
     {
-        internal KeyValue() { }
-        public string ContentType { get { throw null; } }
-        public string ETag { get { throw null; } }
-        public string Key { get { throw null; } }
-        public string Label { get { throw null; } }
-        public System.DateTimeOffset? LastModified { get { throw null; } }
-        public bool? Locked { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string Value { get { throw null; } }
+        protected KeyValueCreateOrUpdateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.ResourceManager.AppConfiguration.KeyValue Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValue>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class KeyValueDeleteOperation : Azure.Operation
+    {
+        protected KeyValueDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultProperties
     {
         public KeyVaultProperties() { }
         public string IdentityClientId { get { throw null; } set { } }
         public string KeyIdentifier { get { throw null; } set { } }
-    }
-    public partial class ListKeyValueOptions
-    {
-        public ListKeyValueOptions(string key) { }
-        public string Key { get { throw null; } }
-        public string Label { get { throw null; } set { } }
     }
     public partial class NameAvailabilityStatus
     {
