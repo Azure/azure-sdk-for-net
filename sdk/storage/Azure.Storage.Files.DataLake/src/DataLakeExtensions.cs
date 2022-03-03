@@ -574,13 +574,26 @@ namespace Azure.Storage.Files.DataLake
                 Owner = path.Owner,
                 Group = path.Group,
                 Permissions = path.Permissions,
-                CreatedOn = path.CreationTime == null
-                    ? null
-                    : DateTimeOffset.FromFileTime(long.Parse(path.CreationTime, CultureInfo.InvariantCulture)).ToUniversalTime(),
-                ExpiresOn = path.ExpiryTime == null
-                    ? null
-                    : DateTimeOffset.FromFileTime(long.Parse(path.ExpiryTime, CultureInfo.InvariantCulture)).ToUniversalTime()
+                CreatedOn = ParseFileTimeString(path.CreationTime),
+                ExpiresOn = ParseFileTimeString(path.ExpiryTime)
             };
+        }
+
+        internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
+        {
+            if (fileTimeString == null)
+            {
+                return null;
+            }
+
+            long fileTimeLong = long.Parse(fileTimeString, CultureInfo.InvariantCulture);
+
+            if (fileTimeLong == 0)
+            {
+                return null;
+            }
+
+            return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
         }
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
