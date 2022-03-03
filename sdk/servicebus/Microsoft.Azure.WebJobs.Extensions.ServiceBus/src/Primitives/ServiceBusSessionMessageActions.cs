@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal bool ShouldReleaseSession { get; set; }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.SessionLockedUntil"/>
-        public DateTimeOffset SessionLockedUntil => _eventArgs?.SessionLockedUntil ?? _receiver.SessionLockedUntil;
+        public virtual DateTimeOffset SessionLockedUntil => _eventArgs?.SessionLockedUntil ?? _receiver.SessionLockedUntil;
 
         internal ServiceBusSessionMessageActions(ProcessSessionMessageEventArgs eventArgs) : base(eventArgs)
         {
