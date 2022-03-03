@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
@@ -259,7 +260,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))

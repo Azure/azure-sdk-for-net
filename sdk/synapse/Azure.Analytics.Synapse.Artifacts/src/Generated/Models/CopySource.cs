@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public CopySource()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "CopySource";
         }
 
         /// <summary> Initializes a new instance of CopySource. </summary>
@@ -28,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopySource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "CopySource";
+            Type = type;
             SourceRetryCount = sourceRetryCount;
             SourceRetryWait = sourceRetryWait;
             MaxConcurrentConnections = maxConcurrentConnections;
