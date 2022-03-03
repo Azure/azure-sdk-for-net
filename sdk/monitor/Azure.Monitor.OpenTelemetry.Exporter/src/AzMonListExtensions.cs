@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal static class HttpHelper
+    internal static class AzMonListExtensions
     {
         ///<summary>
         /// Gets http request url from activity tag objects.
