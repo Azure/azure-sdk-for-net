@@ -304,6 +304,25 @@ namespace Azure.Core.Tests
             Assert.IsFalse(response.IsError);
         }
 
+        [Test]
+        public async Task RequestContextNull_IsError()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(404));
+
+            var pipeline = new HttpPipeline(mockTransport, default);
+
+            HttpMessage message = pipeline.CreateMessage(context: default, ResponseClassifier200204304);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Response response = message.Response;
+
+            Assert.IsFalse(response.IsError);
+        }
+
         #region Helpers
         public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {
@@ -346,7 +365,7 @@ namespace Azure.Core.Tests
 
         // How classifiers will be generated in DPG.
         private static ResponseClassifier _responseClassifier200204304;
-        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
+        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc ushort[] { 200, 204, 304 });
         #endregion
 
     }
