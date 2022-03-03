@@ -1,3 +1,6 @@
+parameters:
+  diffScriptPath: ''
+
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - pwsh: |
@@ -10,8 +13,7 @@ steps:
 
         if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and $targetBranch -eq $defaultBranch)
         {
-
-          $filesInCommonDir = git diff "origin/${targetBranch}" HEAD --name-only -- 'eng/common/*'
+          $filesInCommonDir = &"${{ parameters.diffScriptPath }}" -SourceCommittish HEAD -TargetCommittish "origin/${targetBranch}" | Where { $_.StartsWith("eng/common") }
 
           if (($LASTEXITCODE -eq 0) -and ($filesInCommonDir.Count -gt 0))
           {

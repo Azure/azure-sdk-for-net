@@ -142,54 +142,9 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-      - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-      - task: UsePythonVersion@0
-        displayName: "Use Python 3.6"
-        inputs:
-          versionSpec: "3.6"
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-            Directory: ''
-            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-            Directory: sdk/${{ parameters.ServiceDirectory }}
-          CheckLinkGuidance: $true
-      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-      - template: /eng/common/pipelines/templates/steps/verify-readme.yml
-        parameters:
-          ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
-      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-        parameters:
-          SourceDirectory: $(Build.SourcesDirectory)
-      - task: NodeTool@0
-        inputs:
-          # https://github.com/nodejs/node/issues/40468
-          versionSpec: '16.6.2'
-        displayName: 'Install NodeJS'
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - task: DotNetCoreCLI@2
-        displayName: 'Install Snippet Generator Tool'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
-          workingDirectory: '$(Agent.BuildDirectory)'
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        env:
-          EnableSourceLink: false
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-           -ServiceDirectory ${{ parameters.ServiceToTest }}
-           -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface
-          pwsh: true
-          failOnStderr: false
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+        parameters:
+          diffScriptPath: $(Build.SourcesDirectory)/eng/common/scripts/git-diff-changes.ps1
 
   - job: Compliance
     pool:
