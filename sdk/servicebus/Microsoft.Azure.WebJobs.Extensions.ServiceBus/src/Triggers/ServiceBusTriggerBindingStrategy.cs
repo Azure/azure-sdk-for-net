@@ -95,7 +95,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             // for backcompat
             AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
-            AddBindingContractMember(contract, "LockedUntil", typeof(DateTimeOffset), isSingleDispatch);
 
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
@@ -123,7 +122,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             var subjects = new string[length];
             var correlationIds = new string[length];
             var applicationProperties = new IDictionary<string, object>[length];
-            var lockedUntil = new DateTimeOffset[length];
 
             SafeAddValue(() => bindingData.Add("DeliveryCountArray", deliveryCounts));
             SafeAddValue(() => bindingData.Add("DeadLetterSourceArray", deadLetterSources));
@@ -144,7 +142,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("ApplicationPropertiesArray", applicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserPropertiesArray", applicationProperties));
-            SafeAddValue(() => bindingData.Add("LockedUntilArray", lockedUntil));
             for (int i = 0; i < messages.Length; i++)
             {
                 deliveryCounts[i] = messages[i].DeliveryCount;
@@ -162,7 +159,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 subjects[i] = messages[i].Subject;
                 correlationIds[i] = messages[i].CorrelationId;
                 applicationProperties[i] = messages[i].ApplicationProperties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-                lockedUntil[i] = messages[i].LockedUntil;
             }
         }
 
@@ -183,14 +179,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.SequenceNumber), value.SequenceNumber));
             SafeAddValue(() => bindingData.Add(nameof(value.To), value.To));
             SafeAddValue(() => bindingData.Add(nameof(value.Subject), value.Subject));
-            SafeAddValue(() => bindingData.Add(nameof(value.LockedUntil), value.LockedUntil));
             // for backcompat
             SafeAddValue(() => bindingData.Add("Label", value.Subject));
             SafeAddValue(() => bindingData.Add(nameof(value.CorrelationId), value.CorrelationId));
             SafeAddValue(() => bindingData.Add(nameof(value.ApplicationProperties), value.ApplicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserProperties", value.ApplicationProperties));
-            SafeAddValue(() => bindingData.Add(nameof(value.LockedUntil), value.LockedUntil));
         }
 
         private static void SafeAddValue(Action addValue)

@@ -831,7 +831,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 DateTimeOffset expiresAt,
                 DateTime enqueuedTimeUtc,
                 DateTimeOffset enqueuedTime,
-                DateTimeOffset lockedUntil,
                 string contentType,
                 string replyTo,
                 string to,
@@ -857,9 +856,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value", userProperties["key"]);
                 Assert.Greater(expiresAtUtc, DateTime.UtcNow);
                 Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
-                Assert.Greater(enqueuedTimeUtc, DateTime.UtcNow);
+                Assert.Less(enqueuedTimeUtc, DateTime.UtcNow);
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
-                Assert.Greater(lockedUntil, DateTimeOffset.UtcNow);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
