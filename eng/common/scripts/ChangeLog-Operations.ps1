@@ -379,7 +379,7 @@ function Confirm-LikeForRelease {
     LogError "The changelog entry has the following sections with no content ($($emptySections -join ', ')). Please ensure to either remove the empty sections or add content to the section."
     $isValid = $false
   }
-  if (!$foundRecomendedSection)
+  if (!$foundRecommendedSection)
   {
     LogWarning "The changelog entry did not contain any of the recommended sections ($($RecommendedSectionHeaders -join ', ')), please add at least one. See https://aka.ms/azsdk/guideline/changelogs for more info."
   }
