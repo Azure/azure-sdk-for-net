@@ -27,5 +27,5 @@ extends:
     ServiceDirectory: azurestackhci
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.StackHci
-      safeName: AzureResourceManagerStackHci
+    - name: Azure.ResourceManager.Hci
+      safeName: AzureResourceManagerHci
