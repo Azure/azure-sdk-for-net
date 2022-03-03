@@ -63,7 +63,7 @@ namespace Azure.Core.Tests
         {
             var strategy = new RetryAfterDelayStrategy(new ConstantDelayStrategy());
 
-            Assert.AreEqual(retryAfter, strategy.GetNextDelay(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
+            Assert.AreEqual(Math.Max(retryAfter, suggest), strategy.GetNextDelay(mockWithRetryAfter(retryAfter), TimeSpan.FromSeconds(suggest)).TotalSeconds);
         }
 
         [Test]
