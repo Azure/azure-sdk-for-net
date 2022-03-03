@@ -360,7 +360,7 @@ function Confirm-LikeForRelease {
     $isValid = $false
   }
 
-  $foundRecomendedSection = $false
+  $foundRecommendedSection = $false
   $emptySections = @()
   foreach ($key in $changeLogEntry.Sections.Keys)
   {
