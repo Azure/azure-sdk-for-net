@@ -821,22 +821,35 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task GetPathsAsync_ExpiryTime()
+        public async Task GetPathsAsync_CreationTimeExpiryTime()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient fileClient = InstrumentClient(test.Container.GetFileClient(GetNewFileName()));
             await fileClient.CreateAsync();
             DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn: Recording.UtcNow.AddDays(1));
-            //await fileClient.ScheduleDeletionAsync(options);
+            await fileClient.ScheduleDeletionAsync(options);
 
             // Act
             IList<PathItem> paths = await test.Container.GetPathsAsync().ToListAsync();
 
             // Assert
+            Response<PathProperties> pathPropertiesResponse = await fileClient.GetPropertiesAsync();
             Assert.AreEqual(1, paths.Count);
             Assert.AreEqual(fileClient.Name, paths[0].Name);
-            Assert.AreEqual(options.ExpiresOn, paths[0].ExpiresOn);
+
+            // the CreatedOn value returned by GetPaths() is more precise than GetProperties().
+            DateTimeOffset getPathsCreatedOnRounded = new DateTimeOffset(
+                paths[0].CreatedOn.Value.Year,
+                paths[0].CreatedOn.Value.Month,
+                paths[0].CreatedOn.Value.Day,
+                paths[0].CreatedOn.Value.Hour,
+                paths[0].CreatedOn.Value.Minute,
+                paths[0].CreatedOn.Value.Second,
+                TimeSpan.Zero);
+            Assert.AreEqual(pathPropertiesResponse.Value.CreatedOn, getPathsCreatedOnRounded);
+
+            Assert.AreEqual(pathPropertiesResponse.Value.ExpiresOn, paths[0].ExpiresOn);
         }
 
         [RecordedTest]

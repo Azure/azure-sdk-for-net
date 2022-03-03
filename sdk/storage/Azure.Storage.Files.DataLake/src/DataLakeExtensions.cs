@@ -576,10 +576,10 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = path.Permissions,
                 CreatedOn = path.CreationTime == null
                     ? null
-                    : DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(path.CreationTime, CultureInfo.InvariantCulture))
+                    : DateTimeOffset.FromFileTime(long.Parse(path.CreationTime, CultureInfo.InvariantCulture)).ToUniversalTime(),
                 ExpiresOn = path.ExpiryTime == null
                     ? null
-                    : DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(path.ExpiryTime, CultureInfo.InvariantCulture))
+                    : DateTimeOffset.FromFileTime(long.Parse(path.ExpiryTime, CultureInfo.InvariantCulture)).ToUniversalTime()
             };
         }
 
