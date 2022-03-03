@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Core
         /// <returns> An object representing collection of PolicyAssignments and their operations over a PolicyAssignment. </returns>
         public virtual PolicyAssignmentCollection GetPolicyAssignments()
         {
-            return new PolicyAssignmentCollection(Client, this.Id);
+            return new PolicyAssignmentCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of PolicyExemptions in the PolicyExemption. </summary>
         /// <returns> An object representing collection of PolicyExemptions and their operations over a PolicyExemption. </returns>
         public virtual PolicyExemptionCollection GetPolicyExemptions()
         {
-            return new PolicyExemptionCollection(Client, this.Id);
+            return new PolicyExemptionCollection(Client, Id);
         }
 
         /// <summary> Gets a collection of ManagementLocks in the ManagementLock. </summary>
         /// <returns> An object representing collection of ManagementLocks and their operations over a ManagementLock. </returns>
         public virtual ManagementLockCollection GetManagementLocks()
         {
-            return new ManagementLockCollection(Client, this.Id);
+            return new ManagementLockCollection(Client, Id);
         }
     }
 }
