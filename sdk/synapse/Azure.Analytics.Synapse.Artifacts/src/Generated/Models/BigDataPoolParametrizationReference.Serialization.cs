@@ -12,8 +12,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(SynapseNotebookReferenceConverter))]
-    public partial class SynapseNotebookReference : IUtf8JsonSerializable
+    [JsonConverter(typeof(BigDataPoolParametrizationReferenceConverter))]
+    public partial class BigDataPoolParametrizationReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,15 +25,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseNotebookReference DeserializeSynapseNotebookReference(JsonElement element)
+        internal static BigDataPoolParametrizationReference DeserializeBigDataPoolParametrizationReference(JsonElement element)
         {
-            NotebookReferenceType type = default;
+            BigDataPoolReferenceType type = default;
             object referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new NotebookReferenceType(property.Value.GetString());
+                    type = new BigDataPoolReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -42,19 +42,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SynapseNotebookReference(type, referenceName);
+            return new BigDataPoolParametrizationReference(type, referenceName);
         }
 
-        internal partial class SynapseNotebookReferenceConverter : JsonConverter<SynapseNotebookReference>
+        internal partial class BigDataPoolParametrizationReferenceConverter : JsonConverter<BigDataPoolParametrizationReference>
         {
-            public override void Write(Utf8JsonWriter writer, SynapseNotebookReference model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, BigDataPoolParametrizationReference model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override SynapseNotebookReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override BigDataPoolParametrizationReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSynapseNotebookReference(document.RootElement);
+                return DeserializeBigDataPoolParametrizationReference(document.RootElement);
             }
         }
     }
