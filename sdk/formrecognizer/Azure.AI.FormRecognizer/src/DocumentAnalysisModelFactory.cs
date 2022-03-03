@@ -512,7 +512,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind kind = default, int rowIndex = default, int columnIndex = default, int rowSpan = default, int columnSpan = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
