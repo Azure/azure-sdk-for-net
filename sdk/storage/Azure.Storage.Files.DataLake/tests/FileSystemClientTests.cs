@@ -820,6 +820,26 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetPathsAsync_ExpiryTime()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient fileClient = InstrumentClient(test.Container.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync();
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn: Recording.UtcNow.AddDays(1));
+            //await fileClient.ScheduleDeletionAsync(options);
+
+            // Act
+            IList<PathItem> paths = await test.Container.GetPathsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, paths.Count);
+            Assert.AreEqual(fileClient.Name, paths[0].Name);
+            Assert.AreEqual(options.ExpiresOn, paths[0].ExpiresOn);
+        }
+
+        [RecordedTest]
         public async Task GetPathsAsync_Error()
         {
             // Arrange

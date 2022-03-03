@@ -573,7 +573,13 @@ namespace Azure.Storage.Files.DataLake
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
-                Permissions = path.Permissions
+                Permissions = path.Permissions,
+                CreatedOn = path.CreationTime == null
+                    ? null
+                    : DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(path.CreationTime, CultureInfo.InvariantCulture))
+                ExpiresOn = path.ExpiryTime == null
+                    ? null
+                    : DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(path.ExpiryTime, CultureInfo.InvariantCulture))
             };
         }
 
