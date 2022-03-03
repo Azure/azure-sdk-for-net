@@ -8,18 +8,18 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    public class TestLroOperation : Operation<TestResource>, IOperationSource<TestResource>
+    public class TestResourceOperationOrResponseOfT : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;
         private OperationOrResponseInternals<TestResource> _operationHelper;
         private int _delaySteps = 0;
 
-        protected TestLroOperation()
+        protected TestResourceOperationOrResponseOfT()
         {
         }
 
-        public TestLroOperation(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
+        public TestResourceOperationOrResponseOfT(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
@@ -37,9 +37,28 @@ namespace Azure.Core.Tests
 
         public override Response GetRawResponse() => _operationHelper.GetRawResponse();
 
+        public override Response<TestResource> WaitForCompletion(CancellationToken cancellationToken = default)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return _operationHelper.WaitForCompletion(cancellationToken);
+        }
+
+        public override Response<TestResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return _operationHelper.WaitForCompletion(pollingInterval, cancellationToken);
+        }
+
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return await WaitForCompletionAsync(TimeSpan.FromSeconds(1), cancellationToken);
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return await _operationHelper.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
@@ -47,11 +66,7 @@ namespace Azure.Core.Tests
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            for (int i = 0; i < _delaySteps; i++)
-            {
-                await Task.Delay(pollingInterval);
-            }
-            return Response.FromValue(_value, new MockResponse(200));
+            return await _operationHelper.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatusAsync(cancellationToken);

@@ -24,7 +24,7 @@ namespace Azure.Core
         /// comes from the initial response of an LRO operation.
         /// </summary>
         /// <param name="fallbackStrategy"> Fallback strategy if retry after is not present. </param>
-        public RetryAfterDelayStrategy(DelayStrategy? fallbackStrategy)
+        public RetryAfterDelayStrategy(DelayStrategy? fallbackStrategy = null)
         {
             _fallbackStrategy = fallbackStrategy ?? new ConstantDelayStrategy();
         }
