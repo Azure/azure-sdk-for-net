@@ -25,6 +25,18 @@ namespace Azure.ResourceManager.AppConfiguration
         }
         #endregion
 
+        #region DeletedConfigurationStore
+        /// <summary> Gets an object representing a DeletedConfigurationStore along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedConfigurationStore" /> object. </returns>
+        public static DeletedConfigurationStore GetDeletedConfigurationStore(this ArmClient armClient, ResourceIdentifier id)
+        {
+            DeletedConfigurationStore.ValidateResourceId(id);
+            return new DeletedConfigurationStore(armClient, id);
+        }
+        #endregion
+
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -46,6 +58,18 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             PrivateLinkResource.ValidateResourceId(id);
             return new PrivateLinkResource(armClient, id);
+        }
+        #endregion
+
+        #region KeyValue
+        /// <summary> Gets an object representing a KeyValue along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KeyValue" /> object. </returns>
+        public static KeyValue GetKeyValue(this ArmClient armClient, ResourceIdentifier id)
+        {
+            KeyValue.ValidateResourceId(id);
+            return new KeyValue(armClient, id);
         }
         #endregion
     }

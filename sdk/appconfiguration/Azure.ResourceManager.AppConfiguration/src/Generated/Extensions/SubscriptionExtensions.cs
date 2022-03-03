@@ -16,6 +16,16 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
+        #region DeletedConfigurationStore
+        /// <summary> Gets an object representing a DeletedConfigurationStoreCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="DeletedConfigurationStoreCollection" /> object. </returns>
+        public static DeletedConfigurationStoreCollection GetDeletedConfigurationStores(this Subscription subscription)
+        {
+            return new DeletedConfigurationStoreCollection(subscription);
+        }
+        #endregion
+
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
             return subscription.GetCachedClient((armClient) =>
@@ -41,6 +51,22 @@ namespace Azure.ResourceManager.AppConfiguration
         public static Pageable<ConfigurationStore> GetConfigurationStores(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetConfigurationStores(skipToken, cancellationToken);
+        }
+
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedConfigurationStore> GetDeletedConfigurationStoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDeletedConfigurationStoresAsync(cancellationToken);
+        }
+
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedConfigurationStore> GetDeletedConfigurationStores(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDeletedConfigurationStores(cancellationToken);
         }
 
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>

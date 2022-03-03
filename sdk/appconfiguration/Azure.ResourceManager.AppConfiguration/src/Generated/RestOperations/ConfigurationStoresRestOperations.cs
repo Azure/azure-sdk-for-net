@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public ConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-06-01";
+            this.apiVersion = apiVersion ?? "2021-10-01-preview";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
             uri.AppendPath(configStoreName, true);
-            uri.AppendPath("/ListKeys", false);
+            uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (skipToken != null)
             {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -707,13 +707,13 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
             uri.AppendPath(configStoreName, true);
-            uri.AppendPath("/RegenerateKey", false);
+            uri.AppendPath("/regenerateKey", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerateKeyOptions);
+            content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -723,10 +723,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
+        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyOptions"/> is null. </exception>
-        public async Task<Response<ApiKey>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
+        public async Task<Response<ApiKey>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -740,12 +740,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (regenerateKeyOptions == null)
+            if (regenerateKeyParameters == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyOptions));
+                throw new ArgumentNullException(nameof(regenerateKeyParameters));
             }
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, configStoreName, regenerateKeyOptions);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, configStoreName, regenerateKeyParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -765,10 +765,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
+        /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyOptions"/> is null. </exception>
-        public Response<ApiKey> RegenerateKey(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="regenerateKeyParameters"/> is null. </exception>
+        public Response<ApiKey> RegenerateKey(string subscriptionId, string resourceGroupName, string configStoreName, RegenerateKeyOptions regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -782,12 +782,12 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (regenerateKeyOptions == null)
+            if (regenerateKeyParameters == null)
             {
-                throw new ArgumentNullException(nameof(regenerateKeyOptions));
+                throw new ArgumentNullException(nameof(regenerateKeyParameters));
             }
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, configStoreName, regenerateKeyOptions);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, configStoreName, regenerateKeyParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -803,7 +803,176 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        internal HttpMessage CreateListKeyValueRequest(string subscriptionId, string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions)
+        internal HttpMessage CreateListDeletedRequest(string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/deletedConfigurationStores", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("SDKUserAgent", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeletedConfigurationStoreListResult>> ListDeletedAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedRequest(subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeletedConfigurationStoreListResult> ListDeleted(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedRequest(subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDeletedRequest(string subscriptionId, string location, string configStoreName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/deletedConfigurationStores/", false);
+            uri.AppendPath(configStoreName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("SDKUserAgent", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets a deleted Azure app configuration store. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="configStoreName"/> is null. </exception>
+        public async Task<Response<DeletedConfigurationStoreData>> GetDeletedAsync(string subscriptionId, string location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var message = CreateGetDeletedRequest(subscriptionId, location, configStoreName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DeletedConfigurationStoreData.DeserializeDeletedConfigurationStoreData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DeletedConfigurationStoreData)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets a deleted Azure app configuration store. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="configStoreName"/> is null. </exception>
+        public Response<DeletedConfigurationStoreData> GetDeleted(string subscriptionId, string location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (configStoreName == null)
+            {
+                throw new ArgumentNullException(nameof(configStoreName));
+            }
+
+            using var message = CreateGetDeletedRequest(subscriptionId, location, configStoreName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DeletedConfigurationStoreData.DeserializeDeletedConfigurationStoreData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DeletedConfigurationStoreData)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePurgeDeletedRequest(string subscriptionId, string location, string configStoreName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -812,101 +981,81 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/deletedConfigurationStores/", false);
             uri.AppendPath(configStoreName, true);
-            uri.AppendPath("/listKeyValue", false);
+            uri.AppendPath("/purge", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(listKeyValueOptions);
-            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
-        /// <summary> Lists a configuration store key-value. </summary>
+        /// <summary> Permanently deletes the specified configuration store. </summary>
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueOptions"/> is null. </exception>
-        public async Task<Response<KeyValue>> ListKeyValueAsync(string subscriptionId, string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="configStoreName"/> is null. </exception>
+        public async Task<Response> PurgeDeletedAsync(string subscriptionId, string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            if (resourceGroupName == null)
+            if (location == null)
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentNullException(nameof(location));
             }
             if (configStoreName == null)
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (listKeyValueOptions == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueOptions));
-            }
 
-            using var message = CreateListKeyValueRequest(subscriptionId, resourceGroupName, configStoreName, listKeyValueOptions);
+            using var message = CreatePurgeDeletedRequest(subscriptionId, location, configStoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        KeyValue value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Lists a configuration store key-value. </summary>
+        /// <summary> Permanently deletes the specified configuration store. </summary>
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="listKeyValueOptions"/> is null. </exception>
-        public Response<KeyValue> ListKeyValue(string subscriptionId, string resourceGroupName, string configStoreName, ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="configStoreName"/> is null. </exception>
+        public Response PurgeDeleted(string subscriptionId, string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            if (resourceGroupName == null)
+            if (location == null)
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentNullException(nameof(location));
             }
             if (configStoreName == null)
             {
                 throw new ArgumentNullException(nameof(configStoreName));
             }
-            if (listKeyValueOptions == null)
-            {
-                throw new ArgumentNullException(nameof(listKeyValueOptions));
-            }
 
-            using var message = CreateListKeyValueRequest(subscriptionId, resourceGroupName, configStoreName, listKeyValueOptions);
+            using var message = CreatePurgeDeletedRequest(subscriptionId, location, configStoreName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        KeyValue value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValue.DeserializeKeyValue(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1175,6 +1324,84 @@ namespace Azure.ResourceManager.AppConfiguration
                         ApiKeyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ApiKeyListResult.DeserializeApiKeyListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListDeletedNextPageRequest(string nextLink, string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("SDKUserAgent", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeletedConfigurationStoreListResult>> ListDeletedNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeletedConfigurationStoreListResult> ListDeletedNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedConfigurationStoreListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DeletedConfigurationStoreListResult.DeserializeDeletedConfigurationStoreListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
