@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     public partial class ServiceBusSessionMessageActions : Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions
     {
         protected ServiceBusSessionMessageActions() { }
-        public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
+        public virtual System.DateTimeOffset SessionLockedUntil { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual void ReleaseSession() { }
         public virtual System.Threading.Tasks.Task RenewSessionLockAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
