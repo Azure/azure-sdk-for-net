@@ -371,7 +371,7 @@ function Confirm-LikeForRelease {
     }
     if ($RecommendedSectionHeaders -contains $key)
     {
-      $foundRecomendedSection = $true
+      $foundRecommendedSection = $true
     }
   }
   if ($emptySections.Count -gt 0)
