@@ -40,11 +40,7 @@ namespace Microsoft.Azure.Management.StorageSync
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "56cf5d41fd670c6c13a13ba761fb93a26b374c59";
-      public static readonly String CodeGenerationErrors = "npm notice 
-npm notice New minor version of npm available! 8.3.0 -> 8.5.2
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.5.2>
-npm notice Run `npm install -g npm@8.5.2` to update!
-npm notice"
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
