@@ -47,7 +47,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletion(lro as Operation<Object>, (CancellationToken)invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
                 }
                 return;
             }

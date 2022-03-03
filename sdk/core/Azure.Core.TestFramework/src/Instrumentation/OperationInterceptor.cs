@@ -16,6 +16,9 @@ namespace Azure.Core.TestFramework
         internal static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
         internal static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[] { typeof(TimeSpan), typeof(CancellationToken) });
 
+        // ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
+        internal static readonly string PollerWaitForCompletionAsyncName = nameof(OperationPoller.WaitForCompletionAsync);
+
         private readonly bool _noWait;
 
         public OperationInterceptor(bool noWait)
@@ -30,16 +33,14 @@ namespace Azure.Core.TestFramework
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
                     CheckArguments(invocation.Arguments);
-                    Operation<object> operation = invocation.InvocationTarget as Operation<object>;
-                    invocation.ReturnValue = GetZeroPoller(operation).WaitForCompletionAsync(operation, null, default);
+                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, default);
                     return;
                 }
 
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
                     CheckArguments(invocation.Arguments);
-                    Operation operation = invocation.InvocationTarget as Operation;
-                    invocation.ReturnValue = GetZeroPoller(operation).WaitForCompletionResponseAsync(operation, null, default);
+                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget as Operation, default);
                     return;
                 }
             }
@@ -49,12 +50,17 @@ namespace Azure.Core.TestFramework
 
         internal static object InvokeWaitForCompletionResponse(Operation operation, CancellationToken cancellationToken)
         {
-            return GetZeroPoller(operation).WaitForCompletionResponseAsync(operation, null, (CancellationToken)cancellationToken);
+            return GetZeroPoller().WaitForCompletionResponseAsync(operation, null, (CancellationToken)cancellationToken);
         }
 
-        internal static object InvokeWaitForCompletion(Operation<object> operation, CancellationToken cancellationToken)
+        internal static object InvokeWaitForCompletion(object target, Type targetType, CancellationToken cancellationToken)
         {
-            return GetZeroPoller(operation).WaitForCompletionAsync(operation, null, (CancellationToken)cancellationToken);
+            // get the concrete instance of OperationPoller.ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
+            var poller = GetZeroPoller();
+            var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 3);
+            var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
+
+            return method.Invoke(GetZeroPoller(), new object[] { target, null, cancellationToken});
         }
 
         private void CheckArguments(object[] invocationArguments)
@@ -71,11 +77,20 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private static OperationPoller GetZeroPoller(object operation)
+        private static OperationPoller GetZeroPoller()
         {
             OperationPoller poller = new OperationPoller();
             poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(poller, new ZeroPollingStrategy());
             return poller;
+        }
+
+        private static Type GetOperationOfT(Type type)
+        {
+            while (type != null && type.Name != typeof(Operation<object>).Name)
+            {
+                type = type.BaseType;
+            }
+            return type;
         }
     }
 }
