@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Id = activity.Context.SpanId.ToHexString();
-            Name = TelemetryItem.GetOperationName(activity, ref monitorTags.MappedTags);
+            Name = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
             Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
             Success = activity.GetStatus().StatusCode != StatusCode.Error;
             ResponseCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";

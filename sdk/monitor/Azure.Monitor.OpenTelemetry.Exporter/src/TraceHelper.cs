@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -123,6 +124,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             monitorTags.ForEach(activity.TagObjects);
             return monitorTags;
+        }
+
+        internal static string GetLocationIp(ref AzMonList MappedTags)
+        {
+            var httpClientIp = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpClientIp))
+            {
+                return httpClientIp;
+            }
+
+            return AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
+        }
+
+        internal static string GetOperationName(Activity activity, ref AzMonList MappedTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from httpUrl.
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute.Contains("{controller}"))
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+                var httpUrl = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return $"{httpMethod} {uri.AbsolutePath}";
+                }
+            }
+
+            return activity.DisplayName;
         }
     }
 }
