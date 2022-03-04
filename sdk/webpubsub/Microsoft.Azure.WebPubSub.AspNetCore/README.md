@@ -11,7 +11,7 @@ This library can be used to do the following actions. Details about the terms us
 - API to add user defined functionality to handle different upstream events
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/src) |
-[Package](https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore) |
+[Package][package_ref] |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples][sample_ref] |
@@ -20,7 +20,7 @@ This library can be used to do the following actions. Details about the terms us
 
 ### Install the package
 
-Install the client library from [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore/):
+Install the client library from [NuGet][package_ref]
 
 ```PowerShell
 dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
@@ -33,7 +33,7 @@ dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
 
 ### Authenticate the client
 
-In order to interact with the service, you'll need to inject the Web PubSub service with valid credential. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal. Besides, if you want to invoke service REST API, you can call `AddWebPubSubServiceClient<THub>()` where `THub` is user implemented [`WebPubSubHub`](#webpubsubhub) listening to key events.
+In order to interact with the service, you'll need to inject the Web PubSub service with valid credential. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal. Besides, if you want to invoke service REST API, you can call `AddWebPubSubServiceClient<THub>()` where `THub` is user implemented [`WebPubSubHub`](#webpubsubhub) listening to important events.
 
 ### Inject Web PubSub service with options
 
@@ -76,7 +76,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 ### Handle Upstream event
 
 ```C# Snippet:WebPubSubConnectMethods
-public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest requesCancellationToken cancellationToken)
+public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest reques, CancellationToken cancellationToken)
 {
     var response = new ConnectEventResponse
     {
@@ -94,9 +94,7 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 
 ## Next steps
 
-Please take a look at the
-[samples][samples_ref]
-directory for detailed examples on how to use this library.
+Please take a look at the [Samples][sample_ref] directory for detailed examples on how to use this library.
 
 ## Contributing
 
@@ -115,3 +113,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples/
+[package_ref]: https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore/
