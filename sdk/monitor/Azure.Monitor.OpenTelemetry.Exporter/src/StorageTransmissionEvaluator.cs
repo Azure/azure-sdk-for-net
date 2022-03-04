@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private int _exportDurationIndex = -1;
         private int _exportIntervalIndex = -1;
         private long _prevExportTimeInMilliseconds;
-        private double _currentBatchExportDuration;
+        private double _currentBatchExportDurationInSeconds;
         private double _exportIntervalRunningSum;
         private double _exportDurationRunningSum;
         private bool _enoughSampleSize;
@@ -42,9 +42,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Adds current export duration in seconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void AddExportDurationToDataSample(double currentBatchExportDuration)
+        internal void AddExportDurationToDataSample(double currentBatchExportDurationInSeconds)
         {
-            _currentBatchExportDuration = currentBatchExportDuration;
+            _currentBatchExportDurationInSeconds = currentBatchExportDurationInSeconds;
 
             _exportDurationIndex++;
 
@@ -55,8 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             _exportDurationRunningSum -= _exportDurationsInSeconds[_exportDurationIndex];
-            _exportDurationsInSeconds[_exportDurationIndex] = currentBatchExportDuration;
-            _exportDurationRunningSum += currentBatchExportDuration;
+            _exportDurationsInSeconds[_exportDurationIndex] = currentBatchExportDurationInSeconds;
+            _exportDurationRunningSum += currentBatchExportDurationInSeconds;
         }
 
         /// <summary>
@@ -118,13 +118,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 double avgDurationPerExport = CalculateAverage(_exportDurationRunningSum, _sampleSize);
                 double avgExportInterval = CalculateAverage(_exportIntervalRunningSum, _sampleSize);
-                if (avgExportInterval > _currentBatchExportDuration)
+                if (avgExportInterval > _currentBatchExportDurationInSeconds)
                 {
                     // remove currentBatchExportDuration from avg ExportInterval first
                     // e.g. avg export interval is 10 secs and time it took to export current batch is 5 secs
                     // we have 5 secs left before we expect next batch
                     // so, we can transmit 1 file (if avg duration per export is 5 secs)
-                    totalFiles = (long)((avgExportInterval - _currentBatchExportDuration) / avgDurationPerExport);
+                    totalFiles = (long)((avgExportInterval - _currentBatchExportDurationInSeconds) / avgDurationPerExport);
                 }
             }
 

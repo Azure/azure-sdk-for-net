@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageTransmissionEvaluatorTests
     {
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Update the currentBatchExportDuration to a greater value
             // than avg export interval.
             typeof(StorageTransmissionEvaluator)
-                .GetField("_currentBatchExportDuration", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_currentBatchExportDurationInSeconds", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(storageTransmissionEvaluator, 10);
 
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
