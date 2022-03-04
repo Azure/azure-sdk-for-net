@@ -24,5 +24,12 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteObjectValue(DimensionFilter);
             writer.WriteEndObject();
         }
+
+        internal static RequestContent ToRequestContent(MetricFeedback model)
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            return content;
+        }
     }
 }

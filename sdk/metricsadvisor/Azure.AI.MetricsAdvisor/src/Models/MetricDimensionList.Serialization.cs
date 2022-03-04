@@ -42,5 +42,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new MetricDimensionList(nextLink.Value, Optional.ToList(value));
         }
+
+        internal static MetricDimensionList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricDimensionList(document.RootElement);
+        }
     }
 }

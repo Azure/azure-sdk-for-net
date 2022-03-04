@@ -170,6 +170,12 @@ namespace Azure.AI.MetricsAdvisor
             return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
         }
 
+        internal static MetricFeedback FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricFeedback(document.RootElement);
+        }
+
         private class UnknownMetricFeedback : MetricFeedback
         {
             public UnknownMetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter)

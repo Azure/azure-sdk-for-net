@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -50,63 +49,63 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2021-10-31T00:00:00.0000000Z");
 
-        //public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
-        //{
-        //    // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
-        //    if (useTokenCredential)
-        //    {
-        //        Assert.Ignore();
-        //    }
-
-        //    var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
-        //    var instrumentedOptions = GetInstrumentedOptions();
-
-        //    MetricsAdvisorAdministrationClient client = useTokenCredential
-        //        ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
-        //        : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
-
-        //    return InstrumentClient(client);
-        //}
-
-        //public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
-        //{
-        //    // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
-        //    if (useTokenCredential)
-        //    {
-        //        Assert.Ignore();
-        //    }
-
-        //    var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
-        //    var instrumentedOptions = GetInstrumentedOptions();
-
-        //    MetricsAdvisorClient client = useTokenCredential
-        //        ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
-        //        : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
-
-        //    return InstrumentClient(client);
-        //}
-
-        //protected async Task<DisposableDataFeed> CreateTempDataFeedAsync(MetricsAdvisorAdministrationClient adminClient)
-        //{
-        //    var dataFeed = new DataFeed()
-        //    {
-        //        Name = Recording.GenerateAlphaNumericId("dataFeed"),
-        //        DataSource = new SqlServerDataFeedSource("connString", "query"),
-        //        Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-        //        Schema = new DataFeedSchema()
-        //        {
-        //            MetricColumns = { new DataFeedMetric(TempDataFeedMetricName) },
-        //            DimensionColumns = { new DataFeedDimension(TempDataFeedDimensionNameA), new DataFeedDimension(TempDataFeedDimensionNameB) }
-        //        },
-        //        IngestionSettings = new DataFeedIngestionSettings(SamplingStartTime)
-        //    };
-
-        //    return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
-        //}
-
-        private MetricsAdvisorClientsOptions GetInstrumentedOptions()
+        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
-            var options = new MetricsAdvisorClientsOptions();
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorAdministrationClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
+        }
+
+        public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
+        {
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
+        }
+
+        protected async Task<DisposableDataFeed> CreateTempDataFeedAsync(MetricsAdvisorAdministrationClient adminClient)
+        {
+            var dataFeed = new DataFeed()
+            {
+                Name = Recording.GenerateAlphaNumericId("dataFeed"),
+                DataSource = new SqlServerDataFeedSource("connString", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema()
+                {
+                    MetricColumns = { new DataFeedMetric(TempDataFeedMetricName) },
+                    DimensionColumns = { new DataFeedDimension(TempDataFeedDimensionNameA), new DataFeedDimension(TempDataFeedDimensionNameB) }
+                },
+                IngestionSettings = new DataFeedIngestionSettings(SamplingStartTime)
+            };
+
+            return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
+        }
+
+        private MetricsAdvisorClientOptions GetInstrumentedOptions()
+        {
+            var options = new MetricsAdvisorClientOptions();
 
             options.Retry.MaxRetries = 6;
 

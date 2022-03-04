@@ -24,5 +24,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             writer.WriteEndObject();
         }
+
+        internal static RequestContent ToRequestContent(MetricDimensionQueryOptions model)
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            return content;
+        }
     }
 }

@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -41,12 +38,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
+        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientsOptions();
+            options ??= new MetricsAdvisorClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
@@ -153,8 +150,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                AsyncPageable<BinaryData> bindaryDataFeeds = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-                return PageableHelpers.Select(bindaryDataFeeds, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+                AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)
             {
@@ -192,8 +189,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                Pageable<BinaryData> bindaryDataFeeds = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-                return PageableHelpers.Select(bindaryDataFeeds, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+                Pageable<BinaryData> pageableBindaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)
             {
@@ -293,6 +290,92 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 {
                     throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
                 }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
+        /// </summary>
+        /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual async Task<Response<DataFeed>> UpdateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+            if (dataFeed.Id == null)
+            {
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeedAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+                RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                Response response = await UpdateDataFeedAsync(dataFeedGuid, content, context).ConfigureAwait(false);
+                DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+                return Response.FromValue(new DataFeed(dataFeedDetail), response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
+        /// </summary>
+        /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual Response<DataFeed> UpdateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+            if (dataFeed.Id == null)
+            {
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeed)} and update the returned model before calling this method.");
+            }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
+            scope.Start();
+            try
+            {
+                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+                RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                Response response = UpdateDataFeed(dataFeedGuid, content, context);
+                DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+                return Response.FromValue(new DataFeed(dataFeedDetail), response);
             }
             catch (Exception ex)
             {

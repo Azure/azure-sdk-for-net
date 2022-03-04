@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = credential ?? new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
-            var options = new MetricsAdvisorClientsOptions() { Transport = transport };
+            var options = new MetricsAdvisorClientOptions() { Transport = transport };
 
             return InstrumentClient(new MetricsAdvisorClient(fakeEndpoint, fakeCredential, options));
         }
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = credential ?? new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
-            var options = new MetricsAdvisorClientsOptions() { Transport = transport };
+            var options = new MetricsAdvisorClientOptions() { Transport = transport };
 
             return InstrumentClient(new MetricsAdvisorAdministrationClient(fakeEndpoint, fakeCredential, options));
         }
