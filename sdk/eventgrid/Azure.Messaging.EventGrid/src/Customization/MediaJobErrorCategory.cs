@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary>
-    /// Helps with categorization of errors. If you get an enum with a value of Max Int32, that means the service has returned a new category, and you
+    /// Helps with categorization of errors. If you get an enum with a value of <see cref="int.MaxValue"/>, that means the service has returned a new category, and you
     /// should upgrade to the latest SDK.
     /// </summary>
     [CodeGenModel("MediaJobErrorCategory")]
