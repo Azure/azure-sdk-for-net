@@ -16,7 +16,6 @@ namespace Azure.Core.TestFramework
         internal static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
         internal static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[] { typeof(TimeSpan), typeof(CancellationToken) });
 
-        // ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
         internal static readonly string PollerWaitForCompletionAsyncName = nameof(OperationPoller.WaitForCompletionAsync);
 
         private readonly bool _noWait;
@@ -50,17 +49,17 @@ namespace Azure.Core.TestFramework
 
         internal static object InvokeWaitForCompletionResponse(Operation operation, CancellationToken cancellationToken)
         {
-            return GetZeroPoller().WaitForCompletionResponseAsync(operation, null, cancellationToken);
+            return InjectZeroPoller().WaitForCompletionResponseAsync(operation, null, cancellationToken);
         }
 
         internal static object InvokeWaitForCompletion(object target, Type targetType, CancellationToken cancellationToken)
         {
             // get the concrete instance of OperationPoller.ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
-            var poller = GetZeroPoller();
+            var poller = InjectZeroPoller();
             var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 3);
             var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
 
-            return method.Invoke(GetZeroPoller(), new object[] { target, null, cancellationToken});
+            return method.Invoke(InjectZeroPoller(), new object[] { target, null, cancellationToken});
         }
 
         private void CheckArguments(object[] invocationArguments)
@@ -77,7 +76,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private static OperationPoller GetZeroPoller()
+        private static OperationPoller InjectZeroPoller()
         {
             OperationPoller poller = new OperationPoller();
             poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(poller, new ZeroPollingStrategy());
