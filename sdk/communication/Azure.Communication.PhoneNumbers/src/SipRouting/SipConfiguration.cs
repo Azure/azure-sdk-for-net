@@ -10,41 +10,25 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     [CodeGenSuppress("SipConfiguration")]
-    public partial class SipConfiguration
+    internal partial class SipConfiguration
     {
         /// <summary>
         /// SIP trunks for routing calls.
         /// Map key is trunk&apos;s FQDN (1-249 characters).
         /// </summary>
-        public IReadOnlyDictionary<string, SipTrunk> Trunks { get; }
+        internal IReadOnlyDictionary<string, SipTrunk> Trunks { get; }
 
         /// <summary> Trunk routes for routing calls. </summary>
-        public IReadOnlyList<SipTrunkRoute> Routes { get; }
+        internal IReadOnlyList<SipTrunkRoute> Routes { get; }
 
-        /// <summary> Initializes a new instance of SipConfiguration. </summary>
-        /// <param name="trunks"> SIP trunks for routing calls. Map key is trunk&apos;s FQDN (1-249 characters). </param>
-        /// <param name="routes"> Trunk routes for routing calls. </param>
-        public SipConfiguration(IEnumerable<SipTrunk> trunks, IEnumerable<SipTrunkRoute> routes)
+        internal SipConfiguration(IDictionary<string, SipTrunk> trunks)
         {
-            var trunkDictionary = new Dictionary<string, SipTrunk>();
-
-            foreach (var trunk in trunks)
-            {
-                trunkDictionary.Add(trunk.Fqdn, trunk);
-            }
-
-            Trunks = new ReadOnlyDictionary<string, SipTrunk>(trunkDictionary);
-            Routes = routes.ToList().AsReadOnly();
-        }
-
-        internal SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks)
-        {
-            Trunks = trunks;
+            Trunks = new ReadOnlyDictionary<string, SipTrunk>(trunks);
         }
 
         internal SipConfiguration(IEnumerable<SipTrunkRoute> routes)
         {
-            Routes = routes.ToList();
+            Routes = routes.ToList().AsReadOnly();
         }
 
         // <summary> Initializes a new instance of SipConfiguration. </summary>

@@ -25,4 +25,8 @@
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />
     <None Include="..\samples\Sample_PhoneNumbersClientAsync.md" Link="samples\Sample_PhoneNumbersClientAsync.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\SipRoutingClientLiveTests\" />
+    <Folder Include="SipRouting\samples\" />
+  </ItemGroup>
 </Project>

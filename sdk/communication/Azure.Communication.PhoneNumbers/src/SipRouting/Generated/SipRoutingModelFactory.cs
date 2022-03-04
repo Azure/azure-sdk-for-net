@@ -12,21 +12,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class SipRoutingModelFactory
     {
-        /// <summary> Initializes new instance of SipConfiguration class. </summary>
-        /// <param name="trunks">
-        /// SIP trunks for routing calls.
-        /// 
-        /// Map key is trunk&apos;s FQDN (1-249 characters).
-        /// </param>
-        /// <param name="routes"> Trunk routes for routing calls. </param>
-        /// <returns> A new <see cref="SipRouting.SipConfiguration"/> instance for mocking. </returns>
-        public static SipConfiguration SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks = default, IReadOnlyList<SipTrunkRoute> routes = default)
-        {
-            trunks ??= new Dictionary<string, SipTrunk>();
-            routes ??= new List<SipTrunkRoute>();
-            return new SipConfiguration(trunks, routes);
-        }
-
         /// <summary> Initializes new instance of SipTrunkRoute class. </summary>
         /// <param name="description"> Gets or sets description of the route. </param>
         /// <param name="name"> Gets or sets name of the route. </param>

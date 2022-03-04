@@ -11,11 +11,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     public partial class SipTrunk
     {
         /// <summary> Initializes a new instance of SipTrunk. </summary>
-        /// <param name="name">Name of the trunk</param>
+        /// <param name="fqdn">Name of the trunk</param>
         /// <param name="sipSignalingPort"> Gets or sets SIP signaling port for the gateway. </param>
-        public SipTrunk(string name, int? sipSignalingPort)
+        public SipTrunk(string fqdn, int? sipSignalingPort)
         {
-            Fqdn = name;
+            Fqdn = fqdn;
             SipSignalingPort = sipSignalingPort;
         }
 

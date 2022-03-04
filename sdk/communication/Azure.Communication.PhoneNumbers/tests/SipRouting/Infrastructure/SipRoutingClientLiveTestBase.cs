@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
-        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
+        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
             => Sanitizer = new SipRoutingClientRecordedTestSanitizer();
 
         public bool IncludeSipRoutingLiveTests

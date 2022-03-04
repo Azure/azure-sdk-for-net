@@ -10,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
     internal static class TestData
     {
         public static readonly List<string> Fqdns = new List<string>(){ "sbs1.sipconfigtest.com", "sbs2.sipconfigtest.com" };
-        public static readonly SipTrunk[] TrunkPorts = { new SipTrunk(1122), new SipTrunk(1123) };
+        public static readonly int[] TrunkPorts = { 1122, 1123 };
 
         public static readonly SipTrunkRoute RuleNavigateToTrunk1 = new SipTrunkRoute(
             name: "First rule",
@@ -24,10 +24,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
             numberPattern: @"\+[1-9][0-9]{3,23}",
             trunks: Fqdns);
 
-        public static readonly Dictionary<string, SipTrunk> TrunkDictionary = new Dictionary<string, SipTrunk>()
+        public static readonly List<SipTrunk> TrunkList = new List<SipTrunk>
         {
-            { Fqdns[0], TrunkPorts[0]},
-            { Fqdns[1], TrunkPorts[0]}
+            new SipTrunk(Fqdns[0], TrunkPorts[0]),
+            new SipTrunk(Fqdns[1], TrunkPorts[1])
         };
+
+        public static readonly SipTrunk NewTrunk = new SipTrunk("newsbs.sipconfigtest.com", 3333);
     }
 }

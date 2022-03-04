@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    public partial class SipConfiguration : IUtf8JsonSerializable
+    internal partial class SipConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

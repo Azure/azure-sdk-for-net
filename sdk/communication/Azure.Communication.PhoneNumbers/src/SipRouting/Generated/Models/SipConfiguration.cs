@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// 
     /// Call is then directed into route&apos;s first available trunk, based on the order in the route&apos;s trunks list.
     /// </summary>
-    public partial class SipConfiguration
+    internal partial class SipConfiguration
     {
 
         /// <summary> Initializes a new instance of SipConfiguration. </summary>
