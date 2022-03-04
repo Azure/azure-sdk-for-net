@@ -305,10 +305,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task RequestContextNull_IsError()
+        [TestCase(100, true)]
+        [TestCase(200, false)]
+        [TestCase(201, true)]
+        [TestCase(202, true)]
+        [TestCase(204, false)]
+        [TestCase(300, true)]
+        [TestCase(304, false)]
+        [TestCase(400, true)]
+        [TestCase(404, true)]
+        [TestCase(500, true)]
+        [TestCase(504, true)]
+        public async Task RequestContextDefault_IsErrorIsSet(int code, bool isError)
         {
             var mockTransport = new MockTransport(
-                new MockResponse(404));
+                new MockResponse(code));
 
             var pipeline = new HttpPipeline(mockTransport, default);
 
@@ -320,7 +331,7 @@ namespace Azure.Core.Tests
             await pipeline.SendAsync(message, CancellationToken.None);
             Response response = message.Response;
 
-            Assert.IsFalse(response.IsError);
+            Assert.AreEqual(isError, response.IsError);
         }
 
         #region Helpers
