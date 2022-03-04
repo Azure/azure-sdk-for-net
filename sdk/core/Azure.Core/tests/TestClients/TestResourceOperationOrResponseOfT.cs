@@ -39,39 +39,39 @@ namespace Azure.Core.Tests
 
         public override Response<TestResource> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
             return _operationHelper.WaitForCompletion(cancellationToken);
         }
 
         public override Response<TestResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
             return _operationHelper.WaitForCompletion(pollingInterval, cancellationToken);
         }
 
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
             return await _operationHelper.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
             return await _operationHelper.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatusAsync(cancellationToken);
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
 
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatus(cancellationToken);
+            return _operationHelper.UpdateStatusAsync(cancellationToken);
+        }
+
+        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return _operationHelper.UpdateStatus(cancellationToken);
+        }
 
         public TestResource CreateResult(Response response, CancellationToken cancellationToken)
         {
