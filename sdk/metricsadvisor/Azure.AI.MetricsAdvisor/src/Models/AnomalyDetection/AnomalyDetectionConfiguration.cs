@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <remarks>
     /// In order to create an anomaly detection configuration, you must set up at least the properties <see cref="Name"/>,
     /// <see cref="MetricId"/>, and <see cref="WholeSeriesDetectionConditions"/>, and pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDetectionConfigurationAsync"/>. Note that a detection configuration
+    /// MetricsAdvisorAdministrationClient.CreateDetectionConfigurationAsync"/>. Note that a detection configuration
     /// only detects anomalies, and is not responsible for triggering alerts. If you want alerts to be triggered, you need to
     /// create an <see cref="AnomalyAlertConfiguration"/>.
     /// </remarks>

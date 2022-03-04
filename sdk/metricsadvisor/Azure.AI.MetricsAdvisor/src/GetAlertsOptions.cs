@@ -7,8 +7,8 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAlerts"/> or
-    /// <see cref="MetricsAdvisorClient.GetAlertsAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling MetricsAdvisorClient.GetAlerts or
+    /// MetricsAdvisorClient.GetAlertsAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetAlertsOptions
     {

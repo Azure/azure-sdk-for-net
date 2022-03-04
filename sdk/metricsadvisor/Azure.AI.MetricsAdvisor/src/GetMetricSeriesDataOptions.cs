@@ -9,8 +9,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetMetricSeriesData"/>
-    /// or <see cref="MetricsAdvisorClient.GetMetricSeriesDataAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorClient.GetMetricSeriesData"/>
+    /// or "MetricsAdvisorClient.GetMetricSeriesDataAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetMetricSeriesDataOptions
     {

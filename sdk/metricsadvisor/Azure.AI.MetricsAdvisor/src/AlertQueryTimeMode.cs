@@ -8,7 +8,7 @@ namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
     /// Specifies which time property of an <see cref="AnomalyAlert"/> will be used to filter results
-    /// in the <see cref="MetricsAdvisorClient.GetAlerts"/> and the <see cref="MetricsAdvisorClient.GetAlertsAsync"/>
+    /// in the "MetricsAdvisorClient.GetAlerts" and the "MetricsAdvisorClient.GetAlertsAsync"/>
     /// operations.
     /// </summary>
     [CodeGenModel("TimeMode")]

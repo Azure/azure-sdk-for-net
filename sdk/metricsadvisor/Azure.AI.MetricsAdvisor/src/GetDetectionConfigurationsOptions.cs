@@ -4,8 +4,8 @@
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDetectionConfigurations"/>
-    /// or <see cref="MetricsAdvisorAdministrationClient.GetDetectionConfigurationsAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorAdministrationClient.GetDetectionConfigurations"/>
+    /// or "MetricsAdvisorAdministrationClient.GetDetectionConfigurationsAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetDetectionConfigurationsOptions
     {

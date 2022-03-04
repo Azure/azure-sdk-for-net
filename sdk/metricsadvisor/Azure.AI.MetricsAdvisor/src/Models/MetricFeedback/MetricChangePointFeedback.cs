@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     /// <remarks>
     /// In order to create change point feedback, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// "MetricsAdvisorClient.AddFeedbackAsync"/>.
     /// </remarks>
     [CodeGenModel("ChangePointFeedback")]
     [CodeGenSuppress(nameof(MetricChangePointFeedback), typeof(string), typeof(FeedbackFilter))]

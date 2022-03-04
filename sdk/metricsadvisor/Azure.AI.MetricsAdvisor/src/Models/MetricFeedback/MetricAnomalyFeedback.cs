@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     /// <remarks>
     /// In order to create anomaly feedback, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// MetricsAdvisorClient.AddFeedbackAsync"/>.
     /// </remarks>
     [CodeGenModel("AnomalyFeedback")]
     [CodeGenSuppress(nameof(MetricAnomalyFeedback), typeof(string), typeof(FeedbackFilter))]

@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     /// <remarks>
     /// In order to create comment feedback, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// "MetricsAdvisorClient.AddFeedbackAsync"/>.
     /// </remarks>
     [CodeGenModel("CommentFeedback")]
     [CodeGenSuppress(nameof(MetricCommentFeedback), typeof(string), typeof(FeedbackFilter))]

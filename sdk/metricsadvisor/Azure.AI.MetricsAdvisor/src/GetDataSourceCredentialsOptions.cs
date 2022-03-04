@@ -4,8 +4,8 @@
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDataSourceCredentialsAsync"/>
-    /// or <see cref="MetricsAdvisorAdministrationClient.GetDataSourceCredentials"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorAdministrationClient.GetDataSourceCredentialsAsync"/>
+    /// or MetricsAdvisorAdministrationClient.GetDataSourceCredentials"/> to configure the behavior of the request.
     /// </summary>
     public class GetDataSourceCredentialsOptions
     {

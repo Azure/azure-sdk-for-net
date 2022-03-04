@@ -22,8 +22,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The date and time, in UTC, when the <see cref="DataFeed"/> changed its
         /// <see cref="IngestionStatusType"/> for the last time. If <c>null</c>,
         /// this information is not available. You can check a data feed's ingestion
-        /// status with the <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatuses"/>
-        /// and the <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatusesAsync"/>
+        /// status with the MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatuses"/>
+        /// and the MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatusesAsync"/>
         /// operations.
         /// </summary>
         public DateTimeOffset? LatestActiveTimestamp { get; }

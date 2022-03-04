@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
+#pragma warning disable CS0419 // Ambiguous reference in cref attribute
     /// <summary>
     /// A data feed is the entry point of data for the Metrics Advisor service and, therefore, the first
     /// entity to be created when setting up your resource. It periodically ingests data from a
@@ -21,6 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <see cref="MetricsAdvisorAdministrationClient.CreateDataFeedAsync"/>.
     /// </remarks>
     public class DataFeed
+#pragma warning restore CS0419 // Ambiguous reference in cref attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeed"/> class.

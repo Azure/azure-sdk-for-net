@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </summary>
     /// <remarks>
     /// In order to create a credential entity, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
+    /// MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
     /// </remarks>
     [CodeGenModel("ServicePrincipalCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalCredentialEntity), typeof(string), typeof(ServicePrincipalParam))]

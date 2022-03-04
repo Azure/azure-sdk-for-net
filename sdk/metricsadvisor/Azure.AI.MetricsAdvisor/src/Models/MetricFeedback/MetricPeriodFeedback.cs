@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     /// <remarks>
     /// In order to create period feedback, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// MetricsAdvisorClient.AddFeedbackAsync"/>.
     /// </remarks>
     [CodeGenModel("PeriodFeedback")]
     [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackFilter))]

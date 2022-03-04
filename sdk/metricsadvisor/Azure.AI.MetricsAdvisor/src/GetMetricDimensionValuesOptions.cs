@@ -4,8 +4,8 @@
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetMetricDimensionValues"/>
-    /// or <see cref="MetricsAdvisorClient.GetMetricDimensionValuesAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling MetricsAdvisorClient.GetMetricDimensionValues"/>
+    /// or MetricsAdvisorClient.GetMetricDimensionValuesAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetMetricDimensionValuesOptions
     {

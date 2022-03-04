@@ -6,8 +6,8 @@ using System;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetMetricEnrichmentStatuses"/> or
-    /// <see cref="MetricsAdvisorClient.GetMetricEnrichmentStatusesAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorClient.GetMetricEnrichmentStatuses"/> or
+    /// "MetricsAdvisorClient.GetMetricEnrichmentStatusesAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetMetricEnrichmentStatusesOptions
     {

@@ -6,8 +6,8 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// Filters the result of the <see cref="MetricsAdvisorAdministrationClient.GetDataFeeds"/> and
-    /// <see cref="MetricsAdvisorAdministrationClient.GetDataFeedsAsync"/> operations.
+    /// Filters the result of the "MetricsAdvisorAdministrationClient.GetDataFeeds" and
+    /// "MetricsAdvisorAdministrationClient.GetDataFeedsAsync" operations.
     /// </summary>
     public class DataFeedFilter
     {

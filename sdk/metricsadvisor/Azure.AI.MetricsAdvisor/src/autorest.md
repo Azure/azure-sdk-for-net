@@ -8,6 +8,68 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/08f5e391f2153a99580b458cc71ef88e45dd0531/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
+data-plane: true
+security: AADToken
+security-scopes:  https://cognitiveservices.azure.com/.default
+```
+
+### Generate client name as MetricsAdvisor
+``` yaml
+directive:
+- from: swagger-document
+  where: $.info
+  transform: $.title = "MetricsAdvisor";
+```
+
+### Generate MetricsAdvisorAdministration client and move methods 
+```yaml
+directive:
+  - from: swagger-document
+    where: $..[?(@.operationId !== undefined)]
+    transform: >
+      if ($.operationId == "getDataFeedById" ||
+      $.operationId == "listDataFeeds" ||
+      $.operationId == "createDataFeed" ||
+      $.operationId == "updateDataFeed" ||
+      $.operationId == "deleteDataFeed" ||
+      $.operationId == "getIngestionProgress" ||
+      $.operationId == "resetDataFeedIngestionStatus" ||
+      $.operationId == "getDataFeedIngestionStatus" ||
+
+      $.operationId == "createAnomalyDetectionConfiguration" ||
+      $.operationId == "getAnomalyDetectionConfiguration" ||
+      $.operationId == "updateAnomalyDetectionConfiguration" ||
+      $.operationId == "getAnomalyDetectionConfigurationsByMetric" ||
+      $.operationId == "deleteAnomalyDetectionConfiguration" ||
+
+      $.operationId == "createAnomalyAlertingConfiguration" ||
+      $.operationId == "updateAnomalyAlertingConfiguration" ||
+      $.operationId == "getAnomalyAlertingConfiguration" ||
+      $.operationId == "getAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration" ||
+      $.operationId == "deleteAnomalyAlertingConfiguration" ||
+
+      $.operationId == "createHook" ||
+      $.operationId == "updateHook" ||
+      $.operationId == "getHook" ||
+      $.operationId == "deleteHook" ||
+      $.operationId == "listHooks" ||
+
+      $.operationId == "createCredential" ||
+      $.operationId == "updateCredential" ||
+      $.operationId == "getCredential" ||
+      $.operationId == "listCredentials" ||
+      $.operationId == "deleteCredential") {
+          $.operationId = "MetricsAdvisorAdministration_" + $.operationId;
+      }
+```
+
+### Make Endpoint type as Uri
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
 ```
 
 ### Make generated models internal by default

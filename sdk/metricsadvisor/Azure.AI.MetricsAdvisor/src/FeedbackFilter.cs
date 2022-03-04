@@ -9,8 +9,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Filters the result of the <see cref="MetricsAdvisorClient.GetAllFeedback"/> and
-    /// <see cref="MetricsAdvisorClient.GetAllFeedbackAsync"/> operations.
+    /// Filters the result of the MetricsAdvisorClient.GetAllFeedback and
+    /// MetricsAdvisorClient.GetAllFeedbackAsync operations.
     /// </summary>
     [CodeGenModel("FeedbackDimensionFilter")]
     public partial class FeedbackFilter

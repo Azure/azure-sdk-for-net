@@ -4,8 +4,8 @@
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDataFeeds"/>
-    /// or <see cref="MetricsAdvisorAdministrationClient.GetDataFeedsAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorAdministrationClient.GetDataFeeds"
+    /// or "MetricsAdvisorAdministrationClient.GetDataFeedsAsync" to configure the behavior of the request.
     /// </summary>
     public class GetDataFeedsOptions
     {

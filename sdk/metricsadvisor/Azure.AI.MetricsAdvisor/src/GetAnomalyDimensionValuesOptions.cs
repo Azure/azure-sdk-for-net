@@ -7,8 +7,8 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalyDimensionValues"/>
-    /// or <see cref="MetricsAdvisorClient.GetAnomalyDimensionValuesAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling "MetricsAdvisorClient.GetAnomalyDimensionValues"/>
+    /// or "MetricsAdvisorClient.GetAnomalyDimensionValuesAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetAnomalyDimensionValuesOptions
     {

@@ -4,8 +4,8 @@
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAllFeedback"/>
-    /// or <see cref="MetricsAdvisorClient.GetAllFeedbackAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling MetricsAdvisorClient.GetAllFeedback"/>
+    /// or MetricsAdvisorClient.GetAllFeedbackAsync"/> to configure the behavior of the request.
     /// </summary>
     public class GetAllFeedbackOptions
     {
