@@ -18,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var sampleSize = typeof(StorageTransmissionEvaluator)
                 .GetField("_sampleSize", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(storageTransmissionEvaluator);
-            var prevExportTimestampTicks = typeof(StorageTransmissionEvaluator)
-                .GetField("_prevExportTimestampTicks", BindingFlags.Instance | BindingFlags.NonPublic)
+            var prevExportTimeInMilliseconds = typeof(StorageTransmissionEvaluator)
+                .GetField("_prevExportTimeInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(storageTransmissionEvaluator);
             var exportDurationInSeconds = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportDurationsInSeconds", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -29,9 +29,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 .GetValue(storageTransmissionEvaluator) as double[];
 
             Assert.Equal(SampleSize, (int)sampleSize);
-            Assert.True((long)prevExportTimestampTicks > 0);
             Assert.NotNull(exportIntervalsInSeconds);
             Assert.NotNull(exportDurationInSeconds);
+            Assert.NotNull(storageTransmissionEvaluator.Stopwatch);
             Assert.Equal(SampleSize, exportIntervalsInSeconds.Length);
             Assert.Equal(SampleSize, exportDurationInSeconds.Length);
         }

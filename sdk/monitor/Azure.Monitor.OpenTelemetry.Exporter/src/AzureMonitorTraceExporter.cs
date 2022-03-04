@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 // Get number ticks before export
-                long ticksBeforeExport =  Stopwatch.GetTimestamp();
+                long timeBeforeExportInMilliSeconds = _storageTransmissionEvaluator.Stopwatch.ElapsedMilliseconds;
 
                 var resource = ParentProvider.GetResource();
                 _resourceParser.UpdateRoleNameAndInstance(resource);
@@ -58,10 +58,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
                 // Get number of ticks after export
-                long ticksAfterExport = Stopwatch.GetTimestamp();
+                long timeAfterExportInMilliSeconds = _storageTransmissionEvaluator.Stopwatch.ElapsedMilliseconds;
 
                 // Calculate duration and add it to data sample
-                double currentBatchExportDuration = TimeSpan.FromTicks(ticksAfterExport - ticksBeforeExport).TotalSeconds;
+                double currentBatchExportDuration = (timeAfterExportInMilliSeconds - timeBeforeExportInMilliSeconds) / 1000;
                 _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDuration);
 
                 // Get max number of files we can transmit in this export and start transmitting

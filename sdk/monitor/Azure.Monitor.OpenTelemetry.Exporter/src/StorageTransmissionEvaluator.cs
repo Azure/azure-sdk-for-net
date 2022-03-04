@@ -14,11 +14,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private double[] _exportIntervalsInSeconds;
         private int _exportDurationIndex = -1;
         private int _exportIntervalIndex = -1;
-        private long _prevExportTimestampTicks;
+        private long _prevExportTimeInMilliseconds;
         private double _currentBatchExportDuration;
         private double _exportIntervalRunningSum;
         private double _exportDurationRunningSum;
         private bool _enoughSampleSize;
+
+        internal Stopwatch Stopwatch { get; }
 
         /// <summary> Initializes a new instance of Storage Transmission Evaluator. </summary>
         /// <param name="sampleSize"> Number of data samples to be used for evaluation. </param>
@@ -31,7 +33,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             // Array to store time interval in seconds between each export
             _exportIntervalsInSeconds = new double[sampleSize];
-            _prevExportTimestampTicks = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            Stopwatch = new Stopwatch();
+            Stopwatch.Start();
+            _prevExportTimeInMilliseconds = Stopwatch.ElapsedMilliseconds;
         }
 
         /// <summary>
@@ -85,14 +89,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         internal void UpdateExportInterval()
         {
-            long curExportTimestampTicks = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            long curExportTimeInMilliseconds = Stopwatch.ElapsedMilliseconds;
 
             // todo: check if this can fail
-            // double exportIntervalInSeconds = TimeSpan.FromTicks(curExportTimestampTicks - _prevExportTimestampTicks).TotalSeconds;
 
-            double exportIntervalInSeconds = curExportTimestampTicks - _prevExportTimestampTicks;
+            double exportIntervalInSeconds = (curExportTimeInMilliseconds - _prevExportTimeInMilliseconds) / 1000;
 
-            _prevExportTimestampTicks = curExportTimestampTicks;
+            _prevExportTimeInMilliseconds = curExportTimeInMilliseconds;
 
             // If total time elapsed > 2 days
             // Set exportIntervalSeconds to 0
