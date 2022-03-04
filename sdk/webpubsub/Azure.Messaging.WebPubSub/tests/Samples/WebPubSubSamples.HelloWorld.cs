@@ -82,6 +82,7 @@ namespace Azure.Template.Tests.Samples
             var connectionString = TestEnvironment.ConnectionString;
             var client = new WebPubSubServiceClient(connectionString, "some_hub");
 
+            #region Snippet:WebPubSubAddUserToGroup
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
@@ -91,6 +92,7 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
+            #endregion
         }
 
         private static Dictionary<string, string> ParseConnectionString(string connectionString)
