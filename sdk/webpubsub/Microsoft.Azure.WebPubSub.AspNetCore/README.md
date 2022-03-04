@@ -76,7 +76,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 ### Handle Upstream event
 
 ```C# Snippet:WebPubSubConnectMethods
-public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest reques, CancellationToken cancellationToken)
+public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
 {
     var response = new ConnectEventResponse
     {
