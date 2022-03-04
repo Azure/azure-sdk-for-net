@@ -138,7 +138,7 @@ namespace Azure.Core.Tests
 
             var message = pipeline.CreateMessage();
             var userAgent = new UserAgentValue(typeof(string));
-            userAgent.Apply(message);
+            userAgent.ApplyToMessage(message);
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));

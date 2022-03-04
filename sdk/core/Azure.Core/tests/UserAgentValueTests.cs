@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
             var target = new UserAgentValue(typeof(UserAgentValueTests));
             var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
 
-            target.Apply(message);
+            target.ApplyToMessage(message);
 
             message.TryGetInternalProperty(typeof(UserAgentValueKey), out var obj);
             string actualValue = obj as string;

@@ -683,7 +683,7 @@ namespace Azure.Core
         public UserAgentValue(System.Type packageType, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Type PackageType { get { throw null; } }
-        public void Apply(Azure.Core.HttpMessage message) { }
+        public void ApplyToMessage(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
 }

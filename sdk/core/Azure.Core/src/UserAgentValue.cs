@@ -49,8 +49,8 @@ namespace Azure.Core
         /// Sets the package name and version portion of the UserAgent telemetry value for the context of the <paramref name="message"/>
         /// Note: If <see cref="DiagnosticsOptions.IsTelemetryEnabled"/> is false, this value is never used.
         /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/>.</param>
-        public void Apply(HttpMessage message)
+        /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="UserAgentValue"/>.</param>
+        public void ApplyToMessage(HttpMessage message)
         {
             message.SetInternalProperty(typeof(UserAgentValueKey), ToString());
         }
