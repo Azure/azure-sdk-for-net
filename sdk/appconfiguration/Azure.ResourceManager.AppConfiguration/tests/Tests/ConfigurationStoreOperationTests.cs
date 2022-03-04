@@ -117,9 +117,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetKeyValueTest()
         {
-            ListKeyValueOptions listKeyValueOptions = new ListKeyValueOptions("Primary");
-            KeyValue keyValue = await ConfigStore.GetKeyValueAsync(listKeyValueOptions);
-            Assert.IsTrue(keyValue.Key.Equals("Primary"));
+            KeyValue keyValue = (await ConfigStore.GetKeyValues().ToEnumerableAsync()).FirstOrDefault();
+            Assert.IsTrue(keyValue.Data.Key.Equals("Primary"));
         }
 
         [Test]
