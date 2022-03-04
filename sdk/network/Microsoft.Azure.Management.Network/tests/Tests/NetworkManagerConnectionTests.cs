@@ -17,7 +17,8 @@ namespace Networks.Tests
 {
     public class NetworkManagerConnectionTests
     {
-        [Fact(Skip = "Disable tests")]
+        /*
+        [Fact]
         public void NetworkManagerConnectionManagementGroup()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -52,6 +53,7 @@ namespace Networks.Tests
                 Assert.Empty(listNetworkManagerConnectionResponse);
             }
         }
+        */
 
         [Fact(Skip = "Disable tests")]
         public void NetworkManagerConnectionSubscriptionTest()
@@ -62,30 +64,32 @@ namespace Networks.Tests
             {
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler1);
 
-                var networkManagerId = "/subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b/resourceGroups/TeamMembers/providers/Microsoft.Network/networkManagers/jaredgorthy";
+                var networkManagerId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/jaredgorthy/providers/Microsoft.Network/networkManagers/SDKTestNM";
 
                 var networkManagerConnection = new NetworkManagerConnection()
                 {
                     NetworkManagerId = networkManagerId
                 };
 
-                string networkManagerConnectionName = TestUtilities.GenerateName("NetworkManagerConnectionSub1");
+                string networkManagerConnectionName = "NetworkManagerConnectionSub";
 
                 var putNetworkManagerConnectionResponse = networkManagementClient.SubscriptionNetworkManagerConnections.CreateOrUpdate(networkManagerConnection, networkManagerConnectionName);
                 Assert.Equal(networkManagerConnectionName, putNetworkManagerConnectionResponse.Name);
 
+                // Get NetworkManagerConnection
+                var getNetworkManagerConnectionResponse = networkManagementClient.SubscriptionNetworkManagerConnections.Get(networkManagerConnectionName);
+                Assert.Equal(getNetworkManagerConnectionResponse.Name, networkManagerConnectionName);
+                Assert.Equal(getNetworkManagerConnectionResponse.NetworkManagerId, networkManagerId);
+
+                // List NetworkManagerConnection
                 var listNetworkManagerConnectionResponse = networkManagementClient.SubscriptionNetworkManagerConnections.List();
                 Assert.Single(listNetworkManagerConnectionResponse);
                 Assert.Equal(listNetworkManagerConnectionResponse.First().Name, networkManagerConnectionName);
                 Assert.Equal(listNetworkManagerConnectionResponse.First().NetworkManagerId, networkManagerId);
-                Assert.Equal("Pending", listNetworkManagerConnectionResponse.First().ConnectionState);
 
-                // Delete ScopeConnections
+                // Delete NetworkManagerConnection
                 networkManagementClient.SubscriptionNetworkManagerConnections.Delete(networkManagerConnectionName);
-
-                // Confirm Delete
-                listNetworkManagerConnectionResponse = networkManagementClient.SubscriptionNetworkManagerConnections.List();
-                Assert.Empty(listNetworkManagerConnectionResponse);
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => networkManagementClient.SubscriptionNetworkManagerConnections.Get(networkManagerConnectionName));
             }
         }
     }

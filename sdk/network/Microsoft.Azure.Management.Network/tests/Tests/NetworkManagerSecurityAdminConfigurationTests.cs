@@ -94,9 +94,6 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
@@ -222,9 +219,6 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
@@ -422,9 +416,6 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }

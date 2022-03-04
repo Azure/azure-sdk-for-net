@@ -17,7 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerSecurityUserConfigurationTests
     {
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecurityUserConfigurationTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -91,13 +91,10 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecuirtyUserRuleCollectionsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -221,14 +218,11 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
 
 
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecurityUserRulesTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -365,6 +359,7 @@ namespace Networks.Tests
                 Assert.Single(listRuleResponse);
                 Assert.Equal(networkSecurityRuleName, listRuleResponse.First().Name);
 
+                /*
                 NetworkManagerCommit commit = new NetworkManagerCommit();
                 commit.CommitType = "SecurityUser";
                 commit.ConfigurationIds = new List<string>();
@@ -403,6 +398,7 @@ namespace Networks.Tests
 
                 activeSecurityUserConfigrautionsResponse = networkManagementClient.ListActiveSecurityUserRules(activeConfigurationParameter, resourceGroupName, networkManagerName);
                 Assert.Empty(activeSecurityUserConfigrautionsResponse.Value);
+                */
 
                 // Delete Rules
                 networkManagementClient.UserRules.Delete(resourceGroupName, networkManagerName, networkmanagerSecurityConfigName, networkSecurityRuleCollectionName, networkSecurityRuleName);
@@ -425,9 +421,6 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                // Delete Resource Group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }

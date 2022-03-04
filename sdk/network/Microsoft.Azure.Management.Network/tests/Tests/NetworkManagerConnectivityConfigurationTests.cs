@@ -172,9 +172,6 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
-
-                //Delete ResourceGroup 
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }
