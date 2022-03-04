@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
         private readonly StorageTransmissionEvaluator _storageTransmissionEvaluator;
+        private readonly Stopwatch _stopwatch;
         private const int StorageTransmissionEvaluatorSampleSize = 10;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
@@ -32,6 +33,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _resourceParser = new ResourceParser();
 
             // Todo: Add check if offline storage is enabled by user via options
+            _stopwatch = Stopwatch.StartNew();
+
             _storageTransmissionEvaluator = new StorageTransmissionEvaluator(StorageTransmissionEvaluatorSampleSize);
         }
 
@@ -39,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public override ExportResult Export(in Batch<Activity> batch)
         {
             // Add export time interval to data sample
-            _storageTransmissionEvaluator.UpdateExportInterval();
+            _storageTransmissionEvaluator.AddExportIntervalToDataSample(_stopwatch.ElapsedMilliseconds);
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
@@ -47,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 // Get number ticks before export
-                long timeBeforeExportInMilliSeconds = _storageTransmissionEvaluator.Stopwatch.ElapsedMilliseconds;
+                long timeBeforeExportInMilliSeconds = _stopwatch.ElapsedMilliseconds;
 
                 var resource = ParentProvider.GetResource();
                 _resourceParser.UpdateRoleNameAndInstance(resource);
@@ -58,10 +61,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
                 // Get number of ticks after export
-                long timeAfterExportInMilliSeconds = _storageTransmissionEvaluator.Stopwatch.ElapsedMilliseconds;
+                long timeAfterExportInMilliSeconds = _stopwatch.ElapsedMilliseconds;
 
                 // Calculate duration and add it to data sample
-                double currentBatchExportDurationInSeconds = (timeAfterExportInMilliSeconds - timeBeforeExportInMilliSeconds) / 1000;
+                long currentBatchExportDurationInSeconds = timeAfterExportInMilliSeconds - timeBeforeExportInMilliSeconds;
                 _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDurationInSeconds);
 
                 // Get max number of files we can transmit in this export and start transmitting
