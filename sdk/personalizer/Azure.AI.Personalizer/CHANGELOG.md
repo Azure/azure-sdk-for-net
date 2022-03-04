@@ -8,8 +8,8 @@
 - Provide a model import API to allow customers to warm start the Personalizer service.
 
 ### Breaking Changes
-- In PersonalizerAdministrationClient, GetPersonalizerModel and GetPersonalizerModelAsync are replaced with ExportPersonalizerModel and ExportPersonalizerModelAsync.
-- In PersonalizerClientOptions, ServiceVersion is changed from V1_1_preview_1 to V1_1_preview_3.
+- In `PersonalizerAdministrationClient`, `GetPersonalizerModel` and `GetPersonalizerModelAsync` are replaced with `ExportPersonalizerModel` and `ExportPersonalizerModelAsync`.
+- In `PersonalizerClientOptions`, `ServiceVersion` is changed from V1_1_preview_1 to V1_1_preview_3.
 
 ## 2.0.0-beta.1 (2021-10-05)
 
