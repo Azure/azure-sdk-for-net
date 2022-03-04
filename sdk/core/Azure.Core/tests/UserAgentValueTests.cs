@@ -3,6 +3,8 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -45,6 +47,20 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(typeof(UserAgentValueTests), target.PackageType);
             Assert.AreEqual(applicationId, target.ApplicationId);
+        }
+
+        [Test]
+        public void AppliesToMessage()
+        {
+            var target = new UserAgentValue(typeof(UserAgentValueTests));
+            var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+
+            target.Apply(message);
+
+            message.TryGetInternalProperty(typeof(UserAgentValueKey), out var obj);
+            string actualValue = obj as string;
+
+            Assert.AreEqual(target.ToString(), actualValue);
         }
     }
 }
