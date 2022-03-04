@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -12,12 +12,8 @@
     <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
     <AssemblyName>Azure.Batch.Service</AssemblyName>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012;</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;AZC0007;AZC0012;</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="JobSchedule\JobScheduleClient.cs" />
-  </ItemGroup>
   
   <!-- snip for space (Do not remove these parts of the csproj file) -->
 
@@ -41,9 +37,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="JobSchedule\" />
   </ItemGroup>
 </Project>
