@@ -696,7 +696,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task QueueWithSessionsBatch(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage[] array,
-                ServiceBusSessionMessageActions messageActions,
+                ServiceBusSessionMessageActions sessionActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -710,11 +710,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     // validate that manual lock renewal works
-                    var initialLockedUntil = messageActions.SessionLockedUntil;
-                    await messageActions.RenewSessionLockAsync();
-                    Assert.Greater(messageActions.SessionLockedUntil, initialLockedUntil);
+                    var initialLockedUntil = sessionActions.SessionLockedUntil;
+                    await sessionActions.RenewSessionLockAsync();
+                    Assert.Greater(sessionActions.SessionLockedUntil, initialLockedUntil);
 
-                    await messageActions.CompleteMessageAsync(msg);
+                    await sessionActions.CompleteMessageAsync(msg);
                 }
 
                 _drainValidationPostDelay.Set();
