@@ -105,7 +105,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists()
         {
-            #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
             WebPubSub webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             {
                 Console.WriteLine("WebPubSub 'bar' exists.");
             }
-            #endregion
         }
 
         [Test]

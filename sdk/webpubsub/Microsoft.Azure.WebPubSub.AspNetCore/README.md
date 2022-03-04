@@ -38,25 +38,11 @@ In order to interact with the service, you'll need to inject the Web PubSub serv
 ### Inject Web PubSub service with options
 
 ```C# Snippet:WebPubSubDependencyInjection
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddWebPubSub(o =>
-    {
-        o.ServiceEndpoint = new("<connection-string>");
-    }).AddWebPubSubServiceClient<SampleHub>();
-}
 ```
 
 ### Map `WebPubSubHub` to endpoint routing
 
 ```C# Snippet:WebPubSubMapHub
-public void Configure(IApplicationBuilder app)
-{
-    app.UseEndpoints(endpoint =>
-    {
-        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
-    });
-}
 ```
 
 ## Key concepts
@@ -76,14 +62,6 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 ### Handle Upstream event
 
 ```C# Snippet:WebPubSubConnectMethods
-public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
-{
-    var response = new ConnectEventResponse
-    {
-        UserId = request.ConnectionContext.UserId
-    };
-    return new ValueTask<ConnectEventResponse>(response);
-}
 ```
 
 ## Troubleshooting
