@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateSwapPublicIpAddressesRequest(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters)
+        internal HttpMessage CreateSwapPublicIPAddressesRequest(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> SwapPublicIpAddressesAsync(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> SwapPublicIPAddressesAsync(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSwapPublicIpAddressesRequest(subscriptionId, location, parameters);
+            using var message = CreateSwapPublicIPAddressesRequest(subscriptionId, location, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public Response SwapPublicIpAddresses(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public Response SwapPublicIPAddresses(string subscriptionId, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSwapPublicIpAddressesRequest(subscriptionId, location, parameters);
+            using var message = CreateSwapPublicIPAddressesRequest(subscriptionId, location, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

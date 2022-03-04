@@ -2,6 +2,8 @@
 
 ## 12.10.0-beta.4 (Unreleased)
 - Updated StorageBearerTokenChallengeAuthorizationPolicy to use the AAD scope returned by a bearer challenges.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where Storage Uri Builder was case sensitive for parameter names.
 
 ## 12.10.0-beta.3 (2022-02-07)
 - Fixed bug where AccountSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.

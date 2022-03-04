@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
-    public partial class ManagedRuleSetList
+    internal partial class ManagedRuleSetList
     {
         /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
         public ManagedRuleSetList()

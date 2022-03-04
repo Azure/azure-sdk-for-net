@@ -290,7 +290,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
             var parameters = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
                 Subnets = {
                     new SubnetData
                     {
@@ -313,6 +312,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 },
                 Location = "eastus2"
             };
+            parameters.AddressPrefixes.Add("10.0.0.0/16");
             VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, parameters)).Value;
 
             //set network rule set

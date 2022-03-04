@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(database);
         }
 
-        protected async Task<CosmosTable> CreateTable(AutoscaleSettings autoscale)
+        internal async Task<CosmosTable> CreateTable(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("table-");
             return await CreateTable(_databaseName, autoscale, _databaseAccount.GetCosmosTables());

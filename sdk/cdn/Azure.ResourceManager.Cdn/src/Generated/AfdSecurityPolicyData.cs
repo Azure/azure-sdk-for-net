@@ -39,6 +39,17 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyParameters Parameters { get; set; }
+        internal SecurityPolicyParameters Parameters { get; set; }
+        /// <summary> The type of the Security policy to create. </summary>
+        internal SecurityPolicyType ParametersType
+        {
+            get => Parameters is null ? default : Parameters.Type;
+            set
+            {
+                if (Parameters is null)
+                    Parameters = new SecurityPolicyParameters();
+                Parameters.Type = value;
+            }
+        }
     }
 }
