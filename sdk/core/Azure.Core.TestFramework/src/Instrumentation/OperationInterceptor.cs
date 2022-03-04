@@ -33,14 +33,14 @@ namespace Azure.Core.TestFramework
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
                     CheckArguments(invocation.Arguments);
-                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, default);
+                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, (CancellationToken)invocation.Arguments.Last());
                     return;
                 }
 
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
                     CheckArguments(invocation.Arguments);
-                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget as Operation, default);
+                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget as Operation, (CancellationToken)invocation.Arguments.Last());
                     return;
                 }
             }
@@ -50,7 +50,7 @@ namespace Azure.Core.TestFramework
 
         internal static object InvokeWaitForCompletionResponse(Operation operation, CancellationToken cancellationToken)
         {
-            return GetZeroPoller().WaitForCompletionResponseAsync(operation, null, (CancellationToken)cancellationToken);
+            return GetZeroPoller().WaitForCompletionResponseAsync(operation, null, cancellationToken);
         }
 
         internal static object InvokeWaitForCompletion(object target, Type targetType, CancellationToken cancellationToken)
