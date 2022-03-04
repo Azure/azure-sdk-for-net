@@ -31,6 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(SampleSize, (int)sampleSize);
             Assert.NotNull(exportIntervalsInSeconds);
             Assert.NotNull(exportDurationInSeconds);
+            Assert.True(storageTransmissionEvaluator.Stopwatch.IsRunning);
             Assert.NotNull(storageTransmissionEvaluator.Stopwatch);
             Assert.Equal(SampleSize, exportIntervalsInSeconds.Length);
             Assert.Equal(SampleSize, exportDurationInSeconds.Length);
