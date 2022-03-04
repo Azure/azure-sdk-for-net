@@ -64,8 +64,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 long timeAfterExportInMilliSeconds = _stopwatch.ElapsedMilliseconds;
 
                 // Calculate duration and add it to data sample
-                long currentBatchExportDurationInSeconds = timeAfterExportInMilliSeconds - timeBeforeExportInMilliSeconds;
-                _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDurationInSeconds);
+                long currentBatchExportDurationInMillieconds = timeAfterExportInMilliSeconds - timeBeforeExportInMilliSeconds;
+                _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDurationInMillieconds);
 
                 // Get max number of files we can transmit in this export and start transmitting
                 long maxFilesToTransmit = _storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
