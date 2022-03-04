@@ -127,7 +127,8 @@ In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 ```csharp
 using Microsoft.Azure.ApplicationInsights.Query.Models
 
-// code omitted for brevity
+var credential = new ClientSecretCredential("<domainId or tenantId>", "<clientId>", "<clientSecret>");
+var client = new MetricsQueryClient(credential);
 MetricsResult result = client.Metrics.GetAsync("<appId>", "<metricId>").Result;
 ```
 
