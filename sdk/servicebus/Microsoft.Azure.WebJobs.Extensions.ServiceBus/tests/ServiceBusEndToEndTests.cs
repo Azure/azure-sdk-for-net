@@ -1096,7 +1096,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
                     Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
-                    Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeArray[i]);
+                    Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
