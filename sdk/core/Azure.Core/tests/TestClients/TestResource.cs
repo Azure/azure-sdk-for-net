@@ -19,14 +19,14 @@ namespace Azure.Core.Tests
             return new TestResource();
         }
 
-        public virtual TestLroOperation GetLro(bool waitForCompletion, bool exceptionOnWait = false, CancellationToken cancellationToken = default)
+        public virtual TestResourceOperationOrResponseOfT GetLro(bool waitForCompletion, bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.GetLro");
             scope.Start();
 
             try
             {
-                var lro = new TestLroOperation(new TestResource(), exceptionOnWait);
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource(), exceptionOnWait);
                 if (waitForCompletion)
                     lro.WaitForCompletion(cancellationToken);
                 return lro;
@@ -38,14 +38,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual async Task<TestLroOperation> GetLroAsync(bool waitForCompletion, bool exceptionOnWait = false, CancellationToken cancellationToken = default)
+        public virtual async Task<TestResourceOperationOrResponseOfT> GetLroAsync(bool waitForCompletion, bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.GetLro");
             scope.Start();
 
             try
             {
-                var lro = new TestLroOperation(new TestResource(), exceptionOnWait);
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource(), exceptionOnWait);
                 if (waitForCompletion)
                     await lro.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return lro;
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual TestLroOperation GetLroException(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual TestResourceOperationOrResponseOfT GetLroException(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.GetLroException");
             scope.Start();
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<TestLroOperation> GetLroExceptionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual Task<TestResourceOperationOrResponseOfT> GetLroExceptionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.GetLroException");
             scope.Start();
@@ -193,14 +193,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual TestLroOperation StartLroWrapper(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual TestResourceOperationOrResponseOfT StartLroWrapper(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.StartLroWrapper");
             scope.Start();
 
             try
             {
-                var lro = new TestLroOperation(new TestResource());
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource());
                 if (waitForCompletion)
                     lro.WaitForCompletion(cancellationToken);
                 return lro;
@@ -212,14 +212,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual async Task<TestLroOperation> StartLroWrapperAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<TestResourceOperationOrResponseOfT> StartLroWrapperAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.StartLroWrapper");
             scope.Start();
 
             try
             {
-                var lro = new TestLroOperation(new TestResource());
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource());
                 if (waitForCompletion)
                     await lro.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return lro;
@@ -231,14 +231,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual TestLroOperation StartLongLro(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual TestResourceOperationOrResponseOfT StartLongLro(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.StartLongLro");
             scope.Start();
 
             try
             {
-                var lro = new TestLroOperation(new TestResource(), delaySteps: 10);
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource(), delaySteps: 10);
                 if (waitForCompletion)
                     lro.WaitForCompletion(cancellationToken);
                 return lro;
@@ -250,7 +250,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public async virtual Task<TestLroOperation> StartLongLroAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<TestResourceOperationOrResponseOfT> StartLongLroAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.StartLongLro");
             scope.Start();
@@ -258,7 +258,7 @@ namespace Azure.Core.Tests
             try
             {
                 await Task.Delay(1);
-                var lro = new TestLroOperation(new TestResource(), delaySteps: 10);
+                var lro = new TestResourceOperationOrResponseOfT(new TestResource(), delaySteps: 10);
                 if (waitForCompletion)
                     await lro.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return lro;
