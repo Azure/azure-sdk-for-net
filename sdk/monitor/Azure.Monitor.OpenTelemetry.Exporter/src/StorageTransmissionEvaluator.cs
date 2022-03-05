@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -14,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private long[] _exportIntervalsInMilliseconds;
         private int _exportDurationIndex = -1;
         private int _exportIntervalIndex = -1;
-        private long _prevExportTimeInMilliseconds;
+        private long _previousExportStartTimeInMilliseconds;
         private long _currentBatchExportDurationInMilliseconds;
         private long _exportIntervalRunningSum;
         private long _exportDurationRunningSum;
@@ -34,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         /// <summary>
-        /// Adds current export duration in seconds to the sample size.
+        /// Adds current export duration in Milliseconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
         internal void AddExportDurationToDataSample(long currentBatchExportDurationInMilliseconds)
@@ -55,17 +53,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         /// <summary>
-        /// Adds current export time interval in seconds to the sample size.
+        /// Adds current export time interval in Milliseconds to the sample size.
         /// Also, removes the oldest record from the sample.
         /// </summary>
-        internal void AddExportIntervalToDataSample(long currentExportIntervalInMilliseconds)
+        internal void AddExportIntervalToDataSample(long currentExportStartTimeInMilliseconds)
         {
-            long exportIntervalInMilliseconds = (currentExportIntervalInMilliseconds - _prevExportTimeInMilliseconds);
+            long exportIntervalInMilliseconds = (currentExportStartTimeInMilliseconds - _previousExportStartTimeInMilliseconds);
 
-            _prevExportTimeInMilliseconds = currentExportIntervalInMilliseconds;
+            _previousExportStartTimeInMilliseconds = currentExportStartTimeInMilliseconds;
 
             // If total time elapsed > 2 days
-            // Set exportIntervalSeconds to 0
+            // Set exportIntervalInMilliseconds to 0
             // This can happen if there was no export in 2 days of application run.
             if (exportIntervalInMilliseconds > 172800000)
             {

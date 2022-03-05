@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Reflection;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -19,8 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var sampleSize = typeof(StorageTransmissionEvaluator)
                 .GetField("_sampleSize", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(storageTransmissionEvaluator);
-            var prevExportTimeInMilliseconds = typeof(StorageTransmissionEvaluator)
-                .GetField("_prevExportTimeInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
+            var previousExportStartTimeInMilliseconds = typeof(StorageTransmissionEvaluator)
+                .GetField("_previousExportStartTimeInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(storageTransmissionEvaluator);
             var exportDurationInSeconds = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportDurationsInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -34,36 +32,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(exportDurationInSeconds);
             Assert.Equal(SampleSize, exportIntervalsInSeconds.Length);
             Assert.Equal(SampleSize, exportDurationInSeconds.Length);
+            Assert.Equal(0, (long)previousExportStartTimeInMilliseconds);
         }
 
         [Fact]
         public void MaxFilesToBeTransmittedIsNonZeroWhenExportDurationIsLessThanExportInterval()
         {
             var storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
-            var sw = Stopwatch.StartNew();
-
             for (int i = 0; i < SampleSize; i++)
             {
-                storageTransmissionEvaluator.AddExportIntervalToDataSample(sw.ElapsedMilliseconds);
-
-                // Mock delay of 3 secs
-                Task.Delay(3000).Wait();
+                storageTransmissionEvaluator.AddExportIntervalToDataSample((i+1)*3000);
+                storageTransmissionEvaluator.AddExportDurationToDataSample(1000);
             }
-
-            for (int i = 0; i < SampleSize; i++)
-            {
-                // Considering export duration of 1 sec.
-                var timeBeforeExport = sw.ElapsedMilliseconds;
-
-                // Mock delay of 1 sec for export
-                Task.Delay(1000).Wait();
-
-                var timeAfterExport = sw.ElapsedMilliseconds;
-
-                var timeForExportInMilliseconds = timeAfterExport - timeBeforeExport;
-                storageTransmissionEvaluator.AddExportDurationToDataSample(timeForExportInMilliseconds);
-            }
-
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
 
             Assert.True(maxFiles > 0);
@@ -73,31 +53,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void MaxFilesToBeTransmittedIsZeroWhenExportDurationIsGreaterThanExportInterval()
         {
             var storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
-            var sw = Stopwatch.StartNew();
-
             for (int i = 0; i < SampleSize; i++)
             {
-                storageTransmissionEvaluator.AddExportIntervalToDataSample(sw.ElapsedMilliseconds);
-
-                // Mock delay of 1 sec
-                Task.Delay(1000).Wait();
+                storageTransmissionEvaluator.AddExportIntervalToDataSample((i+1)*1000);
+                storageTransmissionEvaluator.AddExportDurationToDataSample(2000);
             }
-
-            for (int i = 0; i < SampleSize; i++)
-            {
-                // Considering export duration of 1 sec.
-                var timeBeforeExport = sw.ElapsedMilliseconds;
-
-                // Mock delay of 2 sec for export
-                Task.Delay(2000).Wait();
-
-                var timeAfterExport = sw.ElapsedMilliseconds;
-
-                var timeForExportInMilliseconds = timeAfterExport - timeBeforeExport;
-                storageTransmissionEvaluator.AddExportDurationToDataSample(timeForExportInMilliseconds);
-            }
-
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
+
             Assert.Equal(0, maxFiles);
         }
 
@@ -105,37 +67,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void MaxFilesToBeTransmittedIsZeroWhenCurrentBatchExportDurationIsGreaterThanExportInterval()
         {
             var storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
-            var sw = Stopwatch.StartNew();
 
             for (int i = 0; i < SampleSize; i++)
             {
-                storageTransmissionEvaluator.AddExportIntervalToDataSample(sw.ElapsedMilliseconds);
-
-                // Mock delay of 3 secs
-                Task.Delay(3000).Wait();
-            }
-
-            for (int i = 0; i < SampleSize; i++)
-            {
-                // Considering export duration of 1 sec.
-                var timeBeforeExport = sw.ElapsedMilliseconds;
-
-                // Mock delay of 1 sec for export
-                Task.Delay(1000).Wait();
-
-                var timeAfterExport = sw.ElapsedMilliseconds;
-
-                var timeForExportInMilliseconds = timeAfterExport - timeBeforeExport;
-                storageTransmissionEvaluator.AddExportDurationToDataSample(timeForExportInMilliseconds);
+                storageTransmissionEvaluator.AddExportIntervalToDataSample((i+1)*3000);
+                storageTransmissionEvaluator.AddExportDurationToDataSample(1000);
             }
 
             // Update the currentBatchExportDuration to a greater value
             // than avg export interval.
             typeof(StorageTransmissionEvaluator)
                 .GetField("_currentBatchExportDurationInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(storageTransmissionEvaluator, 10);
-
+                .SetValue(storageTransmissionEvaluator, 10000);
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
+
             Assert.Equal(0, maxFiles);
         }
 
@@ -143,31 +88,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void MaxFilesToBeTransmittedIsZeroWhenDataSamplesAreLessThanSampleSize()
         {
             var storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
-            var sw = Stopwatch.StartNew();
-
             //For Sample Size 5, 5th export will have enough samples to make the decision
             for (int i = 0; i < 4; i++)
             {
-                storageTransmissionEvaluator.AddExportDurationToDataSample(sw.ElapsedMilliseconds);
-
-                // Mock delay of 3 secs
-                Task.Delay(3000).Wait();
+                storageTransmissionEvaluator.AddExportDurationToDataSample((i+1)*3000);
+                storageTransmissionEvaluator.AddExportDurationToDataSample(1000);
             }
-
-            for (int i = 0; i < SampleSize; i++)
-            {
-                var timeBeforeExport = sw.ElapsedMilliseconds;
-
-                // Mock delay of 1 sec for export
-                Task.Delay(1000).Wait();
-
-                var timeAfterExport = sw.ElapsedMilliseconds;
-
-                var timeForExportInMilliseconds = timeAfterExport - timeBeforeExport;
-                storageTransmissionEvaluator.AddExportDurationToDataSample(timeForExportInMilliseconds);
-            }
-
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
+
             Assert.Equal(0, maxFiles);
         }
 

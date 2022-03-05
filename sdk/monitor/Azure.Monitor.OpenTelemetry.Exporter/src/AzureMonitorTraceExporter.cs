@@ -41,17 +41,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {
+            // Get export start time
+            long exportStartTimeInMilliseconds = _stopwatch.ElapsedMilliseconds;
+
             // Add export time interval to data sample
-            _storageTransmissionEvaluator.AddExportIntervalToDataSample(_stopwatch.ElapsedMilliseconds);
+            _storageTransmissionEvaluator.AddExportIntervalToDataSample(exportStartTimeInMilliseconds);
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
             try
             {
-                // Get number ticks before export
-                long timeBeforeExportInMilliseconds = _stopwatch.ElapsedMilliseconds;
-
                 var resource = ParentProvider.GetResource();
                 _resourceParser.UpdateRoleNameAndInstance(resource);
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
@@ -60,11 +60,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Validate CancellationToken and async pattern here.
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-                // Get number of ticks after export
-                long timeAfterExportInMilliseconds = _stopwatch.ElapsedMilliseconds;
+                // Get export end time
+                long exportEndTimeInMilliseconds = _stopwatch.ElapsedMilliseconds;
 
                 // Calculate duration and add it to data sample
-                long currentBatchExportDurationInMilliseconds = timeAfterExportInMilliseconds - timeBeforeExportInMilliseconds;
+                long currentBatchExportDurationInMilliseconds = exportEndTimeInMilliseconds - exportStartTimeInMilliseconds;
                 _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDurationInMilliseconds);
 
                 // Get max number of files we can transmit in this export and start transmitting
