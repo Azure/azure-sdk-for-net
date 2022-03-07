@@ -3,14 +3,14 @@
 
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// ChangeFeedEventAsyncOperationInfo.
     /// </summary>
-    public class BlobChangeFeedEventAsyncOperationInfo
+    public class BlobOperationResult
     {
-        internal BlobChangeFeedEventAsyncOperationInfo() { }
+        internal BlobOperationResult() { }
 
         /// <summary>
         /// DestinationAccessTier.
@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// If the operation was async.
         /// </summary>
-        public bool WasAsyncOperation { get; internal set; }
+        public bool IsAsync { get; internal set; }
 
         /// <summary>
         /// Copy Id.
