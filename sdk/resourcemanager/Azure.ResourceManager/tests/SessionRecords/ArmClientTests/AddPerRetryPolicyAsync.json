@@ -1,6 +1,7 @@
 {
   "Entries": [],
   "Variables": {
+    "RandomSeed": "350922097",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "ab716eee-96d3-4021-9fa7-1b01da5de034"
   }
