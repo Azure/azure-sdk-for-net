@@ -136,6 +136,7 @@ In `Azure.Monitor.Query` v1.0.x:
 
 ```csharp
 using Azure;
+using Azure.Identity;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
 
