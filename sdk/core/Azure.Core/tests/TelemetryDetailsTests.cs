@@ -29,13 +29,13 @@ namespace Azure.Core.Tests
             if (applicationId == null)
             {
                 Assert.AreEqual(
-                    target.ToString(),
+                    target.UserAgentString,
                     $"azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
             }
             else
             {
                 Assert.AreEqual(
-                    target.ToString(),
+                    target.UserAgentString,
                     $"{applicationId} azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
             }
         }
@@ -55,12 +55,12 @@ namespace Azure.Core.Tests
             var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly);
             var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
 
-            target.ApplyToMessage(message);
+            target.Apply(message);
 
             message.TryGetInternalProperty(typeof(UserAgentValueKey), out var obj);
             string actualValue = obj as string;
 
-            Assert.AreEqual(target.ToString(), actualValue);
+            Assert.AreEqual(target.UserAgentString, actualValue);
         }
     }
 }

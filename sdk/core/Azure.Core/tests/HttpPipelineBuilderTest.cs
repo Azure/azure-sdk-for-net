@@ -138,7 +138,7 @@ namespace Azure.Core.Tests
 
             var message = pipeline.CreateMessage();
             var userAgent = new TelemetryDetails(typeof(string).Assembly);
-            userAgent.ApplyToMessage(message);
+            userAgent.Apply(message);
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));

@@ -26,6 +26,11 @@ namespace Azure.Core
         public string? ApplicationId { get; }
 
         /// <summary>
+        /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
+        /// </summary>
+        public string UserAgentString => _userAgent;
+
+        /// <summary>
         /// Initialize an instance of <see cref="TelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
         /// </summary>
         /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the <see cref="TelemetryDetails"/> value.</param>
@@ -41,18 +46,13 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns a formatted UserAgent string
-        /// </summary>
-        public override string ToString() => _userAgent;
-
-        /// <summary>
         /// Sets the package name and version portion of the UserAgent telemetry value for the context of the <paramref name="message"/>
         /// Note: If <see cref="DiagnosticsOptions.IsTelemetryEnabled"/> is false, this value is never used.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
-        public void ApplyToMessage(HttpMessage message)
+        public void Apply(HttpMessage message)
         {
-            message.SetInternalProperty(typeof(UserAgentValueKey), ToString());
+            message.SetInternalProperty(typeof(UserAgentValueKey), UserAgentString);
         }
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)

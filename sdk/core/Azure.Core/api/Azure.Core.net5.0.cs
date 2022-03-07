@@ -664,8 +664,8 @@ namespace Azure.Core
         public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
-        public void ApplyToMessage(Azure.Core.HttpMessage message) { }
-        public override string ToString() { throw null; }
+        public string UserAgentString { get { throw null; } }
+        public void Apply(Azure.Core.HttpMessage message) { }
     }
     public abstract partial class TokenCredential
     {
