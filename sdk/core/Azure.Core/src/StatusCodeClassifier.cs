@@ -12,7 +12,7 @@ namespace Azure.Core
     /// This type inherits from ResponseClassifier and is designed to work
     /// efficiently with classifier customizations specified in <see cref="RequestContext"/>.
     /// </summary>
-    public class StatusClassifier : ResponseClassifier
+    public class StatusCodeClassifier : ResponseClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;
@@ -21,11 +21,11 @@ namespace Azure.Core
         internal ResponseClassificationHandler[]? Handlers { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="StatusClassifier"/>
+        /// Creates a new instance of <see cref="StatusCodeClassifier"/>
         /// </summary>
         /// <param name="successStatusCodes">The status codes that this classifier will consider
         /// not to be errors.</param>
-        public StatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
+        public StatusCodeClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
             _successCodes = new ulong[Length];
 
@@ -35,7 +35,7 @@ namespace Azure.Core
             }
         }
 
-        private StatusClassifier(ulong[] successCodes, ResponseClassificationHandler[]? handlers)
+        private StatusCodeClassifier(ulong[] successCodes, ResponseClassificationHandler[]? handlers)
         {
             Debug.Assert(successCodes?.Length == Length);
 
@@ -62,12 +62,12 @@ namespace Azure.Core
             return !IsSuccessCode(message.Response.Status);
         }
 
-        internal virtual StatusClassifier Clone()
+        internal virtual StatusCodeClassifier Clone()
         {
             ulong[] successCodes = new ulong[Length];
             Array.Copy(_successCodes, successCodes, Length);
 
-            return new StatusClassifier(successCodes, Handlers);
+            return new StatusCodeClassifier(successCodes, Handlers);
         }
 
         internal void AddClassifier(int statusCode, bool isError)
