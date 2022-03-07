@@ -143,7 +143,7 @@ using Azure.Monitor.Query.Models;
 
 var credential = new ClientSecretCredential("<domainId or tenantId>", "<clientId>", "<clientSecret>");
 var client = new MetricsQueryClient(credential);
-MetricsQueryResult result = await client.QueryResourceAsync("<resourceId>",new[]{ "<metricName>" }).Value;
+MetricsQueryResult result = await client.QueryResourceAsync("<resourceId>", new[]{ "<metricName>" }).Value;
 ```
 
 ## Additional samples
