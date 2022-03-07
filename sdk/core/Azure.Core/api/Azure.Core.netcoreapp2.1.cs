@@ -380,11 +380,6 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
-    {
-        public CoreResponseClassifier(System.ReadOnlySpan<ushort> successCodes) { }
-        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
-    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -650,6 +645,11 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
+    }
+    public partial class StatusClassifier : Azure.Core.ResponseClassifier
+    {
+        public StatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
     }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
     public abstract partial class TokenCredential
