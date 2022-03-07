@@ -154,12 +154,6 @@ namespace Azure.Core.TestFramework
         {
         };
 
-        /// <summary>
-        /// Whether or not to enable the test framework to proxy traffic through fiddler. This should only be set to
-        /// True for local debugging scenarios, when you have Fiddler listening for traffic.
-        /// </summary>
-        public bool EnableFiddler { get; set; }
-
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;

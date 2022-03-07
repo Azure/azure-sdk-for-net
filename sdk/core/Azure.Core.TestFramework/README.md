@@ -302,7 +302,7 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
-In order to enable testing with Fiddler, you will need to set the `EnableFiddler` property of `RecordedTestBase` to `true` and have Fiddler open and listening for traffic. You should not check in your test class with this property set (it will end up failing CI).
+In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the "EnableFiddler" [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings).
 
 ## Support multi service version testing
 

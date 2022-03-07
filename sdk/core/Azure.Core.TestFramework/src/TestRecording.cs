@@ -25,7 +25,6 @@ namespace Azure.Core.TestFramework
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         private const string Sanitized = "Sanitized";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
-        public bool EnableFiddler { get; }
 
         public SortedDictionary<string, string> Variables => _variables;
         private SortedDictionary<string, string> _variables = new();
@@ -36,7 +35,6 @@ namespace Azure.Core.TestFramework
             _sessionFile = sessionFile;
             _proxy = proxy;
             _recordedTestBase = recordedTestBase;
-            EnableFiddler = _recordedTestBase.EnableFiddler;
         }
 
         public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
