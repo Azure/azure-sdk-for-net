@@ -5,16 +5,16 @@ using System;
 using Azure.Core;
 using System.Text.Json;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Tests
 {
-    internal class ModelWithBinaryData : IUtf8JsonSerializable
+    internal class ModelWithObject : IUtf8JsonSerializable
     {
         public string A { get; set; }
-        public BinaryData Properties { get; set; }
+        public object Properties { get; set; }
 
-        public ModelWithBinaryData() { }
+        public ModelWithObject() { }
 
-        private ModelWithBinaryData(string a, BinaryData properties)
+        private ModelWithObject(string a, object properties)
         {
             A = a;
             Properties = properties;
@@ -31,19 +31,15 @@ namespace Azure.Core.Perf
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(Properties);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }
 
-        internal static ModelWithBinaryData DeserializeModelWithBinaryData(JsonElement element)
+        internal static ModelWithObject DeserializeModelWithObject(JsonElement element)
         {
             Optional<string> a = default;
-            Optional<BinaryData> properties = default;
+            Optional<object> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("a"))
@@ -58,11 +54,11 @@ namespace Azure.Core.Perf
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    properties = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ModelWithBinaryData(a.Value, properties.Value);
+            return new ModelWithObject(a.Value, properties.Value);
         }
     }
 }

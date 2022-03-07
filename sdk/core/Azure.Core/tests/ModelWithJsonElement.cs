@@ -1,20 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Azure.Core;
 using System.Text.Json;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Tests
 {
-    internal class ModelWithObject : IUtf8JsonSerializable
+    internal class ModelWithJsonElement : IUtf8JsonSerializable
     {
         public string A { get; set; }
-        public object Properties { get; set; }
+        public JsonElement Properties { get; set; }
 
-        public ModelWithObject() { }
+        public ModelWithJsonElement() { }
 
-        private ModelWithObject(string a, object properties)
+        private ModelWithJsonElement(string a, JsonElement properties)
         {
             A = a;
             Properties = properties;
@@ -31,15 +29,15 @@ namespace Azure.Core.Perf
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                Properties.WriteTo(writer);
             }
             writer.WriteEndObject();
         }
 
-        internal static ModelWithObject DeserializeModelWithObject(JsonElement element)
+        internal static ModelWithJsonElement DeserializeModelWithJsonElement(JsonElement element)
         {
             Optional<string> a = default;
-            Optional<object> properties = default;
+            Optional<JsonElement> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("a"))
@@ -54,11 +52,11 @@ namespace Azure.Core.Perf
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = property.Value.GetObject();
+                    properties = property.Value;
                     continue;
                 }
             }
-            return new ModelWithObject(a.Value, properties.Value);
+            return new ModelWithJsonElement(a.Value, properties.Value);
         }
     }
 }

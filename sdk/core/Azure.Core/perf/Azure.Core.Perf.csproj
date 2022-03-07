@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="..\tests\Azure.Core.Tests.csproj" />
     <!-- 
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->

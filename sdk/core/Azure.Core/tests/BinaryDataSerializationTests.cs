@@ -127,7 +127,70 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        private static string GetSerializedString(ModelWithBinaryData payload)
+        [Test]
+        public void SerailizeUsingDictStringObjectJsonElement()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithJsonElement { A = "a.value" };
+            var properties = new Dictionary<string, object>();
+            var innerProperties = new Dictionary<string, object>();
+            properties.Add("a", "properties.a.value");
+            innerProperties.Add("a", "properties.innerProperties.a.value");
+            properties.Add("innerProperties", innerProperties);
+            payload.Properties = JsonElementHelpers.FromObjectAsJson(properties);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingJsonFormattedStringJsonElement()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithJsonElement { A = "a.value" };
+            payload.Properties = JsonElementHelpers.FromString(File.ReadAllText(GetFileName("Properties.json")).TrimEnd());
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        [Ignore("TODO fix this test")]
+        public void SerailizeUsingStreamJsonElement()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithJsonElement { A = "a.value" };
+            using var fs = File.OpenRead(GetFileName("Properties.json"));
+            payload.Properties = JsonElementHelpers.FromStream(fs);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectJsonElement()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithJsonElement { A = "a.value" };
+            var properties = new
+            {
+                a = "properties.a.value",
+                innerProperties = new
+                {
+                    a = "properties.innerProperties.a.value"
+                }
+            };
+            payload.Properties = JsonElementHelpers.FromObjectAsJson(properties);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        private static string GetSerializedString(IUtf8JsonSerializable payload)
         {
             using var ms = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(ms);
@@ -269,120 +332,6 @@ namespace Azure.Core.Tests
             {
                 Assert.IsNull(data.ToObject<Model>(serializer));
                 Assert.IsNull(await data.ToObjectAsync<Model>(serializer));
-            }
-        }
-
-        private class ModelWithBinaryData : IUtf8JsonSerializable
-        {
-            public string A { get; set; }
-            public BinaryData Properties { get; set; }
-
-            public ModelWithBinaryData() { }
-
-            private ModelWithBinaryData(string a, BinaryData properties)
-            {
-                A = a;
-                Properties = properties;
-            }
-
-            public void Write(Utf8JsonWriter writer)
-            {
-                writer.WriteStartObject();
-                if (Optional.IsDefined(A))
-                {
-                    writer.WritePropertyName("a");
-                    writer.WriteStringValue(A);
-                }
-                if (Optional.IsDefined(Properties))
-                {
-                    writer.WritePropertyName("properties");
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(Properties);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-
-            internal static ModelWithBinaryData DeserializeModelWithBinaryData(JsonElement element)
-            {
-                Optional<string> a = default;
-                Optional<BinaryData> properties = default;
-                foreach (var property in element.EnumerateObject())
-                {
-                    if (property.NameEquals("a"))
-                    {
-                        a = property.Value.GetString();
-                        continue;
-                    }
-                    if (property.NameEquals("properties"))
-                    {
-                        if (property.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            property.ThrowNonNullablePropertyIsNull();
-                            continue;
-                        }
-                        properties = BinaryData.FromString(property.Value.GetRawText());
-                        continue;
-                    }
-                }
-                return new ModelWithBinaryData(a.Value, properties.Value);
-            }
-        }
-
-        private class ModelWithObject : IUtf8JsonSerializable
-        {
-            public string A { get; set; }
-            public object Properties { get; set; }
-
-            public ModelWithObject() { }
-
-            private ModelWithObject(string a, object properties)
-            {
-                A = a;
-                Properties = properties;
-            }
-
-            public void Write(Utf8JsonWriter writer)
-            {
-                writer.WriteStartObject();
-                if (Optional.IsDefined(A))
-                {
-                    writer.WritePropertyName("a");
-                    writer.WriteStringValue(A);
-                }
-                if (Optional.IsDefined(Properties))
-                {
-                    writer.WritePropertyName("properties");
-                    writer.WriteObjectValue(Properties);
-                }
-                writer.WriteEndObject();
-            }
-
-            internal static ModelWithObject DeserializeModelWithObject(JsonElement element)
-            {
-                Optional<string> a = default;
-                Optional<object> properties = default;
-                foreach (var property in element.EnumerateObject())
-                {
-                    if (property.NameEquals("a"))
-                    {
-                        a = property.Value.GetString();
-                        continue;
-                    }
-                    if (property.NameEquals("properties"))
-                    {
-                        if (property.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            property.ThrowNonNullablePropertyIsNull();
-                            continue;
-                        }
-                        properties = property.Value.GetObject();
-                        continue;
-                    }
-                }
-                return new ModelWithObject(a.Value, properties.Value);
             }
         }
 
