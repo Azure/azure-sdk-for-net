@@ -646,9 +646,9 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
-    public partial class StatusClassifier : Azure.Core.ResponseClassifier
+    public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
-        public StatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public StatusCodeClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
     }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
