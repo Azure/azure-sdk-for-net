@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class JitApproverDefinition : IUtf8JsonSerializable
+    public partial class JitApprover : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static JitApproverDefinition DeserializeJitApproverDefinition(JsonElement element)
+        internal static JitApprover DeserializeJitApprover(JsonElement element)
         {
             string id = default;
             Optional<JitApproverType> type = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new JitApproverDefinition(id, Optional.ToNullable(type), displayName.Value);
+            return new JitApprover(id, Optional.ToNullable(type), displayName.Value);
         }
     }
 }

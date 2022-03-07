@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationUpdateOptions : IUtf8JsonSerializable
+    public partial class ArmApplicationUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ApplicationUpdateOptions DeserializeApplicationUpdateOptions(JsonElement element)
+        internal static ArmApplicationUpdateOptions DeserializeArmApplicationUpdateOptions(JsonElement element)
         {
             Optional<Plan> plan = default;
             Optional<string> kind = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<object> parameters = default;
             Optional<object> outputs = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<ApplicationBillingDetailsDefinition> billingDetails = default;
+            Optional<ApplicationBillingDetails> billingDetails = default;
             Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<string> publisherTenantId = default;
             Optional<IReadOnlyList<ApplicationAuthorization>> authorizations = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            billingDetails = ApplicationBillingDetailsDefinition.DeserializeApplicationBillingDetailsDefinition(property0.Value);
+                            billingDetails = ApplicationBillingDetails.DeserializeApplicationBillingDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ApplicationUpdateOptions(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationUpdateOptions(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

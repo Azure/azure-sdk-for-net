@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application locking policy. </summary>
-    internal partial class ApplicationPackageLockingPolicyDefinition
+    internal partial class ApplicationPackageLockingPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationPackageLockingPolicyDefinition. </summary>
-        public ApplicationPackageLockingPolicyDefinition()
+        /// <summary> Initializes a new instance of ApplicationPackageLockingPolicy. </summary>
+        public ApplicationPackageLockingPolicy()
         {
             AllowedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationPackageLockingPolicyDefinition. </summary>
+        /// <summary> Initializes a new instance of ApplicationPackageLockingPolicy. </summary>
         /// <param name="allowedActions"> The deny assignment excluded actions. </param>
-        internal ApplicationPackageLockingPolicyDefinition(IList<string> allowedActions)
+        internal ApplicationPackageLockingPolicy(IList<string> allowedActions)
         {
             AllowedActions = allowedActions;
         }

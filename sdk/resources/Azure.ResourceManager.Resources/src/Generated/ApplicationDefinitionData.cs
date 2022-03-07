@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, type, systemData, tags, location, managedBy, sku)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The managed application locking policy. </summary>
-        internal ApplicationPackageLockingPolicyDefinition LockingPolicy { get; set; }
+        internal ApplicationPackageLockingPolicy LockingPolicy { get; set; }
         /// <summary> The deny assignment excluded actions. </summary>
         public IList<string> LockingAllowedActions
         {
             get
             {
                 if (LockingPolicy is null)
-                    LockingPolicy = new ApplicationPackageLockingPolicyDefinition();
+                    LockingPolicy = new ApplicationPackageLockingPolicy();
                 return LockingPolicy.AllowedActions;
             }
         }

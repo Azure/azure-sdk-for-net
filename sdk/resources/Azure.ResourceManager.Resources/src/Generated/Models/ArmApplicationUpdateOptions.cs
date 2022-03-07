@@ -5,34 +5,24 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> A class representing the Application data model. </summary>
-    public partial class ApplicationData : ApplicationResource
+    /// <summary> Information about managed application. </summary>
+    public partial class ArmApplicationUpdateOptions : ApplicationResource
     {
-        /// <summary> Initializes a new instance of ApplicationData. </summary>
+        /// <summary> Initializes a new instance of ArmApplicationUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
-        public ApplicationData(AzureLocation location, string kind) : base(location)
+        public ArmApplicationUpdateOptions(AzureLocation location) : base(location)
         {
-            if (kind == null)
-            {
-                throw new ArgumentNullException(nameof(kind));
-            }
-
-            Kind = kind;
             Authorizations = new ChangeTrackingList<ApplicationAuthorization>();
             Artifacts = new ChangeTrackingList<ApplicationArtifact>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationData. </summary>
+        /// <summary> Initializes a new instance of ArmApplicationUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -59,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetails billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -98,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>
-        internal ApplicationBillingDetailsDefinition BillingDetails { get; }
+        internal ApplicationBillingDetails BillingDetails { get; }
         /// <summary> The managed application resource usage Id. </summary>
         public string BillingDetailsResourceUsageId
         {

@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> JIT approver definition. </summary>
-    public partial class JitApproverDefinition
+    public partial class JitApprover
     {
-        /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
+        /// <summary> Initializes a new instance of JitApprover. </summary>
         /// <param name="id"> The approver service principal Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public JitApproverDefinition(string id)
+        public JitApprover(string id)
         {
             if (id == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Resources.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
+        /// <summary> Initializes a new instance of JitApprover. </summary>
         /// <param name="id"> The approver service principal Id. </param>
         /// <param name="type"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
-        internal JitApproverDefinition(string id, JitApproverType? type, string displayName)
+        internal JitApprover(string id, JitApproverType? type, string displayName)
         {
             Id = id;
             Type = type;

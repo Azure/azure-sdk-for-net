@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ApplicationBillingDetailsDefinition
+    internal partial class ApplicationBillingDetails
     {
-        internal static ApplicationBillingDetailsDefinition DeserializeApplicationBillingDetailsDefinition(JsonElement element)
+        internal static ApplicationBillingDetails DeserializeApplicationBillingDetails(JsonElement element)
         {
             Optional<string> resourceUsageId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ApplicationBillingDetailsDefinition(resourceUsageId.Value);
+            return new ApplicationBillingDetails(resourceUsageId.Value);
         }
     }
 }

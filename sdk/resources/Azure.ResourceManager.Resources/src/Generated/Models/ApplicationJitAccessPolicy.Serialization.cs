@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             bool jitAccessEnabled = default;
             Optional<JitApprovalMode> jitApprovalMode = default;
-            Optional<IList<JitApproverDefinition>> jitApprovers = default;
+            Optional<IList<JitApprover>> jitApprovers = default;
             Optional<string> maximumJitAccessDuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JitApproverDefinition> array = new List<JitApproverDefinition>();
+                    List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApproverDefinition.DeserializeJitApproverDefinition(item));
+                        array.Add(JitApprover.DeserializeJitApprover(item));
                     }
                     jitApprovers = array;
                     continue;

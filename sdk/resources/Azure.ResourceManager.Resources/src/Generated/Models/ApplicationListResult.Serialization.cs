@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationData>> value = default;
+            Optional<IReadOnlyList<ArmApplicationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationData> array = new List<ApplicationData>();
+                    List<ArmApplicationData> array = new List<ArmApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationData.DeserializeApplicationData(item));
+                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item));
                     }
                     value = array;
                     continue;

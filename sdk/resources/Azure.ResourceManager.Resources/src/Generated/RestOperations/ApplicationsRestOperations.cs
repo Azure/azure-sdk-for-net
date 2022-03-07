@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response<ApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        ArmApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((ArmApplicationData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response<ApplicationData> Get(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        public Response<ArmApplicationData> Get(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        ArmApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((ArmApplicationData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ApplicationUpdateOptions options)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response<ApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        ArmApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response<ApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationName, ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        public Response<ArmApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        ArmApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

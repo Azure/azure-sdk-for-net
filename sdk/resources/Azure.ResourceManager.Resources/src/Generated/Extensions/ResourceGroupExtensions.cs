@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(resourceGroup).GetDeployments();
         }
 
-        /// <summary> Gets a collection of Applications in the Application. </summary>
+        /// <summary> Gets a collection of ArmApplications in the ArmApplication. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
-        public static ApplicationCollection GetApplications(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
+        public static ArmApplicationCollection GetArmApplications(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetApplications();
+            return GetExtensionClient(resourceGroup).GetArmApplications();
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>

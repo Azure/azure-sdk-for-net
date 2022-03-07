@@ -20,25 +20,25 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Application and their operations over its parent. </summary>
-    public partial class ApplicationCollection : ArmCollection, IEnumerable<Application>, IAsyncEnumerable<Application>
+    /// <summary> A class representing collection of ArmApplication and their operations over its parent. </summary>
+    public partial class ArmApplicationCollection : ArmCollection, IEnumerable<ArmApplication>, IAsyncEnumerable<ArmApplication>
     {
-        private readonly ClientDiagnostics _applicationClientDiagnostics;
-        private readonly ApplicationsRestOperations _applicationRestClient;
+        private readonly ClientDiagnostics _armApplicationApplicationsClientDiagnostics;
+        private readonly ApplicationsRestOperations _armApplicationApplicationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationCollection"/> class for mocking. </summary>
-        protected ApplicationCollection()
+        /// <summary> Initializes a new instance of the <see cref="ArmApplicationCollection"/> class for mocking. </summary>
+        protected ArmApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArmApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Application.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Application.ResourceType, out string applicationApiVersion);
-            _applicationRestClient = new ApplicationsRestOperations(_applicationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationApiVersion);
+            _armApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplication.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ArmApplication.ResourceType, out string armApplicationApplicationsApiVersion);
+            _armApplicationApplicationsRestClient = new ApplicationsRestOperations(_armApplicationApplicationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armApplicationApplicationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<Application>> CreateOrUpdateAsync(bool waitForCompletion, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ArmApplication>> CreateOrUpdateAsync(bool waitForCompletion, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _applicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<Application>(new ApplicationOperationSource(Client), _applicationClientDiagnostics, Pipeline, _applicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _armApplicationApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ArmApplication>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<Application> CreateOrUpdate(bool waitForCompletion, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmApplication> CreateOrUpdate(bool waitForCompletion, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<Application>(new ApplicationOperationSource(Client), _applicationClientDiagnostics, Pipeline, _applicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _armApplicationApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken);
+                var operation = new ResourcesArmOperation<ArmApplication>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public async virtual Task<Response<Application>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArmApplication>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
+                var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _applicationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
+                    throw await _armApplicationApplicationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public virtual Response<Application> Get(string applicationName, CancellationToken cancellationToken = default)
+        public virtual Response<ArmApplication> Get(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken);
+                var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken);
                 if (response.Value == null)
-                    throw _applicationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
+                    throw _armApplicationApplicationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Applications_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Application> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmApplication> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Application>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArmApplication>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetAll");
+                using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _armApplicationApplicationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<Application>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArmApplication>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetAll");
+                using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _armApplicationApplicationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +222,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Applications_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Application> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmApplication> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Application> FirstPageFunc(int? pageSizeHint)
+            Page<ArmApplication> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetAll");
+                using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _applicationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _armApplicationApplicationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<Application> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArmApplication> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetAll");
+                using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _applicationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _armApplicationApplicationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -321,18 +321,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public async virtual Task<Response<Application>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArmApplication>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<Application>(null, response.GetRawResponse());
-                return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ArmApplication>(null, response.GetRawResponse());
+                return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,18 +350,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public virtual Response<Application> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
+        public virtual Response<ArmApplication> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using var scope = _applicationClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
+                var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Application>(null, response.GetRawResponse());
-                return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ArmApplication>(null, response.GetRawResponse());
+                return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<Application> IEnumerable<Application>.GetEnumerator()
+        IEnumerator<ArmApplication> IEnumerable<ArmApplication>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Application> IAsyncEnumerable<Application>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ArmApplication> IAsyncEnumerable<ArmApplication>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

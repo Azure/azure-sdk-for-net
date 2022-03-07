@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Application> GetApplicationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ArmApplication> GetArmApplicationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetApplicationsAsync(cancellationToken);
+            return GetExtensionClient(subscription).GetArmApplicationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Application> GetApplications(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ArmApplication> GetArmApplications(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetApplications(cancellationToken);
+            return GetExtensionClient(subscription).GetArmApplications(cancellationToken);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ApplicationJitAccessPolicy(bool jitAccessEnabled)
         {
             JitAccessEnabled = jitAccessEnabled;
-            JitApprovers = new ChangeTrackingList<JitApproverDefinition>();
+            JitApprovers = new ChangeTrackingList<JitApprover>();
         }
 
         /// <summary> Initializes a new instance of ApplicationJitAccessPolicy. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
         /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
-        internal ApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApproverDefinition> jitApprovers, string maximumJitAccessDuration)
+        internal ApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, string maximumJitAccessDuration)
         {
             JitAccessEnabled = jitAccessEnabled;
             JitApprovalMode = jitApprovalMode;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> JIT approval mode. </summary>
         public JitApprovalMode? JitApprovalMode { get; set; }
         /// <summary> The JIT approvers. </summary>
-        public IList<JitApproverDefinition> JitApprovers { get; }
+        public IList<JitApprover> JitApprovers { get; }
         /// <summary> The maximum duration JIT access is granted. This is an ISO8601 time period value. </summary>
         public string MaximumJitAccessDuration { get; set; }
     }

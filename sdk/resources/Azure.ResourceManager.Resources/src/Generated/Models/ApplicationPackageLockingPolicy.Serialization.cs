@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ApplicationPackageLockingPolicyDefinition : IUtf8JsonSerializable
+    internal partial class ApplicationPackageLockingPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ApplicationPackageLockingPolicyDefinition DeserializeApplicationPackageLockingPolicyDefinition(JsonElement element)
+        internal static ApplicationPackageLockingPolicy DeserializeApplicationPackageLockingPolicy(JsonElement element)
         {
             Optional<IList<string>> allowedActions = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ApplicationPackageLockingPolicyDefinition(Optional.ToList(allowedActions));
+            return new ApplicationPackageLockingPolicy(Optional.ToList(allowedActions));
         }
     }
 }

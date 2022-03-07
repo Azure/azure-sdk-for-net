@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application billing details definition. </summary>
-    internal partial class ApplicationBillingDetailsDefinition
+    internal partial class ApplicationBillingDetails
     {
-        /// <summary> Initializes a new instance of ApplicationBillingDetailsDefinition. </summary>
-        internal ApplicationBillingDetailsDefinition()
+        /// <summary> Initializes a new instance of ApplicationBillingDetails. </summary>
+        internal ApplicationBillingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationBillingDetailsDefinition. </summary>
+        /// <summary> Initializes a new instance of ApplicationBillingDetails. </summary>
         /// <param name="resourceUsageId"> The managed application resource usage Id. </param>
-        internal ApplicationBillingDetailsDefinition(string resourceUsageId)
+        internal ApplicationBillingDetails(string resourceUsageId)
         {
             ResourceUsageId = resourceUsageId;
         }
