@@ -211,7 +211,11 @@ namespace Azure.Storage.Blobs.Test
                     .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStreamAsync);
                 blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
                     .Returns<BlobDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStreamAsync(
-                        options.Range, options.Conditions, options.TransactionalHashingOptions != default, cancellationToken));
+                        options.Range,
+                        options.Conditions,
+                        // TODO #27253
+                        default, //options.TransactionalHashingOptions != default,
+                        cancellationToken));
             }
             else
             {
@@ -219,7 +223,11 @@ namespace Azure.Storage.Blobs.Test
                     .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStream);
                 blockClient.Setup(c => c.DownloadStreaming(It.IsAny<BlobDownloadOptions>(), s_cancellationToken))
                     .Returns<BlobDownloadOptions, CancellationToken>((options, cancellationToken) => dataSource.GetStream(
-                        options.Range, options.Conditions, options.TransactionalHashingOptions != default, cancellationToken));
+                        options.Range,
+                        options.Conditions,
+                        // TODO #27253
+                        default, //options.TransactionalHashingOptions != default,
+                        cancellationToken));
             }
         }
 

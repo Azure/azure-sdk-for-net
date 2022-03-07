@@ -189,11 +189,14 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : Azure.RequestOptions
+    public partial class RequestContext
     {
         public RequestContext() { }
-        public RequestContext(Azure.RequestOptions options) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
+        public void AddClassifier(int statusCode, bool isError) { }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -208,16 +211,6 @@ namespace Azure
         public string? ErrorCode { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-    }
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected RequestOptions(Azure.RequestOptions options) { }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
-        public void AddClassifier(int statusCode, bool isError) { }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
     }
     public abstract partial class Response : System.IDisposable
     {
@@ -262,6 +255,11 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool IsRunningSynchronously { get { throw null; } }
     }
+    public enum WaitUntil
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace Azure.Core
 {
@@ -293,13 +291,19 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CanadaEast { get { throw null; } }
         public static Azure.Core.AzureLocation CentralIndia { get { throw null; } }
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS2 { get { throw null; } }
         public static Azure.Core.AzureLocation FranceCentral { get { throw null; } }
         public static Azure.Core.AzureLocation FranceSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyCentral { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
@@ -308,6 +312,7 @@ namespace Azure.Core
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -320,6 +325,12 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
         public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
         public static Azure.Core.AzureLocation UKWest { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDEast { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovArizona { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovIowa { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovTexas { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovVirginia { get { throw null; } }
         public static Azure.Core.AzureLocation WestCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation WestEurope { get { throw null; } }
         public static Azure.Core.AzureLocation WestIndia { get { throw null; } }
@@ -371,7 +382,7 @@ namespace Azure.Core
     }
     public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
     {
-        public CoreResponseClassifier(System.ReadOnlySpan<int> nonErrors) { }
+        public CoreResponseClassifier(System.ReadOnlySpan<ushort> successCodes) { }
         public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
     }
     public static partial class DelegatedTokenCredential

@@ -649,8 +649,8 @@ namespace Azure.ResourceManager.Sql
     public partial class FirewallRuleData : Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName
     {
         public FirewallRuleData() { }
-        public string EndIpAddress { get { throw null; } set { } }
-        public string StartIpAddress { get { throw null; } set { } }
+        public string EndIPAddress { get { throw null; } set { } }
+        public string StartIPAddress { get { throw null; } set { } }
     }
     public partial class GeoBackupPolicy : Azure.ResourceManager.Core.ArmResource
     {
@@ -6589,7 +6589,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public SecurityEvent() { }
         public string ApplicationName { get { throw null; } }
-        public string ClientIp { get { throw null; } }
+        public string ClientIP { get { throw null; } }
         public string Database { get { throw null; } }
         public System.DateTimeOffset? EventTime { get { throw null; } }
         public string PrincipalName { get { throw null; } }

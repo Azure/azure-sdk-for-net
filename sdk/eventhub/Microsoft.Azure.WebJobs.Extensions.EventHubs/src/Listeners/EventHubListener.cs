@@ -66,11 +66,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         void IListener.Cancel()
         {
-            StopAsync(CancellationToken.None).Wait();
+#pragma warning disable AZC0102
+            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
 
         void IDisposable.Dispose()
         {
+#pragma warning disable AZC0102
+            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -142,63 +147,67 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 return Task.CompletedTask;
             }
 
-            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken processingCancellationToken)
             {
-                var events = messages.ToArray();
-                EventData eventToCheckpoint = null;
-
-                var triggerInput = new EventHubTriggerInput
+                using (CancellationTokenSource linkedCts =
+                        CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken))
                 {
-                    Events = events,
-                    ProcessorPartition = context
-                };
+                    var events = messages.ToArray();
+                    EventData eventToCheckpoint = null;
 
-                if (_singleDispatch)
-                {
-                    // Single dispatch
-                    int eventCount = triggerInput.Events.Length;
-
-                    for (int i = 0; i < eventCount; i++)
+                    var triggerInput = new EventHubTriggerInput
                     {
-                        if (_cts.IsCancellationRequested)
-                        {
-                            break;
-                        }
-
-                        EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
-                        TriggeredFunctionData input = new TriggeredFunctionData
-                        {
-                            TriggerValue = eventHubTriggerInput,
-                            TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
-                        };
-
-                        await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
-                        eventToCheckpoint = events[i];
-                    }
-                }
-                else
-                {
-                    // Batch dispatch
-                    TriggeredFunctionData input = new TriggeredFunctionData
-                    {
-                        TriggerValue = triggerInput,
-                        TriggerDetails = triggerInput.GetTriggerDetails(context)
+                        Events = events,
+                        ProcessorPartition = context
                     };
 
-                    await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
-                    eventToCheckpoint = events.LastOrDefault();
-                }
+                    if (_singleDispatch)
+                    {
+                        // Single dispatch
+                        int eventCount = triggerInput.Events.Length;
 
-                // Checkpoint if we processed any events.
-                // Don't checkpoint if no events. This can reset the sequence counter to 0.
-                // Note: we intentionally checkpoint the batch regardless of function
-                // success/failure. EventHub doesn't support any sort "poison event" model,
-                // so that is the responsibility of the user's function currently. E.g.
-                // the function should have try/catch handling around all event processing
-                // code, and capture/log/persist failed events, since they won't be retried.
-                if (eventToCheckpoint != null)
-                {
-                    await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
+                        for (int i = 0; i < eventCount; i++)
+                        {
+                            if (linkedCts.Token.IsCancellationRequested)
+                            {
+                                break;
+                            }
+
+                            EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
+                            TriggeredFunctionData input = new TriggeredFunctionData
+                            {
+                                TriggerValue = eventHubTriggerInput,
+                                TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
+                            };
+
+                            await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                            eventToCheckpoint = events[i];
+                        }
+                    }
+                    else
+                    {
+                        // Batch dispatch
+                        TriggeredFunctionData input = new TriggeredFunctionData
+                        {
+                            TriggerValue = triggerInput,
+                            TriggerDetails = triggerInput.GetTriggerDetails(context)
+                        };
+
+                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                        eventToCheckpoint = events.LastOrDefault();
+                    }
+
+                    // Checkpoint if we processed any events.
+                    // Don't checkpoint if no events. This can reset the sequence counter to 0.
+                    // Note: we intentionally checkpoint the batch regardless of function
+                    // success/failure. EventHub doesn't support any sort "poison event" model,
+                    // so that is the responsibility of the user's function currently. E.g.
+                    // the function should have try/catch handling around all event processing
+                    // code, and capture/log/persist failed events, since they won't be retried.
+                    if (eventToCheckpoint != null)
+                    {
+                        await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
+                    }
                 }
             }
 

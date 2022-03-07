@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine scale set OS profile. </summary>
-        public VirtualMachineScaleSetUpdateOSProfile OsProfile { get; set; }
+        public VirtualMachineScaleSetUpdateOSProfile OSProfile { get; set; }
         /// <summary> The virtual machine scale set storage profile. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get; set; }
         /// <summary> The virtual machine scale set network profile. </summary>
