@@ -659,6 +659,14 @@ namespace Azure.Core
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
+    public partial class TelemetryDetails
+    {
+        public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public void ApplyToMessage(Azure.Core.HttpMessage message) { }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -677,14 +685,6 @@ namespace Azure.Core
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }
-    }
-    public partial class UserAgentValue
-    {
-        public UserAgentValue(System.Type packageType, string? applicationId = null) { }
-        public string? ApplicationId { get { throw null; } }
-        public System.Type PackageType { get { throw null; } }
-        public void ApplyToMessage(Azure.Core.HttpMessage message) { }
-        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Core.Cryptography

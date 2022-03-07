@@ -9,34 +9,34 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
-    /// Information about the package to be included in UserAgent telemetry
+    /// Details about the package to be included in UserAgent telemetry
     /// </summary>
-    public class UserAgentValue
+    public class TelemetryDetails
     {
         private string _userAgent;
 
         /// <summary>
-        /// The package type represented by this <see cref="UserAgentValue"/> instance.
+        /// The package type represented by this <see cref="TelemetryDetails"/> instance.
         /// </summary>
-        public Type PackageType { get; }
+        public Assembly Assembly { get; }
 
         /// <summary>
-        /// The value of the applicationId used to initialize this <see cref="UserAgentValue"/> instance.
+        /// The value of the applicationId used to initialize this <see cref="TelemetryDetails"/> instance.
         /// </summary>
         public string? ApplicationId { get; }
 
         /// <summary>
-        /// Initialize an instance of <see cref="UserAgentValue"/> by extracting the name and version information from the <see cref="Assembly"/> associated with the <paramref name="packageType"/>.
+        /// Initialize an instance of <see cref="TelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
         /// </summary>
-        /// <param name="packageType">The <see cref="Type"/> used to generate the package name and version information for the <see cref="UserAgentValue"/> value.</param>
-        /// <param name="applicationId">An optional value to be prepended to the <see cref="UserAgentValue"/>.
+        /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the <see cref="TelemetryDetails"/> value.</param>
+        /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.
         /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
-        public UserAgentValue(Type packageType, string? applicationId = null)
+        public TelemetryDetails(Assembly assembly, string? applicationId = null)
         {
-            PackageType = packageType;
+            Argument.AssertNotNull(assembly, nameof(assembly));
+
+            Assembly = assembly;
             ApplicationId = applicationId;
-            var assembly = Assembly.GetAssembly(packageType);
-            if (assembly == null) throw new ArgumentException($"The type parameter {packageType.FullName} does not have a valid Assembly");
             _userAgent = GenerateUserAgentString(assembly, applicationId);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Core
         /// Sets the package name and version portion of the UserAgent telemetry value for the context of the <paramref name="message"/>
         /// Note: If <see cref="DiagnosticsOptions.IsTelemetryEnabled"/> is false, this value is never used.
         /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="UserAgentValue"/>.</param>
+        /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
         public void ApplyToMessage(HttpMessage message)
         {
             message.SetInternalProperty(typeof(UserAgentValueKey), ToString());

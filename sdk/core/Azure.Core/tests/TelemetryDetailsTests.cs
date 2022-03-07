@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class UserAgentValueTests
+    public class TelemetryDetailsTests
     {
         private const string appId = "MyApplicationId";
 
         [Test]
         public void CtorInitializesValue([Values(null, appId)] string applicationId)
         {
-            var target = new UserAgentValue(typeof(UserAgentValueTests), applicationId);
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, applicationId);
 
             var assembly = Assembly.GetAssembly(GetType());
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
@@ -43,16 +43,16 @@ namespace Azure.Core.Tests
         [Test]
         public void CtorPopulatesProperties([Values(null, appId)] string applicationId)
         {
-            var target = new UserAgentValue(typeof(UserAgentValueTests), applicationId);
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, applicationId);
 
-            Assert.AreEqual(typeof(UserAgentValueTests), target.PackageType);
+            Assert.AreEqual(typeof(TelemetryDetailsTests).Assembly, target.Assembly);
             Assert.AreEqual(applicationId, target.ApplicationId);
         }
 
         [Test]
         public void AppliesToMessage()
         {
-            var target = new UserAgentValue(typeof(UserAgentValueTests));
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly);
             var message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
 
             target.ApplyToMessage(message);

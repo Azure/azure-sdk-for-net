@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             var message = pipeline.CreateMessage();
-            var userAgent = new UserAgentValue(typeof(string));
+            var userAgent = new TelemetryDetails(typeof(string).Assembly);
             userAgent.ApplyToMessage(message);
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
