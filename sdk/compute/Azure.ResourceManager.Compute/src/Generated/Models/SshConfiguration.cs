@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> SSH configuration for Linux based VMs running on Azure. </summary>
-    public partial class SshConfiguration
+    internal partial class SshConfiguration
     {
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
         public SshConfiguration()

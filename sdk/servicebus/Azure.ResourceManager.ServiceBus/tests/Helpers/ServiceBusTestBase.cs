@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected ServiceBusTestBase(bool isAsync) : base(isAsync)
+
+        protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new ServiceBusRecordedTestSanitizer();
-        }
-        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new ServiceBusRecordedTestSanitizer();
+            // Lazy sanitize fields in the request and response bodies
+            JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+            JsonPathSanitizers.Add("$..keyName");
         }
 
         [SetUp]
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testservicebusRG-");
-            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)

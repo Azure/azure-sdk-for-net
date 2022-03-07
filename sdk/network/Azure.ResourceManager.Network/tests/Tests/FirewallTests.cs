@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             AzureFirewallData firewallData = new AzureFirewallData();
             firewallData.Location = AzureLocation.WestUS2;
-            firewallData.IpConfigurations.Add(new AzureFirewallIPConfiguration()
+            firewallData.IPConfigurations.Add(new AzureFirewallIPConfiguration()
             {
                 Name = "fwpip",
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },

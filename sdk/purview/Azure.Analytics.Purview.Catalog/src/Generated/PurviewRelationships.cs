@@ -19,8 +19,10 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -90,13 +92,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -170,13 +170,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Create(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -250,13 +248,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -330,13 +326,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Update(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -355,6 +349,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -391,13 +386,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
@@ -416,6 +409,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -452,13 +446,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
@@ -476,6 +468,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -486,13 +479,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
@@ -510,6 +501,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -520,13 +512,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {

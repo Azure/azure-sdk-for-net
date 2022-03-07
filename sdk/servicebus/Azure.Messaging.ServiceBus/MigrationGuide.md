@@ -453,7 +453,7 @@ More examples can be found at:
 
 **Why doesn't `Azure.Messaging.ServiceBus` support batch settlement of messages?**
 
-Batch settlement of messages is not implemented in the `Azure.Messaging.ServiceBus` client library because there is because there is no support for batch operations in Service Bus itself; previous Service Bus packages provided a client-side only implementation similar to:
+Batch settlement of messages is not implemented in the `Azure.Messaging.ServiceBus` client library because there is no support for batch operations in Service Bus itself; previous Service Bus packages provided a client-side only implementation similar to:
 
 ```C# Snippet:MigrationGuideBatchMessageSettlement
 var tasks = new List<Task>();

@@ -15,1069 +15,1393 @@ namespace Azure.ResourceManager.Network
     {
         #region ApplicationGateway
         /// <summary> Gets an object representing a ApplicationGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGateway" /> object. </returns>
-        public static ApplicationGateway GetApplicationGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static ApplicationGateway GetApplicationGateway(this ArmClient client, ResourceIdentifier id)
         {
-            ApplicationGateway.ValidateResourceId(id);
-            return new ApplicationGateway(armClient, id);
-        }
-        #endregion
-
-        #region ApplicationGatewayAvailableSslOptions
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient armClient, ResourceIdentifier id)
-        {
-            ApplicationGatewayAvailableSslOptions.ValidateResourceId(id);
-            return new ApplicationGatewayAvailableSslOptions(armClient, id);
-        }
-        #endregion
-
-        #region ApplicationGatewaySslPredefinedPolicy
-        /// <summary> Gets an object representing a ApplicationGatewaySslPredefinedPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewaySslPredefinedPolicy" /> object. </returns>
-        public static ApplicationGatewaySslPredefinedPolicy GetApplicationGatewaySslPredefinedPolicy(this ArmClient armClient, ResourceIdentifier id)
-        {
-            ApplicationGatewaySslPredefinedPolicy.ValidateResourceId(id);
-            return new ApplicationGatewaySslPredefinedPolicy(armClient, id);
+            return client.GetClient(() =>
+            {
+                ApplicationGateway.ValidateResourceId(id);
+                return new ApplicationGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region ApplicationGatewayPrivateEndpointConnection
         /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnection" /> object. </returns>
-        public static ApplicationGatewayPrivateEndpointConnection GetApplicationGatewayPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static ApplicationGatewayPrivateEndpointConnection GetApplicationGatewayPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            ApplicationGatewayPrivateEndpointConnection.ValidateResourceId(id);
-            return new ApplicationGatewayPrivateEndpointConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                ApplicationGatewayPrivateEndpointConnection.ValidateResourceId(id);
+                return new ApplicationGatewayPrivateEndpointConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region ApplicationSecurityGroup
         /// <summary> Gets an object representing a ApplicationSecurityGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationSecurityGroup" /> object. </returns>
-        public static ApplicationSecurityGroup GetApplicationSecurityGroup(this ArmClient armClient, ResourceIdentifier id)
+        public static ApplicationSecurityGroup GetApplicationSecurityGroup(this ArmClient client, ResourceIdentifier id)
         {
-            ApplicationSecurityGroup.ValidateResourceId(id);
-            return new ApplicationSecurityGroup(armClient, id);
+            return client.GetClient(() =>
+            {
+                ApplicationSecurityGroup.ValidateResourceId(id);
+                return new ApplicationSecurityGroup(client, id);
+            }
+            );
         }
         #endregion
 
         #region AzureFirewall
         /// <summary> Gets an object representing a AzureFirewall along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureFirewall" /> object. </returns>
-        public static AzureFirewall GetAzureFirewall(this ArmClient armClient, ResourceIdentifier id)
+        public static AzureFirewall GetAzureFirewall(this ArmClient client, ResourceIdentifier id)
         {
-            AzureFirewall.ValidateResourceId(id);
-            return new AzureFirewall(armClient, id);
+            return client.GetClient(() =>
+            {
+                AzureFirewall.ValidateResourceId(id);
+                return new AzureFirewall(client, id);
+            }
+            );
         }
         #endregion
 
         #region AzureWebCategory
         /// <summary> Gets an object representing a AzureWebCategory along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureWebCategory" /> object. </returns>
-        public static AzureWebCategory GetAzureWebCategory(this ArmClient armClient, ResourceIdentifier id)
+        public static AzureWebCategory GetAzureWebCategory(this ArmClient client, ResourceIdentifier id)
         {
-            AzureWebCategory.ValidateResourceId(id);
-            return new AzureWebCategory(armClient, id);
+            return client.GetClient(() =>
+            {
+                AzureWebCategory.ValidateResourceId(id);
+                return new AzureWebCategory(client, id);
+            }
+            );
         }
         #endregion
 
         #region BastionHost
         /// <summary> Gets an object representing a BastionHost along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BastionHost" /> object. </returns>
-        public static BastionHost GetBastionHost(this ArmClient armClient, ResourceIdentifier id)
+        public static BastionHost GetBastionHost(this ArmClient client, ResourceIdentifier id)
         {
-            BastionHost.ValidateResourceId(id);
-            return new BastionHost(armClient, id);
+            return client.GetClient(() =>
+            {
+                BastionHost.ValidateResourceId(id);
+                return new BastionHost(client, id);
+            }
+            );
         }
         #endregion
 
-        #region CustomIpPrefix
-        /// <summary> Gets an object representing a CustomIpPrefix along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        #region CustomIPPrefix
+        /// <summary> Gets an object representing a CustomIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefix" /> object. </returns>
-        public static CustomIpPrefix GetCustomIpPrefix(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomIPPrefix" /> object. </returns>
+        public static CustomIPPrefix GetCustomIPPrefix(this ArmClient client, ResourceIdentifier id)
         {
-            CustomIpPrefix.ValidateResourceId(id);
-            return new CustomIpPrefix(armClient, id);
+            return client.GetClient(() =>
+            {
+                CustomIPPrefix.ValidateResourceId(id);
+                return new CustomIPPrefix(client, id);
+            }
+            );
         }
         #endregion
 
         #region DdosCustomPolicy
         /// <summary> Gets an object representing a DdosCustomPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosCustomPolicy" /> object. </returns>
-        public static DdosCustomPolicy GetDdosCustomPolicy(this ArmClient armClient, ResourceIdentifier id)
+        public static DdosCustomPolicy GetDdosCustomPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            DdosCustomPolicy.ValidateResourceId(id);
-            return new DdosCustomPolicy(armClient, id);
+            return client.GetClient(() =>
+            {
+                DdosCustomPolicy.ValidateResourceId(id);
+                return new DdosCustomPolicy(client, id);
+            }
+            );
         }
         #endregion
 
         #region DdosProtectionPlan
         /// <summary> Gets an object representing a DdosProtectionPlan along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosProtectionPlan" /> object. </returns>
-        public static DdosProtectionPlan GetDdosProtectionPlan(this ArmClient armClient, ResourceIdentifier id)
+        public static DdosProtectionPlan GetDdosProtectionPlan(this ArmClient client, ResourceIdentifier id)
         {
-            DdosProtectionPlan.ValidateResourceId(id);
-            return new DdosProtectionPlan(armClient, id);
+            return client.GetClient(() =>
+            {
+                DdosProtectionPlan.ValidateResourceId(id);
+                return new DdosProtectionPlan(client, id);
+            }
+            );
         }
         #endregion
 
         #region DscpConfiguration
         /// <summary> Gets an object representing a DscpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DscpConfiguration" /> object. </returns>
-        public static DscpConfiguration GetDscpConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        public static DscpConfiguration GetDscpConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            DscpConfiguration.ValidateResourceId(id);
-            return new DscpConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                DscpConfiguration.ValidateResourceId(id);
+                return new DscpConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCircuitAuthorization
         /// <summary> Gets an object representing a ExpressRouteCircuitAuthorization along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorization" /> object. </returns>
-        public static ExpressRouteCircuitAuthorization GetExpressRouteCircuitAuthorization(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCircuitAuthorization GetExpressRouteCircuitAuthorization(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCircuitAuthorization.ValidateResourceId(id);
-            return new ExpressRouteCircuitAuthorization(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCircuitAuthorization.ValidateResourceId(id);
+                return new ExpressRouteCircuitAuthorization(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCircuitPeering
         /// <summary> Gets an object representing a ExpressRouteCircuitPeering along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeering" /> object. </returns>
-        public static ExpressRouteCircuitPeering GetExpressRouteCircuitPeering(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCircuitPeering GetExpressRouteCircuitPeering(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCircuitPeering.ValidateResourceId(id);
-            return new ExpressRouteCircuitPeering(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCircuitPeering.ValidateResourceId(id);
+                return new ExpressRouteCircuitPeering(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCircuitConnection
         /// <summary> Gets an object representing a ExpressRouteCircuitConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnection" /> object. </returns>
-        public static ExpressRouteCircuitConnection GetExpressRouteCircuitConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCircuitConnection GetExpressRouteCircuitConnection(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCircuitConnection.ValidateResourceId(id);
-            return new ExpressRouteCircuitConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCircuitConnection.ValidateResourceId(id);
+                return new ExpressRouteCircuitConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region PeerExpressRouteCircuitConnection
         /// <summary> Gets an object representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnection" /> object. </returns>
-        public static PeerExpressRouteCircuitConnection GetPeerExpressRouteCircuitConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static PeerExpressRouteCircuitConnection GetPeerExpressRouteCircuitConnection(this ArmClient client, ResourceIdentifier id)
         {
-            PeerExpressRouteCircuitConnection.ValidateResourceId(id);
-            return new PeerExpressRouteCircuitConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                PeerExpressRouteCircuitConnection.ValidateResourceId(id);
+                return new PeerExpressRouteCircuitConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCircuit
         /// <summary> Gets an object representing a ExpressRouteCircuit along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuit" /> object. </returns>
-        public static ExpressRouteCircuit GetExpressRouteCircuit(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCircuit GetExpressRouteCircuit(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCircuit.ValidateResourceId(id);
-            return new ExpressRouteCircuit(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCircuit.ValidateResourceId(id);
+                return new ExpressRouteCircuit(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCrossConnection
         /// <summary> Gets an object representing a ExpressRouteCrossConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnection" /> object. </returns>
-        public static ExpressRouteCrossConnection GetExpressRouteCrossConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCrossConnection GetExpressRouteCrossConnection(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCrossConnection.ValidateResourceId(id);
-            return new ExpressRouteCrossConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCrossConnection.ValidateResourceId(id);
+                return new ExpressRouteCrossConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteCrossConnectionPeering
         /// <summary> Gets an object representing a ExpressRouteCrossConnectionPeering along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeering" /> object. </returns>
-        public static ExpressRouteCrossConnectionPeering GetExpressRouteCrossConnectionPeering(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteCrossConnectionPeering GetExpressRouteCrossConnectionPeering(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteCrossConnectionPeering.ValidateResourceId(id);
-            return new ExpressRouteCrossConnectionPeering(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteCrossConnectionPeering.ValidateResourceId(id);
+                return new ExpressRouteCrossConnectionPeering(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRoutePortsLocation
         /// <summary> Gets an object representing a ExpressRoutePortsLocation along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePortsLocation" /> object. </returns>
-        public static ExpressRoutePortsLocation GetExpressRoutePortsLocation(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRoutePortsLocation GetExpressRoutePortsLocation(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRoutePortsLocation.ValidateResourceId(id);
-            return new ExpressRoutePortsLocation(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRoutePortsLocation.ValidateResourceId(id);
+                return new ExpressRoutePortsLocation(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRoutePort
         /// <summary> Gets an object representing a ExpressRoutePort along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePort" /> object. </returns>
-        public static ExpressRoutePort GetExpressRoutePort(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRoutePort GetExpressRoutePort(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRoutePort.ValidateResourceId(id);
-            return new ExpressRoutePort(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRoutePort.ValidateResourceId(id);
+                return new ExpressRoutePort(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteLink
         /// <summary> Gets an object representing a ExpressRouteLink along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteLink" /> object. </returns>
-        public static ExpressRouteLink GetExpressRouteLink(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteLink GetExpressRouteLink(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteLink.ValidateResourceId(id);
-            return new ExpressRouteLink(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteLink.ValidateResourceId(id);
+                return new ExpressRouteLink(client, id);
+            }
+            );
         }
         #endregion
 
         #region FirewallPolicy
         /// <summary> Gets an object representing a FirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicy" /> object. </returns>
-        public static FirewallPolicy GetFirewallPolicy(this ArmClient armClient, ResourceIdentifier id)
+        public static FirewallPolicy GetFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            FirewallPolicy.ValidateResourceId(id);
-            return new FirewallPolicy(armClient, id);
+            return client.GetClient(() =>
+            {
+                FirewallPolicy.ValidateResourceId(id);
+                return new FirewallPolicy(client, id);
+            }
+            );
         }
         #endregion
 
         #region FirewallPolicyRuleCollectionGroup
         /// <summary> Gets an object representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroup" /> object. </returns>
-        public static FirewallPolicyRuleCollectionGroup GetFirewallPolicyRuleCollectionGroup(this ArmClient armClient, ResourceIdentifier id)
+        public static FirewallPolicyRuleCollectionGroup GetFirewallPolicyRuleCollectionGroup(this ArmClient client, ResourceIdentifier id)
         {
-            FirewallPolicyRuleCollectionGroup.ValidateResourceId(id);
-            return new FirewallPolicyRuleCollectionGroup(armClient, id);
+            return client.GetClient(() =>
+            {
+                FirewallPolicyRuleCollectionGroup.ValidateResourceId(id);
+                return new FirewallPolicyRuleCollectionGroup(client, id);
+            }
+            );
         }
         #endregion
 
-        #region IpAllocation
-        /// <summary> Gets an object representing a IpAllocation along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        #region IPAllocation
+        /// <summary> Gets an object representing a IPAllocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpAllocation" /> object. </returns>
-        public static IpAllocation GetIpAllocation(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPAllocation" /> object. </returns>
+        public static IPAllocation GetIPAllocation(this ArmClient client, ResourceIdentifier id)
         {
-            IpAllocation.ValidateResourceId(id);
-            return new IpAllocation(armClient, id);
+            return client.GetClient(() =>
+            {
+                IPAllocation.ValidateResourceId(id);
+                return new IPAllocation(client, id);
+            }
+            );
         }
         #endregion
 
-        #region IpGroup
-        /// <summary> Gets an object representing a IpGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        #region IPGroup
+        /// <summary> Gets an object representing a IPGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpGroup" /> object. </returns>
-        public static IpGroup GetIpGroup(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPGroup" /> object. </returns>
+        public static IPGroup GetIPGroup(this ArmClient client, ResourceIdentifier id)
         {
-            IpGroup.ValidateResourceId(id);
-            return new IpGroup(armClient, id);
+            return client.GetClient(() =>
+            {
+                IPGroup.ValidateResourceId(id);
+                return new IPGroup(client, id);
+            }
+            );
         }
         #endregion
 
         #region LoadBalancer
         /// <summary> Gets an object representing a LoadBalancer along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancer" /> object. </returns>
-        public static LoadBalancer GetLoadBalancer(this ArmClient armClient, ResourceIdentifier id)
+        public static LoadBalancer GetLoadBalancer(this ArmClient client, ResourceIdentifier id)
         {
-            LoadBalancer.ValidateResourceId(id);
-            return new LoadBalancer(armClient, id);
+            return client.GetClient(() =>
+            {
+                LoadBalancer.ValidateResourceId(id);
+                return new LoadBalancer(client, id);
+            }
+            );
         }
         #endregion
 
         #region BackendAddressPool
         /// <summary> Gets an object representing a BackendAddressPool along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BackendAddressPool" /> object. </returns>
-        public static BackendAddressPool GetBackendAddressPool(this ArmClient armClient, ResourceIdentifier id)
+        public static BackendAddressPool GetBackendAddressPool(this ArmClient client, ResourceIdentifier id)
         {
-            BackendAddressPool.ValidateResourceId(id);
-            return new BackendAddressPool(armClient, id);
+            return client.GetClient(() =>
+            {
+                BackendAddressPool.ValidateResourceId(id);
+                return new BackendAddressPool(client, id);
+            }
+            );
         }
         #endregion
 
         #region FrontendIPConfiguration
         /// <summary> Gets an object representing a FrontendIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FrontendIPConfiguration" /> object. </returns>
-        public static FrontendIPConfiguration GetFrontendIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        public static FrontendIPConfiguration GetFrontendIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            FrontendIPConfiguration.ValidateResourceId(id);
-            return new FrontendIPConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                FrontendIPConfiguration.ValidateResourceId(id);
+                return new FrontendIPConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region InboundNatRule
         /// <summary> Gets an object representing a InboundNatRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InboundNatRule" /> object. </returns>
-        public static InboundNatRule GetInboundNatRule(this ArmClient armClient, ResourceIdentifier id)
+        public static InboundNatRule GetInboundNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            InboundNatRule.ValidateResourceId(id);
-            return new InboundNatRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                InboundNatRule.ValidateResourceId(id);
+                return new InboundNatRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region LoadBalancingRule
         /// <summary> Gets an object representing a LoadBalancingRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancingRule" /> object. </returns>
-        public static LoadBalancingRule GetLoadBalancingRule(this ArmClient armClient, ResourceIdentifier id)
+        public static LoadBalancingRule GetLoadBalancingRule(this ArmClient client, ResourceIdentifier id)
         {
-            LoadBalancingRule.ValidateResourceId(id);
-            return new LoadBalancingRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                LoadBalancingRule.ValidateResourceId(id);
+                return new LoadBalancingRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region OutboundRule
         /// <summary> Gets an object representing a OutboundRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundRule" /> object. </returns>
-        public static OutboundRule GetOutboundRule(this ArmClient armClient, ResourceIdentifier id)
+        public static OutboundRule GetOutboundRule(this ArmClient client, ResourceIdentifier id)
         {
-            OutboundRule.ValidateResourceId(id);
-            return new OutboundRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                OutboundRule.ValidateResourceId(id);
+                return new OutboundRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region Probe
         /// <summary> Gets an object representing a Probe along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Probe" /> object. </returns>
-        public static Probe GetProbe(this ArmClient armClient, ResourceIdentifier id)
+        public static Probe GetProbe(this ArmClient client, ResourceIdentifier id)
         {
-            Probe.ValidateResourceId(id);
-            return new Probe(armClient, id);
+            return client.GetClient(() =>
+            {
+                Probe.ValidateResourceId(id);
+                return new Probe(client, id);
+            }
+            );
         }
         #endregion
 
         #region NatGateway
         /// <summary> Gets an object representing a NatGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NatGateway" /> object. </returns>
-        public static NatGateway GetNatGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static NatGateway GetNatGateway(this ArmClient client, ResourceIdentifier id)
         {
-            NatGateway.ValidateResourceId(id);
-            return new NatGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                NatGateway.ValidateResourceId(id);
+                return new NatGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkInterface
         /// <summary> Gets an object representing a NetworkInterface along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterface" /> object. </returns>
-        public static NetworkInterface GetNetworkInterface(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkInterface GetNetworkInterface(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkInterface.ValidateResourceId(id);
-            return new NetworkInterface(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkInterface.ValidateResourceId(id);
+                return new NetworkInterface(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkInterfaceIPConfiguration
         /// <summary> Gets an object representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
-        public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkInterfaceIPConfiguration.ValidateResourceId(id);
-            return new NetworkInterfaceIPConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkInterfaceIPConfiguration.ValidateResourceId(id);
+                return new NetworkInterfaceIPConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkInterfaceTapConfiguration
         /// <summary> Gets an object representing a NetworkInterfaceTapConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfiguration" /> object. </returns>
-        public static NetworkInterfaceTapConfiguration GetNetworkInterfaceTapConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkInterfaceTapConfiguration GetNetworkInterfaceTapConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkInterfaceTapConfiguration.ValidateResourceId(id);
-            return new NetworkInterfaceTapConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkInterfaceTapConfiguration.ValidateResourceId(id);
+                return new NetworkInterfaceTapConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkProfile
         /// <summary> Gets an object representing a NetworkProfile along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkProfile" /> object. </returns>
-        public static NetworkProfile GetNetworkProfile(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkProfile GetNetworkProfile(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkProfile.ValidateResourceId(id);
-            return new NetworkProfile(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkProfile.ValidateResourceId(id);
+                return new NetworkProfile(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkSecurityGroup
         /// <summary> Gets an object representing a NetworkSecurityGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkSecurityGroup" /> object. </returns>
-        public static NetworkSecurityGroup GetNetworkSecurityGroup(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkSecurityGroup GetNetworkSecurityGroup(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkSecurityGroup.ValidateResourceId(id);
-            return new NetworkSecurityGroup(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkSecurityGroup.ValidateResourceId(id);
+                return new NetworkSecurityGroup(client, id);
+            }
+            );
         }
         #endregion
 
         #region SecurityRule
         /// <summary> Gets an object representing a SecurityRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityRule" /> object. </returns>
-        public static SecurityRule GetSecurityRule(this ArmClient armClient, ResourceIdentifier id)
+        public static SecurityRule GetSecurityRule(this ArmClient client, ResourceIdentifier id)
         {
-            SecurityRule.ValidateResourceId(id);
-            return new SecurityRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                SecurityRule.ValidateResourceId(id);
+                return new SecurityRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region DefaultSecurityRule
         /// <summary> Gets an object representing a DefaultSecurityRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DefaultSecurityRule" /> object. </returns>
-        public static DefaultSecurityRule GetDefaultSecurityRule(this ArmClient armClient, ResourceIdentifier id)
+        public static DefaultSecurityRule GetDefaultSecurityRule(this ArmClient client, ResourceIdentifier id)
         {
-            DefaultSecurityRule.ValidateResourceId(id);
-            return new DefaultSecurityRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                DefaultSecurityRule.ValidateResourceId(id);
+                return new DefaultSecurityRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkVirtualAppliance
         /// <summary> Gets an object representing a NetworkVirtualAppliance along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualAppliance" /> object. </returns>
-        public static NetworkVirtualAppliance GetNetworkVirtualAppliance(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkVirtualAppliance GetNetworkVirtualAppliance(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkVirtualAppliance.ValidateResourceId(id);
-            return new NetworkVirtualAppliance(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkVirtualAppliance.ValidateResourceId(id);
+                return new NetworkVirtualAppliance(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualApplianceSite
         /// <summary> Gets an object representing a VirtualApplianceSite along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplianceSite" /> object. </returns>
-        public static VirtualApplianceSite GetVirtualApplianceSite(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualApplianceSite GetVirtualApplianceSite(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualApplianceSite.ValidateResourceId(id);
-            return new VirtualApplianceSite(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualApplianceSite.ValidateResourceId(id);
+                return new VirtualApplianceSite(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkVirtualApplianceSku
         /// <summary> Gets an object representing a NetworkVirtualApplianceSku along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSku" /> object. </returns>
-        public static NetworkVirtualApplianceSku GetNetworkVirtualApplianceSku(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkVirtualApplianceSku GetNetworkVirtualApplianceSku(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkVirtualApplianceSku.ValidateResourceId(id);
-            return new NetworkVirtualApplianceSku(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkVirtualApplianceSku.ValidateResourceId(id);
+                return new NetworkVirtualApplianceSku(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkWatcher
         /// <summary> Gets an object representing a NetworkWatcher along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkWatcher" /> object. </returns>
-        public static NetworkWatcher GetNetworkWatcher(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkWatcher GetNetworkWatcher(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkWatcher.ValidateResourceId(id);
-            return new NetworkWatcher(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkWatcher.ValidateResourceId(id);
+                return new NetworkWatcher(client, id);
+            }
+            );
         }
         #endregion
 
         #region PacketCapture
         /// <summary> Gets an object representing a PacketCapture along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PacketCapture" /> object. </returns>
-        public static PacketCapture GetPacketCapture(this ArmClient armClient, ResourceIdentifier id)
+        public static PacketCapture GetPacketCapture(this ArmClient client, ResourceIdentifier id)
         {
-            PacketCapture.ValidateResourceId(id);
-            return new PacketCapture(armClient, id);
+            return client.GetClient(() =>
+            {
+                PacketCapture.ValidateResourceId(id);
+                return new PacketCapture(client, id);
+            }
+            );
         }
         #endregion
 
         #region ConnectionMonitor
         /// <summary> Gets an object representing a ConnectionMonitor along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConnectionMonitor" /> object. </returns>
-        public static ConnectionMonitor GetConnectionMonitor(this ArmClient armClient, ResourceIdentifier id)
+        public static ConnectionMonitor GetConnectionMonitor(this ArmClient client, ResourceIdentifier id)
         {
-            ConnectionMonitor.ValidateResourceId(id);
-            return new ConnectionMonitor(armClient, id);
+            return client.GetClient(() =>
+            {
+                ConnectionMonitor.ValidateResourceId(id);
+                return new ConnectionMonitor(client, id);
+            }
+            );
         }
         #endregion
 
         #region FlowLog
         /// <summary> Gets an object representing a FlowLog along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FlowLog" /> object. </returns>
-        public static FlowLog GetFlowLog(this ArmClient armClient, ResourceIdentifier id)
+        public static FlowLog GetFlowLog(this ArmClient client, ResourceIdentifier id)
         {
-            FlowLog.ValidateResourceId(id);
-            return new FlowLog(armClient, id);
+            return client.GetClient(() =>
+            {
+                FlowLog.ValidateResourceId(id);
+                return new FlowLog(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateEndpoint
         /// <summary> Gets an object representing a PrivateEndpoint along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpoint" /> object. </returns>
-        public static PrivateEndpoint GetPrivateEndpoint(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateEndpoint GetPrivateEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateEndpoint.ValidateResourceId(id);
-            return new PrivateEndpoint(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateEndpoint.ValidateResourceId(id);
+                return new PrivateEndpoint(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateDnsZoneGroup
         /// <summary> Gets an object representing a PrivateDnsZoneGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateDnsZoneGroup" /> object. </returns>
-        public static PrivateDnsZoneGroup GetPrivateDnsZoneGroup(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateDnsZoneGroup GetPrivateDnsZoneGroup(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateDnsZoneGroup.ValidateResourceId(id);
-            return new PrivateDnsZoneGroup(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateDnsZoneGroup.ValidateResourceId(id);
+                return new PrivateDnsZoneGroup(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateLinkService
         /// <summary> Gets an object representing a PrivateLinkService along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkService" /> object. </returns>
-        public static PrivateLinkService GetPrivateLinkService(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateLinkService GetPrivateLinkService(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateLinkService.ValidateResourceId(id);
-            return new PrivateLinkService(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateLinkService.ValidateResourceId(id);
+                return new PrivateLinkService(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateEndpointConnection.ValidateResourceId(id);
-            return new PrivateEndpointConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateEndpointConnection.ValidateResourceId(id);
+                return new PrivateEndpointConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region PublicIPAddress
         /// <summary> Gets an object representing a PublicIPAddress along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPAddress" /> object. </returns>
-        public static PublicIPAddress GetPublicIPAddress(this ArmClient armClient, ResourceIdentifier id)
+        public static PublicIPAddress GetPublicIPAddress(this ArmClient client, ResourceIdentifier id)
         {
-            PublicIPAddress.ValidateResourceId(id);
-            return new PublicIPAddress(armClient, id);
+            return client.GetClient(() =>
+            {
+                PublicIPAddress.ValidateResourceId(id);
+                return new PublicIPAddress(client, id);
+            }
+            );
         }
         #endregion
 
         #region PublicIPPrefix
         /// <summary> Gets an object representing a PublicIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPPrefix" /> object. </returns>
-        public static PublicIPPrefix GetPublicIPPrefix(this ArmClient armClient, ResourceIdentifier id)
+        public static PublicIPPrefix GetPublicIPPrefix(this ArmClient client, ResourceIdentifier id)
         {
-            PublicIPPrefix.ValidateResourceId(id);
-            return new PublicIPPrefix(armClient, id);
+            return client.GetClient(() =>
+            {
+                PublicIPPrefix.ValidateResourceId(id);
+                return new PublicIPPrefix(client, id);
+            }
+            );
         }
         #endregion
 
         #region RouteFilter
         /// <summary> Gets an object representing a RouteFilter along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilter" /> object. </returns>
-        public static RouteFilter GetRouteFilter(this ArmClient armClient, ResourceIdentifier id)
+        public static RouteFilter GetRouteFilter(this ArmClient client, ResourceIdentifier id)
         {
-            RouteFilter.ValidateResourceId(id);
-            return new RouteFilter(armClient, id);
+            return client.GetClient(() =>
+            {
+                RouteFilter.ValidateResourceId(id);
+                return new RouteFilter(client, id);
+            }
+            );
         }
         #endregion
 
         #region RouteFilterRule
         /// <summary> Gets an object representing a RouteFilterRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilterRule" /> object. </returns>
-        public static RouteFilterRule GetRouteFilterRule(this ArmClient armClient, ResourceIdentifier id)
+        public static RouteFilterRule GetRouteFilterRule(this ArmClient client, ResourceIdentifier id)
         {
-            RouteFilterRule.ValidateResourceId(id);
-            return new RouteFilterRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                RouteFilterRule.ValidateResourceId(id);
+                return new RouteFilterRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region RouteTable
         /// <summary> Gets an object representing a RouteTable along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteTable" /> object. </returns>
-        public static RouteTable GetRouteTable(this ArmClient armClient, ResourceIdentifier id)
+        public static RouteTable GetRouteTable(this ArmClient client, ResourceIdentifier id)
         {
-            RouteTable.ValidateResourceId(id);
-            return new RouteTable(armClient, id);
+            return client.GetClient(() =>
+            {
+                RouteTable.ValidateResourceId(id);
+                return new RouteTable(client, id);
+            }
+            );
         }
         #endregion
 
         #region Route
         /// <summary> Gets an object representing a Route along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Route" /> object. </returns>
-        public static Route GetRoute(this ArmClient armClient, ResourceIdentifier id)
+        public static Route GetRoute(this ArmClient client, ResourceIdentifier id)
         {
-            Route.ValidateResourceId(id);
-            return new Route(armClient, id);
+            return client.GetClient(() =>
+            {
+                Route.ValidateResourceId(id);
+                return new Route(client, id);
+            }
+            );
         }
         #endregion
 
         #region SecurityPartnerProvider
         /// <summary> Gets an object representing a SecurityPartnerProvider along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityPartnerProvider" /> object. </returns>
-        public static SecurityPartnerProvider GetSecurityPartnerProvider(this ArmClient armClient, ResourceIdentifier id)
+        public static SecurityPartnerProvider GetSecurityPartnerProvider(this ArmClient client, ResourceIdentifier id)
         {
-            SecurityPartnerProvider.ValidateResourceId(id);
-            return new SecurityPartnerProvider(armClient, id);
+            return client.GetClient(() =>
+            {
+                SecurityPartnerProvider.ValidateResourceId(id);
+                return new SecurityPartnerProvider(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceEndpointPolicy
         /// <summary> Gets an object representing a ServiceEndpointPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicy" /> object. </returns>
-        public static ServiceEndpointPolicy GetServiceEndpointPolicy(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceEndpointPolicy GetServiceEndpointPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceEndpointPolicy.ValidateResourceId(id);
-            return new ServiceEndpointPolicy(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceEndpointPolicy.ValidateResourceId(id);
+                return new ServiceEndpointPolicy(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceEndpointPolicyDefinition
         /// <summary> Gets an object representing a ServiceEndpointPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinition" /> object. </returns>
-        public static ServiceEndpointPolicyDefinition GetServiceEndpointPolicyDefinition(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceEndpointPolicyDefinition GetServiceEndpointPolicyDefinition(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceEndpointPolicyDefinition.ValidateResourceId(id);
-            return new ServiceEndpointPolicyDefinition(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceEndpointPolicyDefinition.ValidateResourceId(id);
+                return new ServiceEndpointPolicyDefinition(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetwork
         /// <summary> Gets an object representing a VirtualNetwork along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
-        public static VirtualNetwork GetVirtualNetwork(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetwork GetVirtualNetwork(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetwork.ValidateResourceId(id);
-            return new VirtualNetwork(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetwork.ValidateResourceId(id);
+                return new VirtualNetwork(client, id);
+            }
+            );
         }
         #endregion
 
         #region Subnet
         /// <summary> Gets an object representing a Subnet along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Subnet" /> object. </returns>
-        public static Subnet GetSubnet(this ArmClient armClient, ResourceIdentifier id)
+        public static Subnet GetSubnet(this ArmClient client, ResourceIdentifier id)
         {
-            Subnet.ValidateResourceId(id);
-            return new Subnet(armClient, id);
+            return client.GetClient(() =>
+            {
+                Subnet.ValidateResourceId(id);
+                return new Subnet(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkPeering
         /// <summary> Gets an object representing a VirtualNetworkPeering along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkPeering" /> object. </returns>
-        public static VirtualNetworkPeering GetVirtualNetworkPeering(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkPeering GetVirtualNetworkPeering(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkPeering.ValidateResourceId(id);
-            return new VirtualNetworkPeering(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkPeering.ValidateResourceId(id);
+                return new VirtualNetworkPeering(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkGateway
         /// <summary> Gets an object representing a VirtualNetworkGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGateway" /> object. </returns>
-        public static VirtualNetworkGateway GetVirtualNetworkGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkGateway GetVirtualNetworkGateway(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkGateway.ValidateResourceId(id);
-            return new VirtualNetworkGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkGateway.ValidateResourceId(id);
+                return new VirtualNetworkGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkGatewayConnection
         /// <summary> Gets an object representing a VirtualNetworkGatewayConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnection" /> object. </returns>
-        public static VirtualNetworkGatewayConnection GetVirtualNetworkGatewayConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkGatewayConnection GetVirtualNetworkGatewayConnection(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkGatewayConnection.ValidateResourceId(id);
-            return new VirtualNetworkGatewayConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkGatewayConnection.ValidateResourceId(id);
+                return new VirtualNetworkGatewayConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region LocalNetworkGateway
         /// <summary> Gets an object representing a LocalNetworkGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LocalNetworkGateway" /> object. </returns>
-        public static LocalNetworkGateway GetLocalNetworkGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static LocalNetworkGateway GetLocalNetworkGateway(this ArmClient client, ResourceIdentifier id)
         {
-            LocalNetworkGateway.ValidateResourceId(id);
-            return new LocalNetworkGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                LocalNetworkGateway.ValidateResourceId(id);
+                return new LocalNetworkGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkGatewayNatRule
         /// <summary> Gets an object representing a VirtualNetworkGatewayNatRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRule" /> object. </returns>
-        public static VirtualNetworkGatewayNatRule GetVirtualNetworkGatewayNatRule(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkGatewayNatRule GetVirtualNetworkGatewayNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkGatewayNatRule.ValidateResourceId(id);
-            return new VirtualNetworkGatewayNatRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkGatewayNatRule.ValidateResourceId(id);
+                return new VirtualNetworkGatewayNatRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkTap
         /// <summary> Gets an object representing a VirtualNetworkTap along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkTap" /> object. </returns>
-        public static VirtualNetworkTap GetVirtualNetworkTap(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkTap GetVirtualNetworkTap(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkTap.ValidateResourceId(id);
-            return new VirtualNetworkTap(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkTap.ValidateResourceId(id);
+                return new VirtualNetworkTap(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualRouter
         /// <summary> Gets an object representing a VirtualRouter along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouter" /> object. </returns>
-        public static VirtualRouter GetVirtualRouter(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualRouter GetVirtualRouter(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualRouter.ValidateResourceId(id);
-            return new VirtualRouter(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualRouter.ValidateResourceId(id);
+                return new VirtualRouter(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualRouterPeering
         /// <summary> Gets an object representing a VirtualRouterPeering along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouterPeering" /> object. </returns>
-        public static VirtualRouterPeering GetVirtualRouterPeering(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualRouterPeering GetVirtualRouterPeering(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualRouterPeering.ValidateResourceId(id);
-            return new VirtualRouterPeering(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualRouterPeering.ValidateResourceId(id);
+                return new VirtualRouterPeering(client, id);
+            }
+            );
         }
         #endregion
 
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWAN along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        #region VirtualWan
+        /// <summary> Gets an object representing a VirtualWan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWAN" /> object. </returns>
-        public static VirtualWAN GetVirtualWAN(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWan" /> object. </returns>
+        public static VirtualWan GetVirtualWan(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualWAN.ValidateResourceId(id);
-            return new VirtualWAN(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualWan.ValidateResourceId(id);
+                return new VirtualWan(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnSite
         /// <summary> Gets an object representing a VpnSite along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSite" /> object. </returns>
-        public static VpnSite GetVpnSite(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnSite GetVpnSite(this ArmClient client, ResourceIdentifier id)
         {
-            VpnSite.ValidateResourceId(id);
-            return new VpnSite(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnSite.ValidateResourceId(id);
+                return new VpnSite(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnSiteLink
         /// <summary> Gets an object representing a VpnSiteLink along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLink" /> object. </returns>
-        public static VpnSiteLink GetVpnSiteLink(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnSiteLink GetVpnSiteLink(this ArmClient client, ResourceIdentifier id)
         {
-            VpnSiteLink.ValidateResourceId(id);
-            return new VpnSiteLink(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnSiteLink.ValidateResourceId(id);
+                return new VpnSiteLink(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnServerConfiguration
         /// <summary> Gets an object representing a VpnServerConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnServerConfiguration" /> object. </returns>
-        public static VpnServerConfiguration GetVpnServerConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnServerConfiguration GetVpnServerConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            VpnServerConfiguration.ValidateResourceId(id);
-            return new VpnServerConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnServerConfiguration.ValidateResourceId(id);
+                return new VpnServerConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualHub
         /// <summary> Gets an object representing a VirtualHub along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHub" /> object. </returns>
-        public static VirtualHub GetVirtualHub(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualHub GetVirtualHub(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualHub.ValidateResourceId(id);
-            return new VirtualHub(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualHub.ValidateResourceId(id);
+                return new VirtualHub(client, id);
+            }
+            );
         }
         #endregion
 
         #region HubVirtualNetworkConnection
         /// <summary> Gets an object representing a HubVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubVirtualNetworkConnection" /> object. </returns>
-        public static HubVirtualNetworkConnection GetHubVirtualNetworkConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static HubVirtualNetworkConnection GetHubVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            HubVirtualNetworkConnection.ValidateResourceId(id);
-            return new HubVirtualNetworkConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                HubVirtualNetworkConnection.ValidateResourceId(id);
+                return new HubVirtualNetworkConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnGateway
         /// <summary> Gets an object representing a VpnGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGateway" /> object. </returns>
-        public static VpnGateway GetVpnGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnGateway GetVpnGateway(this ArmClient client, ResourceIdentifier id)
         {
-            VpnGateway.ValidateResourceId(id);
-            return new VpnGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnGateway.ValidateResourceId(id);
+                return new VpnGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnConnection
         /// <summary> Gets an object representing a VpnConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnConnection" /> object. </returns>
-        public static VpnConnection GetVpnConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnConnection GetVpnConnection(this ArmClient client, ResourceIdentifier id)
         {
-            VpnConnection.ValidateResourceId(id);
-            return new VpnConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnConnection.ValidateResourceId(id);
+                return new VpnConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnSiteLinkConnection
         /// <summary> Gets an object representing a VpnSiteLinkConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLinkConnection" /> object. </returns>
-        public static VpnSiteLinkConnection GetVpnSiteLinkConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnSiteLinkConnection GetVpnSiteLinkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            VpnSiteLinkConnection.ValidateResourceId(id);
-            return new VpnSiteLinkConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnSiteLinkConnection.ValidateResourceId(id);
+                return new VpnSiteLinkConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region VpnGatewayNatRule
         /// <summary> Gets an object representing a VpnGatewayNatRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGatewayNatRule" /> object. </returns>
-        public static VpnGatewayNatRule GetVpnGatewayNatRule(this ArmClient armClient, ResourceIdentifier id)
+        public static VpnGatewayNatRule GetVpnGatewayNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            VpnGatewayNatRule.ValidateResourceId(id);
-            return new VpnGatewayNatRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                VpnGatewayNatRule.ValidateResourceId(id);
+                return new VpnGatewayNatRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region P2SVpnGateway
         /// <summary> Gets an object representing a P2SVpnGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="P2SVpnGateway" /> object. </returns>
-        public static P2SVpnGateway GetP2SVpnGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static P2SVpnGateway GetP2SVpnGateway(this ArmClient client, ResourceIdentifier id)
         {
-            P2SVpnGateway.ValidateResourceId(id);
-            return new P2SVpnGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                P2SVpnGateway.ValidateResourceId(id);
+                return new P2SVpnGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualHubRouteTableV2
         /// <summary> Gets an object representing a VirtualHubRouteTableV2 along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2" /> object. </returns>
-        public static VirtualHubRouteTableV2 GetVirtualHubRouteTableV2(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualHubRouteTableV2 GetVirtualHubRouteTableV2(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualHubRouteTableV2.ValidateResourceId(id);
-            return new VirtualHubRouteTableV2(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualHubRouteTableV2.ValidateResourceId(id);
+                return new VirtualHubRouteTableV2(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteGateway
         /// <summary> Gets an object representing a ExpressRouteGateway along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteGateway" /> object. </returns>
-        public static ExpressRouteGateway GetExpressRouteGateway(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteGateway GetExpressRouteGateway(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteGateway.ValidateResourceId(id);
-            return new ExpressRouteGateway(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteGateway.ValidateResourceId(id);
+                return new ExpressRouteGateway(client, id);
+            }
+            );
         }
         #endregion
 
         #region ExpressRouteConnection
         /// <summary> Gets an object representing a ExpressRouteConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteConnection" /> object. </returns>
-        public static ExpressRouteConnection GetExpressRouteConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static ExpressRouteConnection GetExpressRouteConnection(this ArmClient client, ResourceIdentifier id)
         {
-            ExpressRouteConnection.ValidateResourceId(id);
-            return new ExpressRouteConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                ExpressRouteConnection.ValidateResourceId(id);
+                return new ExpressRouteConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region BgpConnection
         /// <summary> Gets an object representing a BgpConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BgpConnection" /> object. </returns>
-        public static BgpConnection GetBgpConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static BgpConnection GetBgpConnection(this ArmClient client, ResourceIdentifier id)
         {
-            BgpConnection.ValidateResourceId(id);
-            return new BgpConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                BgpConnection.ValidateResourceId(id);
+                return new BgpConnection(client, id);
+            }
+            );
         }
         #endregion
 
-        #region HubIpConfiguration
-        /// <summary> Gets an object representing a HubIpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        #region HubIPConfiguration
+        /// <summary> Gets an object representing a HubIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubIpConfiguration" /> object. </returns>
-        public static HubIpConfiguration GetHubIpConfiguration(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HubIPConfiguration" /> object. </returns>
+        public static HubIPConfiguration GetHubIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            HubIpConfiguration.ValidateResourceId(id);
-            return new HubIpConfiguration(armClient, id);
+            return client.GetClient(() =>
+            {
+                HubIPConfiguration.ValidateResourceId(id);
+                return new HubIPConfiguration(client, id);
+            }
+            );
         }
         #endregion
 
         #region HubRouteTable
         /// <summary> Gets an object representing a HubRouteTable along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubRouteTable" /> object. </returns>
-        public static HubRouteTable GetHubRouteTable(this ArmClient armClient, ResourceIdentifier id)
+        public static HubRouteTable GetHubRouteTable(this ArmClient client, ResourceIdentifier id)
         {
-            HubRouteTable.ValidateResourceId(id);
-            return new HubRouteTable(armClient, id);
+            return client.GetClient(() =>
+            {
+                HubRouteTable.ValidateResourceId(id);
+                return new HubRouteTable(client, id);
+            }
+            );
         }
         #endregion
 
         #region WebApplicationFirewallPolicy
         /// <summary> Gets an object representing a WebApplicationFirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicy" /> object. </returns>
-        public static WebApplicationFirewallPolicy GetWebApplicationFirewallPolicy(this ArmClient armClient, ResourceIdentifier id)
+        public static WebApplicationFirewallPolicy GetWebApplicationFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            WebApplicationFirewallPolicy.ValidateResourceId(id);
-            return new WebApplicationFirewallPolicy(armClient, id);
+            return client.GetClient(() =>
+            {
+                WebApplicationFirewallPolicy.ValidateResourceId(id);
+                return new WebApplicationFirewallPolicy(client, id);
+            }
+            );
         }
         #endregion
     }

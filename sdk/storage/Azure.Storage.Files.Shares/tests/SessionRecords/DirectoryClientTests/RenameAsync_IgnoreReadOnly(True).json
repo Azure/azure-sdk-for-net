@@ -170,7 +170,7 @@
         "x-ms-file-attributes": "Directory",
         "x-ms-file-rename-ignore-readonly": "true",
         "x-ms-file-rename-replace-if-exists": "true",
-        "x-ms-file-rename-source": "https%3A%2F%2Ffp8xscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-fc6e9a64-ae4f-59c6-37f7-0619a06706b1%2Ftest-directory-9e0ff58f-1664-e50f-c1a8-d0e8943f7b08=",
+        "x-ms-file-rename-source": "https://fp8xscnapby3pev24a.file.preprod.core.windows.net/test-share-fc6e9a64-ae4f-59c6-37f7-0619a06706b1/test-directory-9e0ff58f-1664-e50f-c1a8-d0e8943f7b08",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,16 +24,15 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
-        }
-
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
-        {
-            _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                });
         }
 
         protected TableServiceClient service { get; private set; }
@@ -67,7 +67,8 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
             { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
-            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()

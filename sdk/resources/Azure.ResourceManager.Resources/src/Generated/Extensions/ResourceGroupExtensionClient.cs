@@ -11,7 +11,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class for mocking. </summary>
@@ -20,16 +20,58 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public virtual DeploymentCollection GetDeployments()
+        {
+            return new DeploymentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Applications in the Application. </summary>
+        /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
+        public virtual ApplicationCollection GetApplications()
+        {
+            return new ApplicationCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>
+        /// <returns> An object representing collection of ApplicationDefinitions and their operations over a ApplicationDefinition. </returns>
+        public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
+        {
+            return new ApplicationDefinitionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of JitRequests in the JitRequest. </summary>
+        /// <returns> An object representing collection of JitRequests and their operations over a JitRequest. </returns>
+        public virtual JitRequestCollection GetJitRequests()
+        {
+            return new JitRequestCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DeploymentScripts in the DeploymentScript. </summary>
+        /// <returns> An object representing collection of DeploymentScripts and their operations over a DeploymentScript. </returns>
+        public virtual DeploymentScriptCollection GetDeploymentScripts()
+        {
+            return new DeploymentScriptCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of TemplateSpecs in the TemplateSpec. </summary>
+        /// <returns> An object representing collection of TemplateSpecs and their operations over a TemplateSpec. </returns>
+        public virtual TemplateSpecCollection GetTemplateSpecs()
+        {
+            return new TemplateSpecCollection(Client, Id);
         }
     }
 }

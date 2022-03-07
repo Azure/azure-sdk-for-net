@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> The output destination database. </param>
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/>, or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
         {
             if (serverName == null)

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application locking policy. </summary>
-    public partial class ApplicationPackageLockingPolicyDefinition
+    internal partial class ApplicationPackageLockingPolicyDefinition
     {
         /// <summary> Initializes a new instance of ApplicationPackageLockingPolicyDefinition. </summary>
         public ApplicationPackageLockingPolicyDefinition()

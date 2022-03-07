@@ -84,7 +84,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01.</param>
         /// <param name="applicationProfile">Specifies the gallery applications
         /// that should be made available to the VM/VMSS</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile))
+        /// <param name="hardwareProfile">Specifies the hardware profile
+        /// related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2021-11-01.</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -100,6 +103,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             UserData = userData;
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
+            HardwareProfile = hardwareProfile;
             CustomInit();
         }
 
@@ -232,6 +236,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "applicationProfile")]
         public ApplicationProfile ApplicationProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the hardware profile related details of a
+        /// scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2021-11-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "hardwareProfile")]
+        public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
 
         /// <summary>
         /// Validate the object.

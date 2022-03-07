@@ -14,6 +14,5 @@ steps:
         -PullRequestNumber $(System.PullRequest.PullRequestNumber)
         -RepoFullName $(Build.Repository.Name)
       pwsh: true
-      workingDirectory: $(Pipeline.Workspace)
     displayName: Detect API changes
     condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))

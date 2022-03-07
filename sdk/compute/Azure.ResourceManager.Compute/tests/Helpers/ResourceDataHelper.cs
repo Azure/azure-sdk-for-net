@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
-                    OsProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             new VirtualMachineScaleSetNetworkConfiguration("example")
                             {
                                 Primary = true,
-                                IpConfigurations =
+                                IPConfigurations =
                                 {
                                     new VirtualMachineScaleSetIPConfiguration("internal")
                                     {

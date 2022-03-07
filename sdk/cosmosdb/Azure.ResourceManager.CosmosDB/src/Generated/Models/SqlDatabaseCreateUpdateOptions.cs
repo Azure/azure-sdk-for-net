@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB SQL database. </summary>
-    public partial class SqlDatabaseCreateUpdateOptions : TrackedResource
+    public partial class SqlDatabaseCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlDatabaseCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
@@ -33,18 +33,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal SqlDatabaseCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SqlDatabaseResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
+        internal SqlDatabaseCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlDatabaseResource resource, CreateUpdateOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a SQL database. </summary>
-        public SqlDatabaseResource Resource { get; set; }
+        internal SqlDatabaseResource Resource { get; set; }
+        /// <summary> Name of the Cosmos DB SQL database. </summary>
+        public string ResourceId
+        {
+            get => Resource is null ? default : Resource.Id;
+            set => Resource = new SqlDatabaseResource(value);
+        }
+
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CreateUpdateOptions Options { get; set; }
     }

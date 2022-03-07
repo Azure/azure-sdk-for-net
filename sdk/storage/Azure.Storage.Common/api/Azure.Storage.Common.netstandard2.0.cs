@@ -12,12 +12,6 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
-    public partial class DownloadTransactionalHashingOptions
-    {
-        public DownloadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public bool Validate { get { throw null; } set { } }
-    }
     public partial class StorageCrc64NonCryptographicHashAlgorithm
     {
         internal StorageCrc64NonCryptographicHashAlgorithm() { }
@@ -58,18 +52,6 @@ namespace Azure.Storage
         public static bool operator ==(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
-    }
-    public enum TransactionalHashAlgorithm
-    {
-        None = 0,
-        StorageCrc64 = 1,
-        MD5 = 2,
-    }
-    public partial class UploadTransactionalHashingOptions
-    {
-        public UploadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public byte[] PrecalculatedHash { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Sas
@@ -160,7 +142,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2021-02-12";
+        public const string DefaultSasVersion = "2021-04-10";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

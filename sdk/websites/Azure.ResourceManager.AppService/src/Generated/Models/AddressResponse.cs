@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -24,12 +25,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceIpAddress"> Main public virtual IP. </param>
         /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIpAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="vipMappings"> Additional virtual IPs. </param>
-        internal AddressResponse(ResourceIdentifier id, string name, ResourceType type, string kind, string serviceIpAddress, string internalIpAddress, IList<string> outboundIpAddresses, IList<VirtualIPMapping> vipMappings) : base(id, name, type, kind)
+        internal AddressResponse(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string serviceIpAddress, string internalIpAddress, IList<string> outboundIpAddresses, IList<VirtualIPMapping> vipMappings) : base(id, name, type, systemData, kind)
         {
             ServiceIpAddress = serviceIpAddress;
             InternalIpAddress = internalIpAddress;

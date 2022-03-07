@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _subscriptionResourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _subscriptionResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _subscriptionResourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _subscriptionResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

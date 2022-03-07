@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
         internal VpnClientConnectionHealth()
         {
-            AllocatedIpAddresses = new ChangeTrackingList<string>();
+            AllocatedIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
         /// <param name="totalIngressBytesTransferred"> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </param>
         /// <param name="totalEgressBytesTransferred"> Total of the Egress Bytes Transferred in this connection. </param>
         /// <param name="vpnClientConnectionsCount"> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </param>
-        /// <param name="allocatedIpAddresses"> List of allocated ip addresses to the connected p2s vpn clients. </param>
-        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IReadOnlyList<string> allocatedIpAddresses)
+        /// <param name="allocatedIPAddresses"> List of allocated ip addresses to the connected p2s vpn clients. </param>
+        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IReadOnlyList<string> allocatedIPAddresses)
         {
             TotalIngressBytesTransferred = totalIngressBytesTransferred;
             TotalEgressBytesTransferred = totalEgressBytesTransferred;
             VpnClientConnectionsCount = vpnClientConnectionsCount;
-            AllocatedIpAddresses = allocatedIpAddresses;
+            AllocatedIPAddresses = allocatedIPAddresses;
         }
 
         /// <summary> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </summary>
         public int? VpnClientConnectionsCount { get; }
         /// <summary> List of allocated ip addresses to the connected p2s vpn clients. </summary>
-        public IReadOnlyList<string> AllocatedIpAddresses { get; }
+        public IReadOnlyList<string> AllocatedIPAddresses { get; }
     }
 }

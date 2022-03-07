@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
 using Azure.Core;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
             {
                 Location = AzureLocation.WestUS2,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+                Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
             };
             var lro = await account.UpdateAsync(true, updateOptions);
             DeviceUpdateAccount updatedAccount = lro.Value;

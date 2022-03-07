@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the PrivateLinkResource data model. </summary>
-    public partial class PrivateLinkResourceData : Resource
+    public partial class PrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
         public PrivateLinkResourceData()
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
-        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, PrivateLinkResourceProperties properties) : base(id, name, type)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PrivateLinkResourceProperties properties) : base(id, name, type, systemData)
         {
             Properties = properties;
         }

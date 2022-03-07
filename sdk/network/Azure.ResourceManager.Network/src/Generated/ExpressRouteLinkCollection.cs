@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteLinkCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExpressRouteLinkCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ExpressRouteLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteLink.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ExpressRouteLink.ResourceType, out string expressRouteLinkApiVersion);
+            TryGetApiVersion(ExpressRouteLink.ResourceType, out string expressRouteLinkApiVersion);
             _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(_expressRouteLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,37 +50,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ExpressRoutePort.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
+        /// <summary>
+        /// Retrieves the specified ExpressRouteLink resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public virtual Response<ExpressRouteLink> Get(string linkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
-
-            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
-                if (response.Value == null)
-                    throw _expressRouteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteLink(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
-        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteLink>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
@@ -91,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _expressRouteLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteLink(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,23 +79,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Retrieves the specified ExpressRouteLink resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public virtual Response<ExpressRouteLink> GetIfExists(string linkName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteLink> Get(string linkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
-            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
+            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken);
+                var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteLink(ArmClient, response.Value), response.GetRawResponse());
+                    throw _expressRouteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,58 +108,98 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
+        /// <summary>
+        /// Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links
+        /// Operation Id: ExpressRouteLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteLink> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
-
-            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ExpressRouteLink>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _expressRouteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteLink(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _expressRouteLinkRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ExpressRouteLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _expressRouteLinkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
+        /// <summary>
+        /// Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links
+        /// Operation Id: ExpressRouteLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteLink> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
-
-            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
-            scope.Start();
-            try
+            Page<ExpressRouteLink> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(linkName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteLinkRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ExpressRouteLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteLinkRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
@@ -196,80 +219,89 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
+        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteLink> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteLink> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+
+            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteLinkRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(linkName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ExpressRouteLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteLinkRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
+        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        public async virtual Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteLink>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+
+            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteLinkRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _expressRouteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ExpressRouteLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteLinkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}
+        /// Operation Id: ExpressRouteLinks_Get
+        /// </summary>
+        /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        public virtual Response<ExpressRouteLink> GetIfExists(string linkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+
+            using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ExpressRouteLink> IEnumerable<ExpressRouteLink>.GetEnumerator()

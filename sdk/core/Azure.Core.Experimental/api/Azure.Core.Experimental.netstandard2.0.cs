@@ -1,10 +1,13 @@
 namespace Azure
 {
-    public partial class RequestOptions
+    public partial class BinaryContent
     {
-        public RequestOptions() { }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+        public BinaryContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }
 namespace Azure.Core
@@ -93,22 +96,5 @@ namespace Azure.Core
         public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-}
-namespace Azure.Core.Pipeline
-{
-    public static partial class HttpPipelineExtensions
-    {
-        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions? options) { throw null; }
-    }
-}
-namespace Azure.Messaging
-{
-    public abstract partial class MessageWithMetadata
-    {
-        protected MessageWithMetadata() { }
-        public abstract string ContentType { get; set; }
-        public abstract System.BinaryData Data { get; set; }
-        public abstract bool IsReadOnly { get; }
     }
 }

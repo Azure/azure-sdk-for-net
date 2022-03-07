@@ -10,73 +10,61 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ResourceGroup resourceGroup)
-        {
-            return new DeploymentCollection(resourceGroup);
-        }
-        #endregion
-
-        #region Application
-        /// <summary> Gets an object representing a ApplicationCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationCollection" /> object. </returns>
-        public static ApplicationCollection GetApplications(this ResourceGroup resourceGroup)
-        {
-            return new ApplicationCollection(resourceGroup);
-        }
-        #endregion
-
-        #region ApplicationDefinition
-        /// <summary> Gets an object representing a ApplicationDefinitionCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ApplicationDefinitionCollection" /> object. </returns>
-        public static ApplicationDefinitionCollection GetApplicationDefinitions(this ResourceGroup resourceGroup)
-        {
-            return new ApplicationDefinitionCollection(resourceGroup);
-        }
-        #endregion
-
-        #region JitRequestDefinition
-        /// <summary> Gets an object representing a JitRequestDefinitionCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="JitRequestDefinitionCollection" /> object. </returns>
-        public static JitRequestDefinitionCollection GetJitRequestDefinitions(this ResourceGroup resourceGroup)
-        {
-            return new JitRequestDefinitionCollection(resourceGroup);
-        }
-        #endregion
-
-        #region DeploymentScript
-        /// <summary> Gets an object representing a DeploymentScriptCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentScriptCollection" /> object. </returns>
-        public static DeploymentScriptCollection GetDeploymentScripts(this ResourceGroup resourceGroup)
-        {
-            return new DeploymentScriptCollection(resourceGroup);
-        }
-        #endregion
-
-        #region TemplateSpec
-        /// <summary> Gets an object representing a TemplateSpecCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="TemplateSpecCollection" /> object. </returns>
-        public static TemplateSpecCollection GetTemplateSpecs(this ResourceGroup resourceGroup)
-        {
-            return new TemplateSpecCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public static DeploymentCollection GetDeployments(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDeployments();
+        }
+
+        /// <summary> Gets a collection of Applications in the Application. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
+        public static ApplicationCollection GetApplications(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetApplications();
+        }
+
+        /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ApplicationDefinitions and their operations over a ApplicationDefinition. </returns>
+        public static ApplicationDefinitionCollection GetApplicationDefinitions(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetApplicationDefinitions();
+        }
+
+        /// <summary> Gets a collection of JitRequests in the JitRequest. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of JitRequests and their operations over a JitRequest. </returns>
+        public static JitRequestCollection GetJitRequests(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetJitRequests();
+        }
+
+        /// <summary> Gets a collection of DeploymentScripts in the DeploymentScript. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DeploymentScripts and their operations over a DeploymentScript. </returns>
+        public static DeploymentScriptCollection GetDeploymentScripts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDeploymentScripts();
+        }
+
+        /// <summary> Gets a collection of TemplateSpecs in the TemplateSpec. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TemplateSpecs and their operations over a TemplateSpec. </returns>
+        public static TemplateSpecCollection GetTemplateSpecs(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetTemplateSpecs();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CosmosDB.Tests
         public CosmosDBManagementClient CosmosDBManagementClient;
         public ResourceManagementClient ResourceManagementClient;
         public string ResourceGroupName;
-        public string Location = "central us euap";
+        public string Location = "central us";
 
         public Dictionary<AccountType, string> accounts;
 
@@ -98,14 +98,15 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.6",
-                        enablePitr: true
+                        enablePitr: true,
+                        capabilities: new List<Capability> { new Capability("EnableMongo"), new Capability("EnableMongoRoleBasedAccessControl") }
                     );
                 }
                 else if (accountType == AccountType.Table)
                 {
                     accountName = CreateDatabaseAccount(
                         capabilities: new List<Capability> { new Capability("EnableTable") },
-                        enablePitr: false
+                        enablePitr: true
                     );
                 }
                 else if (accountType == AccountType.Cassandra)
@@ -119,7 +120,7 @@ namespace CosmosDB.Tests
                 {
                     accountName = CreateDatabaseAccount(
                         capabilities: new List<Capability> { new Capability("EnableGremlin") },
-                        enablePitr: false
+                        enablePitr: true
                     );
                 }
                 accounts[accountType] = accountName;

@@ -661,6 +661,53 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanManuallyRenewSessionLock()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                for (int i = 0; i < messageCount; i++)
+                {
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(Guid.NewGuid().ToString()));
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = messageCount,
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    var initialLockedUntil = args.SessionLockedUntil;
+                    // introduce a small delay so that the service honors the renewal request
+                    await Task.Delay(500);
+                    await args.RenewSessionLockAsync();
+                    Assert.Greater(args.SessionLockedUntil, initialLockedUntil);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         [TestCase(1, 0)]
         [TestCase(5, 0)]
         [TestCase(10, 1)]

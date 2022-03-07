@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRoute data model. </summary>
-    public partial class AfdRouteData : ProxyResource
+    public partial class AfdRouteData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         public AfdRouteData()
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="customDomains"> Domains referenced by this endpoint. </param>
         /// <param name="originGroup"> A reference to the origin group. </param>
         /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
@@ -64,7 +65,19 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Domains referenced by this endpoint. </summary>
         public IList<WritableSubResource> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup is null ? default : OriginGroup.Id;
+            set
+            {
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
+            }
+        }
+
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         public string OriginPath { get; set; }
         /// <summary> rule sets referenced by this endpoint. </summary>

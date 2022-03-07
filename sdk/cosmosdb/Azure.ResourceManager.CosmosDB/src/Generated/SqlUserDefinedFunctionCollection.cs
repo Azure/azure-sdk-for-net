@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
@@ -32,11 +33,12 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlUserDefinedFunctionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SqlUserDefinedFunctionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SqlUserDefinedFunctionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlUserDefinedFunctionSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlUserDefinedFunction.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SqlUserDefinedFunction.ResourceType, out string sqlUserDefinedFunctionSqlResourcesApiVersion);
+            TryGetApiVersion(SqlUserDefinedFunction.ResourceType, out string sqlUserDefinedFunctionSqlResourcesApiVersion);
             _sqlUserDefinedFunctionSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlUserDefinedFunctionSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,61 +51,28 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlContainer.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Create or update an Azure Cosmos DB SQL userDefinedFunction. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL userDefinedFunction
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_CreateUpdateSqlUserDefinedFunction
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public virtual SqlUserDefinedFunctionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlUserDefinedFunction>> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            if (createUpdateSqlUserDefinedFunctionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlUserDefinedFunctionParameters));
-            }
-
-            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.CreateUpdateSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters, cancellationToken);
-                var operation = new SqlUserDefinedFunctionCreateOrUpdateOperation(ArmClient, _sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _sqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an Azure Cosmos DB SQL userDefinedFunction. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
-        /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async virtual Task<SqlUserDefinedFunctionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            if (createUpdateSqlUserDefinedFunctionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlUserDefinedFunctionParameters));
-            }
+            Argument.AssertNotNull(createUpdateSqlUserDefinedFunctionParameters, nameof(createUpdateSqlUserDefinedFunctionParameters));
 
             using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.CreateUpdateSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlUserDefinedFunctionCreateOrUpdateOperation(ArmClient, _sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _sqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlUserDefinedFunction>(new SqlUserDefinedFunctionOperationSource(Client), _sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _sqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +84,31 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL userDefinedFunction
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_CreateUpdateSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public virtual Response<SqlUserDefinedFunction> Get(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
+        public virtual ArmOperation<SqlUserDefinedFunction> CreateOrUpdate(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+            Argument.AssertNotNull(createUpdateSqlUserDefinedFunctionParameters, nameof(createUpdateSqlUserDefinedFunctionParameters));
 
-            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Get");
+            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken);
-                if (response.Value == null)
-                    throw _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlUserDefinedFunction(ArmClient, response.Value), response.GetRawResponse());
+                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.CreateUpdateSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters, cancellationToken);
+                var operation = new CosmosDBArmOperation<SqlUserDefinedFunction>(new SqlUserDefinedFunctionOperationSource(Client), _sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _sqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, createUpdateSqlUserDefinedFunctionParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,10 +117,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public async virtual Task<Response<SqlUserDefinedFunction>> GetAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
@@ -156,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlUserDefinedFunction(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +146,27 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public virtual Response<SqlUserDefinedFunction> GetIfExists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlUserDefinedFunction> Get(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
 
-            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExists");
+            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken: cancellationToken);
+                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SqlUserDefinedFunction>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlUserDefinedFunction(ArmClient, response.Value), response.GetRawResponse());
+                    throw _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,58 +175,68 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <summary>
+        /// Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions
+        /// Operation Id: SqlResources_ListSqlUserDefinedFunctions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async virtual Task<Response<SqlUserDefinedFunction>> GetIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlUserDefinedFunction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlUserDefinedFunction> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-
-            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SqlUserDefinedFunction>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SqlUserDefinedFunction>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlUserDefinedFunction(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlUserDefinedFunction(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <summary>
+        /// Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions
+        /// Operation Id: SqlResources_ListSqlUserDefinedFunctions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlUserDefinedFunction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlUserDefinedFunction> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-
-            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Exists");
-            scope.Start();
-            try
+            Page<SqlUserDefinedFunction> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(userDefinedFunctionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _sqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlUserDefinedFunction(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
@@ -261,50 +256,89 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlUserDefinedFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlUserDefinedFunction> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            Page<SqlUserDefinedFunction> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+
+            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlUserDefinedFunction(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(userDefinedFunctionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlUserDefinedFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlUserDefinedFunction> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public async virtual Task<Response<SqlUserDefinedFunction>> GetIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlUserDefinedFunction>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+
+            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlUserDefinedFunction(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SqlUserDefinedFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public virtual Response<SqlUserDefinedFunction> GetIfExists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
+
+            using var scope = _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SqlUserDefinedFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SqlUserDefinedFunction> IEnumerable<SqlUserDefinedFunction>.GetEnumerator()

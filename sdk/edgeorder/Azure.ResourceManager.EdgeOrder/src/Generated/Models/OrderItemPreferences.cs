@@ -35,10 +35,40 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Notification preferences. </summary>
         public IList<NotificationPreference> NotificationPreferences { get; }
         /// <summary> Preferences related to the shipment logistics of the order. </summary>
-        public TransportPreferences TransportPreferences { get; set; }
+        internal TransportPreferences TransportPreferences { get; set; }
+        /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
+        public TransportShipmentTypes TransportPreferencesPreferredShipmentType
+        {
+            get => TransportPreferences is null ? default : TransportPreferences.PreferredShipmentType;
+            set => TransportPreferences = new TransportPreferences(value);
+        }
+
         /// <summary> Preferences related to the Encryption. </summary>
-        public EncryptionPreferences EncryptionPreferences { get; set; }
+        internal EncryptionPreferences EncryptionPreferences { get; set; }
+        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+        public DoubleEncryptionStatus? DoubleEncryptionStatus
+        {
+            get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryptionStatus;
+            set
+            {
+                if (EncryptionPreferences is null)
+                    EncryptionPreferences = new EncryptionPreferences();
+                EncryptionPreferences.DoubleEncryptionStatus = value;
+            }
+        }
+
         /// <summary> Preferences related to the Management resource. </summary>
-        public ManagementResourcePreferences ManagementResourcePreferences { get; set; }
+        internal ManagementResourcePreferences ManagementResourcePreferences { get; set; }
+        /// <summary> Customer preferred Management resource ARM ID. </summary>
+        public string PreferredManagementResourceId
+        {
+            get => ManagementResourcePreferences is null ? default : ManagementResourcePreferences.PreferredManagementResourceId;
+            set
+            {
+                if (ManagementResourcePreferences is null)
+                    ManagementResourcePreferences = new ManagementResourcePreferences();
+                ManagementResourcePreferences.PreferredManagementResourceId = value;
+            }
+        }
     }
 }

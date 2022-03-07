@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.KeyVault
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -72,8 +74,13 @@ namespace Azure.ResourceManager.KeyVault
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new SecretData(id, name, type, location.Value, Optional.ToDictionary(tags), properties);
+            return new SecretData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), properties);
         }
     }
 }

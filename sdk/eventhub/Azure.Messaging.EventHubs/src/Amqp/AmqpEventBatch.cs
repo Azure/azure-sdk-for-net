@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -102,9 +101,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
             ActiveFeatures = activeFeatures;
 
-            // Initialize the size by reserving space for the batch envelope.
+            // Initialize the size by reserving space for the batch envelope.  At this point, the
+            // set of batch events is empty, so the message returned will only represent the envelope.
 
-            using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
+            using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(BatchEvents, options.PartitionKey);
             ReservedSize = envelope.SerializedMessageSize;
             _sizeBytes = ReservedSize;
         }
@@ -174,22 +174,21 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
-        ///   Represents the batch as an enumerable set of transport-specific
-        ///   representations of an event.
+        ///   Represents the batch as a set of the AMQP-specific representations of an event.
         /// </summary>
         ///
         /// <typeparam name="T">The transport-specific event representation being requested.</typeparam>
         ///
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
-        public override IEnumerable<T> AsEnumerable<T>()
+        public override IReadOnlyCollection<T> AsReadOnlyCollection<T>()
         {
             if (typeof(T) != typeof(EventData))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
-            return (IEnumerable<T>)BatchEvents;
+            return BatchEvents as IReadOnlyCollection<T>;
         }
 
         /// <summary>
