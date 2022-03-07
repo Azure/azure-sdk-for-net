@@ -14,7 +14,7 @@ namespace Azure.Core
     /// </summary>
     public class TelemetryDetails
     {
-        private string _userAgent;
+        private readonly string _userAgent;
 
         /// <summary>
         /// The package type represented by this <see cref="TelemetryDetails"/> instance.
