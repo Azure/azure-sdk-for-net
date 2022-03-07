@@ -9,7 +9,6 @@ steps:
     displayName: "Set API change detect request URL"
     condition: eq(variables['ApiChangeDetectRequestUrl'], '')
 
-
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
