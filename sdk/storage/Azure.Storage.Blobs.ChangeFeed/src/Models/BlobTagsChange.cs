@@ -3,19 +3,19 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// Blob tags that were updated as part of the change feed event.
     /// </summary>
-    public class BlobChangeFeedEventUpdatedBlobTags
+    public class BlobTagsChange
     {
-        internal BlobChangeFeedEventUpdatedBlobTags() { }
+        internal BlobTagsChange() { }
 
         /// <summary>
         /// Previous Tags.
         /// </summary>
-        public Dictionary<string, string> PreviousTags { get; internal set; }
+        public Dictionary<string, string> OldTags { get; internal set; }
 
         /// <summary>
         /// New Tags.
