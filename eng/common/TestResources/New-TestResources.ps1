@@ -249,6 +249,10 @@ function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azCont
         "${serviceDirectoryPrefix}AZURE_AUTHORITY_HOST" = $azContext.Environment.ActiveDirectoryAuthority;
         "${serviceDirectoryPrefix}RESOURCE_MANAGER_URL" = $azContext.Environment.ResourceManagerUrl;
         "${serviceDirectoryPrefix}SERVICE_MANAGEMENT_URL" = $azContext.Environment.ServiceManagementUrl;
+        "AZURE_CLIENT_ID" = $TestApplicationId;
+        "AZURE_CLIENT_SECRET" = $TestApplicationSecret;
+        "AZURE_TENANT_ID" = $azContext.Tenant.Id;
+        "AZURE_SUBSCRIPTION_ID" =  $azContext.Subscription.Id;
     }
 
     MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
