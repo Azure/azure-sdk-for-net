@@ -42,12 +42,6 @@ namespace Azure.ResourceManager.TestFramework
 
         private void Initialize()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
-                pollField.SetValue(null, TimeSpan.Zero);
-            }
-
             _waitForCleanup = Mode == RecordedTestMode.Live;
         }
 
@@ -232,6 +226,6 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
+            => InstrumentOperationInternal(operationType, operation, new ManagementInterceptor(this));
     }
 }
