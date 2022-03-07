@@ -14,6 +14,7 @@ namespace Azure.Core
     /// </summary>
     public class TelemetryDetails
     {
+        private const int MaxApplicationIdLength = 24;
         private readonly string _userAgent;
 
         /// <summary>
@@ -27,11 +28,6 @@ namespace Azure.Core
         public string? ApplicationId { get; }
 
         /// <summary>
-        /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
-        /// </summary>
-        public string UserAgent => _userAgent;
-
-        /// <summary>
         /// Initialize an instance of <see cref="TelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
         /// </summary>
         /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the <see cref="TelemetryDetails"/> value.</param>
@@ -40,6 +36,10 @@ namespace Azure.Core
         public TelemetryDetails(Assembly assembly, string? applicationId = null)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
+            if ( applicationId?.Length > MaxApplicationIdLength)
+            {
+                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
+            }
 
             Assembly = assembly;
             ApplicationId = applicationId;
@@ -53,7 +53,7 @@ namespace Azure.Core
         /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
         public void Apply(HttpMessage message)
         {
-            message.SetInternalProperty(typeof(UserAgentValueKey), UserAgent);
+            message.SetInternalProperty(typeof(UserAgentValueKey), ToString());
         }
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
@@ -87,8 +87,9 @@ namespace Azure.Core
                 : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
         }
 
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() { return base.ToString()!; }
+        /// <summary>
+        /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
+        /// </summary>
+        public override string ToString() => _userAgent;
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Core.Pipeline
 
         public TelemetryPolicy(TelemetryDetails telemetryDetails)
         {
-            _defaultHeader = telemetryDetails.UserAgent;
+            _defaultHeader = telemetryDetails.ToString();
         }
 
         public override void OnSendingRequest(HttpMessage message)
