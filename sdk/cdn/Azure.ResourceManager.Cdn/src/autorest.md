@@ -301,4 +301,9 @@ directive:
               }
           }
       }
+  - from: cdn.json
+    where: $.definitions.CacheExpirationActionParameters.properties.cacheDuration
+    transform: >
+      $["format"] = "duration";
+      $["x-ms-format"] = "duration-constant";
 ```
