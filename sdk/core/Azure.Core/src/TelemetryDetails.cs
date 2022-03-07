@@ -29,7 +29,7 @@ namespace Azure.Core
         /// <summary>
         /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
         /// </summary>
-        public string UserAgentString => _userAgent;
+        public string UserAgent => _userAgent;
 
         /// <summary>
         /// Initialize an instance of <see cref="TelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
@@ -53,7 +53,7 @@ namespace Azure.Core
         /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
         public void Apply(HttpMessage message)
         {
-            message.SetInternalProperty(typeof(UserAgentValueKey), UserAgentString);
+            message.SetInternalProperty(typeof(UserAgentValueKey), UserAgent);
         }
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)

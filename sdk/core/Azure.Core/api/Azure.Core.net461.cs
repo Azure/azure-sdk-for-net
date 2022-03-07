@@ -664,7 +664,7 @@ namespace Azure.Core
         public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
-        public string UserAgentString { get { throw null; } }
+        public string UserAgent { get { throw null; } }
         public void Apply(Azure.Core.HttpMessage message) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }

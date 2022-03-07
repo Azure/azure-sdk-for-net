@@ -29,13 +29,13 @@ namespace Azure.Core.Tests
             if (applicationId == null)
             {
                 Assert.AreEqual(
-                    target.UserAgentString,
+                    target.UserAgent,
                     $"azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
             }
             else
             {
                 Assert.AreEqual(
-                    target.UserAgentString,
+                    target.UserAgent,
                     $"{applicationId} azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
             }
         }
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
             message.TryGetInternalProperty(typeof(UserAgentValueKey), out var obj);
             string actualValue = obj as string;
 
-            Assert.AreEqual(target.UserAgentString, actualValue);
+            Assert.AreEqual(target.UserAgent, actualValue);
         }
     }
 }
