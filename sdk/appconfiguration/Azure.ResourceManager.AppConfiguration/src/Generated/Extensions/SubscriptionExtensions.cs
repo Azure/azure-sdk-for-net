@@ -54,22 +54,6 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedConfigurationStore> GetDeletedConfigurationStoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetDeletedConfigurationStoresAsync(cancellationToken);
-        }
-
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedConfigurationStore> GetDeletedConfigurationStores(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetDeletedConfigurationStores(cancellationToken);
-        }
-
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>

@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +21,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> A class representing collection of DeletedConfigurationStore and their operations over its parent. </summary>
-    public partial class DeletedConfigurationStoreCollection : ArmCollection
+    public partial class DeletedConfigurationStoreCollection : ArmCollection, IEnumerable<DeletedConfigurationStore>, IAsyncEnumerable<DeletedConfigurationStore>
     {
         private readonly ClientDiagnostics _deletedConfigurationStoreConfigurationStoresClientDiagnostics;
         private readonly ConfigurationStoresRestOperations _deletedConfigurationStoreConfigurationStoresRestClient;
@@ -204,6 +207,97 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedConfigurationStore> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<DeletedConfigurationStore> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedConfigurationStoreConfigurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DeletedConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedConfigurationStore> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DeletedConfigurationStore>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<DeletedConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        IEnumerator<DeletedConfigurationStore> IEnumerable<DeletedConfigurationStore>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<DeletedConfigurationStore> IAsyncEnumerable<DeletedConfigurationStore>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

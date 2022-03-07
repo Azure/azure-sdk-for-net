@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         private ClientDiagnostics _configurationStoreClientDiagnostics;
         private ConfigurationStoresRestOperations _configurationStoreRestClient;
-        private ClientDiagnostics _configurationStoresClientDiagnostics;
-        private ConfigurationStoresRestOperations _configurationStoresRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private AppConfigurationManagementRestOperations _defaultRestClient;
 
@@ -42,8 +40,6 @@ namespace Azure.ResourceManager.AppConfiguration
 
         private ClientDiagnostics ConfigurationStoreClientDiagnostics => _configurationStoreClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
         private ConfigurationStoresRestOperations ConfigurationStoreRestClient => _configurationStoreRestClient ??= new ConfigurationStoresRestOperations(ConfigurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ConfigurationStore.ResourceType));
-        private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ConfigurationStoresRestOperations ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStoresRestOperations(ConfigurationStoresClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
@@ -121,82 +117,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     var response = ConfigurationStoreRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedConfigurationStore> GetDeletedConfigurationStoresAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeletedConfigurationStore>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationStoresClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationStoresClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedConfigurationStore> GetDeletedConfigurationStores(CancellationToken cancellationToken = default)
-        {
-            Page<DeletedConfigurationStore> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationStoresClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeletedConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationStoresClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

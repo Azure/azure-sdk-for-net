@@ -10,8 +10,8 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25
 clear-output-folder: true
 skip-csproj: true
 no-property-type-replacement: RegenerateKeyOptions
-list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+request-path-to-parent:
+  /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
 directive:
   - rename-model:
       from: ConfigurationStoreUpdateParameters
