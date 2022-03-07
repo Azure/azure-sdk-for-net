@@ -12,7 +12,7 @@ namespace Azure.Core
     /// This type inherits from ResponseClassifier and is designed to work
     /// efficiently with classifier customizations specified in <see cref="RequestContext"/>.
     /// </summary>
-    public class CoreResponseClassifier : ResponseClassifier
+    public class StatusClassifier : ResponseClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;
@@ -21,21 +21,21 @@ namespace Azure.Core
         internal ResponseClassificationHandler[]? Handlers { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="CoreResponseClassifier"/>
+        /// Creates a new instance of <see cref="StatusClassifier"/>
         /// </summary>
-        /// <param name="successCodes">The status codes that this classifier will consider
+        /// <param name="successStatusCodes">The status codes that this classifier will consider
         /// not to be errors.</param>
-        public CoreResponseClassifier(ReadOnlySpan<ushort> successCodes)
+        public StatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
             _successCodes = new ulong[Length];
 
-            foreach (int statusCode in successCodes)
+            foreach (int statusCode in successStatusCodes)
             {
                 AddClassifier(statusCode, isError: false);
             }
         }
 
-        private CoreResponseClassifier(ulong[] successCodes, ResponseClassificationHandler[]? handlers)
+        private StatusClassifier(ulong[] successCodes, ResponseClassificationHandler[]? handlers)
         {
             Debug.Assert(successCodes?.Length == Length);
 
@@ -62,12 +62,12 @@ namespace Azure.Core
             return !IsSuccessCode(message.Response.Status);
         }
 
-        internal virtual CoreResponseClassifier Clone()
+        internal virtual StatusClassifier Clone()
         {
             ulong[] successCodes = new ulong[Length];
             Array.Copy(_successCodes, successCodes, Length);
 
-            return new CoreResponseClassifier(successCodes, Handlers);
+            return new StatusClassifier(successCodes, Handlers);
         }
 
         internal void AddClassifier(int statusCode, bool isError)
