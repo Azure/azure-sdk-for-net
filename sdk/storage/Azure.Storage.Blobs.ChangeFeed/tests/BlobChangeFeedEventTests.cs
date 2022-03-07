@@ -141,8 +141,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
             Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
-            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.BlobVersion);
-            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.LastVersion);
+            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.NewBlobVersion);
+            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.OldBlobVersion);
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.PreviousInfo.PreviousTier);
 
             Assert.AreEqual(
@@ -153,27 +153,27 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("ContentLanguage", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PropertyName);
             Assert.AreEqual("pl-Pl", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].NewValue);
-            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PreviousValue);
+            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].OldValue);
 
             Assert.AreEqual("CacheControl", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PropertyName);
             Assert.AreEqual("max-age=100", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].NewValue);
-            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PreviousValue);
+            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].OldValue);
 
             Assert.AreEqual("ContentEncoding", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PropertyName);
             Assert.AreEqual("gzip, identity", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].NewValue);
-            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PreviousValue);
+            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].OldValue);
 
             Assert.AreEqual("ContentMD5", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PropertyName);
             Assert.AreEqual("Q2h1Y2sgSW51ZwDIAXR5IQ==", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].NewValue);
-            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PreviousValue);
+            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].OldValue);
 
             Assert.AreEqual("ContentDisposition", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PropertyName);
             Assert.AreEqual("attachment", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].NewValue);
-            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PreviousValue);
+            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].OldValue);
 
             Assert.AreEqual("ContentType", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PropertyName);
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
-            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
+            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
         }
 
         [Test]
@@ -246,8 +246,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
             Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
-            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.BlobVersion);
-            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.LastVersion);
+            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.NewBlobVersion);
+            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.OldBlobVersion);
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.PreviousInfo.PreviousTier);
 
             Assert.AreEqual(
@@ -258,30 +258,30 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("ContentLanguage", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PropertyName);
             Assert.AreEqual("pl-Pl", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].NewValue);
-            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PreviousValue);
+            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].OldValue);
 
             Assert.AreEqual("CacheControl", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PropertyName);
             Assert.AreEqual("max-age=100", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].NewValue);
-            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PreviousValue);
+            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].OldValue);
 
             Assert.AreEqual("ContentEncoding", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PropertyName);
             Assert.AreEqual("gzip, identity", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].NewValue);
-            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PreviousValue);
+            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].OldValue);
 
             Assert.AreEqual("ContentMD5", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PropertyName);
             Assert.AreEqual("Q2h1Y2sgSW51ZwDIAXR5IQ==", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].NewValue);
-            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PreviousValue);
+            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].OldValue);
 
             Assert.AreEqual("ContentDisposition", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PropertyName);
             Assert.AreEqual("attachment", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].NewValue);
-            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PreviousValue);
+            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].OldValue);
 
             Assert.AreEqual("ContentType", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PropertyName);
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
-            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
+            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
 
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAsyncOperation);
+            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.IsAsync);
             Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
         }
 
@@ -355,8 +355,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("2022-02-17T13:12:11.5726507Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
             Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
-            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.BlobVersion);
-            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.LastVersion);
+            Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.NewBlobVersion);
+            Assert.AreEqual("2022-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.OldBlobVersion);
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.PreviousInfo.PreviousTier);
 
             Assert.AreEqual(
@@ -367,35 +367,35 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual("ContentLanguage", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PropertyName);
             Assert.AreEqual("pl-Pl", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].NewValue);
-            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].PreviousValue);
+            Assert.AreEqual("nl-NL", changeFeedEvent.EventData.UpdatedBlobProperties["ContentLanguage"].OldValue);
 
             Assert.AreEqual("CacheControl", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PropertyName);
             Assert.AreEqual("max-age=100", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].NewValue);
-            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].PreviousValue);
+            Assert.AreEqual("max-age=99", changeFeedEvent.EventData.UpdatedBlobProperties["CacheControl"].OldValue);
 
             Assert.AreEqual("ContentEncoding", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PropertyName);
             Assert.AreEqual("gzip, identity", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].NewValue);
-            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].PreviousValue);
+            Assert.AreEqual("gzip", changeFeedEvent.EventData.UpdatedBlobProperties["ContentEncoding"].OldValue);
 
             Assert.AreEqual("ContentMD5", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PropertyName);
             Assert.AreEqual("Q2h1Y2sgSW51ZwDIAXR5IQ==", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].NewValue);
-            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].PreviousValue);
+            Assert.AreEqual("Q2h1Y2sgSW=", changeFeedEvent.EventData.UpdatedBlobProperties["ContentMD5"].OldValue);
 
             Assert.AreEqual("ContentDisposition", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PropertyName);
             Assert.AreEqual("attachment", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].NewValue);
-            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].PreviousValue);
+            Assert.AreEqual("", changeFeedEvent.EventData.UpdatedBlobProperties["ContentDisposition"].OldValue);
 
             Assert.AreEqual("ContentType", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PropertyName);
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
-            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].PreviousValue);
+            Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
 
             Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.WasAsyncOperation);
+            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.IsAsync);
             Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
 
-            Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.PreviousTags.Count);
-            Assert.AreEqual("Value1_3", changeFeedEvent.EventData.UpdatedBlobTags.PreviousTags["Tag1"]);
-            Assert.AreEqual("Value2_3", changeFeedEvent.EventData.UpdatedBlobTags.PreviousTags["Tag2"]);
+            Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.OldTags.Count);
+            Assert.AreEqual("Value1_3", changeFeedEvent.EventData.UpdatedBlobTags.OldTags["Tag1"]);
+            Assert.AreEqual("Value2_3", changeFeedEvent.EventData.UpdatedBlobTags.OldTags["Tag2"]);
 
             Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.NewTags.Count);
             Assert.AreEqual("Value1_4", changeFeedEvent.EventData.UpdatedBlobTags.NewTags["Tag1"]);
