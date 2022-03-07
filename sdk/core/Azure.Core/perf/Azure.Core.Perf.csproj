@@ -1,7 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +19,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="System.IO.Pipelines" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TestData\JsonFormattedString.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

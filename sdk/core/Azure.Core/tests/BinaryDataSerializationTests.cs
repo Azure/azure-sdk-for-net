@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +16,129 @@ namespace Azure.Core.Tests
 {
     public class BinaryDataSerializationTests
     {
+        [Test]
+        public void DeserializeJsonFormattedStringWithObject()
+        {
+            using (var fs = new FileStream(GetFileName("JsonFormattedString.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using var document = JsonDocument.Parse(fs);
+                var data = ModelWithObject.DeserializeModelWithObject(document.RootElement);
+                Assert.AreEqual("a.value", data.A);
+
+                var properties = data.Properties as Dictionary<string, object>;
+                Assert.AreEqual("properties.a.value", properties["a"]);
+                var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
+                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
+            }
+        }
+
+        [Test]
+        public void DeserializeJsonFormattedStringWithBinaryData()
+        {
+            using (var fs = new FileStream(GetFileName("JsonFormattedString.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using var document = JsonDocument.Parse(fs);
+                var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+                Assert.AreEqual("a.value", data.A);
+
+                var properties = data.Properties.ToDictionaryFromJson();
+                Assert.AreEqual("properties.a.value", properties["a"]);
+                var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
+                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
+            }
+        }
+
+        [Test]
+        public void DeserializeJsonFormattedStringWithBinaryData2()
+        {
+            using (var fs = new FileStream(GetFileName("JsonFormattedString.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using var document = JsonDocument.Parse(fs);
+                var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+                Assert.AreEqual("a.value", data.A);
+
+                var properties = data.Properties.ToDictionaryFromJson2();
+                Assert.AreEqual("properties.a.value", properties["a"]);
+                var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
+                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
+            }
+        }
+
+        [Test]
+        public void SerailizeUsingDictStringObject()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            var properties = new Dictionary<string, object>();
+            var innerProperties = new Dictionary<string, object>();
+            properties.Add("a", "properties.a.value");
+            innerProperties.Add("a", "properties.innerProperties.a.value");
+            properties.Add("innerProperties", innerProperties);
+            payload.Properties = BinaryData.FromObjectAsJson(properties);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingJsonFormattedString()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromString(File.ReadAllText(GetFileName("Properties.json")).TrimEnd());
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        [Ignore("TODO fix this test")]
+        public void SerailizeUsingStream()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            using var fs = File.OpenRead(GetFileName("Properties.json"));
+            payload.Properties = BinaryData.FromStream(fs);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObject()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            var properties = new
+            {
+                a = "properties.a.value",
+                innerProperties = new
+                {
+                    a = "properties.innerProperties.a.value"
+                }
+            };
+            payload.Properties = BinaryData.FromObjectAsJson(properties);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        private static string GetSerializedString(ModelWithBinaryData payload)
+        {
+            using var ms = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(ms);
+            payload.Write(writer);
+            writer.Flush();
+
+            ms.Position = 0;
+            using var sr = new StreamReader(ms);
+            return sr.ReadToEnd();
+        }
+
         [Test]
         public async Task CanCreateBinaryDataFromCustomType()
         {
@@ -146,6 +272,120 @@ namespace Azure.Core.Tests
             }
         }
 
+        private class ModelWithBinaryData : IUtf8JsonSerializable
+        {
+            public string A { get; set; }
+            public BinaryData Properties { get; set; }
+
+            public ModelWithBinaryData() { }
+
+            private ModelWithBinaryData(string a, BinaryData properties)
+            {
+                A = a;
+                Properties = properties;
+            }
+
+            public void Write(Utf8JsonWriter writer)
+            {
+                writer.WriteStartObject();
+                if (Optional.IsDefined(A))
+                {
+                    writer.WritePropertyName("a");
+                    writer.WriteStringValue(A);
+                }
+                if (Optional.IsDefined(Properties))
+                {
+                    writer.WritePropertyName("properties");
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(Properties);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
+                }
+                writer.WriteEndObject();
+            }
+
+            internal static ModelWithBinaryData DeserializeModelWithBinaryData(JsonElement element)
+            {
+                Optional<string> a = default;
+                Optional<BinaryData> properties = default;
+                foreach (var property in element.EnumerateObject())
+                {
+                    if (property.NameEquals("a"))
+                    {
+                        a = property.Value.GetString();
+                        continue;
+                    }
+                    if (property.NameEquals("properties"))
+                    {
+                        if (property.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            property.ThrowNonNullablePropertyIsNull();
+                            continue;
+                        }
+                        properties = BinaryData.FromString(property.Value.GetRawText());
+                        continue;
+                    }
+                }
+                return new ModelWithBinaryData(a.Value, properties.Value);
+            }
+        }
+
+        private class ModelWithObject : IUtf8JsonSerializable
+        {
+            public string A { get; set; }
+            public object Properties { get; set; }
+
+            public ModelWithObject() { }
+
+            private ModelWithObject(string a, object properties)
+            {
+                A = a;
+                Properties = properties;
+            }
+
+            public void Write(Utf8JsonWriter writer)
+            {
+                writer.WriteStartObject();
+                if (Optional.IsDefined(A))
+                {
+                    writer.WritePropertyName("a");
+                    writer.WriteStringValue(A);
+                }
+                if (Optional.IsDefined(Properties))
+                {
+                    writer.WritePropertyName("properties");
+                    writer.WriteObjectValue(Properties);
+                }
+                writer.WriteEndObject();
+            }
+
+            internal static ModelWithObject DeserializeModelWithObject(JsonElement element)
+            {
+                Optional<string> a = default;
+                Optional<object> properties = default;
+                foreach (var property in element.EnumerateObject())
+                {
+                    if (property.NameEquals("a"))
+                    {
+                        a = property.Value.GetString();
+                        continue;
+                    }
+                    if (property.NameEquals("properties"))
+                    {
+                        if (property.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            property.ThrowNonNullablePropertyIsNull();
+                            continue;
+                        }
+                        properties = property.Value.GetObject();
+                        continue;
+                    }
+                }
+                return new ModelWithObject(a.Value, properties.Value);
+            }
+        }
+
         public class Model
         {
             public string A { get; set; }
@@ -190,6 +430,11 @@ namespace Azure.Core.Tests
 
             public async override ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
                 => await s_serializer.SerializeAsync(stream, value, inputType, cancellationToken).ConfigureAwait(false);
+        }
+
+        private string GetFileName(string file)
+        {
+            return Path.Combine(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "BinaryData", file));
         }
     }
 }
