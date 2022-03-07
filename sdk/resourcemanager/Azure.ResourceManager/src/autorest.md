@@ -39,6 +39,9 @@ directive:
   - remove-model: "locationData"
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
+  - remove-model: "ErrorResponse"
+  - remove-model: "ErrorDetail"
+  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -150,7 +153,7 @@ override-operation-name:
   Resources_ListByResourceGroup: GetGenericResources
   Providers_RegisterAtManagementGroupScope: RegisterProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider
+no-property-type-replacement: ProviderData;Provider;ErrorResponse;ErrorAdditionalInfo # TODO: remove error models after updating
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
