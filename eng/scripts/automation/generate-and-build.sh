@@ -2,11 +2,13 @@
 
 if [ -z $1 ]; then
     echo "Please input inputfile"
+    echo "Usage: generate-and-build.sh <inputfile> <outputfile>"
     exit 1
 fi
 
 if [ -z $2 ]; then
     echo "Please input outputfile"
+    echo "Usage: generate-and-build.sh <inputfile> <outputfile>"
     exit 1
 fi
 
