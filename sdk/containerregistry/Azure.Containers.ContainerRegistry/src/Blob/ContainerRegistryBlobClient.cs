@@ -142,7 +142,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
@@ -181,7 +182,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
@@ -218,7 +220,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
@@ -257,7 +260,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
@@ -376,7 +380,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
+                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
@@ -414,7 +419,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
+                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
@@ -459,7 +465,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "The requested digest does not match the digest of the received manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(blobResult,
+                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
@@ -489,7 +496,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(blobResult.Value, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult, "The requested digest does not match the digest of the received manifest.");
+                    throw _clientDiagnostics.CreateRequestFailedException(blobResult,
+                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
