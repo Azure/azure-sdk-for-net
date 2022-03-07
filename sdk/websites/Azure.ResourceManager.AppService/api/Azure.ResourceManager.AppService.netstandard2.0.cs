@@ -6031,7 +6031,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class LogSpecification
     {
         internal LogSpecification() { }
-        public string BlobDuration { get { throw null; } }
+        public System.TimeSpan? BlobDuration { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string LogFilterPattern { get { throw null; } }
         public string Name { get { throw null; } }
@@ -6051,7 +6051,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class MetricAvailability
     {
         internal MetricAvailability() { }
-        public string BlobDuration { get { throw null; } }
+        public System.TimeSpan? BlobDuration { get { throw null; } }
         public string TimeGrain { get { throw null; } }
     }
     public partial class MetricSpecification
@@ -7292,7 +7292,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class TriggeredJobRun
     {
         public TriggeredJobRun() { }
-        public string Duration { get { throw null; } set { } }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public string ErrorUrl { get { throw null; } set { } }
         public string JobName { get { throw null; } set { } }

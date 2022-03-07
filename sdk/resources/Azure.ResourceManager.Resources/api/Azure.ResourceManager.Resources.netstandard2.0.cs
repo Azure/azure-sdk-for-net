@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Resources.Models
         public bool JitAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.JitApprovalMode? JitApprovalMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.JitApproverDefinition> JitApprovers { get { throw null; } }
-        public string MaximumJitAccessDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumJitAccessDuration { get { throw null; } set { } }
     }
     public enum ApplicationLockLevel
     {
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentOperationProperties
     {
         internal DeploymentOperationProperties() { }
-        public string Duration { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningOperation? ProvisioningOperation { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public object RequestContent { get { throw null; } }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string CorrelationId { get { throw null; } }
         public string DebugSettingDetailLevel { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Dependency> Dependencies { get { throw null; } }
-        public string Duration { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.DeploymentMode? Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.OnErrorDeploymentExtended OnErrorDeployment { get { throw null; } }
