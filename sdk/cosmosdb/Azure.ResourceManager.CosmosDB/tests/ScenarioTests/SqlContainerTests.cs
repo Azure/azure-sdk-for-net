@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(container);
         }
 
-        protected async Task<SqlContainer> CreateSqlContainer(AutoscaleSettings autoscale)
+        internal async Task<SqlContainer> CreateSqlContainer(AutoscaleSettings autoscale)
         {
             _containerName = Recording.GenerateAssetName("sql-container-");
             return await CreateSqlContainer(_containerName, autoscale, SqlContainerCollection);

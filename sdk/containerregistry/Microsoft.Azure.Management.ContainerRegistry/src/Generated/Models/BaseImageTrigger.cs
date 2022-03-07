@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// Base image update triggers. Possible values include: 'Default',
         /// 'Token'</param>
         /// <param name="status">The current status of trigger. Possible values
-        /// include: 'Disabled', 'Enabled'</param>
+        /// include: 'Enabled', 'Disabled'</param>
         public BaseImageTrigger(string baseImageTriggerType, string name, string updateTriggerEndpoint = default(string), string updateTriggerPayloadType = default(string), string status = default(string))
         {
             BaseImageTriggerType = baseImageTriggerType;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the current status of trigger. Possible values
-        /// include: 'Disabled', 'Enabled'
+        /// include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="localNetworkAddressSpace"> Local network site address space. </param>
-        /// <param name="gatewayIpAddress"> IP address of local network gateway. </param>
+        /// <param name="gatewayIPAddress"> IP address of local network gateway. </param>
         /// <param name="fqdn"> FQDN of local network gateway. </param>
         /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, AddressSpace localNetworkAddressSpace, string gatewayIpAddress, string fqdn, BgpSettings bgpSettings, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal LocalNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
-            GatewayIpAddress = gatewayIpAddress;
+            GatewayIPAddress = gatewayIPAddress;
             Fqdn = fqdn;
             BgpSettings = bgpSettings;
             ResourceGuid = resourceGuid;
@@ -45,9 +45,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Local network site address space. </summary>
-        public AddressSpace LocalNetworkAddressSpace { get; set; }
+        internal AddressSpace LocalNetworkAddressSpace { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> LocalNetworkAddressPrefixes
+        {
+            get
+            {
+                if (LocalNetworkAddressSpace is null)
+                    LocalNetworkAddressSpace = new AddressSpace();
+                return LocalNetworkAddressSpace.AddressPrefixes;
+            }
+        }
+
         /// <summary> IP address of local network gateway. </summary>
-        public string GatewayIpAddress { get; set; }
+        public string GatewayIPAddress { get; set; }
         /// <summary> FQDN of local network gateway. </summary>
         public string Fqdn { get; set; }
         /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentSpan
+    public partial struct DocumentSpan
     {
         internal static DocumentSpan DeserializeDocumentSpan(JsonElement element)
         {

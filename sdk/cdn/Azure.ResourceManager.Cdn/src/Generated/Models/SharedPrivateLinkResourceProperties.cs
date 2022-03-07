@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -18,7 +19,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
-        public WritableSubResource PrivateLink { get; }
+        internal WritableSubResource PrivateLink { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateLinkId
+        {
+            get => PrivateLink.Id;
+            set => PrivateLink.Id = value;
+        }
+
         /// <summary> The location of the shared private link resource. </summary>
         public string PrivateLinkLocation { get; }
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>

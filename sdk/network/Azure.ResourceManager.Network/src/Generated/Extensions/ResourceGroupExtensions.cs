@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetBastionHosts();
         }
 
-        /// <summary> Gets a collection of CustomIpPrefixes in the CustomIpPrefix. </summary>
+        /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefix. </returns>
-        public static CustomIpPrefixCollection GetCustomIpPrefixes(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
+        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetCustomIpPrefixes();
+            return GetExtensionClient(resourceGroup).GetCustomIPPrefixes();
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
@@ -124,20 +124,20 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetFirewallPolicies();
         }
 
-        /// <summary> Gets a collection of IpAllocations in the IpAllocation. </summary>
+        /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IpAllocations and their operations over a IpAllocation. </returns>
-        public static IpAllocationCollection GetIpAllocations(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
+        public static IPAllocationCollection GetIPAllocations(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetIpAllocations();
+            return GetExtensionClient(resourceGroup).GetIPAllocations();
         }
 
-        /// <summary> Gets a collection of IpGroups in the IpGroup. </summary>
+        /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IpGroups and their operations over a IpGroup. </returns>
-        public static IpGroupCollection GetIpGroups(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
+        public static IPGroupCollection GetIPGroups(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetIpGroups();
+            return GetExtensionClient(resourceGroup).GetIPGroups();
         }
 
         /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetVirtualRouters();
         }
 
-        /// <summary> Gets a collection of VirtualWANs in the VirtualWAN. </summary>
+        /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWAN. </returns>
-        public static VirtualWANCollection GetVirtualWANs(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualWANs();
+            return GetExtensionClient(resourceGroup).GetVirtualWans();
         }
 
         /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>

@@ -199,12 +199,7 @@ namespace Azure.ResourceManager.Management.Models
     {
         internal DescendantInfo() { }
         public string DisplayName { get { throw null; } }
-        public Azure.ResourceManager.Management.Models.DescendantParentGroupInfo Parent { get { throw null; } }
-    }
-    public partial class DescendantParentGroupInfo
-    {
-        internal DescendantParentGroupInfo() { }
-        public string Id { get { throw null; } }
+        public string ParentId { get { throw null; } }
     }
     public partial class ManagementGroupChildInfo
     {
@@ -364,11 +359,6 @@ namespace Azure.ResourceManager.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
-    }
-    public partial class ErrorResponse
-    {
-        public ErrorResponse() { }
-        public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } set { } }
     }
     public partial class KeyVaultProperties
     {
@@ -572,7 +562,7 @@ namespace Azure.ResourceManager.Resources
     public partial class FeatureData : Azure.ResourceManager.Models.ResourceData
     {
         internal FeatureData() { }
-        public Azure.ResourceManager.Resources.Models.FeatureProperties Properties { get { throw null; } }
+        public string FeatureState { get { throw null; } }
     }
     public partial class GenericResource : Azure.ResourceManager.Core.ArmResource
     {
@@ -910,7 +900,7 @@ namespace Azure.ResourceManager.Resources
     {
         public ResourceGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
+        public string ResourceGroupProvisioningState { get { throw null; } }
     }
     public partial class ResourceLink : Azure.ResourceManager.Core.ArmResource
     {
@@ -1099,7 +1089,7 @@ namespace Azure.ResourceManager.Resources
     public partial class TagResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public TagResourceData(Azure.ResourceManager.Resources.Models.Tag properties) { }
-        public Azure.ResourceManager.Resources.Models.Tag Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     public partial class Tenant : Azure.ResourceManager.Core.ArmResource
     {
@@ -1364,11 +1354,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ExtendedLocationType left, Azure.ResourceManager.Resources.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FeatureProperties
-    {
-        internal FeatureProperties() { }
-        public string State { get { throw null; } }
-    }
     public partial class LocationExpanded
     {
         internal LocationExpanded() { }
@@ -1571,11 +1556,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProviderConsentDefinition
-    {
-        public ProviderConsentDefinition() { }
-        public bool? ConsentToAuthorization { get { throw null; } set { } }
-    }
     public partial class ProviderExtendedLocation
     {
         internal ProviderExtendedLocation() { }
@@ -1606,7 +1586,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ProviderRegistrationOptions
     {
         public ProviderRegistrationOptions() { }
-        public Azure.ResourceManager.Resources.Models.ProviderConsentDefinition ThirdPartyProviderConsent { get { throw null; } set { } }
+        public bool? ConsentToAuthorization { get { throw null; } set { } }
     }
     public partial class ProviderResourceType
     {
@@ -1670,17 +1650,12 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
         public object Template { get { throw null; } }
     }
-    public partial class ResourceGroupProperties
-    {
-        public ResourceGroupProperties() { }
-        public string ProvisioningState { get { throw null; } }
-    }
     public partial class ResourceGroupUpdateOptions
     {
         public ResourceGroupUpdateOptions() { }
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
+        public string ResourceGroupProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ResourceLinkProperties
@@ -1761,13 +1736,13 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class Tag
     {
         public Tag() { }
-        public System.Collections.Generic.IDictionary<string, string> TagsValue { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     public partial class TagResourceUpdateOptions
     {
         public TagResourceUpdateOptions() { }
         public Azure.ResourceManager.Resources.Models.TagsPatchOperation? Operation { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.Tag Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TagsPatchOperation : System.IEquatable<Azure.ResourceManager.Resources.Models.TagsPatchOperation>

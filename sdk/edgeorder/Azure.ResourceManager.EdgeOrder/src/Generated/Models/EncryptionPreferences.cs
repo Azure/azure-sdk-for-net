@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Preferences related to the double encryption. </summary>
-    public partial class EncryptionPreferences
+    internal partial class EncryptionPreferences
     {
         /// <summary> Initializes a new instance of EncryptionPreferences. </summary>
         public EncryptionPreferences()

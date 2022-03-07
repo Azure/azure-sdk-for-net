@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("localNetworkAddressSpace");
                 writer.WriteObjectValue(LocalNetworkAddressSpace);
             }
-            if (Optional.IsDefined(GatewayIpAddress))
+            if (Optional.IsDefined(GatewayIPAddress))
             {
                 writer.WritePropertyName("gatewayIpAddress");
-                writer.WriteStringValue(GatewayIpAddress);
+                writer.WriteStringValue(GatewayIPAddress);
             }
             if (Optional.IsDefined(Fqdn))
             {
