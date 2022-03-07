@@ -242,7 +242,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesNonCoreResponseClassifier_HeadResponseClassifier()
+        public void AppliesNonStatusClassifier_HeadResponseClassifier()
         {
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(new RequestContext(), HeadResponseClassifier.Instance);

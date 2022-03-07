@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    internal class CoreResponseClassifierTests
+    internal class StatusClassifierTests
     {
         [Test]
         public void ClassifiesSingleCodeAsNonError()
