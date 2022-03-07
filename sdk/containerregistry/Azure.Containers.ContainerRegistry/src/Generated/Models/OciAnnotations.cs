@@ -9,19 +9,19 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Additional information provided through arbitrary metadata. </summary>
-    internal partial class Annotations
+    public partial class OciAnnotations
     {
-        /// <summary> Initializes a new instance of Annotations. </summary>
-        public Annotations()
+        /// <summary> Initializes a new instance of OciAnnotations. </summary>
+        public OciAnnotations()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Annotations. </summary>
-        /// <param name="created"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
+        /// <summary> Initializes a new instance of OciAnnotations. </summary>
+        /// <param name="createdOn"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
         /// <param name="authors"> Contact details of the people or organization responsible for the image. </param>
         /// <param name="url"> URL to find more information on the image. </param>
         /// <param name="documentation"> URL to get documentation on the image. </param>
@@ -34,9 +34,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="title"> Human-readable title of the image. </param>
         /// <param name="description"> Human-readable description of the software packaged in the image. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Annotations(DateTimeOffset? created, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
+        internal OciAnnotations(DateTimeOffset? createdOn, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
         {
-            Created = created;
+            CreatedOn = createdOn;
             Authors = authors;
             Url = url;
             Documentation = documentation;
@@ -50,9 +50,6 @@ namespace Azure.Containers.ContainerRegistry
             Description = description;
             AdditionalProperties = additionalProperties;
         }
-
-        /// <summary> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </summary>
-        public DateTimeOffset? Created { get; set; }
         /// <summary> Contact details of the people or organization responsible for the image. </summary>
         public string Authors { get; set; }
         /// <summary> URL to find more information on the image. </summary>

@@ -7,48 +7,18 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class V2Manifest : IUtf8JsonSerializable
+    internal partial class V2Manifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
+            Optional<OciBlobDescriptor> config = default;
+            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -74,10 +44,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
                     }
                     layers = array;
                     continue;

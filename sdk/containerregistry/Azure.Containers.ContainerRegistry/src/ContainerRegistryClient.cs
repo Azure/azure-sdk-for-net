@@ -74,7 +74,7 @@ namespace Azure.Containers.ContainerRegistry
 
             if (options.Audience == null)
             {
-                throw new InvalidOperationException("ContainerRegistryClientOptions.Audience property must be set to initialize ContainerRegistryClient.");
+                throw new InvalidOperationException($"{nameof(ContainerRegistryClientOptions.Audience)} property must be set to initialize a {nameof(ContainerRegistryClient)}.");
             }
 
             _endpoint = endpoint;

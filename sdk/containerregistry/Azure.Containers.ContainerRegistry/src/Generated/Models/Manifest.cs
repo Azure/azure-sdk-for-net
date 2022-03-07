@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class Manifest
     {
         /// <summary> Initializes a new instance of Manifest. </summary>
-        public Manifest()
+        internal Manifest()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Schema version. </summary>
-        public int? SchemaVersion { get; set; }
+        public int? SchemaVersion { get; }
     }
 }
