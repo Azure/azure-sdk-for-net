@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Azure.Core.Pipeline;
@@ -85,5 +86,9 @@ namespace Azure.Core
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
                 : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
         }
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() { return base.ToString()!; }
     }
 }

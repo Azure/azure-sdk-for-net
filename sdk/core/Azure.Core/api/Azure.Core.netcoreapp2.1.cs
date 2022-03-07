@@ -666,6 +666,8 @@ namespace Azure.Core
         public System.Reflection.Assembly Assembly { get { throw null; } }
         public string UserAgentString { get { throw null; } }
         public void Apply(Azure.Core.HttpMessage message) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public abstract partial class TokenCredential
     {
