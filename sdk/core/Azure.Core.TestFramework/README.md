@@ -302,6 +302,8 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
+In order to enable testing with Fiddler, you will need to set the `EnableFiddler` property of `RecordedTestBase` to `true` and have Fiddler open and listening for traffic. You should not check in your test class with this property set (it will end up failing CI).
+
 ## Support multi service version testing
 
 To enable multi-version testing, add the `ClientTestFixture` attribute listing to all the service versions to the test class itself or a base class:
