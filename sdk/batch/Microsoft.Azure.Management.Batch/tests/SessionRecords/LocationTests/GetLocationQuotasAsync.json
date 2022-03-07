@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3f3c0c86-68c8-40a7-b551-f5764ec0c4c8"
+          "826d88ab-b0fd-40dc-9a5b-75ed3cd78ce8"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "56d02fad-3f05-444e-aebb-4858f755ba89"
+          "891713dc-8de7-4dfb-854a-f3baf8445bcb"
         ],
         "x-ms-correlation-request-id": [
-          "56d02fad-3f05-444e-aebb-4858f755ba89"
+          "891713dc-8de7-4dfb-854a-f3baf8445bcb"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20220301T195937Z:56d02fad-3f05-444e-aebb-4858f755ba89"
+          "NORTHCENTRALUS:20220307T164918Z:891713dc-8de7-4dfb-854a-f3baf8445bcb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 01 Mar 2022 19:59:36 GMT"
+          "Mon, 07 Mar 2022 16:49:17 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d7716fba-5254-4925-8941-5dcd72a39236"
+          "1ad433ae-6a10-4c1e-b049-82af87cb5d61"
         ],
         "Accept-Language": [
           "en-US"
@@ -76,7 +76,7 @@
           "FxVersion/4.700.21.56803",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19044",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/14.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/14.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -87,10 +87,10 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "36455d58-4a82-4d46-acf2-e2ba2523bbba"
+          "8d58427f-0ac2-4dfb-a3ba-674dd892ef11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -102,13 +102,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "b8ee1991-8a0e-47ed-a199-85336b1e4f71"
+          "9d0dfe03-fa27-4735-bf2c-8294851666a7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20220301T195937Z:b8ee1991-8a0e-47ed-a199-85336b1e4f71"
+          "NORTHCENTRALUS:20220307T164918Z:9d0dfe03-fa27-4735-bf2c-8294851666a7"
         ],
         "Date": [
-          "Tue, 01 Mar 2022 19:59:37 GMT"
+          "Mon, 07 Mar 2022 16:49:17 GMT"
         ],
         "Content-Length": [
           "19"

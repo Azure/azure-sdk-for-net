@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d42083c-f406-499f-b9bf-afb1981f209b"
+          "155eb295-05cf-4c66-b9e5-fa8a0371e6b7"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "6c5901f2-5ea4-404b-9995-8ed816f41a72"
+          "da1bcad3-7c3e-4f68-b951-f96315dbeced"
         ],
         "x-ms-correlation-request-id": [
-          "6c5901f2-5ea4-404b-9995-8ed816f41a72"
+          "da1bcad3-7c3e-4f68-b951-f96315dbeced"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20220301T195935Z:6c5901f2-5ea4-404b-9995-8ed816f41a72"
+          "NORTHCENTRALUS:20220307T164916Z:da1bcad3-7c3e-4f68-b951-f96315dbeced"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 01 Mar 2022 19:59:35 GMT"
+          "Mon, 07 Mar 2022 16:49:16 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b9290b6b-6a67-4da1-9b89-d66778ff8040"
+          "ab1b4aa1-8725-45ad-9401-c7c50b0d4b72"
         ],
         "Accept-Language": [
           "en-US"
@@ -76,7 +76,7 @@
           "FxVersion/4.700.21.56803",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19044",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/14.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/14.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,7 +90,7 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "2fc7f032-3871-4b74-8837-46f8c7a6135f"
+          "47c789c1-77be-4d9b-9815-05678d4a2f56"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -102,13 +102,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-correlation-request-id": [
-          "f9c6db6c-34b4-4bff-b127-21b72e6be230"
+          "ec0fb1d0-1a95-4aad-9b00-4757550702aa"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20220301T195936Z:f9c6db6c-34b4-4bff-b127-21b72e6be230"
+          "NORTHCENTRALUS:20220307T164917Z:ec0fb1d0-1a95-4aad-9b00-4757550702aa"
         ],
         "Date": [
-          "Tue, 01 Mar 2022 19:59:36 GMT"
+          "Mon, 07 Mar 2022 16:49:17 GMT"
         ],
         "Content-Length": [
           "2286"
