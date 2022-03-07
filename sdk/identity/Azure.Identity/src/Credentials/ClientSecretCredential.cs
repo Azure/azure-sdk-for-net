@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 using System;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -21,6 +21,8 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
 
         internal MsalConfidentialClient Client { get; }
+
+        private readonly bool _logAccountDetails;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
@@ -114,6 +116,10 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
+                if (_logAccountDetails)
+                {
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(ClientId, TenantId, null, null);
+                }
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)

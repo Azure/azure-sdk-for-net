@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -11,6 +13,8 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        private bool _logAccountDetails; //TODO: get from options
+
         internal protected bool IsPiiLoggingEnabled { get; }
 
         /// <summary>
@@ -76,6 +80,19 @@ namespace Azure.Identity
             if (!isPii || IsPiiLoggingEnabled)
             {
                 AzureIdentityEventSource.Singleton.LogMsal(level, message);
+            }
+        }
+
+        protected void LogAccountDetails(AuthenticationResult result)
+        {
+            if (_logAccountDetails)
+            {
+                string clientId = null;
+                if (result.ClaimsPrincipal.Identity is ClaimsIdentity claimsIdentity)
+                {
+                    clientId = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "aud")?.Value;
+                }
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(clientId, result.TenantId, result.Account?.Username, result.UniqueId);
             }
         }
     }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -14,6 +15,7 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+        private readonly bool _logAccountDetails;
 
         internal string RedirectUrl { get; }
 
@@ -25,6 +27,7 @@ namespace Azure.Identity
         {
             RedirectUrl = redirectUrl;
             _beforeBuildClient = beforeBuildClient;
+            _logAccountDetails = true; //TODO: get from options
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -98,7 +101,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenSilentCoreAsync(scopes, claims, record, tenantId, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(scopes, claims, record, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool async, CancellationToken cancellationToken)
@@ -135,7 +140,9 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            return await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool async, CancellationToken cancellationToken)
@@ -162,7 +169,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenByUsernamePasswordCoreAsync(scopes, claims, username, password, tenantId, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenByUsernamePasswordCoreAsync(scopes, claims, username, password, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
@@ -181,7 +190,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenWithDeviceCodeCoreAsync(scopes, claims, deviceCodeCallback, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenWithDeviceCodeCoreAsync(scopes, claims, deviceCodeCallback, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeCoreAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
@@ -195,7 +206,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenAsync(string[] scopes, string claims, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenByRefreshTokenCoreAsync(scopes, claims, refreshToken, azureCloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenByRefreshTokenCoreAsync(scopes, claims, refreshToken, azureCloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(string[] scopes, string claims, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool async, CancellationToken cancellationToken)

@@ -28,5 +28,10 @@ namespace Azure.Identity
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// </summary>
         internal bool IsLoggingPIIEnabled { get; set; }
+
+        /// <summary>
+        /// Gets the credential diagnostic options.
+        /// </summary>
+        public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;
     }
 }

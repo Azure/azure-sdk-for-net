@@ -350,6 +350,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics = null, Azure.Core.RetryOptions? retry = null) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -639,7 +640,7 @@ namespace Azure.Core
     }
     public partial class RetryOptions
     {
-        internal RetryOptions() { }
+        protected internal RetryOptions() { }
         public System.TimeSpan Delay { get { throw null; } set { } }
         public System.TimeSpan MaxDelay { get { throw null; } set { } }
         public int MaxRetries { get { throw null; } set { } }
