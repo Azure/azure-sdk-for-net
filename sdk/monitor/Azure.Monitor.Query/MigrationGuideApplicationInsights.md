@@ -125,7 +125,9 @@ The `Microsoft.Azure.ApplicationInsights.Query` package includes an Events API, 
 In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
 
 ```csharp
-using Microsoft.Azure.ApplicationInsights.Query.Models
+using Microsoft.Azure.ApplicationInsights.Query.Models;
+
+// code omitted for brevity
 
 MetricsResult result = client.Metrics.GetAsync("<appId>", "<metricId>").Result;
 ```
