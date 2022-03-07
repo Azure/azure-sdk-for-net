@@ -78,8 +78,8 @@ var client = new ApplicationInsightsDataClient(credentials);
 In `Azure.Monitor.Query` v1.0.x:
 
 ```csharp
-using Azure.Monitor.Query;
 using Azure.Identity;
+using Azure.Monitor.Query;
 
 // code omitted for brevity
 
