@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedPrivateEndpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a managed private endpoint.
         /// </summary>
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedPrivateEndpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a managed private endpoint.
         /// </summary>
