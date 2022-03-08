@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> BGP peer status details. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routesReceived"> The number of routes learned from this peer. </param>
         /// <param name="messagesSent"> The number of BGP messages sent. </param>
         /// <param name="messagesReceived"> The number of BGP messages received. </param>
-        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, string connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived)
+        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, TimeSpan? connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived)
         {
             LocalAddress = localAddress;
             Neighbor = neighbor;
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The BGP peer state. </summary>
         public BgpPeerState? State { get; }
         /// <summary> For how long the peering has been up. </summary>
-        public string ConnectedDuration { get; }
+        public TimeSpan? ConnectedDuration { get; }
         /// <summary> The number of routes learned from this peer. </summary>
         public long? RoutesReceived { get; }
         /// <summary> The number of BGP messages sent. </summary>
