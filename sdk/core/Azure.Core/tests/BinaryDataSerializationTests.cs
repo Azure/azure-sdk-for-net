@@ -17,6 +17,62 @@ namespace Azure.Core.Tests
     public class BinaryDataSerializationTests
     {
         [Test]
+        public void CanConvertDifferentValueTypes()
+        {
+            var model = BinaryData.FromString(File.ReadAllText(GetFileName("PropertiesWithDifferentValueTypes.json")));
+
+            var properties = model.ToDictionaryFromJson();
+            Assert.AreEqual(typeof(string), properties["stringValue"].GetType());
+            Assert.AreEqual(typeof(string), properties["dateTimeValue"].GetType());
+            Assert.AreEqual(typeof(int), properties["intValue"].GetType());
+            Assert.AreEqual(typeof(long), properties["longValue"].GetType());
+            Assert.AreEqual(typeof(double), properties["doubleValue"].GetType());
+            Assert.AreEqual(typeof(bool), properties["trueValue"].GetType());
+            Assert.AreEqual(typeof(bool), properties["falseValue"].GetType());
+            Assert.IsNull(properties["nullValue"]);
+        }
+
+        [Test]
+        public void CanConvertArrays()
+        {
+            var model = BinaryData.FromString(File.ReadAllText(GetFileName("PropertiesWithArrays.json")));
+
+            var properties = model.ToDictionaryFromJson();
+            Assert.IsTrue(AllValuesAreType(typeof(string), properties["stringArray"]));
+            Assert.IsTrue(AllValuesAreType(typeof(string), properties["dateTimeArray"]));
+            Assert.IsTrue(AllValuesAreType(typeof(int), properties["intArray"]));
+            Assert.IsTrue(AllValuesAreType(typeof(long), properties["longArray"]));
+            Assert.IsTrue(AllValuesAreType(typeof(double), properties["doubleArray"]));
+            Assert.IsTrue(AllValuesAreType(typeof(bool), properties["boolArray"]));
+            foreach (var item in properties["nullArray"] as List<object>)
+            {
+                Assert.IsNull(item);
+            }
+            var mixList = properties["mixedNullArray"] as List<object>;
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == 0)
+                {
+                    Assert.IsNull(mixList[i]);
+                }
+                else
+                {
+                    Assert.IsNotNull(mixList[i]);
+                }
+            }
+        }
+
+        private bool AllValuesAreType(Type type, object list)
+        {
+            foreach (var item in list as List<object>)
+            {
+                if (!item.GetType().Equals(type))
+                    return false;
+            }
+            return true;
+        }
+
+        [Test]
         public void DeserializeJsonFormattedStringWithObject()
         {
             using (var fs = new FileStream(GetFileName("JsonFormattedString.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -42,22 +98,6 @@ namespace Azure.Core.Tests
                 Assert.AreEqual("a.value", data.A);
 
                 var properties = data.Properties.ToDictionaryFromJson();
-                Assert.AreEqual("properties.a.value", properties["a"]);
-                var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
-                Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
-            }
-        }
-
-        [Test]
-        public void DeserializeJsonFormattedStringWithBinaryData2()
-        {
-            using (var fs = new FileStream(GetFileName("JsonFormattedString.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                using var document = JsonDocument.Parse(fs);
-                var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
-                Assert.AreEqual("a.value", data.A);
-
-                var properties = data.Properties.ToDictionaryFromJson2();
                 Assert.AreEqual("properties.a.value", properties["a"]);
                 var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
                 Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
@@ -94,13 +134,12 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("TODO fix this test")]
         public void SerailizeUsingStream()
         {
             var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
 
             var payload = new ModelWithBinaryData { A = "a.value" };
-            using var fs = File.OpenRead(GetFileName("Properties.json"));
+            using var fs = File.Open(GetFileName("Properties.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
             payload.Properties = BinaryData.FromStream(fs);
 
             string actual = GetSerializedString(payload);
@@ -122,69 +161,6 @@ namespace Azure.Core.Tests
                 }
             };
             payload.Properties = BinaryData.FromObjectAsJson(properties);
-
-            string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void SerailizeUsingDictStringObjectJsonElement()
-        {
-            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
-
-            var payload = new ModelWithJsonElement { A = "a.value" };
-            var properties = new Dictionary<string, object>();
-            var innerProperties = new Dictionary<string, object>();
-            properties.Add("a", "properties.a.value");
-            innerProperties.Add("a", "properties.innerProperties.a.value");
-            properties.Add("innerProperties", innerProperties);
-            payload.Properties = JsonElementHelpers.FromObjectAsJson(properties);
-
-            string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void SerailizeUsingJsonFormattedStringJsonElement()
-        {
-            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
-
-            var payload = new ModelWithJsonElement { A = "a.value" };
-            payload.Properties = JsonElementHelpers.FromString(File.ReadAllText(GetFileName("Properties.json")).TrimEnd());
-
-            string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        [Ignore("TODO fix this test")]
-        public void SerailizeUsingStreamJsonElement()
-        {
-            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
-
-            var payload = new ModelWithJsonElement { A = "a.value" };
-            using var fs = File.OpenRead(GetFileName("Properties.json"));
-            payload.Properties = JsonElementHelpers.FromStream(fs);
-
-            string actual = GetSerializedString(payload);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void SerailizeUsingAnonObjectJsonElement()
-        {
-            var expected = File.ReadAllText(GetFileName("JsonFormattedString.json")).TrimEnd();
-
-            var payload = new ModelWithJsonElement { A = "a.value" };
-            var properties = new
-            {
-                a = "properties.a.value",
-                innerProperties = new
-                {
-                    a = "properties.innerProperties.a.value"
-                }
-            };
-            payload.Properties = JsonElementHelpers.FromObjectAsJson(properties);
 
             string actual = GetSerializedString(payload);
             Assert.AreEqual(expected, actual);

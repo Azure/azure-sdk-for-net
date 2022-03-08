@@ -51,10 +51,7 @@
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="TestData\BinaryData\JsonFormattedString.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\BinaryData\Properties.json">
+    <None Update="TestData\BinaryData\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

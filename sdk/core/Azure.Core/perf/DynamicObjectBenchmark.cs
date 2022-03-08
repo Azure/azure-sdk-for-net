@@ -21,7 +21,6 @@ namespace Azure.Core.Perf
         private static string _fileName = Path.Combine(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "JsonFormattedString.json"));
         private JsonDocument _jsonDocument;
         private ModelWithBinaryData _modelWithBinaryData;
-        private ModelWithJsonElement _modelWithJsonElement;
         private ModelWithObject _modelWithObject;
 
         [GlobalSetup]
@@ -42,10 +41,6 @@ namespace Azure.Core.Perf
             _modelWithBinaryData = new ModelWithBinaryData();
             _modelWithBinaryData.A = "a.value";
             _modelWithBinaryData.Properties = BinaryData.FromObjectAsJson(anon);
-
-            _modelWithJsonElement = new ModelWithJsonElement();
-            _modelWithJsonElement.A = "a.value";
-            _modelWithJsonElement.Properties = JsonElementHelpers.FromObjectAsJson(anon);
 
             _modelWithObject = new ModelWithObject();
             _modelWithObject.A = "a.value";
@@ -93,15 +88,6 @@ namespace Azure.Core.Perf
         public void DeserializeWithBinaryDataAndAccess()
         {
             var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
-            var properties = model.Properties.ToDictionaryFromJson2();
-            var innerProperties = properties["innerProperties"] as Dictionary<string, object>;
-            var innerA = innerProperties["a"] as string;
-        }
-
-        [Benchmark]
-        public void DeserializeWithBinaryDataAndAccessUsingCustomParse()
-        {
-            var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
             var properties = model.Properties.ToDictionaryFromJson();
             var innerProperties = properties["innerProperties"] as Dictionary<string, object>;
             var innerA = innerProperties["a"] as string;
@@ -113,29 +99,6 @@ namespace Azure.Core.Perf
             using var ms = new MemoryStream();
             using var writer = new Utf8JsonWriter(ms);
             _modelWithBinaryData.Write(writer);
-        }
-
-        [Benchmark]
-        public void DeserializeWithJsonElement()
-        {
-            var model = ModelWithJsonElement.DeserializeModelWithJsonElement(_jsonDocument.RootElement);
-        }
-
-        [Benchmark]
-        public void DeserializeWithJsonElementAndAccess()
-        {
-            var model = ModelWithJsonElement.DeserializeModelWithJsonElement(_jsonDocument.RootElement);
-            var properties = model.Properties.ToDictionary();
-            var innerProperties = properties["innerProperties"] as Dictionary<string, object>;
-            var innerA = innerProperties["a"] as string;
-        }
-
-        [Benchmark]
-        public void SerializeWithJsonElement()
-        {
-            using var ms = new MemoryStream();
-            using var writer = new Utf8JsonWriter(ms);
-            _modelWithJsonElement.Write(writer);
         }
     }
 }
