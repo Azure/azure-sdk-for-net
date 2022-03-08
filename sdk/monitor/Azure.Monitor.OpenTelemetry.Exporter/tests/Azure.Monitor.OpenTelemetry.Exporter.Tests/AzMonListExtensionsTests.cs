@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class HttpHelperTests
+    public class AzMonListExtensionsTests
     {
         [Fact]
         public void HttpRequestUrlIsSetUsingHttpUrl()
