@@ -2152,7 +2152,7 @@ namespace Azure.ResourceManager.Sql
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Details { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo ErrorDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> EstimatedImpact { get { throw null; } }
-        public string ExecuteActionDuration { get { throw null; } }
+        public System.TimeSpan? ExecuteActionDuration { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? ExecuteActionInitiatedBy { get { throw null; } }
         public System.DateTimeOffset? ExecuteActionInitiatedTime { get { throw null; } }
         public System.DateTimeOffset? ExecuteActionStartTime { get { throw null; } }
@@ -2166,7 +2166,7 @@ namespace Azure.ResourceManager.Sql
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> ObservedImpact { get { throw null; } }
         public string RecommendationReason { get { throw null; } }
-        public string RevertActionDuration { get { throw null; } }
+        public System.TimeSpan? RevertActionDuration { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RecommendedActionInitiatedBy? RevertActionInitiatedBy { get { throw null; } }
         public System.DateTimeOffset? RevertActionInitiatedTime { get { throw null; } }
         public System.DateTimeOffset? RevertActionStartTime { get { throw null; } }
@@ -5481,7 +5481,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public MaintenanceWindowTimeRange() { }
         public Azure.ResourceManager.Sql.Models.SqlDayOfWeek? DayOfWeek { get { throw null; } set { } }
-        public string Duration { get { throw null; } set { } }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

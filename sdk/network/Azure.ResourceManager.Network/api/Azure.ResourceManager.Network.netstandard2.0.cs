@@ -5707,7 +5707,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal BgpPeerStatus() { }
         public long? Asn { get { throw null; } }
-        public string ConnectedDuration { get { throw null; } }
+        public System.TimeSpan? ConnectedDuration { get { throw null; } }
         public string LocalAddress { get { throw null; } }
         public long? MessagesReceived { get { throw null; } }
         public long? MessagesSent { get { throw null; } }

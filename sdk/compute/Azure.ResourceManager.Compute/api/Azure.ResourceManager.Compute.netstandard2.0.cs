@@ -4943,7 +4943,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineInstallPatchesParameters(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting rebootSetting) { }
         public Azure.ResourceManager.Compute.Models.LinuxParameters LinuxParameters { get { throw null; } set { } }
-        public string MaximumDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting RebootSetting { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsParameters WindowsParameters { get { throw null; } set { } }
     }
