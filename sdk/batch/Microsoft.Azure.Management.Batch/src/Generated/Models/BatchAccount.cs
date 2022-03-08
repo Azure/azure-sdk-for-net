@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="dedicatedCoreQuota">The dedicated core quota for the
         /// Batch account.</param>
-        /// <param name="lowPriorityCoreQuota">The low-priority core quota for
-        /// the Batch account.</param>
+        /// <param name="lowPriorityCoreQuota">The Spot/low-priority core quota
+        /// for the Batch account.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamily">A list of the dedicated
         /// core quota per Virtual Machine family for the Batch account. For
         /// accounts with PoolAllocationMode set to UserSubscription, quota is
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int? DedicatedCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the low-priority core quota for the Batch account.
+        /// Gets the Spot/low-priority core quota for the Batch account.
         /// </summary>
         /// <remarks>
         /// For accounts with PoolAllocationMode set to UserSubscription, quota
