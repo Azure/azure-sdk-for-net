@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     public partial class EndpointDetail
     {
         internal EndpointDetail() { }
-        public string IpAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
