@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests
                 .CreateOrUpdateAsync(false, Recording.GenerateAssetName("mgmt-group-"), new CreateManagementGroupOptions());
             await mgmtGroupOp.WaitForCompletionAsync();
             ManagementGroup mgmtGroup = mgmtGroupOp.Value;
-            ManagementGroupUpdateOptions patch = new ManagementGroupUpdateOptions();
+            PatchableManagementGroupData patch = new PatchableManagementGroupData();
             patch.DisplayName = "New Display Name";
             ManagementGroup patchedMgmtGroup = await mgmtGroup.UpdateAsync(patch);
             Assert.AreEqual("New Display Name", patchedMgmtGroup.Data.DisplayName);
