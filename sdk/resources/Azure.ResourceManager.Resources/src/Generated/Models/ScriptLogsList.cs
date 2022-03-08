@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment script execution logs. </summary>
-    public partial class ScriptLogsList
+    internal partial class ScriptLogsList
     {
         /// <summary> Initializes a new instance of ScriptLogsList. </summary>
         internal ScriptLogsList()

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     [PropertyReferenceType]
-    internal partial class ErrorResponse
+    public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         [InitializationConstructor]

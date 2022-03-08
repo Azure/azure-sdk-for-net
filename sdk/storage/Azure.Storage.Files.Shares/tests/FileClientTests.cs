@@ -1280,7 +1280,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
                 IgnoreReadOnly = true,
-                SetArchiveAttribute = true,
+                Archive = true,
             };
 
             // Act
@@ -1924,8 +1924,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Act
                 Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
+
+                ShareFileDownloadOptions options = new ShareFileDownloadOptions
+                {
+                    Range = new HttpRange(Constants.KB, data.LongLength)
+                };
+
                 Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
-                    range: new HttpRange(Constants.KB, data.LongLength));
+                    options: options);
 
                 // Assert
 
@@ -1995,9 +2001,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
 
+                ShareFileDownloadOptions options = new ShareFileDownloadOptions
+                {
+                    Range = new HttpRange(Constants.KB, data.LongLength)
+                };
+
                 // Act
                 Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
-                    range: new HttpRange(Constants.KB, data.LongLength));
+                    options: options);
 
                 // Assert
                 Assert.IsNotNull(downloadResponse.Value.Details.ETag);
@@ -2027,10 +2038,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     LeaseId = fileLease.LeaseId
                 };
 
+                ShareFileDownloadOptions options = new ShareFileDownloadOptions
+                {
+                    Range = new HttpRange(Constants.KB, data.LongLength),
+                    Conditions = conditions
+                };
+
                 // Act
                 Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
-                    range: new HttpRange(Constants.KB, data.LongLength),
-                    conditions: conditions);
+                    options: options);
 
                 // Assert
                 Assert.AreEqual(ShareLeaseDuration.Infinite, downloadResponse.Value.Details.LeaseDuration);
@@ -2061,11 +2077,16 @@ namespace Azure.Storage.Files.Shares.Tests
                     LeaseId = Recording.Random.NewGuid().ToString()
                 };
 
+                ShareFileDownloadOptions options = new ShareFileDownloadOptions
+                {
+                    Range = new HttpRange(Constants.KB, data.LongLength),
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     file.DownloadAsync(
-                        range: new HttpRange(Constants.KB, data.LongLength),
-                        conditions: conditions),
+                        options: options),
                     e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
             }
         }
@@ -2105,8 +2126,13 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream);
             }
 
+            ShareFileDownloadOptions options = new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(offset, data.LongLength)
+            };
+
             // Assert
-            Response<ShareFileDownloadInfo> downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
+            Response<ShareFileDownloadInfo> downloadResponse = await fileFaulty.DownloadAsync(options: options);
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -3053,8 +3079,13 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
             }
 
+            ShareFileDownloadOptions options = new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(offset, data.LongLength)
+            };
+
             // Assert
-            Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(offset, data.LongLength));
+            Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(options: options);
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -3103,8 +3134,16 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
 
             // Ensure the contents of the source and destination Files after the UploadRangeFromUri call
-            var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
-            var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
+            ShareFileDownloadOptions sourceOptions = new ShareFileDownloadOptions
+            {
+                Range = sourceRange
+            };
+            var sourceDownloadResponse = await sourceFile.DownloadAsync(options: sourceOptions);
+            ShareFileDownloadOptions destOptions = new ShareFileDownloadOptions
+            {
+                Range = destRange
+            };
+            var destDownloadResponse = await destFile.DownloadAsync(options: destOptions);
 
             var sourceStream = new MemoryStream();
             await sourceDownloadResponse.Value.Content.CopyToAsync(sourceStream);
@@ -3260,8 +3299,17 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourceRange: sourceRange);
 
             // Assert
-            var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
-            var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
+            ShareFileDownloadOptions sourceOptions = new ShareFileDownloadOptions
+            {
+                Range = sourceRange
+            };
+            var sourceDownloadResponse = await sourceFile.DownloadAsync(options: sourceOptions);
+
+            ShareFileDownloadOptions destOptions = new ShareFileDownloadOptions
+            {
+                Range = destRange
+            };
+            var destDownloadResponse = await destFile.DownloadAsync(options: destOptions);
 
             var sourceStream = new MemoryStream();
             await sourceDownloadResponse.Value.Content.CopyToAsync(sourceStream);
@@ -3776,7 +3824,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
             Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
 
-            Response<ShareFileDownloadInfo> result = await file.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+            ShareFileDownloadOptions options = new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(0, 2 * Constants.KB)
+            };
+
+            Response<ShareFileDownloadInfo> result = await file.DownloadAsync(options: options);
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(expectedData.Length, dataResult.Length);
@@ -4017,8 +4070,13 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
 
             // Assert
+            ShareFileDownloadOptions options = new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(0, Constants.KB)
+            };
+
             Response<ShareFileDownloadInfo> downloadResponse = await destFile.DownloadAsync(
-                range: new HttpRange(0, Constants.KB));
+                options: options);
 
             Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
             var actual = new MemoryStream();

@@ -156,6 +156,16 @@ directive:
   - from: resources.json
     where: $.definitions.DeploymentWhatIf.properties.location
     transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
 ```
 
 ### Tag: package-track2-preview

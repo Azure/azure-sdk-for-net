@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IntegrationRuntime()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = new IntegrationRuntimeType("IntegrationRuntime");
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntime. </summary>

@@ -8,12 +8,12 @@ namespace Azure.Core
 {
     /// <summary>
     /// Implements chaining of classifiers for the general case where the end-of-chain
-    /// <see cref="ResponseClassifier"/> is not a <see cref="CoreResponseClassifier"/>.
-    /// <see cref="CoreResponseClassifier"/> is preferred due to its enhanced performance
+    /// <see cref="ResponseClassifier"/> is not a <see cref="StatusCodeClassifier"/>.
+    /// <see cref="StatusCodeClassifier"/> is preferred due to its enhanced performance
     /// characteristics.
     /// The classifier chain is a series of <see cref="ResponseClassificationHandler"/> classifiers
     /// followed by the "end-of-chain" <see cref="ResponseClassifier"/>.  The handlers are
-    /// added to the chain via <see cref="RequestContext"/> or <see cref="RequestOptions"/>,
+    /// added to the chain via <see cref="RequestContext"/>,
     /// and all of them are applied starting with the most recently added handler and
     /// iterating over the list to the least-recently added handler, then applying status code
     /// classification, and finally by applying the "end-of-chain" classifier.

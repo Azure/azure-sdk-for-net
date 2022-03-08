@@ -3440,7 +3440,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="DataLakePathClient"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
-        protected internal virtual DataLakeFileSystemClient GetParentDataLakeFileSystemClientCore()
+        protected internal virtual DataLakeFileSystemClient GetParentFileSystemClientCore()
         {
             if (_parentFileSystemClient == null)
             {
@@ -3466,7 +3466,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="DataLakePathClient"/>.
         /// </summary>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
-        protected internal virtual DataLakeDirectoryClient GetParentDataLakeDirectoryClientCore()
+        protected internal virtual DataLakeDirectoryClient GetParentDirectoryClientCore()
         {
             if (_parentDirectoryClient == null)
             {
@@ -3507,9 +3507,9 @@ namespace Azure.Storage.Files.DataLake
             /// </summary>
             /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
             /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
-            public static DataLakeFileSystemClient GetParentDataLakeFileSystemClient(this DataLakePathClient client)
+            public static DataLakeFileSystemClient GetParentFileSystemClient(this DataLakePathClient client)
             {
-                return client.GetParentDataLakeFileSystemClientCore();
+                return client.GetParentFileSystemClientCore();
             }
 
             /// <summary>
@@ -3520,9 +3520,9 @@ namespace Azure.Storage.Files.DataLake
             /// </summary>
             /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
             /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
-            public static DataLakeDirectoryClient GetParentDataLakeDirectoryClient(this DataLakePathClient client)
+            public static DataLakeDirectoryClient GetParentDirectoryClient(this DataLakePathClient client)
             {
-                return client.GetParentDataLakeDirectoryClientCore();
+                return client.GetParentDirectoryClientCore();
             }
         }
     }

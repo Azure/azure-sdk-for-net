@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };

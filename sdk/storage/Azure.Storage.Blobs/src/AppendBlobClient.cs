@@ -998,12 +998,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlobAppendInfo> AppendBlock(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            byte[] transactionalContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            AppendBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             AppendBlobAppendBlockOptions options = default;
             if (transactionalContentHash != default || conditions != default || progressHandler != default)
@@ -1075,12 +1077,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            byte[] transactionalContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            AppendBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             AppendBlobAppendBlockOptions options = default;
             if (transactionalContentHash != default || conditions != default || progressHandler != default)
@@ -1140,7 +1144,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobAppendInfo> AppendBlock(
             Stream content,
-            AppendBlobAppendBlockOptions options,
+            AppendBlobAppendBlockOptions options = default,
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
@@ -1182,7 +1186,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
             Stream content,
-            AppendBlobAppendBlockOptions options,
+            AppendBlobAppendBlockOptions options = default,
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,

@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
+        public void ValidateTelemetryItem_DefaultActivity_DefaultResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_Activity_WithResource()
+        public void ValidateTelemetryItem_Activity_WithResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_Activity_WithParentSpanId()
+        public void ValidateTelemetryItem_Activity_WithParentSpanId()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(

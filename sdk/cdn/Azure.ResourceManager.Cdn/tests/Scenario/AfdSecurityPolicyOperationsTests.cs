@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
             string afdEndpointName2 = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
-            AfdSecurityPolicyUpdateOptions updateOptions = new AfdSecurityPolicyUpdateOptions
+            PatchableAfdSecurityPolicyData updateOptions = new PatchableAfdSecurityPolicyData
             {
                 Parameters = new SecurityPolicyWebApplicationFirewallParameters
                 {

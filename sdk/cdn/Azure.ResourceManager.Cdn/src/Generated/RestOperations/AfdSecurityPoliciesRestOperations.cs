@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyUpdateOptions options)
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, PatchableAfdSecurityPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -393,10 +393,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="options"> Security policy update properties. </param>
+        /// <param name="data"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response> PatchAsync(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response> PatchAsync(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, PatchableAfdSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -414,12 +414,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, profileName, securityPolicyName, options);
+            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, profileName, securityPolicyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -436,10 +436,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="options"> Security policy update properties. </param>
+        /// <param name="data"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/> or <paramref name="options"/> is null. </exception>
-        public Response Patch(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, AfdSecurityPolicyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public Response Patch(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, PatchableAfdSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -457,12 +457,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(securityPolicyName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, profileName, securityPolicyName, options);
+            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, profileName, securityPolicyName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

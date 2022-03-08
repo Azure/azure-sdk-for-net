@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
             input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
             {
-                CacheDuration = "00:00:20"
+                CacheDuration = new TimeSpan(0, 0, 20)
             }));
             ArmOperation<AfdRule> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(true, ruleName, input3);
             AfdRule rule = lro3.Value;
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the rule with GetAsync()
             AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
             // With UpdateAsync(), we can update the rule
-            AfdRuleUpdateOptions input = new AfdRuleUpdateOptions
+            PatchableAfdRuleData input = new PatchableAfdRuleData
             {
                 Order = 2
             };
             input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
             input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
             {
-                CacheDuration = "00:00:30"
+                CacheDuration = new TimeSpan(0, 0, 30)
             }));
             ArmOperation<AfdRule> lro = await rule.UpdateAsync(true, input);
             rule = lro.Value;

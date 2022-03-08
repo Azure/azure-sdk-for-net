@@ -503,11 +503,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal AvailableCluster() { }
         public string Location { get { throw null; } }
     }
-    public partial class AvailableClustersList
-    {
-        internal AvailableClustersList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.AvailableCluster> Value { get { throw null; } }
-    }
     public partial class CaptureDescription
     {
         public CaptureDescription() { }
@@ -565,26 +560,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus? Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.CreatedByType left, Azure.ResourceManager.EventHubs.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.CreatedByType left, Azure.ResourceManager.EventHubs.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DefaultAction : System.IEquatable<Azure.ResourceManager.EventHubs.Models.DefaultAction>
     {
         private readonly object _dummy;
@@ -631,15 +606,15 @@ namespace Azure.ResourceManager.EventHubs.Models
     }
     public enum EntityStatus
     {
-        Active = 0,
-        Disabled = 1,
-        Restoring = 2,
-        SendDisabled = 3,
-        ReceiveDisabled = 4,
-        Creating = 5,
-        Deleting = 6,
-        Renaming = 7,
-        Unknown = 8,
+        Unknown = 0,
+        Active = 1,
+        Disabled = 2,
+        Restoring = 3,
+        SendDisabled = 4,
+        ReceiveDisabled = 5,
+        Creating = 6,
+        Deleting = 7,
+        Renaming = 8,
     }
     public partial class EventHubDestination
     {
@@ -658,11 +633,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
-    }
-    public partial class EventHubNamespaceIdListResult
-    {
-        internal EventHubNamespaceIdListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.KeyType>
@@ -713,12 +683,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IpMask { get { throw null; } set { } }
     }
-    public partial class NetworkRuleSetListResult
-    {
-        internal NetworkRuleSetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.NetworkRuleSetData> Value { get { throw null; } }
-    }
     public partial class NetworkRuleSetVirtualNetworkRules
     {
         public NetworkRuleSetVirtualNetworkRules() { }
@@ -751,12 +715,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class PrivateLinkResourcesListResult
-    {
-        internal PrivateLinkResourcesListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public enum ProvisioningStateDR
     {
@@ -792,13 +750,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public RegenerateAccessKeyOptions(Azure.ResourceManager.EventHubs.Models.KeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.KeyType KeyType { get { throw null; } }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public enum RoleDisasterRecovery
     {

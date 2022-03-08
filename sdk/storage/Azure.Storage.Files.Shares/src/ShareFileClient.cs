@@ -1039,7 +1039,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
-                setArchiveAttribute: options?.SetArchiveAttribute,
+                setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 async: false,
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
-                setArchiveAttribute: options?.SetArchiveAttribute,
+                setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 async: true,
@@ -1791,7 +1791,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileDownloadInfo> Download(
-            ShareFileDownloadOptions options,
+            ShareFileDownloadOptions options = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 options,
@@ -1824,7 +1824,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            ShareFileDownloadOptions options,
+            ShareFileDownloadOptions options = default,
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 options,
@@ -1870,11 +1870,13 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileDownloadInfo> Download(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             ShareFileDownloadOptions options = default;
             if (range != default || rangeGetContentHash != default || conditions != default)
@@ -1996,11 +1998,13 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             ShareFileDownloadOptions options = default;
             if (range != default || rangeGetContentHash != default || conditions != default)

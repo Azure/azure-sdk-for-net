@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
@@ -301,4 +300,9 @@ directive:
               }
           }
       }
+  - from: cdn.json
+    where: $.definitions.CacheExpirationActionParameters.properties.cacheDuration
+    transform: >
+      $["format"] = "duration";
+      $["x-ms-format"] = "duration-constant";
 ```

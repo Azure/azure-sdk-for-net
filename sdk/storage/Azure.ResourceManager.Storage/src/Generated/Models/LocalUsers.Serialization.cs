@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LocalUsers
+    internal partial class LocalUsers
     {
         internal static LocalUsers DeserializeLocalUsers(JsonElement element)
         {

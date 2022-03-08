@@ -1,14 +1,9 @@
 # Release History
 
-## 11.4.0-beta.7 (Unreleased)
+## 11.4.0-beta.7 (2022-03-08)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support to create, update and delete aliases via the `SearchIndexClient`.
 
 ## 11.4.0-beta.6 (2022-02-08)
 

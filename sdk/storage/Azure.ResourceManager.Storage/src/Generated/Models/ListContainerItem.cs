@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The blob container properties be listed out. </summary>
-    public partial class ListContainerItem : AzureEntityResource
+    internal partial class ListContainerItem : AzureEntityResource
     {
         /// <summary> Initializes a new instance of ListContainerItem. </summary>
         public ListContainerItem()
