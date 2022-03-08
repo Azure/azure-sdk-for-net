@@ -14,8 +14,8 @@ mgmt-debug:
   show-request-path: true
 batch:
   - tag: package-common-type
-  - tag: package-resources
-  - tag: package-management
+#   - tag: package-resources
+#   - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -73,6 +73,9 @@ directive:
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+  - from: managedidentity.json
+    where: $.definitions.SystemAssignedServiceIdentity.properties.type
+    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
 ```
 
 ### Tag: package-resources
