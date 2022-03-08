@@ -14,8 +14,8 @@ mgmt-debug:
   show-request-path: true
 batch:
   - tag: package-common-type
-#   - tag: package-resources
-#   - tag: package-management
+  - tag: package-resources
+  - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -399,6 +399,9 @@ directive:
   - from: locks.json
     where: $.definitions.ManagementLockObject
     transform: $["x-ms-client-name"] = "ManagementLock"
+  - from: links.json
+    where: $.definitions.ResourceLink.properties.type
+    transform: $["x-ms-client-name"] = "ResourceLinkType"
 ```
 
 ### Tag: package-management

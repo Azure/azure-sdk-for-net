@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ResourceLinkData. </summary>
         /// <param name="id"> The fully qualified ID of the resource link. </param>
         /// <param name="name"> The name of the resource link. </param>
-        /// <param name="type"> The resource link object. </param>
+        /// <param name="resourceLinkType"> The resource link object. </param>
         /// <param name="properties"> Properties for resource link. </param>
-        internal ResourceLinkData(string id, string name, object type, ResourceLinkProperties properties)
+        internal ResourceLinkData(string id, string name, object resourceLinkType, ResourceLinkProperties properties)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceLinkType = resourceLinkType;
             Properties = properties;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The name of the resource link. </summary>
         public string Name { get; }
         /// <summary> The resource link object. </summary>
-        public object Type { get; }
+        public object ResourceLinkType { get; }
         /// <summary> Properties for resource link. </summary>
         public ResourceLinkProperties Properties { get; set; }
     }

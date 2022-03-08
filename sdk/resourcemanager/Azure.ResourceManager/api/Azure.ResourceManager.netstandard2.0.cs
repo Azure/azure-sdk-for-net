@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.Models
     }
     public partial class ManagedServiceIdentity
     {
-        public ManagedServiceIdentity(Azure.ResourceManager.Models.ManagedServiceIdentityType type) { }
+        public ManagedServiceIdentity(Azure.ResourceManager.Models.ManagedServiceIdentityType managedServiceIdentityType) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentityType ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentityType Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.Models
     public abstract partial class ResourceData
     {
         protected ResourceData() { }
-        protected ResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
+        protected ResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-        public Azure.Core.ResourceType Type { get { throw null; } }
     }
     public sealed partial class Sku : System.IEquatable<Azure.ResourceManager.Models.Sku>
     {
@@ -444,10 +444,10 @@ namespace Azure.ResourceManager.Models
     }
     public partial class SystemAssignedServiceIdentity
     {
-        public SystemAssignedServiceIdentity(Azure.ResourceManager.Models.SystemAssignedServiceIdentityType type) { }
+        public SystemAssignedServiceIdentity(Azure.ResourceManager.Models.SystemAssignedServiceIdentityType systemAssignedServiceIdentityType) { }
         public System.Guid? PrincipalId { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentityType Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SystemAssignedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Models.SystemAssignedServiceIdentityType>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Models
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
-        protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
+        protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.Resources
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceLinkProperties Properties { get { throw null; } set { } }
-        public object Type { get { throw null; } }
+        public object ResourceLinkType { get { throw null; } }
     }
     public partial class RestApiCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.IEnumerable
     {
