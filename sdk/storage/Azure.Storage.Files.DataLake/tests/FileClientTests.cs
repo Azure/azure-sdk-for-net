@@ -1745,18 +1745,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             var data = GetRandomBuffer(Size);
             TestProgress progress = new TestProgress();
 
-            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
-            {
-                ProgressHandler = progress,
-            };
-
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
-                    options: options);
+                    progressHandler: progress);
                 ;
             }
 
@@ -1851,18 +1846,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             var duration = TimeSpan.FromSeconds(15);
             Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
-            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
-            {
-                LeaseId = response.Value.LeaseId,
-            };
-
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
-                    options: options);
+                    leaseId: response.Value.LeaseId);
             }
         }
 
@@ -1876,11 +1866,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
 
-            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
-            {
-                LeaseId = Recording.Random.NewGuid().ToString()
-            };
-
             // Act
             using (var stream = new MemoryStream(data))
             {
@@ -1888,7 +1873,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     file.AppendAsync(
                         content: stream,
                         offset: 0,
-                        options: options),
+                        leaseId: Recording.Random.NewGuid().ToString()),
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
         }
