@@ -62,6 +62,41 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void CanConvertArrayOfObjects()
+        {
+            var model = BinaryData.FromString(File.ReadAllText(GetFileName("PropertiesWithArraysOfObjects.json")));
+            var properties = model.ToDictionaryFromJson();
+            var objArray = properties["objectArray"] as List<object>;
+            for (int i = 0; i < 3; i++)
+            {
+                var obj = objArray[i] as Dictionary<string, object>;
+                Assert.IsNotNull(obj);
+                Assert.AreEqual(i, obj["intValue"]);
+                var innerObj = obj["objectValue"] as Dictionary<string, object>;
+                Assert.IsNotNull(innerObj);
+                Assert.AreEqual(i.ToString(), innerObj["stringValue"]);
+            }
+        }
+
+        [Test]
+        public void CanConvertArrayOfArrays()
+        {
+            var model = BinaryData.FromString(File.ReadAllText(GetFileName("PropertiesWithArraysOfArrays.json")));
+            var properties = model.ToDictionaryFromJson();
+            var arrayArray = properties["arrayArray"] as List<object>;
+            Assert.IsNotNull(arrayArray);
+            for (int i = 0; i < 2; i++)
+            {
+                var array = arrayArray[i] as List<object>;
+                Assert.IsNotNull(array);
+                foreach (var item in array)
+                {
+                    Assert.AreEqual(i, item);
+                }
+            }
+        }
+
         private bool AllValuesAreType(Type type, object list)
         {
             foreach (var item in list as List<object>)

@@ -69,9 +69,9 @@ namespace Azure
                     case JsonTokenType.Comment:
                         break;
                     case JsonTokenType.EndArray:
-                        break;
+                        return;
                     case JsonTokenType.EndObject:
-                        break;
+                        return;
                     case JsonTokenType.None:
                         break;
                     case JsonTokenType.PropertyName:
