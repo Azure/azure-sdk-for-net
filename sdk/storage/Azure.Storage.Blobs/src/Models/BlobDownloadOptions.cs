@@ -29,7 +29,17 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
-        // TODO #27253
+        /// <summary>
+        /// When set to true and specified together with <see cref="Range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <see cref="Range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </summary>
+        public bool RangeGetContentHash { get; set; }
+
+        // TODO #27253  RangeGetContentHash will become a facade to this option
         ///// <summary>
         ///// Optional transactional hashing options.
         ///// Range must be provided explicitly stating a range withing Azure

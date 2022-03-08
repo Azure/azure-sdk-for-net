@@ -943,6 +943,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
+                    RangeGetContentHash = rangeGetContentHash
                     // TODO #27253
                     //TransactionalHashingOptions = rangeGetContentHash
                     //    ? new DownloadTransactionalHashingOptions()
@@ -954,7 +955,6 @@ namespace Azure.Storage.Blobs.Specialized
             }
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
-                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
                 cancellationToken).ConfigureAwait(false);
@@ -1032,6 +1032,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
@@ -1045,6 +1046,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
+                    RangeGetContentHash = rangeGetContentHash
                     // TODO #27253
                     //TransactionalHashingOptions = rangeGetContentHash
                     //    ? new DownloadTransactionalHashingOptions()
@@ -1056,7 +1058,6 @@ namespace Azure.Storage.Blobs.Specialized
             }
             return DownloadStreamingInternal(
                 options,
-                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
                 cancellationToken)
@@ -1114,6 +1115,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
@@ -1127,6 +1129,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
+                    RangeGetContentHash = rangeGetContentHash
                     // TODO #27253
                     //TransactionalHashingOptions = rangeGetContentHash
                     //    ? new DownloadTransactionalHashingOptions()
@@ -1138,7 +1141,6 @@ namespace Azure.Storage.Blobs.Specialized
             }
             return await DownloadStreamingInternal(
                 options,
-                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
                 cancellationToken)
@@ -1189,7 +1191,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return DownloadStreamingInternal(
                 options,
-                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1234,7 +1235,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await DownloadStreamingInternal(
                 options,
-                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1242,7 +1242,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             BlobDownloadOptions options,
-            bool requestRangeMD5,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -1273,7 +1272,6 @@ namespace Azure.Storage.Blobs.Specialized
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         options,
-                        requestRangeMD5,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1297,7 +1295,6 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     options,
-                                    requestRangeMD5,
                                     startOffset,
                                     async,
                                     cancellationToken)
@@ -1306,7 +1303,6 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 options,
-                                requestRangeMD5,
                                 startOffset,
                                 async,
                                 cancellationToken)
@@ -1382,9 +1378,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional parameters.
         /// </param>
-        /// <param name="rangeRequestMD5">
-        /// Whether to request MD5 of range on download.
-        /// </param>
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
@@ -1406,7 +1399,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             BlobDownloadOptions options,
-            bool rangeRequestMD5,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -1441,7 +1433,7 @@ namespace Azure.Storage.Blobs.Specialized
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
                     // TODO #27253
-                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: options?.RangeGetContentHash == true ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1460,7 +1452,7 @@ namespace Azure.Storage.Blobs.Specialized
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
                     // TODO #27253
-                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: options?.RangeGetContentHash == true ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1847,7 +1839,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
-                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2796,7 +2787,6 @@ namespace Azure.Storage.Blobs.Specialized
                                     // TODO #27253
                                     //TransactionalHashingOptions = hashingOptions
                                 },
-                                requestRangeMD5: default,
                                 operationName,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
