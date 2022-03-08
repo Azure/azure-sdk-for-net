@@ -17,6 +17,7 @@
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
