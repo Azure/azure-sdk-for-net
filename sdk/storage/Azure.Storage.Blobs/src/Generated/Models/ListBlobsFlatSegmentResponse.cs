@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/>, or <paramref name="segment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
         internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, BlobFlatListSegment segment)
         {
             if (serviceEndpoint == null)

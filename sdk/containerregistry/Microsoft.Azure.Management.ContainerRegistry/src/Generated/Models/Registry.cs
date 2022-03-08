@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="identity">The identity of the container
         /// registry.</param>
         /// <param name="loginServer">The URL that can be used to log into the
@@ -55,8 +57,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// time the operation was called.</param>
         /// <param name="adminUserEnabled">The value that indicates whether the
         /// admin user is enabled.</param>
-        /// <param name="storageAccount">The properties of the storage account
-        /// for the container registry. Only applicable to Classic SKU.</param>
         /// <param name="networkRuleSet">The network rule set for a container
         /// registry.</param>
         /// <param name="policies">The policies for a container
@@ -72,8 +72,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="publicNetworkAccess">Whether or not public network
         /// access is allowed for the container registry. Possible values
         /// include: 'Enabled', 'Disabled'</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
-            : base(location, id, name, type, tags)
+        /// <param name="networkRuleBypassOptions">Whether to allow trusted
+        /// Azure services to access a network restricted registry. Possible
+        /// values include: 'AzureServices', 'None'</param>
+        /// <param name="zoneRedundancy">Whether or not zone redundancy is
+        /// enabled for this container registry. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="anonymousPullEnabled">Enables registry-wide pull from
+        /// unauthenticated clients.</param>
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), string networkRuleBypassOptions = default(string), string zoneRedundancy = default(string), bool? anonymousPullEnabled = default(bool?))
+            : base(location, id, name, type, tags, systemData)
         {
             Sku = sku;
             Identity = identity;
@@ -82,7 +90,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             ProvisioningState = provisioningState;
             Status = status;
             AdminUserEnabled = adminUserEnabled;
-            StorageAccount = storageAccount;
             NetworkRuleSet = networkRuleSet;
             Policies = policies;
             Encryption = encryption;
@@ -90,6 +97,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             DataEndpointHostNames = dataEndpointHostNames;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            NetworkRuleBypassOptions = networkRuleBypassOptions;
+            ZoneRedundancy = zoneRedundancy;
+            AnonymousPullEnabled = anonymousPullEnabled;
             CustomInit();
         }
 
@@ -145,13 +155,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public bool? AdminUserEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the storage account for the
-        /// container registry. Only applicable to Classic SKU.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccount")]
-        public StorageAccountProperties StorageAccount { get; set; }
-
-        /// <summary>
         /// Gets or sets the network rule set for a container registry.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkRuleSet")]
@@ -198,6 +201,28 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to allow trusted Azure services to access a
+        /// network restricted registry. Possible values include:
+        /// 'AzureServices', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkRuleBypassOptions")]
+        public string NetworkRuleBypassOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not zone redundancy is enabled for this
+        /// container registry. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundancy")]
+        public string ZoneRedundancy { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables registry-wide pull from unauthenticated
+        /// clients.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.anonymousPullEnabled")]
+        public bool? AnonymousPullEnabled { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -213,10 +238,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             if (Sku != null)
             {
                 Sku.Validate();
-            }
-            if (StorageAccount != null)
-            {
-                StorageAccount.Validate();
             }
             if (NetworkRuleSet != null)
             {

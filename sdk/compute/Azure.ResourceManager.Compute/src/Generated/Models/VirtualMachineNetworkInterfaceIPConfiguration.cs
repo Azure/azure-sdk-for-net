@@ -55,7 +55,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the identifier of the subnet. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>

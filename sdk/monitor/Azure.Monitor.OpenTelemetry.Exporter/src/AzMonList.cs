@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal readonly struct AzMonList : IEnumerable
     {
-        private static int allocationSize = 64;
+        private static int s_allocationSize = 8;
 
         private readonly KeyValuePair<string, object>[] data;
 
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public static AzMonList Initialize()
         {
-            return new AzMonList(ArrayPool<KeyValuePair<string, object>>.Shared.Rent(allocationSize), 0);
+            return new AzMonList(ArrayPool<KeyValuePair<string, object>>.Shared.Rent(s_allocationSize), 0);
         }
 
         public static void Add(ref AzMonList list, KeyValuePair<string, object> keyValuePair)
@@ -43,10 +43,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (list.Length >= data.Length)
             {
-                allocationSize = data.Length * 2;
+                s_allocationSize = data.Length * 2;
                 var previousData = data;
 
-                data = ArrayPool<KeyValuePair<string, object>>.Shared.Rent(allocationSize);
+                data = ArrayPool<KeyValuePair<string, object>>.Shared.Rent(s_allocationSize);
 
                 var span = previousData.AsSpan();
                 span.CopyTo(data);
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             for (int i = 0; i < length; i++)
             {
-                if (list[i].Key == tagName)
+                if (ReferenceEquals(list[i].Key, tagName))
                 {
                     return list[i].Value;
                 }

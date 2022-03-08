@@ -943,16 +943,18 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
-                    TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5
-                        }
-                        : default,
+                    // TODO #27253
+                    //TransactionalHashingOptions = rangeGetContentHash
+                    //    ? new DownloadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5
+                    //    }
+                    //    : default,
                 };
             }
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
+                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
                 cancellationToken).ConfigureAwait(false);
@@ -1043,16 +1045,18 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
-                    TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5
-                        }
-                        : default
+                    // TODO #27253
+                    //TransactionalHashingOptions = rangeGetContentHash
+                    //    ? new DownloadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5
+                    //    }
+                    //    : default
                 };
             }
             return DownloadStreamingInternal(
                 options,
+                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
                 cancellationToken)
@@ -1123,16 +1127,18 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
-                    TransactionalHashingOptions = rangeGetContentHash
-                        ? new DownloadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5
-                        }
-                        : default
+                    // TODO #27253
+                    //TransactionalHashingOptions = rangeGetContentHash
+                    //    ? new DownloadTransactionalHashingOptions()
+                    //    {
+                    //        Algorithm = TransactionalHashAlgorithm.MD5
+                    //    }
+                    //    : default
                 };
             }
             return await DownloadStreamingInternal(
                 options,
+                rangeGetContentHash,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
                 cancellationToken)
@@ -1183,6 +1189,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return DownloadStreamingInternal(
                 options,
+                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1227,6 +1234,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await DownloadStreamingInternal(
                 options,
+                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1234,14 +1242,16 @@ namespace Azure.Storage.Blobs.Specialized
 
         private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             BlobDownloadOptions options,
+            bool requestRangeMD5,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
-            if (UsingClientSideEncryption && options?.TransactionalHashingOptions != default)
-            {
-                throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-            }
+            // TODO #27253
+            //if (UsingClientSideEncryption && options?.TransactionalHashingOptions != default)
+            //{
+            //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+            //}
 
             HttpRange requestedRange = options?.Range ?? default;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -1263,6 +1273,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         options,
+                        requestRangeMD5,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1286,6 +1297,7 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     options,
+                                    requestRangeMD5,
                                     startOffset,
                                     async,
                                     cancellationToken)
@@ -1294,6 +1306,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 options,
+                                requestRangeMD5,
                                 startOffset,
                                 async,
                                 cancellationToken)
@@ -1302,31 +1315,34 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
+                    stream = stream.WithNoDispose().WithProgress(options?.ProgressHandler);
+
                     /* NOTE: we do not currently support both features together. This remains here for the
                      * potential future where we do.
                      * Comparing hash results comes BEFORE decryption.
                      * Buffer response stream and ensure it matches the transactional hash if any.
                      * Storage will not return a hash for payload >4MB, so this buffer is capped similarly.
                      * Hashing is opt-in, so this buffer is part of that opt-in */
-                    if (options?.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
-                    {
-                        // safe-buffer; transactional hash download limit well below maxInt
-                        var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
-                        if (async)
-                        {
-                            await stream.CopyToAsync(readDestStream).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            stream.CopyTo(readDestStream);
-                        }
-                        readDestStream.Position = 0;
+                    // TODO #27253
+                    //if (options?.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
+                    //{
+                    //    // safe-buffer; transactional hash download limit well below maxInt
+                    //    var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
+                    //    if (async)
+                    //    {
+                    //        await stream.CopyToAsync(readDestStream).ConfigureAwait(false);
+                    //    }
+                    //    else
+                    //    {
+                    //        stream.CopyTo(readDestStream);
+                    //    }
+                    //    readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, options.TransactionalHashingOptions.Algorithm, response.GetRawResponse());
+                    //    ContentHasher.AssertResponseHashMatch(readDestStream, options.TransactionalHashingOptions.Algorithm, response.GetRawResponse());
 
-                        // we've consumed the network stream to hash it; return buffered stream to the user
-                        stream = readDestStream;
-                    }
+                    //    // we've consumed the network stream to hash it; return buffered stream to the user
+                    //    stream = readDestStream;
+                    //}
 
                     // if using clientside encryption, wrap the auto-retry stream in a decryptor
                     // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1366,6 +1382,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional parameters.
         /// </param>
+        /// <param name="rangeRequestMD5">
+        /// Whether to request MD5 of range on download.
+        /// </param>
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
@@ -1387,6 +1406,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             BlobDownloadOptions options,
+            bool rangeRequestMD5,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -1420,8 +1440,9 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    // TODO #27253
+                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1438,8 +1459,9 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: options?.Conditions?.LeaseId,
-                    rangeGetContentMD5: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
+                    // TODO #27253
+                    rangeGetContentMD5: rangeRequestMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    //rangeGetContentCRC64: options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1825,6 +1847,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
+                requestRangeMD5: default,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2063,9 +2086,10 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                //options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2102,9 +2126,10 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                //options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2140,9 +2165,10 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                //options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2179,9 +2205,10 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                // TODO #27253
+                //options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2393,12 +2420,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
-        /// </param>
-        /// <param name="hashingOptions">
-        /// Transactional hashing options.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2417,24 +2445,23 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler, // TODO: #8506
+            IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            DownloadTransactionalHashingOptions hashingOptions = default,
+            // TODO #27253
+            //DownloadTransactionalHashingOptions hashingOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, hashingOptions);
+            // TODO #27253
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, /*hashingOptions,*/ progressHandler);
 
             if (UsingClientSideEncryption)
             {
-                if (hashingOptions != default)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
+                // TODO #27253
+                //if (hashingOptions != default)
+                //{
+                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                //}
 
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
@@ -2475,7 +2502,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                hashingOptions: options?.TransactionalHashingOptions,
+                // TODO #27253
+                //hashingOptions: options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2504,7 +2532,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                hashingOptions: options?.TransactionalHashingOptions,
+                // TODO #27253
+                //hashingOptions: options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2545,7 +2574,8 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2623,7 +2653,8 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                hashingOptions: default,
+                // TODO #27253
+                //hashingOptions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2684,9 +2715,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
-        /// <param name="hashingOptions">
-        /// Optional transactional hashing options.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2705,7 +2733,8 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
-            DownloadTransactionalHashingOptions hashingOptions,
+            // TODO #27253
+            //DownloadTransactionalHashingOptions hashingOptions,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2726,10 +2755,11 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    if (UsingClientSideEncryption && hashingOptions != default)
-                    {
-                        throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                    }
+                    // TODO #27253
+                    //if (UsingClientSideEncryption && hashingOptions != default)
+                    //{
+                    //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                    //}
 
                     // This also makes sure that we fail fast if file doesn't exist.
                     Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
@@ -2749,7 +2779,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        DownloadTransactionalHashingOptions hashingOptions,
+                        //DownloadTransactionalHashingOptions hashingOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
@@ -2763,8 +2793,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 {
                                     Range = range,
                                     Conditions = readConditions,
-                                    TransactionalHashingOptions = hashingOptions
+                                    // TODO #27253
+                                    //TransactionalHashingOptions = hashingOptions
                                 },
+                                requestRangeMD5: default,
                                 operationName,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
@@ -2775,7 +2807,8 @@ namespace Azure.Storage.Blobs.Specialized
                         },
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
-                        hashingOptions,
+                        // TODO #27253
+                        //hashingOptions,
                         allowModifications,
                         blobProperties.Value.ContentLength,
                         position,
@@ -3759,7 +3792,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3781,7 +3814,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3801,7 +3834,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3823,7 +3856,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3843,7 +3876,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3866,7 +3899,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if blob exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3886,7 +3919,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3909,7 +3942,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if blob exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3929,7 +3962,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified blob
         /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection.
+        /// during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3954,7 +3987,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -4010,7 +4043,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4038,7 +4071,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

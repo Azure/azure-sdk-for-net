@@ -53,10 +53,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -73,6 +69,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             await StopSessionRecordingAsync();
@@ -127,8 +124,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetManagedInstances().Exists(managedInstanceName));
-            Assert.IsFalse(_resourceGroup.GetManagedInstances().Exists(managedInstanceName + "0"));
+            Assert.IsTrue(await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName));
+            Assert.IsFalse(await _resourceGroup.GetManagedInstances().ExistsAsync(managedInstanceName + "0"));
 
             // 3.Get
             var getManagedInstance = await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName);

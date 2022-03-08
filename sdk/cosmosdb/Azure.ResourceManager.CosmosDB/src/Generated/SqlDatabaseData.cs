@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the SqlDatabase data model. </summary>
-    public partial class SqlDatabaseData : TrackedResource
+    public partial class SqlDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SqlDatabasePropertiesResource resource, SqlDatabasePropertiesOptions options) : base(id, name, type, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlDatabasePropertiesResource resource, SqlDatabasePropertiesOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

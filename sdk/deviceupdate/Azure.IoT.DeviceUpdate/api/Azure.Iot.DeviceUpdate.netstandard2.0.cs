@@ -3,7 +3,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceManagementClient
     {
         protected DeviceManagementClient() { }
-        public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
+        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CollectLogs(string operationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CollectLogsAsync(string operationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -69,7 +69,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceUpdateClient
     {
         protected DeviceUpdateClient() { }
-        public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
+        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> DeleteUpdate(bool waitForCompletion, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteUpdateAsync(bool waitForCompletion, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }

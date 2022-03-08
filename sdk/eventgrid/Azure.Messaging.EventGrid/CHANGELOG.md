@@ -1,14 +1,15 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.9.0 (2022-03-08)
 
 ### Features Added
 
-### Breaking Changes
+- Added new enum values for `MediaJobErrorCategory` and `MediaJobErrorCode`.
+
+## 4.8.2 (2022-02-08)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed deserialization bugs in `StorageDirectoryDeletedEventData` and `EventHubCaptureFileCreatedEventData` system events.
 
 ## 4.8.1 (2022-01-12)
 

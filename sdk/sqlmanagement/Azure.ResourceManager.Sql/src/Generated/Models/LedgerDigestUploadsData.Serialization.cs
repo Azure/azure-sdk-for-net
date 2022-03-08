@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> digestStorageEndpoint = default;
             Optional<LedgerDigestUploadsState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -49,6 +51,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -79,7 +86,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new LedgerDigestUploadsData(id, name, type, digestStorageEndpoint.Value, Optional.ToNullable(state));
+            return new LedgerDigestUploadsData(id, name, type, systemData, digestStorageEndpoint.Value, Optional.ToNullable(state));
         }
     }
 }

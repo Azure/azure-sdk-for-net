@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="uri"> The managed application definition artifact blob uri. </param>
         /// <param name="type"> The managed application definition artifact type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ApplicationDefinitionArtifact(ApplicationDefinitionArtifactName name, string uri, ApplicationArtifactType type)
+        public ApplicationDefinitionArtifact(ApplicationDefinitionArtifactName name, Uri uri, ApplicationArtifactType type)
         {
             if (uri == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application definition artifact name. </summary>
         public ApplicationDefinitionArtifactName Name { get; set; }
         /// <summary> The managed application definition artifact blob uri. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The managed application definition artifact type. </summary>
         public ApplicationArtifactType Type { get; set; }
     }

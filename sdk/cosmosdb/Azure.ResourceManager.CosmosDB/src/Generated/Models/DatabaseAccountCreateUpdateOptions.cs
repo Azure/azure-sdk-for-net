@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
-    public partial class DatabaseAccountCreateUpdateOptions : TrackedResource
+    public partial class DatabaseAccountCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DatabaseAccountCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
@@ -41,6 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
@@ -71,7 +71,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ResourceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters) : base(id, name, type, tags, location)
+        /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
+        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters, Capacity capacity) : base(id, name, type, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -101,12 +102,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
+            Capacity = capacity;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public DatabaseAccountKind? Kind { get; set; }
         /// <summary> Identity for the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
-        public string KeyVaultKeyUri { get; set; }
+        public Uri KeyVaultKeyUri { get; set; }
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
@@ -140,11 +142,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
         public bool? EnableFreeTier { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
-        public ApiProperties ApiProperties { get; set; }
+        internal ApiProperties ApiProperties { get; set; }
+        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        public ServerVersion? ApiServerVersion
+        {
+            get => ApiProperties is null ? default : ApiProperties.ServerVersion;
+            set
+            {
+                if (ApiProperties is null)
+                    ApiProperties = new ApiProperties();
+                ApiProperties.ServerVersion = value;
+            }
+        }
+
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
         public bool? EnableAnalyticalStorage { get; set; }
         /// <summary> Analytical storage specific properties. </summary>
-        public AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+        internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+        /// <summary> Describes the types of schema for analytical storage. </summary>
+        public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
+        {
+            get => AnalyticalStorageConfiguration is null ? default : AnalyticalStorageConfiguration.SchemaType;
+            set
+            {
+                if (AnalyticalStorageConfiguration is null)
+                    AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
+                AnalyticalStorageConfiguration.SchemaType = value;
+            }
+        }
+
         /// <summary> Enum to indicate the mode of account creation. </summary>
         public CreateMode? CreateMode { get; set; }
         /// <summary> The object representing the policy for taking backups on an account. </summary>
@@ -159,5 +185,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
         public RestoreParameters RestoreParameters { get; set; }
+        /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
+        internal Capacity Capacity { get; set; }
+        /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        public int? CapacityTotalThroughputLimit
+        {
+            get => Capacity is null ? default : Capacity.TotalThroughputLimit;
+            set
+            {
+                if (Capacity is null)
+                    Capacity = new Capacity();
+                Capacity.TotalThroughputLimit = value;
+            }
+        }
     }
 }

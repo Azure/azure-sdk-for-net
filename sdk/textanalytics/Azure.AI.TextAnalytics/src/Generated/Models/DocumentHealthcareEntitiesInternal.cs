@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="relations"/>, or <paramref name="warnings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="relations"/> or <paramref name="warnings"/> is null. </exception>
         internal DocumentHealthcareEntitiesInternal(string id, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
+            if (await _resourceGroup.GetWebPubSubs().ExistsAsync(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
                 await webPubSub.Value.DeleteAsync(true);
@@ -107,16 +107,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
                     new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
             var vnet = await vnetContainer.CreateOrUpdateAsync(true, _vnetName, vnetData);
 

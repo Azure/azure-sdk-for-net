@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobCredential data model. </summary>
-    public partial class JobCredentialData : Resource
+    public partial class JobCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of JobCredentialData. </summary>
         public JobCredentialData()
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="username"> The credential user name. </param>
         /// <param name="password"> The credential password. </param>
-        internal JobCredentialData(ResourceIdentifier id, string name, ResourceType type, string username, string password) : base(id, name, type)
+        internal JobCredentialData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string username, string password) : base(id, name, type, systemData)
         {
             Username = username;
             Password = password;

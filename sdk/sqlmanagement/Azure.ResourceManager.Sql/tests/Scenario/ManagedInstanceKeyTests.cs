@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             //Assert.AreEqual(keyName,key.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(keyName));
+            Assert.IsTrue(await collection.ExistsAsync(keyName));
 
             // 3.Get
             var getKey =await collection.GetAsync(keyName);

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the CapacityReservation data model. </summary>
-    public partial class CapacityReservationData : TrackedResource
+    public partial class CapacityReservationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>
         /// <param name="location"> The location. </param>
@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningTime"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, type, tags, location)
+        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;

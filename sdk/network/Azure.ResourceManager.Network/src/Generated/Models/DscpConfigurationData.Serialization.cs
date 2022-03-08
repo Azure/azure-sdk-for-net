@@ -50,21 +50,21 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpRanges))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpRanges)
+                foreach (var item in SourceIPRanges)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpRanges))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in DestinationIpRanges)
+                foreach (var item in DestinationIPRanges)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<int>> markings = default;
-            Optional<IList<QosIpRange>> sourceIpRanges = default;
-            Optional<IList<QosIpRange>> destinationIpRanges = default;
+            Optional<IList<QosIPRange>> sourceIpRanges = default;
+            Optional<IList<QosIPRange>> destinationIpRanges = default;
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<QosIpRange> array = new List<QosIpRange>();
+                            List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIpRange.DeserializeQosIpRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
                             sourceIpRanges = array;
                             continue;
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<QosIpRange> array = new List<QosIpRange>();
+                            List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIpRange.DeserializeQosIpRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
                             destinationIpRanges = array;
                             continue;

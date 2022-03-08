@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The AutoscaleSettings. </summary>
-    public partial class AutoscaleSettings
+    internal partial class AutoscaleSettings
     {
         /// <summary> Initializes a new instance of AutoscaleSettings. </summary>
         public AutoscaleSettings()

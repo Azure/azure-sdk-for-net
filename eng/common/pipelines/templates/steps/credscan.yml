@@ -1,0 +1,50 @@
+parameters:
+  SuppressionFilePath: 'eng/CredScanSuppression.json'
+  BaselineFilePath: ''
+  SourceDirectory: $(Build.SourcesDirectory)
+  ServiceDirectory: ''
+
+steps:
+- pwsh: |
+    if ("$(Build.Reason)" -eq 'PullRequest') {
+      $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
+
+      # Add config to disable the quote and encoding on file name. 
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
+      $changedFiles = git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
+    }
+    else {
+      $scanFolder = ""
+      if ("${{ parameters.ServiceDirectory }}" -ne '') {
+        $scanFolder = "sdk/${{ parameters.ServiceDirectory }}"
+      }
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanFolder"
+    }
+    if(Test-Path "${{ parameters.SourceDirectory }}/credscan.tsv") {
+      Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+    }
+  displayName: CredScan setup
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+  displayName: CredScan running
+  inputs:
+    toolVersion: 2.2.7.8 
+    scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
+    suppressionsFile: ${{ parameters.SuppressionFilePath }}
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+  displayName: CredScan result analysis
+  inputs:
+    GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
+    GdnBreakAllTools: false
+    GdnBreakGdnToolCredScan: true
+    GdnBreakGdnToolCredScanSeverity: Error
+    GdnBreakBaselines: baseline
+    # Used for generating baseline file.
+    # GdnBreakOutputBaselineFile: baseline
+    # GdnBreakOutputBaseline: baseline
+  condition: succeededOrFailed()
+- pwsh: |
+    Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
+  displayName: CredScan troubleshooting guide
+  condition: failed()

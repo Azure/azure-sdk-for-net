@@ -504,7 +504,8 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 
@@ -519,7 +520,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 
@@ -533,7 +535,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 

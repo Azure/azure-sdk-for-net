@@ -99,7 +99,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "657",
+        "Content-Length": "677",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20220119.1",
@@ -141,7 +141,7 @@
               }
             }
           ],
-          "vaultUri": "",
+          "vaultUri": "http://vaulturi.com/",
           "enabledForDeployment": true,
           "enabledForDiskEncryption": true,
           "enabledForTemplateDeployment": true,
@@ -1424,7 +1424,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "657",
+        "Content-Length": "677",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20220119.1",
@@ -1466,7 +1466,7 @@
               }
             }
           ],
-          "vaultUri": "",
+          "vaultUri": "http://vaulturi.com/",
           "enabledForDeployment": true,
           "enabledForDiskEncryption": true,
           "enabledForTemplateDeployment": true,
@@ -1714,7 +1714,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "623",
+        "Content-Length": "643",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20220119.1",
@@ -1751,7 +1751,7 @@
               }
             }
           ],
-          "vaultUri": "",
+          "vaultUri": "http://vaulturi.com/",
           "enabledForDeployment": true,
           "enabledForDiskEncryption": true,
           "enabledForTemplateDeployment": true,

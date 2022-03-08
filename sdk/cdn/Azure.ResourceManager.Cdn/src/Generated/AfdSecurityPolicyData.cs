@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdSecurityPolicy data model. </summary>
-    public partial class AfdSecurityPolicyData : ProxyResource
+    public partial class AfdSecurityPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         public AfdSecurityPolicyData()
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="parameters"> object which contains security policy parameters. </param>
@@ -38,6 +39,17 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyParameters Parameters { get; set; }
+        internal SecurityPolicyParameters Parameters { get; set; }
+        /// <summary> The type of the Security policy to create. </summary>
+        internal SecurityPolicyType ParametersType
+        {
+            get => Parameters is null ? default : Parameters.Type;
+            set
+            {
+                if (Parameters is null)
+                    Parameters = new SecurityPolicyParameters();
+                Parameters.Type = value;
+            }
+        }
     }
 }

@@ -25,9 +25,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
 
-        /// <summary>
-        /// Transactional hashing options for data integrity checks.
-        /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        // TODO #27253
+        ///// <summary>
+        ///// Transactional hashing options for data integrity checks.
+        ///// </summary>
+        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

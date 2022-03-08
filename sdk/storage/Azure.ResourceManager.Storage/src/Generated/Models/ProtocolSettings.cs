@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Protocol settings for file service. </summary>
-    public partial class ProtocolSettings
+    internal partial class ProtocolSettings
     {
         /// <summary> Initializes a new instance of ProtocolSettings. </summary>
         public ProtocolSettings()

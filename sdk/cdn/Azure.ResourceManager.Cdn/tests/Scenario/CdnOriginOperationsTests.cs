@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
             CdnOrigin cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
-            OriginUpdateOptions updateOptions = new OriginUpdateOptions()
+            CdnOriginUpdateOptions updateOptions = new CdnOriginUpdateOptions()
             {
                 HttpPort = 81,
                 HttpsPort = 442,

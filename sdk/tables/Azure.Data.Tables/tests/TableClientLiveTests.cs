@@ -185,6 +185,29 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
+        public async Task ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            var newTableName = tableName + "A";
+            await service.CreateTableAsync(newTableName);
+            // Build a shared access signature with only Read permissions using GenerateSasUri.
+            var sasBuilderClient = new TableClient(new Uri(ServiceUri), newTableName, credential);
+            var sasUri = sasBuilderClient.GenerateSasUri(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Create the TableServiceClient using the SAS URI.
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri, InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+            await service.DeleteTableAsync(newTableName);
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
         public void ValidateSasCredentialsDuplicateTokenInUriAndCred()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token

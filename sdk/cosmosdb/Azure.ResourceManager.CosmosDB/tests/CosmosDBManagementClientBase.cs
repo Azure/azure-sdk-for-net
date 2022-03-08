@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ArmClient = GetArmClient();
         }
 
-        protected CosmosDBManagementClientBase(bool isAsync)
-            : base(isAsync)
+        protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode? mode = default)
+            : base(isAsync, mode)
         {
-            Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..primaryMasterKey");
+            JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
+            JsonPathSanitizers.Add("$..secondaryMasterKey");
+            JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
+
         protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
         {
             return await CreateDatabaseAccount(name, kind, null);
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return accountLro.Value;
         }
 
-        protected static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
+        internal static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
         {
             return new CreateUpdateOptions
             {

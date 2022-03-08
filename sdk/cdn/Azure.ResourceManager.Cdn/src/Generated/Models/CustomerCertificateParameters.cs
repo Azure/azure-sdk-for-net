@@ -48,7 +48,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the KV secret. </summary>
-        public WritableSubResource SecretSource { get; set; }
+        internal WritableSubResource SecretSource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource is null ? default : SecretSource.Id;
+            set
+            {
+                if (SecretSource is null)
+                    SecretSource = new WritableSubResource();
+                SecretSource.Id = value;
+            }
+        }
+
         /// <summary> Version of the secret to be used. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Certificate issuing authority. </summary>

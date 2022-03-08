@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("nextHopType");
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress");
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (Optional.IsDefined(HasBgpOverride))
             {

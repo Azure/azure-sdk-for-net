@@ -15,20 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Tenant and their operations over its parent. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TenantsRestOperations _tenantsRestClient;
+        private readonly ClientDiagnostics _tenantClientDiagnostics;
+        private readonly TenantsRestOperations _tenantRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class for mocking. </summary>
         protected TenantCollection()
         {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal TenantCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
+            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -37,63 +50,23 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /tenants
-        /// ContextualPath: /
-        /// OperationId: Tenants_List
-        /// <summary> Gets the tenants for your account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Tenant" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Tenant> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<Tenant> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /tenants
-        /// ContextualPath: /
-        /// OperationId: Tenants_List
-        /// <summary> Gets the tenants for your account. </summary>
+        /// <summary>
+        /// Gets the tenants for your account.
+        /// Request Path: /tenants
+        /// Operation Id: Tenants_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Tenant" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Tenant> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _tenantsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _tenantRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -103,12 +76,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _tenantsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _tenantRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -117,6 +90,48 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the tenants for your account.
+        /// Request Path: /tenants
+        /// Operation Id: Tenants_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Tenant" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Tenant> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<Tenant> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _tenantRestClient.List(cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _tenantRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Tenant> IEnumerable<Tenant>.GetEnumerator()
@@ -133,8 +148,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Tenant, TenantData> Construct() { }
     }
 }

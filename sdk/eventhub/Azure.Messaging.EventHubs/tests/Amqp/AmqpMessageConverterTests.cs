@@ -550,7 +550,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreateBatchFromEventsAllowsNoPartitionKey(string partitionKey)
         {
-            EventData[] events = new[] { new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })) };
+            var events = new List<EventData> { new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })) };
             Assert.That(() => new AmqpMessageConverter().CreateBatchFromEvents(events, partitionKey), Throws.Nothing);
         }
 
@@ -751,7 +751,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromMessagesAllowNoPartitionKey(string partitionKey)
         {
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreateBatchFromMessages(new[] { AmqpMessage.Create() }, partitionKey), Throws.Nothing);
+            Assert.That(() => converter.CreateBatchFromMessages(new List<AmqpMessage> { AmqpMessage.Create() }, partitionKey), Throws.Nothing);
         }
 
         /// <summary>
@@ -769,7 +769,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var converter = new AmqpMessageConverter();
 
             using AmqpMessage source = converter.CreateMessageFromEvent(eventData);
-            using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(new[] { source }, partitionKey);
+            using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(new List<AmqpMessage> { source }, partitionKey);
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.Batchable, Is.True, "The batch envelope should be set to batchable.");
             Assert.That(batchEnvelope.MessageFormat, Is.Null, "The batch envelope should be not be marked with a batchable format when created from one event.");
@@ -797,14 +797,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var converter = new AmqpMessageConverter();
             using AmqpMessage first = converter.CreateMessageFromEvent(new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })));
             using AmqpMessage second = converter.CreateMessageFromEvent(new EventData(new byte[] { 0x44, 0x55, 0x66 }));
-            AmqpMessage[] source = new[] { first, second };
 
+            var source = new List<AmqpMessage> { first, second };
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(source, partitionKey);
+
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.Batchable, Is.True, "The batch envelope should be marked as batchable.");
             Assert.That(batchEnvelope.MessageFormat, Is.EqualTo(AmqpConstants.AmqpBatchedMessageFormat), "The batch envelope should be marked with a batchable format.");
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
-            Assert.That(batchEnvelope.DataBody.ToList().Count, Is.EqualTo(source.Length), "The batch envelope should contain each batch event in the body.");
+            Assert.That(batchEnvelope.DataBody.ToList().Count, Is.EqualTo(source.Count), "The batch envelope should contain each batch event in the body.");
             Assert.That(batchEnvelope.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out string partitionKeyAnnotation), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "There should be an annotation if a partition key was present.");
 
             if (!string.IsNullOrEmpty(partitionKey))
@@ -830,7 +831,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 properties: new Dictionary<string, object> { { nameof(property), property } });
 
             using AmqpMessage source = converter.CreateMessageFromEvent(eventData);
-            using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(new[] { source }, "Something");
+            using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(new List<AmqpMessage> { source }, "Something");
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
 
@@ -865,14 +866,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using AmqpMessage firstMessage = converter.CreateMessageFromEvent(firstEvent);
             using AmqpMessage secondMessage = converter.CreateMessageFromEvent(secondEvent);
-            AmqpMessage[] source = new[] { firstMessage, secondMessage };
 
+            var source = new List<AmqpMessage> { firstMessage, secondMessage };
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(source, null);
+
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
 
             var messageData = batchEnvelope.DataBody.ToList();
-            Assert.That(messageData.Count, Is.EqualTo(source.Length), "The batch envelope should contain each batch event in the body.");
+            Assert.That(messageData.Count, Is.EqualTo(source.Count), "The batch envelope should contain each batch event in the body.");
 
             // Reset the position for the stream properties, so that they
             // can be read for translation again.
@@ -880,7 +882,7 @@ namespace Azure.Messaging.EventHubs.Tests
             firstEventStream.Position = 0;
             secondEventStream.Position = 0;
 
-            for (var index = 0; index < source.Length; ++index)
+            for (var index = 0; index < source.Count; ++index)
             {
                 AmqpMessage eventMessage = source[index];
                 eventMessage.Batchable = true;
@@ -911,16 +913,16 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage firstMessage = converter.CreateMessageFromEvent(firstEvent, partitionKey);
             using AmqpMessage secondMessage = converter.CreateMessageFromEvent(secondEvent, partitionKey);
 
-            AmqpMessage[] source = new[] { firstMessage, secondMessage };
-
+            var source = new List<AmqpMessage> { firstMessage, secondMessage };
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(source, partitionKey);
+
             Assert.That(batchEnvelope, Is.Not.Null, "The batch envelope should have been created.");
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
 
             var messageData = batchEnvelope.DataBody.ToList();
-            Assert.That(messageData.Count, Is.EqualTo(source.Length), "The batch envelope should contain each batch event in the body.");
+            Assert.That(messageData.Count, Is.EqualTo(source.Count), "The batch envelope should contain each batch event in the body.");
 
-            for (var index = 0; index < source.Length; ++index)
+            for (var index = 0; index < source.Count; ++index)
             {
                 AmqpMessage eventMessage = source[index];
                 eventMessage.Batchable = true;

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the FirewallPolicyNatRuleCollectionAction. </summary>
-    public partial class FirewallPolicyNatRuleCollectionAction
+    internal partial class FirewallPolicyNatRuleCollectionAction
     {
         /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollectionAction. </summary>
         public FirewallPolicyNatRuleCollectionAction()

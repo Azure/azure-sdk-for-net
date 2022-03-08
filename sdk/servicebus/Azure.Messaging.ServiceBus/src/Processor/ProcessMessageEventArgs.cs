@@ -109,5 +109,13 @@ namespace Azure.Messaging.ServiceBus
             .ConfigureAwait(false);
             message.IsSettled = true;
         }
+
+        ///<inheritdoc cref="ServiceBusReceiver.RenewMessageLockAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task RenewMessageLockAsync(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
