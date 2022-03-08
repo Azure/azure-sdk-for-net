@@ -823,8 +823,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public NetworkInterface() { }
         public int? DeviceKey { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> IpAddresses { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings IpSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> IPAddresses { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings IPSettings { get { throw null; } set { } }
         public string Label { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal NicIPAddressSettings() { }
         public string AllocationMethod { get { throw null; } }
-        public string IpAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public string SubnetMask { get { throw null; } }
     }
     public partial class NicIPSettings
@@ -856,8 +856,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod? AllocationMethod { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public System.Collections.Generic.IList<string> Gateway { get { throw null; } }
-        public string IpAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings> IpAddressInfo { get { throw null; } }
+        public string IPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings> IPAddressInfo { get { throw null; } }
         public string PrimaryWinsServer { get { throw null; } }
         public string SecondaryWinsServer { get { throw null; } }
         public string SubnetMask { get { throw null; } set { } }
