@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, false);
             Assert.Null(account1.Data.Identity);
 
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id.ToString(), new UserAssignedIdentity());
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = identity
             };
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id.ToString(), new UserAssignedIdentity());
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = identity
             };
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.TenantId);
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = noneIdentity
             };
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var userManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             userManagedIdentity.UserAssignedIdentities.Add(userAssignedIdentity.Id.ToString(), new UserAssignedIdentity());
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = userManagedIdentity
             };
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var systemUserIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             systemUserIdentity.UserAssignedIdentities.Add(userAssignedIdentity.Id.ToString(), new UserAssignedIdentity());
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = systemUserIdentity
             };
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = noneIdentity
             };
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
             var systemIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = systemIdentity
             };
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
             var systemUserIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = systemUserIdentity
             };
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var identity2 = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity2 = await CreateUserAssignedIdentityAsync();
             identity2.UserAssignedIdentities.Add(userAssignedIdentity2.Id.ToString(), new UserAssignedIdentity());
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = identity2
             };
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()] = null;
             account1.Data.Identity.Type = ManagedServiceIdentityType.None;
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = account1.Data.Identity
             };
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity2.Id.ToString()].PrincipalId);
 
             account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity1.Id.ToString()] = null;
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = account1.Data.Identity
             };
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
             var noneIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = noneIdentity
             };
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.PrincipalId);
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Identity.PrincipalId);
             Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
 
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
