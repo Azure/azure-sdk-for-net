@@ -51,7 +51,7 @@ namespace Azure
         /// </summary>
         /// <param name="data">The <see cref="BinaryData"/> instance to convert.</param>
         /// <returns>The data converted to the Dictionary of string to object.</returns>
-        public static IDictionary<string, object?> ToDictionary(this BinaryData data)
+        public static IDictionary<string, object?> ToDictionaryFromJson(this BinaryData data)
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
             return element.GetObject() as Dictionary<string, object?> ?? new Dictionary<string, object?>();

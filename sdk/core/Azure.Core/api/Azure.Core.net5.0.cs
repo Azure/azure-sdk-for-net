@@ -17,7 +17,7 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static System.Collections.Generic.IDictionary<string, object?> ToDictionary(this System.BinaryData data) { throw null; }
+        public static System.Collections.Generic.IDictionary<string, object?> ToDictionaryFromJson(this System.BinaryData data) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

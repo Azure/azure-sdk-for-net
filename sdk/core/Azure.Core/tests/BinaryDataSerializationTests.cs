@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
             var expected = File.ReadAllText(GetFileName("PropertiesWithDifferentValueTypes.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
 
-            var properties = model.ToDictionary();
+            var properties = model.ToDictionaryFromJson();
             Assert.AreEqual(typeof(string), properties["stringValue"].GetType());
             Assert.AreEqual(typeof(string), properties["dateTimeValue"].GetType());
             Assert.AreEqual(typeof(int), properties["intValue"].GetType());
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
             var expected = File.ReadAllText(GetFileName("PropertiesWithArrays.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
 
-            var properties = model.ToDictionary();
+            var properties = model.ToDictionaryFromJson();
             Assert.IsTrue(AllValuesAreType(typeof(string), properties["stringArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(string), properties["dateTimeArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(int), properties["intArray"]));
@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
         {
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfObjects.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
-            var properties = model.ToDictionary();
+            var properties = model.ToDictionaryFromJson();
             var objArray = properties["objectArray"] as object[];
             for (int i = 0; i < 3; i++)
             {
@@ -91,7 +91,7 @@ namespace Azure.Core.Tests
         {
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfArrays.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
-            var properties = model.ToDictionary();
+            var properties = model.ToDictionaryFromJson();
             var arrayArray = properties["arrayArray"] as object[];
             Assert.IsNotNull(arrayArray);
             for (int i = 0; i < 2; i++)
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
                 var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
                 Assert.AreEqual("a.value", data.A);
 
-                var properties = data.Properties.ToDictionary();
+                var properties = data.Properties.ToDictionaryFromJson();
                 Assert.AreEqual("properties.a.value", properties["a"]);
                 var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
                 Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
