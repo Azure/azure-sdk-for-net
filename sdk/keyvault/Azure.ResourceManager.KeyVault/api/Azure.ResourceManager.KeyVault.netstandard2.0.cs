@@ -705,9 +705,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         StandardB1 = 0,
         CustomB32 = 1,
     }
-    public partial class MhsmipRule
+    public partial class MhsmIPRule
     {
-        public MhsmipRule(string value) { }
+        public MhsmIPRule(string value) { }
         public string Value { get { throw null; } set { } }
     }
     public partial class MhsmNetworkRuleSet
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public MhsmNetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.MhsmipRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.MhsmIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworkRules { get { throw null; } }
     }
     public partial class MhsmPrivateEndpointConnectionItem
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public NetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
     public partial class PatchableSecretData
