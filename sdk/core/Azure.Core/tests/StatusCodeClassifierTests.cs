@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    internal class CoreResponseClassifierTests
+    internal class StatusCodeClassifierTests
     {
         [Test]
         public void ClassifiesSingleCodeAsNonError()
@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
             // test classifiers for each of the status codes
             for (ushort nonError = 100; nonError <= 599; nonError++)
             {
-                CoreResponseClassifier classifier = new CoreResponseClassifier(new ushort[] { nonError });
+                StatusCodeClassifier classifier = new StatusCodeClassifier(new ushort[] { nonError });
                 HttpMessage message = new HttpMessage(new MockRequest(), classifier);
 
                 // test all the status codes against the classifier
@@ -43,7 +43,7 @@ namespace Azure.Core.Tests
         [TestCase(502, true)]
         public void ClassifiesMultipleCodesAsNonErrors(int code, bool isError)
         {
-            CoreResponseClassifier classifier = new CoreResponseClassifier(stackalloc ushort[] { 200, 404 });
+            StatusCodeClassifier classifier = new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
 
             HttpMessage message = new HttpMessage(new MockRequest(), classifier);
 

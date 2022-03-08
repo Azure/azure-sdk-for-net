@@ -380,11 +380,6 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
-    {
-        public CoreResponseClassifier(System.ReadOnlySpan<ushort> successCodes) { }
-        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
-    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -651,7 +646,20 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
+    {
+        public StatusCodeClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+    }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
+    public partial class TelemetryDetails
+    {
+        public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public void Apply(Azure.Core.HttpMessage message) { }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -902,10 +910,6 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public static partial class HttpMessageExtensions
-    {
-        public static void SetUserAgentString(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.UserAgentValue userAgentValue) { }
-    }
     public partial class HttpPipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
@@ -961,12 +965,6 @@ namespace Azure.Core.Pipeline
         public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
-    }
-    public partial class UserAgentValue
-    {
-        public UserAgentValue(System.Type type, string? applicationId = null) { }
-        public static Azure.Core.Pipeline.UserAgentValue FromType<T>(string? applicationId = null) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Core.Serialization

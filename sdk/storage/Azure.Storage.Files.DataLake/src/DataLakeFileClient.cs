@@ -1725,7 +1725,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response Append(
             Stream content,
             long offset,
-            DataLakeFileAppendOptions options,
+            DataLakeFileAppendOptions options = default,
             CancellationToken cancellationToken = default) =>
             AppendInternal(
                 content,
@@ -1772,7 +1772,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response> AppendAsync(
             Stream content,
             long offset,
-            DataLakeFileAppendOptions options,
+            DataLakeFileAppendOptions options = default,
             CancellationToken cancellationToken = default) =>
             await AppendInternal(
                 content,
@@ -1828,13 +1828,15 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response Append(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             long offset,
-            byte[] contentHash = default,
-            string leaseId = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] contentHash,
+            string leaseId,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             DataLakeFileAppendOptions options = default;
             if (contentHash != default || leaseId != default || progressHandler != default)
@@ -1908,13 +1910,15 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response> AppendAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             long offset,
-            byte[] contentHash = default,
-            string leaseId = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] contentHash,
+            string leaseId,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             DataLakeFileAppendOptions options = default;
             if (contentHash != default || leaseId != default || progressHandler != default)
@@ -2783,7 +2787,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response ReadTo(
             Stream destination,
-            DataLakeFileReadToOptions options,
+            DataLakeFileReadToOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
@@ -2832,7 +2836,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response ReadTo(
             string path,
-            DataLakeFileReadToOptions options,
+            DataLakeFileReadToOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
@@ -2881,7 +2885,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response> ReadToAsync(
             Stream destination,
-            DataLakeFileReadToOptions options,
+            DataLakeFileReadToOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
@@ -2931,7 +2935,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response> ReadToAsync(
             string path,
-            DataLakeFileReadToOptions options,
+            DataLakeFileReadToOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
@@ -2984,12 +2988,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response ReadTo(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream destination,
-            DataLakeRequestConditions conditions = default,
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
+            DataLakeRequestConditions conditions,
+            //IProgress<long> progressHandler,
+            StorageTransferOptions transferOptions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3044,12 +3051,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response ReadTo(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string path,
-            DataLakeRequestConditions conditions = default,
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
+            DataLakeRequestConditions conditions,
+            //IProgress<long> progressHandler,
+            StorageTransferOptions transferOptions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3104,12 +3114,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response> ReadToAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream destination,
-            DataLakeRequestConditions conditions = default,
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
+            DataLakeRequestConditions conditions,
+            //IProgress<long> progressHandler,
+            StorageTransferOptions transferOptions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3165,12 +3178,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response> ReadToAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string path,
-            DataLakeRequestConditions conditions = default,
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
+            DataLakeRequestConditions conditions,
+            //IProgress<long> progressHandler,
+            StorageTransferOptions transferOptions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($".{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
