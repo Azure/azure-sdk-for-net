@@ -10,9 +10,9 @@ Param (
   [string] $CommitSha,
   [Parameter(Mandatory=$True)]
   [array] $ArtifactList,
+  [string] $APIViewUri,
   [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
-  [string] $APIViewUri = "https://apiview.dev/PullRequest/DetectApiChanges",
   [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
 
