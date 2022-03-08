@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListQueue. </summary>
-    public partial class ListQueue : ResourceData
+    internal partial class ListQueue : ResourceData
     {
         /// <summary> Initializes a new instance of ListQueue. </summary>
         public ListQueue()

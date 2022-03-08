@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -40,13 +41,13 @@ namespace Azure.Core.TestFramework
                 if (IsTaskFaulted(invocation.ReturnValue))
                     return;
                 object lro = GetResultFromTask(invocation.ReturnValue);
-                if (lro.GetType().BaseType?.BaseType == typeof(Operation))
+                if (lro.GetType().IsSubclassOf(typeof(Operation)))
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro, invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
                 }
                 else
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
                 }
                 return;
             }

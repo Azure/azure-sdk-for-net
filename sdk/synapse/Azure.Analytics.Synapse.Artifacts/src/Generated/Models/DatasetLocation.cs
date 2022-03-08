@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetLocation()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "DatasetLocation";
         }
 
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "DatasetLocation";
+            Type = type;
             FolderPath = folderPath;
             FileName = fileName;
             AdditionalProperties = additionalProperties;

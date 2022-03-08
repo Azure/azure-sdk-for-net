@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update sku
-            StorageAccountUpdateOptions parameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData parameters = new PatchableStorageAccountData()
             {
                 Sku = new Sku(SkuName.StandardLRS),
             };
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledTime);
 
             //update http traffic only and validate
-            parameters = new StorageAccountUpdateOptions()
+            parameters = new PatchableStorageAccountData()
             {
                 EnableHttpsTrafficOnly = false
             };
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(account1.Data.EnableHttpsTrafficOnly, false);
             account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.EnableHttpsTrafficOnly, false);
-            parameters = new StorageAccountUpdateOptions()
+            parameters = new PatchableStorageAccountData()
             {
                 EnableHttpsTrafficOnly = true
             };
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
-            var parameters = new StorageAccountUpdateOptions()
+            var parameters = new PatchableStorageAccountData()
             {
                 CustomDomain = new CustomDomain("foo.example.com")
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
-            var parameters = new StorageAccountUpdateOptions()
+            var parameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2,
                 EnableHttpsTrafficOnly = true
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(account1.Data.AllowSharedKeyAccess);
 
             //update
-            var parameter = new StorageAccountUpdateOptions()
+            var parameter = new PatchableStorageAccountData()
             {
                 AllowSharedKeyAccess = true,
                 EnableHttpsTrafficOnly = false
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(account1.Data.AllowSharedKeyAccess);
 
             //update
-            parameter = new StorageAccountUpdateOptions()
+            parameter = new PatchableStorageAccountData()
             {
                 AllowSharedKeyAccess = false,
                 EnableHttpsTrafficOnly = false
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update account type and tags
-            var parameters = new StorageAccountUpdateOptions()
+            var parameters = new PatchableStorageAccountData()
             {
                 Sku = new Sku(SkuName.StandardLRS)
             };
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             //update encryption
-            var parameters = new StorageAccountUpdateOptions
+            var parameters = new PatchableStorageAccountData
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
 
             // 2. Restore storage encryption
-            parameters = new StorageAccountUpdateOptions
+            parameters = new PatchableStorageAccountData
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
 
             // 3. Remove file encryption service field.
-            parameters = new StorageAccountUpdateOptions
+            parameters = new PatchableStorageAccountData
             {
                 Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[0].Action);
 
             //update network rule
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
                 {
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[1].Action);
 
             //update network rule to allow
-            updateParameters = new StorageAccountUpdateOptions()
+            updateParameters = new PatchableStorageAccountData()
             {
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Allow)
             };
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(MinimumTlsVersion.TLS11, account.Data.MinimumTlsVersion);
 
             //update account
-            StorageAccountUpdateOptions udpateParameters = new StorageAccountUpdateOptions();
+            PatchableStorageAccountData udpateParameters = new PatchableStorageAccountData();
             udpateParameters.MinimumTlsVersion = MinimumTlsVersion.TLS12;
             udpateParameters.AllowBlobPublicAccess = true;
             udpateParameters.EnableHttpsTrafficOnly = true;
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IpRules[0].Action);
 
             //update vnet
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData
             {
                 NetworkRuleSet = new NetworkRuleSet(DefaultAction.Deny)
                 {
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.Data.NetworkRuleSet.ResourceAccessRules[1].ResourceId);
 
             //delete vnet
-            updateParameters = new StorageAccountUpdateOptions
+            updateParameters = new PatchableStorageAccountData
             {
                 NetworkRuleSet = new NetworkRuleSet(DefaultAction.Allow) { }
             };
@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
 
             //update storage account type
-            var updateParameters = new StorageAccountUpdateOptions()
+            var updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2,
                 EnableHttpsTrafficOnly = true,
@@ -1663,7 +1663,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DirectoryServiceOptions.Aadds, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             //Update storage account
-            var updateParameters = new StorageAccountUpdateOptions
+            var updateParameters = new PatchableStorageAccountData
             {
                 AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.None),
                 EnableHttpsTrafficOnly = true

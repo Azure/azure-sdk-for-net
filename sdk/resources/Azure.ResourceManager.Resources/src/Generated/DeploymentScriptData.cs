@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Resources
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
-            Kind = new ScriptType("DeploymentScript");
         }
 
         /// <summary> Initializes a new instance of DeploymentScriptData. </summary>

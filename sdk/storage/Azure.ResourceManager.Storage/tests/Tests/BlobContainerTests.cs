@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task LockImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task ExtendImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName2, createParameters)).Value;
 
             //update 2 accounts properties
-            var updateparameter = new StorageAccountUpdateOptions
+            var updateparameter = new PatchableStorageAccountData
             {
                 AllowCrossTenantReplication = true,
                 EnableHttpsTrafficOnly = true
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainerSoftDelete()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task PITR()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainersVLW()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
                 Kind = Kind.StorageV2
             };
