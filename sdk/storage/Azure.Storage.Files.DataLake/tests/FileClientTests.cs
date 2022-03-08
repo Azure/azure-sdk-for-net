@@ -2757,14 +2757,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     path,
                     cancellationToken: CancellationToken.None));
 
-                DataLakeFileReadToOptions options = new DataLakeFileReadToOptions
-                {
-                    Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
-                };
-
                 await Verify(await file.ReadToAsync(
                     path,
-                    options));
+                    conditions: new DataLakeRequestConditions() { IfModifiedSince = default }));
 
                 async Task Verify(Response response)
                 {
@@ -2810,14 +2805,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             using (var resultStream = new MemoryStream())
             {
-                DataLakeFileReadToOptions options = new DataLakeFileReadToOptions
-                {
-                    Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
-                };
-
                 await file.ReadToAsync(
                     resultStream,
-                    options);
+                    conditions: new DataLakeRequestConditions() { IfModifiedSince = default });
                 Verify(resultStream);
             }
 
