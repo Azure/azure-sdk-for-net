@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (CacheDuration != null)
                 {
                     writer.WritePropertyName("cacheDuration");
-                    writer.WriteStringValue(CacheDuration.Value, "P");
+                    writer.WriteStringValue(CacheDuration.Value, "c");
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         cacheDuration = null;
                         continue;
                     }
-                    cacheDuration = property.Value.GetTimeSpan("P");
+                    cacheDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }

@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public static string ToSerialString(this ApplicationManagedIdentityType value) => value switch
         {
+            ApplicationManagedIdentityType.None => "None",
             ApplicationManagedIdentityType.SystemAssigned => "SystemAssigned",
             ApplicationManagedIdentityType.UserAssigned => "UserAssigned",
             ApplicationManagedIdentityType.SystemAssignedUserAssigned => "SystemAssigned, UserAssigned",
-            ApplicationManagedIdentityType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplicationManagedIdentityType value.")
         };
 
         public static ApplicationManagedIdentityType ToApplicationManagedIdentityType(this string value)
         {
+            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ApplicationManagedIdentityType.None;
             if (string.Equals(value, "SystemAssigned", StringComparison.InvariantCultureIgnoreCase)) return ApplicationManagedIdentityType.SystemAssigned;
             if (string.Equals(value, "UserAssigned", StringComparison.InvariantCultureIgnoreCase)) return ApplicationManagedIdentityType.UserAssigned;
             if (string.Equals(value, "SystemAssigned, UserAssigned", StringComparison.InvariantCultureIgnoreCase)) return ApplicationManagedIdentityType.SystemAssignedUserAssigned;
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ApplicationManagedIdentityType.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplicationManagedIdentityType value.");
         }
     }

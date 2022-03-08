@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectedDuration = property.Value.GetTimeSpan("P");
+                    connectedDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("routesReceived"))
