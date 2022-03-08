@@ -53,105 +53,49 @@ namespace Azure
         /// <returns>The data converted to the Dictionary of string to object.</returns>
         public static IDictionary<string, object?> ToDictionary(this BinaryData data)
         {
-            Utf8JsonReader reader = new Utf8JsonReader(data);
-            reader.Read();
-            Dictionary<string, object?> result = new Dictionary<string, object?>();
-            ParseObject(ref reader, result);
-            return result;
+            JsonElement element = data.ToObjectFromJson<JsonElement>();
+            return element.GetObject() as Dictionary<string, object?> ?? new Dictionary<string, object?>();
         }
 
-        private static void ParseObject(ref Utf8JsonReader reader, Dictionary<string, object?> result)
+        private static object? GetObject(in this JsonElement element)
         {
-            while (reader.Read())
+            switch (element.ValueKind)
             {
-                switch (reader.TokenType)
-                {
-                    case JsonTokenType.Comment:
-                        break;
-                    case JsonTokenType.EndArray:
-                        return;
-                    case JsonTokenType.EndObject:
-                        return;
-                    case JsonTokenType.None:
-                        break;
-                    case JsonTokenType.PropertyName:
-                        var propertyName = reader.GetString();
-                        if (propertyName is null)
-                            throw new InvalidOperationException("Property name was null while parsing json");
-                        reader.Read();
-                        var value = GetValueKind(ref reader);
-                        result.Add(propertyName, value);
-                        break;
-                    default:
-                        throw new InvalidOperationException($"Invalid token type found {reader.TokenType}");
-                }
-            }
-        }
-
-        private static void FillList(ref Utf8JsonReader reader, List<object?> list)
-        {
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonTokenType.EndArray)
-                    break;
-
-                list.Add(GetValueKind(ref reader));
-            }
-        }
-
-        private static object? GetValueKind(ref Utf8JsonReader reader)
-        {
-            switch (reader.TokenType)
-            {
-                case JsonTokenType.False:
-                    return false;
-                case JsonTokenType.True:
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
                     return true;
-                case JsonTokenType.Null:
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
                     return null;
-                case JsonTokenType.Number:
-                    return GetNumberValue(ref reader);
-                case JsonTokenType.String:
-                    return GetStringValue(ref reader);
-                case JsonTokenType.StartObject:
-                    var inner = new Dictionary<string, object?>();
-                    ParseObject(ref reader, inner);
-                    return inner;
-                case JsonTokenType.StartArray:
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object?>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, jsonProperty.Value.GetObject());
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
                     var list = new List<object?>();
-                    FillList(ref reader, list);
-                    return list;
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(item.GetObject());
+                    }
+                    return list.ToArray();
                 default:
-                    throw new InvalidOperationException($"Invalid token type found getting value {reader.TokenType}");
-            }
-        }
-
-        private static object? GetStringValue(ref Utf8JsonReader reader)
-        {
-            if (reader.TryGetGuid(out var guidValue))
-            {
-                return guidValue;
-            }
-            return reader.GetString();
-        }
-
-        private static object? GetNumberValue(ref Utf8JsonReader reader)
-        {
-            if (reader.TryGetInt32(out var int32Value))
-            {
-                return int32Value;
-            }
-            else if (reader.TryGetInt64(out var int64Value))
-            {
-                return int64Value;
-            }
-            else if (reader.TryGetDouble(out var doubleValue))
-            {
-                return doubleValue;
-            }
-            else
-            {
-                throw new InvalidOperationException("Unsupported number type found");
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
             }
         }
     }

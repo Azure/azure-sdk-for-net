@@ -48,11 +48,11 @@ namespace Azure.Core.Tests
             Assert.IsTrue(AllValuesAreType(typeof(long), properties["longArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(double), properties["doubleArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(bool), properties["boolArray"]));
-            foreach (var item in properties["nullArray"] as List<object>)
+            foreach (var item in properties["nullArray"] as object[])
             {
                 Assert.IsNull(item);
             }
-            var mixList = properties["mixedNullArray"] as List<object>;
+            var mixList = properties["mixedNullArray"] as object[];
             for (int i = 0; i < 2; i++)
             {
                 if (i == 0)
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfObjects.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
             var properties = model.ToDictionary();
-            var objArray = properties["objectArray"] as List<object>;
+            var objArray = properties["objectArray"] as object[];
             for (int i = 0; i < 3; i++)
             {
                 var obj = objArray[i] as Dictionary<string, object>;
@@ -92,11 +92,11 @@ namespace Azure.Core.Tests
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfArrays.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
             var properties = model.ToDictionary();
-            var arrayArray = properties["arrayArray"] as List<object>;
+            var arrayArray = properties["arrayArray"] as object[];
             Assert.IsNotNull(arrayArray);
             for (int i = 0; i < 2; i++)
             {
-                var array = arrayArray[i] as List<object>;
+                var array = arrayArray[i] as object[];
                 Assert.IsNotNull(array);
                 foreach (var item in array)
                 {
@@ -108,7 +108,7 @@ namespace Azure.Core.Tests
 
         private bool AllValuesAreType(Type type, object list)
         {
-            foreach (var item in list as List<object>)
+            foreach (var item in list as object[])
             {
                 if (!item.GetType().Equals(type))
                     return false;
