@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task AddPercallPolicy()
+        public async Task AddPolicy_Percall()
         {
             var options = new ArmClientOptions();
             RequestTimesTracker tracker = new RequestTimesTracker();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public void AddPerRetryPolicy()
+        public void AddPolicy_PerRetry()
         {
             var retryResponse = new MockResponse(408); // Request Timeout
             var mockTransport = new MockTransport(retryResponse, retryResponse, new MockResponse(200));
