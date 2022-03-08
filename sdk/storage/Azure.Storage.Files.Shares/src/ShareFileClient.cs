@@ -1746,71 +1746,72 @@ namespace Azure.Storage.Files.Shares
         #endregion AbortCopy
 
         #region Download
-        /// <summary>
-        /// The <see cref="Download(ShareFileDownloadOptions, CancellationToken)"/>
-        /// operation reads or downloads a file from the system, including its metadata and properties.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
-        /// Get File</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        /// the file's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<ShareFileDownloadInfo> Download(
-            ShareFileDownloadOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            DownloadInternal(
-                options,
-                requestRangeMD5: default,
-                async: false,
-                cancellationToken).EnsureCompleted();
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="Download(ShareFileDownloadOptions, CancellationToken)"/>
+        ///// operation reads or downloads a file from the system, including its metadata and properties.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        ///// Get File</see>.
+        ///// </summary>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        ///// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        ///// the file's data.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual Response<ShareFileDownloadInfo> Download(
+        //    ShareFileDownloadOptions options = default,
+        //    CancellationToken cancellationToken = default) =>
+        //    DownloadInternal(
+        //        options,
+        //        requestRangeMD5: default,
+        //        async: false,
+        //        cancellationToken).EnsureCompleted();
 
-        /// <summary>
-        /// The <see cref="DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>
-        /// operation reads or downloads a file from the system, including its metadata and properties.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
-        /// Get File</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        /// the file's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            ShareFileDownloadOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await DownloadInternal(
-                options,
-                requestRangeMD5: default,
-                async: true,
-                cancellationToken).ConfigureAwait(false);
+        ///// <summary>
+        ///// The <see cref="DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>
+        ///// operation reads or downloads a file from the system, including its metadata and properties.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        ///// Get File</see>.
+        ///// </summary>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        ///// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        ///// the file's data.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+        //    ShareFileDownloadOptions options = default,
+        //    CancellationToken cancellationToken = default) =>
+        //    await DownloadInternal(
+        //        options,
+        //        requestRangeMD5: default,
+        //        async: true,
+        //        cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
@@ -1849,31 +1850,33 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileDownloadInfo> Download(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            HttpRange range,
-            bool rangeGetContentHash,
-            ShareFileRequestConditions conditions,
-            CancellationToken cancellationToken)
+            HttpRange range = default,
+            bool rangeGetContentHash = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
-            ShareFileDownloadOptions options = default;
-            if (range != default || rangeGetContentHash != default || conditions != default)
-            {
-                options = new ShareFileDownloadOptions
-                {
-                    Range = range,
-                    // TODO #27253
-                    //TransactionalHashingOptions = rangeGetContentHash
-                    //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-                    //    : default,
-                    Conditions = conditions
-                };
-            }
+            // TODO #27253
+            //ShareFileDownloadOptions options = default;
+            //if (range != default || rangeGetContentHash != default || conditions != default)
+            //{
+            //    options = new ShareFileDownloadOptions
+            //    {
+            //        Range = range,
+            //        //TransactionalHashingOptions = rangeGetContentHash
+            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
+            //        //    : default,
+            //        Conditions = conditions
+            //    };
+            //}
             return DownloadInternal(
-                options,
+                range,
                 rangeGetContentHash,
+                conditions,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1920,21 +1923,23 @@ namespace Azure.Storage.Files.Shares
             bool rangeGetContentHash,
             CancellationToken cancellationToken)
         {
-            ShareFileDownloadOptions options = default;
-            if (range != default || rangeGetContentHash != default)
-            {
-                options = new ShareFileDownloadOptions
-                {
-                    Range = range,
-                    // TODO #27253
-                    //TransactionalHashingOptions = rangeGetContentHash
-                    //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-                    //    : default
-                };
-            }
+            // TODO #27253
+            //ShareFileDownloadOptions options = default;
+            //if (range != default || rangeGetContentHash != default)
+            //{
+            //    options = new ShareFileDownloadOptions
+            //    {
+            //        Range = range,
+            //        // TODO #27253
+            //        //TransactionalHashingOptions = rangeGetContentHash
+            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
+            //        //    : default
+            //    };
+            //}
             return DownloadInternal(
-                options,
+                range,
                 rangeGetContentHash,
+                conditions: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1977,31 +1982,34 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            HttpRange range,
-            bool rangeGetContentHash,
-            ShareFileRequestConditions conditions,
-            CancellationToken cancellationToken)
+            HttpRange range = default,
+            bool rangeGetContentHash = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
-            ShareFileDownloadOptions options = default;
-            if (range != default || rangeGetContentHash != default || conditions != default)
-            {
-                options = new ShareFileDownloadOptions
-                {
-                    Range = range,
-                    // TODO #27253
-                    //TransactionalHashingOptions = rangeGetContentHash
-                    //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-                    //    : default,
-                    Conditions = conditions
-                };
-            }
+            // TODO #27253
+            //ShareFileDownloadOptions options = default;
+            //if (range != default || rangeGetContentHash != default || conditions != default)
+            //{
+            //    options = new ShareFileDownloadOptions
+            //    {
+            //        Range = range,
+            //        // TODO #27253
+            //        //TransactionalHashingOptions = rangeGetContentHash
+            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
+            //        //    : default,
+            //        Conditions = conditions
+            //    };
+            //}
             return await DownloadInternal(
-                options,
+                range,
                 rangeGetContentHash,
+                conditions,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2048,21 +2056,22 @@ namespace Azure.Storage.Files.Shares
             bool rangeGetContentHash,
             CancellationToken cancellationToken)
         {
-            ShareFileDownloadOptions options = default;
-            if (range != default || rangeGetContentHash != default)
-            {
-                options = new ShareFileDownloadOptions
-                {
-                    Range = range,
-                    // TODO #27253
-                    //TransactionalHashingOptions = rangeGetContentHash
-                    //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-                    //    : default
-                };
-            }
+            // TODO #27253
+            //ShareFileDownloadOptions options = default;
+            //if (range != default || rangeGetContentHash != default)
+            //{
+            //    options = new ShareFileDownloadOptions
+            //    {
+            //        Range = range,
+            //        //TransactionalHashingOptions = rangeGetContentHash
+            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
+            //        //    : default
+            //    };
+            //}
             return await DownloadInternal(
-                options,
+                range,
                 rangeGetContentHash,
+                conditions: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2075,11 +2084,14 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
         /// Get File</see>.
         /// </summary>
-        /// <param name="options">
-        /// Optional parameters for downloads.
+        /// <param name="range">
+        /// Range to download.
         /// </param>
         /// <param name="requestRangeMD5">
         /// Whether to request a transactional MD5 on download.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for download.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2098,8 +2110,9 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
-            ShareFileDownloadOptions options,
+            HttpRange range,
             bool requestRangeMD5,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2118,8 +2131,9 @@ namespace Azure.Storage.Files.Shares
 
                     // Start downloading the file
                     (Response<ShareFileDownloadInfo> initialResponse, Stream stream) = await StartDownloadAsync(
-                        options,
+                        range,
                         requestRangeMD5,
+                        conditions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -2134,8 +2148,9 @@ namespace Azure.Storage.Files.Shares
                         startOffset =>
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
-                                options,
+                                range,
                                 requestRangeMD5,
+                                conditions,
                                 startOffset,
                                 async,
                                 cancellationToken)
@@ -2144,15 +2159,16 @@ namespace Azure.Storage.Files.Shares
                             {
                                 throw new ShareFileModifiedException(
                                     "File has been modified concurrently",
-                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), options?.Range ?? default);
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                             }
                             return ContentStream;
                         },
                         async startOffset =>
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
-                                options,
+                                range,
                                 requestRangeMD5,
+                                conditions,
                                 startOffset,
                                 async,
                                 cancellationToken)
@@ -2161,7 +2177,7 @@ namespace Azure.Storage.Files.Shares
                             {
                                 throw new ShareFileModifiedException(
                                     "File has been modified concurrently",
-                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), options?.Range ?? default);
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                             }
                             return ContentStream;
                         },
@@ -2216,11 +2232,14 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
         /// Get File</see>.
         /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
+        /// <param name="range">
+        /// Range to download.
         /// </param>
         /// <param name="requestRangeMD5">
         /// Whether to request a transactional MD5 on download.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for download.
         /// </param>
         /// <param name="startOffset">
         /// Optional. Starting offset to request - in the event of a retry.
@@ -2236,8 +2255,9 @@ namespace Azure.Storage.Files.Shares
         /// <see cref="Response{ShareFileDownloadInfo}"/> and a <see cref="Stream"/>.
         /// </returns>
         private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
-            ShareFileDownloadOptions options,
+            HttpRange range,
             bool requestRangeMD5,
+            ShareFileRequestConditions conditions,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -2249,7 +2269,7 @@ namespace Azure.Storage.Files.Shares
             //}
 
             // calculation gets illegible with null coalesce; just pre-initialize
-            var pageRange = options?.Range ?? default;
+            var pageRange = range; // TODO #27253 //options?.Range ?? default;
             pageRange = new HttpRange(
                 pageRange.Offset + startOffset,
                 pageRange.Length.HasValue ?
@@ -2265,7 +2285,7 @@ namespace Azure.Storage.Files.Shares
                     range: pageRange == default ? null : pageRange.ToString(),
                     // TODO #27253
                     rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    leaseAccessConditions: options?.Conditions,
+                    leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -2275,7 +2295,7 @@ namespace Azure.Storage.Files.Shares
                     range: pageRange == default ? null : pageRange.ToString(),
                     // TODO #27253
                     rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
-                    leaseAccessConditions: options?.Conditions,
+                    leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
 
@@ -2610,14 +2630,17 @@ namespace Azure.Storage.Files.Shares
                     CancellationToken cancellationToken) =>
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
-                            new ShareFileDownloadOptions
-                            {
-                                Range = range,
-                                Conditions = conditions,
-                                // TODO #27253
-                                //TransactionalHashingOptions = downloadTransactionalHashingOptions
-                            },
+                            // TODO #27253
+                            //new ShareFileDownloadOptions
+                            //{
+                            //    Range = range,
+                            //    Conditions = conditions,
+                            //    // TODO #27253
+                            //    //TransactionalHashingOptions = downloadTransactionalHashingOptions
+                            //},
+                            range,
                             requestRangeMD5: default,
+                            conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
 
