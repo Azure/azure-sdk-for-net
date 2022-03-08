@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -142,6 +143,22 @@ namespace Azure.Core.TestFramework
         {
             return operation;
         }
+
+        protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
+            (T)InstrumentOperation(typeof(T), operation);
+
+        protected object InstrumentMockOperation(Type operationType, object operation, params IInterceptor[] interceptors)
+        {
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait: true) }).ToArray();
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                interceptorArray);
+        }
+
+        protected T InstrumentMockOperation<T>(T operation, params IInterceptor[] interceptors) where T : Operation =>
+            (T)InstrumentMockOperation(typeof(T), operation, interceptors);
 
         protected T GetOriginal<T>(T instrumented)
         {

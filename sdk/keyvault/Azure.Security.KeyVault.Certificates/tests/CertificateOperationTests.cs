@@ -66,6 +66,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateClient client = CreateClient(transport);
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
+            operation = InstrumentMockOperation(operation);
 
             await WaitForOperationAsync(operation);
 
@@ -115,6 +116,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateClient client = CreateClient(transport);
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
+            operation = InstrumentMockOperation(operation);
 
             await WaitForOperationAsync(operation);
 
@@ -158,6 +160,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateClient client = CreateClient(transport);
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
+            operation = InstrumentMockOperation(operation);
 
             Exception ex = Assert.ThrowsAsync<OperationCanceledException>(async () => await WaitForOperationAsync(operation));
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
@@ -202,6 +205,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateClient client = CreateClient(transport);
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
+            operation = InstrumentMockOperation(operation);
 
             Exception ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForOperationAsync(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
@@ -246,6 +250,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateClient client = CreateClient(transport);
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
+            operation = InstrumentMockOperation(operation);
 
             Exception ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForOperationAsync(operation));
             Assert.AreEqual("The certificate operation failed: mock failure message", ex.Message);
@@ -292,6 +297,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             CertificateClientOptions options = new CertificateClientOptions
             {
+                Retry =
+                {
+                    Delay = TimeSpan.FromMilliseconds(10),
+                    Mode = RetryMode.Fixed,
+                },
                 Transport = transport,
             };
 
@@ -303,10 +313,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     ));
         }
 
-        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation)
-        {
-            return await operation.WaitForCompletionAsync(TimeSpan.Zero, default);
-        }
+        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation) =>
+            await operation.WaitForCompletionAsync();
 
         public class MockCredential : TokenCredential
         {
