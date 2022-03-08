@@ -4737,89 +4737,90 @@ namespace Azure.Storage.Files.Shares
         #endregion UploadRangeFromUrl
 
         #region Upload
-        /// <summary>
-        /// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
-        /// operation writes <paramref name="options.Stream"/> to a file.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
-        /// Put Range</see>.
-        /// </summary>
-        /// <param name="stream">
-        /// Content stream to upload.
-        /// </param>
-        /// <param name="options">
-        /// Upload options.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
-        /// state of the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual Response<ShareFileUploadInfo> Upload(
-            Stream stream,
-            ShareFileUploadOptions options,
-            CancellationToken cancellationToken = default) =>
-            UploadInternal(
-                stream,
-                options?.ProgressHandler,
-                options?.Conditions,
-                // TODO #27253
-                // options?.TransactionalHashingOptions,
-                Constants.File.MaxFileUpdateRange,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
+        ///// operation writes <paramref name="options.Stream"/> to a file.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        ///// Put Range</see>.
+        ///// </summary>
+        ///// <param name="stream">
+        ///// Content stream to upload.
+        ///// </param>
+        ///// <param name="options">
+        ///// Upload options.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate notifications
+        ///// that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        ///// state of the file.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //[ForwardsClientCalls]
+        //public virtual Response<ShareFileUploadInfo> Upload(
+        //    Stream stream,
+        //    ShareFileUploadOptions options,
+        //    CancellationToken cancellationToken = default) =>
+        //    UploadInternal(
+        //        stream,
+        //        options?.ProgressHandler,
+        //        options?.Conditions,
+        //        // TODO #27253
+        //        // options?.TransactionalHashingOptions,
+        //        Constants.File.MaxFileUpdateRange,
+        //        async: false,
+        //        cancellationToken)
+        //        .EnsureCompleted();
 
-        /// <summary>
-        /// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
-        /// <paramref name="options.Stream"/> to a file.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
-        /// Put Range</see>.
-        /// </summary>
-        /// <param name="stream">
-        /// Content stream to upload.
-        /// </param>
-        /// <param name="options">
-        /// Upload options.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
-        /// state of the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
-            Stream stream,
-            ShareFileUploadOptions options,
-            CancellationToken cancellationToken = default) =>
-            await UploadInternal(
-                stream,
-                options?.ProgressHandler,
-                options?.Conditions,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
-                Constants.File.MaxFileUpdateRange,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+        ///// <summary>
+        ///// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
+        ///// <paramref name="options.Stream"/> to a file.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        ///// Put Range</see>.
+        ///// </summary>
+        ///// <param name="stream">
+        ///// Content stream to upload.
+        ///// </param>
+        ///// <param name="options">
+        ///// Upload options.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate notifications
+        ///// that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        ///// state of the file.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //[ForwardsClientCalls]
+        //public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+        //    Stream stream,
+        //    ShareFileUploadOptions options,
+        //    CancellationToken cancellationToken = default) =>
+        //    await UploadInternal(
+        //        stream,
+        //        options?.ProgressHandler,
+        //        options?.Conditions,
+        //        // TODO #27253
+        //        //options?.TransactionalHashingOptions,
+        //        Constants.File.MaxFileUpdateRange,
+        //        async: true,
+        //        cancellationToken)
+        //        .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
@@ -4853,7 +4854,8 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream content,
             IProgress<long> progressHandler = default,
@@ -4948,7 +4950,8 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<long> progressHandler = default,
