@@ -5,33 +5,27 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Core;
-
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    [PropertyReferenceType]
     public partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        [InitializationConstructor]
-        public ErrorAdditionalInfo()
+        internal ErrorAdditionalInfo()
         {
         }
 
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        [SerializationConstructor]
-        internal ErrorAdditionalInfo(ResourceType type, object info)
+        internal ErrorAdditionalInfo(string type, object info)
         {
             Type = type;
             Info = info;
         }
 
         /// <summary> The additional info type. </summary>
-        public ResourceType Type { get; }
+        public string Type { get; }
         /// <summary> The additional info. </summary>
         public object Info { get; }
     }

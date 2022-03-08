@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {
             Optional<object> template = default;
-            Optional<ErrorDetail> error = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"))
@@ -36,11 +35,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new ResourceGroupExportResult(template.Value, error);
+            return new ResourceGroupExportResult(template.Value, error.Value);
         }
     }
 }
