@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg2 = await subscription.GetResourceGroups().GetAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected.Data.Id, actual.Data.Id);
             Assert.AreEqual(expected.Data.Name, actual.Data.Name);
             Assert.AreEqual(expected.Data.TenantId, actual.Data.TenantId);
-            Assert.AreEqual(expected.Data.Type, actual.Data.Type);
+            Assert.AreEqual(expected.Data.ResourceType, actual.Data.ResourceType);
             Assert.IsNotNull(actual.Data.Details, "Details were null");
             Assert.IsNotNull(actual.Data.Children, "Children were null");
         }
