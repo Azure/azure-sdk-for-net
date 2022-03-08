@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the data connection with the given name.
         /// </summary>
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the data connection with the given name.
         /// </summary>
