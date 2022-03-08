@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, ResourceGroupUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -332,10 +332,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="options"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, ResourceGroupUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -345,12 +345,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -369,10 +369,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="options"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="options"/> is null. </exception>
-        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, ResourceGroupUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

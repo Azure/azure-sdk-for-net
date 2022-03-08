@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
-        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, CdnEndpointUpdateOptions updateOptions)
+        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, PatchableCdnEndpointData updateOptions)
         {
             Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateOptions.IsHttpAllowed);
             Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateOptions.OriginPath);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
         }
 
-        public static void AssertAfdEndpointUpdate(AfdEndpoint updatedAfdEndpoint, AfdEndpointUpdateOptions updateOptions)
+        public static void AssertAfdEndpointUpdate(AfdEndpoint updatedAfdEndpoint, PatchableAfdEndpointData updateOptions)
         {
             Assert.AreEqual(updatedAfdEndpoint.Data.OriginResponseTimeoutSeconds, updateOptions.OriginResponseTimeoutSeconds);
             Assert.AreEqual(updatedAfdEndpoint.Data.Tags.Count, updateOptions.Tags.Count);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.PrivateEndpointStatus, getResult.Data.PrivateEndpointStatus);
         }
 
-        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, CdnOriginUpdateOptions updateOptions)
+        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, PatchableCdnOriginData updateOptions)
         {
             Assert.AreEqual(updatedOrigin.Data.HttpPort, updateOptions.HttpPort);
             Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateOptions.HttpsPort);
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo:SharedPrivateLinkResource
         }
 
-        public static void AssertAfdOriginUpdate(AfdOrigin updatedAfdOrigin, AfdOriginUpdateOptions updateOptions)
+        public static void AssertAfdOriginUpdate(AfdOrigin updatedAfdOrigin, PatchableAfdOriginData updateOptions)
         {
             Assert.AreEqual(updatedAfdOrigin.Data.Priority, updateOptions.Priority);
             Assert.AreEqual(updatedAfdOrigin.Data.Weight, updateOptions.Weight);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ResponseBasedOriginErrorDetectionSettings
         }
 
-        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, CdnOriginGroupUpdateOptions updateOptions)
+        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, PatchableCdnOriginGroupData updateOptions)
         {
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbePath, updateOptions.HealthProbeSettings.ProbePath);
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType, updateOptions.HealthProbeSettings.ProbeRequestType);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ResponseBasedAfdOriginErrorDetectionSettings
         }
 
-        public static void AssertAfdOriginGroupUpdate(AfdOriginGroup updatedAfdOriginGroup, AfdOriginGroupUpdateOptions updateOptions)
+        public static void AssertAfdOriginGroupUpdate(AfdOriginGroup updatedAfdOriginGroup, PatchableAfdOriginGroupData updateOptions)
         {
             Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SampleSize, updateOptions.LoadBalancingSettings.SampleSize);
             Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SuccessfulSamplesRequired, updateOptions.LoadBalancingSettings.SuccessfulSamplesRequired);
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         }
 
-        public static void AssertAfdDomainUpdate(AfdCustomDomain updatedAfdDomain, AfdCustomDomainUpdateOptions updateOptions)
+        public static void AssertAfdDomainUpdate(AfdCustomDomain updatedAfdDomain, PatchableAfdCustomDomainData updateOptions)
         {
             Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.CertificateType, updateOptions.TlsSettings.CertificateType);
             Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.MinimumTlsVersion, updateOptions.TlsSettings.MinimumTlsVersion);
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
 
-        public static void AssertAfdRuleUpdate(AfdRule updatedRule, AfdRuleUpdateOptions updateOptions)
+        public static void AssertAfdRuleUpdate(AfdRule updatedRule, PatchableAfdRuleData updateOptions)
         {
             Assert.AreEqual(updatedRule.Data.Order, updateOptions.Order);
         }
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
 
-        public static void AssertAfdRouteUpdate(AfdRoute updatedRoute, AfdRouteUpdateOptions updateOptions)
+        public static void AssertAfdRouteUpdate(AfdRoute updatedRoute, PatchableAfdRouteData updateOptions)
         {
             Assert.AreEqual(updatedRoute.Data.EnabledState, updateOptions.EnabledState);
         }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
         }
 
-        public static void AssertAfdSecurityPolicyUpdate(AfdSecurityPolicy updatedSecurityPolicy, AfdSecurityPolicyUpdateOptions updateOptions)
+        public static void AssertAfdSecurityPolicyUpdate(AfdSecurityPolicy updatedSecurityPolicy, PatchableAfdSecurityPolicyData updateOptions)
         {
             Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
             Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].Domains.Count, 2);

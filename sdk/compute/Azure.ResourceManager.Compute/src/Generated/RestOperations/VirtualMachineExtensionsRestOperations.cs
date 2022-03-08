@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, PatchableVirtualMachineExtensionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine where the extension should be updated. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
-        /// <param name="options"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
+        /// <param name="data"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, PatchableVirtualMachineExtensionData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(vmExtensionName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmName, vmExtensionName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmName, vmExtensionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine where the extension should be updated. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
-        /// <param name="options"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
+        /// <param name="data"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="options"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="data"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, PatchableVirtualMachineExtensionData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(vmExtensionName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmName, vmExtensionName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmName, vmExtensionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

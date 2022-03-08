@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
-            AfdOriginGroupUpdateOptions updateOptions = new AfdOriginGroupUpdateOptions
+            PatchableAfdOriginGroupData updateOptions = new PatchableAfdOriginGroupData
             {
                 LoadBalancingSettings = new LoadBalancingSettingsParameters
                 {

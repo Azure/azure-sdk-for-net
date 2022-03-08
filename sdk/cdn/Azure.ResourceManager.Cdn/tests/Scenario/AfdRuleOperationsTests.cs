@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRuleName = Recording.GenerateAssetName("AFDRule");
             AfdRule afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
-            AfdRuleUpdateOptions updateOptions = new AfdRuleUpdateOptions
+            PatchableAfdRuleData updateOptions = new PatchableAfdRuleData
             {
                 Order = 2
             };

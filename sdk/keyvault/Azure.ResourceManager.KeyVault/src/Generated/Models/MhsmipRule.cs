@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A rule governing the accessibility of a managed hsm pool from a specific ip address or ip range. </summary>
-    public partial class MhsmipRule
+    public partial class MhsmIPRule
     {
-        /// <summary> Initializes a new instance of MhsmipRule. </summary>
+        /// <summary> Initializes a new instance of MhsmIPRule. </summary>
         /// <param name="value"> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MhsmipRule(string value)
+        public MhsmIPRule(string value)
         {
             if (value == null)
             {

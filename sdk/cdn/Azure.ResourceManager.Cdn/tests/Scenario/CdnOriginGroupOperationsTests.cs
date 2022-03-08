@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             string cdnOriginGroupName = Recording.GenerateAssetName("origingroup-");
             CdnOriginGroup cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
-            CdnOriginGroupUpdateOptions updateOptions = new CdnOriginGroupUpdateOptions()
+            PatchableCdnOriginGroupData updateOptions = new PatchableCdnOriginGroupData()
             {
                 HealthProbeSettings = new HealthProbeParameters
                 {

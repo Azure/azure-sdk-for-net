@@ -197,15 +197,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Update
         /// </summary>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SessionHost>> UpdateAsync(SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<SessionHost>> UpdateAsync(PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Update");
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,15 +223,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Update
         /// </summary>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SessionHost> Update(SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SessionHost> Update(PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Update");
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

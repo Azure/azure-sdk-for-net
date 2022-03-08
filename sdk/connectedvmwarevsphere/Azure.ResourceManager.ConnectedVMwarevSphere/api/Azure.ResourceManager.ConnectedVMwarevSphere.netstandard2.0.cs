@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.PatchableMachineExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.PatchableMachineExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MachineExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>, System.Collections.IEnumerable
     {
@@ -344,8 +344,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineOptions body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineOptions body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualMachineUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.PatchableVirtualMachineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.ConnectedVMwarevSphere.Models.PatchableVirtualMachineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>, System.Collections.IEnumerable
     {
@@ -655,26 +655,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskMode : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskMode>
     {
         private readonly object _dummy;
@@ -774,24 +754,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public int? NumCpus { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InventoryType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.InventoryType>
     {
         private readonly object _dummy;
@@ -857,23 +819,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public MachineExtensionPropertiesInstanceView() { }
     }
-    public partial class MachineExtensionUpdateOptions : Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch
-    {
-        public MachineExtensionUpdateOptions() { }
-        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public object ProtectedSettings { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        public string TypeHandlerVersion { get { throw null; } set { } }
-    }
     public partial class NetworkInterface
     {
         public NetworkInterface() { }
         public int? DeviceKey { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> IpAddresses { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings IpSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> IPAddresses { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings IPSettings { get { throw null; } set { } }
         public string Label { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -896,7 +847,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal NicIPAddressSettings() { }
         public string AllocationMethod { get { throw null; } }
-        public string IpAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public string SubnetMask { get { throw null; } }
     }
     public partial class NicIPSettings
@@ -905,8 +856,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod? AllocationMethod { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public System.Collections.Generic.IList<string> Gateway { get { throw null; } }
-        public string IpAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings> IpAddressInfo { get { throw null; } }
+        public string IPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings> IPAddressInfo { get { throw null; } }
         public string PrimaryWinsServer { get { throw null; } }
         public string SecondaryWinsServer { get { throw null; } }
         public string SubnetMask { get { throw null; } set { } }
@@ -963,6 +914,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PatchableMachineExtensionData : Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch
+    {
+        public PatchableMachineExtensionData() { }
+        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public string ForceUpdateTag { get { throw null; } set { } }
+        public object ProtectedSettings { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public object Settings { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+        public string TypeHandlerVersion { get { throw null; } set { } }
+    }
+    public partial class PatchableVirtualMachineData
+    {
+        public PatchableVirtualMachineData() { }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PlacementProfile
     {
@@ -1148,15 +1119,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType? DiskType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? UnitNumber { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineUpdateOptions
-    {
-        public VirtualMachineUpdateOptions() { }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VirtualScsiController
     {

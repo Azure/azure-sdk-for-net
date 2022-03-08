@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, SessionHostUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, PatchableSessionHostData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -275,13 +275,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -291,10 +288,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
-        public async Task<Response<SessionHostData>> UpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<SessionHostData>> UpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -312,8 +309,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 throw new ArgumentNullException(nameof(sessionHostName));
             }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -334,10 +335,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
-        public Response<SessionHostData> Update(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="data"/> is null. </exception>
+        public Response<SessionHostData> Update(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -355,8 +356,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 throw new ArgumentNullException(nameof(sessionHostName));
             }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

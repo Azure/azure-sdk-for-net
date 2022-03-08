@@ -189,15 +189,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}
         /// Operation Id: Workspaces_Update
         /// </summary>
-        /// <param name="options"> Object containing Workspace definitions. </param>
+        /// <param name="data"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualWorkspace>> UpdateAsync(VirtualWorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<VirtualWorkspace>> UpdateAsync(PatchableVirtualWorkspaceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspace.Update");
             scope.Start();
             try
             {
-                var response = await _virtualWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,15 +215,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}
         /// Operation Id: Workspaces_Update
         /// </summary>
-        /// <param name="options"> Object containing Workspace definitions. </param>
+        /// <param name="data"> Object containing Workspace definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWorkspace> Update(VirtualWorkspaceUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<VirtualWorkspace> Update(PatchableVirtualWorkspaceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspace.Update");
             scope.Start();
             try
             {
-                var response = _virtualWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _virtualWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

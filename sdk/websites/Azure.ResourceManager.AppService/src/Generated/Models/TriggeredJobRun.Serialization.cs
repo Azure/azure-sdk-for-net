@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration.Value, "P");
+                writer.WriteStringValue(Duration.Value, "c");
             }
             if (Optional.IsDefined(OutputUrl))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("output_url"))

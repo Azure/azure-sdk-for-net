@@ -397,13 +397,10 @@ namespace Azure.ResourceManager.Communication
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (parameters != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(parameters);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -414,8 +411,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public async Task<Response<CommunicationServiceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<CommunicationServiceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -428,6 +425,10 @@ namespace Azure.ResourceManager.Communication
             if (communicationServiceName == null)
             {
                 throw new ArgumentNullException(nameof(communicationServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);
@@ -452,8 +453,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
-        public Response<CommunicationServiceData> Update(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<CommunicationServiceData> Update(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -466,6 +467,10 @@ namespace Azure.ResourceManager.Communication
             if (communicationServiceName == null)
             {
                 throw new ArgumentNullException(nameof(communicationServiceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, communicationServiceName, parameters);

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the source of the SSL certificate. </summary>
-    public readonly partial struct CertificateSource : IEquatable<CertificateSource>
+    internal readonly partial struct CertificateSource : IEquatable<CertificateSource>
     {
         private readonly string _value;
 

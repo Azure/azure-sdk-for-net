@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> The list skus operation response. </summary>
-    public partial class SkuList
+    internal partial class SkuList
     {
         /// <summary> Initializes a new instance of SkuList. </summary>
         internal SkuList()
