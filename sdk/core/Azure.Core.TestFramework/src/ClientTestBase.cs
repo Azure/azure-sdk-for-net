@@ -139,26 +139,21 @@ namespace Azure.Core.TestFramework
                 interceptors.ToArray());
         }
 
-        protected internal virtual object InstrumentOperation(Type operationType, object operation)
-        {
-            return operation;
-        }
+        protected internal virtual object InstrumentOperation(Type operationType, object operation) =>
+            InstrumentOperationInternal(operationType, operation, true);
 
         protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
             (T)InstrumentOperation(typeof(T), operation);
 
-        protected object InstrumentMockOperation(Type operationType, object operation, params IInterceptor[] interceptors)
+        protected object InstrumentOperationInternal(Type operationType, object operation, bool noWait, params IInterceptor[] interceptors)
         {
-            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait: true) }).ToArray();
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },
                 operation,
                 interceptorArray);
         }
-
-        protected T InstrumentMockOperation<T>(T operation, params IInterceptor[] interceptors) where T : Operation =>
-            (T)InstrumentMockOperation(typeof(T), operation, interceptors);
 
         protected T GetOriginal<T>(T instrumented)
         {
