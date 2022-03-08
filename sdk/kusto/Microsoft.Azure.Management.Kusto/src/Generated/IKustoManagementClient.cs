@@ -134,5 +134,10 @@ namespace Microsoft.Azure.Management.Kusto
         /// </summary>
         IOperationsResults OperationsResults { get; }
 
+        /// <summary>
+        /// Gets the IOperationsResultsLocation.
+        /// </summary>
+        IOperationsResultsLocation OperationsResultsLocation { get; }
+
     }
 }

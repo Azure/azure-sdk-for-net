@@ -7,6 +7,7 @@
 - Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.
 - Fixed a bug where BlobContainerClient.GetProperties() would throw an ArgumentNullException when the AccessPolicy was null
 - Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed a bug where BlobUriBuilder was case sensitive for parameter names.
 
 ## 12.11.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.

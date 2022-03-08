@@ -41,8 +41,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            CompareBodies = false;
         }
 
         [SetUp]

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Concurrent;
 using Azure.Messaging.ServiceBus;
 using System.Collections.Generic;
@@ -193,6 +194,31 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
 
             TrackMessageAsSettled(message);
+        }
+
+        ///<inheritdoc cref="ServiceBusReceiver.RenewMessageLockAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task RenewMessageLockAsync(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            if (_receiver is ServiceBusSessionReceiver || _sessionEventArgs != null)
+            {
+                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+            }
+            if (_receiver != null)
+            {
+                await _receiver.RenewMessageLockAsync(
+                        message,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                await _eventArgs.RenewMessageLockAsync(
+                        message,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
         }
 
         private void TrackMessageAsSettled(ServiceBusReceivedMessage message)

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Sas;
@@ -123,24 +124,34 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z";
-            var originalUri = new UriBuilder(uriString);
+            IList<string> snapshotUris = new List<string>()
+            {
+                "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?ShareSnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?shareSnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?SHARESNAPSHOT=2011-03-09T01:42:34.9360000Z",
+            };
 
-            // Act
-            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.ToUri();
+            foreach (var uriString in snapshotUris)
+            {
+                var originalUri = new UriBuilder(uriString);
 
-            // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("share", fileUriBuilder.ShareName);
-            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
-            Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("", fileUriBuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
+                // Act
+                var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+                Uri newUri = fileUriBuilder.ToUri();
+
+                // Assert
+                Assert.AreEqual("https", fileUriBuilder.Scheme);
+                Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+                Assert.AreEqual("account", fileUriBuilder.AccountName);
+                Assert.AreEqual(443, fileUriBuilder.Port);
+                Assert.AreEqual("share", fileUriBuilder.ShareName);
+                Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+                Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
+                Assert.IsNull(fileUriBuilder.Sas);
+                Assert.AreEqual("", fileUriBuilder.Query);
+                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         [RecordedTest]

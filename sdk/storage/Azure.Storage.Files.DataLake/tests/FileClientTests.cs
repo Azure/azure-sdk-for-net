@@ -1745,10 +1745,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             var data = GetRandomBuffer(Size);
             TestProgress progress = new TestProgress();
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                ProgressHandler = progress,
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await file.AppendAsync(stream, 0, progressHandler: progress);
+                await file.AppendAsync(
+                    content: stream,
+                    offset: 0,
+                    options: options);
+                ;
             }
 
             // Assert
@@ -1771,7 +1780,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await file.AppendAsync(stream, 0, contentHash: contentHash);
+                await file.AppendAsync(
+                    content: stream,
+                    offset: 0,
+                    contentHash: contentHash,
+                    leaseId: null,
+                    progressHandler: null,
+                    cancellationToken: CancellationToken.None);
             }
         }
 
@@ -1836,10 +1851,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             var duration = TimeSpan.FromSeconds(15);
             Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseId = response.Value.LeaseId,
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await file.AppendAsync(stream, 0, leaseId: response.Value.LeaseId);
+                await file.AppendAsync(
+                    content: stream,
+                    offset: 0,
+                    options: options);
             }
         }
 
@@ -1853,11 +1876,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.AppendAsync(stream, 0, leaseId: Recording.Random.NewGuid().ToString()),
+                    file.AppendAsync(
+                        content: stream,
+                        offset: 0,
+                        options: options),
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
         }
@@ -2740,9 +2771,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await Verify(await file.ReadToAsync(
                     path,
                     cancellationToken: CancellationToken.None));
+
+                DataLakeFileReadToOptions options = new DataLakeFileReadToOptions
+                {
+                    Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                };
+
                 await Verify(await file.ReadToAsync(
                     path,
-                    new DataLakeRequestConditions() { IfModifiedSince = default }));
+                    options));
 
                 async Task Verify(Response response)
                 {
@@ -2788,9 +2825,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             using (var resultStream = new MemoryStream())
             {
+                DataLakeFileReadToOptions options = new DataLakeFileReadToOptions
+                {
+                    Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                };
+
                 await file.ReadToAsync(
                     resultStream,
-                    new DataLakeRequestConditions() { IfModifiedSince = default });
+                    options);
                 Verify(resultStream);
             }
 

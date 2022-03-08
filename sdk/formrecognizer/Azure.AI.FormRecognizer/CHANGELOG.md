@@ -7,6 +7,7 @@
 
 ### Breaking Changes
 - Made `DocumentSpan` a `struct` instead of a `class`.
+- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
 
 ### Bugs Fixed
 
