@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(vaultData.Properties.NetworkAcls);
             Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkAcls.DefaultAction);
             Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkAcls.Bypass);
-            Assert.True(vaultData.Properties.NetworkAcls.IpRules != null && vaultData.Properties.NetworkAcls.IpRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IpRules[0].Value, vaultData.Properties.NetworkAcls.IpRules[0].Value);
-            Assert.AreEqual(networkRuleSet.IpRules[1].Value, vaultData.Properties.NetworkAcls.IpRules[1].Value);
+            Assert.True(vaultData.Properties.NetworkAcls.IPRules != null && vaultData.Properties.NetworkAcls.IPRules.Count == 2);
+            Assert.AreEqual(networkRuleSet.IPRules[0].Value, vaultData.Properties.NetworkAcls.IPRules[0].Value);
+            Assert.AreEqual(networkRuleSet.IPRules[1].Value, vaultData.Properties.NetworkAcls.IPRules[1].Value);
         }
     }
 }

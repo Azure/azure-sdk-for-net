@@ -94,7 +94,7 @@ CdnOriginGroupCollection originGroupCollection = endpoint.GetCdnOriginGroups();
 // Now we can get the origin group with GetAsync()
 CdnOriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
 // With UpdateAsync(), we can update the origin group
-CdnOriginGroupUpdateOptions input = new CdnOriginGroupUpdateOptions()
+PatchableCdnOriginGroupData input = new PatchableCdnOriginGroupData()
 {
     HealthProbeSettings = new HealthProbeParameters
     {

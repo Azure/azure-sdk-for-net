@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The KeyVaultCertificateSourceParametersOdataType. </summary>
-    public readonly partial struct KeyVaultCertificateSourceParametersOdataType : IEquatable<KeyVaultCertificateSourceParametersOdataType>
+    internal readonly partial struct KeyVaultCertificateSourceParametersOdataType : IEquatable<KeyVaultCertificateSourceParametersOdataType>
     {
         private readonly string _value;
 

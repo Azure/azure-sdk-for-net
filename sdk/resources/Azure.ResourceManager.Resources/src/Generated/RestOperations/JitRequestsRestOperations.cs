@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jitRequestName, JitRequestUpdateOptions options)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jitRequestName, PatchableJitRequestData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
-        /// <param name="options"> Parameters supplied to the update JIT request. </param>
+        /// <param name="data"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jitRequestName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<JitRequestData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jitRequestName, JitRequestUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jitRequestName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<JitRequestData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jitRequestName, PatchableJitRequestData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -286,12 +286,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jitRequestName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jitRequestName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
-        /// <param name="options"> Parameters supplied to the update JIT request. </param>
+        /// <param name="data"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jitRequestName"/> or <paramref name="options"/> is null. </exception>
-        public Response<JitRequestData> Update(string subscriptionId, string resourceGroupName, string jitRequestName, JitRequestUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jitRequestName"/> or <paramref name="data"/> is null. </exception>
+        public Response<JitRequestData> Update(string subscriptionId, string resourceGroupName, string jitRequestName, PatchableJitRequestData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(jitRequestName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jitRequestName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jitRequestName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

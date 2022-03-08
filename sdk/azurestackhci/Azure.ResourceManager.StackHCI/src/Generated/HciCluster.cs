@@ -196,18 +196,18 @@ namespace Azure.ResourceManager.StackHCI
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
         /// Operation Id: Clusters_Update
         /// </summary>
-        /// <param name="options"> Details of the HCI cluster. </param>
+        /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<HciCluster>> UpdateAsync(HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<HciCluster>> UpdateAsync(PatchableHciClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Update");
             scope.Start();
             try
             {
-                var response = await _hciClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _hciClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,18 +222,18 @@ namespace Azure.ResourceManager.StackHCI
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
         /// Operation Id: Clusters_Update
         /// </summary>
-        /// <param name="options"> Details of the HCI cluster. </param>
+        /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<HciCluster> Update(HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<HciCluster> Update(PatchableHciClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Update");
             scope.Start();
             try
             {
-                var response = _hciClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _hciClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

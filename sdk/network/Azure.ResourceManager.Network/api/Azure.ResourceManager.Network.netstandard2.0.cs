@@ -3669,8 +3669,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetVpnClientSharedKeyAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGateway> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGateway>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters> SetVpnclientIPsecParameters(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnClientIPsecParameters vpnclientIpsecParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnClientIPsecParameters vpnclientIpsecParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters> SetVpnclientIPsecParameters(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnClientIPsecParameters vpnclientIPsecParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnClientIPsecParameters vpnclientIPsecParams, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StartPacketCapture(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(bool waitForCompletion, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4526,19 +4526,6 @@ namespace Azure.ResourceManager.Network.Models
         public int? MaxCapacity { get { throw null; } set { } }
         public int MinCapacity { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayAvailableSslOptions : Azure.ResourceManager.Network.Models.Resource
-    {
-        public ApplicationGatewayAvailableSslOptions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol> AvailableProtocols { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? DefaultPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PredefinedPolicies { get { throw null; } }
-    }
-    public partial class ApplicationGatewayAvailableWafRuleSetsResult
-    {
-        internal ApplicationGatewayAvailableWafRuleSetsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> Value { get { throw null; } }
-    }
     public partial class ApplicationGatewayBackendAddress
     {
         public ApplicationGatewayBackendAddress() { }
@@ -5134,13 +5121,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewaySslPredefinedPolicy : Azure.ResourceManager.Network.Models.SubResource
-    {
-        public ApplicationGatewaySslPredefinedPolicy() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite> CipherSuites { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol? MinProtocolVersion { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
     public partial class ApplicationGatewaySslProfile : Azure.ResourceManager.Network.Models.SubResource
     {
         public ApplicationGatewaySslProfile() { }
@@ -5707,7 +5687,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal BgpPeerStatus() { }
         public long? Asn { get { throw null; } }
-        public string ConnectedDuration { get { throw null; } }
+        public System.TimeSpan? ConnectedDuration { get { throw null; } }
         public string LocalAddress { get { throw null; } }
         public long? MessagesReceived { get { throw null; } }
         public long? MessagesSent { get { throw null; } }
@@ -6667,11 +6647,6 @@ namespace Azure.ResourceManager.Network.Models
         public long? SecondarybytesIn { get { throw null; } set { } }
         public long? SecondarybytesOut { get { throw null; } set { } }
     }
-    public partial class ExpressRouteConnectionList
-    {
-        internal ExpressRouteConnectionList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteConnectionData> Value { get { throw null; } }
-    }
     public partial class ExpressRouteCrossConnectionRoutesTableSummary
     {
         internal ExpressRouteCrossConnectionRoutesTableSummary() { }
@@ -6685,11 +6660,6 @@ namespace Azure.ResourceManager.Network.Models
         internal ExpressRouteCrossConnectionsRoutesTableSummaryListResult() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnectionRoutesTableSummary> Value { get { throw null; } }
-    }
-    public partial class ExpressRouteGatewayList
-    {
-        internal ExpressRouteGatewayList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteGatewayData> Value { get { throw null; } }
     }
     public partial class ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds
     {
@@ -7054,24 +7024,6 @@ namespace Azure.ResourceManager.Network.Models
         public int? Priority { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FirewallPolicyRuleCollectionType : System.IEquatable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FirewallPolicyRuleCollectionType(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType FirewallPolicyFilterRuleCollection { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType FirewallPolicyNatRuleCollection { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FirewallPolicyRuleNetworkProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol>
     {
         private readonly object _dummy;
@@ -7089,25 +7041,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FirewallPolicyRuleType : System.IEquatable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FirewallPolicyRuleType(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleType ApplicationRule { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleType NatRule { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleType NetworkRule { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyRuleType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyRuleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -8198,28 +8131,6 @@ namespace Azure.ResourceManager.Network.Models
         public string StorageId { get { throw null; } set { } }
         public string StoragePath { get { throw null; } set { } }
     }
-    public partial class PatchRouteFilter : Azure.ResourceManager.Network.Models.SubResource
-    {
-        public PatchRouteFilter() { }
-        public string Etag { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> Peerings { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.RouteFilterRuleData> Rules { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
-    public partial class PatchRouteFilterRule : Azure.ResourceManager.Network.Models.SubResource
-    {
-        public PatchRouteFilterRule() { }
-        public Azure.ResourceManager.Network.Models.Access? Access { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Communities { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.RouteFilterRuleType? RouteFilterRuleType { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PcError : System.IEquatable<Azure.ResourceManager.Network.Models.PcError>
     {
@@ -8412,14 +8323,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
         public string Type { get { throw null; } }
-    }
-    public partial class PrivateLinkServicePropertiesAutoApproval : Azure.ResourceManager.Network.Models.ResourceSet
-    {
-        public PrivateLinkServicePropertiesAutoApproval() { }
-    }
-    public partial class PrivateLinkServicePropertiesVisibility : Azure.ResourceManager.Network.Models.ResourceSet
-    {
-        public PrivateLinkServicePropertiesVisibility() { }
     }
     public partial class PrivateLinkServiceVisibility
     {
@@ -8696,13 +8599,6 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
-    }
     public partial class ResourceNavigationLink : Azure.ResourceManager.Network.Models.SubResource
     {
         public ResourceNavigationLink() { }
@@ -8712,17 +8608,6 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class ResourceNavigationLinksListResult
-    {
-        internal ResourceNavigationLinksListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ResourceNavigationLink> Value { get { throw null; } }
-    }
-    public partial class ResourceSet
-    {
-        public ResourceSet() { }
-        public System.Collections.Generic.IList<string> Subscriptions { get { throw null; } }
     }
     public partial class RetentionPolicyParameters
     {
@@ -8928,12 +8813,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class ServiceAssociationLinksListResult
-    {
-        internal ServiceAssociationLinksListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ServiceAssociationLink> Value { get { throw null; } }
-    }
     public partial class ServiceEndpointPropertiesFormat
     {
         public ServiceEndpointPropertiesFormat() { }
@@ -9037,11 +8916,6 @@ namespace Azure.ResourceManager.Network.Models
         public static implicit operator Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace left, Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TagsObject
-    {
-        public TagsObject() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class Topology
     {
@@ -9587,10 +9461,6 @@ namespace Azure.ResourceManager.Network.Models
         public VirtualWanVpnProfileParameters() { }
         public Azure.ResourceManager.Network.Models.AuthenticationMethod? AuthenticationMethod { get { throw null; } set { } }
         public string VpnServerConfigurationResourceId { get { throw null; } set { } }
-    }
-    public partial class Vm : Azure.ResourceManager.Network.Models.Resource
-    {
-        public Vm() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VpnAuthenticationType : System.IEquatable<Azure.ResourceManager.Network.Models.VpnAuthenticationType>

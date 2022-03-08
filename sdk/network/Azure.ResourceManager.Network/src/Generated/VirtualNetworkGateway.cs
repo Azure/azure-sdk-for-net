@@ -769,19 +769,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGateways_SetVpnclientIPsecParameters
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public async virtual Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public async virtual Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(bool waitForCompletion, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnclientIpsecParams, nameof(vpnclientIpsecParams));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIPsecParameters");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayRestClient.SetVpnclientIPsecParametersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIPsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualNetworkGatewayRestClient.SetVpnclientIPsecParametersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIPsecParams, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIPsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIPsecParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -799,19 +799,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGateways_SetVpnclientIPsecParameters
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(bool waitForCompletion, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(bool waitForCompletion, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnclientIpsecParams, nameof(vpnclientIpsecParams));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIPsecParameters");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayRestClient.SetVpnclientIPsecParameters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken);
-                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIPsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualNetworkGatewayRestClient.SetVpnclientIPsecParameters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIPsecParams, cancellationToken);
+                var operation = new NetworkArmOperation<VpnClientIPsecParameters>(new VpnClientIPsecParametersOperationSource(), _virtualNetworkGatewayClientDiagnostics, Pipeline, _virtualNetworkGatewayRestClient.CreateSetVpnclientIPsecParametersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnclientIPsecParams).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -111,7 +111,7 @@ AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabil
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
 // availabilitySet is an AvailabilitySet instance created above
-AvailabilitySetUpdateOptions update = new AvailabilitySetUpdateOptions()
+PatchableAvailabilitySetData update = new PatchableAvailabilitySetData()
 {
     PlatformFaultDomainCount = 3
 };

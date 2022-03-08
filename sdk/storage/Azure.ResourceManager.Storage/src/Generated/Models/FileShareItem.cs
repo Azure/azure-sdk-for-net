@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The file share properties be listed out. </summary>
-    public partial class FileShareItem : AzureEntityResource
+    internal partial class FileShareItem : AzureEntityResource
     {
         /// <summary> Initializes a new instance of FileShareItem. </summary>
         public FileShareItem()

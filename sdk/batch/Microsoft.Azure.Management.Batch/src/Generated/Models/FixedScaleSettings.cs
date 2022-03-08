@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// compute nodes in the pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority compute nodes in the pool.</param>
+        /// Spot/low-priority compute nodes in the pool.</param>
         /// <param name="nodeDeallocationOption">Determines what to do with a
         /// node and its running task(s) if the pool size is
         /// decreasing.</param>
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority compute nodes in
-        /// the pool.
+        /// Gets or sets the desired number of Spot/low-priority compute nodes
+        /// in the pool.
         /// </summary>
         /// <remarks>
         /// At least one of targetDedicatedNodes, targetLowPriorityNodes must

@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
         /// Operation Id: Secrets_Update
         /// </summary>
-        /// <param name="options"> Parameters to patch the secret. </param>
+        /// <param name="data"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<Secret>> UpdateAsync(SecretUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<Secret>> UpdateAsync(PatchableSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,18 +163,18 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
         /// Operation Id: Secrets_Update
         /// </summary>
-        /// <param name="options"> Parameters to patch the secret. </param>
+        /// <param name="data"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<Secret> Update(SecretUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<Secret> Update(PatchableSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

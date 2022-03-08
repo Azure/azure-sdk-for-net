@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isRevertableAction = default;
             Optional<bool> isArchivedAction = default;
             Optional<DateTimeOffset> executeActionStartTime = default;
-            Optional<string> executeActionDuration = default;
+            Optional<TimeSpan> executeActionDuration = default;
             Optional<DateTimeOffset> revertActionStartTime = default;
-            Optional<string> revertActionDuration = default;
+            Optional<TimeSpan> revertActionDuration = default;
             Optional<RecommendedActionInitiatedBy> executeActionInitiatedBy = default;
             Optional<DateTimeOffset> executeActionInitiatedTime = default;
             Optional<RecommendedActionInitiatedBy> revertActionInitiatedBy = default;
@@ -179,7 +179,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("executeActionDuration"))
                         {
-                            executeActionDuration = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            executeActionDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("revertActionStartTime"))
@@ -194,7 +199,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("revertActionDuration"))
                         {
-                            revertActionDuration = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            revertActionDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("executeActionInitiatedBy"))
@@ -346,7 +356,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RecommendedActionData(id, name, type, systemData, kind.Value, location.Value, recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), executeActionDuration.Value, Optional.ToNullable(revertActionStartTime), revertActionDuration.Value, Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
+            return new RecommendedActionData(id, name, type, systemData, kind.Value, location.Value, recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
         }
     }
 }

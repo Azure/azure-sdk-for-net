@@ -220,15 +220,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_Update
         /// </summary>
-        /// <param name="options"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostPool>> UpdateAsync(HostPoolUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<HostPool>> UpdateAsync(PatchableHostPoolData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPool.Update");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _hostPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,15 +246,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_Update
         /// </summary>
-        /// <param name="options"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostPool> Update(HostPoolUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<HostPool> Update(PatchableHostPoolData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPool.Update");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _hostPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -480,13 +486,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage
         /// Operation Id: MsixImages_Expand
         /// </summary>
-        /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
+        /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
         /// <returns> An async collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             async Task<Page<ExpandMsixImage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -494,7 +500,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Start();
                 try
                 {
-                    var response = await _msixImagesRestClient.ExpandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageURI, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _msixImagesRestClient.ExpandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -509,7 +515,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Start();
                 try
                 {
-                    var response = await _msixImagesRestClient.ExpandNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageURI, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _msixImagesRestClient.ExpandNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -526,13 +532,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage
         /// Operation Id: MsixImages_Expand
         /// </summary>
-        /// <param name="msixImageURI"> Object containing URI to MSIX Image. </param>
+        /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageURI"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
         /// <returns> A collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageURI, CancellationToken cancellationToken = default)
+        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(msixImageURI, nameof(msixImageURI));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             Page<ExpandMsixImage> FirstPageFunc(int? pageSizeHint)
             {
@@ -540,7 +546,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Start();
                 try
                 {
-                    var response = _msixImagesRestClient.Expand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageURI, cancellationToken: cancellationToken);
+                    var response = _msixImagesRestClient.Expand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -555,7 +561,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Start();
                 try
                 {
-                    var response = _msixImagesRestClient.ExpandNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageURI, cancellationToken: cancellationToken);
+                    var response = _msixImagesRestClient.ExpandNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

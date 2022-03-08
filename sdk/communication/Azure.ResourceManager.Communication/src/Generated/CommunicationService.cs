@@ -191,8 +191,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.Update");
             scope.Start();
             try
@@ -214,8 +217,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunicationService> Update(CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<CommunicationService> Update(CommunicationServiceData parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.Update");
             scope.Start();
             try

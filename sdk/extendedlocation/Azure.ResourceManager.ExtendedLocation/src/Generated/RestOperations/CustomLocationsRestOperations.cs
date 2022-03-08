@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -564,10 +564,10 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="options"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<CustomLocationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<CustomLocationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocationData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -581,12 +581,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -606,10 +606,10 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="options"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="options"/> is null. </exception>
-        public Response<CustomLocationData> Update(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public Response<CustomLocationData> Update(string subscriptionId, string resourceGroupName, string resourceName, PatchableCustomLocationData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -623,12 +623,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 throw new ArgumentNullException(nameof(resourceName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
