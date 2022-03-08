@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
             await vm.DeallocateAsync(true);
-            var update = new VirtualMachineUpdateOptions()
+            var update = new PatchableVirtualMachineData()
             {
                 HardwareProfile = new HardwareProfile
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachine virtualMachine = await CreateVirtualMachineAsync(vmName);
             Assert.IsNull(virtualMachine.Data.BootDiagnostics);
 
-            VirtualMachineUpdateOptions updateOptions = new VirtualMachineUpdateOptions();
+            PatchableVirtualMachineData updateOptions = new PatchableVirtualMachineData();
             updateOptions.BootDiagnostics = new BootDiagnostics();
             updateOptions.BootDiagnostics.Enabled = true;
             virtualMachine = (await virtualMachine.UpdateAsync(true, updateOptions)).Value;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachine virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
             Assert.IsNull(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics);
 
-            VirtualMachineUpdateOptions updateOptions2 = new VirtualMachineUpdateOptions();
+            PatchableVirtualMachineData updateOptions2 = new PatchableVirtualMachineData();
             updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();
             updateOptions2.DiagnosticsProfile.BootDiagnostics= new BootDiagnostics();
             updateOptions2.DiagnosticsProfile.BootDiagnostics.Enabled = true;
