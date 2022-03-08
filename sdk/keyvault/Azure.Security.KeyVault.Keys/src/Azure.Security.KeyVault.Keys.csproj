@@ -16,9 +16,6 @@
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
