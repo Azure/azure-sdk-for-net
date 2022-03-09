@@ -17,8 +17,6 @@ operation-id-mappings:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
 
-modelerfour:
-  lenient-model-deduplication: true
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
@@ -35,6 +33,12 @@ directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.customRules
     transform: $['x-ms-client-name'] = 'CustomSettings'
+  - from: swagger-document
+    where: $.definitions.CdnEndpoint
+    transform: $['x-ms-client-name'] = 'CdnEndpointReference'
+  - from: swagger-document
+    where: $.definitions.DeliveryRuleAction.properties.name['x-ms-enum'].name
+    transform: return "DeliveryRuleActionType"
   - from: swagger-document
     where: $.definitions
     transform: >
