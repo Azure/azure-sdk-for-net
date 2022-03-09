@@ -1,11 +1,11 @@
-function Generate-AadToken ($TenantId, $ClientId, $ClientSecret) 
+function Generate-AadToken ($TenantId, $ClientId, $ClientSecret)
 {
     $LoginAPIBaseURI = "https://login.microsoftonline.com/$TenantId/oauth2/token"
 
     $headers = @{
         "content-type" = "application/x-www-form-urlencoded"
     }
-    
+
     $body = @{
         "grant_type" = "client_credentials"
         "client_id" = $ClientId
@@ -17,8 +17,9 @@ function Generate-AadToken ($TenantId, $ClientId, $ClientSecret)
     return $resp.access_token
 }
 
-function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser) 
+function GetMsAliasFromGithub ([string]$TenantId, [string]$ClientId, [string]$ClientSecret, [string]$GithubUser)
 {
+    # API documentation (out of date): https://github.com/microsoft/opensource-management-portal/blob/main/docs/api.md
     $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubUser"
 
     $Headers = @{
@@ -31,8 +32,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
         $Headers["Authorization"] = "Bearer $opsAuthToken"
         Write-Host "Fetching aad identity for github user: $GithubUser"
         $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers -MaximumRetryCount 3
-    }
-    catch { 
+    } catch {
         Write-Warning $_
         return $null
     }
@@ -47,7 +47,30 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
     return $null
 }
 
-function GetPrimaryCodeOwner ($TargetDirectory) 
+function GetAllGithubUsers ([string]$TenantId, [string]$ClientId, [string]$ClientSecret)
+{
+    # API documentation (out of date): https://github.com/microsoft/opensource-management-portal/blob/main/docs/api.md
+    $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links"
+
+    $Headers = @{
+        "Content-Type" = "application/json"
+        "api-version" = "2019-10-01"
+    }
+
+    try {
+        $opsAuthToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
+        $Headers["Authorization"] = "Bearer $opsAuthToken"
+        Write-Host "Fetching all github alias links"
+        $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers -MaximumRetryCount 3
+    } catch {
+        Write-Warning $_
+        return $null
+    }
+
+    return $resp
+}
+
+function GetPrimaryCodeOwner ([string]$TargetDirectory)
 {
     $codeOwnerArray = &"$PSScriptRoot/../get-codeowners.ps1" -TargetDirectory $TargetDirectory
     if ($codeOwnerArray) {
