@@ -26,6 +26,11 @@ override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
   LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
+  LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
+  LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
+  LogAnalytics_GetLogAnalyticsLocations: GetLogAnalyticsLocations
+  LogAnalytics_GetWafLogAnalyticsMetrics: GetWafLogAnalyticsMetrics
+  LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
 directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules

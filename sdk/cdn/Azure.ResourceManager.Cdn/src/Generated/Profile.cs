@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsLogAnalyticAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(rankings, nameof(rankings));
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankings");
             scope.Start();
             try
             {
@@ -614,12 +614,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public virtual Response<RankingsResponse> GetLogAnalyticsRankingsLogAnalytic(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(rankings, nameof(rankings));
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankings");
             scope.Start();
             try
             {
@@ -639,9 +639,9 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsLogAnalyticAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocations");
             scope.Start();
             try
             {
@@ -661,9 +661,9 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContinentsResponse> GetLogAnalyticsLocationsLogAnalytic(CancellationToken cancellationToken = default)
+        public virtual Response<ContinentsResponse> GetLogAnalyticsLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocations");
             scope.Start();
             try
             {
@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesLogAnalyticAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResources");
             scope.Start();
             try
             {
@@ -705,9 +705,9 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourcesResponse> GetLogAnalyticsResourcesLogAnalytic(CancellationToken cancellationToken = default)
+        public virtual Response<ResourcesResponse> GetLogAnalyticsResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResources");
             scope.Start();
             try
             {
@@ -735,11 +735,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsLogAnalyticAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetrics");
             scope.Start();
             try
             {
@@ -767,11 +767,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetricsLogAnalytic(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetrics");
             scope.Start();
             try
             {
@@ -799,12 +799,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsLogAnalyticAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(rankings, nameof(rankings));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankings");
             scope.Start();
             try
             {
@@ -832,12 +832,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankingsLogAnalytic(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(rankings, nameof(rankings));
 
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsLogAnalytic");
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankings");
             scope.Start();
             try
             {
