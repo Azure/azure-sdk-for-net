@@ -20,7 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +28,7 @@
 	<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
 	-->
-	<PackageReference Include="Azure.Messaging.WebPubSub" />
+    <PackageReference Include="Azure.Messaging.WebPubSub" />
     <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
   </ItemGroup>
 </Project>
