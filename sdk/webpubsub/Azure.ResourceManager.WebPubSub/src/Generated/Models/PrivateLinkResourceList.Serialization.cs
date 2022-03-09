@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class PrivateLinkList
+    internal partial class PrivateLinkResourceList
     {
-        internal static PrivateLinkList DeserializePrivateLinkList(JsonElement element)
+        internal static PrivateLinkResourceList DeserializePrivateLinkResourceList(JsonElement element)
         {
             Optional<IReadOnlyList<PrivateLink>> value = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PrivateLinkList(Optional.ToList(value), nextLink.Value);
+            return new PrivateLinkResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,18 +12,18 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> A list of shared private link resources. </summary>
-    internal partial class SharedPrivateLinkList
+    internal partial class SharedPrivateLinkResourceList
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkList. </summary>
-        internal SharedPrivateLinkList()
+        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
+        internal SharedPrivateLinkResourceList()
         {
             Value = new ChangeTrackingList<SharedPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkList. </summary>
+        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
         /// <param name="value"> The list of the shared private link resources. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
-        internal SharedPrivateLinkList(IReadOnlyList<SharedPrivateLinkData> value, string nextLink)
+        internal SharedPrivateLinkResourceList(IReadOnlyList<SharedPrivateLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
