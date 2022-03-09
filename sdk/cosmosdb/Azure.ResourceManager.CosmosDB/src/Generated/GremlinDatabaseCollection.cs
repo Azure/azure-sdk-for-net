@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<GremlinDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GremlinDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateData createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(createUpdateGremlinDatabaseParameters, nameof(createUpdateGremlinDatabaseParameters));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public virtual ArmOperation<GremlinDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateData createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(createUpdateGremlinDatabaseParameters, nameof(createUpdateGremlinDatabaseParameters));

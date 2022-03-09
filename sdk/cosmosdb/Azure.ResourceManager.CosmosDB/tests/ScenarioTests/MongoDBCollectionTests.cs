@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected MongoDBCollectionCollection MongoDBCollectionCollection { get => _mongoDBDatabase.GetMongoDBCollections(); }
+        protected MongoDBCollectionCollection MongoDBCollectionCollection => _mongoDBDatabase.GetMongoDBCollections();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            MongoDBCollectionCreateUpdateOptions updateOptions = new MongoDBCollectionCreateUpdateOptions(collection.Id, _collectionName, collection.Data.Type, null,
+            MongoDBCollectionCreateUpdateData updateOptions = new MongoDBCollectionCreateUpdateData(collection.Id, _collectionName, collection.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, collection.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<MongoDBCollection> CreateMongoDBCollection(string name, AutoscaleSettings autoscale, MongoDBCollectionCollection mongoDBContainerCollection)
         {
-            MongoDBCollectionCreateUpdateOptions mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateUpdateOptions(AzureLocation.WestUS,
+            MongoDBCollectionCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateUpdateData(AzureLocation.WestUS,
                 new MongoDBCollectionResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlUserDefinedFunction>> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlUserDefinedFunction>> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
             Argument.AssertNotNull(createUpdateSqlUserDefinedFunctionParameters, nameof(createUpdateSqlUserDefinedFunctionParameters));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlUserDefinedFunction> CreateOrUpdate(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlUserDefinedFunction> CreateOrUpdate(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
             Argument.AssertNotNull(createUpdateSqlUserDefinedFunctionParameters, nameof(createUpdateSqlUserDefinedFunctionParameters));

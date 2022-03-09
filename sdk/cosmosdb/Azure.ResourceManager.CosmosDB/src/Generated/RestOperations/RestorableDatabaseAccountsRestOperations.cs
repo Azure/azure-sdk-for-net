@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<RestorableDatabaseAccountsList>> ListByLocationAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableDatabaseAccountsListResult>> ListByLocationAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountsList value = default;
+                        RestorableDatabaseAccountsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableDatabaseAccountsList.DeserializeRestorableDatabaseAccountsList(document.RootElement);
+                        value = RestorableDatabaseAccountsListResult.DeserializeRestorableDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
-        public Response<RestorableDatabaseAccountsList> ListByLocation(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<RestorableDatabaseAccountsListResult> ListByLocation(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountsList value = default;
+                        RestorableDatabaseAccountsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableDatabaseAccountsList.DeserializeRestorableDatabaseAccountsList(document.RootElement);
+                        value = RestorableDatabaseAccountsListResult.DeserializeRestorableDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<RestorableDatabaseAccountsList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableDatabaseAccountsListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountsList value = default;
+                        RestorableDatabaseAccountsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableDatabaseAccountsList.DeserializeRestorableDatabaseAccountsList(document.RootElement);
+                        value = RestorableDatabaseAccountsListResult.DeserializeRestorableDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<RestorableDatabaseAccountsList> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<RestorableDatabaseAccountsListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountsList value = default;
+                        RestorableDatabaseAccountsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableDatabaseAccountsList.DeserializeRestorableDatabaseAccountsList(document.RootElement);
+                        value = RestorableDatabaseAccountsListResult.DeserializeRestorableDatabaseAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

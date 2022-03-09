@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<SqlDatabaseList>> ListSqlDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlDatabaseListResult>> ListSqlDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseList value = default;
+                        SqlDatabaseListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlDatabaseList.DeserializeSqlDatabaseList(document.RootElement);
+                        value = SqlDatabaseListResult.DeserializeSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<SqlDatabaseList> ListSqlDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<SqlDatabaseListResult> ListSqlDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseList value = default;
+                        SqlDatabaseListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlDatabaseList.DeserializeSqlDatabaseList(document.RootElement);
+                        value = SqlDatabaseListResult.DeserializeSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters)
+        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData createUpdateSqlDatabaseParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public Response CreateUpdateSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateData updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateSqlDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateSqlDatabaseThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateSqlDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateSqlDatabaseThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SqlContainerList>> ListSqlContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlContainerListResult>> ListSqlContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -934,9 +934,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerList value = default;
+                        SqlContainerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlContainerList.DeserializeSqlContainerList(document.RootElement);
+                        value = SqlContainerListResult.DeserializeSqlContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
-        public Response<SqlContainerList> ListSqlContainers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<SqlContainerListResult> ListSqlContainers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -976,9 +976,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerList value = default;
+                        SqlContainerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlContainerList.DeserializeSqlContainerList(document.RootElement);
+                        value = SqlContainerListResult.DeserializeSqlContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters)
+        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public Response CreateUpdateSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1464,7 +1464,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters)
+        internal HttpMessage CreateUpdateSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateData updateThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1502,7 +1502,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async Task<Response> UpdateSqlContainerThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateSqlContainerThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
-        public Response UpdateSqlContainerThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateSqlContainerThroughput(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1844,7 +1844,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlStoredProcedureList>> ListSqlStoredProceduresAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlStoredProcedureListResult>> ListSqlStoredProceduresAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1873,9 +1873,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureList value = default;
+                        SqlStoredProcedureListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlStoredProcedureList.DeserializeSqlStoredProcedureList(document.RootElement);
+                        value = SqlStoredProcedureListResult.DeserializeSqlStoredProcedureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlStoredProcedureList> ListSqlStoredProcedures(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<SqlStoredProcedureListResult> ListSqlStoredProcedures(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1920,9 +1920,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureList value = default;
+                        SqlStoredProcedureListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlStoredProcedureList.DeserializeSqlStoredProcedureList(document.RootElement);
+                        value = SqlStoredProcedureListResult.DeserializeSqlStoredProcedureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2064,7 +2064,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters)
+        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2104,7 +2104,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public Response CreateUpdateSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2354,7 +2354,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlUserDefinedFunctionList>> ListSqlUserDefinedFunctionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlUserDefinedFunctionListResult>> ListSqlUserDefinedFunctionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2383,9 +2383,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionList value = default;
+                        SqlUserDefinedFunctionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlUserDefinedFunctionList.DeserializeSqlUserDefinedFunctionList(document.RootElement);
+                        value = SqlUserDefinedFunctionListResult.DeserializeSqlUserDefinedFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlUserDefinedFunctionList> ListSqlUserDefinedFunctions(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<SqlUserDefinedFunctionListResult> ListSqlUserDefinedFunctions(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2430,9 +2430,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionList value = default;
+                        SqlUserDefinedFunctionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlUserDefinedFunctionList.DeserializeSqlUserDefinedFunctionList(document.RootElement);
+                        value = SqlUserDefinedFunctionListResult.DeserializeSqlUserDefinedFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2574,7 +2574,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters)
+        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2667,7 +2667,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlUserDefinedFunctionParameters"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public Response CreateUpdateSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateOptions createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2864,7 +2864,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public async Task<Response<SqlTriggerList>> ListSqlTriggersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlTriggerListResult>> ListSqlTriggersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2893,9 +2893,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerList value = default;
+                        SqlTriggerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlTriggerList.DeserializeSqlTriggerList(document.RootElement);
+                        value = SqlTriggerListResult.DeserializeSqlTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2911,7 +2911,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
-        public Response<SqlTriggerList> ListSqlTriggers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<SqlTriggerListResult> ListSqlTriggers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -2940,9 +2940,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerList value = default;
+                        SqlTriggerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlTriggerList.DeserializeSqlTriggerList(document.RootElement);
+                        value = SqlTriggerListResult.DeserializeSqlTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3084,7 +3084,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters)
+        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3124,7 +3124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async Task<Response> CreateUpdateSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -3177,7 +3177,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public Response CreateUpdateSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

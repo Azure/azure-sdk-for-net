@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected SqlUserDefinedFunctionCollection SqlUserDefinedFunctionCollection { get => _sqlContainer.GetSqlUserDefinedFunctions(); }
+        protected SqlUserDefinedFunctionCollection SqlUserDefinedFunctionCollection => _sqlContainer.GetSqlUserDefinedFunctions();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -79,10 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
-            SqlUserDefinedFunctionCreateUpdateOptions updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            SqlUserDefinedFunctionCreateUpdateData updateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -125,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<SqlUserDefinedFunction> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS,
+            SqlUserDefinedFunctionCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS,
                 new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {

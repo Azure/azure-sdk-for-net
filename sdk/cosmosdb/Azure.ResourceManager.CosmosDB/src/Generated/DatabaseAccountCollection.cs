@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="createUpdateParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccount>> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccount>> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DatabaseAccountCreateUpdateData createUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(createUpdateParameters, nameof(createUpdateParameters));
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="createUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<DatabaseAccount> CreateOrUpdate(bool waitForCompletion, string accountName, DatabaseAccountCreateUpdateOptions createUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccount> CreateOrUpdate(bool waitForCompletion, string accountName, DatabaseAccountCreateUpdateData createUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(createUpdateParameters, nameof(createUpdateParameters));
