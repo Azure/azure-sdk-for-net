@@ -345,10 +345,15 @@ namespace Azure.Core.TestFramework
         }
 
         protected internal override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation);
-
-        protected object InstrumentOperationInternal(Type operationType, object operation, params IInterceptor[] interceptors)
-            => InstrumentOperationInternal(operationType, operation, Mode == RecordedTestMode.Playback, interceptors);
+        {
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                interceptorArray);
+        }
 
         /// <summary>
         /// A number of our tests have built in delays while we wait an expected

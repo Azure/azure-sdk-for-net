@@ -37,6 +37,8 @@ namespace Azure.Core.TestFramework
             IsAsync = isAsync;
         }
 
+        protected IReadOnlyCollection<IInterceptor> AdditionalInterceptors { get; set; }
+
         protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
 
         [TearDown]
@@ -139,21 +141,21 @@ namespace Azure.Core.TestFramework
                 interceptors.ToArray());
         }
 
-        protected internal virtual object InstrumentOperation(Type operationType, object operation) =>
-            InstrumentOperationInternal(operationType, operation, true);
-
-        protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
-            (T)InstrumentOperation(typeof(T), operation);
-
-        protected object InstrumentOperationInternal(Type operationType, object operation, bool noWait, params IInterceptor[] interceptors)
+        protected internal virtual object InstrumentOperation(Type operationType, object operation)
         {
-            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait) }).ToArray();
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+
+            // The assumption is that any recorded or live tests deriving from RecordedTestBase, and that any unit tests deriving directly from ClientTestBase are equivalent to playback.
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(RecordedTestMode.Playback) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },
                 operation,
                 interceptorArray);
         }
+
+        protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
+            (T)InstrumentOperation(typeof(T), operation);
 
         protected T GetOriginal<T>(T instrumented)
         {
