@@ -29,7 +29,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with an asynchronous callback that provides a signed client assertion to authenicate against Azure Active Directory.
+        /// Creates an instance of the ClientCertificateCredential with an asynchronous callback that provides a signed client assertion to authenticate against Azure Active Directory.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -42,11 +42,11 @@ namespace Azure.Identity
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId;
 
-            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
         }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with a synchronous callback that provides a signed client assertion to authenicate against Azure Active Directory.
+        /// Creates an instance of the ClientCertificateCredential with a synchronous callback that provides a signed client assertion to authenticate against Azure Active Directory.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -59,7 +59,7 @@ namespace Azure.Identity
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId;
 
-            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
         }
 
         /// <summary>

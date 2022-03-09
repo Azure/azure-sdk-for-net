@@ -91,7 +91,7 @@ namespace Azure.Identity
             _password = password.ToSecureString();
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
         }
 
         /// <summary>

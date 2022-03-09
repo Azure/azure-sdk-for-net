@@ -95,9 +95,8 @@ namespace Azure.Identity
                          clientId,
                          clientSecret,
                          null,
-                         options as ITokenCacheOptions,
-                         (options as ClientSecretCredentialOptions)?.RegionalAuthority,
-                         options?.IsLoggingPIIEnabled ?? false);
+                         options,
+                         (options as ClientSecretCredentialOptions)?.RegionalAuthority);
         }
 
         /// <summary>

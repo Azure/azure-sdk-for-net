@@ -159,9 +159,7 @@ namespace Azure.Identity
                          clientId,
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
-                         options as ITokenCacheOptions,
-                         certCredOptions?.RegionalAuthority,
-                         options?.IsLoggingPIIEnabled ?? false);
+                         options);
         }
 
         /// <summary>
