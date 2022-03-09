@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableSqlDatabasesList>> ListAsync(string subscriptionId, string location, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableSqlDatabasesListResult>> ListAsync(string subscriptionId, string location, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableSqlDatabasesList value = default;
+                        RestorableSqlDatabasesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableSqlDatabasesList.DeserializeRestorableSqlDatabasesList(document.RootElement);
+                        value = RestorableSqlDatabasesListResult.DeserializeRestorableSqlDatabasesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableSqlDatabasesList> List(string subscriptionId, string location, string instanceId, CancellationToken cancellationToken = default)
+        public Response<RestorableSqlDatabasesListResult> List(string subscriptionId, string location, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableSqlDatabasesList value = default;
+                        RestorableSqlDatabasesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableSqlDatabasesList.DeserializeRestorableSqlDatabasesList(document.RootElement);
+                        value = RestorableSqlDatabasesListResult.DeserializeRestorableSqlDatabasesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
