@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> CIDR Ip address. </summary>
-    public partial class CidrIpAddress
+    public partial class CidrIPAddress
     {
-        /// <summary> Initializes a new instance of CidrIpAddress. </summary>
-        public CidrIpAddress()
+        /// <summary> Initializes a new instance of CidrIPAddress. </summary>
+        public CidrIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of CidrIpAddress. </summary>
-        /// <param name="baseIpAddress"> Ip address itself. </param>
+        /// <summary> Initializes a new instance of CidrIPAddress. </summary>
+        /// <param name="baseIPAddress"> Ip address itself. </param>
         /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
-        internal CidrIpAddress(string baseIpAddress, int? prefixLength)
+        internal CidrIPAddress(string baseIPAddress, int? prefixLength)
         {
-            BaseIpAddress = baseIpAddress;
+            BaseIPAddress = baseIPAddress;
             PrefixLength = prefixLength;
         }
 
         /// <summary> Ip address itself. </summary>
-        public string BaseIpAddress { get; set; }
+        public string BaseIPAddress { get; set; }
         /// <summary> The length of the prefix of the ip address. </summary>
         public int? PrefixLength { get; set; }
     }

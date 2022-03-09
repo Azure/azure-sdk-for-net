@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CidrIpAddress : IUtf8JsonSerializable
+    public partial class CidrIPAddress : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseIpAddress))
+            if (Optional.IsDefined(BaseIPAddress))
             {
                 writer.WritePropertyName("baseIpAddress");
-                writer.WriteStringValue(BaseIpAddress);
+                writer.WriteStringValue(BaseIPAddress);
             }
             if (Optional.IsDefined(PrefixLength))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static CidrIpAddress DeserializeCidrIpAddress(JsonElement element)
+        internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element)
         {
             Optional<string> baseIpAddress = default;
             Optional<int> prefixLength = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CidrIpAddress(baseIpAddress.Value, Optional.ToNullable(prefixLength));
+            return new CidrIPAddress(baseIpAddress.Value, Optional.ToNullable(prefixLength));
         }
     }
 }
