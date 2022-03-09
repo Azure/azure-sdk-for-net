@@ -9,24 +9,24 @@ namespace Azure.Storage
     /// <summary>
     /// Azure Storage CRC-64 implementation.
     /// </summary>
-    public class StorageCrc64NonCryptographicHashAlgorithm : NonCryptographicHashAlgorithm
+    public class StorageCrc64HashAlgorithm : NonCryptographicHashAlgorithm
     {
         private ulong _uCRC;
         private const int _hashSizeBytes = 8;
 
-        private StorageCrc64NonCryptographicHashAlgorithm(ulong uCrc)
+        private StorageCrc64HashAlgorithm(ulong uCrc)
             : base(_hashSizeBytes)
         {
             _uCRC = uCrc;
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="StorageCrc64NonCryptographicHashAlgorithm"/>.
+        /// Creates a new instance of <see cref="StorageCrc64HashAlgorithm"/>.
         /// </summary>
         /// <returns></returns>
-        public static StorageCrc64NonCryptographicHashAlgorithm Create()
+        public static StorageCrc64HashAlgorithm Create()
         {
-            return new StorageCrc64NonCryptographicHashAlgorithm(0UL);
+            return new StorageCrc64HashAlgorithm(0UL);
         }
 
         /// <inheritdoc/>

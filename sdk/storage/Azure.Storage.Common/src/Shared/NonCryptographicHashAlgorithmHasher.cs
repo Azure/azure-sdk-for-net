@@ -14,9 +14,9 @@ namespace Azure.Storage
     {
         private const int _streamBufferSize = 4 * Constants.MB;
 
-        private readonly StorageCrc64NonCryptographicHashAlgorithm _nonCryptpgraphicHashAlgorithm;
+        private readonly StorageCrc64HashAlgorithm _nonCryptpgraphicHashAlgorithm;
 
-        public NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
+        public NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm nonCryptographicHashAlgorithm)
         {
             _nonCryptpgraphicHashAlgorithm = nonCryptographicHashAlgorithm;
         }
