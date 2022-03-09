@@ -189,19 +189,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOrigins_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Origin properties. </param>
+        /// <param name="data"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdOrigin>> UpdateAsync(bool waitForCompletion, AfdOriginUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdOrigin>> UpdateAsync(bool waitForCompletion, PatchableAfdOriginData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOrigin.Update");
             scope.Start();
             try
             {
-                var response = await _afdOriginRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _afdOriginRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,19 +219,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOrigins_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Origin properties. </param>
+        /// <param name="data"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<AfdOrigin> Update(bool waitForCompletion, AfdOriginUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AfdOrigin> Update(bool waitForCompletion, PatchableAfdOriginData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOrigin.Update");
             scope.Start();
             try
             {
-                var response = _afdOriginRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _afdOriginRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

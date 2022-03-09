@@ -12,20 +12,13 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
-    public partial class DownloadTransactionalHashingOptions
+    public partial class StorageCrc64NonCryptographicHashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
-        public DownloadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public bool Validate { get { throw null; } set { } }
-    }
-    public partial class StorageCrc64NonCryptographicHashAlgorithm
-    {
-        internal StorageCrc64NonCryptographicHashAlgorithm() { }
-        public void Append(System.ReadOnlySpan<byte> source) { }
+        internal StorageCrc64NonCryptographicHashAlgorithm() : base (default(int)) { }
+        public override void Append(System.ReadOnlySpan<byte> source) { }
         public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
-        public byte[] GetCurrentHash() { throw null; }
-        protected void GetCurrentHashCore(System.Span<byte> destination) { }
-        public void Reset() { }
+        protected override void GetCurrentHashCore(System.Span<byte> destination) { }
+        public override void Reset() { }
     }
     public static partial class StorageExtensions
     {
@@ -58,18 +51,6 @@ namespace Azure.Storage
         public static bool operator ==(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
-    }
-    public enum TransactionalHashAlgorithm
-    {
-        None = 0,
-        StorageCrc64 = 1,
-        MD5 = 2,
-    }
-    public partial class UploadTransactionalHashingOptions
-    {
-        public UploadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public byte[] PrecalculatedHash { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Sas

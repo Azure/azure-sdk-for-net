@@ -6,7 +6,11 @@
 - Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
 
 ### Breaking Changes
+- Renamed `StartCopyModel` methods to `StartCopyModelTo`.
 - Made `DocumentSpan` a `struct` instead of a `class`.
+- In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
+- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
+- In the method `StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
 
 ### Bugs Fixed
 

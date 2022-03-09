@@ -211,19 +211,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Endpoint update properties. </param>
+        /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, CdnEndpointUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,19 +241,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Endpoint update properties. </param>
+        /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<CdnEndpoint> Update(bool waitForCompletion, CdnEndpointUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<CdnEndpoint> Update(bool waitForCompletion, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

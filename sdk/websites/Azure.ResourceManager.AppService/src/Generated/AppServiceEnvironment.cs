@@ -243,18 +243,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="options"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,18 +269,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="options"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<AppServiceEnvironment> Update(AppServiceEnvironmentUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> Update(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

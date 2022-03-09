@@ -23,7 +23,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public BackupRestoreTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
-            Sanitizer = new BackupRestoreRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..token");
+            SanitizedQueryParameters.Add("sig");
         }
 
         internal KeyVaultBackupClient GetClient(bool isInstrumented = true)
@@ -59,7 +60,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return RecordedTestSanitizer.SanitizeValue;
+                return SanitizeValue;
             }
             // Create a service level SAS that only allows reading from service
             // level APIs

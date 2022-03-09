@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            IpConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get; }
         /// <summary> Gets or sets the dscp configuration. </summary>
         internal WritableSubResource DscpConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Url signing key parameters. </summary>
-    public partial class UrlSigningKeyParameters : SecretParameters
+    internal partial class UrlSigningKeyParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of UrlSigningKeyParameters. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>

@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new TextAnalyticsRecordedTestSanitizer();
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
         protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)

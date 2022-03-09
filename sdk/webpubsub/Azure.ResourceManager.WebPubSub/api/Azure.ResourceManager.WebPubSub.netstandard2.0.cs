@@ -222,26 +222,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.AclAction left, Azure.ResourceManager.WebPubSub.Models.AclAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.CreatedByType left, Azure.ResourceManager.WebPubSub.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.CreatedByType left, Azure.ResourceManager.WebPubSub.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class EventHandler
     {
         public EventHandler(string urlTemplate) { }
@@ -486,12 +466,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.ScaleType? ScaleType { get { throw null; } }
-    }
-    public partial class SkuList
-    {
-        internal SkuList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.Models.Sku> Value { get { throw null; } }
     }
     public partial class UpstreamAuthSettings
     {

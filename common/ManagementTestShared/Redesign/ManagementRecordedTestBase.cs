@@ -33,14 +33,7 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
-        {
-            SessionEnvironment = new TEnvironment();
-            SessionEnvironment.Mode = Mode;
-            Initialize();
-        }
-
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -49,12 +42,6 @@ namespace Azure.ResourceManager.TestFramework
 
         private void Initialize()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
-                pollField.SetValue(null, TimeSpan.Zero);
-            }
-
             _waitForCleanup = Mode == RecordedTestMode.Live;
         }
 
@@ -156,7 +143,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
@@ -170,7 +157,7 @@ namespace Azure.ResourceManager.TestFramework
 
             if (SessionRecording != null)
             {
-                await SessionRecording.DisposeAsync(true);
+                await SessionRecording.DisposeAsync();
             }
 
             GlobalClient = null;
@@ -239,6 +226,6 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
+            => InstrumentOperationInternal(operationType, operation, new ManagementInterceptor(this));
     }
 }

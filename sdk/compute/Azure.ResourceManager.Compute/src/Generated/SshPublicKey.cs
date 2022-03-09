@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}
         /// Operation Id: SshPublicKeys_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update the SSH public key. </param>
+        /// <param name="data"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<SshPublicKey>> UpdateAsync(SshPublicKeyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<SshPublicKey>> UpdateAsync(PatchableSshPublicKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKey.Update");
             scope.Start();
             try
             {
-                var response = await _sshPublicKeyRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _sshPublicKeyRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SshPublicKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,18 +215,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}
         /// Operation Id: SshPublicKeys_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update the SSH public key. </param>
+        /// <param name="data"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<SshPublicKey> Update(SshPublicKeyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SshPublicKey> Update(PatchableSshPublicKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKey.Update");
             scope.Start();
             try
             {
-                var response = _sshPublicKeyRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _sshPublicKeyRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new SshPublicKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

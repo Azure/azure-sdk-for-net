@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ImportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "ImportSettings";
         }
 
         /// <summary> Initializes a new instance of ImportSettings. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ImportSettings(string type, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "ImportSettings";
+            Type = type;
             AdditionalProperties = additionalProperties;
         }
 

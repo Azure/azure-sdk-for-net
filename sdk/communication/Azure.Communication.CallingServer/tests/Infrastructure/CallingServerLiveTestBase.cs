@@ -10,6 +10,7 @@ using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.CallingServer.Tests
 {
@@ -26,6 +27,8 @@ namespace Azure.Communication.CallingServer.Tests
 
         // Random Gen Guid
         protected const string GROUP_IDENTIFIER = "f8c9bb0a-25ec-408d-b335-266dcc0c0c9a";
+
+        private const string PhoneNumberRegEx = @"\\u002B[0-9]{11,15}";
 
         protected string GetResourceId()
         {
@@ -84,7 +87,10 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new CallingServerRecordedTestSanitizer();
+        {
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         public bool SkipCallingServerInteractionLiveTests
             => TestEnvironment.Mode == RecordedTestMode.Live && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,13 +159,10 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -174,10 +171,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="options"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -191,8 +188,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(scriptName));
             }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -212,10 +213,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="options"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -229,8 +230,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(scriptName));
             }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
