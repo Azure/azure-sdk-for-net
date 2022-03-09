@@ -8,7 +8,6 @@ library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 require: 
   - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
-  - ../../../../eng/mgmt-rename-rules.md
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
@@ -16,6 +15,27 @@ operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
