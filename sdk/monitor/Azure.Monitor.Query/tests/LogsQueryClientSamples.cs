@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query.Tests
                     IncludeStatistics = true,
                 });
 
-            var stats = response.Value.GetStatistics();
+            BinaryData stats = response.Value.GetStatistics();
             using var statsDoc = JsonDocument.Parse(stats);
             var queryStats = statsDoc.RootElement.GetProperty("query");
             Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
@@ -69,7 +69,7 @@ namespace Azure.Monitor.Query.Tests
                     IncludeVisualization = true,
                 });
 
-            var viz = response.Value.GetVisualization();
+            BinaryData viz = response.Value.GetVisualization();
             using var vizDoc = JsonDocument.Parse(viz);
             var queryViz = vizDoc.RootElement.GetProperty("visualization");
             Console.WriteLine(queryViz.GetString());
