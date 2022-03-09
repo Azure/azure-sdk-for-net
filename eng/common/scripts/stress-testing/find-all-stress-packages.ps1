@@ -11,7 +11,12 @@ class StressTestPackageInfo {
     [string]$DockerBuildDir
 }
 
-function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [switch]$CI) {
+function FindStressPackages(
+    [string]$directory,
+    [hashtable]$filters = @{},
+    [switch]$CI,
+    [string]$namespaceOverride
+) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
 
@@ -20,7 +25,11 @@ function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [swit
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $packages += NewStressTestPackageInfo -chart $chart -chartFile $chartFile -CI:$CI
+            $packages += NewStressTestPackageInfo `
+                            -chart $chart `
+                            -chartFile $chartFile `
+                            -CI:$CI `
+                            -namespaceOverride $namespaceOverride
         }
     }
 
@@ -41,8 +50,15 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
-function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile, [switch]$CI) {
-    $namespace = if ($CI) {
+function NewStressTestPackageInfo(
+    [hashtable]$chart,
+    [System.IO.FileInfo]$chartFile,
+    [switch]$CI,
+    [object]$namespaceOverride
+) {
+    $namespace = if ($namespaceOverride) {
+        $namespaceOverride
+    } elseif ($CI) {
         $chart.annotations.namespace
     } else {
         # Check GITHUB_USER for users in codespaces environments, since the default user is `codespaces` and
