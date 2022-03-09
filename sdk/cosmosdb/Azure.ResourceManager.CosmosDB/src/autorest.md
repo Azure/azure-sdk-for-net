@@ -16,8 +16,6 @@ output-folder: Generated/
 clear-output-folder: true
 flatten-payloads: false
 model-namespae: true
-modelerfour:
-  lenient-model-deduplication: true
 operation-id-mappings:
   DatabaseAccountCassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
