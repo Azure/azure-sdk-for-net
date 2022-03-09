@@ -6,7 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
-require: https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+require: 
+  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+  - ../../../../eng/mgmt-rename-rules.md
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
@@ -25,6 +27,7 @@ no-property-type-replacement:
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
+  LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
 directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules
@@ -198,24 +201,6 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsMetrics
-      to: AfdProfiles_GetLogAnalyticsMetrics
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsRankings
-      to: AfdProfiles_GetLogAnalyticsRankings
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsLocations
-      to: AfdProfiles_GetLogAnalyticsLocations
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsResources
-      to: AfdProfiles_GetLogAnalyticsResources
-  - rename-operation:
-      from: LogAnalytics_GetWafLogAnalyticsMetrics
-      to: AfdProfiles_GetWafLogAnalyticsMetrics
-  - rename-operation:
-      from: LogAnalytics_GetWafLogAnalyticsRankings
-      to: AfdProfiles_GetWafLogAnalyticsRankings
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
