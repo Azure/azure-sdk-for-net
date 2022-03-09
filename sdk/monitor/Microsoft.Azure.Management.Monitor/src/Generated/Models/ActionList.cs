@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of activity log alert actions.
+    /// A list of Activity Log Alert rule actions.
     /// </summary>
-    public partial class ActivityLogAlertActionList
+    public partial class ActionList
     {
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertActionList class.
+        /// Initializes a new instance of the ActionList class.
         /// </summary>
-        public ActivityLogAlertActionList()
+        public ActionList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertActionList class.
+        /// Initializes a new instance of the ActionList class.
         /// </summary>
-        /// <param name="actionGroups">The list of activity log alerts.</param>
-        public ActivityLogAlertActionList(IList<ActivityLogAlertActionGroup> actionGroups = default(IList<ActivityLogAlertActionGroup>))
+        /// <param name="actionGroups">The list of the Action Groups.</param>
+        public ActionList(IList<ActionGroup> actionGroups = default(IList<ActionGroup>))
         {
             ActionGroups = actionGroups;
             CustomInit();
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of activity log alerts.
+        /// Gets or sets the list of the Action Groups.
         /// </summary>
         [JsonProperty(PropertyName = "actionGroups")]
-        public IList<ActivityLogAlertActionGroup> ActionGroups { get; set; }
+        public IList<ActionGroup> ActionGroups { get; set; }
 
     }
 }

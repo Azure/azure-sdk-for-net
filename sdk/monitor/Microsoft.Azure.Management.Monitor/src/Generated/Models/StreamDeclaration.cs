@@ -10,31 +10,32 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The endpoint used by clients to access their configuration.
+    /// Declaration of a custom stream.
     /// </summary>
-    public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
+    public partial class StreamDeclaration
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the StreamDeclaration class.
         /// </summary>
-        public DataCollectionEndpointConfigurationAccess()
+        public StreamDeclaration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the StreamDeclaration class.
         /// </summary>
-        /// <param name="endpoint">The endpoint. This property is
-        /// READ-ONLY.</param>
-        public DataCollectionEndpointConfigurationAccess(string endpoint = default(string))
-            : base(endpoint)
+        /// <param name="columns">List of columns used by data in this
+        /// stream.</param>
+        public StreamDeclaration(IList<ColumnDefinition> columns = default(IList<ColumnDefinition>))
         {
+            Columns = columns;
             CustomInit();
         }
 
@@ -42,6 +43,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets list of columns used by data in this stream.
+        /// </summary>
+        [JsonProperty(PropertyName = "columns")]
+        public IList<ColumnDefinition> Columns { get; set; }
 
     }
 }

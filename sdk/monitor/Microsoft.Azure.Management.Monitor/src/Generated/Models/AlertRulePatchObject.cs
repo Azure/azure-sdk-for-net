@@ -18,27 +18,27 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// An activity log alert object for the body of patch operations.
+    /// An Activity Log Alert rule object for the body of patch operations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ActivityLogAlertPatchBody
+    public partial class AlertRulePatchObject
     {
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertPatchBody class.
+        /// Initializes a new instance of the AlertRulePatchObject class.
         /// </summary>
-        public ActivityLogAlertPatchBody()
+        public AlertRulePatchObject()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertPatchBody class.
+        /// Initializes a new instance of the AlertRulePatchObject class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="enabled">Indicates whether this activity log alert is
-        /// enabled. If an activity log alert is not enabled, then none of its
-        /// actions will be activated.</param>
-        public ActivityLogAlertPatchBody(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? enabled = default(bool?))
+        /// <param name="tags">The resource tags</param>
+        /// <param name="enabled">Indicates whether this Activity Log Alert
+        /// rule is enabled. If an Activity Log Alert rule is not enabled, then
+        /// none of its actions will be activated.</param>
+        public AlertRulePatchObject(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? enabled = default(bool?))
         {
             Tags = tags;
             Enabled = enabled;
@@ -51,15 +51,15 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets the resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether this activity log alert is enabled.
-        /// If an activity log alert is not enabled, then none of its actions
-        /// will be activated.
+        /// Gets or sets indicates whether this Activity Log Alert rule is
+        /// enabled. If an Activity Log Alert rule is not enabled, then none of
+        /// its actions will be activated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }

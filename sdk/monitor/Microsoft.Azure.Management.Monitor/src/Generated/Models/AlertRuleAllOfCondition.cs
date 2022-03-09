@@ -17,27 +17,25 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// An Activity Log alert condition that is met when all its member
+    /// An Activity Log Alert rule condition that is met when all its member
     /// conditions are met.
     /// </summary>
-    public partial class ActivityLogAlertAllOfCondition
+    public partial class AlertRuleAllOfCondition
     {
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertAllOfCondition
-        /// class.
+        /// Initializes a new instance of the AlertRuleAllOfCondition class.
         /// </summary>
-        public ActivityLogAlertAllOfCondition()
+        public AlertRuleAllOfCondition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ActivityLogAlertAllOfCondition
-        /// class.
+        /// Initializes a new instance of the AlertRuleAllOfCondition class.
         /// </summary>
-        /// <param name="allOf">The list of activity log alert
+        /// <param name="allOf">The list of Activity Log Alert rule
         /// conditions.</param>
-        public ActivityLogAlertAllOfCondition(IList<ActivityLogAlertLeafCondition> allOf)
+        public AlertRuleAllOfCondition(IList<AlertRuleAnyOfOrLeafCondition> allOf)
         {
             AllOf = allOf;
             CustomInit();
@@ -49,10 +47,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of activity log alert conditions.
+        /// Gets or sets the list of Activity Log Alert rule conditions.
         /// </summary>
         [JsonProperty(PropertyName = "allOf")]
-        public IList<ActivityLogAlertLeafCondition> AllOf { get; set; }
+        public IList<AlertRuleAnyOfOrLeafCondition> AllOf { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -65,16 +63,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (AllOf == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AllOf");
-            }
-            if (AllOf != null)
-            {
-                foreach (var element in AllOf)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
