@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class SkuList
+    internal partial class SkuList
     {
         internal static SkuList DeserializeSkuList(JsonElement element)
         {

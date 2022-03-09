@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> Update(bool waitForCompletion, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> Update(bool waitForCompletion, Azure.ResourceManager.DeviceUpdate.Models.PatchableDeviceUpdateAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.DeviceUpdate.Models.PatchableDeviceUpdateAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DeviceUpdateAccountCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>, System.Collections.IEnumerable
     {
@@ -280,38 +280,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string MemberName { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceUpdate.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceUpdate.Models.CreatedByType left, Azure.ResourceManager.DeviceUpdate.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.CreatedByType left, Azure.ResourceManager.DeviceUpdate.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DeviceUpdateAccountUpdateOptions
-    {
-        public DeviceUpdateAccountUpdateOptions() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class DeviceUpdateInstanceUpdateOptions
-    {
-        public DeviceUpdateInstanceUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class DiagnosticStorageProperties
     {
         public DiagnosticStorageProperties(Azure.ResourceManager.DeviceUpdate.Models.AuthenticationType authenticationType, string resourceId) { }
@@ -355,25 +323,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string IoTHubConnectionString { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType>
+    public partial class PatchableDeviceUpdateAccountData
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType left, Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType left, Azure.ResourceManager.DeviceUpdate.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public PatchableDeviceUpdateAccountData() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState>
@@ -394,14 +349,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PrivateEndpointConnectionProxyProperties
-    {
-        public PrivateEndpointConnectionProxyProperties() { }
-        public string ETag { get { throw null; } }
-        public Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DeviceUpdate.Models.RemotePrivateEndpoint RemotePrivateEndpoint { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProxyProvisioningState : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProxyProvisioningState>

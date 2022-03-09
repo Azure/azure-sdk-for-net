@@ -20,9 +20,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
     {
         private ResourceGroup _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
+
         public ServiceBusNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteNamespace()
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            ServiceBusNamespaceUpdateOptions parameters = new ServiceBusNamespaceUpdateOptions(DefaultLocation);
+            PatchableServiceBusNamespaceData parameters = new PatchableServiceBusNamespaceData(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The type of identity that creates/modifies resources. </summary>
-    public readonly partial struct IdentityType : IEquatable<IdentityType>
+    internal readonly partial struct IdentityType : IEquatable<IdentityType>
     {
         private readonly string _value;
 

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore> Update(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore> Update(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.PatchableConfigurationStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppConfiguration.Models.PatchableConfigurationStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConfigurationStoreCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.IEnumerable
     {
@@ -196,15 +196,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType left, Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConfigurationStoreUpdateOptions
-    {
-        public ConfigurationStoreUpdateOptions() { }
-        public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public string SkuName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionStatus : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.ConnectionStatus>
     {
@@ -255,6 +246,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
+    }
+    public partial class PatchableConfigurationStoreData
+    {
+        public PatchableConfigurationStoreData() { }
+        public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.AppConfiguration.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public string SkuName { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PrivateEndpointConnectionReference : Azure.ResourceManager.Models.ResourceData
     {
@@ -314,26 +314,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         public RegenerateKeyOptions() { }
         public string Id { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType left, Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType left, Azure.ResourceManager.AppConfiguration.Models.ResourceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class Sku
     {

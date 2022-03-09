@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, PatchableManagedDatabaseData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -492,10 +492,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="options"> The requested database resource state. </param>
+        /// <param name="data"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, PatchableManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -513,12 +513,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,10 +535,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="options"> The requested database resource state. </param>
+        /// <param name="data"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="options"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, PatchableManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -556,12 +556,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -27,16 +27,15 @@ namespace Azure.Core.TestFramework
         private readonly Func<EntryRecordModel> _filter;
         private readonly string _proxyHost;
 
-        private static bool s_useFiddler => TestEnvironment.EnableFiddler;
-
         public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording, Func<EntryRecordModel> filter)
         {
             _recording = recording;
             _proxy = proxy;
             _filter = filter;
 
-            string certIssuer = s_useFiddler ? FiddlerCertIssuer : DevCertIssuer;
-            _proxyHost = s_useFiddler ? "localhost.fiddler" : TestProxy.IpAddress;
+            bool useFiddler = TestEnvironment.EnableFiddler;
+            string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
+            _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxy.IpAddress;
 
             if (transport is HttpClientTransport)
             {

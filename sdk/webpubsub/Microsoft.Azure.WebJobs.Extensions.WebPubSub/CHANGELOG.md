@@ -1,14 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0 (2022-03-08)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix `CancellationToken` in output binding.(#26704)
 
 ## 1.1.0 (2021-11-24)
 
