@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
-        public async Task<Response<PartitionMetricList>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public async Task<Response<PartitionMetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PartitionMetricList value = default;
+                        PartitionMetricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PartitionMetricList.DeserializePartitionMetricList(document.RootElement);
+                        value = PartitionMetricListResult.DeserializePartitionMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
-        public Response<PartitionMetricList> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        public Response<PartitionMetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PartitionMetricList value = default;
+                        PartitionMetricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PartitionMetricList.DeserializePartitionMetricList(document.RootElement);
+                        value = PartitionMetricListResult.DeserializePartitionMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

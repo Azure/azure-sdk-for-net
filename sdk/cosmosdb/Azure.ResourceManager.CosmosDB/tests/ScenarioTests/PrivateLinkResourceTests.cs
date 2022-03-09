@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected PrivateLinkResourceCollection PrivateLinkResourceCollection { get => _databaseAccount.GetPrivateLinkResources(); }
+        protected PrivateLinkResourceCollection PrivateLinkResourceCollection => _databaseAccount.GetPrivateLinkResources();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()

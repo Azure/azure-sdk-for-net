@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected SqlStoredProcedureCollection SqlStoredProcedureCollection { get => _sqlContainer.GetSqlStoredProcedures(); }
+        protected SqlStoredProcedureCollection SqlStoredProcedureCollection => _sqlContainer.GetSqlStoredProcedures();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -81,9 +81,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
 
-            SqlStoredProcedureCreateUpdateOptions updateOptions = new SqlStoredProcedureCreateUpdateOptions(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+            // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
+            SqlStoredProcedureCreateUpdateData updateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS, storedProcedure.Data.Resource)
+            {
+                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+            };
 
             storedProcedure = (await SqlStoredProcedureCollection.CreateOrUpdateAsync(true, _storedProcedureName, updateOptions)).Value;
             Assert.AreEqual(_storedProcedureName, storedProcedure.Data.Resource.Id);
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlStoredProcedureCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateOptions(AzureLocation.WestUS,
+            SqlStoredProcedureCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS,
                 new SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {
