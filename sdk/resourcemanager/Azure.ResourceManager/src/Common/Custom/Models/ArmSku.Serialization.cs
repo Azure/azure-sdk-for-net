@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Models
         internal static ArmSku DeserializeArmSku(JsonElement element)
         {
             string name = default;
-            Optional<SkuTier> tier = default;
+            Optional<ArmSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToSkuTier();
+                    tier = property.Value.GetString().ToArmSkuTier();
                     continue;
                 }
                 if (property.NameEquals("size"))
