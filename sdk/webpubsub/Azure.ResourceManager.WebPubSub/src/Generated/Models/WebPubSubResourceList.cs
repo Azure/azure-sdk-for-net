@@ -7,32 +7,33 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Contains a list of PrivateLinkResource and a possible link to query more results. </summary>
-    internal partial class PrivateLinkList
+    /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
+    internal partial class WebPubSubResourceList
     {
-        /// <summary> Initializes a new instance of PrivateLinkList. </summary>
-        internal PrivateLinkList()
+        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        internal WebPubSubResourceList()
         {
-            Value = new ChangeTrackingList<PrivateLink>();
+            Value = new ChangeTrackingList<WebPubSubData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkList. </summary>
-        /// <param name="value"> List of PrivateLinkResource. </param>
+        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <param name="value"> List of the resources. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal PrivateLinkList(IReadOnlyList<PrivateLink> value, string nextLink)
+        internal WebPubSubResourceList(IReadOnlyList<WebPubSubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of PrivateLinkResource. </summary>
-        public IReadOnlyList<PrivateLink> Value { get; }
+        /// <summary> List of the resources. </summary>
+        public IReadOnlyList<WebPubSubData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

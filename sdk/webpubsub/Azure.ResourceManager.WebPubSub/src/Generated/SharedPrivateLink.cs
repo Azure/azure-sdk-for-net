@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class SharedPrivateLink : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedPrivateLink"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _sharedPrivateLinkClientDiagnostics;
-        private readonly SharedPrivateLinksRestOperations _sharedPrivateLinkRestClient;
+        private readonly ClientDiagnostics _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics;
+        private readonly WebPubSubSharedPrivateLinkResourcesRestOperations _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient;
         private readonly SharedPrivateLinkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SharedPrivateLink"/> class for mocking. </summary>
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SharedPrivateLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sharedPrivateLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceType, out string sharedPrivateLinkApiVersion);
-            _sharedPrivateLinkRestClient = new SharedPrivateLinksRestOperations(_sharedPrivateLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedPrivateLinkApiVersion);
+            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
+            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResourcesRestOperations(_sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary>
         /// Get the specified shared private link resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
-        /// Operation Id: SharedPrivateLinks_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SharedPrivateLink>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedPrivateLinkClientDiagnostics.CreateScope("SharedPrivateLink.Get");
+            using var scope = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLink.Get");
             scope.Start();
             try
             {
-                var response = await _sharedPrivateLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sharedPrivateLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SharedPrivateLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary>
         /// Get the specified shared private link resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
-        /// Operation Id: SharedPrivateLinks_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SharedPrivateLink> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedPrivateLinkClientDiagnostics.CreateScope("SharedPrivateLink.Get");
+            using var scope = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLink.Get");
             scope.Start();
             try
             {
-                var response = _sharedPrivateLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sharedPrivateLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SharedPrivateLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,19 +132,19 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary>
         /// Delete the specified shared private link resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
-        /// Operation Id: SharedPrivateLinks_Delete
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedPrivateLinkClientDiagnostics.CreateScope("SharedPrivateLink.Delete");
+            using var scope = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLink.Delete");
             scope.Start();
             try
             {
-                var response = await _sharedPrivateLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation(_sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -158,19 +158,19 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary>
         /// Delete the specified shared private link resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
-        /// Operation Id: SharedPrivateLinks_Delete
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedPrivateLinkClientDiagnostics.CreateScope("SharedPrivateLink.Delete");
+            using var scope = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLink.Delete");
             scope.Start();
             try
             {
-                var response = _sharedPrivateLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WebPubSubArmOperation(_sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
