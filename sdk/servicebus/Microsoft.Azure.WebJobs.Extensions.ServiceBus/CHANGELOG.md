@@ -1,14 +1,19 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.3.0 (2022-03-09)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
-### Breaking Changes
+- Added the ability to renew message and session locks using the `ServiceBusMessageActions` and `ServiceBusSessionActions`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Ignore scheduled/deferred messages when computing scale monitor metrics. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.2.0 (2021-12-08)
 
