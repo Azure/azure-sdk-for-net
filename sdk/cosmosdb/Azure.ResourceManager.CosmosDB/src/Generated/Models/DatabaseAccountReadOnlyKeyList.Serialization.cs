@@ -10,26 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseAccountListKeysResult
+    public partial class DatabaseAccountReadOnlyKeyList
     {
-        internal static DatabaseAccountListKeysResult DeserializeDatabaseAccountListKeysResult(JsonElement element)
+        internal static DatabaseAccountReadOnlyKeyList DeserializeDatabaseAccountReadOnlyKeyList(JsonElement element)
         {
-            Optional<string> primaryMasterKey = default;
-            Optional<string> secondaryMasterKey = default;
             Optional<string> primaryReadonlyMasterKey = default;
             Optional<string> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryMasterKey"))
-                {
-                    primaryMasterKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryMasterKey"))
-                {
-                    secondaryMasterKey = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("primaryReadonlyMasterKey"))
                 {
                     primaryReadonlyMasterKey = property.Value.GetString();
@@ -41,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DatabaseAccountListKeysResult(primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, primaryMasterKey.Value, secondaryMasterKey.Value);
+            return new DatabaseAccountReadOnlyKeyList(primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value);
         }
     }
 }

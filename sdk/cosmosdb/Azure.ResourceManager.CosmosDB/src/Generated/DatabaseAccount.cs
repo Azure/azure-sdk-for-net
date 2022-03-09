@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountListKeysResult>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
             scope.Start();
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountListKeysResult> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseAccountKeyList> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
             scope.Start();
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListReadOnlyKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountListReadOnlyKeysResult>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
             scope.Start();
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListReadOnlyKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountListReadOnlyKeysResult> GetReadOnlyKeys(CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseAccountReadOnlyKeyList> GetReadOnlyKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
             scope.Start();

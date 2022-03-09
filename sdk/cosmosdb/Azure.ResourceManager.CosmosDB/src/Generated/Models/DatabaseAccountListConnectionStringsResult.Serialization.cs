@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class DatabaseAccountConnectionStringList
+    internal partial class DatabaseAccountListConnectionStringsResult
     {
-        internal static DatabaseAccountConnectionStringList DeserializeDatabaseAccountConnectionStringList(JsonElement element)
+        internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element)
         {
             Optional<IReadOnlyList<DatabaseAccountConnectionString>> connectionStrings = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DatabaseAccountConnectionStringList(Optional.ToList(connectionStrings));
+            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings));
         }
     }
 }

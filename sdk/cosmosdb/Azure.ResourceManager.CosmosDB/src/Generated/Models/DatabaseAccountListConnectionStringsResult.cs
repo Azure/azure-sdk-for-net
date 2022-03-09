@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The connection strings for the given database account. </summary>
-    internal partial class DatabaseAccountConnectionStringList
+    internal partial class DatabaseAccountListConnectionStringsResult
     {
-        /// <summary> Initializes a new instance of DatabaseAccountConnectionStringList. </summary>
-        internal DatabaseAccountConnectionStringList()
+        /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
+        internal DatabaseAccountListConnectionStringsResult()
         {
             ConnectionStrings = new ChangeTrackingList<DatabaseAccountConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountConnectionStringList. </summary>
+        /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
-        internal DatabaseAccountConnectionStringList(IReadOnlyList<DatabaseAccountConnectionString> connectionStrings)
+        internal DatabaseAccountListConnectionStringsResult(IReadOnlyList<DatabaseAccountConnectionString> connectionStrings)
         {
             ConnectionStrings = connectionStrings;
         }

@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountKeyList>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -724,9 +724,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountListKeysResult value = default;
+                        DatabaseAccountKeyList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseAccountListKeysResult.DeserializeDatabaseAccountListKeysResult(document.RootElement);
+                        value = DatabaseAccountKeyList.DeserializeDatabaseAccountKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountKeyList> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -761,9 +761,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountListKeysResult value = default;
+                        DatabaseAccountKeyList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseAccountListKeysResult.DeserializeDatabaseAccountListKeysResult(document.RootElement);
+                        value = DatabaseAccountKeyList.DeserializeDatabaseAccountKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountConnectionStringList>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountListConnectionStringsResult>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -819,9 +819,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountConnectionStringList value = default;
+                        DatabaseAccountListConnectionStringsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseAccountConnectionStringList.DeserializeDatabaseAccountConnectionStringList(document.RootElement);
+                        value = DatabaseAccountListConnectionStringsResult.DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountConnectionStringList> ListConnectionStrings(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountListConnectionStringsResult> ListConnectionStrings(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -856,9 +856,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountConnectionStringList value = default;
+                        DatabaseAccountListConnectionStringsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseAccountConnectionStringList.DeserializeDatabaseAccountConnectionStringList(document.RootElement);
+                        value = DatabaseAccountListConnectionStringsResult.DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<DatabaseAccountListReadOnlyKeysResult>> ListReadOnlyKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseAccountReadOnlyKeyList>> ListReadOnlyKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1116,9 +1116,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountListReadOnlyKeysResult value = default;
+                        DatabaseAccountReadOnlyKeyList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseAccountListReadOnlyKeysResult.DeserializeDatabaseAccountListReadOnlyKeysResult(document.RootElement);
+                        value = DatabaseAccountReadOnlyKeyList.DeserializeDatabaseAccountReadOnlyKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<DatabaseAccountListReadOnlyKeysResult> ListReadOnlyKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DatabaseAccountReadOnlyKeyList> ListReadOnlyKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1153,9 +1153,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        DatabaseAccountListReadOnlyKeysResult value = default;
+                        DatabaseAccountReadOnlyKeyList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseAccountListReadOnlyKeysResult.DeserializeDatabaseAccountListReadOnlyKeysResult(document.RootElement);
+                        value = DatabaseAccountReadOnlyKeyList.DeserializeDatabaseAccountReadOnlyKeyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

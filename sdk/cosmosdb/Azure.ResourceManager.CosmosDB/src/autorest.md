@@ -147,6 +147,12 @@ directive:
 - rename-model:
     from: DatabaseAccountGetProperties
     to: DatabaseAccountProperties
+- rename-model:
+    from: DatabaseAccountListReadOnlyKeysResult
+    to: DatabaseAccountReadOnlyKeyList
+- rename-model:
+    from: DatabaseAccountListKeysResult
+    to: DatabaseAccountKeyList
 # This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
 - from: swagger-document
   where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings"].post

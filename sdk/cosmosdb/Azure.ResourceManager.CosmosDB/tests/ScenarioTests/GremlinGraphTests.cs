@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(graph);
         }
 
-        protected async Task<GremlinGraph> CreateGremlinGraph(GremlinGraphCreateUpdateOptions parameters)
+        protected async Task<GremlinGraph> CreateGremlinGraph(GremlinGraphCreateUpdateData parameters)
         {
             if (parameters == null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return graphLro.Value;
         }
 
-        private GremlinGraphCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private GremlinGraphCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _graphName = Recording.GenerateAssetName("gremlin-graph-");
 
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateUpdateOptions(AzureLocation.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
+            return new GremlinGraphCreateUpdateData(AzureLocation.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }
 
-        private void VerifyGremlinGraphCreation(GremlinGraph graph, GremlinGraphCreateUpdateOptions gremlinGraphCreateUpdateOptions)
+        private void VerifyGremlinGraphCreation(GremlinGraph graph, GremlinGraphCreateUpdateData gremlinGraphCreateUpdateOptions)
         {
             Assert.AreEqual(graph.Data.Resource.Id, gremlinGraphCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());

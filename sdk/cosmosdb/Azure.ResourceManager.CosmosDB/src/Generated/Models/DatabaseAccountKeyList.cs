@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The access keys for the given database account. </summary>
-    public partial class DatabaseAccountListKeysResult : DatabaseAccountListReadOnlyKeysResult
+    public partial class DatabaseAccountKeyList : DatabaseAccountReadOnlyKeyList
     {
-        /// <summary> Initializes a new instance of DatabaseAccountListKeysResult. </summary>
-        internal DatabaseAccountListKeysResult()
+        /// <summary> Initializes a new instance of DatabaseAccountKeyList. </summary>
+        internal DatabaseAccountKeyList()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountListKeysResult. </summary>
+        /// <summary> Initializes a new instance of DatabaseAccountKeyList. </summary>
         /// <param name="primaryReadonlyMasterKey"> Base 64 encoded value of the primary read-only key. </param>
         /// <param name="secondaryReadonlyMasterKey"> Base 64 encoded value of the secondary read-only key. </param>
         /// <param name="primaryMasterKey"> Base 64 encoded value of the primary read-write key. </param>
         /// <param name="secondaryMasterKey"> Base 64 encoded value of the secondary read-write key. </param>
-        internal DatabaseAccountListKeysResult(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey, string primaryMasterKey, string secondaryMasterKey) : base(primaryReadonlyMasterKey, secondaryReadonlyMasterKey)
+        internal DatabaseAccountKeyList(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey, string primaryMasterKey, string secondaryMasterKey) : base(primaryReadonlyMasterKey, secondaryReadonlyMasterKey)
         {
             PrimaryMasterKey = primaryMasterKey;
             SecondaryMasterKey = secondaryMasterKey;
