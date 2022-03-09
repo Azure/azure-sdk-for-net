@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class IpAddressGroup : IUtf8JsonSerializable
+    public partial class IPAddressGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("deliveryRegion");
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (Optional.IsCollectionDefined(Ipv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses");
                 writer.WriteStartArray();
-                foreach (var item in Ipv4Addresses)
+                foreach (var item in IPv4Addresses)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses");
                 writer.WriteStartArray();
-                foreach (var item in Ipv6Addresses)
+                foreach (var item in IPv6Addresses)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static IpAddressGroup DeserializeIpAddressGroup(JsonElement element)
+        internal static IPAddressGroup DeserializeIPAddressGroup(JsonElement element)
         {
             Optional<string> deliveryRegion = default;
-            Optional<IList<CidrIpAddress>> ipv4Addresses = default;
-            Optional<IList<CidrIpAddress>> ipv6Addresses = default;
+            Optional<IList<CidrIPAddress>> ipv4Addresses = default;
+            Optional<IList<CidrIPAddress>> ipv6Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryRegion"))
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CidrIpAddress> array = new List<CidrIpAddress>();
+                    List<CidrIPAddress> array = new List<CidrIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CidrIpAddress.DeserializeCidrIpAddress(item));
+                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
                     }
                     ipv4Addresses = array;
                     continue;
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CidrIpAddress> array = new List<CidrIpAddress>();
+                    List<CidrIPAddress> array = new List<CidrIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CidrIpAddress.DeserializeCidrIpAddress(item));
+                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
                     }
                     ipv6Addresses = array;
                     continue;
                 }
             }
-            return new IpAddressGroup(deliveryRegion.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
+            return new IPAddressGroup(deliveryRegion.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
         }
     }
 }
