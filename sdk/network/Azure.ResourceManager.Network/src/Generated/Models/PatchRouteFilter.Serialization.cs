@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PatchRouteFilter : IUtf8JsonSerializable
+    internal partial class PatchRouteFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, PatchableAppServiceCertificateOrderData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -585,10 +585,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="options"> Distinguished name to use for the certificate order. </param>
+        /// <param name="data"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateOrderData>> UpdateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, PatchableAppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -602,12 +602,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -627,10 +627,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="options"> Distinguished name to use for the certificate order. </param>
+        /// <param name="data"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="options"/> is null. </exception>
-        public Response<AppServiceCertificateOrderData> Update(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="data"/> is null. </exception>
+        public Response<AppServiceCertificateOrderData> Update(string subscriptionId, string resourceGroupName, string certificateOrderName, PatchableAppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -644,12 +644,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, certificateOrderName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceUpdateOptions options)
+        internal HttpMessage CreateUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, PatchableAppServiceCertificateResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -1111,10 +1111,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
-        /// <param name="options"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<AppServiceCertificateResourceData>> UpdateCertificateAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, PatchableAppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1132,12 +1132,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, options);
+            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1158,10 +1158,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
         /// <param name="name"> Name of the certificate. </param>
-        /// <param name="options"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
-        public Response<AppServiceCertificateResourceData> UpdateCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public Response<AppServiceCertificateResourceData> UpdateCertificate(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, PatchableAppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1179,12 +1179,12 @@ namespace Azure.ResourceManager.AppService
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, options);
+            using var message = CreateUpdateCertificateRequest(subscriptionId, resourceGroupName, certificateOrderName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

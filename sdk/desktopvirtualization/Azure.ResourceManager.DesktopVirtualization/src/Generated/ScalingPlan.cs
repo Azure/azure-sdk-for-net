@@ -189,15 +189,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Update
         /// </summary>
-        /// <param name="options"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ScalingPlan>> UpdateAsync(ScalingPlanUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<ScalingPlan>> UpdateAsync(PatchableScalingPlanData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlan.Update");
             scope.Start();
             try
             {
-                var response = await _scalingPlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _scalingPlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,15 +215,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Update
         /// </summary>
-        /// <param name="options"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScalingPlan> Update(ScalingPlanUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ScalingPlan> Update(PatchableScalingPlanData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlan.Update");
             scope.Start();
             try
             {
-                var response = _scalingPlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _scalingPlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

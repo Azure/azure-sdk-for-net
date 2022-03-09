@@ -128,9 +128,9 @@ namespace Azure
                 return classifier;
             }
 
-            if (classifier is CoreResponseClassifier coreClassifier)
+            if (classifier is StatusCodeClassifier statusCodeClassifier)
             {
-                CoreResponseClassifier clone = coreClassifier.Clone();
+                StatusCodeClassifier clone = statusCodeClassifier.Clone();
                 clone.Handlers = _handlers;
 
                 if (_statusCodes != null)

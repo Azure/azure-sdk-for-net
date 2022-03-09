@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
             Assert.AreEqual(0, operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();

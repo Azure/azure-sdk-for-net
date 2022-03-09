@@ -30,17 +30,26 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the AzureSku class.
         /// </summary>
-        /// <param name="name">SKU name. Possible values include:
-        /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
-        /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
-        /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+        /// <param name="name">SKU name. Possible values include: 'Dev(No
+        /// SLA)_Standard_D11_v2', 'Dev(No SLA)_Standard_E2a_v4',
+        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_D13_v2',
+        /// 'Standard_D14_v2', 'Standard_D32d_v4', 'Standard_D16d_v5',
+        /// 'Standard_D32d_v5', 'Standard_DS13_v2+1TB_PS',
+        /// 'Standard_DS13_v2+2TB_PS', 'Standard_DS14_v2+3TB_PS',
+        /// 'Standard_DS14_v2+4TB_PS', 'Standard_L4s', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_L8s_v2', 'Standard_L16s_v2',
-        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_L4s', 'Dev(No
-        /// SLA)_Standard_D11_v2', 'Standard_E64i_v3', 'Standard_E80ids_v4',
-        /// 'Standard_E2a_v4', 'Standard_E4a_v4', 'Standard_E8a_v4',
-        /// 'Standard_E16a_v4', 'Standard_E8as_v4+1TB_PS',
-        /// 'Standard_E8as_v4+2TB_PS', 'Standard_E16as_v4+3TB_PS',
-        /// 'Standard_E16as_v4+4TB_PS', 'Dev(No SLA)_Standard_E2a_v4'</param>
+        /// 'Standard_E64i_v3', 'Standard_E80ids_v4', 'Standard_E2a_v4',
+        /// 'Standard_E4a_v4', 'Standard_E8a_v4', 'Standard_E16a_v4',
+        /// 'Standard_E8as_v4+1TB_PS', 'Standard_E8as_v4+2TB_PS',
+        /// 'Standard_E16as_v4+3TB_PS', 'Standard_E16as_v4+4TB_PS',
+        /// 'Standard_E8as_v5+1TB_PS', 'Standard_E8as_v5+2TB_PS',
+        /// 'Standard_E16as_v5+3TB_PS', 'Standard_E16as_v5+4TB_PS',
+        /// 'Standard_E2ads_v5', 'Standard_E4ads_v5', 'Standard_E8ads_v5',
+        /// 'Standard_E16ads_v5', 'Standard_E8s_v4+1TB_PS',
+        /// 'Standard_E8s_v4+2TB_PS', 'Standard_E16s_v4+3TB_PS',
+        /// 'Standard_E16s_v4+4TB_PS', 'Standard_E8s_v5+1TB_PS',
+        /// 'Standard_E8s_v5+2TB_PS', 'Standard_E16s_v5+3TB_PS',
+        /// 'Standard_E16s_v5+4TB_PS'</param>
         /// <param name="tier">SKU tier. Possible values include: 'Basic',
         /// 'Standard'</param>
         /// <param name="capacity">The number of instances of the
@@ -59,17 +68,26 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name. Possible values include:
-        /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
-        /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
-        /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+        /// Gets or sets SKU name. Possible values include: 'Dev(No
+        /// SLA)_Standard_D11_v2', 'Dev(No SLA)_Standard_E2a_v4',
+        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_D13_v2',
+        /// 'Standard_D14_v2', 'Standard_D32d_v4', 'Standard_D16d_v5',
+        /// 'Standard_D32d_v5', 'Standard_DS13_v2+1TB_PS',
+        /// 'Standard_DS13_v2+2TB_PS', 'Standard_DS14_v2+3TB_PS',
+        /// 'Standard_DS14_v2+4TB_PS', 'Standard_L4s', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_L8s_v2', 'Standard_L16s_v2',
-        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_L4s', 'Dev(No
-        /// SLA)_Standard_D11_v2', 'Standard_E64i_v3', 'Standard_E80ids_v4',
-        /// 'Standard_E2a_v4', 'Standard_E4a_v4', 'Standard_E8a_v4',
-        /// 'Standard_E16a_v4', 'Standard_E8as_v4+1TB_PS',
-        /// 'Standard_E8as_v4+2TB_PS', 'Standard_E16as_v4+3TB_PS',
-        /// 'Standard_E16as_v4+4TB_PS', 'Dev(No SLA)_Standard_E2a_v4'
+        /// 'Standard_E64i_v3', 'Standard_E80ids_v4', 'Standard_E2a_v4',
+        /// 'Standard_E4a_v4', 'Standard_E8a_v4', 'Standard_E16a_v4',
+        /// 'Standard_E8as_v4+1TB_PS', 'Standard_E8as_v4+2TB_PS',
+        /// 'Standard_E16as_v4+3TB_PS', 'Standard_E16as_v4+4TB_PS',
+        /// 'Standard_E8as_v5+1TB_PS', 'Standard_E8as_v5+2TB_PS',
+        /// 'Standard_E16as_v5+3TB_PS', 'Standard_E16as_v5+4TB_PS',
+        /// 'Standard_E2ads_v5', 'Standard_E4ads_v5', 'Standard_E8ads_v5',
+        /// 'Standard_E16ads_v5', 'Standard_E8s_v4+1TB_PS',
+        /// 'Standard_E8s_v4+2TB_PS', 'Standard_E16s_v4+3TB_PS',
+        /// 'Standard_E16s_v4+4TB_PS', 'Standard_E8s_v5+1TB_PS',
+        /// 'Standard_E8s_v5+2TB_PS', 'Standard_E16s_v5+3TB_PS',
+        /// 'Standard_E16s_v5+4TB_PS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

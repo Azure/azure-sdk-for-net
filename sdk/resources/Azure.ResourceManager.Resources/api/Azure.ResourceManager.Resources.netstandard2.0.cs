@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Update(Azure.ResourceManager.Resources.Models.ApplicationUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> UpdateAsync(Azure.ResourceManager.Resources.Models.ApplicationUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Update(Azure.ResourceManager.Resources.Models.PatchableApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApplicationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.IEnumerable
     {
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Update(Azure.ResourceManager.Resources.Models.DeploymentScriptUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> UpdateAsync(Azure.ResourceManager.Resources.Models.DeploymentScriptUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Update(Azure.ResourceManager.Resources.Models.PatchableDeploymentScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableDeploymentScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DeploymentScriptCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.IEnumerable
     {
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Update(Azure.ResourceManager.Resources.Models.TemplateSpecUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Update(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateSpecCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.IEnumerable
     {
@@ -380,8 +380,8 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Update(Azure.ResourceManager.Resources.Models.TemplateSpecVersionUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecVersionUpdateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Update(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateSpecVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.IEnumerable
     {
@@ -499,13 +499,13 @@ namespace Azure.ResourceManager.Resources.Models
         public bool JitAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.JitApprovalMode? JitApprovalMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.JitApproverDefinition> JitApprovers { get { throw null; } }
-        public string MaximumJitAccessDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumJitAccessDuration { get { throw null; } set { } }
     }
     public enum ApplicationLockLevel
     {
-        CanNotDelete = 0,
-        ReadOnly = 1,
-        None = 2,
+        None = 0,
+        CanNotDelete = 1,
+        ReadOnly = 2,
     }
     public partial class ApplicationManagedIdentity
     {
@@ -517,10 +517,10 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public enum ApplicationManagedIdentityType
     {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationManagementMode : System.IEquatable<Azure.ResourceManager.Resources.Models.ApplicationManagementMode>
@@ -581,28 +581,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-    }
-    public partial class ApplicationUpdateOptions : Azure.ResourceManager.Resources.Models.ApplicationResource
-    {
-        public ApplicationUpdateOptions(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string ApplicationDefinitionId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
-        public string BillingDetailsResourceUsageId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationClientDetails CreatedBy { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationPackageContact CustomerSupport { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationJitAccessPolicy JitAccessPolicy { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string ManagedResourceGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
-        public object Outputs { get { throw null; } }
-        public object Parameters { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublisherTenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationClientDetails UpdatedBy { get { throw null; } }
     }
     public partial class AzureCliScript : Azure.ResourceManager.Resources.DeploymentScriptData
     {
@@ -678,26 +656,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.CleanupOptions left, Azure.ResourceManager.Resources.Models.CleanupOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Resources.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class Dependency
     {
         internal Dependency() { }
@@ -747,7 +705,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentOperationProperties
     {
         internal DeploymentOperationProperties() { }
-        public string Duration { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningOperation? ProvisioningOperation { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public object RequestContent { get { throw null; } }
@@ -776,7 +734,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string CorrelationId { get { throw null; } }
         public string DebugSettingDetailLevel { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Dependency> Dependencies { get { throw null; } }
-        public string Duration { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.DeploymentMode? Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.OnErrorDeploymentExtended OnErrorDeployment { get { throw null; } }
@@ -814,11 +772,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType left, Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DeploymentScriptUpdateOptions : Azure.ResourceManager.Models.ResourceData
-    {
-        public DeploymentScriptUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DeploymentValidateResult
     {
@@ -913,12 +866,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
     }
-    public partial class JitRequestListResult
-    {
-        internal JitRequestListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.JitRequestData> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitRequestState : System.IEquatable<Azure.ResourceManager.Resources.Models.JitRequestState>
     {
@@ -942,11 +889,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.JitRequestState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitRequestState left, Azure.ResourceManager.Resources.Models.JitRequestState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class JitRequestUpdateOptions
-    {
-        public JitRequestUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class JitSchedulingPolicy
     {
@@ -1004,6 +946,43 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContentVersion { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
+    public partial class PatchableApplicationData : Azure.ResourceManager.Resources.Models.ApplicationResource
+    {
+        public PatchableApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string ApplicationDefinitionId { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
+        public string BillingDetailsResourceUsageId { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ApplicationClientDetails CreatedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ApplicationPackageContact CustomerSupport { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ApplicationJitAccessPolicy JitAccessPolicy { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string ManagedResourceGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
+        public object Outputs { get { throw null; } }
+        public object Parameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string PublisherTenantId { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ApplicationClientDetails UpdatedBy { get { throw null; } }
+    }
+    public partial class PatchableDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
+    {
+        public PatchableDeploymentScriptData() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableTemplateSpecData : Azure.ResourceManager.Models.ResourceData
+    {
+        public PatchableTemplateSpecData() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableTemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData
+    {
+        public PatchableTemplateSpecVersionData() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public enum PropertyChangeType
     {
         Create = 0,
@@ -1053,11 +1032,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ProvisioningState left, Azure.ResourceManager.Resources.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptLogsList
-    {
-        internal ScriptLogsList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ScriptLogData> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptProvisioningState : System.IEquatable<Azure.ResourceManager.Resources.Models.ScriptProvisioningState>
     {
@@ -1089,24 +1063,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.DateTimeOffset? ExpirationTime { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScriptType : System.IEquatable<Azure.ResourceManager.Resources.Models.ScriptType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScriptType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.ScriptType AzureCLI { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.ScriptType AzurePowerShell { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.ScriptType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.ScriptType left, Azure.ResourceManager.Resources.Models.ScriptType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.ScriptType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.ScriptType left, Azure.ResourceManager.Resources.Models.ScriptType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StatusMessage
     {
@@ -1159,22 +1115,12 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TemplateSpecUpdateOptions : Azure.ResourceManager.Models.ResourceData
-    {
-        public TemplateSpecUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class TemplateSpecVersionInfo
     {
         internal TemplateSpecVersionInfo() { }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.DateTimeOffset? TimeModified { get { throw null; } }
-    }
-    public partial class TemplateSpecVersionUpdateOptions : Azure.ResourceManager.Models.ResourceData
-    {
-        public TemplateSpecVersionUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class UserAssignedResourceIdentity
     {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class RuleUpdatePropertiesParameters
+    internal partial class RuleUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RuleUpdatePropertiesParameters. </summary>
         public RuleUpdatePropertiesParameters()

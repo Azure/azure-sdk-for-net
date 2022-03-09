@@ -15,6 +15,8 @@ clear-output-folder: true
 modelerfour:
   flatten-payloads: false
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs

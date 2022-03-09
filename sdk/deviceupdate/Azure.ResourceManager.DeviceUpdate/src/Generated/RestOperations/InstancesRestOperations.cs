@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -489,10 +489,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="instanceName"> Instance name. </param>
-        /// <param name="options"> Updated tags. </param>
+        /// <param name="data"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -510,12 +510,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 throw new ArgumentNullException(nameof(instanceName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -536,10 +536,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="instanceName"> Instance name. </param>
-        /// <param name="options"> Updated tags. </param>
+        /// <param name="data"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="options"/> is null. </exception>
-        public Response<DeviceUpdateInstanceData> Update(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstanceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        public Response<DeviceUpdateInstanceData> Update(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 throw new ArgumentNullException(nameof(instanceName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

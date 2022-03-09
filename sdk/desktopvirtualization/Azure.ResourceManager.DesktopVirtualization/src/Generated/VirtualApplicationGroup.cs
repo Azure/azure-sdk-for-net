@@ -207,15 +207,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}
         /// Operation Id: ApplicationGroups_Update
         /// </summary>
-        /// <param name="options"> Object containing ApplicationGroup definitions. </param>
+        /// <param name="data"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualApplicationGroup>> UpdateAsync(VirtualApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<VirtualApplicationGroup>> UpdateAsync(PatchableVirtualApplicationGroupData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroup.Update");
             scope.Start();
             try
             {
-                var response = await _virtualApplicationGroupApplicationGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplicationGroupApplicationGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualApplicationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,15 +233,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}
         /// Operation Id: ApplicationGroups_Update
         /// </summary>
-        /// <param name="options"> Object containing ApplicationGroup definitions. </param>
+        /// <param name="data"> Object containing ApplicationGroup definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualApplicationGroup> Update(VirtualApplicationGroupUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<VirtualApplicationGroup> Update(PatchableVirtualApplicationGroupData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroup.Update");
             scope.Start();
             try
             {
-                var response = _virtualApplicationGroupApplicationGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _virtualApplicationGroupApplicationGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new VirtualApplicationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

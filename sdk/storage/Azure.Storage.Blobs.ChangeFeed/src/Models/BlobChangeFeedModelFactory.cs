@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -59,9 +58,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             string sequencer,
             ChangeFeedEventPreviousInfo previousInfo,
             string snapshot,
-            Dictionary<string, BlobChangeFeedEventUpdatedBlobProperty> updatedBlobProperties,
-            BlobChangeFeedEventAsyncOperationInfo asyncOperationInfo,
-            BlobChangeFeedEventUpdatedBlobTags updatedBlobTags)
+            Dictionary<string, BlobPropertyChange> updatedBlobProperties,
+            BlobOperationResult asyncOperationInfo,
+            BlobTagsChange updatedBlobTags)
             => new BlobChangeFeedEventData
             {
                 BlobOperationName = blobOperationName,
@@ -100,48 +99,48 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 SoftDeleteSnapshot = softDeleteSnapshot,
                 WasBlobSoftDeleted = wasBlobSoftDeleted,
-                BlobVersion = blobVersion,
-                LastVersion = lastVersion,
+                NewBlobVersion = blobVersion,
+                OldBlobVersion = lastVersion,
                 PreviousTier = previousTier
             };
 
         /// <summary>
         /// Creates a BlobChangeFeedEventUpdatedBlobProperty for mocking.
         /// </summary>
-        public static BlobChangeFeedEventUpdatedBlobProperty BlobChangeFeedEventUpdatedBlobProperty(
+        public static BlobPropertyChange BlobChangeFeedEventUpdatedBlobProperty(
             string propertyName,
             string previousValue,
             string newValue)
-            => new BlobChangeFeedEventUpdatedBlobProperty
+            => new BlobPropertyChange
             {
                 PropertyName = propertyName,
-                PreviousValue = previousValue,
+                OldValue = previousValue,
                 NewValue = newValue
             };
 
         /// <summary>
         /// Creates a BlobChangeFeedEventAsyncOperationInfo for mocking.
         /// </summary>
-        public static BlobChangeFeedEventAsyncOperationInfo BlobChangeFeedEventAsyncOperationInfo(
+        public static BlobOperationResult BlobChangeFeedEventAsyncOperationInfo(
             AccessTier? destinationAccessTier,
             bool wasAsyncOperation,
             string copyId)
-            => new BlobChangeFeedEventAsyncOperationInfo
+            => new BlobOperationResult
             {
                 DestinationAccessTier = destinationAccessTier,
-                WasAsyncOperation = wasAsyncOperation,
+                IsAsync = wasAsyncOperation,
                 CopyId = copyId
             };
 
         /// <summary>
         /// Creates a BlobChangeFeedEventUpdatedBlobTags for mocking.
         /// </summary>
-        public static BlobChangeFeedEventUpdatedBlobTags BlobChangeFeedEventUpdatedBlobTags(
+        public static BlobTagsChange BlobChangeFeedEventUpdatedBlobTags(
             Dictionary<string, string> previousTags,
             Dictionary<string, string> newTags)
-            => new BlobChangeFeedEventUpdatedBlobTags
+            => new BlobTagsChange
             {
-                PreviousTags = previousTags,
+                OldTags = previousTags,
                 NewTags = newTags
             };
     }

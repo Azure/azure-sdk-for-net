@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg1 = rg1Op.Value;
-            var parameters = new ResourceGroupUpdateOptions
+            var parameters = new PatchableResourceGroupData
             {
                 Name = rgName
             };

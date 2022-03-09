@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO.Hashing;
 
 namespace Azure.Storage
 {
     /// <summary>
     /// Azure Storage CRC-64 implementation.
     /// </summary>
-    public class StorageCrc64NonCryptographicHashAlgorithm
+    public class StorageCrc64NonCryptographicHashAlgorithm : NonCryptographicHashAlgorithm
     {
         private ulong _uCRC;
+        private const int _hashSizeBytes = 8;
 
         private StorageCrc64NonCryptographicHashAlgorithm(ulong uCrc)
+            : base(_hashSizeBytes)
         {
             _uCRC = uCrc;
         }
@@ -26,43 +29,20 @@ namespace Azure.Storage
             return new StorageCrc64NonCryptographicHashAlgorithm(0UL);
         }
 
-        /// <summary>
-        /// Resets CRC computation.
-        /// </summary>
-        // Future implementation of abstract class NonCryptographicHashAlgorithm.
-        public void Reset()
+        /// <inheritdoc/>
+        public override void Reset()
         {
             _uCRC = 0;
         }
 
-        /// <summary>
-        /// Appends the given data to CRC computation.
-        /// </summary>
-        /// <param name="source">Data to compute on.</param>
-        // Future implementation of abstract class NonCryptographicHashAlgorithm.
-        public void Append(ReadOnlySpan<byte> source)
+        /// <inheritdoc/>
+        public override void Append(ReadOnlySpan<byte> source)
         {
             _uCRC = StorageCrc64Calculator.ComputeSlicedSafe(source, _uCRC);
         }
 
-        /// <summary>
-        /// Gets current CRC computation.
-        /// </summary>
-        /// <param name="destination">Span to write the current CRC to.</param>
-        // Future implementation of abstract class NonCryptographicHashAlgorithm.
-        protected void GetCurrentHashCore(Span<byte> destination)
+        /// <inheritdoc/>
+        protected override void GetCurrentHashCore(Span<byte> destination)
             => BitConverter.GetBytes(_uCRC).CopyTo(destination);
-
-        /// <summary>
-        /// Gets the current computed hash value without modifying accumulated state.
-        /// </summary>
-        /// <returns>Byte array of the current hash.</returns>
-        // Clone of non-virtual method in future parent class NonCryptographicHashAlgorithm.
-        public byte[] GetCurrentHash()
-        {
-            var result = new byte[8];
-            GetCurrentHashCore(new Span<byte>(result));
-            return result;
-        }
     }
 }
