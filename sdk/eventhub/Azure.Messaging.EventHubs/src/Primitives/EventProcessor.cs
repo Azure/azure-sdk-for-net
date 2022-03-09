@@ -955,6 +955,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   be overridden and implemented instead to improve efficiency.
         /// </remarks>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) => throw new NotImplementedException(Resources.ListCheckpointsAsyncObsolete);
 
         /// <summary>
