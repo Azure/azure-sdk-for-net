@@ -126,6 +126,9 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
 
       - ${{ if eq(parameters.Daily, true) }}:
         - task: PowerShell@2
