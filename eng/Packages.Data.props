@@ -110,7 +110,7 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.2.0-rc1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry" Version="1.2.0-rc3"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
     <PackageReference Update="OpenTelemetry.Contrib.Extensions.PersistentStorage" Version="1.0.0-alpha2" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
@@ -122,9 +122,9 @@
     <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.15.1" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.15.1" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.15.1" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.16.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.16.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.16.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.31" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
@@ -238,10 +238,10 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.2.1" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc8" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc8" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.2.0-rc2" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc10" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc10" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc10" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.2.0-rc3" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
