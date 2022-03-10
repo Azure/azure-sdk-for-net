@@ -8,7 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Trace;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class RequestDataTests
     {
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);

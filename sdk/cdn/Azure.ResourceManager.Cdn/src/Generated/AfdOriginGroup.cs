@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdOriginGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdOriginGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string afdOriginGroupApiVersion);
             _afdOriginGroupRestClient = new AfdOriginGroupsRestOperations(_afdOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -196,22 +196,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOriginGroups_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
+        /// <param name="data"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdOriginGroup>> UpdateAsync(bool waitForCompletion, AfdOriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdOriginGroup>> UpdateAsync(bool waitForCompletion, PatchableAfdOriginGroupData data, CancellationToken cancellationToken = default)
         {
-            if (originGroupUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupUpdateProperties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Update");
             scope.Start();
             try
             {
-                var response = await _afdOriginGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdOriginGroup>(new AfdOriginGroupOperationSource(Client), _afdOriginGroupClientDiagnostics, Pipeline, _afdOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _afdOriginGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdOriginGroup>(new AfdOriginGroupOperationSource(Client), _afdOriginGroupClientDiagnostics, Pipeline, _afdOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,22 +226,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOriginGroups_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="originGroupUpdateProperties"> Origin group properties. </param>
+        /// <param name="data"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<AfdOriginGroup> Update(bool waitForCompletion, AfdOriginGroupUpdateOptions originGroupUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AfdOriginGroup> Update(bool waitForCompletion, PatchableAfdOriginGroupData data, CancellationToken cancellationToken = default)
         {
-            if (originGroupUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupUpdateProperties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Update");
             scope.Start();
             try
             {
-                var response = _afdOriginGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<AfdOriginGroup>(new AfdOriginGroupOperationSource(Client), _afdOriginGroupClientDiagnostics, Pipeline, _afdOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _afdOriginGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CdnArmOperation<AfdOriginGroup>(new AfdOriginGroupOperationSource(Client), _afdOriginGroupClientDiagnostics, Pipeline, _afdOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

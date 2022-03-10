@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesApiVersion);
             _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient = new CassandraResourcesRestOperations(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -141,12 +141,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -174,12 +171,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -313,21 +307,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -350,21 +338,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -386,10 +368,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
             scope.Start();
@@ -397,7 +376,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -419,10 +398,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
             scope.Start();
@@ -430,7 +406,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -452,17 +428,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -484,17 +457,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());

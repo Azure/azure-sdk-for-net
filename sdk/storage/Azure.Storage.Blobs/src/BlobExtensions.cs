@@ -742,7 +742,7 @@ namespace Azure.Storage.Blobs
                 copyId: response.Headers.CopyId,
                 copyProgress: response.Headers.CopyProgress,
                 copySource: response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                copyStatus: response.Headers.CopyStatus.GetValueOrDefault(),
+                blobCopyStatus: response.Headers.CopyStatus,
                 isIncrementalCopy: response.Headers.IsIncrementalCopy.GetValueOrDefault(),
                 destinationSnapshot: response.Headers.DestinationSnapshot,
                 leaseDuration: response.Headers.LeaseDuration.GetValueOrDefault(),

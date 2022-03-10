@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
+            TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
             _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(_appServiceEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceEnvironmentApiVersion);
             _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _recommendationsRestClient = new RecommendationsRestOperations(_recommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
+            TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
             _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -243,21 +243,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (hostingEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,21 +269,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual Response<AppServiceEnvironment> Update(AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> Update(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (hostingEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken);
+                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,7 +479,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
         {
@@ -512,7 +506,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, CancellationToken cancellationToken = default)
         {
@@ -1294,10 +1288,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public async virtual Task<Response> DisableAllForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1323,10 +1314,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response DisableAllForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1352,10 +1340,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public async virtual Task<Response> ResetAllFiltersForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1381,10 +1366,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response ResetAllFiltersForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1411,21 +1393,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1448,21 +1424,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1484,10 +1454,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
             scope.Start();
@@ -1495,7 +1462,7 @@ namespace Azure.ResourceManager.AppService
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1517,10 +1484,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
             scope.Start();
@@ -1528,7 +1492,7 @@ namespace Azure.ResourceManager.AppService
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1550,17 +1514,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1582,17 +1543,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());

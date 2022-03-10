@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string afdEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string afdEndpointApiVersion);
             _afdEndpointRestClient = new AfdEndpointsRestOperations(_afdEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,22 +197,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdEndpoint>> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<AfdEndpoint>> UpdateAsync(bool waitForCompletion, PatchableAfdEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Update");
             scope.Start();
             try
             {
-                var response = await _afdEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _afdEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,22 +227,19 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdEndpoints_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
+        /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public virtual ArmOperation<AfdEndpoint> Update(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AfdEndpoint> Update(bool waitForCompletion, PatchableAfdEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointUpdateProperties == null)
-            {
-                throw new ArgumentNullException(nameof(endpointUpdateProperties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Update");
             scope.Start();
             try
             {
-                var response = _afdEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _afdEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -268,10 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public async virtual Task<ArmOperation> PurgeContentAsync(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
         {
-            if (contents == null)
-            {
-                throw new ArgumentNullException(nameof(contents));
-            }
+            Argument.AssertNotNull(contents, nameof(contents));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.PurgeContent");
             scope.Start();
@@ -301,10 +292,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public virtual ArmOperation PurgeContent(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
         {
-            if (contents == null)
-            {
-                throw new ArgumentNullException(nameof(contents));
-            }
+            Argument.AssertNotNull(contents, nameof(contents));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.PurgeContent");
             scope.Start();
@@ -417,10 +405,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainProperties"/> is null. </exception>
         public async virtual Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
         {
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.ValidateCustomDomain");
             scope.Start();
@@ -446,10 +431,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainProperties"/> is null. </exception>
         public virtual Response<ValidateCustomDomainOutput> ValidateCustomDomain(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
         {
-            if (customDomainProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainProperties));
-            }
+            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.ValidateCustomDomain");
             scope.Start();
@@ -476,21 +458,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<AfdEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -513,21 +489,15 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AfdEndpoint> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -549,10 +519,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<AfdEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.SetTags");
             scope.Start();
@@ -560,7 +527,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -582,10 +549,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AfdEndpoint> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.SetTags");
             scope.Start();
@@ -593,7 +557,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -615,17 +579,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<AfdEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -647,17 +608,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AfdEndpoint> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccount account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
-            var updateOptions = new DatabaseAccountUpdateOptions()
+            var updateOptions = new PatchableDatabaseAccountData()
             {
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyOptions(KeyKind.Primary));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyOptions(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyOptions(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyOptions(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.Primary));
+            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.Secondary));
+            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.SecondaryReadonly));
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
@@ -143,9 +143,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
 
-            DatabaseAccountConnectionStringList connectionStrings =
-                await account.GetConnectionStringsAsync();
-            Assert.That(connectionStrings.ConnectionStrings, Has.Count.EqualTo(4));
+            var connectionStrings = await account.GetConnectionStringsAsync().ToEnumerableAsync();
+            Assert.That(connectionStrings, Has.Count.EqualTo(4));
         }
 
         [Test]
@@ -225,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, DatabaseAccountUpdateOptions parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, PatchableDatabaseAccountData parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);

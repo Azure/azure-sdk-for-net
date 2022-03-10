@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
+        public void ValidateTelemetryItem_DefaultActivity_DefaultResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_Activity_WithResource()
+        public void ValidateTelemetryItem_Activity_WithResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -81,12 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("my-service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("my-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.Equal(activity.TraceId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
-            Assert.Equal(SdkVersionUtils.SdkVersion, telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
+            Assert.Equal(SdkVersionUtils.s_sdkVersion, telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_Activity_WithParentSpanId()
+        public void ValidateTelemetryItem_Activity_WithParentSpanId()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(

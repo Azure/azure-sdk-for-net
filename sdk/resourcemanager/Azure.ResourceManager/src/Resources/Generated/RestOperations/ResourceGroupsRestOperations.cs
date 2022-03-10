@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class ResourceGroupsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ResourceGroupsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ResourceGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-04-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-04-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,12 +49,12 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ResourceGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ResourceGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -145,7 +147,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
@@ -154,7 +156,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("forceDeletionTypes", forceDeletionTypes, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -186,7 +188,7 @@ namespace Azure.ResourceManager.Resources
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.Resources
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -225,12 +227,12 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((ResourceGroupData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -301,27 +303,27 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((ResourceGroupData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, ResourceGroupPatchable parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -330,10 +332,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -343,12 +345,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -360,17 +362,17 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -380,12 +382,12 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -397,7 +399,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -407,13 +409,13 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/exportTemplate", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -429,7 +431,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -453,7 +455,7 @@ namespace Azure.ResourceManager.Resources
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -462,7 +464,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -486,7 +488,7 @@ namespace Azure.ResourceManager.Resources
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -496,7 +498,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourcegroups", false);
@@ -508,7 +510,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -540,7 +542,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -569,7 +571,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -579,13 +581,13 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(sourceResourceGroupName, true);
             uri.AppendPath("/moveResources", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -601,7 +603,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> MoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -625,7 +627,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -634,7 +636,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response MoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -658,7 +660,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -668,13 +670,13 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(sourceResourceGroupName, true);
             uri.AppendPath("/validateMoveResources", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -690,7 +692,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ValidateMoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -714,7 +716,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -723,7 +725,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public Response ValidateMoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -747,7 +749,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -757,7 +759,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -795,7 +797,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -829,7 +831,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

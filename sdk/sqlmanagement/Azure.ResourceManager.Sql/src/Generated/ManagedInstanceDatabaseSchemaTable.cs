@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceDatabaseSchemaTable(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
+            TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
             _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient = new ManagedDatabaseTablesRestOperations(_managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

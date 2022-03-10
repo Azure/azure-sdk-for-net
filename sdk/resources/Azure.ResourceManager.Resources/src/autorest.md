@@ -15,7 +15,6 @@ skip-csproj: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-payload-flattening-threshold: 2
 
 request-path-to-parent:
   /{scope}/providers/Microsoft.Resources/links: /{linkId}
@@ -148,6 +147,25 @@ directive:
       $["Operation"]["properties"]["display"] = undefined;
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
       $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[2].schema
+    transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
+  - from: resources.json
+    where: $.definitions.DeploymentWhatIf.properties.location
+    transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
 ```
 
 ### Tag: package-track2-preview

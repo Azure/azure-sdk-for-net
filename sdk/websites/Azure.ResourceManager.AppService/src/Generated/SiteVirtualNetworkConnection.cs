@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteVirtualNetworkConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
             _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -199,10 +199,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<Response<SiteVirtualNetworkConnection>> UpdateAsync(VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnection.Update");
             scope.Start();
@@ -228,10 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual Response<SiteVirtualNetworkConnection> Update(VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnection.Update");
             scope.Start();

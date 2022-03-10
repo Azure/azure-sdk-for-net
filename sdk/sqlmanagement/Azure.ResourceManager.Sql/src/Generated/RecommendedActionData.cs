@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
         /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, string executeActionDuration, DateTimeOffset? revertActionStartTime, string revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, object> details) : base(id, name, type, systemData)
+        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartTime, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, object> details) : base(id, name, type, systemData)
         {
             Kind = kind;
             Location = location;
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </summary>
         public DateTimeOffset? ExecuteActionStartTime { get; }
         /// <summary> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </summary>
-        public string ExecuteActionDuration { get; }
+        public TimeSpan? ExecuteActionDuration { get; }
         /// <summary> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </summary>
         public DateTimeOffset? RevertActionStartTime { get; }
         /// <summary> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </summary>
-        public string RevertActionDuration { get; }
+        public TimeSpan? RevertActionDuration { get; }
         /// <summary> Gets if approval for applying this recommended action was given by user/system. </summary>
         public RecommendedActionInitiatedBy? ExecuteActionInitiatedBy { get; }
         /// <summary> Gets the time when this recommended action was approved for execution. </summary>

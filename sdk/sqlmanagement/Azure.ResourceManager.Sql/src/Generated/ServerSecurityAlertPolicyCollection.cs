@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerSecurityAlertPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerSecurityAlertPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerSecurityAlertPolicy.ResourceType, out string serverSecurityAlertPolicyApiVersion);
+            TryGetApiVersion(ServerSecurityAlertPolicy.ResourceType, out string serverSecurityAlertPolicyApiVersion);
             _serverSecurityAlertPolicyRestClient = new ServerSecurityAlertPoliciesRestOperations(_serverSecurityAlertPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ServerSecurityAlertPolicy>> CreateOrUpdateAsync(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverSecurityAlertPolicyClientDiagnostics.CreateScope("ServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ServerSecurityAlertPolicy> CreateOrUpdate(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverSecurityAlertPolicyClientDiagnostics.CreateScope("ServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();

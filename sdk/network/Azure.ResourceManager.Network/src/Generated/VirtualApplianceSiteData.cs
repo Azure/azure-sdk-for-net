@@ -44,7 +44,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Address Prefix. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Office 365 Policy. </summary>
-        public Office365PolicyProperties O365Policy { get; set; }
+        internal Office365PolicyProperties O365Policy { get; set; }
+        /// <summary> Office 365 breakout categories. </summary>
+        public BreakOutCategoryPolicies O365BreakOutCategories
+        {
+            get => O365Policy is null ? default : O365Policy.BreakOutCategories;
+            set
+            {
+                if (O365Policy is null)
+                    O365Policy = new Office365PolicyProperties();
+                O365Policy.BreakOutCategories = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

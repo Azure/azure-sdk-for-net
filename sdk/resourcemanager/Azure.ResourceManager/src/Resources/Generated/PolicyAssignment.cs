@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicyAssignment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
+            TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
             _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(_policyAssignmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);

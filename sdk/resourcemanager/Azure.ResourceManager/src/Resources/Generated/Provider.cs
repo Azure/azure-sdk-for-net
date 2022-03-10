@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         internal Provider(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string providerApiVersion);
+            TryGetApiVersion(ResourceType, out string providerApiVersion);
             _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
             _providerResourceTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_providerResourceTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);

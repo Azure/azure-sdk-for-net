@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         internal SyncMember(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _syncMemberClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string syncMemberApiVersion);
+            TryGetApiVersion(ResourceType, out string syncMemberApiVersion);
             _syncMemberRestClient = new SyncMembersRestOperations(_syncMemberClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncMemberApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<SyncMember>> UpdateAsync(bool waitForCompletion, SyncMemberData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Update");
             scope.Start();
@@ -227,10 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<SyncMember> Update(bool waitForCompletion, SyncMemberData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Update");
             scope.Start();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected PrivateEndpointConnectionCollection PrivateEndpointConnectionCollection { get => _databaseAccount.GetPrivateEndpointConnections(); }
+        protected PrivateEndpointConnectionCollection PrivateEndpointConnectionCollection => _databaseAccount.GetPrivateEndpointConnections();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -117,20 +117,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var vnet = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.0.0.0/16", }
-                },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
+            vnet.AddressPrefixes.Add("10.0.0.0/16");
+            vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
+            vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
             VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnet)).Value;
 
             var name = Recording.GenerateAssetName("pe-");

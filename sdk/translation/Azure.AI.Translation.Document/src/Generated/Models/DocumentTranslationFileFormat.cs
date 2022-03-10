@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/>, or <paramref name="contentTypes"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/> or <paramref name="contentTypes"/> is null. </exception>
         internal DocumentTranslationFileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
         {
             if (format == null)

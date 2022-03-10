@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -18,16 +19,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
-        /// <param name="oSType"> Gets the Operating System type. </param>
+        /// <param name="osType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmOSDisk(OperatingSystemType? oSType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
         {
-            OSType = oSType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Caching = caching;
@@ -49,6 +50,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the managed disk details. </summary>
         public ManagedDiskParameters ManagedDisk { get; }
         /// <summary> Gets the disk restore point Id. </summary>
-        public WritableSubResource DiskRestorePoint { get; }
+        internal WritableSubResource DiskRestorePoint { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DiskRestorePointId
+        {
+            get => DiskRestorePoint.Id;
+            set => DiskRestorePoint.Id = value;
+        }
     }
 }

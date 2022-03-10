@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Resources
         internal ResourceGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourceGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string resourceGroupApiVersion);
             _resourceGroupRestClient = new ResourceGroupsRestOperations(_resourceGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
             _resourceGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
             _resourceGroupResourcesRestClient = new ResourcesRestOperations(_resourceGroupResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,21 +197,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// Operation Id: ResourceGroups_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> UpdateAsync(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<ResourceGroup>> UpdateAsync(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Update");
             scope.Start();
             try
             {
-                var response = await _resourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,21 +223,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// Operation Id: ResourceGroups_Update
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ResourceGroup> Update(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ResourceGroup> Update(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Update");
             scope.Start();
             try
             {
-                var response = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var response = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
                 return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,10 +255,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
@@ -294,10 +285,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ResourceGroupExportResult> ExportTemplate(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
@@ -327,10 +315,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.MoveResources");
             scope.Start();
@@ -360,10 +345,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.MoveResources");
             scope.Start();
@@ -393,10 +375,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
             scope.Start();
@@ -426,10 +405,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
             scope.Start();
@@ -459,21 +435,15 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -496,21 +466,15 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -532,10 +496,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.SetTags");
             scope.Start();
@@ -543,7 +504,7 @@ namespace Azure.ResourceManager.Resources
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -565,10 +526,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ResourceGroup> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.SetTags");
             scope.Start();
@@ -576,7 +534,7 @@ namespace Azure.ResourceManager.Resources
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -598,17 +556,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -630,17 +585,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new ResourceGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());

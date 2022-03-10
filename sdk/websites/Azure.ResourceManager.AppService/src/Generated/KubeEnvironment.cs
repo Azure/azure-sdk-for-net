@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal KubeEnvironment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
+            TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(_kubeEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -189,21 +189,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<Response<KubeEnvironment>> UpdateAsync(KubeEnvironmentPatchResource kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<KubeEnvironment>> UpdateAsync(PatchableKubeEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (kubeEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,21 +215,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual Response<KubeEnvironment> Update(KubeEnvironmentPatchResource kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<KubeEnvironment> Update(PatchableKubeEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (kubeEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken);
+                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,21 +247,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<KubeEnvironment>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -290,21 +278,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<KubeEnvironment> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -326,10 +308,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<KubeEnvironment>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.SetTags");
             scope.Start();
@@ -337,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -359,10 +338,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<KubeEnvironment> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.SetTags");
             scope.Start();
@@ -370,7 +346,7 @@ namespace Azure.ResourceManager.AppService
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -392,17 +368,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KubeEnvironment>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -424,17 +397,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<KubeEnvironment> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new KubeEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());

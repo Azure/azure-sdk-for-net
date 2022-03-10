@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         public PrivateEndpointConnectionData() { }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
+        public string PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub
         protected SharedPrivateLink() { }
         public virtual Azure.ResourceManager.WebPubSub.SharedPrivateLinkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class SharedPrivateLinkCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.IEnumerable
     {
         protected SharedPrivateLinkCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.SharedPrivateLink> CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, Azure.ResourceManager.WebPubSub.SharedPrivateLinkData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, Azure.ResourceManager.WebPubSub.SharedPrivateLinkData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> Get(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.SharedPrivateLink> CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkResourceName, Azure.ResourceManager.WebPubSub.SharedPrivateLinkData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkResourceName, Azure.ResourceManager.WebPubSub.SharedPrivateLinkData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> Get(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.SharedPrivateLink> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.SharedPrivateLink> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> GetAsync(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> GetIfExists(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> GetIfExistsAsync(string sharedPrivateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> GetAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> GetIfExists(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> GetIfExistsAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WebPubSub.SharedPrivateLink> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.SharedPrivateLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -148,6 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public WebPubSubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public bool? ClientCertEnabled { get { throw null; } set { } }
         public bool? DisableAadAuth { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public string ExternalIP { get { throw null; } }
@@ -160,11 +161,10 @@ namespace Azure.ResourceManager.WebPubSub
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicNetworkAccess { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.ResourceLogConfiguration ResourceLogConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory> ResourceLogCategories { get { throw null; } }
         public int? ServerPort { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.SharedPrivateLinkData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.WebPubSubTlsSettings Tls { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
     public partial class WebPubSubHub : Azure.ResourceManager.Core.ArmResource
@@ -222,26 +222,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.AclAction left, Azure.ResourceManager.WebPubSub.Models.AclAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.CreatedByType left, Azure.ResourceManager.WebPubSub.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.CreatedByType left, Azure.ResourceManager.WebPubSub.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class EventHandler
     {
         public EventHandler(string urlTemplate) { }
@@ -289,11 +269,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
-    public partial class ManagedIdentitySettings
-    {
-        public ManagedIdentitySettings() { }
-        public string Resource { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType>
     {
@@ -331,11 +306,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public NetworkAcl() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Allow { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Deny { get { throw null; } }
-    }
-    public partial class PrivateEndpoint
-    {
-        public PrivateEndpoint() { }
-        public string Id { get { throw null; } set { } }
     }
     public partial class PrivateEndpointAcl : Azure.ResourceManager.WebPubSub.Models.NetworkAcl
     {
@@ -412,11 +382,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public ResourceLogCategory() { }
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-    }
-    public partial class ResourceLogConfiguration
-    {
-        public ResourceLogConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory> Categories { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScaleType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ScaleType>
@@ -502,16 +467,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.ScaleType? ScaleType { get { throw null; } }
     }
-    public partial class SkuList
-    {
-        internal SkuList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.Models.Sku> Value { get { throw null; } }
-    }
     public partial class UpstreamAuthSettings
     {
         public UpstreamAuthSettings() { }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentitySettings ManagedIdentity { get { throw null; } set { } }
+        public string ManagedIdentityResource { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -601,10 +560,5 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier left, Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class WebPubSubTlsSettings
-    {
-        public WebPubSubTlsSettings() { }
-        public bool? ClientCertEnabled { get { throw null; } set { } }
     }
 }

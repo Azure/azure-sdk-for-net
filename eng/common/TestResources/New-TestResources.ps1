@@ -143,6 +143,14 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
 # https://azure.microsoft.com/en-us/updates/update-your-apps-to-use-microsoft-graph-before-30-june-2022/
 function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGroup, [string]$displayName)
 {
+    if ((Get-Module Az.Resources).Version -eq "5.3.0") {
+        # https://github.com/Azure/azure-powershell/issues/17040
+        # New-AzAdServicePrincipal calls will fail with:
+        # "You cannot call a method on a null-valued expression."
+        Write-Warning "Az.Resources version 5.3.0 is not supported. Please update to >= 5.3.1"
+        Write-Warning "Update-Module Az.Resources -RequiredVersion 5.3.1"
+        exit 1
+    }
     $servicePrincipal = Retry {
         New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
     }
@@ -228,7 +236,8 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file)
     return $templateFilePath
 }
 
-function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azContext, [object]$deployment) {
+function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment) {
+    $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
     # Add default values
     $deploymentOutputs = [Ordered]@{
         "${serviceDirectoryPrefix}CLIENT_ID" = $TestApplicationId;
@@ -241,6 +250,7 @@ function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azCont
         "${serviceDirectoryPrefix}AZURE_AUTHORITY_HOST" = $azContext.Environment.ActiveDirectoryAuthority;
         "${serviceDirectoryPrefix}RESOURCE_MANAGER_URL" = $azContext.Environment.ResourceManagerUrl;
         "${serviceDirectoryPrefix}SERVICE_MANAGEMENT_URL" = $azContext.Environment.ServiceManagementUrl;
+        "AZURE_SERVICE_DIRECTORY" = $serviceName.ToUpperInvariant();
     }
 
     MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
@@ -260,8 +270,7 @@ function BuildDeploymentOutputs([string]$serviceDirectoryPrefix, [object]$azCont
 }
 
 function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
-    $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
-    $deploymentOutputs = BuildDeploymentOutputs $serviceDirectoryPrefix $azContext $deployment
+    $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment
 
     if ($OutFile) {
         if (!$IsWindows) {
@@ -292,7 +301,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
             $EnvironmentVariables[$key] = $value
 
             if ($CI) {
-                if (ShouldMarkValueAsSecret $serviceDirectoryPrefix $key $value $notSecretValues) {
+                if (ShouldMarkValueAsSecret $serviceName $key $value $notSecretValues) {
                     # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                     # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
                     LogVsoCommand "##vso[task.setvariable variable=_$key;issecret=true;]$value"
@@ -398,8 +407,7 @@ try {
         Write-Verbose "Location was not set. Using default location for environment: '$Location'"
     }
 
-    if (!$CI) {
-
+    if (!$CI -and $PSCmdlet.ParameterSetName -ne "Provisioner") {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {

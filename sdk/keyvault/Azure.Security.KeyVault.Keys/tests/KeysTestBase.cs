@@ -25,7 +25,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         public KeyClient Client { get; private set; }
-        private KeyClient _noninstrumentedClient;
 
         public virtual Uri Uri => new Uri(TestEnvironment.KeyVaultUrl);
 
@@ -66,10 +65,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        internal KeyClient GetClient(bool instrument)
+        internal KeyClient GetClient()
         {
-            // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-            KeyClientOptions options = new(_serviceVersion)
+            KeyClientOptions options = InstrumentClientOptions(new KeyClientOptions(_serviceVersion)
             {
                 Diagnostics =
                 {
@@ -77,28 +75,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         "x-ms-request-id",
                     },
-                    // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
-                    IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
                 },
-            };
+            });
 
-            if (instrument)
-            {
-                options = InstrumentClientOptions(options);
-            }
+            // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
+            // we need to delay creation of keys due to aggressive service limits on key creation:
+            // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
+            IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
 
-            KeyClient client = new(Uri, TestEnvironment.Credential, options);
-            if (instrument)
-            {
-                // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
-                // we need to delay creation of keys due to aggressive service limits on key creation:
-                // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
-                IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
-
-                return InstrumentClient(client, interceptors);
-            }
-
-            return client;
+            return InstrumentClient(new KeyClient(Uri, TestEnvironment.Credential, options), interceptors);
         }
 
         public override async Task StartTestRecordingAsync()
@@ -107,9 +92,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             _listener = new KeyVaultTestEventListener();
 
-            // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-            Client = GetClient(true);
-            _noninstrumentedClient = GetClient(false);
+            Client = GetClient();
         }
 
         public override async Task StopTestRecordingAsync()
@@ -152,11 +135,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             try
             {
-                // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-                //using (Recording.DisableRecording())
-                //{
-                await _noninstrumentedClient.StartDeleteKeyAsync(name).ConfigureAwait(false);
-                //}
+                using (Recording.DisableRecording())
+                {
+                    await Client.StartDeleteKeyAsync(name).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -180,11 +162,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             try
             {
-                // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-                //using (Recording.DisableRecording())
-                //{
-                await _noninstrumentedClient.PurgeDeletedKeyAsync(name).ConfigureAwait(false);
-                //}
+                using (Recording.DisableRecording())
+                {
+                    await Client.PurgeDeletedKeyAsync(name).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -296,20 +277,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return Task.CompletedTask;
             }
 
-            // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-            //using (Recording.DisableRecording())
-            //{
-            return TestRetryHelper.RetryAsync(async () => {
-                try
-                {
-                    return await _noninstrumentedClient.GetDeletedKeyAsync(name).ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex) when (ex.Status == 404)
-                {
-                    throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
-                }
-            }, delay: PollingInterval);
-            //}
+            using (Recording.DisableRecording())
+            {
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
+            }
         }
 
         protected Task WaitForPurgedKey(string name, TimeSpan? delay = null)
@@ -319,22 +299,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return Task.CompletedTask;
             }
 
-            // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-            //using (Recording.DisableRecording())
-            //{
-            delay ??= PollingInterval;
-            return TestRetryHelper.RetryAsync(async () => {
-                try
-                {
-                    await _noninstrumentedClient.GetDeletedKeyAsync(name).ConfigureAwait(false);
-                    throw new InvalidOperationException($"Key {name} still exists");
-                }
-                catch (RequestFailedException ex) when (ex.Status == 404)
-                {
-                    return (Response)null;
-                }
-            }, delay: delay.Value);
-            //}
+            using (Recording.DisableRecording())
+            {
+                delay ??= PollingInterval;
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                        throw new InvalidOperationException($"Key {name} still exists");
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        return (Response)null;
+                    }
+                }, delay: delay.Value);
+            }
         }
 
         protected Task WaitForKey(string name)
@@ -344,11 +323,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return Task.CompletedTask;
             }
 
-            // TODO: Remove support for non-instrumented client when https://github.com/Azure/azure-sdk-tools/issues/2434 is resolved.
-            //using (Recording.DisableRecording())
-            //{
-            return TestRetryHelper.RetryAsync(async () => await _noninstrumentedClient.GetKeyAsync(name), delay: PollingInterval);
-            //}
+            using (Recording.DisableRecording())
+            {
+                return TestRetryHelper.RetryAsync(async () => await Client.GetKeyAsync(name), delay: PollingInterval);
+            }
         }
     }
 }

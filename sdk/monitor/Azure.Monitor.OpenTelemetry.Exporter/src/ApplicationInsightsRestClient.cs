@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -39,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
-                    return null;
+                    throw;
                 }
             }
 
@@ -66,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
-                    return null;
+                    throw;
                 }
             }
 
@@ -79,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;
@@ -102,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.AppendRaw(_host, false);
             uri.AppendRaw("/v2", false);
             uri.AppendPath("/track", false);
             request.Uri = uri;

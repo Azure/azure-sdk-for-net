@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class TagsRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of TagsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public TagsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-04-01";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-04-01";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,14 +49,14 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/tagNames/", false);
             uri.AppendPath(tagName, true);
             uri.AppendPath("/tagValues/", false);
             uri.AppendPath(tagValue, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response> DeleteValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response DeleteValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -123,7 +125,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -133,14 +135,14 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/tagNames/", false);
             uri.AppendPath(tagName, true);
             uri.AppendPath("/tagValues/", false);
             uri.AppendPath(tagValue, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -181,7 +183,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -190,7 +192,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/>, or <paramref name="tagValue"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public Response<PredefinedTagValue> CreateOrUpdateValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -229,12 +231,12 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/tagNames/", false);
             uri.AppendPath(tagName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -270,7 +272,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -303,7 +305,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -313,12 +315,12 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/tagNames/", false);
             uri.AppendPath(tagName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -349,7 +351,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -377,7 +379,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -387,11 +389,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/tagNames", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -421,7 +423,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -448,7 +450,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -458,11 +460,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -501,7 +503,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -533,26 +535,26 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagPatchResource parameters)
+        internal HttpMessage CreateUpdateAtScopeRequest(string scope, PatchableTagResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -560,21 +562,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="data"> The PatchableTagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, PatchableTagResourceData data, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateUpdateAtScopeRequest(scope, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -586,27 +588,27 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="data"> The PatchableTagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<TagResourceData> UpdateAtScope(string scope, TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        public Response<TagResourceData> UpdateAtScope(string scope, PatchableTagResourceData data, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
                 throw new ArgumentNullException(nameof(scope));
             }
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateUpdateAtScopeRequest(scope, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -618,7 +620,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -628,11 +630,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -664,7 +666,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((TagResourceData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -693,7 +695,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((TagResourceData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -703,11 +705,11 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -732,7 +734,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -754,7 +756,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -764,7 +766,7 @@ namespace Azure.ResourceManager.Resources
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -800,7 +802,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -832,7 +834,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

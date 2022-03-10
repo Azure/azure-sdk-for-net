@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         internal TableService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tableServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
+            TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
             _tableServiceRestClient = new TableServicesRestOperations(_tableServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -148,10 +148,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<TableService>> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.CreateOrUpdate");
             scope.Start();
@@ -181,10 +178,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<TableService> CreateOrUpdate(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.CreateOrUpdate");
             scope.Start();

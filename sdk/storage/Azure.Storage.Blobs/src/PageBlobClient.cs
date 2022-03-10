@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to the <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// to the <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         /// </summary>
         public virtual int PageBlobMaxUploadPagesBytes => 4 * Constants.MB; // 4MB
 
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.
         /// The content of any existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.
         /// The content of any existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -511,7 +511,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
-        /// <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -573,7 +573,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
         /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -617,7 +617,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
         /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -661,7 +661,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
         /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
-        /// <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -717,7 +717,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already exists,
         /// the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
-        /// <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -774,7 +774,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
         /// To add content to the page blob, call the
-        /// <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -882,7 +882,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
-        /// <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation.
+        /// <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
@@ -1104,7 +1104,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PageInfo> UploadPages(
             Stream content,
             long offset,
@@ -1113,26 +1114,29 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            PageBlobUploadPagesOptions options = default;
-            if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            {
-                options = new PageBlobUploadPagesOptions()
-                {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
-                    Conditions = conditions,
-                    ProgressHandler = progressHandler
-                };
-            }
+            // TODO #27253
+            //PageBlobUploadPagesOptions options = default;
+            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            //{
+            //    options = new PageBlobUploadPagesOptions()
+            //    {
+            //        TransactionalHashingOptions = transactionalContentHash != default
+            //            ? new UploadTransactionalHashingOptions()
+            //            {
+            //                Algorithm = TransactionalHashAlgorithm.MD5,
+            //                PrecalculatedHash = transactionalContentHash
+            //            }
+            //            : default,
+            //        Conditions = conditions,
+            //        ProgressHandler = progressHandler
+            //    };
+            //}
             return UploadPagesInternal(
                 content,
                 offset,
-                options,
+                transactionalContentHash,
+                conditions,
+                progressHandler,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1184,7 +1188,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
@@ -1193,122 +1198,129 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            PageBlobUploadPagesOptions options = default;
-            if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            {
-                options = new PageBlobUploadPagesOptions()
-                {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
-                    Conditions = conditions,
-                    ProgressHandler = progressHandler
-                };
-            }
+            // TODO #27253
+            //PageBlobUploadPagesOptions options = default;
+            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            //{
+            //    options = new PageBlobUploadPagesOptions()
+            //    {
+            //        TransactionalHashingOptions = transactionalContentHash != default
+            //            ? new UploadTransactionalHashingOptions()
+            //            {
+            //                Algorithm = TransactionalHashAlgorithm.MD5,
+            //                PrecalculatedHash = transactionalContentHash
+            //            }
+            //            : default,
+            //        Conditions = conditions,
+            //        ProgressHandler = progressHandler
+            //    };
+            //}
             return await UploadPagesInternal(
                 content,
                 offset,
-                options,
+                transactionalContentHash,
+                conditions,
+                progressHandler,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// The <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation writes
-        /// <paramref name="content"/> to a range of pages in a page blob,
-        /// starting at <paramref name="offset"/>.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
-        /// Put Page</see>.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the pages to
-        /// upload.  The content can be up to 4 MB in size.
-        /// </param>
-        /// <param name="offset">
-        /// Specifies the starting offset for the <paramref name="content"/>
-        /// to be written as a page.  Given that pages must be aligned with
-        /// 512-byte boundaries, the start offset must be a modulus of 512.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PageInfo}"/> describing the
-        /// state of the updated pages.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<PageInfo> UploadPages(
-            Stream content,
-            long offset,
-            PageBlobUploadPagesOptions options,
-            CancellationToken cancellationToken = default) =>
-            UploadPagesInternal(
-                content,
-                offset,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation writes
+        ///// <paramref name="content"/> to a range of pages in a page blob,
+        ///// starting at <paramref name="offset"/>.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        ///// Put Page</see>.
+        ///// </summary>
+        ///// <param name="content">
+        ///// A <see cref="Stream"/> containing the content of the pages to
+        ///// upload.  The content can be up to 4 MB in size.
+        ///// </param>
+        ///// <param name="offset">
+        ///// Specifies the starting offset for the <paramref name="content"/>
+        ///// to be written as a page.  Given that pages must be aligned with
+        ///// 512-byte boundaries, the start offset must be a modulus of 512.
+        ///// </param>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{PageInfo}"/> describing the
+        ///// state of the updated pages.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual Response<PageInfo> UploadPages(
+        //    Stream content,
+        //    long offset,
+        //    PageBlobUploadPagesOptions options,
+        //    CancellationToken cancellationToken = default) =>
+        //    UploadPagesInternal(
+        //        content,
+        //        offset,
+        //        options,
+        //        pageRangeTransactionalContentMD5: default,
+        //        false, // async
+        //        cancellationToken)
+        //        .EnsureCompleted();
 
-        /// <summary>
-        /// The <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation writes
-        /// <paramref name="content"/> to a range of pages in a page blob,
-        /// starting at <paramref name="offset"/>.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
-        /// Put Page</see>.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the pages to
-        /// upload.  The content can be up to 4 MB in size.
-        /// </param>
-        /// <param name="offset">
-        /// Specifies the starting offset for the <paramref name="content"/>
-        /// to be written as a page.  Given that pages must be aligned with
-        /// 512-byte boundaries, the start offset must be a modulus of 512.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PageInfo}"/> describing the
-        /// state of the updated pages.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<PageInfo>> UploadPagesAsync(
-            Stream content,
-            long offset,
-            PageBlobUploadPagesOptions options,
-            CancellationToken cancellationToken = default) =>
-            await UploadPagesInternal(
-                content,
-                offset,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> operation writes
+        ///// <paramref name="content"/> to a range of pages in a page blob,
+        ///// starting at <paramref name="offset"/>.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        ///// Put Page</see>.
+        ///// </summary>
+        ///// <param name="content">
+        ///// A <see cref="Stream"/> containing the content of the pages to
+        ///// upload.  The content can be up to 4 MB in size.
+        ///// </param>
+        ///// <param name="offset">
+        ///// Specifies the starting offset for the <paramref name="content"/>
+        ///// to be written as a page.  Given that pages must be aligned with
+        ///// 512-byte boundaries, the start offset must be a modulus of 512.
+        ///// </param>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{PageInfo}"/> describing the
+        ///// state of the updated pages.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual async Task<Response<PageInfo>> UploadPagesAsync(
+        //    Stream content,
+        //    long offset,
+        //    PageBlobUploadPagesOptions options,
+        //    CancellationToken cancellationToken = default) =>
+        //    await UploadPagesInternal(
+        //        content,
+        //        offset,
+        //        options,
+        //        pageRangeTransactionalContentMD5: default,
+        //        true, // async
+        //        cancellationToken)
+        //        .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadPagesInternal"/> operation writes
@@ -1328,8 +1340,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// to be written as a page.  Given that pages must be aligned with
         /// 512-byte boundaries, the start offset must be a modulus of 512.
         /// </param>
-        /// <param name="options">
-        /// Optional parameters.
+        /// <param name="pageRangeTransactionalContentMD5">
+        /// Optional transactional MD5 hash for the page range.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for page upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for upload operation.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1349,7 +1367,9 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
-            PageBlobUploadPagesOptions options,
+            byte[] pageRangeTransactionalContentMD5,
+            PageBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1360,15 +1380,15 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
-                    $"{nameof(options.Conditions)}: {options?.Conditions}");
+                    $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
 
                 // All PageBlobRequestConditions are valid.
-                options?.Conditions.ValidateConditionsNotPresent(
+                conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(PageBlobClient.UploadPages),
-                    parameterName: nameof(options.Conditions));
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -1376,9 +1396,10 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                    content = content?.WithNoDispose().WithProgress(options?.ProgressHandler);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
                     HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
                     ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
@@ -1388,22 +1409,23 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.UploadPagesAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: pageRangeTransactionalContentMD5, // hashResult?.MD5,
                             range: range.ToString(),
-                            leaseId: options?.Conditions?.LeaseId,
+                            leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifSequenceNumberLessThanOrEqualTo: options?.Conditions?.IfSequenceNumberLessThanOrEqual,
-                            ifSequenceNumberLessThan: options?.Conditions?.IfSequenceNumberLessThan,
-                            ifSequenceNumberEqualTo: options?.Conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options?.Conditions?.TagConditions,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1412,22 +1434,23 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.UploadPages(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: pageRangeTransactionalContentMD5, // hashResult?.MD5,
                             range: range.ToString(),
-                            leaseId: options?.Conditions?.LeaseId,
+                            leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifSequenceNumberLessThanOrEqualTo: options?.Conditions?.IfSequenceNumberLessThanOrEqual,
-                            ifSequenceNumberLessThan: options?.Conditions?.IfSequenceNumberLessThan,
-                            ifSequenceNumberEqualTo: options?.Conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options?.Conditions?.TagConditions,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2799,7 +2822,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="GetPageRanges"/> apply to
         /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
-        /// the source blob is recreated using <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> or
+        /// the source blob is recreated using <see cref="UploadPages(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> or
         /// <see cref="BlobBaseClient.StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// then  <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// on new snapshots will fail.
@@ -2908,7 +2931,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="GetPageRangesAsync"/> apply to
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
-        /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> or
+        /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/> or
         /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// then <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// on new snapshots will fail.
@@ -3021,7 +3044,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="GetPageRangesAsync"/> apply to
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
-        /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/>
+        /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, byte[], PageBlobRequestConditions, IProgress{long}, CancellationToken)"/>
         /// or  <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// then <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// on new snapshots will fail.
@@ -3770,8 +3793,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    progressHandler: options?.ProgressHandler
+                    // TODO #27253
+                    //options?.TransactionalHashingOptions
+                    );
             }
             catch (Exception ex)
             {

@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The instance view status summary for the virtual machine scale set. </summary>
-        public VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; }
+        internal VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; }
+        /// <summary> The extensions information. </summary>
+        public IReadOnlyList<VirtualMachineStatusCodeCount> VirtualMachineStatusesSummary
+        {
+            get => VirtualMachine.StatusesSummary;
+        }
+
         /// <summary> The extensions information. </summary>
         public IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> Extensions { get; }
         /// <summary> The resource status information. </summary>

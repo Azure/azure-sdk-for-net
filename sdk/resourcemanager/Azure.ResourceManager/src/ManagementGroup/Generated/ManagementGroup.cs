@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Management
         internal ManagementGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
             _managementGroupRestClient = new ManagementGroupsRestOperations(_managementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -205,22 +205,19 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Update
         /// </summary>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="data"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patchGroupRequest"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (patchGroupRequest == null)
-            {
-                throw new ArgumentNullException(nameof(patchGroupRequest));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.UpdateAsync(Id.Name, patchGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.UpdateAsync(Id.Name, data, cacheControl, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,22 +233,19 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Update
         /// </summary>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="data"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patchGroupRequest"/> is null. </exception>
-        public virtual Response<ManagementGroup> Update(PatchManagementGroupOptions patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ManagementGroup> Update(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (patchGroupRequest == null)
-            {
-                throw new ArgumentNullException(nameof(patchGroupRequest));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Update(Id.Name, patchGroupRequest, cacheControl, cancellationToken);
+                var response = _managementGroupRestClient.Update(Id.Name, data, cacheControl, cancellationToken);
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

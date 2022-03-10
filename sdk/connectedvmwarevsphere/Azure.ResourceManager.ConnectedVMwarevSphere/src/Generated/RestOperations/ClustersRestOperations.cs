@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     internal partial class ClustersRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ClustersRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-10-01-preview";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2020-10-01-preview";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,14 +49,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (body != null)
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 201:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -108,7 +110,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 201:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -142,14 +144,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public async Task<Response<VMwareClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -191,7 +193,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 404:
                     return Response.FromValue((VMwareClusterData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -200,7 +202,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public Response<VMwareClusterData> Get(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 404:
                     return Response.FromValue((VMwareClusterData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -240,23 +242,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
@@ -267,8 +266,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<VMwareClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ResourcePatch body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
+        public async Task<Response<VMwareClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ResourcePatch body, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -281,6 +280,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, body);
@@ -295,7 +298,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -305,8 +308,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<VMwareClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ResourcePatch body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
+        public Response<VMwareClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ResourcePatch body, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -319,6 +322,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (clusterName == null)
             {
                 throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
             }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, body);
@@ -333,7 +340,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -343,14 +350,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (force != null)
             {
                 uri.AppendQuery("force", force.Value, true);
@@ -367,7 +374,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -392,7 +399,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -402,7 +409,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="force"> Whether force delete was specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, bool? force = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
@@ -427,7 +434,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -437,11 +444,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -471,7 +478,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -498,7 +505,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -508,13 +515,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/clusters", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -549,7 +556,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -581,7 +588,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -591,7 +598,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -627,7 +634,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -659,7 +666,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -669,7 +676,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -682,7 +689,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ClustersList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -710,7 +717,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -719,7 +726,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ClustersList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -747,7 +754,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

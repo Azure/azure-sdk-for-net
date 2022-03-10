@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerConnectionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverConnectionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerConnectionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerConnectionPolicy.ResourceType, out string serverConnectionPolicyApiVersion);
+            TryGetApiVersion(ServerConnectionPolicy.ResourceType, out string serverConnectionPolicyApiVersion);
             _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(_serverConnectionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverConnectionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<ServerConnectionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<ServerConnectionPolicy> CreateOrUpdate(bool waitForCompletion, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.CreateOrUpdate");
             scope.Start();

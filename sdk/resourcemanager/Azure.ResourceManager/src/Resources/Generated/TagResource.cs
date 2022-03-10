@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal TagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
+            TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
             _tagResourceTagsRestClient = new TagsRestOperations(_tagResourceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -188,21 +188,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="data"> The PatchableTagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<TagResource>> UpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<TagResource>> UpdateAsync(PatchableTagResourceData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,21 +214,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="data"> The PatchableTagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<TagResource> Update(TagPatchResource parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<TagResource> Update(PatchableTagResourceData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, parameters, cancellationToken);
+                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, data, cancellationToken);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,10 +246,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<TagResource>> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
             scope.Start();
@@ -285,10 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<TagResource> CreateOrUpdate(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
             scope.Start();

@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Sql
         internal ManagedDatabase(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
+            TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(_managedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseApiVersion);
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
             _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
             _managedDatabaseQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_managedDatabaseQueriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _managedDatabaseSecurityEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_managedDatabaseSecurityEventsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
             _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -258,22 +258,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested database resource state. </param>
+        /// <param name="data"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ManagedDatabase>> UpdateAsync(bool waitForCompletion, ManagedDatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<ManagedDatabase>> UpdateAsync(bool waitForCompletion, PatchableManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedDatabaseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,22 +288,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested database resource state. </param>
+        /// <param name="data"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedDatabase> Update(bool waitForCompletion, ManagedDatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedDatabase> Update(bool waitForCompletion, PatchableManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = _managedDatabaseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _managedDatabaseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -419,7 +413,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, CancellationToken cancellationToken = default)
         {
@@ -446,7 +440,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual Response<ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, CancellationToken cancellationToken = default)
         {
@@ -476,7 +470,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> An async collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
@@ -526,7 +520,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> A collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
@@ -577,10 +571,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation> CompleteRestoreAsync(bool waitForCompletion, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
             scope.Start();
@@ -610,10 +601,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation CompleteRestore(bool waitForCompletion, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
             scope.Start();
@@ -824,10 +812,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response> UpdateManagedDatabaseSensitivityLabelAsync(SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -853,10 +838,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response UpdateManagedDatabaseSensitivityLabel(SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -972,10 +954,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response> UpdateRecommendedManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1001,10 +980,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response UpdateRecommendedManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
@@ -1031,21 +1007,15 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<ManagedDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1068,21 +1038,15 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ManagedDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1104,10 +1068,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<ManagedDatabase>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.SetTags");
             scope.Start();
@@ -1115,7 +1076,7 @@ namespace Azure.ResourceManager.Sql
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1137,10 +1098,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ManagedDatabase> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.SetTags");
             scope.Start();
@@ -1148,7 +1106,7 @@ namespace Azure.ResourceManager.Sql
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1170,17 +1128,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<ManagedDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -1202,17 +1157,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ManagedDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new ManagedDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());

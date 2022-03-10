@@ -8,19 +8,28 @@ steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
       $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
-      $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
+
+      # Add config to disable the quote and encoding on file name. 
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
+      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
+      $changedFiles = git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff $targetBranch HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
-      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
+      $scanFolder = ""
+      if ("${{ parameters.ServiceDirectory }}" -ne '') {
+        $scanFolder = "sdk/${{ parameters.ServiceDirectory }}"
+      }
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanFolder"
     }
-    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+    if(Test-Path "${{ parameters.SourceDirectory }}/credscan.tsv") {
+      Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+    }
   displayName: CredScan setup
-- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   inputs:
-    toolMajorVersion: V2
-    toolVersion: latest
+    toolVersion: 2.2.7.8 
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
@@ -32,7 +41,7 @@ steps:
     GdnBreakGdnToolCredScanSeverity: Error
     GdnBreakBaselines: baseline
     # Used for generating baseline file.
-    # GdnBreakOutputBaselineFile: dotnet
+    # GdnBreakOutputBaselineFile: baseline
     # GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |

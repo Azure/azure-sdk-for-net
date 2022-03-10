@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of BackupItem and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteBackup and their operations over its parent. </summary>
     public partial class SiteBackupCollection : ArmCollection, IEnumerable<SiteBackup>, IAsyncEnumerable<SiteBackup>
     {
         private readonly ClientDiagnostics _siteBackupWebAppsClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackup.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
+            TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
             _siteBackupWebAppsRestClient = new WebAppsRestOperations(_siteBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<SiteBackup>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<SiteBackup> Get(string backupId, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<bool> Exists(string backupId, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<SiteBackup>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<SiteBackup> GetIfExists(string backupId, CancellationToken cancellationToken = default)
         {

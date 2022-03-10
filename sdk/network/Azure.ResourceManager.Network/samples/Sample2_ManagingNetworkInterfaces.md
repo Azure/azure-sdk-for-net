@@ -55,7 +55,7 @@ string networkInterfaceName = "myNetworkInterface";
 NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
-    IpConfigurations = {
+    IPConfigurations = {
         new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",

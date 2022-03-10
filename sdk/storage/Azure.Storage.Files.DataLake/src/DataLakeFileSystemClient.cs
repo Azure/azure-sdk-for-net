@@ -17,6 +17,8 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using System.ComponentModel;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
@@ -2938,5 +2940,59 @@ namespace Azure.Storage.Files.DataLake
                 ClientConfiguration);
         }
         #endregion Restore Path
+
+        #region GetParentDataLakeServiceClientCore
+
+        private DataLakeServiceClient _parentServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeServiceClient"/> that pointing to this <see cref="DataLakeFileSystemClient"/>'s parent container.
+        /// The new <see cref="DataLakeServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakeFileSystemClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual DataLakeServiceClient GetParentServiceClientCore()
+        {
+            if (_parentServiceClient == null)
+            {
+                DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentServiceClient = new DataLakeServiceClient(
+                    datalakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentServiceClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="DataLakePathClient"/> for
+        /// creating <see cref="DataLakeFileSystemClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedDataLakeExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+            /// The new <see cref="DataLakeFileSystemClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+            public static DataLakeServiceClient GetParentServiceClient(this DataLakeFileSystemClient client)
+            {
+                return client.GetParentServiceClientCore();
+            }
+        }
     }
 }

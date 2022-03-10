@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetBastionHosts();
         }
 
-        /// <summary> Gets a collection of CustomIpPrefixes in the CustomIpPrefix. </summary>
+        /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CustomIpPrefixes and their operations over a CustomIpPrefix. </returns>
-        public static CustomIpPrefixCollection GetCustomIpPrefixes(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
+        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetCustomIpPrefixes();
+            return GetExtensionClient(resourceGroup).GetCustomIPPrefixes();
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
@@ -124,20 +124,20 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetFirewallPolicies();
         }
 
-        /// <summary> Gets a collection of IpAllocations in the IpAllocation. </summary>
+        /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IpAllocations and their operations over a IpAllocation. </returns>
-        public static IpAllocationCollection GetIpAllocations(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
+        public static IPAllocationCollection GetIPAllocations(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetIpAllocations();
+            return GetExtensionClient(resourceGroup).GetIPAllocations();
         }
 
-        /// <summary> Gets a collection of IpGroups in the IpGroup. </summary>
+        /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IpGroups and their operations over a IpGroup. </returns>
-        public static IpGroupCollection GetIpGroups(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
+        public static IPGroupCollection GetIPGroups(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetIpGroups();
+            return GetExtensionClient(resourceGroup).GetIPGroups();
         }
 
         /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetVirtualRouters();
         }
 
-        /// <summary> Gets a collection of VirtualWANs in the VirtualWAN. </summary>
+        /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualWANs and their operations over a VirtualWAN. </returns>
-        public static VirtualWANCollection GetVirtualWANs(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualWANs();
+            return GetExtensionClient(resourceGroup).GetVirtualWans();
         }
 
         /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -490,15 +490,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public async static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             return await GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitForCompletion, location, parameters, cancellationToken).ConfigureAwait(false);
         }
@@ -513,15 +510,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             return GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitForCompletion, location, parameters, cancellationToken);
         }
@@ -534,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
@@ -552,7 +546,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)

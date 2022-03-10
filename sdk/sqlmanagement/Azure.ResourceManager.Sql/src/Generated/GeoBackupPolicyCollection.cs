@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal GeoBackupPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _geoBackupPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", GeoBackupPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(GeoBackupPolicy.ResourceType, out string geoBackupPolicyApiVersion);
+            TryGetApiVersion(GeoBackupPolicy.ResourceType, out string geoBackupPolicyApiVersion);
             _geoBackupPolicyRestClient = new GeoBackupPoliciesRestOperations(_geoBackupPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, geoBackupPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<GeoBackupPolicy>> CreateOrUpdateAsync(bool waitForCompletion, GeoBackupPolicyName geoBackupPolicyName, GeoBackupPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<GeoBackupPolicy> CreateOrUpdate(bool waitForCompletion, GeoBackupPolicyName geoBackupPolicyName, GeoBackupPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.CreateOrUpdate");
             scope.Start();

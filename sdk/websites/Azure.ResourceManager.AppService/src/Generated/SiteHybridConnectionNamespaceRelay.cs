@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteHybridConnectionNamespaceRelay(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
             _siteHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(_siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionNamespaceRelayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -192,10 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<Response<SiteHybridConnectionNamespaceRelay>> UpdateAsync(HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelay.Update");
             scope.Start();
@@ -221,10 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual Response<SiteHybridConnectionNamespaceRelay> Update(HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
+            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelay.Update");
             scope.Start();

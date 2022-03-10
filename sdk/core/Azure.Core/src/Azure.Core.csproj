@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -48,16 +48,21 @@
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
+    <Compile Include="Shared\ConstantDelayStrategy.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
+    <Compile Include="Shared\ExponentialDelayStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
+    <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
+    <Compile Include="Shared\OperationPoller.cs" />
+    <Compile Include="Shared\DelayStrategy.cs" />
   </ItemGroup>
 
 </Project>

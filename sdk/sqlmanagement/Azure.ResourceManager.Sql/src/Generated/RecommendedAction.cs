@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal RecommendedAction(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
+            TryGetApiVersion(ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
             _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -140,10 +140,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<RecommendedAction>> UpdateAsync(RecommendedActionData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Update");
             scope.Start();
@@ -169,10 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<RecommendedAction> Update(RecommendedActionData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Update");
             scope.Start();

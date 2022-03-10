@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var vnetData = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
                 Subnets =
                 {
                     new SubnetData()
@@ -57,6 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.0.0.0/16");
             ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
             VirtualNetwork vnet = vnetOperation.Value;
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var nicData = new NetworkInterfaceData()
             {
                 Location = location,
-                IpConfigurations =
+                IPConfigurations =
                 {
                     new NetworkInterfaceIPConfigurationData()
                     {

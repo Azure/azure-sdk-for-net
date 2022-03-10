@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         internal CustomLocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string customLocationApiVersion);
+            TryGetApiVersion(ResourceType, out string customLocationApiVersion);
             _customLocationRestClient = new CustomLocationsRestOperations(_customLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -189,21 +189,18 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
-        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CustomLocation>> UpdateAsync(PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<CustomLocation>> UpdateAsync(PatchableCustomLocationData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.Update");
             scope.Start();
             try
             {
-                var response = await _customLocationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _customLocationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,21 +215,18 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
-        /// <param name="parameters"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CustomLocation> Update(PatchableCustomLocations parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<CustomLocation> Update(PatchableCustomLocationData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.Update");
             scope.Start();
             try
             {
-                var response = _customLocationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _customLocationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,21 +331,15 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<CustomLocation>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -374,21 +362,15 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CustomLocation> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -410,10 +392,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<CustomLocation>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.SetTags");
             scope.Start();
@@ -421,7 +400,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -443,10 +422,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CustomLocation> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.SetTags");
             scope.Start();
@@ -454,7 +430,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -476,17 +452,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<CustomLocation>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -508,17 +481,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CustomLocation> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CustomLocation(Client, originalResponse.Value), originalResponse.GetRawResponse());

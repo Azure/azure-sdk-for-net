@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StackHCI
         internal ArcExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string arcExtensionExtensionsApiVersion);
+            TryGetApiVersion(ResourceType, out string arcExtensionExtensionsApiVersion);
             _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(_arcExtensionExtensionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcExtensionExtensionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -193,10 +193,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
         public async virtual Task<ArmOperation<ArcExtension>> UpdateAsync(bool waitForCompletion, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
+            Argument.AssertNotNull(extension, nameof(extension));
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
         public virtual ArmOperation<ArcExtension> Update(bool waitForCompletion, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
-            if (extension == null)
-            {
-                throw new ArgumentNullException(nameof(extension));
-            }
+            Argument.AssertNotNull(extension, nameof(extension));
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();

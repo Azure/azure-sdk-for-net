@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         internal EncryptionProtectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", EncryptionProtector.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(EncryptionProtector.ResourceType, out string encryptionProtectorApiVersion);
+            TryGetApiVersion(EncryptionProtector.ResourceType, out string encryptionProtectorApiVersion);
             _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(_encryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ArmOperation<EncryptionProtector>> CreateOrUpdateAsync(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.CreateOrUpdate");
             scope.Start();
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ArmOperation<EncryptionProtector> CreateOrUpdate(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.CreateOrUpdate");
             scope.Start();

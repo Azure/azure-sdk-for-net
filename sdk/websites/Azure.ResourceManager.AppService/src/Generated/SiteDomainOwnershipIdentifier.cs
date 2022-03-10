@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteDomainOwnershipIdentifier(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
             _siteDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(_siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDomainOwnershipIdentifierWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -192,10 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public async virtual Task<Response<SiteDomainOwnershipIdentifier>> UpdateAsync(IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
-            if (domainOwnershipIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(domainOwnershipIdentifier));
-            }
+            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
 
             using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifier.Update");
             scope.Start();
@@ -221,10 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifier"/> is null. </exception>
         public virtual Response<SiteDomainOwnershipIdentifier> Update(IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
-            if (domainOwnershipIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(domainOwnershipIdentifier));
-            }
+            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
 
             using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifier.Update");
             scope.Start();

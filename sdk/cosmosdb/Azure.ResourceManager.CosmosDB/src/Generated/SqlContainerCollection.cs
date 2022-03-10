@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal SqlContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlContainerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlContainer.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SqlContainer.ResourceType, out string sqlContainerSqlResourcesApiVersion);
+            TryGetApiVersion(SqlContainer.ResourceType, out string sqlContainerSqlResourcesApiVersion);
             _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlContainerSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlContainerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlContainer>> CreateOrUpdateAsync(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlContainer>> CreateOrUpdateAsync(bool waitForCompletion, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            if (createUpdateSqlContainerParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
-            }
+            Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
 
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -96,15 +93,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlContainer> CreateOrUpdate(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlContainer> CreateOrUpdate(bool waitForCompletion, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            if (createUpdateSqlContainerParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
-            }
+            Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
 
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<SqlContainer>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<SqlContainer> Get(string containerName, CancellationToken cancellationToken = default)
         {
@@ -242,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
@@ -296,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<SqlContainer>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -325,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<SqlContainer> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {

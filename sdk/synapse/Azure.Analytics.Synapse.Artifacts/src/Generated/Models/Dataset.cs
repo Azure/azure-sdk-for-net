@@ -28,7 +28,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "Dataset";
         }
 
         /// <summary> Initializes a new instance of Dataset. </summary>
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal Dataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "Dataset";
+            Type = type;
             Description = description;
             Structure = structure;
             Schema = schema;

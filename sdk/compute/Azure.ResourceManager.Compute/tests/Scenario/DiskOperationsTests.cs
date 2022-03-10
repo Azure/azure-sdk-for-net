@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var disk = await CreateDiskAsync(diskName);
 
             var newDiskSize = 20;
-            var update = new DiskUpdate()
+            var update = new PatchableDiskData()
             {
                 DiskSizeGB = newDiskSize
             };

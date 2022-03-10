@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.CosmosDB
 {
     internal partial class DatabaseAccountRegionRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of DatabaseAccountRegionRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DatabaseAccountRegionRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-10-15";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-10-15";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/region/", false);
             uri.AppendPath(region, true);
             uri.AppendPath("/metrics", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("$filter", filter, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, or <paramref name="filter"/> is null. </exception>
-        public async Task<Response<MetricList>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string region, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
+        public async Task<Response<MetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string region, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -102,13 +104,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricList value = default;
+                        MetricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricList.DeserializeMetricList(document.RootElement);
+                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -119,8 +121,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, or <paramref name="filter"/> is null. </exception>
-        public Response<MetricList> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string region, string filter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
+        public Response<MetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string region, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -149,13 +151,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricList value = default;
+                        MetricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricList.DeserializeMetricList(document.RootElement);
+                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteUserProvidedFunctionAppARMResource and their operations over its parent. </summary>
+    /// <summary> A class representing collection of StaticSiteUserProvidedFunctionApp and their operations over its parent. </summary>
     public partial class StaticSiteUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteUserProvidedFunctionApp>, IAsyncEnumerable<StaticSiteUserProvidedFunctionApp>
     {
         private readonly ClientDiagnostics _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteUserProvidedFunctionAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteUserProvidedFunctionApp.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StaticSiteUserProvidedFunctionApp.ResourceType, out string staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
+            TryGetApiVersion(StaticSiteUserProvidedFunctionApp.ResourceType, out string staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
             _staticSiteUserProvidedFunctionAppStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteUserProvidedFunctionAppStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="staticSiteUserProvidedFunctionEnvelope"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
         public async virtual Task<ArmOperation<StaticSiteUserProvidedFunctionApp>> CreateOrUpdateAsync(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
-            if (staticSiteUserProvidedFunctionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteUserProvidedFunctionEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteUserProvidedFunctionEnvelope, nameof(staticSiteUserProvidedFunctionEnvelope));
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -97,15 +94,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="staticSiteUserProvidedFunctionEnvelope"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
         public virtual ArmOperation<StaticSiteUserProvidedFunctionApp> CreateOrUpdate(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
-            if (staticSiteUserProvidedFunctionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteUserProvidedFunctionEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteUserProvidedFunctionEnvelope, nameof(staticSiteUserProvidedFunctionEnvelope));
 
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -131,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public async virtual Task<Response<StaticSiteUserProvidedFunctionApp>> GetAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<StaticSiteUserProvidedFunctionApp> Get(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -273,7 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -300,7 +294,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -327,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public async virtual Task<Response<StaticSiteUserProvidedFunctionApp>> GetIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -356,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<StaticSiteUserProvidedFunctionApp> GetIfExists(string functionAppName, CancellationToken cancellationToken = default)
         {

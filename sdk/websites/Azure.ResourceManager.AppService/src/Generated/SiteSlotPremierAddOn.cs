@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPremierAddOn(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotPremierAddOnWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
             _siteSlotPremierAddOnWebAppsRestClient = new WebAppsRestOperations(_siteSlotPremierAddOnWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPremierAddOnWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public async virtual Task<Response<SiteSlotPremierAddOn>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.Update");
             scope.Start();
@@ -223,10 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public virtual Response<SiteSlotPremierAddOn> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.Update");
             scope.Start();
@@ -253,21 +247,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<SiteSlotPremierAddOn>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -290,21 +278,15 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SiteSlotPremierAddOn> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -326,10 +308,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<SiteSlotPremierAddOn>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.SetTags");
             scope.Start();
@@ -337,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -359,10 +338,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SiteSlotPremierAddOn> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.SetTags");
             scope.Start();
@@ -370,7 +346,7 @@ namespace Azure.ResourceManager.AppService
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -392,17 +368,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<SiteSlotPremierAddOn>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -424,17 +397,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SiteSlotPremierAddOn> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOn.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SiteSlotPremierAddOn(Client, originalResponse.Value), originalResponse.GetRawResponse());

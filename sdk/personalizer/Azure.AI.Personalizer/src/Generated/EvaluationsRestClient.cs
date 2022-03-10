@@ -41,7 +41,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/evaluations/", false);
             uri.AppendPath(evaluationId, true);
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/evaluations/", false);
             uri.AppendPath(evaluationId, true);
             request.Uri = uri;
@@ -168,7 +168,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/evaluations", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -232,7 +232,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/evaluations", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

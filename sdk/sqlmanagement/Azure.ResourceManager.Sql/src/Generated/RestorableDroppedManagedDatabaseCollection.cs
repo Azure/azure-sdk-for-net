@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal RestorableDroppedManagedDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorableDroppedManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorableDroppedManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(RestorableDroppedManagedDatabase.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
+            TryGetApiVersion(RestorableDroppedManagedDatabase.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
             _restorableDroppedManagedDatabaseRestClient = new RestorableDroppedManagedDatabasesRestOperations(_restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDroppedManagedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public async virtual Task<Response<RestorableDroppedManagedDatabase>> GetAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<RestorableDroppedManagedDatabase> Get(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<bool> Exists(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public async virtual Task<Response<RestorableDroppedManagedDatabase>> GetIfExistsAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<RestorableDroppedManagedDatabase> GetIfExists(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {

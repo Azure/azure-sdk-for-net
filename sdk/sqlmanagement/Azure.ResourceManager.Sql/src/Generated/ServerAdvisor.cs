@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         internal ServerAdvisor(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverAdvisorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string serverAdvisorApiVersion);
+            TryGetApiVersion(ResourceType, out string serverAdvisorApiVersion);
             _serverAdvisorRestClient = new ServerAdvisorsRestOperations(_serverAdvisorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAdvisorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -140,10 +140,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<ServerAdvisor>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAdvisorClientDiagnostics.CreateScope("ServerAdvisor.Update");
             scope.Start();
@@ -169,10 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<ServerAdvisor> Update(AdvisorData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _serverAdvisorClientDiagnostics.CreateScope("ServerAdvisor.Update");
             scope.Start();

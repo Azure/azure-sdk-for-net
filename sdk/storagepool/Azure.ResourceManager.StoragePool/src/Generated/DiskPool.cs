@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StoragePool
         internal DiskPool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string diskPoolApiVersion);
+            TryGetApiVersion(ResourceType, out string diskPoolApiVersion);
             _diskPoolRestClient = new DiskPoolsRestOperations(_diskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -197,22 +197,19 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskPoolUpdatePayload"> Request payload for Disk Pool update operation. </param>
+        /// <param name="data"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public async virtual Task<ArmOperation<DiskPool>> UpdateAsync(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<DiskPool>> UpdateAsync(bool waitForCompletion, PatchableDiskPoolData data, CancellationToken cancellationToken = default)
         {
-            if (diskPoolUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolUpdatePayload));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.Update");
             scope.Start();
             try
             {
-                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,22 +227,19 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskPoolUpdatePayload"> Request payload for Disk Pool update operation. </param>
+        /// <param name="data"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolUpdatePayload"/> is null. </exception>
-        public virtual ArmOperation<DiskPool> Update(bool waitForCompletion, DiskPoolUpdate diskPoolUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DiskPool> Update(bool waitForCompletion, PatchableDiskPoolData data, CancellationToken cancellationToken = default)
         {
-            if (diskPoolUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolUpdatePayload));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.Update");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskPoolUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -508,21 +502,15 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -545,21 +533,15 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DiskPool> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -581,10 +563,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.SetTags");
             scope.Start();
@@ -592,7 +571,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -614,10 +593,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DiskPool> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.SetTags");
             scope.Start();
@@ -625,7 +601,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -647,17 +623,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());
@@ -679,17 +652,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DiskPool> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPool.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskPool(Client, originalResponse.Value), originalResponse.GetRawResponse());

@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             string modelId = model.ModelId;
 #endif
-            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelAsync(modelId, targetAuth);
+            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
             await newModelOperation.WaitForCompletionAsync();
             DocumentModel newModel = newModelOperation.Value;
 

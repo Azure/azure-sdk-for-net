@@ -2,13 +2,8 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+- 'Deprecates' (read discourage) the use of PhoneNumbersModelFactory.PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
 
 ## 1.1.0-beta.1 (2022-01-24)
 ### Features Added

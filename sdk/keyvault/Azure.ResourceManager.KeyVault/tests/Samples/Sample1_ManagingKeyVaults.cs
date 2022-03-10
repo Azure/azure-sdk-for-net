@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
-                IpRules =
+                IPRules =
                 {
                     new IPRule("1.2.3.4/32"),
                     new IPRule("1.0.0.0/25")

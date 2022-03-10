@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </param>
-        /// <param name="networkAcls"> Network Acls. </param>
+        /// <param name="networkAcls"> Network ACLs. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
         /// When it&apos;s Enabled, network ACLs still apply.
@@ -107,7 +107,19 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The list of shared private link resources. </summary>
         public IReadOnlyList<SharedPrivateLinkData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings. </summary>
-        public WebPubSubTlsSettings Tls { get; set; }
+        internal WebPubSubTlsSettings Tls { get; set; }
+        /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        public bool? ClientCertEnabled
+        {
+            get => Tls is null ? default : Tls.ClientCertEnabled;
+            set
+            {
+                if (Tls is null)
+                    Tls = new WebPubSubTlsSettings();
+                Tls.ClientCertEnabled = value;
+            }
+        }
+
         /// <summary> Deprecated. </summary>
         public string HostNamePrefix { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
@@ -117,8 +129,19 @@ namespace Azure.ResourceManager.WebPubSub
         /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </summary>
-        public ResourceLogConfiguration ResourceLogConfiguration { get; set; }
-        /// <summary> Network Acls. </summary>
+        internal ResourceLogConfiguration ResourceLogConfiguration { get; set; }
+        /// <summary> Gets or sets the list of category configurations. </summary>
+        public IList<ResourceLogCategory> ResourceLogCategories
+        {
+            get
+            {
+                if (ResourceLogConfiguration is null)
+                    ResourceLogConfiguration = new ResourceLogConfiguration();
+                return ResourceLogConfiguration.Categories;
+            }
+        }
+
+        /// <summary> Network ACLs. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.

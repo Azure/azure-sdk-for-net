@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotInstanceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotInstanceExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string siteSlotInstanceExtensionWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotInstanceExtensionWebAppsApiVersion);
             _siteSlotInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -142,10 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         public async virtual Task<ArmOperation<SiteSlotInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            if (msDeploy == null)
-            {
-                throw new ArgumentNullException(nameof(msDeploy));
-            }
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
             using var scope = _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceExtension.CreateOrUpdate");
             scope.Start();
@@ -175,10 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         public virtual ArmOperation<SiteSlotInstanceExtension> CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            if (msDeploy == null)
-            {
-                throw new ArgumentNullException(nameof(msDeploy));
-            }
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
             using var scope = _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceExtension.CreateOrUpdate");
             scope.Start();

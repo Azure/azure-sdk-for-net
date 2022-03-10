@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         internal TopLevelDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
+            TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
             _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -142,10 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             async Task<Page<TldLegalAgreement>> FirstPageFunc(int? pageSizeHint)
             {
@@ -191,10 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             Page<TldLegalAgreement> FirstPageFunc(int? pageSizeHint)
             {

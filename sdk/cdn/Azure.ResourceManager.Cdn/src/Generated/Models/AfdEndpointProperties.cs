@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
-    public partial class AfdEndpointProperties : AfdEndpointPropertiesUpdateParameters
+    internal partial class AfdEndpointProperties : AfdEndpointPropertiesUpdateParameters
     {
         /// <summary> Initializes a new instance of AfdEndpointProperties. </summary>
         public AfdEndpointProperties()

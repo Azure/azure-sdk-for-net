@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class PrivateEndpointConnectionProxyProperties : IUtf8JsonSerializable
+    internal partial class PrivateEndpointConnectionProxyProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

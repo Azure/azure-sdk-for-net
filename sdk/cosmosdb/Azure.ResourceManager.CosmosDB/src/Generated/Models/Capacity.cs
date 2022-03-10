@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
-    public partial class Capacity
+    internal partial class Capacity
     {
         /// <summary> Initializes a new instance of Capacity. </summary>
         public Capacity()
