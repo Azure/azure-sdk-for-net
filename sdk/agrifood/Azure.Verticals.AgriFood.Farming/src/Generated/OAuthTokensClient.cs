@@ -393,7 +393,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for OAuth tokens. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
@@ -436,7 +436,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
@@ -447,7 +447,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -457,7 +457,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for OAuth tokens. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
@@ -500,7 +500,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
@@ -511,7 +511,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OAuthTokensClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

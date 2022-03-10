@@ -20,19 +20,14 @@ namespace Azure.Security.Attestation
         private readonly HttpPipeline _pipeline;
         private readonly string _instanceUrl;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of SigningCertificatesRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> is null. </exception>
-        public SigningCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="instanceUrl"/> is null. </exception>
+        public SigningCertificatesRestClient(HttpPipeline pipeline, string instanceUrl)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetRequest()
@@ -64,7 +59,7 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -84,7 +79,7 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

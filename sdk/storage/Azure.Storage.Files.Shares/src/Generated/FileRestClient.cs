@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
@@ -24,23 +25,18 @@ namespace Azure.Storage.Files.Shares
         private readonly string _version;
         private readonly string _fileRangeWriteFromUrl;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of FileRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10", string fileRangeWriteFromUrl = "update")
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
+        public FileRestClient(HttpPipeline pipeline, string url, string version = "2021-04-10", string fileRangeWriteFromUrl = "update")
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
             _fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateCreateRequest(long fileContentLength, string fileAttributes, string fileCreationTime, string fileLastWriteTime, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions leaseAccessConditions)
@@ -141,7 +137,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -181,7 +177,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -235,7 +231,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -259,7 +255,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -303,7 +299,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -322,7 +318,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -361,7 +357,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -379,7 +375,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -479,7 +475,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -518,7 +514,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -563,7 +559,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -582,7 +578,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -628,7 +624,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -647,7 +643,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -691,7 +687,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -715,7 +711,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -764,7 +760,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -789,7 +785,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -830,7 +826,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -848,7 +844,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -911,7 +907,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -940,7 +936,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1020,7 +1016,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1055,7 +1051,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1118,7 +1114,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1147,7 +1143,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1234,7 +1230,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1263,7 +1259,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1312,7 +1308,7 @@ namespace Azure.Storage.Files.Shares
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1337,7 +1333,7 @@ namespace Azure.Storage.Files.Shares
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1395,7 +1391,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1423,7 +1419,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1476,7 +1472,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1502,7 +1498,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1593,7 +1589,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1625,7 +1621,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

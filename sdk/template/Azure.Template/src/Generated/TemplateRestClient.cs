@@ -22,21 +22,16 @@ namespace Azure.Template
         private readonly string _vaultBaseUrl;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of TemplateRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TemplateRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
+        public TemplateRestClient(HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetSecretRequest(string secretName)
@@ -77,7 +72,7 @@ namespace Azure.Template
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -104,7 +99,7 @@ namespace Azure.Template
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

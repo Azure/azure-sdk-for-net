@@ -20,19 +20,14 @@ namespace Azure.Containers.ContainerRegistry
         private readonly HttpPipeline _pipeline;
         private readonly string _url;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of ContainerRegistryBlobRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ContainerRegistryBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="url"/> is null. </exception>
+        public ContainerRegistryBlobRestClient(HttpPipeline pipeline, string url)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetBlobRequest(string name, string digest)
@@ -80,7 +75,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -113,7 +108,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -158,7 +153,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,7 +182,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -234,7 +229,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -265,7 +260,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -315,7 +310,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -348,7 +343,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -385,7 +380,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -408,7 +403,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -452,7 +447,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -480,7 +475,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -529,7 +524,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -558,7 +553,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -594,7 +589,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -616,7 +611,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -654,7 +649,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -677,7 +672,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -730,7 +725,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -766,7 +761,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -816,7 +811,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -849,7 +844,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

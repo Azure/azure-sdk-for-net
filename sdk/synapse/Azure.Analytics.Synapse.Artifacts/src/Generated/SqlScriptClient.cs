@@ -46,16 +46,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SqlScriptRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new SqlScriptRestClient(_pipeline, endpoint);
         }
 
         /// <summary> Initializes a new instance of SqlScriptClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal SqlScriptClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            RestClient = new SqlScriptRestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new SqlScriptRestClient(pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

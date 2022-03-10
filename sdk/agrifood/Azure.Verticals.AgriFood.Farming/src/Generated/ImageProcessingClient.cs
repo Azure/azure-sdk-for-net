@@ -140,7 +140,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a ImageProcessing Rasterize job. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -185,7 +185,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -194,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a ImageProcessing Rasterize job. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -249,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> CreateRasterizeJob(bool waitForCompletion, string jobId, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateRasterizeJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -258,7 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

@@ -2024,7 +2024,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -2049,7 +2049,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2058,7 +2058,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2068,7 +2068,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -2093,7 +2093,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2102,7 +2102,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2112,7 +2112,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
@@ -2164,7 +2164,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2173,7 +2173,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2183,7 +2183,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
@@ -2235,7 +2235,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2244,7 +2244,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2254,7 +2254,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -2344,7 +2344,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2353,7 +2353,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2363,7 +2363,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -2453,7 +2453,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2462,7 +2462,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2472,7 +2472,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2498,7 +2498,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2508,7 +2508,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2518,7 +2518,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2544,7 +2544,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2554,7 +2554,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2564,7 +2564,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2603,7 +2603,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2613,7 +2613,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2623,7 +2623,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2662,7 +2662,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2672,7 +2672,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2682,7 +2682,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2743,7 +2743,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2753,7 +2753,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2763,7 +2763,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2824,7 +2824,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2834,7 +2834,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

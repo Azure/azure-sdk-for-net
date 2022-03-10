@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Monitoring
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new MonitoringRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new MonitoringRestClient(_pipeline, endpoint, options.Version);
         }
 
         /// <summary> Initializes a new instance of MonitoringClient. </summary>
@@ -54,9 +54,10 @@ namespace Azure.Analytics.Synapse.Monitoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         internal MonitoringClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-11-01-preview")
         {
-            RestClient = new MonitoringRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            RestClient = new MonitoringRestClient(pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

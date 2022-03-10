@@ -6430,7 +6430,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6463,7 +6463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -6473,7 +6473,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6483,7 +6483,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6516,7 +6516,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -6526,7 +6526,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -6536,7 +6536,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6569,7 +6569,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -6579,7 +6579,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6589,7 +6589,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> Indicates whether this method should return once it has started the long-running operation or wait for the operation to fully complete before returning. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
@@ -6622,7 +6622,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -6632,7 +6632,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {

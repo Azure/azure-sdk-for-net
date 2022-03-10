@@ -46,16 +46,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new NotebookRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new NotebookRestClient(_pipeline, endpoint);
         }
 
         /// <summary> Initializes a new instance of NotebookClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal NotebookClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            RestClient = new NotebookRestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new NotebookRestClient(pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
