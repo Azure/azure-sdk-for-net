@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource management error additional info.
+    /// Resources created in GitHub repository.
     /// </summary>
-    public partial class ErrorAdditionalInfo
+    public partial class GitHubResourceInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorAdditionalInfo class.
+        /// Initializes a new instance of the GitHubResourceInfo class.
         /// </summary>
-        public ErrorAdditionalInfo()
+        public GitHubResourceInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorAdditionalInfo class.
+        /// Initializes a new instance of the GitHubResourceInfo class.
         /// </summary>
-        /// <param name="type">The additional info type.</param>
-        /// <param name="info">The additional info.</param>
-        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
+        /// <param name="appInstallationId">GitHub application installation
+        /// id.</param>
+        public GitHubResourceInfo(string appInstallationId = default(string))
         {
-            Type = type;
-            Info = info;
+            AppInstallationId = appInstallationId;
             CustomInit();
         }
 
@@ -44,16 +43,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the additional info type.
+        /// Gets or sets gitHub application installation id.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets the additional info.
-        /// </summary>
-        [JsonProperty(PropertyName = "info")]
-        public object Info { get; private set; }
+        [JsonProperty(PropertyName = "appInstallationId")]
+        public string AppInstallationId { get; set; }
 
     }
 }

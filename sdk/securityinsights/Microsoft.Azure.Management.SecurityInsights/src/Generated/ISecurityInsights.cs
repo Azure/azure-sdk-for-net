@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// API spec for Microsoft.SecurityInsights (Azure Security Insights)
     /// resource provider
     /// </summary>
-    public partial interface ISecurityInsightsClient : System.IDisposable
+    public partial interface ISecurityInsights : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -91,6 +91,11 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IAutomationRulesOperations AutomationRules { get; }
 
         /// <summary>
+        /// Gets the IIncidentsOperations.
+        /// </summary>
+        IIncidentsOperations Incidents { get; }
+
+        /// <summary>
         /// Gets the IBookmarksOperations.
         /// </summary>
         IBookmarksOperations Bookmarks { get; }
@@ -116,11 +121,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IDomainWhoisOperations DomainWhois { get; }
 
         /// <summary>
-        /// Gets the IEntityQueriesOperations.
-        /// </summary>
-        IEntityQueriesOperations EntityQueries { get; }
-
-        /// <summary>
         /// Gets the IEntitiesOperations.
         /// </summary>
         IEntitiesOperations Entities { get; }
@@ -141,9 +141,14 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IEntityRelationsOperations EntityRelations { get; }
 
         /// <summary>
-        /// Gets the IIncidentsOperations.
+        /// Gets the IEntityQueriesOperations.
         /// </summary>
-        IIncidentsOperations Incidents { get; }
+        IEntityQueriesOperations EntityQueries { get; }
+
+        /// <summary>
+        /// Gets the IEntityQueryTemplatesOperations.
+        /// </summary>
+        IEntityQueryTemplatesOperations EntityQueryTemplates { get; }
 
         /// <summary>
         /// Gets the IIncidentCommentsOperations.
@@ -159,6 +164,11 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the IMetadataOperations.
         /// </summary>
         IMetadataOperations Metadata { get; }
+
+        /// <summary>
+        /// Gets the IOfficeConsentsOperations.
+        /// </summary>
+        IOfficeConsentsOperations OfficeConsents { get; }
 
         /// <summary>
         /// Gets the ISentinelOnboardingStatesOperations.
@@ -181,6 +191,21 @@ namespace Microsoft.Azure.Management.SecurityInsights
         ISourceControlsOperations SourceControls { get; }
 
         /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorOperations ThreatIntelligenceIndicator { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorsOperations ThreatIntelligenceIndicators { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorMetricsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorMetricsOperations ThreatIntelligenceIndicatorMetrics { get; }
+
+        /// <summary>
         /// Gets the IWatchlistsOperations.
         /// </summary>
         IWatchlistsOperations Watchlists { get; }
@@ -201,34 +226,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IDataConnectorsCheckRequirementsOperations DataConnectorsCheckRequirements { get; }
 
         /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorOperations ThreatIntelligenceIndicator { get; }
-
-        /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorsOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorsOperations ThreatIntelligenceIndicators { get; }
-
-        /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorMetricsOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorMetricsOperations ThreatIntelligenceIndicatorMetrics { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IOfficeConsentsOperations.
-        /// </summary>
-        IOfficeConsentsOperations OfficeConsents { get; }
-
-        /// <summary>
-        /// Gets the IEntityQueryTemplatesOperations.
-        /// </summary>
-        IEntityQueryTemplatesOperations EntityQueryTemplates { get; }
 
     }
 }

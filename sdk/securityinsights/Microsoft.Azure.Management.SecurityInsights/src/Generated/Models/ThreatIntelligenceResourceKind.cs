@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -27,24 +26,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Static constructor for ThreatIntelligenceResourceKind class.
-        /// </summary>
-        static ThreatIntelligenceResourceKind()
-        {
-            Kind = "indicator";
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// The kind of the entity.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public static string Kind { get; private set; }
 
     }
 }

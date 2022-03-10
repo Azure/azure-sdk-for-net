@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Evaluates if the property equals at least one of the condition
         /// values
         /// </summary>
-        public const string Equals = "Equals";
+        public new const string Equals = "Equals";
         /// <summary>
         /// Evaluates if the property does not equal any of the condition
         /// values

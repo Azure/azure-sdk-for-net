@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests.Helpers
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
-        public static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
+        public static SecurityInsights GetSecurityInsightsClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests.Helpers
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
 
             var SecurityInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
-                ? context.GetServiceClient<SecurityInsightsClient>(TestEnvironment, handlers: handler)
-                : context.GetServiceClient<SecurityInsightsClient>(handlers: handler);
+                ? context.GetServiceClient<SecurityInsights>(TestEnvironment, handlers: handler)
+                : context.GetServiceClient<SecurityInsights>(handlers: handler);
 
             return SecurityInsightsClient;
         }

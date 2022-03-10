@@ -102,11 +102,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 IsEnabled = false
             };
-            var ActionConfiguration = new AutomationRuleRunPlaybookActionActionConfiguration()
+            var ActionConfiguration = new PlaybookActionProperties()
             {
                 LogicAppResourceId = TestHelper.ActionLAResourceID,
-                TenantId = TestHelper.TestEnvironment.Tenant
-            };
+                TenantId = Guid.Parse(TestHelper.TestEnvironment.Tenant)
+            }; 
+
             var AutomationRuleAction = new AutomationRuleRunPlaybookAction()
             {
                 Order = 1,

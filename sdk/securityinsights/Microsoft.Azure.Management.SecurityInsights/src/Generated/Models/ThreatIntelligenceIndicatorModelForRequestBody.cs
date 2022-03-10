@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Threat intelligence indicator entity used in request body.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("indicator")]
     [Rest.Serialization.JsonTransformation]
     public partial class ThreatIntelligenceIndicatorModelForRequestBody : ThreatIntelligenceResourceKind
     {
