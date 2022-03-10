@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs.Primitives
 {
-    internal partial class BlobsCheckpointStore
+    internal partial class BlobCheckpointStoreInternal
     {
         private readonly string _functionId;
         private readonly ILogger _logger;
@@ -18,23 +18,21 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>
         /// The mocking constructor.
         /// </summary>
-        protected BlobsCheckpointStore()
+        protected BlobCheckpointStoreInternal()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BlobsCheckpointStore" /> class.
+        ///   Initializes a new instance of the <see cref="BlobCheckpointStoreInternal" /> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
-        /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
         /// <param name="functionId">The function id for diagnostic messages.</param>
         /// <param name="logger">The logger to use for diagnostic messages.</param>
         ///
-        public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
-            EventHubsRetryPolicy retryPolicy,
+        public BlobCheckpointStoreInternal(BlobContainerClient blobContainerClient,
             string functionId,
-            ILogger logger): this(blobContainerClient, retryPolicy, initializeWithLegacyCheckpoints: true)
+            ILogger logger): this(blobContainerClient, initializeWithLegacyCheckpoints: true)
         {
             _functionId = functionId;
             _logger = logger;
@@ -64,13 +62,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="partitionId">The identifier of the partition for which the checkpoint was being queried.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
-        partial void ListCheckpointsError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, Exception exception)
+        partial void GetCheckpointError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Exception exception)
         {
             _logger.LogWarning(exception,
-                "Function '{functionId}': An exception occurred when listing checkpoints for FullyQualifiedNamespace: '{fullyQualifiedNamespace}'; EventHubName: '{eventHubName}'; ConsumerGroup: '{consumerGroup}'.",
-                _functionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                "Function '{functionId}': An exception occurred when retrieving a checkpoint for FullyQualifiedNamespace: '{fullyQualifiedNamespace}'; EventHubName: '{eventHubName}'; ConsumerGroup: '{consumerGroup}'; PartitionId: '{partitionId}'.",
+                _functionId, fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
         }
 
         /// <summary>

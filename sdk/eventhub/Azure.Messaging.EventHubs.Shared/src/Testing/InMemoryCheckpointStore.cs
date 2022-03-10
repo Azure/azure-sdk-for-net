@@ -12,16 +12,16 @@ using Azure.Messaging.EventHubs.Primitives;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The EventProcessor relies on a <see cref="StorageManager" /> to store checkpoints and handle partition
-    ///   ownership.  <see cref="MockCheckPointStorage"/> is simple storage manager that stores checkpoints and
+    ///   The EventProcessor relies on a <see cref="CheckpointStore" /> to store checkpoints and handle partition
+    ///   ownership.  <see cref="InMemoryCheckpointStore"/> is simple storage manager that stores checkpoints and
     ///   partition ownership in memory of your program.
     ///
-    ///   You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
-    ///   But in production, you should choose an implementation of the <see cref="StorageManager" /> interface that will
+    ///   You can use the <see cref="InMemoryCheckpointStore"/> to get started with using the `EventProcessor`.
+    ///   But in production, you should choose an implementation of the <see cref="CheckpointStore" /> interface that will
     ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
-    internal class InMemoryStorageManager : StorageManager
+    internal class InMemoryCheckpointStore : CheckpointStore
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
         /// </summary>
         ///
-        public InMemoryStorageManager() : this(null)
+        public InMemoryCheckpointStore() : this(null)
         {
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="logger">Logs activities performed by this storage manager.</param>
         ///
-        public InMemoryStorageManager(Action<string> logger = null)
+        public InMemoryCheckpointStore(Action<string> logger = null)
         {
             _logger = logger;
 
@@ -79,15 +79,18 @@ namespace Azure.Messaging.EventHubs.Tests
         public int TotalRenewals { get; set; }
 
         /// <summary>
-        ///   Retrieves a complete ownership list from the in-memory storage service.
+        ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor
+        ///   instances for a given Event Hub and consumer group pairing.  This operation is used during load balancing to allow
+        ///   the processor to discover other active collaborators and to make decisions about how to best balance work
+        ///   between them.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
-        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>The set of ownership data to take into account when making load balancing decisions.</returns>
         ///
         public override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                                string eventHubName,
@@ -109,15 +112,17 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Attempts to claim ownership of partitions for processing.
+        ///   Attempts to claim ownership of the specified partitions for processing.  This operation is used by
+        ///   load balancing to enable distributing the responsibility for processing partitions for an
+        ///   Event Hub and consumer group pairing amongst the active event processors.
         /// </summary>
         ///
-        /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
+        /// <param name="desiredOwnership">The set of partition ownership desired by the event processor instance; this is the set of partitions that it will attempt to request responsibility for processing.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
-        /// <returns>An enumerable containing the successfully claimed ownership.</returns>
+        /// <returns>The set of ownership records for the partitions that were successfully claimed; this is expected to be the <paramref name="desiredOwnership"/> or a subset of those partitions.</returns>
         ///
-        public override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> partitionOwnership,
+        public override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership,
                                                                                                 CancellationToken cancellationToken = default)
         {
             var claimedOwnership = new List<EventProcessorPartitionOwnership>();
@@ -127,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             lock (_ownershipLock)
             {
-                foreach (EventProcessorPartitionOwnership ownership in partitionOwnership)
+                foreach (EventProcessorPartitionOwnership ownership in desiredOwnership)
                 {
                     var isClaimable = true;
                     var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
@@ -160,64 +165,77 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Retrieves a complete checkpoint list from the in-memory storage service.
+        ///   Requests checkpoint information for a specific partition, allowing an event processor to resume reading
+        ///   from the next event in the stream.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition to read a checkpoint for.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>An <see cref="EventProcessorCheckpoint"/> instance, if a checkpoint was found for the requested partition; otherwise, <c>null</c>.</returns>
         ///
-        public override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                         string eventHubName,
-                                                                                         string consumerGroup,
-                                                                                         CancellationToken cancellationToken = default)
+        public override Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace,
+                                                                          string eventHubName,
+                                                                          string consumerGroup,
+                                                                          string partitionId,
+                                                                          CancellationToken cancellationToken = default)
         {
-            List<EventProcessorCheckpoint> checkpointList;
+            EventProcessorCheckpoint checkpoint;
 
             EventProcessorCheckpoint TransformCheckpointData(CheckpointData data) =>
                 new EventProcessorCheckpoint
                 {
-                    FullyQualifiedNamespace = data.Checkpoint.FullyQualifiedNamespace,
-                    EventHubName = data.Checkpoint.EventHubName,
-                    ConsumerGroup = data.Checkpoint.ConsumerGroup,
-                    PartitionId = data.Checkpoint.PartitionId,
-                    StartingPosition = EventPosition.FromOffset(data.Event.Offset, false)
+                    FullyQualifiedNamespace = data.FullyQualifiedNamespace,
+                    EventHubName = data.EventHubName,
+                    ConsumerGroup = data.ConsumerGroup,
+                    PartitionId = data.PartitionId,
+                    StartingPosition = EventPosition.FromOffset(data.Offset, false)
                 };
 
             lock (_checkpointLock)
             {
-                checkpointList = Checkpoints.Values
-                    .Where(data => data.Checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
-                        && data.Checkpoint.EventHubName == eventHubName
-                        && data.Checkpoint.ConsumerGroup == consumerGroup)
+                checkpoint = Checkpoints.Values
+                    .Where(data => data.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && data.EventHubName == eventHubName
+                        && data.ConsumerGroup == consumerGroup
+                        && data.PartitionId == partitionId)
                     .Select(data => TransformCheckpointData(data))
-                    .ToList();
+                    .SingleOrDefault();
             }
 
-            return Task.FromResult((IEnumerable<EventProcessorCheckpoint>)checkpointList);
+            return Task.FromResult(checkpoint);
         }
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the in-memory storage service.
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
         /// </summary>
         ///
-        /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
-        /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
-                                                   EventData eventData,
+        public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string partitionId,
+                                                   long offset,
+                                                   long? sequenceNumber,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {
-                var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
-                Checkpoints[key] = new CheckpointData(checkpoint, eventData);
+                var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber);
 
-                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
+                Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
             }
 
             return Task.CompletedTask;
@@ -248,14 +266,26 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public struct CheckpointData
         {
-            public EventProcessorCheckpoint Checkpoint { get; }
-            public EventData Event { get; }
+            public string FullyQualifiedNamespace { get; }
+            public string EventHubName { get; }
+            public string ConsumerGroup { get; }
+            public string PartitionId { get; }
+            public long Offset { get; }
+            public long? SequenceNumber { get; }
 
-            public CheckpointData(EventProcessorCheckpoint checkpoint,
-                                  EventData eventData)
+            public CheckpointData(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  string consumerGroup,
+                                  string partitionId,
+                                  long offset,
+                                  long? sequenceNumber = default)
             {
-                Checkpoint = checkpoint;
-                Event = eventData;
+               FullyQualifiedNamespace = fullyQualifiedNamespace;
+               EventHubName = eventHubName;
+               ConsumerGroup = consumerGroup;
+               PartitionId = partitionId;
+               Offset = offset;
+               SequenceNumber = sequenceNumber;
             }
         }
     }

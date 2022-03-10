@@ -11,36 +11,36 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="InMemoryStorageManager" />
+    ///   The suite of tests for the <see cref="InMemoryCheckpointStore" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class InMemoryStorageManagerTests
+    public class InMemoryCheckpointStoreTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ListOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ListOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task ListOwnershipAsyncReturnsEmptyIEnumerableWhenThereAreNoOwnership()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             IEnumerable<EventProcessorPartitionOwnership> ownership = await storageManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
             Assert.That(ownership, Is.Not.Null.And.Empty);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task FirstOwnershipClaimSucceeds()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
             var ownership = new EventProcessorPartitionOwnership
             {
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("invalidVersion")]
         public async Task OwnershipClaimFailsWhenVersionIsInvalid(string version)
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
             var firstOwnership = new EventProcessorPartitionOwnership
             {
@@ -111,14 +111,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimSucceedsWhenVersionsValid()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
             var firstOwnership = new EventProcessorPartitionOwnership
             {
@@ -161,14 +161,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task ClaimOwnershipAsyncCanClaimMultipleOwnership()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
             var ownershipCount = 5;
 
@@ -195,14 +195,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task ClaimOwnershipAsyncReturnsOnlyTheSuccessfullyClaimedOwnership()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
             var ownershipCount = 5;
 
@@ -254,14 +254,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherConsumerGroups()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
 
             var firstOwnership = new EventProcessorPartitionOwnership
@@ -310,14 +310,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherEventHubs()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
 
             var firstOwnership = new EventProcessorPartitionOwnership
@@ -366,14 +366,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.ClaimOwnershipAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.ClaimOwnershipAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherNamespaces()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
             var ownershipList = new List<EventProcessorPartitionOwnership>();
 
             var firstOwnership = new EventProcessorPartitionOwnership
@@ -422,166 +422,80 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.UpdateCheckpointAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.UpdateCheckpointAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherConsumerGroups()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
 
-            var mockEvent = new MockEventData(
-                eventBody: Array.Empty<byte>(),
-                offset: 10,
-                sequenceNumber: 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", 10, 20);
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup1",
-                PartitionId = "partitionId"
-            }, mockEvent);
+            var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId");
+            var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId");
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup2",
-                PartitionId = "partitionId"
-            }, mockEvent);
-
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup1");
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup2");
-
-            Assert.That(storedCheckpointsList1, Is.Not.Null);
-            Assert.That(storedCheckpointsList1.Count, Is.EqualTo(1));
-
-            Assert.That(storedCheckpointsList2, Is.Not.Null);
-            Assert.That(storedCheckpointsList2.Count, Is.EqualTo(1));
+            Assert.That(storedCheckpoint1, Is.Not.Null);
+            Assert.That(storedCheckpoint2, Is.Not.Null);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.UpdateCheckpointAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.UpdateCheckpointAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherEventHubs()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
 
-            var mockEvent = new MockEventData(
-                eventBody: Array.Empty<byte>(),
-                offset: 10,
-                sequenceNumber: 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", 10, 20);
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName1",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId"
-            }, mockEvent);
+            var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId");
+            var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId");
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName2",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId"
-            }, mockEvent);
-
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName1", "consumerGroup");
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName2", "consumerGroup");
-
-            Assert.That(storedCheckpointsList1, Is.Not.Null);
-            Assert.That(storedCheckpointsList1.Count, Is.EqualTo(1));
-
-            Assert.That(storedCheckpointsList2, Is.Not.Null);
-            Assert.That(storedCheckpointsList2.Count, Is.EqualTo(1));
+            Assert.That(storedCheckpoint1, Is.Not.Null);
+            Assert.That(storedCheckpoint2, Is.Not.Null);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.UpdateCheckpointAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.UpdateCheckpointAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherNamespaces()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
 
-            var mockEvent = new MockEventData(
-                eventBody: Array.Empty<byte>(),
-                offset: 10,
-                sequenceNumber: 20);
+            await storageManager.UpdateCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", 10, 20);
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace1",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId"
-            }, mockEvent);
+            var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId");
+            var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId");
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace2",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId"
-            }, mockEvent);
-
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace1", "eventHubName", "consumerGroup");
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace2", "eventHubName", "consumerGroup");
-
-            Assert.That(storedCheckpointsList1, Is.Not.Null);
-            Assert.That(storedCheckpointsList1.Count, Is.EqualTo(1));
-
-            Assert.That(storedCheckpointsList2, Is.Not.Null);
-            Assert.That(storedCheckpointsList2.Count, Is.EqualTo(1));
+            Assert.That(storedCheckpoint1, Is.Not.Null);
+            Assert.That(storedCheckpoint2, Is.Not.Null);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="InMemoryStorageManager.UpdateCheckpointAsync" />
+        ///   Verifies functionality of the <see cref="InMemoryCheckpointStore.UpdateCheckpointAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherPartitions()
         {
-            var storageManager = new InMemoryStorageManager();
+            var storageManager = new InMemoryCheckpointStore();
 
-            var mockEvent = new MockEventData(
-                eventBody: Array.Empty<byte>(),
-                offset: 10,
-                sequenceNumber: 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", 10, 20);
+            await storageManager.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", 10, 20);
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId1"
-            }, mockEvent);
-
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId2"
-            }, mockEvent);
-
-            IEnumerable<EventProcessorCheckpoint> storedCheckpointsList = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup");
-
-            Assert.That(storedCheckpointsList, Is.Not.Null);
-            Assert.That(storedCheckpointsList.Count, Is.EqualTo(2));
-
-            EventProcessorCheckpoint storedCheckpoint1 = storedCheckpointsList.First(checkpoint => checkpoint.PartitionId == "partitionId1");
-            EventProcessorCheckpoint storedCheckpoint2 = storedCheckpointsList.First(checkpoint => checkpoint.PartitionId == "partitionId2");
+            var storedCheckpoint1 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1");
+            var storedCheckpoint2 = await storageManager.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2");
 
             Assert.That(storedCheckpoint1, Is.Not.Null);
             Assert.That(storedCheckpoint2, Is.Not.Null);
