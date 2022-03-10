@@ -78,3 +78,5 @@ await actionGroup.DeleteAsync(true);
 
 
 ## Next steps
+
+Take a look at the [Managing Monitor ActivityLogAlerts](https://github.com/Azure/azure-sdk-for-net/blob/Zihewang_Monitor_Test/sdk/monitor/Azure.ResourceManager.Monitor/samples/Sample1_ManagingMonitorActionGroup.md) samples.
