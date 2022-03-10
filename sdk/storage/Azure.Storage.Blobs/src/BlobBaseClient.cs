@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     range,
-                                    conditions,
+                                    conditionsWithEtag,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
@@ -1470,7 +1470,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
-                                conditions,
+                                conditionsWithEtag,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
