@@ -1,16 +1,12 @@
 # Release History
 
-## 7.8.0-beta.1 (Unreleased)
+## 7.8.0-beta.1 (2022-03-10)
 
 ### Features Added
 
-### Breaking Changes
+- Added the `ServiceBusRuleManager` which allows managing rules for subscriptions.
 
-### Bugs Fixed
-
-### Other Changes
-
-## 7.7.0 (2022-02-11)
+## 7.7.0 (2022-03-09)
 
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:

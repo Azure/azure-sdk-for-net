@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
         ///
-        /// <param name="options">The rule description that provides the rule to add.</param>
+        /// <param name="options">The options for the rule to add.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -179,7 +179,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RemoveRuleComplete(Identifier);
         }
 
@@ -189,17 +188,17 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>Returns a list of rules description</returns>
-        public virtual async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns a list of <see cref="RuleProperties"/></returns>
+        public virtual async Task<IReadOnlyList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            IList<RuleProperties> rulesDescription;
+            List<RuleProperties> rulePropertiesList;
 
             try
             {
-                rulesDescription = await InnerRuleManager.GetRulesAsync(cancellationToken).ConfigureAwait(false);
+                rulePropertiesList = await InnerRuleManager.GetRulesAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -209,7 +208,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleComplete(Identifier);
-            return rulesDescription;
+            return rulePropertiesList;
         }
 
         /// <summary>

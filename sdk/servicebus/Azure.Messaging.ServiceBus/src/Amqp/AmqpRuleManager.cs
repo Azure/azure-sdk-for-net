@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public override async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken) =>
+        public override async Task<List<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
                 static async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout).ConfigureAwait(false),
                 this,
@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        private async Task<IList<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout)
+        private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.EnumerateRulesOperation,

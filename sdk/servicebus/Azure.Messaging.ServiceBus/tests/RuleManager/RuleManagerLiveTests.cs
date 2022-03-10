@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 var sqlRuleName = "sqlRule";
                 var correlationRuleName = "correlationRule";
 
-                var rules = (await ruleManager.GetRulesAsync()).ToList();
+                var rules = await ruleManager.GetRulesAsync();
                 Assert.AreEqual(1, rules.Count());
                 var firstRule = rules[0];
                 Assert.AreEqual(RuleProperties.DefaultRuleName, firstRule.Name);
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 };
                 await ruleManager.AddRuleAsync(ruleOptions);
 
-                rules = (await ruleManager.GetRulesAsync()).ToList();
+                rules = await ruleManager.GetRulesAsync();
                 Assert.AreEqual(3, rules.Count);
 
                 var sqlRule = rules.FirstOrDefault(rule => rule.Name.Equals(sqlRuleName));
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 await ruleManager.RemoveRuleAsync(sqlRuleName);
                 await ruleManager.RemoveRuleAsync(correlationRuleName);
                 rules = (await ruleManager.GetRulesAsync()).ToList();
-                Assert.AreEqual(0, rules.Count());
+                Assert.AreEqual(0, rules.Count);
             }
         }
 
