@@ -210,14 +210,79 @@ namespace Azure.Core
         public static AzureLocation GermanyWestCentral { get; } = CreateStaticReference("germanywestcentral", "Germany West Central");
 
         /// <summary>
+        /// Public cloud location for Germany Central.
+        /// </summary>
+        public static AzureLocation GermanyCentral { get; } = CreateStaticReference("germanycentral", "Germany Central");
+
+        /// <summary>
+        /// Public cloud location for Germany NorthEast.
+        /// </summary>
+        public static AzureLocation GermanyNorthEast { get; } = CreateStaticReference("germanynortheast", "Germany Northeast");
+
+        /// <summary>
         /// Public cloud location for Norway West.
         /// </summary>
         public static AzureLocation NorwayWest { get; } = CreateStaticReference("norwaywest", "Norway West");
 
         /// <summary>
+        /// Public cloud location for Norway East.
+        /// </summary>
+        public static AzureLocation NorwayEast { get; } = CreateStaticReference("norwayeast", "Norway East");
+
+        /// <summary>
         /// Public cloud location for Brazil Southeast.
         /// </summary>
         public static AzureLocation BrazilSoutheast { get; } = CreateStaticReference("brazilsoutheast", "Brazil Southeast");
+
+        /// <summary>
+        /// Public cloud location for China North.
+        /// </summary>
+        public static AzureLocation ChinaNorth { get; } = CreateStaticReference("chinanorth", "China North");
+
+        /// <summary>
+        /// Public cloud location for China East.
+        /// </summary>
+        public static AzureLocation ChinaEast { get; } = CreateStaticReference("chinaeast", "China East");
+
+        /// <summary>
+        /// Public cloud location for China North 2.
+        /// </summary>
+        public static AzureLocation ChinaNorth2 { get; } = CreateStaticReference("chinanorth2", "China North 2");
+
+        /// <summary>
+        /// Public cloud location for China East 2.
+        /// </summary>
+        public static AzureLocation ChinaEast2 { get; } = CreateStaticReference("chinaeast2", "China East 2");
+
+        /// <summary>
+        /// Public cloud location for US DoD Central.
+        /// </summary>
+        public static AzureLocation USDoDCentral { get; } = CreateStaticReference("usdodcentral", "US DoD Central");
+
+        /// <summary>
+        /// Public cloud location for US DoD East.
+        /// </summary>
+        public static AzureLocation USDoDEast { get; } = CreateStaticReference("usdodeast", "US DoD East");
+
+        /// <summary>
+        /// Public cloud location for US Gov Arizona.
+        /// </summary>
+        public static AzureLocation USGovArizona { get; } = CreateStaticReference("usgovarizona", "US Gov Arizona");
+
+        /// <summary>
+        /// Public cloud location for US Gov Texas.
+        /// </summary>
+        public static AzureLocation USGovTexas { get; } = CreateStaticReference("usgovtexas", "US Gov Texas");
+
+        /// <summary>
+        /// Public cloud location for US Gov Virginia.
+        /// </summary>
+        public static AzureLocation USGovVirginia { get; } = CreateStaticReference("usgovvirginia", "US Gov Virginia");
+
+        /// <summary>
+        /// Public cloud location for US Gov Iowa.
+        /// </summary>
+        public static AzureLocation USGovIowa { get; } = CreateStaticReference("usgoviowa", "US Gov Iowa");
 
         #endregion
 

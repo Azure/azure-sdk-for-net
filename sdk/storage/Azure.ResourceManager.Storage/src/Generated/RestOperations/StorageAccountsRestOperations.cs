@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Storage
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -445,10 +445,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="options"> The parameters to provide for the updated account. </param>
+        /// <param name="data"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="options"/> is null. </exception>
-        public async Task<Response<StorageAccountData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<StorageAccountData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -462,12 +462,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -487,10 +487,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="options"> The parameters to provide for the updated account. </param>
+        /// <param name="data"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="options"/> is null. </exception>
-        public Response<StorageAccountData> Update(string subscriptionId, string resourceGroupName, string accountName, StorageAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        public Response<StorageAccountData> Update(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -504,12 +504,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (options == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

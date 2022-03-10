@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Domain registration status. </summary>
     public enum DomainStatus
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> Active. </summary>
         Active,
         /// <summary> Awaiting. </summary>
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.AppService.Models
         Suspended,
         /// <summary> Transferred. </summary>
         Transferred,
-        /// <summary> Unknown. </summary>
-        Unknown,
         /// <summary> Unlocked. </summary>
         Unlocked,
         /// <summary> Unparked. </summary>

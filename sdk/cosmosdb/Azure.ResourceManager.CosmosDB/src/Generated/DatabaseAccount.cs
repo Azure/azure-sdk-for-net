@@ -283,19 +283,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The parameters to provide for the current database account. </param>
+        /// <param name="data"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, PatchableDatabaseAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Update");
             scope.Start();
             try
             {
-                var response = await _databaseAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = await _databaseAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -313,19 +313,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The parameters to provide for the current database account. </param>
+        /// <param name="data"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<DatabaseAccount> Update(bool waitForCompletion, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DatabaseAccount> Update(bool waitForCompletion, PatchableDatabaseAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Update");
             scope.Start();
             try
             {
-                var response = _databaseAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = _databaseAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -447,20 +447,25 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseAccountConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseAccountConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
+            async Task<Page<DatabaseAccountConnectionString>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _databaseAccountRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ConnectionStrings, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -469,20 +474,25 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountConnectionStringList> GetConnectionStrings(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseAccountConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseAccountConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
+            Page<DatabaseAccountConnectionString> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _databaseAccountRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.ConnectionStrings, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -658,7 +668,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
 
@@ -688,7 +698,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public virtual ArmOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
 

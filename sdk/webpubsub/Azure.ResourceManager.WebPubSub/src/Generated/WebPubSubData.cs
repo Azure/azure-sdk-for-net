@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </param>
-        /// <param name="networkAcls"> Network Acls. </param>
+        /// <param name="networkAcls"> Network ACLs. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
         /// When it&apos;s Enabled, network ACLs still apply.
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Network Acls. </summary>
+        /// <summary> Network ACLs. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.

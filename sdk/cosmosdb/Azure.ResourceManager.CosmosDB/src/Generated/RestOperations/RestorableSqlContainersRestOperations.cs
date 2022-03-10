@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<RestorableSqlContainersList>> ListAsync(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableSqlContainersListResult>> ListAsync(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableSqlContainersList value = default;
+                        RestorableSqlContainersListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableSqlContainersList.DeserializeRestorableSqlContainersList(document.RootElement);
+                        value = RestorableSqlContainersListResult.DeserializeRestorableSqlContainersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="instanceId"/> is null. </exception>
-        public Response<RestorableSqlContainersList> List(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public Response<RestorableSqlContainersListResult> List(string subscriptionId, string location, string instanceId, string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableSqlContainersList value = default;
+                        RestorableSqlContainersListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableSqlContainersList.DeserializeRestorableSqlContainersList(document.RootElement);
+                        value = RestorableSqlContainersListResult.DeserializeRestorableSqlContainersListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

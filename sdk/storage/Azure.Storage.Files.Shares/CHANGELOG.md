@@ -3,6 +3,8 @@
 ## 12.9.0-beta.4 (Unreleased)
 - Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
 - Added new overload of ShareFileClient.StartCopy() and .StartCopyAsync(), added new parameters allowing the copying of the source file's CreatedOn, LastWrittenOn, and FileAttributes properties.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareUriBuilder was case sensitive for parameter names.
 
 ## 12.9.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.

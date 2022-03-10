@@ -287,7 +287,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Type = "akv",
                         Value = "akvPath",
-                        Name = "cmk"
+                        Name = "cmk",
+                        Algorithm = "algo"
                     },
                     WrappedDataEncryptionKey = new byte[] { 0xab, 0x57, 0x05, 0xe9, 0x9f, 0xe2 }
                 };
@@ -315,6 +316,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
                 Assert.Equal(clientEncryptionKeyResource.EncryptionAlgorithm, clientEncryptionKeyRetrieved.Resource.EncryptionAlgorithm);
                 Assert.Equal(clientEncryptionKeyResource.KeyWrapMetadata.Name, clientEncryptionKeyRetrieved.Resource.KeyWrapMetadata.Name);
+                Assert.Equal(clientEncryptionKeyResource.KeyWrapMetadata.Algorithm, clientEncryptionKeyRetrieved.Resource.KeyWrapMetadata.Algorithm);
 
                 clientEncryptionKeyResource.WrappedDataEncryptionKey = new byte[] { 0xac, 0x15 };
                 clientEncryptionKeyCreateUpdateParameters = new ClientEncryptionKeyCreateUpdateParameters
@@ -349,7 +351,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Type = "akv",
                         Value = "akvPath2",
-                        Name = "cmk"
+                        Name = "cmk",
+                        Algorithm = "algo"
                     },
                     WrappedDataEncryptionKey = new byte[] { 0x11, 0x54, 0x10, 0xa9, 0x1f, 0x24 }
                 };

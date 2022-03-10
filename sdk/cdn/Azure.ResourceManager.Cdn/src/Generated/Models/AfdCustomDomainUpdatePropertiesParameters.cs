@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class AfdCustomDomainUpdatePropertiesParameters
+    internal partial class AfdCustomDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdCustomDomainUpdatePropertiesParameters. </summary>
         public AfdCustomDomainUpdatePropertiesParameters()

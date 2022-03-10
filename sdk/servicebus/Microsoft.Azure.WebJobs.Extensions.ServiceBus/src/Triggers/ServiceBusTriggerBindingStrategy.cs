@@ -52,10 +52,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
 
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            // TODO - investigate why the parameter names need to be hard-coded here but they are not
-            // for binding to sender
+
+            // Support MessageReceiver and MessageSession parameters for backcompat
             SafeAddValue(() => bindingData.Add("MessageReceiver", value.MessageActions));
             SafeAddValue(() => bindingData.Add("MessageSession", value.MessageActions));
+
             SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
             SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
             SafeAddValue(() => bindingData.Add("Client", value.Client));
@@ -79,7 +80,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "DeadLetterSource", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "LockToken", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ExpiresAtUtc", typeof(DateTime), isSingleDispatch);
+            AddBindingContractMember(contract, "ExpiresAt", typeof(DateTimeOffset), isSingleDispatch);
             AddBindingContractMember(contract, "EnqueuedTimeUtc", typeof(DateTime), isSingleDispatch);
+            AddBindingContractMember(contract, "EnqueuedTime", typeof(DateTimeOffset), isSingleDispatch);
             AddBindingContractMember(contract, "MessageId", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ContentType", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ReplyTo", typeof(string), isSingleDispatch);
@@ -92,6 +95,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             // for backcompat
             AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
+
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
             contract.Add("MessageActions", typeof(ServiceBusMessageActions));
@@ -107,7 +111,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             var deadLetterSources = new string[length];
             var lockTokens = new string[length];
             var expiresAtUtcs = new DateTime[length];
+            var expiresAt = new DateTimeOffset[length];
             var enqueuedTimeUtcs = new DateTime[length];
+            var enqueuedTimes = new DateTimeOffset[length];
             var messageIds = new string[length];
             var contentTypes = new string[length];
             var replyTos = new string[length];
@@ -121,7 +127,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("DeadLetterSourceArray", deadLetterSources));
             SafeAddValue(() => bindingData.Add("LockTokenArray", lockTokens));
             SafeAddValue(() => bindingData.Add("ExpiresAtUtcArray", expiresAtUtcs));
+            SafeAddValue(() => bindingData.Add("ExpiresAtArray", expiresAt));
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtcArray", enqueuedTimeUtcs));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeArray", enqueuedTimes));
             SafeAddValue(() => bindingData.Add("MessageIdArray", messageIds));
             SafeAddValue(() => bindingData.Add("ContentTypeArray", contentTypes));
             SafeAddValue(() => bindingData.Add("ReplyToArray", replyTos));
@@ -140,7 +148,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 deadLetterSources[i] = messages[i].DeadLetterSource;
                 lockTokens[i] = messages[i].LockToken;
                 expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime;
+                expiresAt[i] = messages[i].ExpiresAt;
                 enqueuedTimeUtcs[i] = messages[i].EnqueuedTime.DateTime;
+                enqueuedTimes[i] = messages[i].EnqueuedTime;
                 messageIds[i] = messages[i].MessageId;
                 contentTypes[i] = messages[i].ContentType;
                 replyTos[i] = messages[i].ReplyTo;
@@ -157,8 +167,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.DeliveryCount), value.DeliveryCount));
             SafeAddValue(() => bindingData.Add(nameof(value.DeadLetterSource), value.DeadLetterSource));
             SafeAddValue(() => bindingData.Add(nameof(value.LockToken), value.LockToken));
+            // for backcompat
             SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.DateTime));
+            SafeAddValue(() => bindingData.Add(nameof(value.ExpiresAt), value.ExpiresAt));
+            // for backcompat
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime.DateTime));
+            SafeAddValue(() => bindingData.Add(nameof(value.EnqueuedTime), value.EnqueuedTime));
             SafeAddValue(() => bindingData.Add(nameof(value.MessageId), value.MessageId));
             SafeAddValue(() => bindingData.Add(nameof(value.ContentType), value.ContentType));
             SafeAddValue(() => bindingData.Add(nameof(value.ReplyTo), value.ReplyTo));

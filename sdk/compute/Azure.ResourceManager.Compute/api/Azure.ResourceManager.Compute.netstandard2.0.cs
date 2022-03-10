@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> Update(Azure.ResourceManager.Compute.Models.AvailabilitySetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> UpdateAsync(Azure.ResourceManager.Compute.Models.AvailabilitySetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet> Update(Azure.ResourceManager.Compute.Models.PatchableAvailabilitySetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySet>> UpdateAsync(Azure.ResourceManager.Compute.Models.PatchableAvailabilitySetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AvailabilitySetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.AvailabilitySet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.AvailabilitySet>, System.Collections.IEnumerable
     {
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservation>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CapacityReservation> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservation>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CapacityReservation> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.CapacityReservationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CapacityReservation>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.CapacityReservationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CapacityReservation> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableCapacityReservationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CapacityReservation>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableCapacityReservationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CapacityReservationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CapacityReservation>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservation>, System.Collections.IEnumerable
     {
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup> Update(Azure.ResourceManager.Compute.Models.CapacityReservationGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.CapacityReservationGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup> Update(Azure.ResourceManager.Compute.Models.PatchableCapacityReservationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.PatchableCapacityReservationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CapacityReservationGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CapacityReservationGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservationGroup>, System.Collections.IEnumerable
     {
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHost>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHost> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHost>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DedicatedHost> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DedicatedHostUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DedicatedHost>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DedicatedHostUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DedicatedHost> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDedicatedHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DedicatedHost>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDedicatedHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DedicatedHostCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DedicatedHost>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHost>, System.Collections.IEnumerable
     {
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> Update(Azure.ResourceManager.Compute.Models.DedicatedHostGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.DedicatedHostGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup> Update(Azure.ResourceManager.Compute.Models.PatchableDedicatedHostGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.PatchableDedicatedHostGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DedicatedHostGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DedicatedHostGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHostGroup>, System.Collections.IEnumerable
     {
@@ -397,8 +397,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RevokeAccessAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Disk> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Disk>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Disk> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DiskUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Disk>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DiskUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Disk> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDiskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Disk>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDiskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DiskAccess : Azure.ResourceManager.Core.ArmResource
     {
@@ -519,8 +519,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DiskEncryptionSet>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DiskEncryptionSet> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DiskEncryptionSetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DiskEncryptionSet>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.DiskEncryptionSetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DiskEncryptionSet> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDiskEncryptionSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.DiskEncryptionSet>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableDiskEncryptionSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DiskEncryptionSetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.DiskEncryptionSet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskEncryptionSet>, System.Collections.IEnumerable
     {
@@ -619,8 +619,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Gallery>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Gallery> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Gallery>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Gallery> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Gallery>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Gallery> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Gallery>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.SharingUpdate> UpdateSharingProfile(bool waitForCompletion, Azure.ResourceManager.Compute.Models.SharingUpdate sharingUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.SharingUpdate>> UpdateSharingProfileAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.SharingUpdate sharingUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -642,8 +642,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplication>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplication> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplication>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplication> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryApplicationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplication>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryApplicationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplication> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplication>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryApplicationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryApplication>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplication>, System.Collections.IEnumerable
     {
@@ -689,8 +689,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryApplicationVersion>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplicationVersion> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryApplicationVersionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplicationVersion>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryApplicationVersionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplicationVersion> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryApplicationVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryApplicationVersion>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryApplicationVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryApplicationVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryApplicationVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplicationVersion>, System.Collections.IEnumerable
     {
@@ -760,8 +760,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImage>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImage> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImage>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImage> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryImageUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImage>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryImageUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImage> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImage>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryImageCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryImage>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImage>, System.Collections.IEnumerable
     {
@@ -815,8 +815,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.GalleryImageVersion>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImageVersion> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryImageVersionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImageVersion>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.GalleryImageVersionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImageVersion> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryImageVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.GalleryImageVersion>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableGalleryImageVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryImageVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.GalleryImageVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImageVersion>, System.Collections.IEnumerable
     {
@@ -860,8 +860,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Image>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Image> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Image>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Image> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.ImageUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Image>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.ImageUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Image> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Image>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ImageCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Image>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Image>, System.Collections.IEnumerable
     {
@@ -1101,8 +1101,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> Update(Azure.ResourceManager.Compute.Models.RestorePointGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.RestorePointGroupUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup> Update(Azure.ResourceManager.Compute.Models.PatchableRestorePointGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroup>> UpdateAsync(Azure.ResourceManager.Compute.Models.PatchableRestorePointGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RestorePointGroupCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.RestorePointGroup>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.RestorePointGroup>, System.Collections.IEnumerable
     {
@@ -1304,8 +1304,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RevokeAccessAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Snapshot> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Snapshot>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Snapshot> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.SnapshotUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Snapshot>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.SnapshotUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Snapshot> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableSnapshotData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Snapshot>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableSnapshotData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SnapshotCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Snapshot>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Snapshot>, System.Collections.IEnumerable
     {
@@ -1370,8 +1370,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> Update(Azure.ResourceManager.Compute.Models.SshPublicKeyUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> UpdateAsync(Azure.ResourceManager.Compute.Models.SshPublicKeyUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.SshPublicKey> Update(Azure.ResourceManager.Compute.Models.PatchableSshPublicKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.SshPublicKey>> UpdateAsync(Azure.ResourceManager.Compute.Models.PatchableSshPublicKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SshPublicKeyCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.SshPublicKey>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.SshPublicKey>, System.Collections.IEnumerable
     {
@@ -1517,8 +1517,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReapplyAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Redeploy(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Reimage(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Reimage(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineReimageOptions parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineReimageOptions parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachine> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachine>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1531,8 +1531,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachine>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SimulateEviction(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SimulateEvictionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachine> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachine>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachine>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachine>, System.Collections.IEnumerable
     {
@@ -1602,8 +1602,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineExtension>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtension>, System.Collections.IEnumerable
     {
@@ -1741,19 +1741,19 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation CancelVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ConvertToSinglePlacementGroup(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetConvertToSinglePlacementGroupOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetConvertToSinglePlacementGroupOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ConvertToSinglePlacementGroup(Azure.ResourceManager.Compute.Models.VmScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(Azure.ResourceManager.Compute.Models.VmScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Deallocate(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeallocateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Deallocate(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeallocateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation DeleteInstances(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteInstancesAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation DeleteInstances(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteInstancesAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Get(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetAsync(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Get(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetAsync(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1763,22 +1763,22 @@ namespace Azure.ResourceManager.Compute
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionCollection GetVirtualMachineScaleSetExtensions() { throw null; }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade() { throw null; }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetVmCollection GetVirtualMachineScaleSetVms() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PerformMaintenance(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PerformMaintenanceAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PowerOff(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PowerOffAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PowerOn(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PowerOnAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Redeploy(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PerformMaintenance(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PerformMaintenanceAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PowerOff(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PowerOffAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PowerOn(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PowerOnAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Redeploy(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Reimage(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ReimageAll(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAllAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ReimageAll(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAllAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Restart(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Restart(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SetOrchestrationServiceState(bool waitForCompletion, Azure.ResourceManager.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SetOrchestrationServiceStateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1787,24 +1787,24 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation StartOSUpgrade(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartOSUpgradeAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation UpdateInstances(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateInstancesAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation UpdateInstances(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateInstancesAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>, System.Collections.IEnumerable
     {
         protected VirtualMachineScaleSetCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet> CreateOrUpdate(bool waitForCompletion, string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> CreateOrUpdateAsync(bool waitForCompletion, string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Get(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> Get(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.VirtualMachineScaleSet> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.VirtualMachineScaleSet> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> GetIfExists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetIfExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet> GetIfExists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSet>> GetIfExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSet> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSet> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1845,8 +1845,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtension>, System.Collections.IEnumerable
     {
@@ -1970,10 +1970,10 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PowerOnAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Redeploy(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Reimage(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Reimage(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmReimageOptions vmScaleSetVmReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ReimageAll(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAllAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmReimageOptions vmScaleSetVmReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVm> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVm>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2041,8 +2041,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmExtensionUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension> Update(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetVmExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.Compute.Models.PatchableVirtualMachineScaleSetVmExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetVmExtensionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtension>, System.Collections.IEnumerable
     {
@@ -2168,16 +2168,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Enabled { get { throw null; } set { } }
         public string GracePeriod { get { throw null; } set { } }
     }
-    public partial class AvailabilitySetUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public AvailabilitySetUpdateOptions() { }
-        public int? PlatformFaultDomainCount { get { throw null; } set { } }
-        public int? PlatformUpdateDomainCount { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
-    }
     public partial class AvailablePatchSummary
     {
         internal AvailablePatchSummary() { }
@@ -2226,13 +2216,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewTypes left, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CapacityReservationGroupUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public CapacityReservationGroupUpdateOptions() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
-    }
     public partial class CapacityReservationInstanceView
     {
         internal CapacityReservationInstanceView() { }
@@ -2260,16 +2243,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal CapacityReservationInstanceViewWithName() { }
         public string Name { get { throw null; } }
-    }
-    public partial class CapacityReservationUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public CapacityReservationUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
-        public string ReservationId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
     }
     public partial class CloudServiceExtensionProperties
     {
@@ -2327,11 +2300,6 @@ namespace Azure.ResourceManager.Compute.Models
         public long? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-    }
-    public partial class CloudServiceUpdateOptions
-    {
-        public CloudServiceUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudServiceUpgradeMode : System.IEquatable<Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode>
@@ -2459,15 +2427,6 @@ namespace Azure.ResourceManager.Compute.Models
         public double? Count { get { throw null; } }
         public string VmSize { get { throw null; } }
     }
-    public partial class DedicatedHostGroupUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public DedicatedHostGroupUpdateOptions() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
-        public int? PlatformFaultDomainCount { get { throw null; } set { } }
-        public bool? SupportAutomaticPlacement { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-    }
     public partial class DedicatedHostInstanceView
     {
         internal DedicatedHostInstanceView() { }
@@ -2485,18 +2444,6 @@ namespace Azure.ResourceManager.Compute.Models
         None = 0,
         WindowsServerHybrid = 1,
         WindowsServerPerpetual = 2,
-    }
-    public partial class DedicatedHostUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public DedicatedHostUpdateOptions() { }
-        public bool? AutoReplaceOnFailure { get { throw null; } set { } }
-        public string HostId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DedicatedHostLicenseTypes? LicenseType { get { throw null; } set { } }
-        public int? PlatformFaultDomain { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeleteOptions : System.IEquatable<Azure.ResourceManager.Compute.Models.DeleteOptions>
@@ -2556,11 +2503,6 @@ namespace Azure.ResourceManager.Compute.Models
         public DiffDiskSettings() { }
         public Azure.ResourceManager.Compute.Models.DiffDiskOptions? Option { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiffDiskPlacement? Placement { get { throw null; } set { } }
-    }
-    public partial class DiskAccessUpdateOptions
-    {
-        public DiskAccessUpdateOptions() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskCreateOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskCreateOption>
@@ -2642,24 +2584,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes left, Azure.ResourceManager.Compute.Models.DiskDetachOptionTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiskEncryptionSetIdentityType : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DiskEncryptionSetIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DiskEncryptionSettings
     {
         public DiskEncryptionSettings() { }
@@ -2685,15 +2609,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.DiskEncryptionSetType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DiskEncryptionSetUpdateOptions
-    {
-        public DiskEncryptionSetUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? EncryptionType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DiskImageEncryption
     {
@@ -2793,30 +2708,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskStorageAccountTypes left, Azure.ResourceManager.Compute.Models.DiskStorageAccountTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskUpdateOptions
-    {
-        public DiskUpdateOptions() { }
-        public bool? AcceleratedNetwork { get { throw null; } set { } }
-        public bool? BurstingEnabled { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
-        public long? DiskIopsReadOnly { get { throw null; } set { } }
-        public long? DiskIopsReadWrite { get { throw null; } set { } }
-        public long? DiskMBpsReadOnly { get { throw null; } set { } }
-        public long? DiskMBpsReadWrite { get { throw null; } set { } }
-        public int? DiskSizeGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Encryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
-        public int? MaxShares { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
-        public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.DiskSku Sku { get { throw null; } set { } }
-        public bool? SupportsHibernation { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Tier { get { throw null; } set { } }
-    }
     public partial class Encryption
     {
         public Encryption() { }
@@ -2903,20 +2794,20 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpandTypesForGetVirtualMachineScaleSets : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets>
+    public readonly partial struct ExpandTypesForGetVmScaleSets : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExpandTypesForGetVirtualMachineScaleSets(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets UserData { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets other) { throw null; }
+        public ExpandTypesForGetVmScaleSets(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets UserData { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVirtualMachineScaleSets right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSets right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExtendedLocation
@@ -2965,16 +2856,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceExtensionProperties Properties { get { throw null; } set { } }
     }
-    public partial class GalleryApplicationUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
-    {
-        public GalleryApplicationUpdateOptions() { }
-        public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
-        public string Eula { get { throw null; } set { } }
-        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
-        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryApplicationVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState>
     {
@@ -3003,13 +2884,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableHealthCheck { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserArtifactManage ManageActions { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserArtifactSource Source { get { throw null; } set { } }
-    }
-    public partial class GalleryApplicationVersionUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
-    {
-        public GalleryApplicationVersionUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
     }
     public partial class GalleryArtifactPublishingProfileBase
     {
@@ -3075,24 +2949,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState left, Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GalleryImageUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
-    {
-        public GalleryImageUpdateOptions() { }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
-        public string Eula { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes? OSState { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
-        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } set { } }
-        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImageVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState>
     {
@@ -3125,14 +2981,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryDataDiskImage> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryOSDiskImage OSDiskImage { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource Source { get { throw null; } set { } }
-    }
-    public partial class GalleryImageVersionUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
-    {
-        public GalleryImageVersionUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
     }
     public partial class GalleryOSDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -3177,15 +3025,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes left, Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class GalleryUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
-    {
-        public GalleryUpdateOptions() { }
-        public string Description { get { throw null; } set { } }
-        public string IdentifierUniqueName { get { throw null; } }
-        public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.GalleryPropertiesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile { get { throw null; } set { } }
     }
     public partial class GrantAccessData
     {
@@ -3311,14 +3150,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ImageDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageOSDisk OSDisk { get { throw null; } set { } }
         public bool? ZoneResilient { get { throw null; } set { } }
-    }
-    public partial class ImageUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public ImageUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
     }
     public partial class InnerError
     {
@@ -3735,10 +3566,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Uri VhdUri { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
-    public partial class OSDiskImageEncryption : Azure.ResourceManager.Compute.Models.DiskImageEncryption
-    {
-        public OSDiskImageEncryption() { }
-    }
     public partial class OSFamilyProperties
     {
         internal OSFamilyProperties() { }
@@ -3776,6 +3603,268 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? IsDefault { get { throw null; } }
         public string Label { get { throw null; } }
         public string Version { get { throw null; } }
+    }
+    public partial class PatchableAvailabilitySetData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableAvailabilitySetData() { }
+        public int? PlatformFaultDomainCount { get { throw null; } set { } }
+        public int? PlatformUpdateDomainCount { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
+    }
+    public partial class PatchableCapacityReservationData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableCapacityReservationData() { }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
+        public string ReservationId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
+    }
+    public partial class PatchableCapacityReservationGroupData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableCapacityReservationGroupData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
+    }
+    public partial class PatchableDedicatedHostData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableDedicatedHostData() { }
+        public bool? AutoReplaceOnFailure { get { throw null; } set { } }
+        public string HostId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DedicatedHostLicenseTypes? LicenseType { get { throw null; } set { } }
+        public int? PlatformFaultDomain { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
+    }
+    public partial class PatchableDedicatedHostGroupData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableDedicatedHostGroupData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
+        public int? PlatformFaultDomainCount { get { throw null; } set { } }
+        public bool? SupportAutomaticPlacement { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+    }
+    public partial class PatchableDiskData
+    {
+        public PatchableDiskData() { }
+        public bool? AcceleratedNetwork { get { throw null; } set { } }
+        public bool? BurstingEnabled { get { throw null; } set { } }
+        public string DiskAccessId { get { throw null; } set { } }
+        public long? DiskIopsReadOnly { get { throw null; } set { } }
+        public long? DiskIopsReadWrite { get { throw null; } set { } }
+        public long? DiskMBpsReadOnly { get { throw null; } set { } }
+        public long? DiskMBpsReadWrite { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Encryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
+        public int? MaxShares { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
+        public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskSku Sku { get { throw null; } set { } }
+        public bool? SupportsHibernation { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string Tier { get { throw null; } set { } }
+    }
+    public partial class PatchableDiskEncryptionSetData
+    {
+        public PatchableDiskEncryptionSetData() { }
+        public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? EncryptionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableGalleryApplicationData : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
+    {
+        public PatchableGalleryApplicationData() { }
+        public string Description { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public string Eula { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
+    }
+    public partial class PatchableGalleryApplicationVersionData : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
+    {
+        public PatchableGalleryApplicationVersionData() { }
+        public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+    }
+    public partial class PatchableGalleryData : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
+    {
+        public PatchableGalleryData() { }
+        public string Description { get { throw null; } set { } }
+        public string IdentifierUniqueName { get { throw null; } }
+        public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GalleryPropertiesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile { get { throw null; } set { } }
+    }
+    public partial class PatchableGalleryImageData : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
+    {
+        public PatchableGalleryImageData() { }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public string Eula { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes? OSState { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
+    }
+    public partial class PatchableGalleryImageVersionData : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
+    {
+        public PatchableGalleryImageVersionData() { }
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
+    }
+    public partial class PatchableImageData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableImageData() { }
+        public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
+    }
+    public partial class PatchableRestorePointGroupData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableRestorePointGroupData() { }
+        public string ProvisioningState { get { throw null; } }
+        public string RestorePointCollectionId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.RestorePointCollectionSourceProperties Source { get { throw null; } set { } }
+    }
+    public partial class PatchableSnapshotData
+    {
+        public PatchableSnapshotData() { }
+        public bool? AcceleratedNetwork { get { throw null; } set { } }
+        public string DiskAccessId { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Encryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
+        public bool? SupportsHibernation { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableSshPublicKeyData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableSshPublicKeyData() { }
+        public string PublicKey { get { throw null; } set { } }
+    }
+    public partial class PatchableVirtualMachineData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableVirtualMachineData() { }
+        public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
+        public double? BillingMaxPrice { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyTypes? EvictionPolicy { get { throw null; } set { } }
+        public string ExtensionsTimeBudget { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGalleryApplication> GalleryApplications { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostId { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView InstanceView { get { throw null; } }
+        public string LicenseType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OSProfile OSProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public int? PlatformFaultDomain { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
+        public string UserData { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetId { get { throw null; } set { } }
+        public string VmId { get { throw null; } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+    }
+    public partial class PatchableVirtualMachineExtensionData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableVirtualMachineExtensionData() { }
+        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
+        public string ForceUpdateTag { get { throw null; } set { } }
+        public object ProtectedSettings { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public object Settings { get { throw null; } set { } }
+        public bool? SuppressFailures { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+        public string TypeHandlerVersion { get { throw null; } set { } }
+    }
+    public partial class PatchableVirtualMachineScaleSetData : Azure.ResourceManager.Compute.Models.UpdateResource
+    {
+        public PatchableVirtualMachineScaleSetData() { }
+        public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
+        public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? Overprovision { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
+        public bool? SinglePlacementGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get { throw null; } set { } }
+    }
+    public partial class PatchableVirtualMachineScaleSetExtensionData : Azure.ResourceManager.Compute.Models.SubResourceReadOnly
+    {
+        public PatchableVirtualMachineScaleSetExtensionData() { }
+        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
+        public string ForceUpdateTag { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public object ProtectedSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public string Publisher { get { throw null; } set { } }
+        public object Settings { get { throw null; } set { } }
+        public bool? SuppressFailures { get { throw null; } set { } }
+        public string Type { get { throw null; } }
+        public string TypeHandlerVersion { get { throw null; } set { } }
+        public string TypePropertiesType { get { throw null; } set { } }
+    }
+    public partial class PatchableVirtualMachineScaleSetVmExtensionData : Azure.ResourceManager.Compute.Models.SubResourceReadOnly
+    {
+        public PatchableVirtualMachineScaleSetVmExtensionData() { }
+        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
+        public string ForceUpdateTag { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public object ProtectedSettings { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public object Settings { get { throw null; } set { } }
+        public bool? SuppressFailures { get { throw null; } set { } }
+        public string Type { get { throw null; } }
+        public string TypeHandlerVersion { get { throw null; } set { } }
+        public string TypePropertiesType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchAssessmentState : System.IEquatable<Azure.ResourceManager.Compute.Models.PatchAssessmentState>
@@ -3928,11 +4017,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PrivateLinkResource> Value { get { throw null; } }
-    }
     public partial class PrivateLinkServiceConnectionState
     {
         public PrivateLinkServiceConnectionState() { }
@@ -3962,10 +4046,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType left, Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ProximityPlacementGroupUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public ProximityPlacementGroupUpdateOptions() { }
     }
     public partial class PublicIPAddressSku
     {
@@ -4138,13 +4218,6 @@ namespace Azure.ResourceManager.Compute.Models
         public RequestRateByIntervalInput(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMins intervalLength) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
         public Azure.ResourceManager.Compute.Models.IntervalInMins IntervalLength { get { throw null; } }
     }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
-    }
     public partial class ResourceInstanceViewStatus
     {
         internal ResourceInstanceViewStatus() { }
@@ -4193,15 +4266,15 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public enum ResourceSkuCapacityScaleType
     {
-        Automatic = 0,
-        Manual = 1,
-        None = 2,
+        None = 0,
+        Automatic = 1,
+        Manual = 2,
     }
     public partial class ResourceSkuCosts
     {
         internal ResourceSkuCosts() { }
         public string ExtendedUnit { get { throw null; } }
-        public string MeterID { get { throw null; } }
+        public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
     }
     public partial class ResourceSkuLocationInfo
@@ -4265,14 +4338,6 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointCollectionSourceProperties() { }
         public string Id { get { throw null; } set { } }
         public string Location { get { throw null; } }
-    }
-    public partial class RestorePointGroupUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public RestorePointGroupUpdateOptions() { }
-        public string ProvisioningState { get { throw null; } }
-        public string RestorePointCollectionId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointCollectionSourceProperties Source { get { throw null; } set { } }
     }
     public partial class RestorePointSourceMetadata
     {
@@ -4585,21 +4650,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountTypes left, Azure.ResourceManager.Compute.Models.SnapshotStorageAccountTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SnapshotUpdateOptions
-    {
-        public SnapshotUpdateOptions() { }
-        public bool? AcceleratedNetwork { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
-        public int? DiskSizeGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Encryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
-        public bool? SupportsHibernation { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class SpotRestorePolicy
     {
         public SpotRestorePolicy() { }
@@ -4618,11 +4668,6 @@ namespace Azure.ResourceManager.Compute.Models
         public SshPublicKeyInfo() { }
         public string KeyData { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-    }
-    public partial class SshPublicKeyUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public SshPublicKeyUpdateOptions() { }
-        public string PublicKey { get { throw null; } set { } }
     }
     public partial class StatusCodeCount
     {
@@ -4896,24 +4941,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
-    public partial class VirtualMachineExtensionsListResult
-    {
-        internal VirtualMachineExtensionsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineExtensionUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public VirtualMachineExtensionUpdateOptions() { }
-        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public object ProtectedSettings { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
-        public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        public string TypeHandlerVersion { get { throw null; } set { } }
-    }
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageResource
     {
         public VirtualMachineImage(string name, string location) : base (default(string), default(string)) { }
@@ -4943,7 +4970,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineInstallPatchesParameters(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting rebootSetting) { }
         public Azure.ResourceManager.Compute.Models.LinuxParameters LinuxParameters { get { throw null; } set { } }
-        public string MaximumDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting RebootSetting { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsParameters WindowsParameters { get { throw null; } set { } }
     }
@@ -4983,10 +5010,10 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus VmHealthStatus { get { throw null; } }
     }
-    public partial class VirtualMachineIpTag
+    public partial class VirtualMachineIPTag
     {
-        public VirtualMachineIpTag() { }
-        public string IpTagType { get { throw null; } set { } }
+        public VirtualMachineIPTag() { }
+        public string IPTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
     public partial class VirtualMachineNetworkInterfaceConfiguration
@@ -4998,7 +5025,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -5047,16 +5074,16 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DeleteOptions? DeleteOption { get { throw null; } set { } }
         public string DnsDomainNameLabel { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineIpTag> IpTags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineIPTag> IPTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersions? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAddressSku Sku { get { throw null; } set { } }
     }
-    public partial class VirtualMachineReimageParameters
+    public partial class VirtualMachineReimageOptions
     {
-        public VirtualMachineReimageParameters() { }
+        public VirtualMachineReimageOptions() { }
         public bool? TempDisk { get { throw null; } set { } }
     }
     public partial class VirtualMachineRunCommandInstanceView
@@ -5093,11 +5120,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandScriptSource Source { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetConvertToSinglePlacementGroupOptions
-    {
-        public VirtualMachineScaleSetConvertToSinglePlacementGroupOptions() { }
-        public string ActivePlacementGroupId { get { throw null; } set { } }
-    }
     public partial class VirtualMachineScaleSetDataDisk
     {
         public VirtualMachineScaleSetDataDisk(int lun, Azure.ResourceManager.Compute.Models.DiskCreateOptionTypes createOption) { }
@@ -5116,23 +5138,6 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetExtensionProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData> Extensions { get { throw null; } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineScaleSetExtensionUpdateOptions : Azure.ResourceManager.Compute.Models.SubResourceReadOnly
-    {
-        public VirtualMachineScaleSetExtensionUpdateOptions() { }
-        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public object ProtectedSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
-        public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
-        public string TypeHandlerVersion { get { throw null; } set { } }
-        public string TypePropertiesType { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetInstanceView
     {
@@ -5155,10 +5160,10 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetIpTag
+    public partial class VirtualMachineScaleSetIPTag
     {
-        public VirtualMachineScaleSetIpTag() { }
-        public string IpTagType { get { throw null; } set { } }
+        public VirtualMachineScaleSetIPTag() { }
+        public string IPTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetManagedDiskParameters
@@ -5175,7 +5180,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IpConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -5218,7 +5223,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DeleteOptions? DeleteOption { get { throw null; } set { } }
         public string DnsDomainNameLabel { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIpTag> IpTags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPTag> IPTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
@@ -5265,8 +5270,8 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public enum VirtualMachineScaleSetSkuScaleType
     {
-        Automatic = 0,
-        None = 1,
+        None = 0,
+        Automatic = 1,
     }
     public partial class VirtualMachineScaleSetStorageProfile
     {
@@ -5296,7 +5301,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -5307,22 +5312,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier HealthProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkApiVersion? NetworkApiVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public VirtualMachineScaleSetUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
-        public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public bool? Overprovision { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
-        public bool? SinglePlacementGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetUpdateOSDisk
     {
@@ -5365,37 +5354,17 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionProfile ExtensionProfile { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateOSProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateOSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineScaleSetVmExtensionsListResult
-    {
-        internal VirtualMachineScaleSetVmExtensionsListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionData> Value { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVmExtensionsSummary
     {
         internal VirtualMachineScaleSetVmExtensionsSummary() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineStatusCodeCount> StatusesSummary { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetVmExtensionUpdateOptions : Azure.ResourceManager.Compute.Models.SubResourceReadOnly
-    {
-        public VirtualMachineScaleSetVmExtensionUpdateOptions() { }
-        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
-        public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public object ProtectedSettings { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
-        public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
-        public string TypeHandlerVersion { get { throw null; } set { } }
-        public string TypePropertiesType { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetVmInstanceIds
     {
@@ -5434,7 +5403,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGalleryApplication> GalleryApplications { get { throw null; } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetOSProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetOSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
@@ -5447,7 +5416,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ProtectFromScaleIn { get { throw null; } set { } }
         public bool? ProtectFromScaleSetActions { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetVmReimageOptions : Azure.ResourceManager.Compute.Models.VirtualMachineReimageParameters
+    public partial class VirtualMachineScaleSetVmReimageOptions : Azure.ResourceManager.Compute.Models.VirtualMachineReimageOptions
     {
         public VirtualMachineScaleSetVmReimageOptions() { }
     }
@@ -5663,38 +5632,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Code { get { throw null; } }
         public int? Count { get { throw null; } }
     }
-    public partial class VirtualMachineUpdateOptions : Azure.ResourceManager.Compute.Models.UpdateResource
-    {
-        public VirtualMachineUpdateOptions() { }
-        public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
-        public double? BillingMaxPrice { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyTypes? EvictionPolicy { get { throw null; } set { } }
-        public string ExtensionsTimeBudget { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGalleryApplication> GalleryApplications { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier HostId { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView InstanceView { get { throw null; } }
-        public string LicenseType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OSProfile OSProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
-        public int? PlatformFaultDomain { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
-        public string UserData { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetId { get { throw null; } set { } }
-        public string VmId { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmDiskTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.VmDiskTypes>
     {
@@ -5824,6 +5761,11 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VmScaleSetConvertToSinglePlacementGroupInput
+    {
+        public VmScaleSetConvertToSinglePlacementGroupInput() { }
+        public string ActivePlacementGroupId { get { throw null; } set { } }
     }
     public partial class VmSizeProperties
     {

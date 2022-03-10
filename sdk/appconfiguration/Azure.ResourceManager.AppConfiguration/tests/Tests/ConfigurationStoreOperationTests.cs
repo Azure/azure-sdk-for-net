@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            ConfigurationStoreUpdateOptions configurationStoreUpdateOptions = new ConfigurationStoreUpdateOptions() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
-            ConfigurationStore configurationStore = (await ConfigStore.UpdateAsync(true, configurationStoreUpdateOptions)).Value;
+            PatchableConfigurationStoreData PatchableconfigurationStoreData = new PatchableConfigurationStoreData() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
+            ConfigurationStore configurationStore = (await ConfigStore.UpdateAsync(true, PatchableconfigurationStoreData)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionList>> ListByDatabaseAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> ListByDatabaseAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionList value = default;
+                        PrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionList> ListByDatabaseAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> ListByDatabaseAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionList value = default;
+                        PrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

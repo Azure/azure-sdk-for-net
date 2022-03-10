@@ -1230,7 +1230,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
                 IgnoreReadOnly = true,
-                SetArchiveAttribute = true,
+                Archive = true,
             };
 
             // Act
@@ -1798,6 +1798,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Act
                 Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
+
                 Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
                     range: new HttpRange(Constants.KB, data.LongLength));
 
@@ -2703,7 +2704,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 stream,
                 progressHandler: null,
                 conditions: null,
-                hashingOptions: default,
+                // TODO #27253
+                //validationOptions: default,
                 singleRangeThreshold: 512,
                 async: IsAsync,
                 cancellationToken: CancellationToken.None);
@@ -2813,7 +2815,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     content: stream,
                     progressHandler: default,
                     conditions: default,
-                    hashingOptions: default,
+                    // TODO #27253
+                    //validationOptions: default,
                     singleRangeThreshold: singleRangeThreshold,
                     async: true,
                     cancellationToken: CancellationToken.None);
@@ -3097,6 +3100,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
+
             var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
 
             var sourceStream = new MemoryStream();
@@ -3564,7 +3568,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
             Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
 
-            Response<ShareFileDownloadInfo> result = await file.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+            Response<ShareFileDownloadInfo> result = await file.DownloadAsync(range: new HttpRange(0, 2 * Constants.KB));
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(expectedData.Length, dataResult.Length);

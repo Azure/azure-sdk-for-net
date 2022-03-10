@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServicePropertiesVisibility : IUtf8JsonSerializable
+    internal partial class PrivateLinkServicePropertiesVisibility : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

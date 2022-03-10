@@ -24,8 +24,7 @@ namespace Azure.Core.TestFramework
     {
         private static readonly string s_dotNetExe;
 
-        public const string DevCertIssuer = "CN=localhost";
-
+        // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
         public const string IpAddress = "127.0.0.1";
 
         public int? ProxyPortHttp => _proxyPortHttp;

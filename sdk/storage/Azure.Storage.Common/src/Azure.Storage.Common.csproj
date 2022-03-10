@@ -20,6 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.IO.Hashing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />

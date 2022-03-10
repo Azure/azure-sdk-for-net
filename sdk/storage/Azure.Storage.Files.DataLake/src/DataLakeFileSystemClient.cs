@@ -2952,7 +2952,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="DataLakeFileSystemClient"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
-        protected internal virtual DataLakeServiceClient GetParentDataLakeServiceClientCore()
+        protected internal virtual DataLakeServiceClient GetParentServiceClientCore()
         {
             if (_parentServiceClient == null)
             {
@@ -2989,9 +2989,9 @@ namespace Azure.Storage.Files.DataLake
             /// </summary>
             /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
             /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
-            public static DataLakeServiceClient GetParentDataLakeServiceClient(this DataLakeFileSystemClient client)
+            public static DataLakeServiceClient GetParentServiceClient(this DataLakeFileSystemClient client)
             {
-                return client.GetParentDataLakeServiceClientCore();
+                return client.GetParentServiceClientCore();
             }
         }
     }

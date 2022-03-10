@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected PrivateEndpointConnectionCollection PrivateEndpointConnectionCollection { get => _databaseAccount.GetPrivateEndpointConnections(); }
+        protected PrivateEndpointConnectionCollection PrivateEndpointConnectionCollection => _databaseAccount.GetPrivateEndpointConnections();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()

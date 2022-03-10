@@ -118,11 +118,6 @@ namespace Azure.Core.TestFramework
                     RecordingId);
             }
 
-            foreach (string jsonPath in _recordedTestBase.JsonPathSanitizers)
-            {
-                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
-            }
-
             foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
             {
                 await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);

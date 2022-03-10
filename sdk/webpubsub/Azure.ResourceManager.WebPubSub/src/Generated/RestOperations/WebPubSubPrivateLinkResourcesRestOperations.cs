@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkList>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkList value = default;
+                        PrivateLinkResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
+                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateLinkList> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceList> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkList value = default;
+                        PrivateLinkResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
+                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PrivateLinkList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkList value = default;
+                        PrivateLinkResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
+                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public Response<PrivateLinkList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        PrivateLinkList value = default;
+                        PrivateLinkResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkList.DeserializePrivateLinkList(document.RootElement);
+                        value = PrivateLinkResourceList.DeserializePrivateLinkResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

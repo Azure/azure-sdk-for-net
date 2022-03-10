@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_UpdateCertificate
         /// </summary>
-        /// <param name="options"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateResource>> UpdateAsync(AppServiceCertificateResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<AppServiceCertificateResource>> UpdateAsync(PatchableAppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,18 +215,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_UpdateCertificate
         /// </summary>
-        /// <param name="options"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> Update(AppServiceCertificateResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AppServiceCertificateResource> Update(PatchableAppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

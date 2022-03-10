@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<CosmosTable>> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CosmosTable>> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateData createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNull(createUpdateTableParameters, nameof(createUpdateTableParameters));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public virtual ArmOperation<CosmosTable> CreateOrUpdate(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosTable> CreateOrUpdate(bool waitForCompletion, string tableName, TableCreateUpdateData createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNull(createUpdateTableParameters, nameof(createUpdateTableParameters));

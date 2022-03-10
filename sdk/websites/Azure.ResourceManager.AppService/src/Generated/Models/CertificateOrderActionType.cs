@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Action type. </summary>
     public enum CertificateOrderActionType
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> CertificateIssued. </summary>
         CertificateIssued,
         /// <summary> CertificateOrderCanceled. </summary>
@@ -35,8 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> CertificateExpirationWarning. </summary>
         CertificateExpirationWarning,
         /// <summary> FraudDocumentationRequired. </summary>
-        FraudDocumentationRequired,
-        /// <summary> Unknown. </summary>
-        Unknown
+        FraudDocumentationRequired
     }
 }

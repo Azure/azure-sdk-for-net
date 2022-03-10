@@ -189,15 +189,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applications/{applicationName}
         /// Operation Id: Applications_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update an existing managed application. </param>
+        /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Application>> UpdateAsync(ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<Application>> UpdateAsync(PatchableApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _applicationClientDiagnostics.CreateScope("Application.Update");
             scope.Start();
             try
             {
-                var response = await _applicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,15 +215,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applications/{applicationName}
         /// Operation Id: Applications_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update an existing managed application. </param>
+        /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Application> Update(ApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<Application> Update(PatchableApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _applicationClientDiagnostics.CreateScope("Application.Update");
             scope.Start();
             try
             {
-                var response = _applicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _applicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new Application(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

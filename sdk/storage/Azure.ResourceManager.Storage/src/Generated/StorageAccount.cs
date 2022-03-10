@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of the <see cref = "StorageAccount"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageAccount(ArmClient client, StorageAccountData data) : this(client, new ResourceIdentifier(data.Id))
+        internal StorageAccount(ArmClient client, StorageAccountData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -265,18 +265,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_Update
         /// </summary>
-        /// <param name="options"> The parameters to provide for the updated account. </param>
+        /// <param name="data"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<StorageAccount>> UpdateAsync(StorageAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<StorageAccount>> UpdateAsync(PatchableStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccount.Update");
             scope.Start();
             try
             {
-                var response = await _storageAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _storageAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,18 +291,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_Update
         /// </summary>
-        /// <param name="options"> The parameters to provide for the updated account. </param>
+        /// <param name="data"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<StorageAccount> Update(StorageAccountUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<StorageAccount> Update(PatchableStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccount.Update");
             scope.Start();
             try
             {
-                var response = _storageAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _storageAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new StorageAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

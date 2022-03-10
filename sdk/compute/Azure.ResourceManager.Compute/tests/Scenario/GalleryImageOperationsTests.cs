@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
             var description = "This is a gallery for test";
-            var update = new GalleryImageUpdateOptions()
+            var update = new PatchableGalleryImageData()
             {
                 OSType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
                 Description = description

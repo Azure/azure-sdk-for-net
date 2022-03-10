@@ -198,18 +198,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Update
         /// </summary>
-        /// <param name="options"> Domain registration information. </param>
+        /// <param name="data"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<AppServiceDomain>> UpdateAsync(AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<Response<AppServiceDomain>> UpdateAsync(PatchableAppServiceDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceDomainDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceDomainDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,18 +224,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Update
         /// </summary>
-        /// <param name="options"> Domain registration information. </param>
+        /// <param name="data"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<AppServiceDomain> Update(AppServiceDomainUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AppServiceDomain> Update(PatchableAppServiceDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomain.Update");
             scope.Start();
             try
             {
-                var response = _appServiceDomainDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _appServiceDomainDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

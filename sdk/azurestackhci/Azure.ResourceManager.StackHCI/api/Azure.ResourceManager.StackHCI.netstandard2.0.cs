@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.StackHCI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> Update(Azure.ResourceManager.StackHCI.Models.HciClusterUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> UpdateAsync(Azure.ResourceManager.StackHCI.Models.HciClusterUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> Update(Azure.ResourceManager.StackHCI.Models.PatchableHciClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> UpdateAsync(Azure.ResourceManager.StackHCI.Models.PatchableHciClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HciClusterCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StackHCI.HciCluster>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HciCluster>, System.Collections.IEnumerable
     {
@@ -327,15 +327,6 @@ namespace Azure.ResourceManager.StackHCI.Models
         public static bool operator !=(Azure.ResourceManager.StackHCI.Models.HciClusterStatus left, Azure.ResourceManager.StackHCI.Models.HciClusterStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HciClusterUpdateOptions
-    {
-        public HciClusterUpdateOptions() { }
-        public string AadClientId { get { throw null; } set { } }
-        public string AadTenantId { get { throw null; } set { } }
-        public string CloudManagementEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StackHCI.Models.ClusterDesiredProperties DesiredProperties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImdsAttestation : System.IEquatable<Azure.ResourceManager.StackHCI.Models.ImdsAttestation>
     {
@@ -409,6 +400,15 @@ namespace Azure.ResourceManager.StackHCI.Models
         public static implicit operator Azure.ResourceManager.StackHCI.Models.NodeExtensionState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StackHCI.Models.NodeExtensionState left, Azure.ResourceManager.StackHCI.Models.NodeExtensionState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PatchableHciClusterData
+    {
+        public PatchableHciClusterData() { }
+        public string AadClientId { get { throw null; } set { } }
+        public string AadTenantId { get { throw null; } set { } }
+        public string CloudManagementEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StackHCI.Models.ClusterDesiredProperties DesiredProperties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PerNodeExtensionState
     {
