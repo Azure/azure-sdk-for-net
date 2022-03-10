@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _ipAllocationIpAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocation.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(IPAllocation.ResourceType, out string ipAllocationIpAllocationsApiVersion);
-            _ipAllocationIpAllocationsRestClient = new IpAllocationsRestOperations(_ipAllocationIpAllocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipAllocationIpAllocationsApiVersion);
+            _ipAllocationIpAllocationsRestClient = new IpAllocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipAllocationIpAllocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<IPAllocation>> CreateOrUpdateAsync(bool waitForCompletion, string ipAllocationName, IPAllocationData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IPAllocation>> CreateOrUpdateAsync(bool waitForCompletion, string ipAllocationName, IPAllocationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        public async virtual Task<Response<IPAllocation>> GetAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IPAllocation>> GetAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _ipAllocationIpAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _ipAllocationIpAllocationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPAllocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _ipAllocationIpAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _ipAllocationIpAllocationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPAllocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        public async virtual Task<Response<IPAllocation>> GetIfExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IPAllocation>> GetIfExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 

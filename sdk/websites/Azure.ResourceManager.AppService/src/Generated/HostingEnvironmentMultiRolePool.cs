@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
-            _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
+            _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetMultiRolePool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostingEnvironmentMultiRolePool>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentMultiRolePool>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<Response<HostingEnvironmentMultiRolePool>> UpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentMultiRolePool>> UpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<HostingEnvironmentMultiRolePool>> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePool>> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
@@ -511,10 +511,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetMultiRoleUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceUsage> GetMultiRoleUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
@@ -553,10 +553,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetMultiRoleUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceUsage> GetMultiRoleUsages(CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();

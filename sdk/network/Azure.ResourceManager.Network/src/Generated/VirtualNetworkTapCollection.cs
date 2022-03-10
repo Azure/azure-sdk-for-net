@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTap.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VirtualNetworkTap.ResourceType, out string virtualNetworkTapApiVersion);
-            _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(_virtualNetworkTapClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkTapApiVersion);
+            _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkTapApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualNetworkTap>> CreateOrUpdateAsync(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualNetworkTap>> CreateOrUpdateAsync(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkTap>> GetAsync(string tapName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkTap>> GetAsync(string tapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualNetworkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualNetworkTapClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualNetworkTap(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualNetworkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualNetworkTapClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualNetworkTap(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string tapName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string tapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkTap>> GetIfExistsAsync(string tapName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkTap>> GetIfExistsAsync(string tapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
 

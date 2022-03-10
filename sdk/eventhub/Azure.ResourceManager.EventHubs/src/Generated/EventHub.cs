@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _eventHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string eventHubApiVersion);
-            _eventHubRestClient = new EventHubsRestOperations(_eventHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
+            _eventHubRestClient = new EventHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: EventHubs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<EventHub>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHub>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.Get");
             scope.Start();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _eventHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _eventHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.Delete");
             scope.Start();

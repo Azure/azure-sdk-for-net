@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOriginGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AfdOriginGroup.ResourceType, out string afdOriginGroupApiVersion);
-            _afdOriginGroupRestClient = new AfdOriginGroupsRestOperations(_afdOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginGroupApiVersion);
+            _afdOriginGroupRestClient = new AfdOriginGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="originGroup"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdOriginGroup>> CreateOrUpdateAsync(bool waitForCompletion, string originGroupName, AfdOriginGroupData originGroup, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdOriginGroup>> CreateOrUpdateAsync(bool waitForCompletion, string originGroupName, AfdOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             Argument.AssertNotNull(originGroup, nameof(originGroup));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public async virtual Task<Response<AfdOriginGroup>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOriginGroup>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdOriginGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _afdOriginGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public async virtual Task<Response<AfdOriginGroup>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOriginGroup>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 

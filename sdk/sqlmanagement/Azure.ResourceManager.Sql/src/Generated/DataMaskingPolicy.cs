@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Sql
         {
             _dataMaskingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string dataMaskingPolicyApiVersion);
-            _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(_dataMaskingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataMaskingPolicyApiVersion);
+            _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataMaskingPolicyApiVersion);
             _dataMaskingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_dataMaskingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DataMaskingPolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DataMaskingPolicy>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataMaskingPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicy.Get");
             scope.Start();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _dataMaskingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _dataMaskingPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataMaskingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _dataMaskingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _dataMaskingPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataMaskingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DataMaskingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataMaskingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
             Argument.AssertNotNull(parameters, nameof(parameters));

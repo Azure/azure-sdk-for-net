@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItem.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(InventoryItem.ResourceType, out string inventoryItemApiVersion);
-            _inventoryItemRestClient = new InventoryItemsRestOperations(_inventoryItemClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inventoryItemApiVersion);
+            _inventoryItemRestClient = new InventoryItemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inventoryItemApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<ArmOperation<InventoryItem>> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<InventoryItem>> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<Response<InventoryItem>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InventoryItem>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _inventoryItemClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken);
                 if (response.Value == null)
-                    throw _inventoryItemClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<Response<InventoryItem>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InventoryItem>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 

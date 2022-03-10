@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
-            _sharedGalleryRestClient = new SharedGalleriesRestOperations(_sharedGalleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
+            _sharedGalleryRestClient = new SharedGalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: SharedGalleries_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SharedGallery>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGallery>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGallery.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sharedGalleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
                 return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sharedGalleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
                 return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }

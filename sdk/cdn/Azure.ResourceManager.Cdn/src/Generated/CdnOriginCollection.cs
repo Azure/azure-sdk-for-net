@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _cdnOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOrigin.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CdnOrigin.ResourceType, out string cdnOriginApiVersion);
-            _cdnOriginRestClient = new CdnOriginsRestOperations(_cdnOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginApiVersion);
+            _cdnOriginRestClient = new CdnOriginsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnOrigin>> CreateOrUpdateAsync(bool waitForCompletion, string originName, CdnOriginData origin, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnOrigin>> CreateOrUpdateAsync(bool waitForCompletion, string originName, CdnOriginData origin, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             Argument.AssertNotNull(origin, nameof(origin));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<CdnOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _cdnOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnOriginClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _cdnOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnOriginClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<CdnOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 

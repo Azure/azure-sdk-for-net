@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _instancePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePool.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(InstancePool.ResourceType, out string instancePoolApiVersion);
-            _instancePoolRestClient = new InstancePoolsRestOperations(_instancePoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instancePoolApiVersion);
+            _instancePoolRestClient = new InstancePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instancePoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<InstancePool>> CreateOrUpdateAsync(bool waitForCompletion, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<InstancePool>> CreateOrUpdateAsync(bool waitForCompletion, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
-        public async virtual Task<Response<InstancePool>> GetAsync(string instancePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> GetAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _instancePoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InstancePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _instancePoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InstancePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
-        public async virtual Task<Response<InstancePool>> GetIfExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> GetIfExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 

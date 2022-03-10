@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _consumerGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ConsumerGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ConsumerGroup.ResourceType, out string consumerGroupApiVersion);
-            _consumerGroupRestClient = new ConsumerGroupsRestOperations(_consumerGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, consumerGroupApiVersion);
+            _consumerGroupRestClient = new ConsumerGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, consumerGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConsumerGroup>> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConsumerGroup>> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public async virtual Task<Response<ConsumerGroup>> GetAsync(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumerGroup>> GetAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _consumerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _consumerGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConsumerGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _consumerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _consumerGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConsumerGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public async virtual Task<Response<ConsumerGroup>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumerGroup>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         {
             _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
-            _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupLongTermRetentionBackup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<LongTermRetentionBackupOperationResult>> CopyByResourceGroupAsync(bool waitForCompletion, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> CopyByResourceGroupAsync(bool waitForCompletion, CopyLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<LongTermRetentionBackupOperationResult>> UpdateByResourceGroupAsync(bool waitForCompletion, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> UpdateByResourceGroupAsync(bool waitForCompletion, UpdateLongTermRetentionBackupOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

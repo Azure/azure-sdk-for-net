@@ -836,8 +836,8 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitionsAsync(string instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.SkuInfo> GetMultiRolePoolSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.SkuInfo> GetMultiRolePoolSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.Usage> GetMultiRoleUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.Usage> GetMultiRoleUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceUsage> GetMultiRoleUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceUsage> GetMultiRoleUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.HostingEnvironmentMultiRolePool> Update(Azure.ResourceManager.AppService.WorkerPoolResourceData multiRolePoolEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.HostingEnvironmentMultiRolePool>> UpdateAsync(Azure.ResourceManager.AppService.WorkerPoolResourceData multiRolePoolEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -903,8 +903,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.HostingEnvironmentWorkerPool>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition> GetWebWorkerMetricDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition> GetWebWorkerMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.Usage> GetWebWorkerUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.Usage> GetWebWorkerUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceUsage> GetWebWorkerUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceUsage> GetWebWorkerUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitions(string instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitionsAsync(string instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.SkuInfo> GetWorkerPoolSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3840,8 +3840,8 @@ namespace Azure.ResourceManager.AppService
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.DeletedSite> GetDeletedSitesByLocationAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.DeletedSite> GetDeletedWebAppByLocationDeletedWebApp(this Azure.ResourceManager.Resources.Subscription subscription, string location, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegions(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.SkuName? sku = default(Azure.ResourceManager.AppService.Models.SkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegionsAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.SkuName? sku = default(Azure.ResourceManager.AppService.Models.SkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegions(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegionsAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.KubeEnvironment> GetKubeEnvironments(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.KubeEnvironment> GetKubeEnvironmentsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.PremierAddOnOffer> GetPremierAddOnOffers(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4523,6 +4523,47 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public AppServiceResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Kind { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServiceSkuName : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServiceSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Basic { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Dynamic { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName ElasticIsolated { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName ElasticPremium { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Free { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Isolated { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName IsolatedV2 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Premium { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName PremiumContainer { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName PremiumV2 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName PremiumV3 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Shared { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AppServiceSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AppServiceSkuName left, Azure.ResourceManager.AppService.Models.AppServiceSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AppServiceSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceSkuName left, Azure.ResourceManager.AppService.Models.AppServiceSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AppServiceUsage : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
+    {
+        public AppServiceUsage() { }
+        public Azure.ResourceManager.AppService.Models.ComputeModeOptions? ComputeMode { get { throw null; } }
+        public long? CurrentValue { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public long? Limit { get { throw null; } }
+        public System.DateTimeOffset? NextResetTime { get { throw null; } }
+        public string ResourceName { get { throw null; } }
+        public string SiteMode { get { throw null; } }
+        public string Unit { get { throw null; } }
     }
     public partial class ArcConfiguration
     {
@@ -6942,35 +6983,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.GlobalCsmSkuDescription> Skus { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuName : System.IEquatable<Azure.ResourceManager.AppService.Models.SkuName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuName(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.SkuName Basic { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Dynamic { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName ElasticIsolated { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName ElasticPremium { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Free { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Isolated { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName IsolatedV2 { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Premium { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName PremiumContainer { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName PremiumV2 { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName PremiumV3 { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Shared { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SkuName Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.SkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.SkuName left, Azure.ResourceManager.AppService.Models.SkuName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.SkuName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.SkuName left, Azure.ResourceManager.AppService.Models.SkuName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SlotDifference : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public SlotDifference() { }
@@ -7339,18 +7351,6 @@ namespace Azure.ResourceManager.AppService.Models
         AllowAnonymous = 1,
         Return401 = 2,
         Return403 = 3,
-    }
-    public partial class Usage : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
-    {
-        public Usage() { }
-        public Azure.ResourceManager.AppService.Models.ComputeModeOptions? ComputeMode { get { throw null; } }
-        public long? CurrentValue { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public long? Limit { get { throw null; } }
-        public System.DateTimeOffset? NextResetTime { get { throw null; } }
-        public string ResourceName { get { throw null; } }
-        public string SiteMode { get { throw null; } }
-        public string Unit { get { throw null; } }
     }
     public enum UsageState
     {

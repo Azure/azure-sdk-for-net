@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdRuleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdRuleSet.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AfdRuleSet.ResourceType, out string afdRuleSetApiVersion);
-            _afdRuleSetRestClient = new AfdRuleSetsRestOperations(_afdRuleSetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleSetApiVersion);
+            _afdRuleSetRestClient = new AfdRuleSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleSetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public async virtual Task<Response<AfdRuleSet>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRuleSet>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdRuleSetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
-                    throw _afdRuleSetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
-        public async virtual Task<Response<AfdRuleSet>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRuleSet>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 

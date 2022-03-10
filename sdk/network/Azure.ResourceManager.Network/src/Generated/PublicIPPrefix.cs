@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             _publicIPPrefixClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string publicIPPrefixApiVersion);
-            _publicIPPrefixRestClient = new PublicIPPrefixesRestOperations(_publicIPPrefixClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPPrefixApiVersion);
+            _publicIPPrefixRestClient = new PublicIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPPrefixApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PublicIPPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefix.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _publicIPPrefixRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _publicIPPrefixClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PublicIPPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _publicIPPrefixRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _publicIPPrefixClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PublicIPPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefix.Delete");
             scope.Start();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<PublicIPPrefix>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefix>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<PublicIPPrefix>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefix>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<PublicIPPrefix>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefix>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

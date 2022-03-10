@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdRuleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string afdRuleSetApiVersion);
-            _afdRuleSetRestClient = new AfdRuleSetsRestOperations(_afdRuleSetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleSetApiVersion);
+            _afdRuleSetRestClient = new AfdRuleSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleSetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdRuleSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AfdRuleSet>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRuleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdRuleSetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _afdRuleSetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.Delete");
             scope.Start();
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.GetResourceUsage");
                 scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.GetResourceUsage");
                 scope.Start();
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetResourceUsage(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.GetResourceUsage");
                 scope.Start();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSet.GetResourceUsage");
                 scope.Start();

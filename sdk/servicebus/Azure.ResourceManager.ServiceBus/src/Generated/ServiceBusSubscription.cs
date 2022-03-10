@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _serviceBusSubscriptionSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serviceBusSubscriptionSubscriptionsApiVersion);
-            _serviceBusSubscriptionSubscriptionsRestClient = new SubscriptionsRestOperations(_serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusSubscriptionSubscriptionsApiVersion);
+            _serviceBusSubscriptionSubscriptionsRestClient = new SubscriptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusSubscriptionSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: Subscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServiceBusSubscription>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusSubscription>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateScope("ServiceBusSubscription.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _serviceBusSubscriptionSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusSubscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusSubscriptionSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusSubscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateScope("ServiceBusSubscription.Delete");
             scope.Start();

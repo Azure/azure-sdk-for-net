@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
-            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
+            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: CassandraDataCenters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DataCenterResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataCenterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _dataCenterResourceCassandraDataCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _dataCenterResourceCassandraDataCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Delete");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="body"> Parameters to provide for specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<ArmOperation<DataCenterResource>> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataCenterResource>> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

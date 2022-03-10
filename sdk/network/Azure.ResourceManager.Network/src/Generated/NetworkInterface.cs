@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Network
         {
             _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
-            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(_networkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
+            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
             _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NetworkInterface>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterface.Get");
             scope.Start();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkInterfaceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _networkInterfaceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterface.Delete");
             scope.Start();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<EffectiveRouteListResult>> GetEffectiveRouteTableAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteListResult>> GetEffectiveRouteTableAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterface.GetEffectiveRouteTable");
             scope.Start();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<EffectiveNetworkSecurityGroupListResult>> GetEffectiveNetworkSecurityGroupsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveNetworkSecurityGroupListResult>> GetEffectiveNetworkSecurityGroupsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterface.GetEffectiveNetworkSecurityGroups");
             scope.Start();
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

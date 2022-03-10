@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _serviceBusSubscriptionSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusSubscription.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServiceBusSubscription.ResourceType, out string serviceBusSubscriptionSubscriptionsApiVersion);
-            _serviceBusSubscriptionSubscriptionsRestClient = new SubscriptionsRestOperations(_serviceBusSubscriptionSubscriptionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusSubscriptionSubscriptionsApiVersion);
+            _serviceBusSubscriptionSubscriptionsRestClient = new SubscriptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusSubscriptionSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ServiceBusSubscription>> CreateOrUpdateAsync(bool waitForCompletion, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceBusSubscription>> CreateOrUpdateAsync(bool waitForCompletion, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusSubscription>> GetAsync(string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusSubscription>> GetAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _serviceBusSubscriptionSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusSubscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusSubscriptionSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, cancellationToken);
                 if (response.Value == null)
-                    throw _serviceBusSubscriptionSubscriptionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusSubscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusSubscription>> GetIfExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusSubscription>> GetIfExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 

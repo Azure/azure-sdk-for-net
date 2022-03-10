@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string userApiVersion);
-            _userRestClient = new WebSiteManagementRestOperations(_userClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
+            _userRestClient = new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetPublishingUser
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _userClientDiagnostics.CreateScope("User.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _userRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _userClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _userRestClient.GetPublishingUser(cancellationToken);
                 if (response.Value == null)
-                    throw _userClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async virtual Task<ArmOperation<User>> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<User>> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(userDetails, nameof(userDetails));
 

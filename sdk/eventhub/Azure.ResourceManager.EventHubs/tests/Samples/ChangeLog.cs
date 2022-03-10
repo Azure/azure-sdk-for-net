@@ -3,7 +3,6 @@
 #region Snippet:ChangeLog_Sample
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
 
@@ -28,9 +27,9 @@ ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroup
 //create namespace
 EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
-    Sku = new Models.Sku(SkuName.Standard)
+    Sku = new EventHubsSku(EventHubsSkuName.Standard)
     {
-        Tier = SkuTier.Standard,
+        Tier = EventHubsSkuTier.Standard,
     }
 };
 parameters.Tags.Add("tag1", "value1");

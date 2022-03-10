@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Sql
         public string MaintenanceConfigurationId { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings PerDatabaseSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolState? State { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Sql
     {
         public InstancePoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Sql.Models.InstancePoolLicenseType? LicenseType { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         public int? VCores { get { throw null; } set { } }
     }
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Sql
     {
         public JobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DatabaseId { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
     }
     public partial class JobCredential : Azure.ResourceManager.Core.ArmResource
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? ProxyOverride { get { throw null; } set { } }
         public bool? PublicDataEndpointEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public string SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
@@ -2405,7 +2405,7 @@ namespace Azure.ResourceManager.Sql
         public string ElasticPoolId { get { throw null; } }
         public string Location { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class RestorableDroppedManagedDatabase : Azure.ResourceManager.Core.ArmResource
@@ -3465,7 +3465,7 @@ namespace Azure.ResourceManager.Sql
         public System.DateTimeOffset? CreationDate { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
         public string CurrentServiceObjectiveName { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Sku CurrentSku { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlSku CurrentSku { get { throw null; } }
         public System.Guid? DatabaseId { get { throw null; } }
         public string DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreDate { get { throw null; } }
@@ -3493,7 +3493,7 @@ namespace Azure.ResourceManager.Sql
         public System.DateTimeOffset? ResumedDate { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecondaryType? SecondaryType { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? SourceDatabaseDeletionDate { get { throw null; } set { } }
         public string SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseStatus? Status { get { throw null; } }
@@ -3892,7 +3892,7 @@ namespace Azure.ResourceManager.Sql
         public System.DateTimeOffset? LastSyncTime { get { throw null; } }
         public string PrivateEndpointName { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SyncGroupSchema Schema { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public string SyncDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SyncGroupState? SyncState { get { throw null; } }
         public bool? UsePrivateLinkConnection { get { throw null; } set { } }
@@ -4876,7 +4876,7 @@ namespace Azure.ResourceManager.Sql.Models
         public int? MaxDatabaseCount { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PerformanceLevelCapability PerformanceLevel { get { throw null; } }
         public string Reason { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.CapabilityStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> SupportedLicenseTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get { throw null; } }
@@ -5863,7 +5863,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string MaintenanceConfigurationId { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ElasticPoolPerDatabaseSettings PerDatabaseSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -5920,7 +5920,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? ProxyOverride { get { throw null; } set { } }
         public bool? PublicDataEndpointEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public string SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
@@ -5941,7 +5941,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? CreationDate { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
         public string CurrentServiceObjectiveName { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Sku CurrentSku { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlSku CurrentSku { get { throw null; } }
         public System.Guid? DatabaseId { get { throw null; } }
         public string DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreDate { get { throw null; } }
@@ -5967,7 +5967,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? ResumedDate { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecondaryType? SecondaryType { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? SourceDatabaseDeletionDate { get { throw null; } set { } }
         public string SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseStatus? Status { get { throw null; } }
@@ -6832,7 +6832,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PerformanceLevelCapability PerformanceLevel { get { throw null; } }
         public string Reason { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.CapabilityStatus? Status { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.AutoPauseDelayTimeRange SupportedAutoPauseDelay { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.LicenseTypeCapability> SupportedLicenseTypes { get { throw null; } }
@@ -6857,15 +6857,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName left, Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Sku
-    {
-        public Sku(string name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public string Tier { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlAgentConfigurationPropertiesState : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState>
@@ -6917,6 +6908,15 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.UnitType? Unit { get { throw null; } }
+    }
+    public partial class SqlSku
+    {
+        public SqlSku(string name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccountType : System.IEquatable<Azure.ResourceManager.Sql.Models.StorageAccountType>

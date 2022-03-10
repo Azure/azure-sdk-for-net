@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string afdRuleApiVersion);
-            _afdRuleRestClient = new AfdRulesRestOperations(_afdRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleApiVersion);
+            _afdRuleRestClient = new AfdRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AfdRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _afdRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdRule>> UpdateAsync(bool waitForCompletion, PatchableAfdRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdRule>> UpdateAsync(bool waitForCompletion, PatchableAfdRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

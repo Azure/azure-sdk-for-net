@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterface.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(NetworkInterface.ResourceType, out string networkInterfaceApiVersion);
-            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(_networkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
+            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<NetworkInterface>> CreateOrUpdateAsync(bool waitForCompletion, string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkInterface>> CreateOrUpdateAsync(bool waitForCompletion, string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkInterfaceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _networkInterfaceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> GetIfExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterface>> GetIfExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 

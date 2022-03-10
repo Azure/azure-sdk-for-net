@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _failoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FailoverGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(FailoverGroup.ResourceType, out string failoverGroupApiVersion);
-            _failoverGroupRestClient = new FailoverGroupsRestOperations(_failoverGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, failoverGroupApiVersion);
+            _failoverGroupRestClient = new FailoverGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, failoverGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FailoverGroup>> CreateOrUpdateAsync(bool waitForCompletion, string failoverGroupName, FailoverGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FailoverGroup>> CreateOrUpdateAsync(bool waitForCompletion, string failoverGroupName, FailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        public async virtual Task<Response<FailoverGroup>> GetAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FailoverGroup>> GetAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _failoverGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _failoverGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FailoverGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _failoverGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _failoverGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FailoverGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
-        public async virtual Task<Response<FailoverGroup>> GetIfExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FailoverGroup>> GetIfExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 

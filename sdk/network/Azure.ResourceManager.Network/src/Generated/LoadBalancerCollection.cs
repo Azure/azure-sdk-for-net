@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancer.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(LoadBalancer.ResourceType, out string loadBalancerApiVersion);
-            _loadBalancerRestClient = new LoadBalancersRestOperations(_loadBalancerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
+            _loadBalancerRestClient = new LoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<LoadBalancer>> CreateOrUpdateAsync(bool waitForCompletion, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LoadBalancer>> CreateOrUpdateAsync(bool waitForCompletion, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public async virtual Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _loadBalancerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _loadBalancerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public async virtual Task<Response<LoadBalancer>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancer>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 

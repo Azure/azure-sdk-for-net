@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Resources
         {
             _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string resourceGroupApiVersion);
-            _resourceGroupRestClient = new ResourceGroupsRestOperations(_resourceGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
             _resourceGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
-            _resourceGroupResourcesRestClient = new ResourcesRestOperations(_resourceGroupResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupResourcesApiVersion);
+            _resourceGroupResourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _resourceGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _resourceGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> UpdateAsync(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> UpdateAsync(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

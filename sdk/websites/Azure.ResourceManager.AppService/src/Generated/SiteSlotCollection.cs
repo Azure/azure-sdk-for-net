@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlot.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlot.ResourceType, out string siteSlotWebAppsApiVersion);
-            _siteSlotWebAppsRestClient = new WebAppsRestOperations(_siteSlotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotWebAppsApiVersion);
+            _siteSlotWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlot>> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlot>> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
-        public async virtual Task<Response<SiteSlot>> GetAsync(string slot, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlot>> GetAsync(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotWebAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlot(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotWebAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlot(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string slot, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
-        public async virtual Task<Response<SiteSlot>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlot>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 

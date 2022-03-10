@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _applicationDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationDefinition.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ApplicationDefinition.ResourceType, out string applicationDefinitionApiVersion);
-            _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(_applicationDefinitionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationDefinitionApiVersion);
+            _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationDefinitionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ApplicationDefinition>> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplicationDefinition>> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationDefinition>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationDefinition>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _applicationDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _applicationDefinitionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _applicationDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
                 if (response.Value == null)
-                    throw _applicationDefinitionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 

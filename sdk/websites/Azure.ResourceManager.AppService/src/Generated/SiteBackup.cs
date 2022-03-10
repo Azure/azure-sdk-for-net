@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteBackupWebAppsApiVersion);
-            _siteBackupWebAppsRestClient = new WebAppsRestOperations(_siteBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
+            _siteBackupWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteBackup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteBackup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackup.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteBackupWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteBackupWebAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteBackupWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackup.Delete");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<SiteBackup>> GetBackupStatusSecretsAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteBackup>> GetBackupStatusSecretsAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 

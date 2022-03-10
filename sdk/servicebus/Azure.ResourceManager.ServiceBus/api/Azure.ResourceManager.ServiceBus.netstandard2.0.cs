@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ServiceBus
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
@@ -844,20 +844,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
     }
-    public partial class Sku
+    public partial class ServiceBusSku
     {
-        public Sku(Azure.ResourceManager.ServiceBus.Models.SkuName name) { }
+        public ServiceBusSku(Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.SkuName Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.SkuTier? Tier { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuName Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuTier? Tier { get { throw null; } set { } }
     }
-    public enum SkuName
+    public enum ServiceBusSkuName
     {
         Basic = 0,
         Standard = 1,
         Premium = 2,
     }
-    public enum SkuTier
+    public enum ServiceBusSkuTier
     {
         Basic = 0,
         Standard = 1,

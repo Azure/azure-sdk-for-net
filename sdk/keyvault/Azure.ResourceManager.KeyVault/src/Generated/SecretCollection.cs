@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", Secret.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Secret.ResourceType, out string secretApiVersion);
-            _secretRestClient = new SecretsRestOperations(_secretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
+            _secretRestClient = new SecretsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<Secret>> CreateOrUpdateAsync(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<Secret>> CreateOrUpdateAsync(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async virtual Task<Response<Secret>> GetAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Secret>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _secretClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
                 if (response.Value == null)
-                    throw _secretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async virtual Task<Response<Secret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Secret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 

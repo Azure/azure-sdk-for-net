@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async static Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async static Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

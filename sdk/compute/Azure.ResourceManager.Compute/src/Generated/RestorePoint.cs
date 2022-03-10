@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         {
             _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string restorePointApiVersion);
-            _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
+            _restorePointRestClient = new RestorePointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RestorePoint>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePoint>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _restorePointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _restorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.Delete");
             scope.Start();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Intent Policy resource. </summary>
-    public partial class NetworkIntentPolicy : Resource
+    public partial class NetworkIntentPolicy : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkIntentPolicy. </summary>
         public NetworkIntentPolicy()

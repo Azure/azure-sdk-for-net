@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _machineExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string machineExtensionApiVersion);
-            _machineExtensionRestClient = new MachineExtensionsRestOperations(_machineExtensionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, machineExtensionApiVersion);
+            _machineExtensionRestClient = new MachineExtensionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, machineExtensionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: MachineExtensions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MachineExtension>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtension.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _machineExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _machineExtensionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _machineExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _machineExtensionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MachineExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtension.Delete");
             scope.Start();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<MachineExtension>> UpdateAsync(bool waitForCompletion, PatchableMachineExtensionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineExtension>> UpdateAsync(bool waitForCompletion, PatchableMachineExtensionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<MachineExtension>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineExtension>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<MachineExtension>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineExtension>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<MachineExtension>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineExtension>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

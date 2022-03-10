@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         {
             _appServiceCertificateOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateOrder.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AppServiceCertificateOrder.ResourceType, out string appServiceCertificateOrderApiVersion);
-            _appServiceCertificateOrderRestClient = new AppServiceCertificateOrdersRestOperations(_appServiceCertificateOrderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateOrderApiVersion);
+            _appServiceCertificateOrderRestClient = new AppServiceCertificateOrdersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateOrderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async virtual Task<ArmOperation<AppServiceCertificateOrder>> CreateOrUpdateAsync(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServiceCertificateOrder>> CreateOrUpdateAsync(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
             Argument.AssertNotNull(certificateDistinguishedName, nameof(certificateDistinguishedName));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateOrder>> GetAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceCertificateOrder>> GetAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServiceCertificateOrderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _appServiceCertificateOrderClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken);
                 if (response.Value == null)
-                    throw _appServiceCertificateOrderClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateOrder>> GetIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceCertificateOrder>> GetIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 

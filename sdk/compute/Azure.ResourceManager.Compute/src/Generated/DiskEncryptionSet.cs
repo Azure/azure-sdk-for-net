@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         {
             _diskEncryptionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string diskEncryptionSetApiVersion);
-            _diskEncryptionSetRestClient = new DiskEncryptionSetsRestOperations(_diskEncryptionSetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskEncryptionSetApiVersion);
+            _diskEncryptionSetRestClient = new DiskEncryptionSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskEncryptionSetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskEncryptionSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DiskEncryptionSet>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskEncryptionSet>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSet.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskEncryptionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _diskEncryptionSetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskEncryptionSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _diskEncryptionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _diskEncryptionSetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskEncryptionSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSet.Delete");
             scope.Start();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="data"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<DiskEncryptionSet>> UpdateAsync(bool waitForCompletion, PatchableDiskEncryptionSetData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiskEncryptionSet>> UpdateAsync(bool waitForCompletion, PatchableDiskEncryptionSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<DiskEncryptionSet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskEncryptionSet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<DiskEncryptionSet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskEncryptionSet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<DiskEncryptionSet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskEncryptionSet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

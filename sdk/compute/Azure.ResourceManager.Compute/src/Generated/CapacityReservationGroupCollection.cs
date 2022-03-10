@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _capacityReservationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CapacityReservationGroup.ResourceType, out string capacityReservationGroupApiVersion);
-            _capacityReservationGroupRestClient = new CapacityReservationGroupsRestOperations(_capacityReservationGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, capacityReservationGroupApiVersion);
+            _capacityReservationGroupRestClient = new CapacityReservationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, capacityReservationGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<CapacityReservationGroup>> CreateOrUpdateAsync(bool waitForCompletion, string capacityReservationGroupName, CapacityReservationGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CapacityReservationGroup>> CreateOrUpdateAsync(bool waitForCompletion, string capacityReservationGroupName, CapacityReservationGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public async virtual Task<Response<CapacityReservationGroup>> GetAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationGroup>> GetAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _capacityReservationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _capacityReservationGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CapacityReservationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _capacityReservationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _capacityReservationGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CapacityReservationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public async virtual Task<Response<CapacityReservationGroup>> GetIfExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationGroup>> GetIfExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 

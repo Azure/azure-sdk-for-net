@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotHybridconnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridconnection.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotHybridconnection.ResourceType, out string siteSlotHybridconnectionWebAppsApiVersion);
-            _siteSlotHybridconnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotHybridconnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHybridconnectionWebAppsApiVersion);
+            _siteSlotHybridconnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHybridconnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotHybridconnection>> CreateOrUpdateAsync(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotHybridconnection>> CreateOrUpdateAsync(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotHybridconnection>> GetAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridconnection>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotHybridconnectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotHybridconnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotHybridconnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotHybridconnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotHybridconnection>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridconnection>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 

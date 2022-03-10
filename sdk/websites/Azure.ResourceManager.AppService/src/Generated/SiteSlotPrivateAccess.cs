@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotPrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotPrivateAccessWebAppsApiVersion);
-            _siteSlotPrivateAccessWebAppsRestClient = new WebAppsRestOperations(_siteSlotPrivateAccessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPrivateAccessWebAppsApiVersion);
+            _siteSlotPrivateAccessWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPrivateAccessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetPrivateAccessSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotPrivateAccess>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotPrivateAccess>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("SiteSlotPrivateAccess.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotPrivateAccessWebAppsRestClient.GetPrivateAccessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotPrivateAccessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotPrivateAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotPrivateAccessWebAppsRestClient.GetPrivateAccessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotPrivateAccessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotPrivateAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotPrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotPrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(access, nameof(access));
 

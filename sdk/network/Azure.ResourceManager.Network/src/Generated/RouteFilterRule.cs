@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string routeFilterRuleApiVersion);
-            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(_routeFilterRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
+            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: RouteFilterRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RouteFilterRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteFilterRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _routeFilterRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _routeFilterRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RouteFilterRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _routeFilterRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _routeFilterRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RouteFilterRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Delete");
             scope.Start();

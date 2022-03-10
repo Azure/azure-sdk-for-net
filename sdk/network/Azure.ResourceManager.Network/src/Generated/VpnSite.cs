@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             _vpnSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string vpnSiteApiVersion);
-            _vpnSiteRestClient = new VpnSitesRestOperations(_vpnSiteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteApiVersion);
+            _vpnSiteRestClient = new VpnSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VpnSites_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VpnSite>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSite>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSite.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _vpnSiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _vpnSiteClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _vpnSiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _vpnSiteClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSite.Delete");
             scope.Start();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<VpnSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<VpnSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<VpnSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

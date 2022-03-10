@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _cdnOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cdnOriginGroupApiVersion);
-            _cdnOriginGroupRestClient = new CdnOriginGroupsRestOperations(_cdnOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginGroupApiVersion);
+            _cdnOriginGroupRestClient = new CdnOriginGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnOriginGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CdnOriginGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnOriginGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroup.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _cdnOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnOriginGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _cdnOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnOriginGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroup.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnOriginGroup>> UpdateAsync(bool waitForCompletion, PatchableCdnOriginGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnOriginGroup>> UpdateAsync(bool waitForCompletion, PatchableCdnOriginGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
-            _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
+            _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, aseV3NetworkingConfigurationAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetAseV3NetworkingConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AseV3NetworkingConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AseV3NetworkingConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfiguration.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient.GetAseV3NetworkingConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AseV3NetworkingConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _aseV3NetworkingConfigurationAppServiceEnvironmentsRestClient.GetAseV3NetworkingConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AseV3NetworkingConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
-        public async virtual Task<ArmOperation<AseV3NetworkingConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AseV3NetworkingConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, AseV3NetworkingConfigurationData aseNetworkingConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
 

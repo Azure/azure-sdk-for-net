@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Resources
         {
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
-            _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
+            _subscriptionRestClient = new SubscriptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
             _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
-            _subscriptionResourcesRestClient = new ResourcesRestOperations(_subscriptionResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
+            _subscriptionResourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
             _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
-            _subscriptionTagsRestClient = new TagsRestOperations(_subscriptionTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
+            _subscriptionTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
-            _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
+            _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
-            _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Subscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.Get");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _subscriptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
-                    throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public async virtual Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public async virtual Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async virtual Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async virtual Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<Subscription>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<Subscription>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<Subscription>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

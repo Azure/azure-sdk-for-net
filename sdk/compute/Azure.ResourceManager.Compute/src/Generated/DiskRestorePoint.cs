@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             _diskRestorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_diskRestorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskRestorePointApiVersion);
+            _diskRestorePointRestClient = new DiskRestorePointRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskRestorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskRestorePoint_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DiskRestorePoint>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskRestorePoint>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _diskRestorePointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskRestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _diskRestorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskRestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePoint.RevokeAccess");
             scope.Start();

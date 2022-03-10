@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
             var data = new GenericResourceData(AzureLocation.WestUS2);
-            data.Sku = new Resources.Models.Sku()
+            data.Sku = new ResourcesSku()
             {
                 Name = "Aligned"
             };

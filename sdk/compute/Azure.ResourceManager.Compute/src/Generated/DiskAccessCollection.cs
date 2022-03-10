@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         {
             _diskAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccess.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DiskAccess.ResourceType, out string diskAccessApiVersion);
-            _diskAccessRestClient = new DiskAccessesRestOperations(_diskAccessClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskAccessApiVersion);
+            _diskAccessRestClient = new DiskAccessesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskAccessApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public async virtual Task<ArmOperation<DiskAccess>> CreateOrUpdateAsync(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiskAccess>> CreateOrUpdateAsync(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
             Argument.AssertNotNull(diskAccess, nameof(diskAccess));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public async virtual Task<Response<DiskAccess>> GetAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskAccess>> GetAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _diskAccessClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _diskAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, cancellationToken);
                 if (response.Value == null)
-                    throw _diskAccessClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public async virtual Task<Response<DiskAccess>> GetIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskAccess>> GetIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 

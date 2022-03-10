@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _deletedVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string deletedVaultVaultsApiVersion);
-            _deletedVaultVaultsRestClient = new VaultsRestOperations(_deletedVaultVaultsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedVaultVaultsApiVersion);
+            _deletedVaultVaultsRestClient = new VaultsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedVaultVaultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Vaults_GetDeleted
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeletedVault>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedVault>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVault.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _deletedVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedVaultVaultsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVault(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _deletedVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _deletedVaultVaultsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVault(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> PurgeDeletedAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PurgeDeletedAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVault.PurgeDeleted");
             scope.Start();

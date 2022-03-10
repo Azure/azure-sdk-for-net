@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
-                Sku = new Models.Sku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
+                Sku = new SqlSku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
                 LicenseType = InstancePoolLicenseType.LicenseIncluded,
                 Location = AzureLocation.WestUS2,
                 SubnetId = subnetId,

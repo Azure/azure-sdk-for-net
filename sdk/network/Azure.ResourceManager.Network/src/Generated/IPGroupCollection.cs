@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _ipGroupIpGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(IPGroup.ResourceType, out string ipGroupIpGroupsApiVersion);
-            _ipGroupIpGroupsRestClient = new IpGroupsRestOperations(_ipGroupIpGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipGroupIpGroupsApiVersion);
+            _ipGroupIpGroupsRestClient = new IpGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipGroupIpGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<IPGroup>> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IPGroup>> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public async virtual Task<Response<IPGroup>> GetAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IPGroup>> GetAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _ipGroupIpGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _ipGroupIpGroupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _ipGroupIpGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _ipGroupIpGroupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public async virtual Task<Response<IPGroup>> GetIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IPGroup>> GetIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 

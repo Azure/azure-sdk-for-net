@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         internal GenericResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _resourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)

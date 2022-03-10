@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         {
             _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteCustomDomainOverviewARMResource.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(StaticSiteCustomDomainOverviewARMResource.ResourceType, out string staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
-            _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
+            _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<StaticSiteCustomDomainOverviewARMResource>> CreateOrUpdateAsync(bool waitForCompletion, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteCustomDomainOverviewARMResource>> CreateOrUpdateAsync(bool waitForCompletion, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(staticSiteCustomDomainRequestPropertiesEnvelope, nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public async virtual Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
                 if (response.Value == null)
-                    throw _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public async virtual Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 

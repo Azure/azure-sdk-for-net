@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             if (useDefaults)
             {
                 Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
-                Assert.AreEqual(SkuTier.Standard, sBNamespace.Data.Sku.Tier);
+                Assert.AreEqual(ServiceBusSkuTier.Standard, sBNamespace.Data.Sku.Tier);
             }
         }
 

@@ -135,105 +135,105 @@ namespace Azure.ResourceManager.Network
         }
 
         private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(ApplicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationGateway.ResourceType));
+        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationGateway.ResourceType));
         private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(ApplicationSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationSecurityGroup.ResourceType));
+        private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationSecurityGroup.ResourceType));
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableDelegationsRestOperations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegationsRestOperations(AvailableDelegationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableDelegationsRestOperations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(AvailableServiceAliasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AzureFirewallClientDiagnostics => _azureFirewallClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
-        private AzureFirewallsRestOperations AzureFirewallRestClient => _azureFirewallRestClient ??= new AzureFirewallsRestOperations(AzureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AzureFirewall.ResourceType));
+        private AzureFirewallsRestOperations AzureFirewallRestClient => _azureFirewallRestClient ??= new AzureFirewallsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AzureFirewall.ResourceType));
         private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics BastionHostClientDiagnostics => _bastionHostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", BastionHost.ResourceType.Namespace, DiagnosticOptions);
-        private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(BastionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(BastionHost.ResourceType));
+        private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(BastionHost.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private NetworkManagementRestOperations DefaultRestClient => _defaultRestClient ??= new NetworkManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private NetworkManagementRestOperations DefaultRestClient => _defaultRestClient ??= new NetworkManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics CustomIPPrefixClientDiagnostics => _customIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefix.ResourceType.Namespace, DiagnosticOptions);
-        private CustomIPPrefixesRestOperations CustomIPPrefixRestClient => _customIPPrefixRestClient ??= new CustomIPPrefixesRestOperations(CustomIPPrefixClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomIPPrefix.ResourceType));
+        private CustomIPPrefixesRestOperations CustomIPPrefixRestClient => _customIPPrefixRestClient ??= new CustomIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomIPPrefix.ResourceType));
         private ClientDiagnostics DdosProtectionPlanClientDiagnostics => _ddosProtectionPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlan.ResourceType.Namespace, DiagnosticOptions);
-        private DdosProtectionPlansRestOperations DdosProtectionPlanRestClient => _ddosProtectionPlanRestClient ??= new DdosProtectionPlansRestOperations(DdosProtectionPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DdosProtectionPlan.ResourceType));
+        private DdosProtectionPlansRestOperations DdosProtectionPlanRestClient => _ddosProtectionPlanRestClient ??= new DdosProtectionPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DdosProtectionPlan.ResourceType));
         private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfiguration.ResourceType.Namespace, DiagnosticOptions);
-        private DscpConfigurationRestOperations DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfigurationRestOperations(DscpConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DscpConfiguration.ResourceType));
+        private DscpConfigurationRestOperations DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DscpConfiguration.ResourceType));
         private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableEndpointServicesRestOperations AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServicesRestOperations(AvailableEndpointServicesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableEndpointServicesRestOperations AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ExpressRouteCircuitClientDiagnostics => _expressRouteCircuitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuit.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteCircuitsRestOperations ExpressRouteCircuitRestClient => _expressRouteCircuitRestClient ??= new ExpressRouteCircuitsRestOperations(ExpressRouteCircuitClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCircuit.ResourceType));
+        private ExpressRouteCircuitsRestOperations ExpressRouteCircuitRestClient => _expressRouteCircuitRestClient ??= new ExpressRouteCircuitsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCircuit.ResourceType));
         private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ExpressRouteServiceProvidersRestOperations ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProvidersRestOperations(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ExpressRouteServiceProvidersRestOperations ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ExpressRouteCrossConnectionClientDiagnostics => _expressRouteCrossConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnection.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteCrossConnectionsRestOperations ExpressRouteCrossConnectionRestClient => _expressRouteCrossConnectionRestClient ??= new ExpressRouteCrossConnectionsRestOperations(ExpressRouteCrossConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCrossConnection.ResourceType));
+        private ExpressRouteCrossConnectionsRestOperations ExpressRouteCrossConnectionRestClient => _expressRouteCrossConnectionRestClient ??= new ExpressRouteCrossConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCrossConnection.ResourceType));
         private ClientDiagnostics ExpressRoutePortClientDiagnostics => _expressRoutePortClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePort.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(ExpressRoutePortClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRoutePort.ResourceType));
+        private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRoutePort.ResourceType));
         private ClientDiagnostics FirewallPolicyClientDiagnostics => _firewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(FirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(FirewallPolicy.ResourceType));
+        private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(FirewallPolicy.ResourceType));
         private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIpAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocation.ResourceType.Namespace, DiagnosticOptions);
-        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIpAllocationsRestClient ??= new IpAllocationsRestOperations(IPAllocationIpAllocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPAllocation.ResourceType));
+        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIpAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPAllocation.ResourceType));
         private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIpGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroup.ResourceType.Namespace, DiagnosticOptions);
-        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIpGroupsRestClient ??= new IpGroupsRestOperations(IPGroupIpGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPGroup.ResourceType));
+        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIpGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPGroup.ResourceType));
         private ClientDiagnostics LoadBalancerClientDiagnostics => _loadBalancerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancer.ResourceType.Namespace, DiagnosticOptions);
-        private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(LoadBalancerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(LoadBalancer.ResourceType));
+        private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(LoadBalancer.ResourceType));
         private ClientDiagnostics NatGatewayClientDiagnostics => _natGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NatGateway.ResourceType.Namespace, DiagnosticOptions);
-        private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(NatGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NatGateway.ResourceType));
+        private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NatGateway.ResourceType));
         private ClientDiagnostics NetworkInterfaceClientDiagnostics => _networkInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterface.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(NetworkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkInterface.ResourceType));
+        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkInterface.ResourceType));
         private ClientDiagnostics NetworkProfileClientDiagnostics => _networkProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfile.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(NetworkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkProfile.ResourceType));
+        private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkProfile.ResourceType));
         private ClientDiagnostics NetworkSecurityGroupClientDiagnostics => _networkSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(NetworkSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkSecurityGroup.ResourceType));
+        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkSecurityGroup.ResourceType));
         private ClientDiagnostics NetworkVirtualApplianceClientDiagnostics => _networkVirtualApplianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualAppliance.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkVirtualAppliancesRestOperations NetworkVirtualApplianceRestClient => _networkVirtualApplianceRestClient ??= new NetworkVirtualAppliancesRestOperations(NetworkVirtualApplianceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkVirtualAppliance.ResourceType));
+        private NetworkVirtualAppliancesRestOperations NetworkVirtualApplianceRestClient => _networkVirtualApplianceRestClient ??= new NetworkVirtualAppliancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkVirtualAppliance.ResourceType));
         private ClientDiagnostics NetworkWatcherClientDiagnostics => _networkWatcherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcher.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkWatchersRestOperations NetworkWatcherRestClient => _networkWatcherRestClient ??= new NetworkWatchersRestOperations(NetworkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkWatcher.ResourceType));
+        private NetworkWatchersRestOperations NetworkWatcherRestClient => _networkWatcherRestClient ??= new NetworkWatchersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkWatcher.ResourceType));
         private ClientDiagnostics PrivateEndpointClientDiagnostics => _privateEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpoint.ResourceType.Namespace, DiagnosticOptions);
-        private PrivateEndpointsRestOperations PrivateEndpointRestClient => _privateEndpointRestClient ??= new PrivateEndpointsRestOperations(PrivateEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateEndpoint.ResourceType));
+        private PrivateEndpointsRestOperations PrivateEndpointRestClient => _privateEndpointRestClient ??= new PrivateEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateEndpoint.ResourceType));
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics PrivateLinkServiceClientDiagnostics => _privateLinkServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkService.ResourceType.Namespace, DiagnosticOptions);
-        private PrivateLinkServicesRestOperations PrivateLinkServiceRestClient => _privateLinkServiceRestClient ??= new PrivateLinkServicesRestOperations(PrivateLinkServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateLinkService.ResourceType));
+        private PrivateLinkServicesRestOperations PrivateLinkServiceRestClient => _privateLinkServiceRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateLinkService.ResourceType));
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(PrivateLinkServicesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics PublicIPAddressClientDiagnostics => _publicIPAddressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddress.ResourceType.Namespace, DiagnosticOptions);
-        private PublicIPAddressesRestOperations PublicIPAddressRestClient => _publicIPAddressRestClient ??= new PublicIPAddressesRestOperations(PublicIPAddressClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPAddress.ResourceType));
+        private PublicIPAddressesRestOperations PublicIPAddressRestClient => _publicIPAddressRestClient ??= new PublicIPAddressesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPAddress.ResourceType));
         private ClientDiagnostics PublicIPPrefixClientDiagnostics => _publicIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefix.ResourceType.Namespace, DiagnosticOptions);
-        private PublicIPPrefixesRestOperations PublicIPPrefixRestClient => _publicIPPrefixRestClient ??= new PublicIPPrefixesRestOperations(PublicIPPrefixClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPPrefix.ResourceType));
+        private PublicIPPrefixesRestOperations PublicIPPrefixRestClient => _publicIPPrefixRestClient ??= new PublicIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPPrefix.ResourceType));
         private ClientDiagnostics RouteFilterClientDiagnostics => _routeFilterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilter.ResourceType.Namespace, DiagnosticOptions);
-        private RouteFiltersRestOperations RouteFilterRestClient => _routeFilterRestClient ??= new RouteFiltersRestOperations(RouteFilterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteFilter.ResourceType));
+        private RouteFiltersRestOperations RouteFilterRestClient => _routeFilterRestClient ??= new RouteFiltersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteFilter.ResourceType));
         private ClientDiagnostics RouteTableClientDiagnostics => _routeTableClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteTable.ResourceType.Namespace, DiagnosticOptions);
-        private RouteTablesRestOperations RouteTableRestClient => _routeTableRestClient ??= new RouteTablesRestOperations(RouteTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteTable.ResourceType));
+        private RouteTablesRestOperations RouteTableRestClient => _routeTableRestClient ??= new RouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteTable.ResourceType));
         private ClientDiagnostics SecurityPartnerProviderClientDiagnostics => _securityPartnerProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProvider.ResourceType.Namespace, DiagnosticOptions);
-        private SecurityPartnerProvidersRestOperations SecurityPartnerProviderRestClient => _securityPartnerProviderRestClient ??= new SecurityPartnerProvidersRestOperations(SecurityPartnerProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SecurityPartnerProvider.ResourceType));
+        private SecurityPartnerProvidersRestOperations SecurityPartnerProviderRestClient => _securityPartnerProviderRestClient ??= new SecurityPartnerProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SecurityPartnerProvider.ResourceType));
         private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private BgpServiceCommunitiesRestOperations BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunitiesRestOperations(BgpServiceCommunitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private BgpServiceCommunitiesRestOperations BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunitiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ServiceEndpointPolicyClientDiagnostics => _serviceEndpointPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(ServiceEndpointPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceEndpointPolicy.ResourceType));
+        private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceEndpointPolicy.ResourceType));
         private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(ServiceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(UsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetwork.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(VirtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetwork.ResourceType));
+        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetwork.ResourceType));
         private ClientDiagnostics VirtualNetworkTapClientDiagnostics => _virtualNetworkTapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTap.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualNetworkTapsRestOperations VirtualNetworkTapRestClient => _virtualNetworkTapRestClient ??= new VirtualNetworkTapsRestOperations(VirtualNetworkTapClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetworkTap.ResourceType));
+        private VirtualNetworkTapsRestOperations VirtualNetworkTapRestClient => _virtualNetworkTapRestClient ??= new VirtualNetworkTapsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetworkTap.ResourceType));
         private ClientDiagnostics VirtualRouterClientDiagnostics => _virtualRouterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouter.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualRoutersRestOperations VirtualRouterRestClient => _virtualRouterRestClient ??= new VirtualRoutersRestOperations(VirtualRouterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualRouter.ResourceType));
+        private VirtualRoutersRestOperations VirtualRouterRestClient => _virtualRouterRestClient ??= new VirtualRoutersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualRouter.ResourceType));
         private ClientDiagnostics VirtualWanClientDiagnostics => _virtualWanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWan.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualWansRestOperations VirtualWanRestClient => _virtualWanRestClient ??= new VirtualWansRestOperations(VirtualWanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWan.ResourceType));
+        private VirtualWansRestOperations VirtualWanRestClient => _virtualWanRestClient ??= new VirtualWansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWan.ResourceType));
         private ClientDiagnostics VpnSiteClientDiagnostics => _vpnSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnSite.ResourceType.Namespace, DiagnosticOptions);
-        private VpnSitesRestOperations VpnSiteRestClient => _vpnSiteRestClient ??= new VpnSitesRestOperations(VpnSiteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnSite.ResourceType));
+        private VpnSitesRestOperations VpnSiteRestClient => _vpnSiteRestClient ??= new VpnSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnSite.ResourceType));
         private ClientDiagnostics VpnServerConfigurationClientDiagnostics => _vpnServerConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfiguration.ResourceType.Namespace, DiagnosticOptions);
-        private VpnServerConfigurationsRestOperations VpnServerConfigurationRestClient => _vpnServerConfigurationRestClient ??= new VpnServerConfigurationsRestOperations(VpnServerConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnServerConfiguration.ResourceType));
+        private VpnServerConfigurationsRestOperations VpnServerConfigurationRestClient => _vpnServerConfigurationRestClient ??= new VpnServerConfigurationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnServerConfiguration.ResourceType));
         private ClientDiagnostics VirtualHubClientDiagnostics => _virtualHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHub.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(VirtualHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualHub.ResourceType));
+        private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualHub.ResourceType));
         private ClientDiagnostics VpnGatewayClientDiagnostics => _vpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnGateway.ResourceType.Namespace, DiagnosticOptions);
-        private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(VpnGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnGateway.ResourceType));
+        private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnGateway.ResourceType));
         private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGateway.ResourceType.Namespace, DiagnosticOptions);
-        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2SVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(P2SVpnGateway.ResourceType));
+        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2SVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(P2SVpnGateway.ResourceType));
         private ClientDiagnostics ExpressRouteGatewayClientDiagnostics => _expressRouteGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGateway.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(ExpressRouteGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteGateway.ResourceType));
+        private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteGateway.ResourceType));
         private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(WebApplicationFirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebApplicationFirewallPolicy.ResourceType));
+        private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebApplicationFirewallPolicy.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckDnsNameAvailability");
             scope.Start();
@@ -2137,7 +2137,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
@@ -2921,7 +2921,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
@@ -3649,7 +3649,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServiceTagsListResult>> GetServiceTagAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(string location, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceTagsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetServiceTag");
             scope.Start();
@@ -3695,10 +3695,10 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3713,7 +3713,7 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3738,10 +3738,10 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<NetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3756,7 +3756,7 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();

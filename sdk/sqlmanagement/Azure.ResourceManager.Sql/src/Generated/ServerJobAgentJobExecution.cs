@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
-            _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(_serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
+            _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobExecutions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobExecution>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobExecution>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecution.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobExecution(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobExecutionJobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobExecution(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobExecutions_Cancel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> CancelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecution.Cancel");
             scope.Start();

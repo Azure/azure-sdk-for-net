@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
         private async Task<StorageAccount> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
-            var parameters = new StorageAccountCreateParameters(new Storage.Models.Sku(SkuName.StandardLRS),Kind.Storage,TestEnvironment.Location);
+            var parameters = new StorageAccountCreateParameters(new StorageSku(StorageSkuName.StandardLRS), StorageKind.Storage,TestEnvironment.Location);
             return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, name,parameters)).Value;
             //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 

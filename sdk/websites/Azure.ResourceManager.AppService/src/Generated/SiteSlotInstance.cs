@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotInstanceWebAppsApiVersion);
-            _siteSlotInstanceWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceWebAppsApiVersion);
+            _siteSlotInstanceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceInfoSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotInstance>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotInstance>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstance.Get");
             scope.Start();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotInstanceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotInstanceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

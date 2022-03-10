@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string orderItemResourceApiVersion);
-            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(_orderItemResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderItemResourceApiVersion);
+            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderItemResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </summary>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<OrderItemResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrderItemResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Get");
             scope.Start();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = await _orderItemResourceRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _orderItemResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OrderItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = _orderItemResourceRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _orderItemResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OrderItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Delete");
             scope.Start();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<OrderItemResource>> UpdateAsync(bool waitForCompletion, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OrderItemResource>> UpdateAsync(bool waitForCompletion, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
-        public async virtual Task<Response> CancelOrderItemAsync(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelOrderItemAsync(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="returnOrderItemDetails"/> is null. </exception>
-        public async virtual Task<ArmOperation> ReturnOrderItemAsync(bool waitForCompletion, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReturnOrderItemAsync(bool waitForCompletion, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<OrderItemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrderItemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<OrderItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrderItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<OrderItemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrderItemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

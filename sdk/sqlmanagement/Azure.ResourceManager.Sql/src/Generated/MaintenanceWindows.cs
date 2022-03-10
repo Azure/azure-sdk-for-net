@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _maintenanceWindowsMaintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
-            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_maintenanceWindowsMaintenanceWindowsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
+            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
-        public async virtual Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken);
                 if (response.Value == null)
-                    throw _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
             Argument.AssertNotNull(parameters, nameof(parameters));

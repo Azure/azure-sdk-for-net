@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal PatchableApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal PatchableApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ArmPlan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The plan information. </summary>
-        public Plan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
         /// <summary> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </summary>
         public string Kind { get; set; }
         /// <summary> The identity of the resource. </summary>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string afdRouteApiVersion);
-            _afdRouteRestClient = new AfdRoutesRestOperations(_afdRouteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRouteApiVersion);
+            _afdRouteRestClient = new AfdRoutesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRouteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdRoutes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AfdRoute>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRoute>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdRouteClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _afdRouteClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdRoute>> UpdateAsync(bool waitForCompletion, PatchableAfdRouteData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdRoute>> UpdateAsync(bool waitForCompletion, PatchableAfdRouteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

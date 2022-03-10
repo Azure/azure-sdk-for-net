@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.PremiumAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.PremiumAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.PremiumAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");

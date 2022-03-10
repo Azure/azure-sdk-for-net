@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
-            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteBuildARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
+            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StaticSiteBuildARMResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteBuildARMResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Delete");
             scope.Start();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteBuildAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetStaticSiteBuildAppSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetStaticSiteBuildAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildAppSettings");
             scope.Start();
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctionAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetStaticSiteBuildFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetStaticSiteBuildFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctionAppSettings");
             scope.Start();
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation> CreateZipDeploymentForStaticSiteBuildAsync(bool waitForCompletion, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateZipDeploymentForStaticSiteBuildAsync(bool waitForCompletion, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 

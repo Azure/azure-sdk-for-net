@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string afdCustomDomainApiVersion);
-            _afdCustomDomainRestClient = new AfdCustomDomainsRestOperations(_afdCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdCustomDomainApiVersion);
+            _afdCustomDomainRestClient = new AfdCustomDomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdCustomDomains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AfdCustomDomain>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdCustomDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdCustomDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdCustomDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _afdCustomDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdCustomDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdCustomDomain>> UpdateAsync(bool waitForCompletion, PatchableAfdCustomDomainData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdCustomDomain>> UpdateAsync(bool waitForCompletion, PatchableAfdCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<ValidationToken>> RefreshValidationTokenAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ValidationToken>> RefreshValidationTokenAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.RefreshValidationToken");
             scope.Start();

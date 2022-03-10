@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceData parameters1 = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new Models.Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium,
+                    Tier = ServiceBusSkuTier.Premium,
                     Capacity = 1
                 }
             };
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceData parameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS)
             {
-                Sku = new Models.Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium,
+                    Tier = ServiceBusSkuTier.Premium,
                     Capacity = 1
                 }
             };

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _expressRouteCrossConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnection.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ExpressRouteCrossConnection.ResourceType, out string expressRouteCrossConnectionApiVersion);
-            _expressRouteCrossConnectionRestClient = new ExpressRouteCrossConnectionsRestOperations(_expressRouteCrossConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionApiVersion);
+            _expressRouteCrossConnectionRestClient = new ExpressRouteCrossConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ExpressRouteCrossConnection>> CreateOrUpdateAsync(bool waitForCompletion, string crossConnectionName, ExpressRouteCrossConnectionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCrossConnection>> CreateOrUpdateAsync(bool waitForCompletion, string crossConnectionName, ExpressRouteCrossConnectionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> GetAsync(string crossConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> GetAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRouteCrossConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRouteCrossConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> GetIfExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> GetIfExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _longTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LongTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(LongTermRetentionPolicy.ResourceType, out string longTermRetentionPolicyApiVersion);
-            _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(_longTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, longTermRetentionPolicyApiVersion);
+            _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, longTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<LongTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LongTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LongTermRetentionPolicy>> GetAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LongTermRetentionPolicy>> GetAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _longTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _longTermRetentionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _longTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
-                    throw _longTermRetentionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.Exists");
             scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LongTermRetentionPolicy>> GetIfExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LongTermRetentionPolicy>> GetIfExistsAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.GetIfExists");
             scope.Start();

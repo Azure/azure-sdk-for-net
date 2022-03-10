@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _hostPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPool.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(HostPool.ResourceType, out string hostPoolApiVersion);
-            _hostPoolRestClient = new HostPoolsRestOperations(_hostPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostPoolApiVersion);
+            _hostPoolRestClient = new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="hostPool"/> is null. </exception>
-        public async virtual Task<ArmOperation<HostPool>> CreateOrUpdateAsync(bool waitForCompletion, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostPool>> CreateOrUpdateAsync(bool waitForCompletion, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
             Argument.AssertNotNull(hostPool, nameof(hostPool));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hostPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _hostPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 

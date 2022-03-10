@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         {
             _queueServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
-            _queueServiceRestClient = new QueueServicesRestOperations(_queueServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, queueServiceApiVersion);
+            _queueServiceRestClient = new QueueServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, queueServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: QueueServices_GetServiceProperties
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<QueueService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _queueServiceClientDiagnostics.CreateScope("QueueService.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _queueServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _queueServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QueueService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _queueServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _queueServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QueueService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<QueueService>> CreateOrUpdateAsync(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<QueueService>> CreateOrUpdateAsync(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

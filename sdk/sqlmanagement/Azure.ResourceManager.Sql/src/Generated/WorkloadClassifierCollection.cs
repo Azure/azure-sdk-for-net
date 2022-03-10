@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _workloadClassifierClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadClassifier.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(WorkloadClassifier.ResourceType, out string workloadClassifierApiVersion);
-            _workloadClassifierRestClient = new WorkloadClassifiersRestOperations(_workloadClassifierClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadClassifierApiVersion);
+            _workloadClassifierRestClient = new WorkloadClassifiersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadClassifierApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WorkloadClassifier>> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WorkloadClassifier>> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
-        public async virtual Task<Response<WorkloadClassifier>> GetAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadClassifier>> GetAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _workloadClassifierRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _workloadClassifierClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadClassifier(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _workloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken);
                 if (response.Value == null)
-                    throw _workloadClassifierClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadClassifier(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
-        public async virtual Task<Response<WorkloadClassifier>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadClassifier>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 

@@ -76,29 +76,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string databaseAccountApiVersion);
-            _databaseAccountRestClient = new DatabaseAccountsRestOperations(_databaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountApiVersion);
+            _databaseAccountRestClient = new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountApiVersion);
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _databaseRestClient = new DatabaseRestOperations(_databaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _databaseRestClient = new DatabaseRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionRestClient = new CollectionRestOperations(_collectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _collectionRestClient = new CollectionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionRegionRestClient = new CollectionRegionRestOperations(_collectionRegionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(_databaseAccountRegionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(_percentileSourceTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileTargetRestClient = new PercentileTargetRestOperations(_percentileTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileRestClient = new PercentileRestOperations(_percentileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _percentileRestClient = new PercentileRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(_collectionPartitionRegionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionPartitionRestClient = new CollectionPartitionRestOperations(_collectionPartitionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(_partitionKeyRangeIdClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccount>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Get");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _databaseAccountClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _databaseAccountClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Delete");
             scope.Start();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, PatchableDatabaseAccountData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, PatchableDatabaseAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> FailoverPriorityChangeAsync(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FailoverPriorityChangeAsync(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(failoverParameters, nameof(failoverParameters));
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetKeys");
             scope.Start();
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="regionParameterForOffline"> Cosmos DB region to offline for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
-        public async virtual Task<ArmOperation> OfflineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> OfflineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(regionParameterForOffline, nameof(regionParameterForOffline));
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="regionParameterForOnline"> Cosmos DB region to online for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
-        public async virtual Task<ArmOperation> OnlineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> OnlineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(regionParameterForOnline, nameof(regionParameterForOnline));
 
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListReadOnlyKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetReadOnlyKeys");
             scope.Start();
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
 
@@ -2028,7 +2028,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccount>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccount>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccount>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccount>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -2149,7 +2149,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccount>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccount>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

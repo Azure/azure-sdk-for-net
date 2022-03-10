@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _templateSpecVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecVersion.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(TemplateSpecVersion.ResourceType, out string templateSpecVersionApiVersion);
-            _templateSpecVersionRestClient = new TemplateSpecVersionsRestOperations(_templateSpecVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecVersionApiVersion);
+            _templateSpecVersionRestClient = new TemplateSpecVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public async virtual Task<ArmOperation<TemplateSpecVersion>> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TemplateSpecVersion>> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
             Argument.AssertNotNull(templateSpecVersionModel, nameof(templateSpecVersionModel));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public async virtual Task<Response<TemplateSpecVersion>> GetAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateSpecVersion>> GetAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _templateSpecVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _templateSpecVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken);
                 if (response.Value == null)
-                    throw _templateSpecVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TemplateSpecVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
-        public async virtual Task<Response<TemplateSpecVersion>> GetIfExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateSpecVersion>> GetIfExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 

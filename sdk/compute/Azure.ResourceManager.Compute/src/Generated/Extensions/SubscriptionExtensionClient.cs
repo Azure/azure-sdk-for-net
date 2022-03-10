@@ -85,55 +85,55 @@ namespace Azure.ResourceManager.Compute
         }
 
         private ClientDiagnostics AvailabilitySetClientDiagnostics => _availabilitySetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySet.ResourceType.Namespace, DiagnosticOptions);
-        private AvailabilitySetsRestOperations AvailabilitySetRestClient => _availabilitySetRestClient ??= new AvailabilitySetsRestOperations(AvailabilitySetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AvailabilitySet.ResourceType));
+        private AvailabilitySetsRestOperations AvailabilitySetRestClient => _availabilitySetRestClient ??= new AvailabilitySetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AvailabilitySet.ResourceType));
         private ClientDiagnostics ProximityPlacementGroupClientDiagnostics => _proximityPlacementGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroup.ResourceType.Namespace, DiagnosticOptions);
-        private ProximityPlacementGroupsRestOperations ProximityPlacementGroupRestClient => _proximityPlacementGroupRestClient ??= new ProximityPlacementGroupsRestOperations(ProximityPlacementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ProximityPlacementGroup.ResourceType));
+        private ProximityPlacementGroupsRestOperations ProximityPlacementGroupRestClient => _proximityPlacementGroupRestClient ??= new ProximityPlacementGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ProximityPlacementGroup.ResourceType));
         private ClientDiagnostics DedicatedHostGroupClientDiagnostics => _dedicatedHostGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DedicatedHostGroup.ResourceType.Namespace, DiagnosticOptions);
-        private DedicatedHostGroupsRestOperations DedicatedHostGroupRestClient => _dedicatedHostGroupRestClient ??= new DedicatedHostGroupsRestOperations(DedicatedHostGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DedicatedHostGroup.ResourceType));
+        private DedicatedHostGroupsRestOperations DedicatedHostGroupRestClient => _dedicatedHostGroupRestClient ??= new DedicatedHostGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DedicatedHostGroup.ResourceType));
         private ClientDiagnostics SshPublicKeyClientDiagnostics => _sshPublicKeyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKey.ResourceType.Namespace, DiagnosticOptions);
-        private SshPublicKeysRestOperations SshPublicKeyRestClient => _sshPublicKeyRestClient ??= new SshPublicKeysRestOperations(SshPublicKeyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SshPublicKey.ResourceType));
+        private SshPublicKeysRestOperations SshPublicKeyRestClient => _sshPublicKeyRestClient ??= new SshPublicKeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SshPublicKey.ResourceType));
         private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _virtualMachineImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(VirtualMachineImagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _virtualMachineImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _virtualMachineImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _virtualMachineImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics UsageClientDiagnostics => _usageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsageRestOperations UsageRestClient => _usageRestClient ??= new UsageRestOperations(UsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private UsageRestOperations UsageRestClient => _usageRestClient ??= new UsageRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachine.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(VirtualMachineClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachine.ResourceType));
+        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachine.ResourceType));
         private ClientDiagnostics VirtualMachineScaleSetClientDiagnostics => _virtualMachineScaleSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSet.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _virtualMachineScaleSetRestClient ??= new VirtualMachineScaleSetsRestOperations(VirtualMachineScaleSetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineScaleSet.ResourceType));
+        private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _virtualMachineScaleSetRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineScaleSet.ResourceType));
         private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(VirtualMachineSizesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ImageClientDiagnostics => _imageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", Image.ResourceType.Namespace, DiagnosticOptions);
-        private ImagesRestOperations ImageRestClient => _imageRestClient ??= new ImagesRestOperations(ImageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Image.ResourceType));
+        private ImagesRestOperations ImageRestClient => _imageRestClient ??= new ImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Image.ResourceType));
         private ClientDiagnostics RestorePointGroupRestorePointCollectionsClientDiagnostics => _restorePointGroupRestorePointCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroup.ResourceType.Namespace, DiagnosticOptions);
-        private RestorePointCollectionsRestOperations RestorePointGroupRestorePointCollectionsRestClient => _restorePointGroupRestorePointCollectionsRestClient ??= new RestorePointCollectionsRestOperations(RestorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorePointGroup.ResourceType));
+        private RestorePointCollectionsRestOperations RestorePointGroupRestorePointCollectionsRestClient => _restorePointGroupRestorePointCollectionsRestClient ??= new RestorePointCollectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorePointGroup.ResourceType));
         private ClientDiagnostics CapacityReservationGroupClientDiagnostics => _capacityReservationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroup.ResourceType.Namespace, DiagnosticOptions);
-        private CapacityReservationGroupsRestOperations CapacityReservationGroupRestClient => _capacityReservationGroupRestClient ??= new CapacityReservationGroupsRestOperations(CapacityReservationGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CapacityReservationGroup.ResourceType));
+        private CapacityReservationGroupsRestOperations CapacityReservationGroupRestClient => _capacityReservationGroupRestClient ??= new CapacityReservationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CapacityReservationGroup.ResourceType));
         private ClientDiagnostics LogAnalyticsClientDiagnostics => _logAnalyticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(LogAnalyticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualMachineRunCommandClientDiagnostics => _virtualMachineRunCommandClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommand.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(VirtualMachineRunCommandClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineRunCommand.ResourceType));
+        private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineRunCommand.ResourceType));
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(ResourceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DiskClientDiagnostics => _diskClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", Disk.ResourceType.Namespace, DiagnosticOptions);
-        private DisksRestOperations DiskRestClient => _diskRestClient ??= new DisksRestOperations(DiskClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Disk.ResourceType));
+        private DisksRestOperations DiskRestClient => _diskRestClient ??= new DisksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Disk.ResourceType));
         private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", Snapshot.ResourceType.Namespace, DiagnosticOptions);
-        private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(SnapshotClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Snapshot.ResourceType));
+        private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Snapshot.ResourceType));
         private ClientDiagnostics DiskEncryptionSetClientDiagnostics => _diskEncryptionSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSet.ResourceType.Namespace, DiagnosticOptions);
-        private DiskEncryptionSetsRestOperations DiskEncryptionSetRestClient => _diskEncryptionSetRestClient ??= new DiskEncryptionSetsRestOperations(DiskEncryptionSetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskEncryptionSet.ResourceType));
+        private DiskEncryptionSetsRestOperations DiskEncryptionSetRestClient => _diskEncryptionSetRestClient ??= new DiskEncryptionSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskEncryptionSet.ResourceType));
         private ClientDiagnostics DiskAccessClientDiagnostics => _diskAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccess.ResourceType.Namespace, DiagnosticOptions);
-        private DiskAccessesRestOperations DiskAccessRestClient => _diskAccessRestClient ??= new DiskAccessesRestOperations(DiskAccessClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskAccess.ResourceType));
+        private DiskAccessesRestOperations DiskAccessRestClient => _diskAccessRestClient ??= new DiskAccessesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskAccess.ResourceType));
         private ClientDiagnostics GalleryClientDiagnostics => _galleryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", Gallery.ResourceType.Namespace, DiagnosticOptions);
-        private GalleriesRestOperations GalleryRestClient => _galleryRestClient ??= new GalleriesRestOperations(GalleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Gallery.ResourceType));
+        private GalleriesRestOperations GalleryRestClient => _galleryRestClient ??= new GalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Gallery.ResourceType));
         private ClientDiagnostics CommunityGalleriesClientDiagnostics => _communityGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CommunityGalleriesRestOperations CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleriesRestOperations(CommunityGalleriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CommunityGalleriesRestOperations CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics CommunityGalleryImagesClientDiagnostics => _communityGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CommunityGalleryImagesRestOperations CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImagesRestOperations(CommunityGalleryImagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CommunityGalleryImagesRestOperations CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics CommunityGalleryImageVersionsClientDiagnostics => _communityGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CommunityGalleryImageVersionsRestOperations CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersionsRestOperations(CommunityGalleryImageVersionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CommunityGalleryImageVersionsRestOperations CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics CloudServiceClientDiagnostics => _cloudServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CloudService.ResourceType.Namespace, DiagnosticOptions);
-        private CloudServicesRestOperations CloudServiceRestClient => _cloudServiceRestClient ??= new CloudServicesRestOperations(CloudServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CloudService.ResourceType));
+        private CloudServicesRestOperations CloudServiceRestClient => _cloudServiceRestClient ??= new CloudServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CloudService.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualMachineImage");
             scope.Start();
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -1121,10 +1121,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ComputeUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsageClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ComputeUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsageClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -1164,10 +1164,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<ComputeUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsageClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ComputeUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsageClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -1861,7 +1861,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<LogAnalytics>> ExportRequestRateByIntervalLogAnalyticAsync(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportRequestRateByIntervalLogAnalyticAsync(bool waitForCompletion, string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportRequestRateByIntervalLogAnalytic");
             scope.Start();
@@ -1917,7 +1917,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<LogAnalytics>> ExportThrottledRequestsLogAnalyticAsync(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportThrottledRequestsLogAnalyticAsync(bool waitForCompletion, string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ExportThrottledRequestsLogAnalytic");
             scope.Start();
@@ -2058,7 +2058,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(string location, string commandId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(string location, string commandId, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunityGallery>> GetCommunityGalleryAsync(string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(string location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleriesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunityGallery");
             scope.Start();
@@ -2663,7 +2663,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunityGalleryImage");
             scope.Start();
@@ -2714,7 +2714,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImageVersionsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunityGalleryImageVersion");
             scope.Start();

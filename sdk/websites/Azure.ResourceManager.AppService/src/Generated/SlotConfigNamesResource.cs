@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _slotConfigNamesResourceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string slotConfigNamesResourceWebAppsApiVersion);
-            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(_slotConfigNamesResourceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, slotConfigNamesResourceWebAppsApiVersion);
+            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, slotConfigNamesResourceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _slotConfigNamesResourceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _slotConfigNamesResourceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
-        public async virtual Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 

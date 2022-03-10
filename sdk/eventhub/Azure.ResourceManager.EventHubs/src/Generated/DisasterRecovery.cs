@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.EventHubs
         {
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
-            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string disasterRecoveryApiVersion);
-            _disasterRecoveryRestClient = new DisasterRecoveriesRestOperations(_disasterRecoveryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryApiVersion);
+            _disasterRecoveryRestClient = new DisasterRecoveriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.Get");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryClientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_BreakPairing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.BreakPairing");
             scope.Start();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_FailOver
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> FailOverAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> FailOverAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.FailOver");
             scope.Start();

@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.SharedPrivateLinkCollection GetSharedPrivateLinks() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.Sku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.Models.Sku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.WebPubSubResourceSku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.Models.WebPubSubResourceSku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubHubCollection GetWebPubSubHubs() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.PrivateLink> GetWebPubSubPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.Models.PrivateLink> GetWebPubSubPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -451,13 +451,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class Sku
-    {
-        internal Sku() { }
-        public Azure.ResourceManager.WebPubSub.Models.SkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.WebPubSubSku SkuValue { get { throw null; } }
-    }
     public partial class SkuCapacity
     {
         internal SkuCapacity() { }
@@ -531,6 +524,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class WebPubSubResourceSku
+    {
+        internal WebPubSubResourceSku() { }
+        public Azure.ResourceManager.WebPubSub.Models.SkuCapacity Capacity { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.WebPubSub.Models.WebPubSubSku Sku { get { throw null; } }
     }
     public partial class WebPubSubSku
     {

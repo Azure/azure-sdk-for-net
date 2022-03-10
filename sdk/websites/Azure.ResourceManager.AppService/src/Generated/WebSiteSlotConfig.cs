@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.AppService
         {
             _webSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webSiteSlotConfigWebAppsApiVersion);
-            _webSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(_webSiteSlotConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteSlotConfigWebAppsApiVersion);
+            _webSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteSlotConfigWebAppsApiVersion);
             _siteSlotConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotConfigSnapshot.ResourceType, out string siteSlotConfigSnapshotWebAppsApiVersion);
-            _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigSnapshotWebAppsApiVersion);
+            _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfig.Get");
             scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<Response<WebSiteSlotConfig>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConfig>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteConfig, nameof(siteConfig));
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebSiteSlotConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebSiteSlotConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteConfig, nameof(siteConfig));
 

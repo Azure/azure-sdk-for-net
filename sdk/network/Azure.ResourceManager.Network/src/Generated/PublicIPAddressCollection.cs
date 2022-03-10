@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _publicIPAddressClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddress.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PublicIPAddress.ResourceType, out string publicIPAddressApiVersion);
-            _publicIPAddressRestClient = new PublicIPAddressesRestOperations(_publicIPAddressClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPAddressApiVersion);
+            _publicIPAddressRestClient = new PublicIPAddressesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPAddressApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<PublicIPAddress>> CreateOrUpdateAsync(bool waitForCompletion, string publicIPAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PublicIPAddress>> CreateOrUpdateAsync(bool waitForCompletion, string publicIPAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        public async virtual Task<Response<PublicIPAddress>> GetAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPAddress>> GetAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _publicIPAddressRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _publicIPAddressClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PublicIPAddress(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _publicIPAddressRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publicIPAddressName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _publicIPAddressClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PublicIPAddress(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        public async virtual Task<Response<PublicIPAddress>> GetIfExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPAddress>> GetIfExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 

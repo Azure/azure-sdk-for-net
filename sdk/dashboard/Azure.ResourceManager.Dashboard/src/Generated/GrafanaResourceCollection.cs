@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dashboard
         {
             _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(GrafanaResource.ResourceType, out string grafanaResourceGrafanaApiVersion);
-            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(_grafanaResourceGrafanaClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, grafanaResourceGrafanaApiVersion);
+            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, grafanaResourceGrafanaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<ArmOperation<GrafanaResource>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, GrafanaResourceData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GrafanaResource>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, GrafanaResourceData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<GrafanaResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrafanaResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Dashboard
             {
                 var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _grafanaResourceGrafanaClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Dashboard
             {
                 var response = _grafanaResourceGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                    throw _grafanaResourceGrafanaClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<GrafanaResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrafanaResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
-            _cdnEndpointRestClient = new CdnEndpointsRestOperations(_cdnEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
+            _cdnEndpointRestClient = new CdnEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CdnEndpoint>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpoint>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Get");
             scope.Start();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cdnEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cdnEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Delete");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpoint>> UpdateAsync(bool waitForCompletion, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<CdnEndpoint>> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpoint>> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Start");
             scope.Start();
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<CdnEndpoint>> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpoint>> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Stop");
             scope.Start();
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public async virtual Task<ArmOperation> PurgeContentAsync(bool waitForCompletion, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PurgeContentAsync(bool waitForCompletion, PurgeOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contentFilePaths"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png&apos; which loads a single file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilePaths"/> is null. </exception>
-        public async virtual Task<ArmOperation> LoadContentAsync(bool waitForCompletion, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> LoadContentAsync(bool waitForCompletion, LoadOptions contentFilePaths, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainProperties"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainProperties"/> is null. </exception>
-        public async virtual Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(ValidateCustomDomainInput customDomainProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<CdnEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<CdnEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<CdnEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

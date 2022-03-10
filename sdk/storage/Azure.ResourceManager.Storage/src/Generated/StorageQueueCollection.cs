@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         {
             _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueue.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(StorageQueue.ResourceType, out string storageQueueQueueApiVersion);
-            _storageQueueQueueRestClient = new QueueRestOperations(_storageQueueQueueClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
+            _storageQueueQueueRestClient = new QueueRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public async virtual Task<ArmOperation<StorageQueue>> CreateOrUpdateAsync(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageQueue>> CreateOrUpdateAsync(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             Argument.AssertNotNull(queue, nameof(queue));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<StorageQueue>> GetAsync(string queueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageQueue>> GetAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _storageQueueQueueClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken);
                 if (response.Value == null)
-                    throw _storageQueueQueueClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<StorageQueue>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageQueue>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 

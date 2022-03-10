@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.Sql
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
-            _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
+            _sqlServerServersRestClient = new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
-            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
+            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
-            _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
+            _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(_serverUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
-            _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
+            _firewallRuleRestClient = new FirewallRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _serverOperationsRestClient = new ServerRestOperations(_serverOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serverOperationsRestClient = new ServerRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_tdeCertificatesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SqlServer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Get");
             scope.Start();
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlServerServersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlServerServersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Delete");
             scope.Start();
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlServer>> UpdateAsync(bool waitForCompletion, PatchableSqlServerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServer>> UpdateAsync(bool waitForCompletion, PatchableSqlServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<FirewallRule>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallRule>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> CreateTdeCertificateAsync(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateTdeCertificateAsync(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

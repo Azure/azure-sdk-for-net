@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _outboundFirewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", OutboundFirewallRule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(OutboundFirewallRule.ResourceType, out string outboundFirewallRuleApiVersion);
-            _outboundFirewallRuleRestClient = new OutboundFirewallRulesRestOperations(_outboundFirewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundFirewallRuleApiVersion);
+            _outboundFirewallRuleRestClient = new OutboundFirewallRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundFirewallRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<OutboundFirewallRule>> CreateOrUpdateAsync(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OutboundFirewallRule>> CreateOrUpdateAsync(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        public async virtual Task<Response<OutboundFirewallRule>> GetAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OutboundFirewallRule>> GetAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _outboundFirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _outboundFirewallRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OutboundFirewallRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _outboundFirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken);
                 if (response.Value == null)
-                    throw _outboundFirewallRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OutboundFirewallRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
-        public async virtual Task<Response<OutboundFirewallRule>> GetIfExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OutboundFirewallRule>> GetIfExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 

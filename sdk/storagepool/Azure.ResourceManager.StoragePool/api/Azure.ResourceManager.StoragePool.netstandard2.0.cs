@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StoragePool
         public string ManagedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ManagedByExtended { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.ProvisioningStates ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
     }
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     }
     public partial class DiskPoolCreate : Azure.ResourceManager.Models.ResourceData
     {
-        public DiskPoolCreate(Azure.ResourceManager.StoragePool.Models.Sku sku, string location, string subnetId) { }
+        public DiskPoolCreate(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, string location, string subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
         public string Location { get { throw null; } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
         public string SubnetId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal DiskPoolZoneInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AvailabilityZones { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
     }
     public partial class EndpointDependency
     {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PatchableIscsiTargetData : Azure.ResourceManager.Models.ResourceData
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.ResourceSkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
     }
-    public partial class Sku
+    public partial class StoragePoolSku
     {
-        public Sku(string name) { }
+        public StoragePoolSku(string name) { }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
     }

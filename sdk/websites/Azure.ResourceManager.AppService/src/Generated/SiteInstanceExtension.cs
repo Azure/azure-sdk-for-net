@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteInstanceExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteInstanceExtensionWebAppsApiVersion);
-            _siteInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(_siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceExtensionWebAppsApiVersion);
+            _siteInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMsDeployStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteInstanceExtension>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtension.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceExtensionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceExtensionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MsDeployLog>> GetInstanceMSDeployLogAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsDeployLog>> GetInstanceMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtension.GetInstanceMSDeployLog");
             scope.Start();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _workloadGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string workloadGroupApiVersion);
-            _workloadGroupRestClient = new WorkloadGroupsRestOperations(_workloadGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadGroupApiVersion);
+            _workloadGroupRestClient = new WorkloadGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: WorkloadGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WorkloadGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroup.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _workloadGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _workloadGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _workloadGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _workloadGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroup.Delete");
             scope.Start();

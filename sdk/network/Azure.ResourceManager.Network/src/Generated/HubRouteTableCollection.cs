@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _hubRouteTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubRouteTable.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(HubRouteTable.ResourceType, out string hubRouteTableApiVersion);
-            _hubRouteTableRestClient = new HubRouteTablesRestOperations(_hubRouteTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubRouteTableApiVersion);
+            _hubRouteTableRestClient = new HubRouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubRouteTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="routeTableParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<HubRouteTable>> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HubRouteTable>> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             Argument.AssertNotNull(routeTableParameters, nameof(routeTableParameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<HubRouteTable>> GetAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HubRouteTable>> GetAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _hubRouteTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hubRouteTableClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubRouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _hubRouteTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken);
                 if (response.Value == null)
-                    throw _hubRouteTableClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubRouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<HubRouteTable>> GetIfExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HubRouteTable>> GetIfExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 

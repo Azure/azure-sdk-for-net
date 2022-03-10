@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPool.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ElasticPool.ResourceType, out string elasticPoolApiVersion);
-            _elasticPoolRestClient = new ElasticPoolsRestOperations(_elasticPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
+            _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ElasticPool>> CreateOrUpdateAsync(bool waitForCompletion, string elasticPoolName, ElasticPoolData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticPool>> CreateOrUpdateAsync(bool waitForCompletion, string elasticPoolName, ElasticPoolData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<ElasticPool>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticPool>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _elasticPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _elasticPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<ElasticPool>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticPool>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 

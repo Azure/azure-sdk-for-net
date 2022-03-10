@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             var parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new Models.Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium
+                    Tier = ServiceBusSkuTier.Premium
                 },
                 ZoneRedundant = true
             };
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters.Sku = new Models.Sku(SkuName.Premium)
+            createParameters.Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
             {
-                Tier = SkuTier.Premium
+                Tier = ServiceBusSkuTier.Premium
             };
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, createParameters)).Value;
 
@@ -425,18 +425,18 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters1 = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters1.Sku = new Models.Sku(SkuName.Premium)
+            createParameters1.Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
             {
-                Tier = SkuTier.Premium
+                Tier = ServiceBusSkuTier.Premium
             };
             ServiceBusNamespace serviceBusNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, createParameters1)).Value;
 
             //create namespace with standard
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS);
-            createParameters2.Sku = new Models.Sku(SkuName.Standard)
+            createParameters2.Sku = new ServiceBusSku(ServiceBusSkuName.Standard)
             {
-                Tier = SkuTier.Standard
+                Tier = ServiceBusSkuTier.Standard
             };
             ServiceBusNamespace serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, createParameters2)).Value;
 

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _connectionMonitorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ConnectionMonitor.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ConnectionMonitor.ResourceType, out string connectionMonitorApiVersion);
-            _connectionMonitorRestClient = new ConnectionMonitorsRestOperations(_connectionMonitorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, connectionMonitorApiVersion);
+            _connectionMonitorRestClient = new ConnectionMonitorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, connectionMonitorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConnectionMonitor>> CreateOrUpdateAsync(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectionMonitor>> CreateOrUpdateAsync(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
-        public async virtual Task<Response<ConnectionMonitor>> GetAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionMonitor>> GetAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _connectionMonitorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _connectionMonitorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConnectionMonitor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _connectionMonitorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken);
                 if (response.Value == null)
-                    throw _connectionMonitorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConnectionMonitor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
-        public async virtual Task<Response<ConnectionMonitor>> GetIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionMonitor>> GetIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
 

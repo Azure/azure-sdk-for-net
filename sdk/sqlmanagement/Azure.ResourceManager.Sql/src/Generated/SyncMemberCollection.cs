@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _syncMemberClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncMember.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SyncMember.ResourceType, out string syncMemberApiVersion);
-            _syncMemberRestClient = new SyncMembersRestOperations(_syncMemberClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncMemberApiVersion);
+            _syncMemberRestClient = new SyncMembersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncMemberApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SyncMember>> CreateOrUpdateAsync(bool waitForCompletion, string syncMemberName, SyncMemberData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SyncMember>> CreateOrUpdateAsync(bool waitForCompletion, string syncMemberName, SyncMemberData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public async virtual Task<Response<SyncMember>> GetAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncMember>> GetAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _syncMemberRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _syncMemberClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncMember(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncMemberRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken);
                 if (response.Value == null)
-                    throw _syncMemberClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncMember(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public async virtual Task<Response<SyncMember>> GetIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncMember>> GetIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 

@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateCdnProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateCdnProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(true, profileName, input);
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateAfdProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateAfdProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateAfdProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(true, profileName, input);

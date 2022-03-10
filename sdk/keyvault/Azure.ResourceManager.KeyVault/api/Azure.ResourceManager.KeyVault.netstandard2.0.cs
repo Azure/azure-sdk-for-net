@@ -655,6 +655,34 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class KeyVaultSku
+    {
+        public KeyVaultSku(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily family, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName name) { }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily Family { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultSkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultSkuFamily(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily A { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily left, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily left, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum KeyVaultSkuName
+    {
+        Standard = 0,
+        Premium = 1,
+    }
     public partial class ManagedHsmProperties
     {
         public ManagedHsmProperties() { }
@@ -958,34 +986,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string SecretUriWithVersion { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class Sku
-    {
-        public Sku(Azure.ResourceManager.KeyVault.Models.SkuFamily family, Azure.ResourceManager.KeyVault.Models.SkuName name) { }
-        public Azure.ResourceManager.KeyVault.Models.SkuFamily Family { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.SkuName Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SkuFamily>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuFamily(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.SkuFamily A { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.SkuFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.SkuFamily (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SkuFamily left, Azure.ResourceManager.KeyVault.Models.SkuFamily right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum SkuName
-    {
-        Standard = 0,
-        Premium = 1,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StoragePermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.StoragePermissions>
     {
@@ -1054,13 +1054,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnableSoftDelete { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleSet NetworkAcls { get { throw null; } set { } }
         public string PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultSku Sku { get { throw null; } set { } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class VaultProperties
     {
-        public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.Sku sku) { }
+        public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultSku Sku { get { throw null; } set { } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }

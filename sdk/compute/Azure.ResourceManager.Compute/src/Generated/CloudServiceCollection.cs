@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         {
             _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudService.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CloudService.ResourceType, out string cloudServiceApiVersion);
-            _cloudServiceRestClient = new CloudServicesRestOperations(_cloudServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
+            _cloudServiceRestClient = new CloudServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<ArmOperation<CloudService>> CreateOrUpdateAsync(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CloudService>> CreateOrUpdateAsync(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> GetAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> GetAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cloudServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken);
                 if (response.Value == null)
-                    throw _cloudServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 

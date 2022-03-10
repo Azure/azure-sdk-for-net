@@ -9,7 +9,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
-using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             if (useDefaults)
             {
                 Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
-                Assert.AreEqual(SkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
+                Assert.AreEqual(EventHubsSkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
             }
         }
     }

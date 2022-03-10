@@ -51,7 +51,7 @@ AccessPermissions permissions = new AccessPermissions
 };
 AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
 
-VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Models.Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;

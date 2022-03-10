@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Network
         {
             _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subnetApiVersion);
-            _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
+            _subnetRestClient = new SubnetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
             _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_resourceNavigationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(_serviceAssociationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Subnet>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subnet>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Get");
             scope.Start();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _subnetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _subnetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subnet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _subnetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _subnetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subnet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Delete");
             scope.Start();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> PrepareNetworkPoliciesAsync(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PrepareNetworkPoliciesAsync(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(prepareNetworkPoliciesRequestParameters, nameof(prepareNetworkPoliciesRequestParameters));
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> UnprepareNetworkPoliciesAsync(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UnprepareNetworkPoliciesAsync(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(unprepareNetworkPoliciesRequestParameters, nameof(unprepareNetworkPoliciesRequestParameters));
 

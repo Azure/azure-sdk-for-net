@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public async static Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static async Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public async static Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public async static Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static async Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 

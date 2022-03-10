@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Network
         {
             _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string applicationGatewayApiVersion);
-            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
+            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
             _applicationGatewayPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(_applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ApplicationGateways_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ApplicationGateway>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Get");
             scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _applicationGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _applicationGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Delete");
             scope.Start();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Start");
             scope.Start();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Stop");
             scope.Start();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<ApplicationGatewayBackendHealth>> BackendHealthAsync(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplicationGatewayBackendHealth>> BackendHealthAsync(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.BackendHealth");
             scope.Start();
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandAsync(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandAsync(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(probeRequest, nameof(probeRequest));
 
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

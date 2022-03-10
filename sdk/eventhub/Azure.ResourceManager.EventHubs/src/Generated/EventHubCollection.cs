@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _eventHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHub.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(EventHub.ResourceType, out string eventHubApiVersion);
-            _eventHubRestClient = new EventHubsRestOperations(_eventHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
+            _eventHubRestClient = new EventHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<EventHub>> CreateOrUpdateAsync(bool waitForCompletion, string eventHubName, EventHubData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHub>> CreateOrUpdateAsync(bool waitForCompletion, string eventHubName, EventHubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
-        public async virtual Task<Response<EventHub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _eventHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken);
                 if (response.Value == null)
-                    throw _eventHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
-        public async virtual Task<Response<EventHub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 

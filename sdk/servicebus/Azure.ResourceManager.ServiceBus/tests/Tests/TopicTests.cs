@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceData parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium
+                    Tier = ServiceBusSkuTier.Premium
                 }
             };
             ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, parameters)).Value;

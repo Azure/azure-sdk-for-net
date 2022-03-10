@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", IscsiTarget.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(IscsiTarget.ResourceType, out string iscsiTargetApiVersion);
-            _iscsiTargetRestClient = new IscsiTargetsRestOperations(_iscsiTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
+            _iscsiTargetRestClient = new IscsiTargetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
-        public async virtual Task<ArmOperation<IscsiTarget>> CreateOrUpdateAsync(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IscsiTarget>> CreateOrUpdateAsync(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
             Argument.AssertNotNull(iscsiTargetCreatePayload, nameof(iscsiTargetCreatePayload));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
-        public async virtual Task<Response<IscsiTarget>> GetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IscsiTarget>> GetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 var response = await _iscsiTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _iscsiTargetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IscsiTarget(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 var response = _iscsiTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken);
                 if (response.Value == null)
-                    throw _iscsiTargetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IscsiTarget(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
-        public async virtual Task<Response<IscsiTarget>> GetIfExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IscsiTarget>> GetIfExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 

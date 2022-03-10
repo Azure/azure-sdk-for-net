@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgent.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SyncAgent.ResourceType, out string syncAgentApiVersion);
-            _syncAgentRestClient = new SyncAgentsRestOperations(_syncAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
+            _syncAgentRestClient = new SyncAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SyncAgent>> CreateOrUpdateAsync(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SyncAgent>> CreateOrUpdateAsync(bool waitForCompletion, string syncAgentName, SyncAgentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public async virtual Task<Response<SyncAgent>> GetAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncAgent>> GetAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _syncAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken);
                 if (response.Value == null)
-                    throw _syncAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public async virtual Task<Response<SyncAgent>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncAgent>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 

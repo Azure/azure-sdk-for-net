@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _domainOwnershipIdentifierDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
-            _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(_domainOwnershipIdentifierDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, domainOwnershipIdentifierDomainsApiVersion);
+            _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, domainOwnershipIdentifierDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_GetOwnershipIdentifier
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DomainOwnershipIdentifier>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainOwnershipIdentifier>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifier.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _domainOwnershipIdentifierDomainsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _domainOwnershipIdentifierDomainsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifier.Delete");
             scope.Start();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public async virtual Task<Response<DomainOwnershipIdentifier>> UpdateAsync(DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainOwnershipIdentifier>> UpdateAsync(DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
 

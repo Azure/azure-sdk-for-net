@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Gallery.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Gallery.ResourceType, out string galleryApiVersion);
-            _galleryRestClient = new GalleriesRestOperations(_galleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
+            _galleryRestClient = new GalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public async virtual Task<ArmOperation<Gallery>> CreateOrUpdateAsync(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<Gallery>> CreateOrUpdateAsync(bool waitForCompletion, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
             Argument.AssertNotNull(gallery, nameof(gallery));
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public async virtual Task<Response<Gallery>> GetAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> GetAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _galleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _galleryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken);
                 if (response.Value == null)
-                    throw _galleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public async virtual Task<Response<Gallery>> GetIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> GetIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 

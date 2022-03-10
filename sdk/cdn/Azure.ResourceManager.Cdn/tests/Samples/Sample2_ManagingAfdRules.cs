@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
             // Create a new azure front door profile
             string AfdProfileName = "myAfdProfile";
-            var input1 = new ProfileData("Global", new Models.Sku { Name = SkuName.StandardAzureFrontDoor });
+            var input1 = new ProfileData("Global", new CdnSku { Name = CdnSkuName.StandardAzureFrontDoor });
             ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, AfdProfileName, input1);
             Profile AfdProfile = lro1.Value;
             // Get the rule set collection from the specific azure front door profile and create a rule set

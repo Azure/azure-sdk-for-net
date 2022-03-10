@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Compute
         {
             _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string galleryApiVersion);
-            _galleryRestClient = new GalleriesRestOperations(_galleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
+            _galleryRestClient = new GalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
             _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(_gallerySharingProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Gallery>> GetAsync(SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> GetAsync(SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Get");
             scope.Start();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _galleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _galleryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select, cancellationToken);
                 if (response.Value == null)
-                    throw _galleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Gallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _galleryClientDiagnostics.CreateScope("Gallery.Delete");
             scope.Start();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="data"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<Gallery>> UpdateAsync(bool waitForCompletion, PatchableGalleryData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<Gallery>> UpdateAsync(bool waitForCompletion, PatchableGalleryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public async virtual Task<ArmOperation<SharingUpdate>> UpdateSharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharingUpdate>> UpdateSharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<Gallery>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<Gallery>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<Gallery>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Gallery>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

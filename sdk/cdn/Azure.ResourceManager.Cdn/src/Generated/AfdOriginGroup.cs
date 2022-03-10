@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string afdOriginGroupApiVersion);
-            _afdOriginGroupRestClient = new AfdOriginGroupsRestOperations(_afdOriginGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginGroupApiVersion);
+            _afdOriginGroupRestClient = new AfdOriginGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOriginGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AfdOriginGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOriginGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdOriginGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _afdOriginGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOriginGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.Delete");
             scope.Start();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdOriginGroup>> UpdateAsync(bool waitForCompletion, PatchableAfdOriginGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdOriginGroup>> UpdateAsync(bool waitForCompletion, PatchableAfdOriginGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOriginGroups_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.GetResourceUsage");
                 scope.Start();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.GetResourceUsage");
                 scope.Start();
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdOriginGroups_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetResourceUsage(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.GetResourceUsage");
                 scope.Start();
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroup.GetResourceUsage");
                 scope.Start();

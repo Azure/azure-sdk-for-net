@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.AppService
         {
             _webSiteWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webSiteWebAppsApiVersion);
-            _webSiteWebAppsRestClient = new WebAppsRestOperations(_webSiteWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
+            _webSiteWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
             _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_recommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendation.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebSite>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Get");
             scope.Start();
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webSiteWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webSiteWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> UpdateAsync(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> UpdateAsync(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
 
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_DisableAllForWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableAllForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAllForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
             scope.Start();
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_ResetAllFiltersForWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ResetAllFiltersForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllFiltersForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
             scope.Start();
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
             scope.Start();
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<Response> ApplySlotConfigToProductionAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ApplySlotConfigToProductionAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<SiteBackup>> BackupAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteBackup>> BackupAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> UpdateApplicationSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> UpdateApplicationSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListApplicationSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetApplicationSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetApplicationSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
             scope.Start();
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
-        public async virtual Task<Response<SiteAuthSettings>> UpdateAuthSettingsAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettings>> UpdateAuthSettingsAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettings");
             scope.Start();
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
-        public async virtual Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
             scope.Start();
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
-        public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsAsync(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsAsync(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListAzureStorageAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> GetAzureStorageAccountsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureStoragePropertyDictionaryResource>> GetAzureStorageAccountsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
             scope.Start();
@@ -1372,7 +1372,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_DeleteBackupConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteBackupConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
             scope.Start();
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetBackupConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<BackupRequest>> GetBackupConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupRequest>> GetBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
             scope.Start();
@@ -1512,7 +1512,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
-        public async virtual Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ConnectionStringDictionary>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionStringDictionary>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
             scope.Start();
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> UpdateMetadataAsync(StringDictionary metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> UpdateMetadataAsync(StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
 
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListMetadata
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetMetadataAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetMetadataAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMetadata");
             scope.Start();
@@ -1703,7 +1703,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<User>> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<User>> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
-        public async virtual Task<Response<PushSettings>> UpdateSitePushSettingsAsync(PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PushSettings>> UpdateSitePushSettingsAsync(PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSitePushSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PushSettings>> GetSitePushSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PushSettings>> GetSitePushSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
             scope.Start();
@@ -1850,7 +1850,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetWebSiteContainerLogs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetWebSiteContainerLogsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetWebSiteContainerLogsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
             scope.Start();
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetContainerLogsZip
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetContainerLogsZipAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetContainerLogsZipAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
             scope.Start();
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<RestoreRequest>> DiscoverBackupAsync(RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestoreRequest>> DiscoverBackupAsync(RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -1990,7 +1990,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFunctionsAdminToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<string>> GetFunctionsAdminTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetFunctionsAdminTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
             scope.Start();
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHostKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostKeys>> GetHostKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostKeys>> GetHostKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHostKeys");
             scope.Start();
@@ -2078,7 +2078,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSyncStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GetSyncStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetSyncStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncStatus");
             scope.Start();
@@ -2122,7 +2122,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncFunctionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncFunctionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctions");
             scope.Start();
@@ -2171,7 +2171,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -2286,7 +2286,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHybridConnections");
             scope.Start();
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListRelayServiceConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteHybridConnection>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteHybridConnection>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
             scope.Start();
@@ -2374,7 +2374,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_IsCloneable
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteCloneability>> IsCloneableAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteCloneability>> IsCloneableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.IsCloneable");
             scope.Start();
@@ -2502,7 +2502,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSyncFunctionTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FunctionSecrets>> GetSyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FunctionSecrets>> GetSyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
             scope.Start();
@@ -2550,7 +2550,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
-        public async virtual Task<ArmOperation<StorageMigrationResponse>> MigrateStorageAsync(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageMigrationResponse>> MigrateStorageAsync(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(migrationOptions, nameof(migrationOptions));
@@ -2613,7 +2613,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRequestEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<OperationInformation>> MigrateMySqlAsync(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationInformation>> MigrateMySqlAsync(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(migrationRequestEnvelope, nameof(migrationRequestEnvelope));
 
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMigrateMySqlStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MigrateMySqlStatus>> GetMigrateMySqlStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateMySqlStatus>> GetMigrateMySqlStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
             scope.Start();
@@ -2717,7 +2717,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public async virtual Task<Response<NetworkFeatures>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFeatures>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(view, nameof(view));
 
@@ -2835,7 +2835,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
             scope.Start();
@@ -2886,7 +2886,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
@@ -2940,7 +2940,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StopWebSiteNetworkTrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopWebSiteNetworkTraceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopWebSiteNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
             scope.Start();
@@ -3176,7 +3176,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GenerateNewSitePublishingPassword
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GenerateNewSitePublishingPasswordAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GenerateNewSitePublishingPasswordAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
             scope.Start();
@@ -3306,7 +3306,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSitePhpErrorLogFlag
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
             scope.Start();
@@ -3350,7 +3350,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListPremierAddOns
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SitePremierAddon>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePremierAddon>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
             scope.Start();
@@ -3450,7 +3450,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
-        public async virtual Task<Response<Stream>> GetPublishingProfileXmlWithSecretsAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
@@ -3500,7 +3500,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ResetProductionSlotConfig
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ResetProductionSlotConfigAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetProductionSlotConfigAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
             scope.Start();
@@ -3546,7 +3546,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RestartAsync(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestartAsync(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Restart");
             scope.Start();
@@ -3595,7 +3595,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreFromBackupBlobAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreFromBackupBlobAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -3655,7 +3655,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreFromDeletedAppAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreFromDeletedAppAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3715,7 +3715,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreSnapshotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreSnapshotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3867,7 +3867,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<ArmOperation> SwapSlotWithProductionAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapSlotWithProductionAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
@@ -4092,7 +4092,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Start
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Start");
             scope.Start();
@@ -4140,7 +4140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
@@ -4194,7 +4194,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Stop
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Stop");
             scope.Start();
@@ -4238,7 +4238,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StopNetworkTrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopNetworkTraceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
             scope.Start();
@@ -4282,7 +4282,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncRepository
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncRepositoryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncRepositoryAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncRepository");
             scope.Start();
@@ -4326,7 +4326,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncFunctionTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
             scope.Start();
@@ -4459,7 +4459,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -4520,7 +4520,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -4580,7 +4580,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

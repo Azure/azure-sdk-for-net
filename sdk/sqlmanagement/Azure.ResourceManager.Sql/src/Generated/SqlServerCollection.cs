@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServer.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlServer.ResourceType, out string sqlServerServersApiVersion);
-            _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
+            _sqlServerServersRestClient = new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlServer>> CreateOrUpdateAsync(bool waitForCompletion, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServer>> CreateOrUpdateAsync(bool waitForCompletion, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> GetAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> GetAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlServerServersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlServerServersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> GetIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> GetIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 

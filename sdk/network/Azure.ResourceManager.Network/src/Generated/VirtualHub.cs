@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         {
             _virtualHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
-            _virtualHubRestClient = new VirtualHubsRestOperations(_virtualHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubApiVersion);
+            _virtualHubRestClient = new VirtualHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualHubs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualHub>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHub>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.Get");
             scope.Start();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.Delete");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutes");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<VirtualHub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<VirtualHub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<VirtualHub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

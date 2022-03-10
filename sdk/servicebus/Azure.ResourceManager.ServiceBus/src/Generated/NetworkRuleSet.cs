@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
-            _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(_networkRuleSetNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
+            _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: Namespaces_GetNetworkRuleSet
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NetworkRuleSet>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkRuleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _networkRuleSetNamespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkRuleSetNamespacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _networkRuleSetNamespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _networkRuleSetNamespacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<NetworkRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

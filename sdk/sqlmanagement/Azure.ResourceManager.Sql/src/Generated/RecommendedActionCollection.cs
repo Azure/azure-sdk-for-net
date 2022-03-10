@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedAction.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
-            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
+            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public async virtual Task<Response<RecommendedAction>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecommendedAction>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
                 if (response.Value == null)
-                    throw _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public async virtual Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteExtensionWebAppsApiVersion);
-            _siteExtensionWebAppsRestClient = new WebAppsRestOperations(_siteExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteExtensionWebAppsApiVersion);
+            _siteExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMSDeployStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteExtension>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtension.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteExtensionWebAppsRestClient.GetMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteExtensionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteExtensionWebAppsRestClient.GetMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteExtensionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MsDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtension.GetMSDeployLog");
             scope.Start();

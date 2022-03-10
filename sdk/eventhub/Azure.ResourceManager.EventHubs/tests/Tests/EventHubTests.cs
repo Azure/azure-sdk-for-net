@@ -1,18 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
-using Azure.ResourceManager.Resources.Models;
 using KeyType = Azure.ResourceManager.EventHubs.Models.KeyType;
 
 namespace Azure.ResourceManager.EventHubs.Tests
@@ -24,6 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public EventhubTests(bool isAsync) : base(isAsync)
         {
         }
+
         [SetUp]
         public async Task CreateNamespaceAndGetEventhubCollection()
         {
@@ -33,6 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
             _eventHubCollection = eventHubNamespace.GetEventHubs();
         }
+
         [TearDown]
         public async Task ClearNamespaces()
         {
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //prepare a storage account
             string accountName = Recording.GenerateAssetName("storage");
-            Storage.Models.Sku sku = new Storage.Models.Sku("Standard_LRS");
-            var storageAccountCreateParameters = new StorageAccountCreateParameters(sku, Kind.StorageV2, "eastus2")
+            StorageSku sku = new StorageSku("Standard_LRS");
+            var storageAccountCreateParameters = new StorageAccountCreateParameters(sku, StorageKind.StorageV2, "eastus2")
             {
                 AccessTier = AccessTier.Hot
             };

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Communication
         {
             _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationService.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CommunicationService.ResourceType, out string communicationServiceApiVersion);
-            _communicationServiceRestClient = new CommunicationServiceRestOperations(_communicationServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<ArmOperation<CommunicationService>> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommunicationService>> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> GetAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> GetAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Communication
             {
                 var response = await _communicationServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _communicationServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Communication
             {
                 var response = _communicationServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken);
                 if (response.Value == null)
-                    throw _communicationServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> GetIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> GetIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 

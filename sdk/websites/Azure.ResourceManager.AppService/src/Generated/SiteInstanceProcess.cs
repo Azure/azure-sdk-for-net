@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteInstanceProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteInstanceProcessWebAppsApiVersion);
-            _siteInstanceProcessWebAppsRestClient = new WebAppsRestOperations(_siteInstanceProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessWebAppsApiVersion);
+            _siteInstanceProcessWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteInstanceProcess>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcess>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteInstanceProcess.Get");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceProcessWebAppsRestClient.GetInstanceProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceProcessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceProcessWebAppsRestClient.GetInstanceProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceProcessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteInstanceProcess.Delete");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceProcessDump
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetInstanceProcessDumpAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetInstanceProcessDumpAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteInstanceProcess.GetInstanceProcessDump");
             scope.Start();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         {
             _fileServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string fileServiceApiVersion);
-            _fileServiceRestClient = new FileServicesRestOperations(_fileServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileServiceApiVersion);
+            _fileServiceRestClient = new FileServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: FileServices_GetServiceProperties
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FileService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _fileServiceClientDiagnostics.CreateScope("FileService.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _fileServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _fileServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _fileServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _fileServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FileService>> CreateOrUpdateAsync(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FileService>> CreateOrUpdateAsync(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

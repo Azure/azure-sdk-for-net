@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<Usage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
-            List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkUsage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
+            List<NetworkUsage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);
             Assert.True(usagesResponse.Any());
 
-            foreach (Usage usage in usagesResponse)
+            foreach (NetworkUsage usage in usagesResponse)
             {
                 Assert.True(usage.Limit > 0);
                 Assert.NotNull(usage.Name);

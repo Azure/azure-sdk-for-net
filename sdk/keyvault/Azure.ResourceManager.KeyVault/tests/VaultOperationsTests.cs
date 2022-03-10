@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
-            createdVault.Properties.Sku.Name = SkuName.Premium;
+            createdVault.Properties.Sku.Name = KeyVaultSkuName.Premium;
 
             parameters = new VaultCreateOrUpdateParameters(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Premium,
+                KeyVaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Premium,
+                KeyVaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             string expectedLocation,
             string expectedSkuFamily,
-            SkuName expectedSku,
+            KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             string expectedLocation,
             string expectedSkuFamily,
-            SkuName expectedSku,
+            KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,

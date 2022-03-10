@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_OriginGroups_CreateAnOriginGroup
             // Create a new cdn profile
             string profileName = "myProfile";
-            var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
+            var input1 = new ProfileData(AzureLocation.WestUS, new CdnSku { Name = CdnSkuName.StandardMicrosoft });
             ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
             Profile profile = lro1.Value;
             // Get the cdn endpoint collection from the specific profile and create an endpoint

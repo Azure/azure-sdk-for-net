@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _sqlStoredProcedureSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlStoredProcedure.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlStoredProcedure.ResourceType, out string sqlStoredProcedureSqlResourcesApiVersion);
-            _sqlStoredProcedureSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlStoredProcedureSqlResourcesApiVersion);
+            _sqlStoredProcedureSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlStoredProcedureSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlStoredProcedure>> CreateOrUpdateAsync(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlStoredProcedure>> CreateOrUpdateAsync(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
             Argument.AssertNotNull(createUpdateSqlStoredProcedureParameters, nameof(createUpdateSqlStoredProcedureParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<SqlStoredProcedure>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlStoredProcedure>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlStoredProcedure(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlStoredProcedure(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<SqlStoredProcedure>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlStoredProcedure>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 

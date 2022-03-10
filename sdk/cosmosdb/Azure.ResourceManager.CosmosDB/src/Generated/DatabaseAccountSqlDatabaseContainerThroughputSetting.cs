@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
-            _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(_databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
+            _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_GetSqlContainerThroughput
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseContainerThroughputSetting.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccountSqlDatabaseContainerThroughputSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccountSqlDatabaseContainerThroughputSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> MigrateSqlContainerToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> MigrateSqlContainerToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseContainerThroughputSetting.MigrateSqlContainerToAutoscale");
             scope.Start();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> MigrateSqlContainerToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>> MigrateSqlContainerToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseContainerThroughputSetting.MigrateSqlContainerToManualThroughput");
             scope.Start();
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountSqlDatabaseContainerThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

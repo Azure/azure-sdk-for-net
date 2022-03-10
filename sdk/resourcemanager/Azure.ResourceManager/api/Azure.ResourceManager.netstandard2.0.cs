@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Management.Models
 }
 namespace Azure.ResourceManager.Models
 {
-    public partial class ArmPlan
+    public sealed partial class ArmPlan : System.IEquatable<Azure.ResourceManager.Models.ArmPlan>
     {
         public ArmPlan(string name, string publisher, string product) { }
         public string Name { get { throw null; } set { } }
@@ -314,15 +314,45 @@ namespace Azure.ResourceManager.Models
         public string PromotionCode { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        public bool Equals(Azure.ResourceManager.Models.ArmPlan other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Models.ArmPlan left, Azure.ResourceManager.Models.ArmPlan right) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Models.ArmPlan left, Azure.ResourceManager.Models.ArmPlan right) { throw null; }
     }
-    public partial class ArmSku
+    public abstract partial class ArmResourceData
+    {
+        protected ArmResourceData() { }
+        protected ArmResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.Core.ResourceType Type { get { throw null; } }
+    }
+    public sealed partial class ArmSku : System.IEquatable<Azure.ResourceManager.Models.ArmSku>
     {
         public ArmSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
         public string Family { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SkuTier? Tier { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmSkuTier? Tier { get { throw null; } set { } }
+        public bool Equals(Azure.ResourceManager.Models.ArmSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Models.ArmSku left, Azure.ResourceManager.Models.ArmSku right) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Models.ArmSku left, Azure.ResourceManager.Models.ArmSku right) { throw null; }
+    }
+    public enum ArmSkuTier
+    {
+        Free = 0,
+        Basic = 1,
+        Standard = 2,
+        Premium = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Models.CreatedByType>
@@ -422,22 +452,6 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Azure.ResourceManager.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public sealed partial class Plan : System.IEquatable<Azure.ResourceManager.Models.Plan>
-    {
-        public Plan(string name, string publisher, string product) { }
-        public string Name { get { throw null; } set { } }
-        public string Product { get { throw null; } set { } }
-        public string PromotionCode { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-        public bool Equals(Azure.ResourceManager.Models.Plan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
-    }
     public abstract partial class ResourceData
     {
         protected ResourceData() { }
@@ -446,29 +460,6 @@ namespace Azure.ResourceManager.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public Azure.Core.ResourceType Type { get { throw null; } }
-    }
-    public sealed partial class Sku : System.IEquatable<Azure.ResourceManager.Models.Sku>
-    {
-        public Sku(string name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SkuTier? Tier { get { throw null; } set { } }
-        public bool Equals(Azure.ResourceManager.Models.Sku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Models.Sku left, Azure.ResourceManager.Models.Sku right) { throw null; }
-    }
-    public enum SkuTier
-    {
-        Free = 0,
-        Basic = 1,
-        Standard = 2,
-        Premium = 3,
     }
     public partial class SystemAssignedServiceIdentity
     {
@@ -630,10 +621,10 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public object Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ResourcesSku Sku { get { throw null; } set { } }
     }
     public partial class ManagementGroupPolicyDefinition : Azure.ResourceManager.Core.ArmResource
     {
@@ -1720,6 +1711,16 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
         public string TargetResourceGroup { get { throw null; } set { } }
     }
+    public partial class ResourcesSku
+    {
+        public ResourcesSku() { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
+    }
     public partial class ResourceTypeAliases
     {
         internal ResourceTypeAliases() { }
@@ -1744,16 +1745,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Permission> Permissions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Scopes { get { throw null; } }
-    }
-    public partial class Sku
-    {
-        public Sku() { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Model { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public string Tier { get { throw null; } set { } }
     }
     public enum SpendingLimit
     {

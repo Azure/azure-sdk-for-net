@@ -62,8 +62,8 @@ Then we can create a storage account inside this resource group.
 
 ```C# Snippet:Managing_StorageAccounts_CreateStorageAccount
 //first we need to define the StorageAccountCreateParameters
-Sku sku = new Sku(SkuName.StandardGRS);
-Kind kind = Kind.Storage;
+StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+StorageKind kind = StorageKind.Storage;
 string location = "westus2";
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
 //now we can create a storage account with defined account name and parameters

@@ -530,6 +530,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.CommandLineSetting left, Azure.ResourceManager.DesktopVirtualization.Models.CommandLineSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DesktopVirtualizationSku
+    {
+        public DesktopVirtualizationSku(string name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSkuTier? Tier { get { throw null; } set { } }
+    }
+    public enum DesktopVirtualizationSkuTier
+    {
+        Free = 0,
+        Basic = 1,
+        Standard = 2,
+        Premium = 3,
+    }
     public partial class ExpandMsixImage : Azure.ResourceManager.Models.ResourceData
     {
         public ExpandMsixImage() { }
@@ -860,10 +876,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
     }
-    public partial class ResourceModelWithAllowedPropertySetSku : Azure.ResourceManager.DesktopVirtualization.Models.Sku
+    public partial class ResourceModelWithAllowedPropertySetSku : Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku
     {
         public ResourceModelWithAllowedPropertySetSku(string name) : base (default(string)) { }
     }
@@ -1005,22 +1021,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.SessionState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.SessionState left, Azure.ResourceManager.DesktopVirtualization.Models.SessionState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Sku
-    {
-        public Sku(string name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.SkuTier? Tier { get { throw null; } set { } }
-    }
-    public enum SkuTier
-    {
-        Free = 0,
-        Basic = 1,
-        Standard = 2,
-        Premium = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SsoSecretType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.SsoSecretType>

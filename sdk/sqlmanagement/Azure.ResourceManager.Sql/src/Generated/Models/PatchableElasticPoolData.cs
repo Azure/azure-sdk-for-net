@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> An ARM Resource SKU. </summary>
-        public Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>

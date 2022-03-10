@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
         public object Outputs { get { throw null; } }
         public object Parameters { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
         public object Outputs { get { throw null; } }
         public object Parameters { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }

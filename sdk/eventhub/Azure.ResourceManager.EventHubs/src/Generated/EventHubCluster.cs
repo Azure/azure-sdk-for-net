@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string eventHubClusterClustersApiVersion);
-            _eventHubClusterClustersRestClient = new ClustersRestOperations(_eventHubClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
+            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
             _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string eventHubClusterApiVersion);
-            _eventHubClusterRestClient = new EventHubClustersRestOperations(_eventHubClusterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
+            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _configurationRestClient = new ConfigurationRestOperations(_configurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _configurationRestClient = new ConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Clusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<EventHubCluster>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubCluster>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubClusterClustersClientDiagnostics.CreateScope("EventHubCluster.Get");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _eventHubClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _eventHubClusterClustersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHubCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _eventHubClusterClustersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHubCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubCluster.Delete");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<EventHubCluster>> UpdateAsync(bool waitForCompletion, EventHubClusterData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubCluster>> UpdateAsync(bool waitForCompletion, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ClusterQuotaConfigurationProperties>> PatchConfigurationAsync(ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterQuotaConfigurationProperties>> PatchConfigurationAsync(ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Configuration_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ClusterQuotaConfigurationProperties>> GetConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterQuotaConfigurationProperties>> GetConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _configurationClientDiagnostics.CreateScope("EventHubCluster.GetConfiguration");
             scope.Start();
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<EventHubCluster>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubCluster>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<EventHubCluster>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubCluster>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<EventHubCluster>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubCluster>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

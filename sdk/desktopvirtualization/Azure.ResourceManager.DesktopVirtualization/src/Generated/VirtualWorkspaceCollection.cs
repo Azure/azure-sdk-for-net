@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _virtualWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VirtualWorkspace.ResourceType, out string virtualWorkspaceWorkspacesApiVersion);
-            _virtualWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(_virtualWorkspaceWorkspacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWorkspaceWorkspacesApiVersion);
+            _virtualWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualWorkspace>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualWorkspace>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, VirtualWorkspaceData workspace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(workspace, nameof(workspace));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<VirtualWorkspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWorkspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _virtualWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualWorkspaceWorkspacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualWorkspaceWorkspacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWorkspace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<VirtualWorkspace>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWorkspace>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 

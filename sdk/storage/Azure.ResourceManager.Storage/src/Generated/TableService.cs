@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         {
             _tableServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
-            _tableServiceRestClient = new TableServicesRestOperations(_tableServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableServiceApiVersion);
+            _tableServiceRestClient = new TableServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: TableServices_GetServiceProperties
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TableService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _tableServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _tableServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TableService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _tableServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _tableServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TableService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<TableService>> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TableService>> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

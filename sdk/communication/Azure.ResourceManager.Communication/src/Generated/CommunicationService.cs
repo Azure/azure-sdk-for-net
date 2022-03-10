@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Communication
         {
             _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string communicationServiceApiVersion);
-            _communicationServiceRestClient = new CommunicationServiceRestOperations(_communicationServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunicationService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Communication
             {
                 var response = await _communicationServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _communicationServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication
             {
                 var response = _communicationServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _communicationServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CommunicationService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> UpdateAsync(CommunicationServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubOptions linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubOptions linkNotificationHubParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.LinkNotificationHub");
             scope.Start();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationService.GetKeys");
             scope.Start();
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<CommunicationService>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationService>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

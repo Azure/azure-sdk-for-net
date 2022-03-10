@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _cosmosTableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosTable.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CosmosTable.ResourceType, out string cosmosTableTableResourcesApiVersion);
-            _cosmosTableTableResourcesRestClient = new TableResourcesRestOperations(_cosmosTableTableResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosTableTableResourcesApiVersion);
+            _cosmosTableTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosTableTableResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<CosmosTable>> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateData createUpdateTableParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosTable>> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateData createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNull(createUpdateTableParameters, nameof(createUpdateTableParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<CosmosTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _cosmosTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cosmosTableTableResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
-                    throw _cosmosTableTableResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<CosmosTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 

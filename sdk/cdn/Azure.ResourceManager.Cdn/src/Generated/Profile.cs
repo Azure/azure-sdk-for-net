@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Cdn
         {
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string profileApiVersion);
-            _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
+            _profileRestClient = new ProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
             _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_afdProfilesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _logAnalyticsRestClient = new LogAnalyticsRestOperations(_logAnalyticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _logAnalyticsRestClient = new LogAnalyticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Profile>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Profile>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Get");
             scope.Start();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _profileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Profile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _profileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Profile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Delete");
             scope.Start();
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_GenerateSsoUri
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
             scope.Start();
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_ListSupportedOptimizationTypes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
             scope.Start();
@@ -419,10 +419,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetResourceUsageAfdProfilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageAfdProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: AfdProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetResourceUsageAfdProfiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsageAfdProfiles(CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        public async virtual Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(customDomains, nameof(customDomains));
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(rankings, nameof(rankings));
             Argument.AssertNotNull(metrics, nameof(metrics));
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocations");
             scope.Start();
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: LogAnalytics_GetLogAnalyticsResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResources");
             scope.Start();
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public async virtual Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
 
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public async virtual Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(rankings, nameof(rankings));
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<Profile>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Profile>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<Profile>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Profile>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<Profile>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Profile>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

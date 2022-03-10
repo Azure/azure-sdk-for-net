@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
-            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
+            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: Locations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CosmosDBLocation>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBLocation>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocation.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _sqlUserDefinedFunctionSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlUserDefinedFunction.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlUserDefinedFunction.ResourceType, out string sqlUserDefinedFunctionSqlResourcesApiVersion);
-            _sqlUserDefinedFunctionSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlUserDefinedFunctionSqlResourcesApiVersion);
+            _sqlUserDefinedFunctionSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlUserDefinedFunctionSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> or <paramref name="createUpdateSqlUserDefinedFunctionParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlUserDefinedFunction>> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlUserDefinedFunction>> CreateOrUpdateAsync(bool waitForCompletion, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData createUpdateSqlUserDefinedFunctionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
             Argument.AssertNotNull(createUpdateSqlUserDefinedFunctionParameters, nameof(createUpdateSqlUserDefinedFunctionParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async virtual Task<Response<SqlUserDefinedFunction>> GetAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlUserDefinedFunction>> GetAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlUserDefinedFunctionSqlResourcesRestClient.GetSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, userDefinedFunctionName, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlUserDefinedFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async virtual Task<Response<SqlUserDefinedFunction>> GetIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlUserDefinedFunction>> GetIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
 

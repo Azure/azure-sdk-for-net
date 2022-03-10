@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Resources
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string providerApiVersion);
-            _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
+            _providerRestClient = new ProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
             _providerResourceTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_providerResourceTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Provider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _providerClientDiagnostics.CreateScope("Provider.Get");
             scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _providerRestClient.GetAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _providerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _providerRestClient.Get(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _providerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Providers_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Provider>> UnregisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _providerClientDiagnostics.CreateScope("Provider.Unregister");
             scope.Start();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Provider>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _providerClientDiagnostics.CreateScope("Provider.Register");
             scope.Start();

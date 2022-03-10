@@ -1,16 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
-using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SkuTier = Azure.ResourceManager.Storage.Models.SkuTier;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,8 +22,8 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static Sku DefaultSkuNameStandardGRS = new Sku(SkuName.StandardGRS);
-        public static Kind DefaultKindStorage = Kind.Storage;
+        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGRS);
+        public static StorageKind DefaultKindStorage = StorageKind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
             {"key1","value1"},
@@ -41,10 +39,10 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
         }
 
-        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null, ManagedServiceIdentity identity = null)
+        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
         {
-            Sku skuParameters = sku ?? DefaultSkuNameStandardGRS;
-            Kind kindParameters = kind ?? DefaultKindStorage;
+            StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
+            StorageKind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocationString;
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
             parameters.Tags.InitializeFrom(DefaultTags);
@@ -117,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 Assert.AreEqual(DefaultLocation, account.Data.Location);
                 Assert.AreEqual(DefaultSkuNameStandardGRS.Name, account.Data.Sku.Name);
-                Assert.AreEqual(SkuTier.Standard, account.Data.Sku.Tier);
+                Assert.AreEqual(StorageSkuTier.Standard, account.Data.Sku.Tier);
                 Assert.AreEqual(DefaultKindStorage, account.Data.Kind);
 
                 Assert.NotNull(account.Data.Tags);

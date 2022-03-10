@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotSiteextensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotSiteextension.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotSiteextension.ResourceType, out string siteSlotSiteextensionWebAppsApiVersion);
-            _siteSlotSiteextensionWebAppsRestClient = new WebAppsRestOperations(_siteSlotSiteextensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSiteextensionWebAppsApiVersion);
+            _siteSlotSiteextensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSiteextensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotSiteextension>> CreateOrUpdateAsync(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotSiteextension>> CreateOrUpdateAsync(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotSiteextension>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSiteextension>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotSiteextensionWebAppsRestClient.GetSiteExtensionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotSiteextensionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotSiteextension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotSiteextensionWebAppsRestClient.GetSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotSiteextensionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotSiteextension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotSiteextension>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSiteextension>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _scalingPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlan.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ScalingPlan.ResourceType, out string scalingPlanApiVersion);
-            _scalingPlanRestClient = new ScalingPlansRestOperations(_scalingPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scalingPlanApiVersion);
+            _scalingPlanRestClient = new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scalingPlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public async virtual Task<ArmOperation<ScalingPlan>> CreateOrUpdateAsync(bool waitForCompletion, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ScalingPlan>> CreateOrUpdateAsync(bool waitForCompletion, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
             Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public async virtual Task<Response<ScalingPlan>> GetAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlan>> GetAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _scalingPlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken);
                 if (response.Value == null)
-                    throw _scalingPlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public async virtual Task<Response<ScalingPlan>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlan>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 

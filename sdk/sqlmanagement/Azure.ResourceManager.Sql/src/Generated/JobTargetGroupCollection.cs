@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobTargetGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(JobTargetGroup.ResourceType, out string jobTargetGroupApiVersion);
-            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(_jobTargetGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobTargetGroupApiVersion);
+            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobTargetGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<JobTargetGroup>> CreateOrUpdateAsync(bool waitForCompletion, string targetGroupName, JobTargetGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<JobTargetGroup>> CreateOrUpdateAsync(bool waitForCompletion, string targetGroupName, JobTargetGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<JobTargetGroup>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobTargetGroup>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _jobTargetGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jobTargetGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobTargetGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _jobTargetGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _jobTargetGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobTargetGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<JobTargetGroup>> GetIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobTargetGroup>> GetIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _msixPackageMSIXPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string msixPackageMSIXPackagesApiVersion);
-            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(_msixPackageMSIXPackagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, msixPackageMSIXPackagesApiVersion);
+            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, msixPackageMSIXPackagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: MSIXPackages_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MsixPackage>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsixPackage>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackage.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _msixPackageMSIXPackagesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _msixPackageMSIXPackagesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackage.Delete");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Object containing MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<MsixPackage>> UpdateAsync(PatchableMsixPackageData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsixPackage>> UpdateAsync(PatchableMsixPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

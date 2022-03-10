@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
     }
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CapacityReservationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public string ReservationId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoReplaceOnFailure { get { throw null; } set { } }
         public string HostId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
     }
     public partial class DedicatedHostGroup : Azure.ResourceManager.Core.ArmResource
@@ -1446,8 +1446,8 @@ namespace Azure.ResourceManager.Compute
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Snapshot> GetSnapshotsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.SshPublicKey> GetSshPublicKeys(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.SshPublicKey> GetSshPublicKeysAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.Usage> GetUsages(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.Usage> GetUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeUsage> GetUsages(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this Azure.ResourceManager.Resources.Subscription subscription, string location, string publisherName) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineImage> GetVirtualMachineImage(this Azure.ResourceManager.Resources.Subscription subscription, string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineImage>> GetVirtualMachineImageAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.Compute
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OSProfile OSProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -1820,13 +1820,13 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
         public bool? Overprovision { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
         public bool? SinglePlacementGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SpotRestorePolicy SpotRestorePolicy { get { throw null; } set { } }
         public string UniqueId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
@@ -2019,12 +2019,12 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OSProfile OSProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } set { } }
         public string VmId { get { throw null; } }
@@ -2359,6 +2359,29 @@ namespace Azure.ResourceManager.Compute.Models
         internal CommunityGalleryImageVersion() { }
         public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
         public System.DateTimeOffset? PublishedDate { get { throw null; } }
+    }
+    public partial class ComputePlan
+    {
+        public ComputePlan() { }
+        public string Name { get { throw null; } set { } }
+        public string Product { get { throw null; } set { } }
+        public string PromotionCode { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+    }
+    public partial class ComputeSku
+    {
+        public ComputeSku() { }
+        public long? Capacity { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Tier { get { throw null; } set { } }
+    }
+    public partial class ComputeUsage
+    {
+        internal ComputeUsage() { }
+        public int CurrentValue { get { throw null; } }
+        public long Limit { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.UsageName Name { get { throw null; } }
+        public string Unit { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsistencyModeTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.ConsistencyModeTypes>
@@ -3610,7 +3633,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
     }
@@ -3621,7 +3644,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public string ReservationId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
     }
     public partial class PatchableCapacityReservationGroupData : Azure.ResourceManager.Compute.Models.UpdateResource
@@ -3792,7 +3815,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OSProfile OSProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -3826,11 +3849,11 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? Overprovision { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
         public bool? SinglePlacementGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get { throw null; } set { } }
     }
@@ -3962,14 +3985,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal PirSharedGalleryResource() { }
         public string UniqueId { get { throw null; } }
-    }
-    public partial class Plan
-    {
-        public Plan() { }
-        public string Name { get { throw null; } set { } }
-        public string Product { get { throw null; } set { } }
-        public string PromotionCode { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.PrivateEndpointConnectionProvisioningState>
@@ -4618,13 +4633,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.SharingUpdateOperationTypes left, Azure.ResourceManager.Compute.Models.SharingUpdateOperationTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Sku
-    {
-        public Sku() { }
-        public long? Capacity { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Tier { get { throw null; } set { } }
-    }
     public partial class SnapshotSku
     {
         public SnapshotSku() { }
@@ -4833,14 +4841,6 @@ namespace Azure.ResourceManager.Compute.Models
         Cancelled = 1,
         Completed = 2,
         Faulted = 3,
-    }
-    public partial class Usage
-    {
-        internal Usage() { }
-        public int CurrentValue { get { throw null; } }
-        public long Limit { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.UsageName Name { get { throw null; } }
-        public string Unit { get { throw null; } }
     }
     public partial class UsageName
     {
@@ -5258,7 +5258,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineScaleSetSku() { }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuCapacity Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetSkuCapacity
     {

@@ -220,7 +220,7 @@ var availabilitySetData = new AvailabilitySetData(location)
 {
     PlatformUpdateDomainCount = 5,
     PlatformFaultDomainCount = 2,
-    Sku = new Compute.Models.Sku() { Name = "Aligned" }
+    Sku = new ComputeSku() { Name = "Aligned" }
 };
 ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
 AvailabilitySet availabilitySet = asetOperation.Value;

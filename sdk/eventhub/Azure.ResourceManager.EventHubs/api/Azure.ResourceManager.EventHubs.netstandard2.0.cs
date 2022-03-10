@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.EventHubs
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubsSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
@@ -634,6 +634,51 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
+    public partial class EventHubsSku
+    {
+        public EventHubsSku(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubsSkuName Name { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier? Tier { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventHubsSkuName : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventHubsSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuName Basic { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuName Premium { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuName Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventHubsSkuTier : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventHubsSkuTier(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier Basic { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier Premium { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.KeyType>
     {
@@ -792,51 +837,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(Azure.ResourceManager.EventHubs.Models.SchemaType left, Azure.ResourceManager.EventHubs.Models.SchemaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventHubs.Models.SchemaType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.SchemaType left, Azure.ResourceManager.EventHubs.Models.SchemaType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Sku
-    {
-        public Sku(Azure.ResourceManager.EventHubs.Models.SkuName name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.SkuName Name { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.SkuTier? Tier { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuName : System.IEquatable<Azure.ResourceManager.EventHubs.Models.SkuName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuName(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.SkuName Basic { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.SkuName Premium { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.SkuName Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.SkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.SkuName left, Azure.ResourceManager.EventHubs.Models.SkuName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.SkuName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.SkuName left, Azure.ResourceManager.EventHubs.Models.SkuName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuTier : System.IEquatable<Azure.ResourceManager.EventHubs.Models.SkuTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuTier(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.SkuTier Basic { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.SkuTier Premium { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.SkuTier Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.SkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.SkuTier left, Azure.ResourceManager.EventHubs.Models.SkuTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.SkuTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.SkuTier left, Azure.ResourceManager.EventHubs.Models.SkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum UnavailableReason

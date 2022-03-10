@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", HybridIdentityMetadata.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(HybridIdentityMetadata.ResourceType, out string hybridIdentityMetadataHybridIdentityMetadataApiVersion);
-            _hybridIdentityMetadataHybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(_hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridIdentityMetadataHybridIdentityMetadataApiVersion);
+            _hybridIdentityMetadataHybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridIdentityMetadataHybridIdentityMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<ArmOperation<HybridIdentityMetadata>> CreateOrUpdateAsync(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridIdentityMetadata>> CreateOrUpdateAsync(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<HybridIdentityMetadata>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridIdentityMetadata>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridIdentityMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken);
                 if (response.Value == null)
-                    throw _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridIdentityMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<HybridIdentityMetadata>> GetIfExistsAsync(string metadataName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridIdentityMetadata>> GetIfExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 

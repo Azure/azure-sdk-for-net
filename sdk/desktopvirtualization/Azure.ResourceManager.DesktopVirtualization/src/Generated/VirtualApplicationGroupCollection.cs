@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _virtualApplicationGroupApplicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VirtualApplicationGroup.ResourceType, out string virtualApplicationGroupApplicationGroupsApiVersion);
-            _virtualApplicationGroupApplicationGroupsRestClient = new ApplicationGroupsRestOperations(_virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplicationGroupApplicationGroupsApiVersion);
+            _virtualApplicationGroupApplicationGroupsRestClient = new ApplicationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplicationGroupApplicationGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> or <paramref name="applicationGroup"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualApplicationGroup>> CreateOrUpdateAsync(bool waitForCompletion, string applicationGroupName, VirtualApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualApplicationGroup>> CreateOrUpdateAsync(bool waitForCompletion, string applicationGroupName, VirtualApplicationGroupData applicationGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
             Argument.AssertNotNull(applicationGroup, nameof(applicationGroup));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public async virtual Task<Response<VirtualApplicationGroup>> GetAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroup>> GetAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _virtualApplicationGroupApplicationGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualApplicationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualApplicationGroupApplicationGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualApplicationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public async virtual Task<Response<VirtualApplicationGroup>> GetIfExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroup>> GetIfExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 

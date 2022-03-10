@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.KeyVault
         {
             _managedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string managedHsmApiVersion);
-            _managedHsmRestClient = new ManagedHsmsRestOperations(_managedHsmClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedHsmApiVersion);
+            _managedHsmRestClient = new ManagedHsmsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedHsmApiVersion);
             _mhsmPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _mhsmPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(_mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _mhsmPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: ManagedHsms_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedHsm>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsm>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsm.Get");
             scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _managedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managedHsmClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _managedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _managedHsmClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsm.Delete");
             scope.Start();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ManagedHsm>> UpdateAsync(bool waitForCompletion, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedHsm>> UpdateAsync(bool waitForCompletion, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ManagedHsm>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsm>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ManagedHsm>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsm>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ManagedHsm>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsm>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

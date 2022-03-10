@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _virtualDesktopDesktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualDesktop.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VirtualDesktop.ResourceType, out string virtualDesktopDesktopsApiVersion);
-            _virtualDesktopDesktopsRestClient = new DesktopsRestOperations(_virtualDesktopDesktopsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualDesktopDesktopsApiVersion);
+            _virtualDesktopDesktopsRestClient = new DesktopsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualDesktopDesktopsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public async virtual Task<Response<VirtualDesktop>> GetAsync(string desktopName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualDesktop>> GetAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualDesktopDesktopsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualDesktop(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string desktopName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
-        public async virtual Task<Response<VirtualDesktop>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualDesktop>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 

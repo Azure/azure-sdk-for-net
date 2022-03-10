@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _networkWatcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcher.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(NetworkWatcher.ResourceType, out string networkWatcherApiVersion);
-            _networkWatcherRestClient = new NetworkWatchersRestOperations(_networkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
+            _networkWatcherRestClient = new NetworkWatchersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<NetworkWatcher>> CreateOrUpdateAsync(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkWatcher>> CreateOrUpdateAsync(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> GetAsync(string networkWatcherName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> GetAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkWatcherClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken);
                 if (response.Value == null)
-                    throw _networkWatcherClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> GetIfExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> GetIfExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 

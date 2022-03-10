@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _sqlAgentConfigurationSqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sqlAgentConfigurationSqlAgentApiVersion);
-            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(_sqlAgentConfigurationSqlAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
+            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SqlAgent_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SqlAgentConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlAgentConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlAgentConfigurationSqlAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlAgentConfigurationSqlAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlAgentConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlAgentConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

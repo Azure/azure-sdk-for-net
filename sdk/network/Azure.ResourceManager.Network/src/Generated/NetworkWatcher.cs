@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         {
             _networkWatcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string networkWatcherApiVersion);
-            _networkWatcherRestClient = new NetworkWatchersRestOperations(_networkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
+            _networkWatcherRestClient = new NetworkWatchersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: NetworkWatchers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NetworkWatcher>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.Get");
             scope.Start();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkWatcherClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _networkWatcherClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.Delete");
             scope.Start();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<Topology>> GetTopologyAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Topology>> GetTopologyAsync(TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the IP flow to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VerificationIPFlowResult>> VerifyIPFlowAsync(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VerificationIPFlowResult>> VerifyIPFlowAsync(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the source and destination endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<NextHopResult>> GetNextHopAsync(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NextHopResult>> GetNextHopAsync(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SecurityGroupViewResult>> GetVmSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityGroupViewResult>> GetVmSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to troubleshoot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingAsync(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingAsync(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingResultAsync(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingResultAsync(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the configuration of flow log. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FlowLogInformation>> SetFlowLogConfigurationAsync(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FlowLogInformation>> SetFlowLogConfigurationAsync(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FlowLogInformation>> GetFlowLogStatusAsync(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FlowLogInformation>> GetFlowLogStatusAsync(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine how the connectivity check will be performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConnectivityInformation>> CheckConnectivityAsync(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectivityInformation>> CheckConnectivityAsync(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine Azure reachability report configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<AzureReachabilityReport>> GetAzureReachabilityReportAsync(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AzureReachabilityReport>> GetAzureReachabilityReportAsync(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<AvailableProvidersList>> GetAvailableProvidersAsync(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvailableProvidersList>> GetAvailableProvidersAsync(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters to get network configuration diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<NetworkConfigurationDiagnosticResponse>> GetNetworkConfigurationDiagnosticAsync(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkConfigurationDiagnosticResponse>> GetNetworkConfigurationDiagnosticAsync(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkWatcher>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

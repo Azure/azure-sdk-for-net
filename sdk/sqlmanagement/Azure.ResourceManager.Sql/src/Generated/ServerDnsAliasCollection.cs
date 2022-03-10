@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverDnsAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDnsAlias.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServerDnsAlias.ResourceType, out string serverDnsAliasApiVersion);
-            _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(_serverDnsAliasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDnsAliasApiVersion);
+            _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDnsAliasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        public async virtual Task<ArmOperation<ServerDnsAlias>> CreateOrUpdateAsync(bool waitForCompletion, string dnsAliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServerDnsAlias>> CreateOrUpdateAsync(bool waitForCompletion, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        public async virtual Task<Response<ServerDnsAlias>> GetAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDnsAlias>> GetAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDnsAliasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDnsAliasClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDnsAlias(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDnsAliasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDnsAliasClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDnsAlias(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        public async virtual Task<Response<ServerDnsAlias>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDnsAlias>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         {
             _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string syncGroupApiVersion);
-            _syncGroupRestClient = new SyncGroupsRestOperations(_syncGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncGroupApiVersion);
+            _syncGroupRestClient = new SyncGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SyncGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SyncGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _syncGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _syncGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.Delete");
             scope.Start();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SyncGroup>> UpdateAsync(bool waitForCompletion, SyncGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SyncGroup>> UpdateAsync(bool waitForCompletion, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RefreshHubSchemaAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RefreshHubSchemaAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.RefreshHubSchema");
             scope.Start();
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SyncGroups_CancelSync
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> CancelSyncAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelSyncAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.CancelSync");
             scope.Start();
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SyncGroups_TriggerSync
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> TriggerSyncAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TriggerSyncAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.TriggerSync");
             scope.Start();

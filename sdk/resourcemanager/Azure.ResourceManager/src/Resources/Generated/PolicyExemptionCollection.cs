@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyExemption.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PolicyExemption.ResourceType, out string policyExemptionApiVersion);
-            _policyExemptionRestClient = new PolicyExemptionsRestOperations(_policyExemptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
+            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyExemptionRestClient.GetAsync(Id, policyExemptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _policyExemptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyExemptionRestClient.Get(Id, policyExemptionName, cancellationToken);
                 if (response.Value == null)
-                    throw _policyExemptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 

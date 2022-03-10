@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
@@ -28,8 +26,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
-            Sku sku = new Sku(SkuName.StandardGRS);
-            Kind kind = Kind.Storage;
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+            StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();

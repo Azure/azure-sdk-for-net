@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         private ClientDiagnostics ApplicationClientDiagnostics => _applicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", Application.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(ApplicationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Application.ResourceType));
+        private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Application.ResourceType));
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
-        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(JitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequest.ResourceType));
+        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequest.ResourceType));
         private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(DeploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentScript.ResourceType));
+        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentScript.ResourceType));
         private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpec.ResourceType.Namespace, DiagnosticOptions);
-        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(TemplateSpecClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(TemplateSpec.ResourceType));
+        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(TemplateSpec.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

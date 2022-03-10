@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotInstanceExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotInstanceExtensionWebAppsApiVersion);
-            _siteSlotInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceExtensionWebAppsApiVersion);
+            _siteSlotInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMsDeployStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotInstanceExtension>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotInstanceExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceExtension.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotInstanceExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotInstanceExtension(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMSDeployLogSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MsDeployLog>> GetInstanceMSDeployLogSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsDeployLog>> GetInstanceMSDeployLogSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceExtension.GetInstanceMSDeployLogSlot");
             scope.Start();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
-            _storageAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters(kind: Kind.StorageV2))).Value;
+            _storageAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2))).Value;
         }
 
         [TearDown]

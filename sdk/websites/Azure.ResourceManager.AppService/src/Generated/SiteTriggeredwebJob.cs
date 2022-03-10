@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteTriggeredwebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteTriggeredwebJobWebAppsApiVersion);
-            _siteTriggeredwebJobWebAppsRestClient = new WebAppsRestOperations(_siteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteTriggeredwebJobWebAppsApiVersion);
+            _siteTriggeredwebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteTriggeredwebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetTriggeredWebJobSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteTriggeredwebJob>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteTriggeredwebJob>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("SiteTriggeredwebJob.Get");
             scope.Start();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteTriggeredwebJobWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteTriggeredwebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteTriggeredwebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteTriggeredwebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("SiteTriggeredwebJob.Delete");
             scope.Start();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_RunTriggeredWebJobSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RunTriggeredWebJobSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RunTriggeredWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("SiteTriggeredwebJob.RunTriggeredWebJobSlot");
             scope.Start();

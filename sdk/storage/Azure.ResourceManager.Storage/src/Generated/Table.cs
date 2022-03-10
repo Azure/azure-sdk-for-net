@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         {
             _tableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string tableApiVersion);
-            _tableRestClient = new TableRestOperations(_tableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableApiVersion);
+            _tableRestClient = new TableRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: Table_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Table>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Table>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tableClientDiagnostics.CreateScope("Table.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _tableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _tableClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Table(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _tableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _tableClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Table(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _tableClientDiagnostics.CreateScope("Table.Delete");
             scope.Start();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: Table_Update
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Table>> UpdateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Table>> UpdateAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tableClientDiagnostics.CreateScope("Table.Update");
             scope.Start();

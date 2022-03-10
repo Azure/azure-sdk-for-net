@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
-            _azureFirewallRestClient = new AzureFirewallsRestOperations(_azureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
+            _azureFirewallRestClient = new AzureFirewallsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<AzureFirewall>> CreateOrUpdateAsync(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AzureFirewall>> CreateOrUpdateAsync(bool waitForCompletion, string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public async virtual Task<Response<AzureFirewall>> GetAsync(string azureFirewallName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureFirewall>> GetAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _azureFirewallRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _azureFirewallClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AzureFirewall(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _azureFirewallRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, cancellationToken);
                 if (response.Value == null)
-                    throw _azureFirewallClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AzureFirewall(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public async virtual Task<Response<AzureFirewall>> GetIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureFirewall>> GetIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 

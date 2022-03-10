@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWan.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VirtualWan.ResourceType, out string virtualWanApiVersion);
-            _virtualWanRestClient = new VirtualWansRestOperations(_virtualWanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWanApiVersion);
+            _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="wanParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualWan>> CreateOrUpdateAsync(bool waitForCompletion, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualWan>> CreateOrUpdateAsync(bool waitForCompletion, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
             Argument.AssertNotNull(wanParameters, nameof(wanParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public async virtual Task<Response<VirtualWan>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualWanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualWanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualWanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualWanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public async virtual Task<Response<VirtualWan>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 

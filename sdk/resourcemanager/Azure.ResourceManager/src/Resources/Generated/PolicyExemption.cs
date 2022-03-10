@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
-            _policyExemptionRestClient = new PolicyExemptionsRestOperations(_policyExemptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
+            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyExemptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PolicyExemption>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemption>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyExemptionRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _policyExemptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyExemptionRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _policyExemptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
             scope.Start();

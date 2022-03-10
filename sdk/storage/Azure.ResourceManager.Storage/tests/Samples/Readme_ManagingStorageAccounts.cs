@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.Core;
 #endregion
 
@@ -40,8 +38,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_CreateStorageAccount
             //first we need to define the StorageAccountCreateParameters
-            Sku sku = new Sku(SkuName.StandardGRS);
-            Kind kind = Kind.Storage;
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+            StorageKind kind = StorageKind.Storage;
             string location = "westus2";
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
             //now we can create a storage account with defined account name and parameters

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         {
             _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
-            _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
+            _appServicePlanRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AppServicePlan>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Get");
             scope.Start();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _appServicePlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _appServicePlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Delete");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> UpdateAsync(PatchableAppServicePlanData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> UpdateAsync(PatchableAppServicePlanData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="softRestart"> Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies the configuration settings and restarts the apps if necessary. The default is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions the apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RestartWebAppsAsync(bool? softRestart = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestartWebAppsAsync(bool? softRestart = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RestartWebApps");
             scope.Start();
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<object>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<object>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
-        public async virtual Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
 
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

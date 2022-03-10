@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
-            _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(_ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFtpAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FtpSiteSlotBasicPublishingCredentialsPolicy>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FtpSiteSlotBasicPublishingCredentialsPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("FtpSiteSlotBasicPublishingCredentialsPolicy.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetFtpAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FtpSiteSlotBasicPublishingCredentialsPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetFtpAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FtpSiteSlotBasicPublishingCredentialsPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicy>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicy>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
 

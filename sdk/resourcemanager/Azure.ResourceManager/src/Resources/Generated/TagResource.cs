@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
         {
             _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
-            _tagResourceTagsRestClient = new TagsRestOperations(_tagResourceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
+            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Tags_GetAtScope
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _tagResourceTagsRestClient.GetAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _tagResourceTagsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _tagResourceTagsRestClient.GetAtScope(Id.Parent, cancellationToken);
                 if (response.Value == null)
-                    throw _tagResourceTagsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> The PatchableTagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<TagResource>> UpdateAsync(PatchableTagResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagResource>> UpdateAsync(PatchableTagResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<TagResource>> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TagResource>> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

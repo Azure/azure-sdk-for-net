@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _packetCaptureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PacketCapture.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PacketCapture.ResourceType, out string packetCaptureApiVersion);
-            _packetCaptureRestClient = new PacketCapturesRestOperations(_packetCaptureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
+            _packetCaptureRestClient = new PacketCapturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<PacketCapture>> CreateOrUpdateAsync(bool waitForCompletion, string packetCaptureName, PacketCaptureInput parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PacketCapture>> CreateOrUpdateAsync(bool waitForCompletion, string packetCaptureName, PacketCaptureInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        public async virtual Task<Response<PacketCapture>> GetAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PacketCapture>> GetAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _packetCaptureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PacketCapture(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
                 if (response.Value == null)
-                    throw _packetCaptureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PacketCapture(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        public async virtual Task<Response<PacketCapture>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PacketCapture>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(JitRequest.ResourceType, out string jitRequestApiVersion);
-            _jitRequestRestClient = new JitRequestsRestOperations(_jitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
+            _jitRequestRestClient = new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<JitRequest>> CreateOrUpdateAsync(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<JitRequest>> CreateOrUpdateAsync(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public async virtual Task<Response<JitRequest>> GetAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JitRequest>> GetAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jitRequestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken);
                 if (response.Value == null)
-                    throw _jitRequestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public async virtual Task<Response<JitRequest>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JitRequest>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 

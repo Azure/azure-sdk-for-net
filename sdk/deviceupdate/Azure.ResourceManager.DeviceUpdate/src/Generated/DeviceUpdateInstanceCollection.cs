@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             _deviceUpdateInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateInstance.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DeviceUpdateInstance.ResourceType, out string deviceUpdateInstanceInstancesApiVersion);
-            _deviceUpdateInstanceInstancesRestClient = new InstancesRestOperations(_deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateInstanceInstancesApiVersion);
+            _deviceUpdateInstanceInstancesRestClient = new InstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateInstanceInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
-        public async virtual Task<ArmOperation<DeviceUpdateInstance>> CreateOrUpdateAsync(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceUpdateInstance>> CreateOrUpdateAsync(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             Argument.AssertNotNull(instance, nameof(instance));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateInstance>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdateInstance>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = await _deviceUpdateInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deviceUpdateInstanceInstancesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = _deviceUpdateInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken);
                 if (response.Value == null)
-                    throw _deviceUpdateInstanceInstancesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateInstance>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdateInstance>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 

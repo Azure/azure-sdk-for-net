@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Compute
         {
             _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cloudServiceApiVersion);
-            _cloudServiceRestClient = new CloudServicesRestOperations(_cloudServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
+            _cloudServiceRestClient = new CloudServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
             _cloudServicesUpdateDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CloudService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Get");
             scope.Start();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cloudServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cloudServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Delete");
             scope.Start();
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_GetInstanceView
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CloudServiceInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceInstanceView>> GetInstanceViewAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.GetInstanceView");
             scope.Start();
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> PowerOnAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PowerOnAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.PowerOn");
             scope.Start();
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> PowerOffAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PowerOffAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.PowerOff");
             scope.Start();
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RestartAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Restart");
             scope.Start();
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReimageAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Reimage");
             scope.Start();
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RebuildAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RebuildAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.Rebuild");
             scope.Start();
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteInstancesAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteInstancesAsync(bool waitForCompletion, RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudService.DeleteInstances");
             scope.Start();
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> WalkUpdateDomainAsync(bool waitForCompletion, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(bool waitForCompletion, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudService.WalkUpdateDomain");
             scope.Start();
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<UpdateDomain>> GetUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UpdateDomain>> GetUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudService.GetUpdateDomain");
             scope.Start();
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudService>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

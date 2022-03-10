@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Threading.Tasks;
-
-using ResourceGroup = Azure.ResourceManager.Resources.ResourceGroup;
-using DiskPoolSku = Azure.ResourceManager.StoragePool.Models.Sku;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StoragePool.Models;
 using Microsoft.AspNetCore.Http;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StoragePool.Tests
 {
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var diskPoolName = Recording.GenerateAssetName("diskpool-");
             var diskPoolCollection = _resourceGroup.GetDiskPools();
 
-            var sku = new DiskPoolSku("Standard_S1");
+            var sku = new StoragePoolSku("Standard_S1");
             var diskPoolCreate = new DiskPoolCreate(sku, DefaultLocation, SubnetResourceId) {};
             diskPoolCreate.AvailabilityZones.Add("1");
             // the following additional capability is not needed for non-test disk pools

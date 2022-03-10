@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
-            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(_policyAssignmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
+            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PolicyAssignment>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignment>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _policyAssignmentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _policyAssignmentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<PolicyAssignment>> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyAssignment>> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Delete");
             scope.Start();

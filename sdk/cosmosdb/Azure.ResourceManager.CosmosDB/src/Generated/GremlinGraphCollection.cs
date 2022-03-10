@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _gremlinGraphGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinGraph.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(GremlinGraph.ResourceType, out string gremlinGraphGremlinResourcesApiVersion);
-            _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, gremlinGraphGremlinResourcesApiVersion);
+            _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, gremlinGraphGremlinResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<GremlinGraph>> CreateOrUpdateAsync(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateData createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinGraph>> CreateOrUpdateAsync(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateData createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
             Argument.AssertNotNull(createUpdateGremlinGraphParameters, nameof(createUpdateGremlinGraphParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<GremlinGraph>> GetAsync(string graphName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GremlinGraph>> GetAsync(string graphName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _gremlinGraphGremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _gremlinGraphGremlinResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GremlinGraph(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _gremlinGraphGremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
                 if (response.Value == null)
-                    throw _gremlinGraphGremlinResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GremlinGraph(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<GremlinGraph>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GremlinGraph>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 

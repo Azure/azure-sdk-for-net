@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
-            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
+            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ApplicationGateway>> CreateOrUpdateAsync(bool waitForCompletion, string applicationGatewayName, ApplicationGatewayData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplicationGateway>> CreateOrUpdateAsync(bool waitForCompletion, string applicationGatewayName, ApplicationGatewayData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> GetAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> GetAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _applicationGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
                 if (response.Value == null)
-                    throw _applicationGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApplicationGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> GetIfExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGateway>> GetIfExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 

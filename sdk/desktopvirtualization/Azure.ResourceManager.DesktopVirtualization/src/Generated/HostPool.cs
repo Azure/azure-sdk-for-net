@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _hostPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
-            _hostPoolRestClient = new HostPoolsRestOperations(_hostPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostPoolApiVersion);
+            _hostPoolRestClient = new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostPoolApiVersion);
             _scalingPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlan.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ScalingPlan.ResourceType, out string scalingPlanApiVersion);
-            _scalingPlanRestClient = new ScalingPlansRestOperations(_scalingPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scalingPlanApiVersion);
+            _scalingPlanRestClient = new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scalingPlanApiVersion);
             _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSession.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(UserSession.ResourceType, out string userSessionApiVersion);
-            _userSessionRestClient = new UserSessionsRestOperations(_userSessionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
+            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
             _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _msixImagesRestClient = new MsixImagesRestOperations(_msixImagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _msixImagesRestClient = new MsixImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostPool>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPool.Get");
             scope.Start();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hostPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _hostPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="force"> Force flag to delete sessionHost. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPool.Delete");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> UpdateAsync(PatchableHostPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> UpdateAsync(PatchableHostPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_RetrieveRegistrationToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPool.RetrieveRegistrationToken");
             scope.Start();
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<HostPool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

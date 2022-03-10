@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
         {
             _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string localUserApiVersion);
-            _localUserRestClient = new LocalUsersRestOperations(_localUserClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
+            _localUserRestClient = new LocalUsersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: LocalUsers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LocalUser>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUser>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _localUserClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _localUserClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.Delete");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: LocalUsers_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LocalUserKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUserKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.GetKeys");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: LocalUsers_RegeneratePassword
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LocalUserRegeneratePasswordResult>> RegeneratePasswordAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUserRegeneratePasswordResult>> RegeneratePasswordAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.RegeneratePassword");
             scope.Start();

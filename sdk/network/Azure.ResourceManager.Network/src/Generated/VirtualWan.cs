@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Network
         {
             _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string virtualWanApiVersion);
-            _virtualWanRestClient = new VirtualWansRestOperations(_virtualWanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWanApiVersion);
+            _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWanApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _defaultRestClient = new NetworkManagementRestOperations(_defaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _defaultRestClient = new NetworkManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_vpnSitesConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualWan>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWan.Get");
             scope.Start();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualWanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualWanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualWanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualWanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWan.Delete");
             scope.Start();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: SupportedSecurityProviders
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _defaultClientDiagnostics.CreateScope("VirtualWan.SupportedSecurityProviders");
             scope.Start();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public async virtual Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(bool waitForCompletion, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(bool waitForCompletion, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vpnClientParams, nameof(vpnClientParams));
 
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<ArmOperation> DownloadVpnSitesConfigurationAsync(bool waitForCompletion, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DownloadVpnSitesConfigurationAsync(bool waitForCompletion, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<VpnServerConfigurationsResponse>> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VpnServerConfigurationsResponse>> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics.CreateScope("VirtualWan.GetVpnServerConfigurationsAssociatedWithVirtualWan");
             scope.Start();
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<VirtualWan>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<VirtualWan>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<VirtualWan>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWan>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

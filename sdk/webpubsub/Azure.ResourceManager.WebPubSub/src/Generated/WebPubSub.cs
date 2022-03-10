@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.WebPubSub
         {
             _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webPubSubApiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_webPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
             _webPubSubPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Get");
             scope.Start();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webPubSubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webPubSubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Delete");
             scope.Start();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebPubSub>> UpdateAsync(bool waitForCompletion, WebPubSubData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSub>> UpdateAsync(bool waitForCompletion, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetKeys");
             scope.Start();
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebPubSubKeys>> RegenerateKeyAsync(bool waitForCompletion, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubKeys>> RegenerateKeyAsync(bool waitForCompletion, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Restart");
             scope.Start();
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Sku> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebPubSubResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubResourceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Sku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebPubSubResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
@@ -458,10 +458,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Sku> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubResourceSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<Sku> FirstPageFunc(int? pageSizeHint)
+            Page<WebPubSubResourceSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 

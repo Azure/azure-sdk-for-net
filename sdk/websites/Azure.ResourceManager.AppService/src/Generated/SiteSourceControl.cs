@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSourceControlWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSourceControlWebAppsApiVersion);
-            _siteSourceControlWebAppsRestClient = new WebAppsRestOperations(_siteSourceControlWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSourceControlWebAppsApiVersion);
+            _siteSourceControlWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSourceControlWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSourceControl>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSourceControl>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSourceControlWebAppsClientDiagnostics.CreateScope("SiteSourceControl.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSourceControlWebAppsRestClient.GetSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSourceControlWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSourceControlWebAppsRestClient.GetSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSourceControlWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSourceControlWebAppsClientDiagnostics.CreateScope("SiteSourceControl.Delete");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public async virtual Task<Response<SiteSourceControl>> UpdateAsync(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSourceControl>> UpdateAsync(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSourceControl>> CreateOrUpdateAsync(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSourceControl>> CreateOrUpdateAsync(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 

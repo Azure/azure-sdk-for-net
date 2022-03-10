@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         {
             _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUser.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(LocalUser.ResourceType, out string localUserApiVersion);
-            _localUserRestClient = new LocalUsersRestOperations(_localUserClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
+            _localUserRestClient = new LocalUsersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ArmOperation<LocalUser>> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LocalUser>> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<LocalUser>> GetAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUser>> GetAsync(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _localUserClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken);
                 if (response.Value == null)
-                    throw _localUserClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<LocalUser>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUser>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 

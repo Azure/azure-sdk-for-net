@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ApplicationGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ApplicationGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get { throw null; } }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ApplicationSecurityGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationSecurityGroupData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ApplicationSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationSecurityGroupData() { }
         public string Etag { get { throw null; } }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.AzureFirewall> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.AzureFirewall>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AzureFirewallData : Azure.ResourceManager.Network.Models.Resource
+    public partial class AzureFirewallData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public AzureFirewallData() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.BastionHost> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BastionHost>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BastionHostData : Azure.ResourceManager.Network.Models.Resource
+    public partial class BastionHostData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BastionHostData() { }
         public string DnsName { get { throw null; } set { } }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.CustomIPPrefix> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.CustomIPPrefix>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CustomIPPrefixData : Azure.ResourceManager.Network.Models.Resource
+    public partial class CustomIPPrefixData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public CustomIPPrefixData() { }
         public string AuthorizationMessage { get { throw null; } set { } }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicy> GetIfExists(string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicy>> GetIfExistsAsync(string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.Resource
+    public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public DdosCustomPolicyData() { }
         public string Etag { get { throw null; } }
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.DscpConfiguration> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DscpConfiguration>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DscpConfigurationData : Azure.ResourceManager.Network.Models.Resource
+    public partial class DscpConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public DscpConfigurationData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> AssociatedNetworkInterfaces { get { throw null; } }
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class ExpressRouteCircuitData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRouteCircuitData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCircuitData() { }
         public bool? AllowClassicOperations { get { throw null; } set { } }
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCrossConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCrossConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCrossConnectionData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRouteCrossConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCrossConnectionData() { }
         public int? BandwidthInMbps { get { throw null; } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRouteGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteGatewayData() { }
         public Azure.ResourceManager.Network.Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds { get { throw null; } set { } }
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRoutePort> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePort>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRoutePortData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRoutePortData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRoutePortData() { }
         public string AllocationDate { get { throw null; } }
@@ -1265,7 +1265,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRoutePortsLocation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePortsLocation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRoutePortsLocationData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRoutePortsLocationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRoutePortsLocationData() { }
         public string Address { get { throw null; } }
@@ -1309,7 +1309,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FirewallPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FirewallPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FirewallPolicyData : Azure.ResourceManager.Network.Models.Resource
+    public partial class FirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FirewallPolicyData() { }
         public Azure.Core.ResourceIdentifier BasePolicyId { get { throw null; } set { } }
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FlowLog> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLog>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FlowLogData : Azure.ResourceManager.Network.Models.Resource
+    public partial class FlowLogData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FlowLogData() { }
         public bool? Enabled { get { throw null; } set { } }
@@ -1663,7 +1663,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.IPAllocation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPAllocation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IPAllocationData : Azure.ResourceManager.Network.Models.Resource
+    public partial class IPAllocationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPAllocationData() { }
         public System.Collections.Generic.IDictionary<string, string> AllocationTags { get { throw null; } }
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.IPGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IPGroupData : Azure.ResourceManager.Network.Models.Resource
+    public partial class IPGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPGroupData() { }
         public string Etag { get { throw null; } }
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.LoadBalancer> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancer>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LoadBalancerData : Azure.ResourceManager.Network.Models.Resource
+    public partial class LoadBalancerData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public LoadBalancerData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.BackendAddressPoolData> BackendAddressPools { get { throw null; } }
@@ -1859,7 +1859,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.LocalNetworkGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LocalNetworkGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LocalNetworkGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class LocalNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public LocalNetworkGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NatGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NatGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NatGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NatGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NatGatewayData() { }
         public string Etag { get { throw null; } }
@@ -1961,7 +1961,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkInterface> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterface>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkInterfaceData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkInterfaceData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkInterfaceData() { }
         public Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings DnsSettings { get { throw null; } set { } }
@@ -2104,7 +2104,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkProfile> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkProfile>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkProfileData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkProfileData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkProfileData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get { throw null; } }
@@ -2150,7 +2150,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkSecurityGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkSecurityGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkSecurityGroupData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkSecurityGroupData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SecurityRuleData> DefaultSecurityRules { get { throw null; } }
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkVirtualAppliance> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualAppliance>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkVirtualApplianceData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkVirtualApplianceData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkVirtualApplianceData() { }
         public string AddressPrefix { get { throw null; } }
@@ -2248,7 +2248,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkVirtualApplianceSku> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceSku>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkVirtualApplianceSkuData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkVirtualApplianceSkuData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkVirtualApplianceSkuData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get { throw null; } }
@@ -2318,7 +2318,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkWatcher> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkWatcher>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkWatcherData : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkWatcherData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkWatcherData() { }
         public string Etag { get { throw null; } }
@@ -2408,7 +2408,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.P2SVpnGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.P2SVpnGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class P2SVpnGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class P2SVpnGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public P2SVpnGatewayData() { }
         public System.Collections.Generic.IList<string> CustomDnsServers { get { throw null; } }
@@ -2620,7 +2620,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class PrivateEndpointData : Azure.ResourceManager.Network.Models.Resource
+    public partial class PrivateEndpointData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateEndpointData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get { throw null; } }
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PrivateLinkService> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateLinkService>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkServiceData : Azure.ResourceManager.Network.Models.Resource
+    public partial class PrivateLinkServiceData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateLinkServiceData() { }
         public string Alias { get { throw null; } }
@@ -2758,7 +2758,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PublicIPAddress> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PublicIPAddress>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PublicIPAddressData : Azure.ResourceManager.Network.Models.Resource
+    public partial class PublicIPAddressData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PublicIPAddressData() { }
         public Azure.ResourceManager.Network.Models.DdosSettings DdosSettings { get { throw null; } set { } }
@@ -2817,7 +2817,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PublicIPPrefix> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PublicIPPrefix>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PublicIPPrefixData : Azure.ResourceManager.Network.Models.Resource
+    public partial class PublicIPPrefixData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PublicIPPrefixData() { }
         public Azure.Core.ResourceIdentifier CustomIPPrefixId { get { throw null; } set { } }
@@ -2968,7 +2968,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteFilter> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteFilter>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteFilterData : Azure.ResourceManager.Network.Models.Resource
+    public partial class RouteFilterData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public RouteFilterData() { }
         public string Etag { get { throw null; } }
@@ -3053,7 +3053,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteTable> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteTable>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteTableData : Azure.ResourceManager.Network.Models.Resource
+    public partial class RouteTableData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public RouteTableData() { }
         public bool? DisableBgpRoutePropagation { get { throw null; } set { } }
@@ -3098,7 +3098,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.SecurityPartnerProvider> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityPartnerProvider>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SecurityPartnerProviderData : Azure.ResourceManager.Network.Models.Resource
+    public partial class SecurityPartnerProviderData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public SecurityPartnerProviderData() { }
         public Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus? ConnectionStatus { get { throw null; } }
@@ -3195,7 +3195,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ServiceEndpointPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceEndpointPolicyData : Azure.ResourceManager.Network.Models.Resource
+    public partial class ServiceEndpointPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ServiceEndpointPolicyData() { }
         public string Etag { get { throw null; } }
@@ -3402,8 +3402,8 @@ namespace Azure.ResourceManager.Network
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult> GetServiceTag(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult>> GetServiceTagAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.Usage> GetUsages(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.Usage> GetUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsages(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.VirtualHub> GetVirtualHubs(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.VirtualHub> GetVirtualHubsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.VirtualNetwork> GetVirtualNetworks(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3506,7 +3506,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualHub> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHub>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualHubData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualHubData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualHubData() { }
         public string AddressPrefix { get { throw null; } set { } }
@@ -3609,7 +3609,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetwork> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetwork>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualNetworkData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkData() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
@@ -3746,7 +3746,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkGatewayConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkGatewayConnectionData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualNetworkGatewayConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayConnectionData(Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
         public string AuthorizationKey { get { throw null; } set { } }
@@ -3776,7 +3776,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGateway1 { get { throw null; } set { } }
         public Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGateway2 { get { throw null; } set { } }
     }
-    public partial class VirtualNetworkGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayData() { }
         public bool? Active { get { throw null; } set { } }
@@ -3927,7 +3927,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkTap> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkTap>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkTapData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualNetworkTapData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkTapData() { }
         public Azure.ResourceManager.Network.FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
@@ -3974,7 +3974,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualRouter> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualRouter>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualRouterData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualRouterData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualRouterData() { }
         public string Etag { get { throw null; } }
@@ -4067,7 +4067,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualWan> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualWan>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualWanData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualWanData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualWanData() { }
         public bool? AllowBranchToBranchTraffic { get { throw null; } set { } }
@@ -4182,7 +4182,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnGateway> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnGateway>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnGatewayData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VpnGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
@@ -4274,7 +4274,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnServerConfiguration> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnServerConfiguration>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnServerConfigurationData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VpnServerConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnServerConfigurationData() { }
         public Azure.ResourceManager.Network.Models.AadAuthenticationParameters AadAuthenticationParameters { get { throw null; } set { } }
@@ -4330,7 +4330,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnSite> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSite>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnSiteData : Azure.ResourceManager.Network.Models.Resource
+    public partial class VpnSiteData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnSiteData() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
@@ -4470,7 +4470,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.WebApplicationFirewallPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.WebApplicationFirewallPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebApplicationFirewallPolicyData : Azure.ResourceManager.Network.Models.Resource
+    public partial class WebApplicationFirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public WebApplicationFirewallPolicyData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ApplicationGatewayData> ApplicationGateways { get { throw null; } }
@@ -4707,7 +4707,7 @@ namespace Azure.ResourceManager.Network.Models
         public string RuleGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRule> Rules { get { throw null; } }
     }
-    public partial class ApplicationGatewayFirewallRuleSet : Azure.ResourceManager.Network.Models.Resource
+    public partial class ApplicationGatewayFirewallRuleSet : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayFirewallRuleSet() { }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -5394,7 +5394,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType left, Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureFirewallFqdnTag : Azure.ResourceManager.Network.Models.Resource
+    public partial class AzureFirewallFqdnTag : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public AzureFirewallFqdnTag() { }
         public string Etag { get { throw null; } }
@@ -5700,7 +5700,7 @@ namespace Azure.ResourceManager.Network.Models
         internal BgpPeerStatusListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.BgpPeerStatus> Value { get { throw null; } }
     }
-    public partial class BgpServiceCommunity : Azure.ResourceManager.Network.Models.Resource
+    public partial class BgpServiceCommunity : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BgpServiceCommunity() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BGPCommunity> BgpCommunities { get { throw null; } }
@@ -6810,7 +6810,7 @@ namespace Azure.ResourceManager.Network.Models
         public string OfferName { get { throw null; } }
         public int? ValueInGbps { get { throw null; } }
     }
-    public partial class ExpressRouteServiceProvider : Azure.ResourceManager.Network.Models.Resource
+    public partial class ExpressRouteServiceProvider : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteServiceProvider() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get { throw null; } }
@@ -7812,7 +7812,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkSecurityGroupResult NetworkSecurityGroupResult { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile Profile { get { throw null; } }
     }
-    public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.Resource
+    public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkIntentPolicy() { }
         public string Etag { get { throw null; } }
@@ -7884,6 +7884,15 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkInterfaceNicType left, Azure.ResourceManager.Network.Models.NetworkInterfaceNicType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class NetworkResourceData
+    {
+        public NetworkResourceData() { }
+        public string Id { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
     public partial class NetworkRule : Azure.ResourceManager.Network.Models.FirewallPolicyRule
     {
         public NetworkRule() { }
@@ -7910,6 +7919,15 @@ namespace Azure.ResourceManager.Network.Models
         public bool? ProtocolMatched { get { throw null; } }
         public bool? SourceMatched { get { throw null; } }
         public bool? SourcePortMatched { get { throw null; } }
+    }
+    public partial class NetworkUsage
+    {
+        internal NetworkUsage() { }
+        public long CurrentValue { get { throw null; } }
+        public string Id { get { throw null; } }
+        public long Limit { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.UsageName Name { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.UsageUnit Unit { get { throw null; } }
     }
     public partial class NetworkVirtualApplianceSkuInstances
     {
@@ -8590,15 +8608,6 @@ namespace Azure.ResourceManager.Network.Models
         public string RecordType { get { throw null; } }
         public int? Ttl { get { throw null; } }
     }
-    public partial class Resource
-    {
-        public Resource() { }
-        public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
     public partial class ResourceNavigationLink : Azure.ResourceManager.Network.Models.SubResource
     {
         public ResourceNavigationLink() { }
@@ -9027,15 +9036,6 @@ namespace Azure.ResourceManager.Network.Models
         public UnprepareNetworkPoliciesRequest() { }
         public string ServiceName { get { throw null; } set { } }
     }
-    public partial class Usage
-    {
-        internal Usage() { }
-        public long CurrentValue { get { throw null; } }
-        public string Id { get { throw null; } }
-        public long Limit { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.UsageName Name { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.UsageUnit Unit { get { throw null; } }
-    }
     public partial class UsageName
     {
         internal UsageName() { }
@@ -9130,7 +9130,7 @@ namespace Azure.ResourceManager.Network.Models
         public string RegionalCommunity { get { throw null; } }
         public string VirtualNetworkCommunity { get { throw null; } set { } }
     }
-    public partial class VirtualNetworkGatewayConnectionListEntity : Azure.ResourceManager.Network.Models.Resource
+    public partial class VirtualNetworkGatewayConnectionListEntity : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayConnectionListEntity(Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetworkGateway1, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
         public string AuthorizationKey { get { throw null; } set { } }

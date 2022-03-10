@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _flowLogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FlowLog.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(FlowLog.ResourceType, out string flowLogApiVersion);
-            _flowLogRestClient = new FlowLogsRestOperations(_flowLogClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, flowLogApiVersion);
+            _flowLogRestClient = new FlowLogsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, flowLogApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FlowLog>> CreateOrUpdateAsync(bool waitForCompletion, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FlowLog>> CreateOrUpdateAsync(bool waitForCompletion, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<FlowLog>> GetAsync(string flowLogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FlowLog>> GetAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _flowLogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _flowLogClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _flowLogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken);
                 if (response.Value == null)
-                    throw _flowLogClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FlowLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
-        public async virtual Task<Response<FlowLog>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FlowLog>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 

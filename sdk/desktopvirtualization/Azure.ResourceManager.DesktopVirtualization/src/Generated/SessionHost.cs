@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sessionHostApiVersion);
-            _sessionHostRestClient = new SessionHostsRestOperations(_sessionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
+            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: SessionHosts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SessionHost>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHost>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Get");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sessionHostClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sessionHostClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="force"> Force flag to force sessionHost deletion even when userSession exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Delete");
             scope.Start();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<Response<SessionHost>> UpdateAsync(PatchableSessionHostData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHost>> UpdateAsync(PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

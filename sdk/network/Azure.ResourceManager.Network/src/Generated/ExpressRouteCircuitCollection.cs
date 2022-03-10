@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _expressRouteCircuitClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuit.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ExpressRouteCircuit.ResourceType, out string expressRouteCircuitApiVersion);
-            _expressRouteCircuitRestClient = new ExpressRouteCircuitsRestOperations(_expressRouteCircuitClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCircuitApiVersion);
+            _expressRouteCircuitRestClient = new ExpressRouteCircuitsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCircuitApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ExpressRouteCircuit>> CreateOrUpdateAsync(bool waitForCompletion, string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuit>> CreateOrUpdateAsync(bool waitForCompletion, string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuit>> GetAsync(string circuitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCircuit>> GetAsync(string circuitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRouteCircuitRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRouteCircuitClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCircuit(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteCircuitRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, circuitName, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRouteCircuitClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCircuit(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string circuitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string circuitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuit>> GetIfExistsAsync(string circuitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCircuit>> GetIfExistsAsync(string circuitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
 

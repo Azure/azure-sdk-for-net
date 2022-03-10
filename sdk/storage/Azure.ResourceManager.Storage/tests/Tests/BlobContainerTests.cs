@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //update storage account to v2
             PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //update storage account to v2
             PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateParameters createParameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            StorageAccountCreateParameters createParameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
             StorageAccount sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName1, createParameters)).Value;
             StorageAccount destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName2, createParameters)).Value;
 
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //update storage account to v2
             PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //update storage account to v2
             PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //update storage account to v2
             PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
