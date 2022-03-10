@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
         /// <param name="features">A list of gallery image features.</param>
-        public SharedGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan))
+        /// <param name="architecture">Possible values include: 'x64',
+        /// 'Arm64'</param>
+        public SharedGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string))
             : base(name, location, uniqueId)
         {
             OsType = osType;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             HyperVGeneration = hyperVGeneration;
             Features = features;
             PurchasePlan = purchasePlan;
+            Architecture = architecture;
             CustomInit();
         }
 
@@ -135,6 +138,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.purchasePlan")]
         public ImagePurchasePlan PurchasePlan { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'x64', 'Arm64'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.architecture")]
+        public string Architecture { get; set; }
 
         /// <summary>
         /// Validate the object.
