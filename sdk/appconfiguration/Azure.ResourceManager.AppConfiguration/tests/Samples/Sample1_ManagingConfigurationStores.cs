@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
         {
             #region Snippet:Managing_ConfigurationStores_CreateAConfigurationStore
             string configurationStoreName = ("myApp");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };

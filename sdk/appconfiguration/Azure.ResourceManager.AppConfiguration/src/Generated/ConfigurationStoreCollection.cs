@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ConfigurationStore.ResourceType, out string configurationStoreApiVersion);
-            _configurationStoreRestClient = new ConfigurationStoresRestOperations(_configurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
+            _configurationStoreRestClient = new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConfigurationStore>> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfigurationStore>> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             Argument.AssertNotNull(configStoreCreationParameters, nameof(configStoreCreationParameters));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _configurationStoreClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken);
                 if (response.Value == null)
-                    throw _configurationStoreClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 

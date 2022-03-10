@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Describes a configuration store SKU. </summary>
-    public partial class Sku
+    public partial class AppConfigurationSku
     {
-        /// <summary> Initializes a new instance of Sku. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationSku. </summary>
         /// <param name="name"> The SKU name of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Sku(string name)
+        public AppConfigurationSku(string name)
         {
             if (name == null)
             {

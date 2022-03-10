@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
                 ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             string configurationStoreName1 = Recording.GenerateAssetName("testapp-");
             string configurationStoreName2 = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetIfExistsTest()
         {
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };

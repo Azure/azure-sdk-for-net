@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class Sku : IUtf8JsonSerializable
+    public partial class AppConfigurationSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static Sku DeserializeSku(JsonElement element)
+        internal static AppConfigurationSku DeserializeAppConfigurationSku(JsonElement element)
         {
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new Sku(name);
+            return new AppConfigurationSku(name);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             string configurationStoreName1 = Recording.GenerateAssetName("testapp-");
             string configurationStoreName2 = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetIfExistsTest()
         {
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };

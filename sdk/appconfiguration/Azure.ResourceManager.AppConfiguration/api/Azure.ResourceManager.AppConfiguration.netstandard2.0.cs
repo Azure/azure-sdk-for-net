@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
@@ -172,6 +172,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public string Name { get { throw null; } }
         public bool? ReadOnly { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    public partial class AppConfigurationSku
+    {
+        public AppConfigurationSku(string name) { }
+        public string Name { get { throw null; } set { } }
     }
     public partial class CheckNameAvailabilityParameters
     {
@@ -314,10 +319,5 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         public RegenerateKeyOptions() { }
         public string Id { get { throw null; } set { } }
-    }
-    public partial class Sku
-    {
-        public Sku(string name) { }
-        public string Name { get { throw null; } set { } }
     }
 }

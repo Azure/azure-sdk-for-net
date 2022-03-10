@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
                 ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };

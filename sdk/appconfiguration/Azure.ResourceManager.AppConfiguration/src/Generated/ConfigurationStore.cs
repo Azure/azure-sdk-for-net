@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
-            _configurationStoreRestClient = new ConfigurationStoresRestOperations(_configurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
+            _configurationStoreRestClient = new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ConfigurationStore>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Get");
             scope.Start();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _configurationStoreClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _configurationStoreClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationStore(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStore.Delete");
             scope.Start();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="data"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async virtual Task<ArmOperation<ConfigurationStore>> UpdateAsync(bool waitForCompletion, PatchableConfigurationStoreData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfigurationStore>> UpdateAsync(bool waitForCompletion, PatchableConfigurationStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
-        public async virtual Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(regenerateKeyOptions, nameof(regenerateKeyOptions));
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
-        public async virtual Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(listKeyValueOptions, nameof(listKeyValueOptions));
 
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ConfigurationStore>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationStore>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
