@@ -4,13 +4,12 @@
 
 Namespaces for this example:
 ```C# Snippet:Manage_ActionGroups_Namespaces
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Cdn.Models;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Monitor.Tests;
+using NUnit.Framework;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:

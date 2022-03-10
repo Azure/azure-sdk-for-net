@@ -4,13 +4,12 @@
 
 Namespaces for this example:
 ```C# Snippet:Manage_ActivityLogAlerts_Namespaces
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Cdn.Models;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Monitor.Tests;
+using NUnit.Framework;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
@@ -45,16 +44,25 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 ActivityLogAlertCollection alertCollection = resourceGroup.GetActivityLogAlerts();
 // Use the same location as the resource group
 string activityLogAlertName = "myActivityLogAlert";
-var input = new ActivityLogAlertData("global")
+var input = new ActivityLogAlertData("global", subscription.ID)
 {
+            IEnumerable<ActivityLogAlertLeafCondition> allOf;
+            allOf = new List<ActivityLogAlertLeafCondition>()
+            {
+                new ActivityLogAlertLeafCondition( "category", "Administrative"),
+                new ActivityLogAlertLeafCondition( "level", "Error")
+            };
             var data = new ActivityLogAlertData(location)
             {
-                EmailReceivers =
+                Scopes =
                 {
-                    new EmailReceiver("name", "a@b.c")
+                    subscription.ID
                 },
-                Enabled = true,
-                GroupShortName = "name"
+                Condition = new ActivityLogAlertAllOfCondition(allOf),
+                Actions =
+                {
+                    ActionGroups = {}
+                }
             };
 };
 ArmOperation<ActivityLogAlert> lro = await alertCollection.CreateOrUpdateAsync(true, activityLogAlertName, input);
