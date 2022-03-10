@@ -38,6 +38,7 @@ steps:
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: CredScan result analysis
+  condition: and(succeededOrFailed(), ne('CREDSCAN_UNNEEDED', true))
   inputs:
     GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
     GdnBreakAllTools: false
@@ -47,8 +48,7 @@ steps:
     # Used for generating baseline file.
     # GdnBreakOutputBaselineFile: baseline
     # GdnBreakOutputBaseline: baseline
-  condition: succeededOrFailed()
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
   displayName: CredScan troubleshooting guide
-  condition: failed()
+  condition: and(failed(), ne('CREDSCAN_UNNEEDED', true))
