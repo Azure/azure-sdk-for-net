@@ -85,13 +85,13 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = new RequestFailedException(failedSubResponse);
+                        RequestFailedException rfex = await ClientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
 
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -125,12 +125,12 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = new RequestFailedException(responses[0]);
+                        RequestFailedException rfex = ClientDiagnostics.CreateRequestFailedException(responses[0]);
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

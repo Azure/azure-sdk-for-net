@@ -328,6 +328,7 @@ namespace Azure.Storage.Files.Shares
         private DirectoryRestClient BuildDirectoryRestClient(Uri uri)
         {
             return new DirectoryRestClient(
+                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());

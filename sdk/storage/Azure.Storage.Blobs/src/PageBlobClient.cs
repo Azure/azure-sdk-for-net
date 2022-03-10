@@ -252,6 +252,7 @@ namespace Azure.Storage.Blobs.Specialized
         private PageBlobRestClient BuildPageBlobRestClient(Uri blobUri)
         {
             return new PageBlobRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

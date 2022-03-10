@@ -370,6 +370,7 @@ namespace Azure.Storage.Blobs.Specialized
         private BlockBlobRestClient BuildBlockBlobRestClient(Uri blobUri)
         {
             return new BlockBlobRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

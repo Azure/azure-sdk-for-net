@@ -227,11 +227,13 @@ namespace Azure.Storage.Blobs.Specialized
         private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients(Uri serviceUri)
         {
             ServiceRestClient serviceRestClient = new ServiceRestClient(
+                clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
                 url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
 
             ContainerRestClient containerRestClient = new ContainerRestClient(
+                clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
                 url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
