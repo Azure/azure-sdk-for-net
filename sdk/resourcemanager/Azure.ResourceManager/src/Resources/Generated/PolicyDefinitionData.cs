@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
         public PolicyDefinitionData()
         {
-            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
         }
 
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type, systemData)
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ArmPolicyParameter> parameters) : base(id, name, type, systemData)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </summary>
         public object Metadata { get; set; }
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; }
+        public IDictionary<string, ArmPolicyParameter> Parameters { get; }
     }
 }

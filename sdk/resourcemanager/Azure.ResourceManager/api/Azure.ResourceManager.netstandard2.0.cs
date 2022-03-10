@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Resources
         public string DisplayName { get { throw null; } set { } }
         public object Metadata { get { throw null; } set { } }
         public string Mode { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> Parameters { get { throw null; } }
         public object PolicyRule { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
     }
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public object Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup> PolicyDefinitionGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
@@ -1277,6 +1277,14 @@ namespace Azure.ResourceManager.Resources.Models
         public string ApiVersion { get { throw null; } }
         public string ProfileVersion { get { throw null; } }
     }
+    public partial class ArmPolicyParameter
+    {
+        public ArmPolicyParameter() { }
+        public System.Collections.Generic.IList<object> AllowedValues { get { throw null; } }
+        public object DefaultValue { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ParameterType? Type { get { throw null; } set { } }
+    }
     public partial class DataEffect
     {
         internal DataEffect() { }
@@ -1431,14 +1439,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-    }
-    public partial class ParameterDefinitionsValue
-    {
-        public ParameterDefinitionsValue() { }
-        public System.Collections.Generic.IList<object> AllowedValues { get { throw null; } }
-        public object DefaultValue { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ParameterType? Type { get { throw null; } set { } }
     }
     public partial class ParameterDefinitionsValueMetadata
     {

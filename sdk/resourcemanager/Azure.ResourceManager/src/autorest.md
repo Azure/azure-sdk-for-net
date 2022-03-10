@@ -271,6 +271,10 @@ directive:
     where: $.definitions.Alias
     transform:
       $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameter";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
