@@ -100,9 +100,7 @@ namespace Azure.Identity
                           clientId,
                           clientSecret,
                           _redirectUri,
-                          options as ITokenCacheOptions,
-                          null,
-                          options?.IsLoggingPIIEnabled ?? false);
+                          options);
         }
 
         /// <summary>
