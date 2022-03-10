@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected GremlinDatabaseCollection GremlinDatabaseCollection { get => _databaseAccount.GetGremlinDatabases(); }
+        protected GremlinDatabaseCollection GremlinDatabaseCollection => _databaseAccount.GetGremlinDatabases();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            GremlinDatabaseCreateUpdateOptions updateOptions = new GremlinDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type, null,
+            GremlinDatabaseCreateUpdateData updateOptions = new GremlinDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountGremlinDatabaseThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<GremlinDatabase> CreateGremlinDatabase(string name, AutoscaleSettings autoscale, GremlinDatabaseCollection collection)
         {
-            GremlinDatabaseCreateUpdateOptions cassandraKeyspaceCreateUpdateOptions = new GremlinDatabaseCreateUpdateOptions(AzureLocation.WestUS,
+            GremlinDatabaseCreateUpdateData cassandraKeyspaceCreateUpdateOptions = new GremlinDatabaseCreateUpdateData(AzureLocation.WestUS,
                 new GremlinDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

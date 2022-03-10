@@ -65,6 +65,16 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
+        class RequestTimesTracker : HttpPipelineSynchronousPolicy
+        {
+            public int Times { get; private set; }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                Times++;
+            }
+        }
+
         private string _rgName;
         private readonly string _location = "southcentralus";
 
@@ -81,6 +91,37 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             var op = await rgCollection.CreateOrUpdateAsync(true, _rgName, new ResourceGroupData(_location));
             await StopSessionRecordingAsync();
+        }
+
+        [RecordedTest]
+        public async Task AddPolicy_Percall()
+        {
+            var options = new ArmClientOptions();
+            RequestTimesTracker tracker = new RequestTimesTracker();
+            options.AddPolicy(tracker, HttpPipelinePosition.PerCall);
+            var client = GetArmClient(options);
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            Assert.AreEqual(1, tracker.Times);
+            var rgCollection = subscription.GetResourceGroups();
+            _ = await rgCollection.GetAsync(_rgName);
+            Assert.AreEqual(2, tracker.Times);
+        }
+
+        [RecordedTest]
+        public void AddPolicy_PerRetry()
+        {
+            var retryResponse = new MockResponse(408); // Request Timeout
+            var mockTransport = new MockTransport(retryResponse, retryResponse, new MockResponse(200));
+            var options = new ArmClientOptions()
+            {
+                Transport = mockTransport,
+            };
+            options.Retry.Delay = TimeSpan.FromMilliseconds(100);
+            RequestTimesTracker tracker = new RequestTimesTracker();
+            options.AddPolicy(tracker, HttpPipelinePosition.PerRetry);
+            var client = GetArmClient(options);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await client.GetDefaultSubscriptionAsync());
+            Assert.AreEqual(options.Retry.MaxRetries, tracker.Times);
         }
 
         [RecordedTest]

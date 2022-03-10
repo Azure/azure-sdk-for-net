@@ -447,20 +447,25 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseAccountConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseAccountConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
+            async Task<Page<DatabaseAccountConnectionString>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _databaseAccountRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+                scope.Start();
+                try
+                {
+                    var response = await _databaseAccountRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ConnectionStrings, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -469,20 +474,25 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseAccountConnectionStringList> GetConnectionStrings(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseAccountConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseAccountConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
-            scope.Start();
-            try
+            Page<DatabaseAccountConnectionString> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _databaseAccountRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetConnectionStrings");
+                scope.Start();
+                try
+                {
+                    var response = _databaseAccountRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.ConnectionStrings, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -658,7 +668,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
 
@@ -688,7 +698,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public virtual ArmOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyData keyToRegenerate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
 
