@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.0-beta.4 (2022-03-10)
+## 12.9.0 (2022-03-10)
 - Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3 except SDK-calculated transactional checksums on data transfer.
 - Removed preview support for SDK-calculated transactional checksums on data transfer.
 
