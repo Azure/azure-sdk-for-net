@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Deployment data model. </summary>
-    public partial class DeploymentData : Resource
+    public partial class DeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         internal DeploymentData()

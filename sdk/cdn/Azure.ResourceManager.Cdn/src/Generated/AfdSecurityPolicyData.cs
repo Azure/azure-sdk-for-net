@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdSecurityPolicy data model. </summary>
-    public partial class AfdSecurityPolicyData : Resource
+    public partial class AfdSecurityPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         public AfdSecurityPolicyData()

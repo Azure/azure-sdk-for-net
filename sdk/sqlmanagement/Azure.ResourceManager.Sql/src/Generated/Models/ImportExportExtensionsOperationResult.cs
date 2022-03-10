@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Extension operation result resource. </summary>
-    public partial class ImportExportExtensionsOperationResult : Resource
+    public partial class ImportExportExtensionsOperationResult : ResourceData
     {
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
         public ImportExportExtensionsOperationResult()

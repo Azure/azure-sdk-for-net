@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRule data model. </summary>
-    public partial class AfdRuleData : Resource
+    public partial class AfdRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRuleData. </summary>
         public AfdRuleData()

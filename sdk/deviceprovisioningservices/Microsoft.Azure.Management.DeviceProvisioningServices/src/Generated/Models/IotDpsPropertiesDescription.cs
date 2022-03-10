@@ -61,7 +61,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// service.</param>
         /// <param name="authorizationPolicies">List of authorization keys for
         /// a provisioning service.</param>
-        public IotDpsPropertiesDescription(string state = default(string), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), IList<IotHubDefinitionDescription> iotHubs = default(IList<IotHubDefinitionDescription>), string allocationPolicy = default(string), string serviceOperationsHostName = default(string), string deviceProvisioningHostName = default(string), string idScope = default(string), IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>))
+        /// <param name="enableDataResidency">Optional.
+        /// Indicates if the DPS instance has Data Residency enabled, removing
+        /// the cross geo-pair disaster recovery.</param>
+        public IotDpsPropertiesDescription(string state = default(string), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), IList<IotHubDefinitionDescription> iotHubs = default(IList<IotHubDefinitionDescription>), string allocationPolicy = default(string), string serviceOperationsHostName = default(string), string deviceProvisioningHostName = default(string), string idScope = default(string), IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>), bool? enableDataResidency = default(bool?))
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
             DeviceProvisioningHostName = deviceProvisioningHostName;
             IdScope = idScope;
             AuthorizationPolicies = authorizationPolicies;
+            EnableDataResidency = enableDataResidency;
             CustomInit();
         }
 
@@ -155,6 +159,14 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "authorizationPolicies")]
         public IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> AuthorizationPolicies { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional.
+        /// Indicates if the DPS instance has Data Residency enabled, removing
+        /// the cross geo-pair disaster recovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableDataResidency")]
+        public bool? EnableDataResidency { get; set; }
 
     }
 }

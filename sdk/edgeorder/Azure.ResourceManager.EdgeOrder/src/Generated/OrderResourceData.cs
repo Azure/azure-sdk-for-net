@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary> A class representing the OrderResource data model. </summary>
-    public partial class OrderResourceData : Resource
+    public partial class OrderResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of OrderResourceData. </summary>
         public OrderResourceData()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnOrigin data model. </summary>
-    public partial class CdnOriginData : Resource
+    public partial class CdnOriginData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnOriginData. </summary>
         public CdnOriginData()

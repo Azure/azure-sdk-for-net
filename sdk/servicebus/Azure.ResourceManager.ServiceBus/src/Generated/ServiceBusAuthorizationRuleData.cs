@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusAuthorizationRule data model. </summary>
-    public partial class ServiceBusAuthorizationRuleData : Resource
+    public partial class ServiceBusAuthorizationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         public ServiceBusAuthorizationRuleData()

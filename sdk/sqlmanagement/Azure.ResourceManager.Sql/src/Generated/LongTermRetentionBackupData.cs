@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the LongTermRetentionBackup data model. </summary>
-    public partial class LongTermRetentionBackupData : Resource
+    public partial class LongTermRetentionBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of LongTermRetentionBackupData. </summary>
         public LongTermRetentionBackupData()

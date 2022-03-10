@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the MigrationConfigProperties data model. </summary>
-    public partial class MigrationConfigPropertiesData : Resource
+    public partial class MigrationConfigPropertiesData : ResourceData
     {
         /// <summary> Initializes a new instance of MigrationConfigPropertiesData. </summary>
         public MigrationConfigPropertiesData()

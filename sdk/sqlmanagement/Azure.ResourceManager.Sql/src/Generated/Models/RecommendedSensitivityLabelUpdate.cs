@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recommended sensitivity label update operation. </summary>
-    public partial class RecommendedSensitivityLabelUpdate : Resource
+    public partial class RecommendedSensitivityLabelUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
         public RecommendedSensitivityLabelUpdate()

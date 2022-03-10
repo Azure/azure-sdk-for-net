@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
             await operation.WaitForCompletionAsync();
 
             // List the first ten or fewer operations that have been executed in the last 24h.

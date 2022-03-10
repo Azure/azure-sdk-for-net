@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An object representing the detected language for a given text span. </summary>
-    internal partial class DocumentLanguage
+    public partial class DocumentLanguage
     {
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
         /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>

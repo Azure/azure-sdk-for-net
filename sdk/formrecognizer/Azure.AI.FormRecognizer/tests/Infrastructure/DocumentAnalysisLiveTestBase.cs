@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
 
         public DocumentAnalysisLiveTestBase(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
             _serviceVersion = serviceVersion;
             Sanitizer = new DocumentAnalysisRecordedTestSanitizer();
@@ -100,8 +100,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// </summary>
         /// <param name="modelId">Model Id.</param>
         /// <param name="containerType">Type of container to use to execute training.</param>
+        /// <param name="buildMode">The technique to use to build the model. Defaults to <see cref="DocumentBuildMode.Template"/>.</param>
         /// <returns>A <see cref="DisposableBuildModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableBuildModel> CreateDisposableBuildModelAsync(string modelId, ContainerType containerType = default)
+        protected async Task<DisposableBuildModel> CreateDisposableBuildModelAsync(string modelId, ContainerType containerType = default, DocumentBuildMode buildMode = default)
         {
             var adminClient = CreateDocumentModelAdministrationClient();
 
@@ -116,7 +117,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableBuildModel.BuildModelAsync(adminClient, trainingFilesUri, modelId);
+            buildMode = (buildMode == default)
+                ? DocumentBuildMode.Template
+                : buildMode;
+
+            return await DisposableBuildModel.BuildModelAsync(adminClient, trainingFilesUri, buildMode, modelId);
         }
 
         protected enum ContainerType

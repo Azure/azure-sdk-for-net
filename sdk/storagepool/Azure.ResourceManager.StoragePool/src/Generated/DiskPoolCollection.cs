@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StoragePool.Models;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         /// <summary> Initializes a new instance of the <see cref="DiskPoolCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiskPoolCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DiskPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPool.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(DiskPool.ResourceType, out string diskPoolApiVersion);
+            TryGetApiVersion(DiskPool.ResourceType, out string diskPoolApiVersion);
             _diskPoolRestClient = new DiskPoolsRestOperations(_diskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,67 +52,28 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_CreateOrUpdate
-        /// <summary> Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior. </summary>
+        /// <summary>
+        /// Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DiskPool>> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            if (diskPoolCreatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolCreatePayload));
-            }
-
-            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
-                var operation = new DiskPoolCreateOrUpdateOperation(ArmClient, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_CreateOrUpdate
-        /// <summary> Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
-        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            if (diskPoolCreatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolCreatePayload));
-            }
+            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _diskPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskPoolCreateOrUpdateOperation(ArmClient, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,26 +85,31 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_Get
-        /// <summary> Get a Disk pool. </summary>
+        /// <summary>
+        /// Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public virtual Response<DiskPool> Get(string diskPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
+        public virtual ArmOperation<DiskPool> CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
 
-            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken);
-                if (response.Value == null)
-                    throw _diskPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
+                var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -150,13 +118,14 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_Get
-        /// <summary> Get a Disk pool. </summary>
+        /// <summary>
+        /// Get a Disk pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> GetAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
@@ -169,7 +138,7 @@ namespace Azure.ResourceManager.StoragePool
                 var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _diskPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,23 +147,27 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a Disk pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public virtual Response<DiskPool> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<DiskPool> Get(string diskPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
+                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
+                    throw _diskPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DiskPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,58 +176,98 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <summary>
+        /// Gets a list of DiskPools in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools
+        /// Operation Id: DiskPools_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public async virtual Task<Response<DiskPool>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiskPool> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-
-            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DiskPool>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _diskPoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<DiskPool>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _diskPoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <summary>
+        /// Gets a list of DiskPools in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools
+        /// Operation Id: DiskPools_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public virtual Response<bool> Exists(string diskPoolName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiskPool> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-
-            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
-            scope.Start();
-            try
+            Page<DiskPool> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(diskPoolName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diskPoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<DiskPool> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diskPoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
@@ -274,86 +287,89 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_ListByResourceGroup
-        /// <summary> Gets a list of DiskPools in a resource group. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskPool> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public virtual Response<bool> Exists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            Page<DiskPool> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskPoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(diskPoolName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<DiskPool> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskPoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DiskPools_ListByResourceGroup
-        /// <summary> Gets a list of DiskPools in a resource group. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskPool> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public async virtual Task<Response<DiskPool>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiskPool>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diskPoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskPool(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<DiskPool>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diskPoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public virtual Response<DiskPool> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DiskPool>(null, response.GetRawResponse());
+                return Response.FromValue(new DiskPool(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<DiskPool> IEnumerable<DiskPool>.GetEnumerator()

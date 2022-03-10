@@ -567,7 +567,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
         public async Task StartAnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -623,18 +622,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(8, cells.Count);
+            Assert.AreEqual(6, cells.Count);
 
-            var expectedContent = new string[4, 2]
+            var expectedContent = new string[3, 2]
             {
                 { "SUBTOTAL", "$140.00" },
                 { "TAX", "$4.00" },
-                { "", ""},
                 { "TOTAL", "$144.00" }
             };
 
@@ -1146,12 +1144,64 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion
 
+        #region Read
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartAnalyzeDocumentCanReadPageAndLanguage(bool useStream)
+        {
+            var client = CreateDocumentAnalysisClient();
+            AnalyzeDocumentOperation operation;
+
+            if (useStream)
+            {
+                using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
+                }
+            }
+            else
+            {
+                var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
+                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasValue);
+
+            AnalyzeResult result = operation.Value;
+
+            ValidateAnalyzeResult(
+                result,
+                "prebuilt-read",
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            DocumentPage page = result.Pages.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(8.5, page.Width);
+            Assert.AreEqual(11, page.Height);
+            Assert.AreEqual(0, page.Angle);
+            Assert.AreEqual(18, page.Lines.Count);
+            Assert.IsEmpty(result.Tables);
+
+            Assert.IsNotEmpty(result.Languages);
+        }
+
+        #endregion
+
         #region Receipts
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27083")]
         public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1261,7 +1311,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26605")]
         public async Task StartAnalyzeDocumentCanParseMultipageReceipt(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1307,7 +1356,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("$ 1203.39", sampleField.Content);
+                    Assert.AreEqual("1203.39", sampleField.Content);
                 }
             }
         }
@@ -1569,6 +1618,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             foreach (DocumentTable table in result.Tables)
             {
                 ValidateTable(table, expectedFirstPageNumber, expectedLastPageNumber);
+            }
+
+            // Check Document Languages.
+
+            foreach (DocumentLanguage language in result.Languages)
+            {
+                Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+                Assert.NotNull(language.LanguageCode);
             }
         }
 

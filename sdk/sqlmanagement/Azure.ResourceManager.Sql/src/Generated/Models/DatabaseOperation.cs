@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database operation. </summary>
-    public partial class DatabaseOperation : Resource
+    public partial class DatabaseOperation : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseOperation. </summary>
         public DatabaseOperation()

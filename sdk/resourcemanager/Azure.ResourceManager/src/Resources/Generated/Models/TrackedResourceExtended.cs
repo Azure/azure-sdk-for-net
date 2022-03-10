@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specified resource. </summary>
-    public partial class TrackedResourceExtended : TrackedResource
+    public partial class TrackedResourceExtended : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TrackedResourceExtended. </summary>
         /// <param name="location"> The location. </param>

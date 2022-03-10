@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
         /// <param name="definition"> An object that defines the blob inventory policy rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destination"/>, or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destination"/> or <paramref name="definition"/> is null. </exception>
         public BlobInventoryPolicyRule(bool enabled, string name, string destination, BlobInventoryPolicyDefinition definition)
         {
             if (name == null)

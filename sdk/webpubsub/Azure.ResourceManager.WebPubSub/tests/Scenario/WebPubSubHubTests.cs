@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
-            Assert.IsTrue(collection.Exists(webPubSubHubName));
+            Assert.IsTrue(await collection.ExistsAsync(webPubSubHubName));
         }
 
         [Test]

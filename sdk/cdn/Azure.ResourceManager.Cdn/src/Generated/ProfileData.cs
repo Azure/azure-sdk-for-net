@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the Profile data model. </summary>
-    public partial class ProfileData : TrackedResource
+    public partial class ProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProfileData. </summary>
         /// <param name="location"> The location. </param>

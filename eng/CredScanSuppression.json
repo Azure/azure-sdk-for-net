@@ -64,7 +64,32 @@
                 "sdk/storage/Azure.Storage.Common/tests/Shared/azurite_cert.pem",
                 "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem"
             ],
-            "_justification": "File contains private key used by test code."
-        }    
+            "_justification": "Files contain private keys used by test code."
+        },
+        {
+            "file":[
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-256).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-256)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-384).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-384)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-521).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-521)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-256).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-256)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-384).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-384)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-521).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignRemoteVerifyLocal(application%x-pem-file,P-521)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadLatestCertificate(%application%x-pem-file%).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadLatestCertificate(%application%x-pem-file%)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadVersionedCertificate(%application%x-pem-file%).json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadVersionedCertificate(%application%x-pem-file%)Async.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePem.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemAsync.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuer.json",
+                "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuerAsync.json"
+            ],
+            "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
+        }
     ]
 }

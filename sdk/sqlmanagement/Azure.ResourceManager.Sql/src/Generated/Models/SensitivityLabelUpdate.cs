@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A sensitivity label update operation. </summary>
-    public partial class SensitivityLabelUpdate : Resource
+    public partial class SensitivityLabelUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
         public SensitivityLabelUpdate()

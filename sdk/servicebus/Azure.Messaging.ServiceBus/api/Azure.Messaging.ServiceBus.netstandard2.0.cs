@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus
         SessionLockLost = 11,
         MessagingEntityAlreadyExists = 12,
     }
-    public partial class ServiceBusMessage : Azure.Messaging.MessageWithMetadata
+    public partial class ServiceBusMessage
     {
         public ServiceBusMessage() { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
@@ -161,12 +161,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(string body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public System.BinaryData Body { get { throw null; } set { } }
-        public override string ContentType { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.BinaryData Data { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
         public string ReplyTo { get { throw null; } set { } }
@@ -259,15 +255,13 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusReceivedMessage : Azure.Messaging.MessageWithMetadata
+    public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
         public System.BinaryData Body { get { throw null; } }
-        public override string ContentType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
+        public string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.BinaryData Data { get { throw null; } set { } }
         public string DeadLetterErrorDescription { get { throw null; } }
         public string DeadLetterReason { get { throw null; } }
         public string DeadLetterSource { get { throw null; } }
@@ -275,8 +269,6 @@ namespace Azure.Messaging.ServiceBus
         public long EnqueuedSequenceNumber { get { throw null; } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.DateTimeOffset ExpiresAt { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsReadOnly { get { throw null; } }
         public System.DateTimeOffset LockedUntil { get { throw null; } }
         public string LockToken { get { throw null; } }
         public string MessageId { get { throw null; } }
@@ -938,8 +930,10 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class ServiceBusClientBuilderExtensions
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClient, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions> AddServiceAdministrationBusClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClient, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions> AddServiceBusAdministrationClientWithNamespace<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClient, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions> AddServiceBusAdministrationClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClient, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions> AddServiceBusAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.ServiceBusClient, Azure.Messaging.ServiceBus.ServiceBusClientOptions> AddServiceBusClientWithNamespace<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.ServiceBus.ServiceBusClient, Azure.Messaging.ServiceBus.ServiceBusClientOptions> AddServiceBusClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }

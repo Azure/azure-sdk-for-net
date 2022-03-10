@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch.AsEnumerable" />
+        ///   Verifies property accessors for the <see cref="EventDataBatch.AsReadOnlyCollection" />
         ///   method.
         /// </summary>
         ///
@@ -142,8 +142,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBatch = new MockTransportBatch();
             var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
 
-            batch.AsEnumerable<string>();
-            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
+            batch.AsReadOnlyCollection<string>();
+            Assert.That(mockBatch.AsReadOnlyCollectionCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             public bool DisposeInvoked = false;
             public bool ClearInvoked = false;
-            public Type AsEnumerableCalledWith = null;
+            public Type AsReadOnlyCollectionCalledWith = null;
             public EventData TryAddCalledWith = null;
 
             public override long MaximumSizeInBytes { get; } = 200;
@@ -289,9 +289,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 return true;
             }
 
-            public override IEnumerable<T> AsEnumerable<T>()
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>()
             {
-                AsEnumerableCalledWith = typeof(T);
+                AsReadOnlyCollectionCalledWith = typeof(T);
                 return default;
             }
         }

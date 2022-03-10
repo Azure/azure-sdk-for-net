@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
-using System.Xml;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -30,14 +28,48 @@ namespace Azure.Security.KeyVault.Keys
         public KeyRotationPolicyAction Action { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="TimeSpan"/> after creation to attempt to rotate. It only applies to <see cref="KeyRotationPolicyAction.Rotate"/>.
+        /// Gets or sets the ISO 8601 duration after creation to attempt to rotate. It only applies to <see cref="KeyRotationPolicyAction.Rotate"/>.
         /// </summary>
-        public TimeSpan? TimeAfterCreate { get; set; }
+        /// <remarks>
+        /// ISO 8601 duration examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>P90D</term>
+        /// <description>90 days</description>
+        /// </item>
+        /// <item>
+        /// <term>P3M</term>
+        /// <description>3 months</description>
+        /// </item>
+        /// <item>
+        /// <term>P1Y10D</term>
+        /// <description>1 year and 10 days</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public string TimeAfterCreate { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="TimeSpan"/> before expiry to attempt to <see cref="KeyRotationPolicyAction.Rotate"/> or <see cref="KeyRotationPolicyAction.Notify"/>.
+        /// Gets or sets the ISO 8601 duration before expiry to attempt to <see cref="KeyRotationPolicyAction.Rotate"/> or <see cref="KeyRotationPolicyAction.Notify"/>.
         /// </summary>
-        public TimeSpan? TimeBeforeExpiry { get; set; }
+        /// <remarks>
+        /// ISO 8601 duration examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>P90D</term>
+        /// <description>90 days</description>
+        /// </item>
+        /// <item>
+        /// <term>P3M</term>
+        /// <description>3 months</description>
+        /// </item>
+        /// <item>
+        /// <term>P1Y10D</term>
+        /// <description>1 year and 10 days</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public string TimeBeforeExpiry { get; set; }
 
         internal void ReadProperties(JsonElement json)
         {
@@ -51,11 +83,11 @@ namespace Azure.Security.KeyVault.Keys
                             switch (triggerProp.Name)
                             {
                                 case TimeAfterCreatePropertyName:
-                                    TimeAfterCreate = XmlConvert.ToTimeSpan(triggerProp.Value.GetString());
+                                    TimeAfterCreate = triggerProp.Value.GetString();
                                     break;
 
                                 case TimeBeforeExpiryPropertyName:
-                                    TimeBeforeExpiry = XmlConvert.ToTimeSpan(triggerProp.Value.GetString());
+                                    TimeBeforeExpiry = triggerProp.Value.GetString();
                                     break;
                             }
                         }
@@ -70,18 +102,18 @@ namespace Azure.Security.KeyVault.Keys
 
         internal void WriteProperties(Utf8JsonWriter json)
         {
-            if (TimeAfterCreate.HasValue || TimeBeforeExpiry.HasValue)
+            if (TimeAfterCreate != null || TimeBeforeExpiry != null)
             {
                 json.WriteStartObject(s_triggerPropertyNameBytes);
 
-                if (TimeAfterCreate.HasValue)
+                if (TimeAfterCreate != null)
                 {
-                    json.WriteString(s_timeAfterCreatePropertyNameBytes, XmlConvert.ToString(TimeAfterCreate.Value));
+                    json.WriteString(s_timeAfterCreatePropertyNameBytes, TimeAfterCreate);
                 }
 
-                if (TimeBeforeExpiry.HasValue)
+                if (TimeBeforeExpiry != null)
                 {
-                    json.WriteString(s_timeBeforeExpiryPropertyNameBytes, XmlConvert.ToString(TimeBeforeExpiry.Value));
+                    json.WriteString(s_timeBeforeExpiryPropertyNameBytes, TimeBeforeExpiry);
                 }
 
                 json.WriteEndObject();

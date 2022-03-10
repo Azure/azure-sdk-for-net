@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="JitRequestCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal JitRequestCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal JitRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(JitRequest.ResourceType, out string jitRequestApiVersion);
+            TryGetApiVersion(JitRequest.ResourceType, out string jitRequestApiVersion);
             _jitRequestRestClient = new JitRequestsRestOperations(_jitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,61 +50,28 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates the JIT request. </summary>
+        /// <summary>
+        /// Creates or updates the JIT request.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="parameters"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JitRequestCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<JitRequest>> CreateOrUpdateAsync(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _jitRequestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters, cancellationToken);
-                var operation = new JitRequestCreateOrUpdateOperation(ArmClient, _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the JIT request. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="jitRequestName"> The name of the JIT request. </param>
-        /// <param name="parameters"> Parameters supplied to the update JIT request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JitRequestCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _jitRequestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new JitRequestCreateOrUpdateOperation(ArmClient, _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<JitRequest>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +83,31 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets the JIT request. </summary>
+        /// <summary>
+        /// Creates or updates the JIT request.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
+        /// <param name="parameters"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public virtual Response<JitRequest> Get(string jitRequestName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<JitRequest> CreateOrUpdate(bool waitForCompletion, string jitRequestName, JitRequestData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Get");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken);
-                if (response.Value == null)
-                    throw _jitRequestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
+                var response = _jitRequestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters, cancellationToken);
+                var operation = new ResourcesArmOperation<JitRequest>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,10 +116,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets the JIT request. </summary>
+        /// <summary>
+        /// Gets the JIT request.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public async virtual Task<Response<JitRequest>> GetAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
@@ -156,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _jitRequestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +145,27 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the JIT request.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public virtual Response<JitRequest> GetIfExists(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> Get(string jitRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Get");
             scope.Start();
             try
             {
-                var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken);
+                var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<JitRequest>(null, response.GetRawResponse());
-                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
+                    throw _jitRequestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,58 +174,68 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jitRequestName"> The name of the JIT request. </param>
+        /// <summary>
+        /// Retrieves all JIT requests within the resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public async virtual Task<Response<JitRequest>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JitRequest> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
-
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<JitRequest>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<JitRequest>(null, response.GetRawResponse());
-                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _jitRequestRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jitRequestName"> The name of the JIT request. </param>
+        /// <summary>
+        /// Retrieves all JIT requests within the resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
-        public virtual Response<bool> Exists(string jitRequestName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JitRequest> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
-
-            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Exists");
-            scope.Start();
-            try
+            Page<JitRequest> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(jitRequestName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jitRequestRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
@@ -261,50 +255,89 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Retrieves all JIT requests within the resource group. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
+        /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JitRequest> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        public virtual Response<bool> Exists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            Page<JitRequest> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jitRequestRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(jitRequestName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Retrieves all JIT requests within the resource group. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
+        /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JitRequest> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        public async virtual Task<Response<JitRequest>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitRequest>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jitRequestRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<JitRequest>(null, response.GetRawResponse());
+                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}
+        /// Operation Id: JitRequests_Get
+        /// </summary>
+        /// <param name="jitRequestName"> The name of the JIT request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        public virtual Response<JitRequest> GetIfExists(string jitRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<JitRequest>(null, response.GetRawResponse());
+                return Response.FromValue(new JitRequest(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<JitRequest> IEnumerable<JitRequest>.GetEnumerator()
