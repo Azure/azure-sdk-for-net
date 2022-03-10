@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS2, locations)
+            var createParameters = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS2, locations)
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),

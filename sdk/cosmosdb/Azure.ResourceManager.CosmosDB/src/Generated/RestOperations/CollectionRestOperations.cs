@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
-        public async Task<Response<MetricList>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricList value = default;
+                        MetricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricList.DeserializeMetricList(document.RootElement);
+                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="filter"/> is null. </exception>
-        public Response<MetricList> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
+        public Response<MetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricList value = default;
+                        MetricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricList.DeserializeMetricList(document.RootElement);
+                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        public async Task<Response<UsageList>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UsagesResult>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        UsageList value = default;
+                        UsagesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageList.DeserializeUsageList(document.RootElement);
+                        value = UsagesResult.DeserializeUsagesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        public Response<UsageList> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
+        public Response<UsagesResult> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        UsageList value = default;
+                        UsagesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageList.DeserializeUsageList(document.RootElement);
+                        value = UsagesResult.DeserializeUsagesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        public async Task<Response<MetricDefinitionList>> ListMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricDefinitionsListResult>> ListMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricDefinitionList value = default;
+                        MetricDefinitionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricDefinitionList.DeserializeMetricDefinitionList(document.RootElement);
+                        value = MetricDefinitionsListResult.DeserializeMetricDefinitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
-        public Response<MetricDefinitionList> ListMetricDefinitions(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
+        public Response<MetricDefinitionsListResult> ListMetricDefinitions(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        MetricDefinitionList value = default;
+                        MetricDefinitionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricDefinitionList.DeserializeMetricDefinitionList(document.RootElement);
+                        value = MetricDefinitionsListResult.DeserializeMetricDefinitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

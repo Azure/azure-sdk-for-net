@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<MongoDBCollection>> CreateOrUpdateAsync(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<MongoDBCollection>> CreateOrUpdateAsync(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateData createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
             Argument.AssertNotNull(createUpdateMongoDBCollectionParameters, nameof(createUpdateMongoDBCollectionParameters));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public virtual ArmOperation<MongoDBCollection> CreateOrUpdate(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBCollection> CreateOrUpdate(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateData createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
             Argument.AssertNotNull(createUpdateMongoDBCollectionParameters, nameof(createUpdateMongoDBCollectionParameters));

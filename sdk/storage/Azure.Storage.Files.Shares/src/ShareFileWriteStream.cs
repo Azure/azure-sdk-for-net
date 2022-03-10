@@ -48,14 +48,17 @@ namespace Azure.Storage.Files.Shares
                await _fileClient.UploadRangeInternal(
                     range: httpRange,
                     content: _buffer,
-                    options: new ShareFileUploadRangeOptions
-                    {
-                        // TODO #27253
-                        //TransactionalHashingOptions = _hashingOptions,
-                        ProgressHandler = _progressHandler,
-                        Conditions = _conditions
-                    },
+                    // TODO #27253
+                    //options: new ShareFileUploadRangeOptions
+                    //{
+                    //    //TransactionalHashingOptions = _hashingOptions,
+                    //    ProgressHandler = _progressHandler,
+                    //    Conditions = _conditions
+                    //},
                     rangeContentMD5: default,
+                    _progressHandler,
+                    _conditions,
+                    fileLastWrittenMode: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

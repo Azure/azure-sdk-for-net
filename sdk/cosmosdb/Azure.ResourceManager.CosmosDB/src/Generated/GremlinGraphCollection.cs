@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<GremlinGraph>> CreateOrUpdateAsync(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GremlinGraph>> CreateOrUpdateAsync(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateData createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
             Argument.AssertNotNull(createUpdateGremlinGraphParameters, nameof(createUpdateGremlinGraphParameters));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public virtual ArmOperation<GremlinGraph> CreateOrUpdate(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinGraph> CreateOrUpdate(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateData createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
             Argument.AssertNotNull(createUpdateGremlinGraphParameters, nameof(createUpdateGremlinGraphParameters));

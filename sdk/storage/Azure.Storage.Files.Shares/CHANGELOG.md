@@ -1,6 +1,17 @@
 # Release History
 
-## 12.9.0-beta.4 (Unreleased)
+## 12.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.9.0 (2022-03-10)
+- Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3 except SDK-calculated transactional checksums on data transfer.
 - Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
 - Added new overload of ShareFileClient.StartCopy() and .StartCopyAsync(), added new parameters allowing the copying of the source file's CreatedOn, LastWrittenOn, and FileAttributes properties.
 - Removed preview support for SDK-calculated transactional checksums on data transfer.

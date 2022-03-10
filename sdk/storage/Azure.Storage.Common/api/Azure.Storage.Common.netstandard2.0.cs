@@ -12,11 +12,11 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
-    public partial class StorageCrc64NonCryptographicHashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
+    public partial class StorageCrc64HashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
-        internal StorageCrc64NonCryptographicHashAlgorithm() : base (default(int)) { }
+        internal StorageCrc64HashAlgorithm() : base (default(int)) { }
         public override void Append(System.ReadOnlySpan<byte> source) { }
-        public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
+        public static Azure.Storage.StorageCrc64HashAlgorithm Create() { throw null; }
         protected override void GetCurrentHashCore(System.Span<byte> destination) { }
         public override void Reset() { }
     }

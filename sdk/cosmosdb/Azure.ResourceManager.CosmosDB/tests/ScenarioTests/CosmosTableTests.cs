@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected CosmosTableCollection TableCollection { get => _databaseAccount.GetCosmosTables(); }
+        protected CosmosTableCollection TableCollection => _databaseAccount.GetCosmosTables();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -76,9 +76,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyTables(table, table2);
 
-            TableCreateUpdateOptions updateOptions = new TableCreateUpdateOptions(table.Id, _databaseName, table.Data.Type, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, table.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+            // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
+            TableCreateUpdateData updateOptions = new TableCreateUpdateData(AzureLocation.WestUS, table.Data.Resource)
+            {
+                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+            };
 
             table = (await TableCollection.CreateOrUpdateAsync(true, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, table.Data.Resource.Id);
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -162,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CosmosTable> CreateTable(string name, AutoscaleSettings autoscale, CosmosTableCollection collection)
         {
-            TableCreateUpdateOptions mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateOptions(AzureLocation.WestUS,
+            TableCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateData(AzureLocation.WestUS,
                 new TableResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

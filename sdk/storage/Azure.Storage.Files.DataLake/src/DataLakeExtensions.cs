@@ -509,36 +509,38 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
-        {
-            if (options == null)
-            {
-                return null;
-            }
+        // TODO #27253
+        //internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        //{
+        //    if (options == null)
+        //    {
+        //        return null;
+        //    }
 
-            return new BlobDownloadOptions()
-            {
-                Range = options.Range,
-                Conditions = options.Conditions.ToBlobRequestConditions(),
-                // TODO #27253
-                //TransactionalHashingOptions = options.TransactionalHashingOptions
-            };
-        }
+        //    return new BlobDownloadOptions()
+        //    {
+        //        Range = options.Range,
+        //        Conditions = options.Conditions.ToBlobRequestConditions(),
+        //        // TODO #27253
+        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
+        //    };
+        //}
 
-        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
-        {
-            if (options == null)
-            {
-                return null;
-            }
-            return new BlobDownloadToOptions()
-            {
-                Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferOptions = options.TransferOptions,
-                // TODO #27253
-                //TransactionalHashingOptions = options.TransactionalHashingOptions
-            };
-        }
+        // TODO #27253
+        //internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        //{
+        //    if (options == null)
+        //    {
+        //        return null;
+        //    }
+        //    return new BlobDownloadToOptions()
+        //    {
+        //        Conditions = options.Conditions.ToBlobRequestConditions(),
+        //        TransferOptions = options.TransferOptions,
+        //        // TODO #27253
+        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
+        //    };
+        //}
 
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment
