@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
@@ -17,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             var metrics = new List<Metric>();
 
-            using var meter = new System.Diagnostics.Metrics.Meter(nameof(ValidateMetricTelemetryItem));
+            using var meter = new Meter(nameof(ValidateMetricTelemetryItem));
             using var provider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(meter.Name)
                 .AddInMemoryExporter(metrics)
@@ -40,6 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
             Assert.Equal(DataPointType.Aggregation, metricsData.Metrics.First().DataPointType);
             Assert.Equal(1, metricsData.Properties.Count);
+            Assert.Equal("60000", metricsData.Properties["_MS.AggregationIntervalMs"]);
         }
     }
 }
