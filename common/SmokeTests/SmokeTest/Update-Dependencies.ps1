@@ -1,7 +1,8 @@
 param(
     [string]$ProjectFile = './SmokeTest.csproj',
     [switch]$PreferDevVersion,
-    [switch]$CI
+    [switch]$CI,
+    [string]$ArtifactsPath
 )
 
 . (Join-Path $PSScriptRoot ../../../eng/scripts/smoketest/Get-Package-Version.ps1)
@@ -65,7 +66,7 @@ Log-Info "Querying package information."
 
 $referenceUpdateCount = 0
 
-Get-SmokeTestPkgProperties
+Get-SmokeTestPkgProperties -ArtifactsPath $ArtifactsPath
 | Foreach-Object { $referenceUpdateCount += AddPackageReference $csproj $referenceNode $_ }
 
 # Save the project and report the outcome.  If no refrences were added, consider this
