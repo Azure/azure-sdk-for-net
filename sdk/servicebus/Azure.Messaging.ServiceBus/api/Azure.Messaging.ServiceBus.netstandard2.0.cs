@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus
     }
     public partial class ServiceBusRuleManager : System.IAsyncDisposable
     {
-        internal ServiceBusRuleManager() { }
+        protected ServiceBusRuleManager() { }
         public virtual bool IsClosed { get { throw null; } }
         public virtual string SubscriptionPath { get { throw null; } }
         public virtual System.Threading.Tasks.Task AddRuleAsync(Azure.Messaging.ServiceBus.Administration.CreateRuleOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

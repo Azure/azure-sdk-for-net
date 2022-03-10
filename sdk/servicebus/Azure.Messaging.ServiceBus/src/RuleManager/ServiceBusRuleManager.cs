@@ -86,6 +86,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusRuleManager"/> class for mocking.
+        /// </summary>
+        ///
+        protected ServiceBusRuleManager() { }
+
+        /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
         ///
