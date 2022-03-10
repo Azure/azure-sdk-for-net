@@ -94,6 +94,45 @@ directive:
   - rename-model:
       from: AutoscaleSettingResource
       to: AutoscaleSetting
+  - rename-model:
+      from: Action
+      to: MonitorAction
+  - rename-model:
+      from: Recurrence
+      to: MonitorRecurrence
+  - rename-model:
+      from: Operator
+      to: MonitorOperator
+  - rename-model:
+      from: Response
+      to: MonitorResponse
+  - rename-model:
+      from: Odatatype
+      to: MonitorOdatatype
+  - rename-model:
+      from: Metric
+      to: MonitorMetric
+  - rename-model:
+      from: Metric
+      to: MonitorMetric
+  - rename-model:
+      from: Incident
+      to: MonitorIncident
+  - rename-model:
+      from: Enabled
+      to: MonitorEnabled
+  - rename-model:
+      from: Dimension
+      to: MonitorDimension
+  - rename-model:
+      from: Schedule
+      to: MonitorSchedule
+  - rename-model:
+      from: Criteria
+      to: MonitorCriteria
+  - rename-model:
+      from: Source
+      to: MonitorSource
   - from: swagger-document
     where: $.definitions.DataCollectionEndpointResource.properties.properties
     transform:  >
