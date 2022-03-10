@@ -150,11 +150,13 @@ namespace Azure.Communication.NetworkTraversal.Tests
                 AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
                 _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
             };
-
+            DateTimeOffset currentTime = DateTimeOffset.Now;
             Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(ttl : 5000);
+            currentTime.AddSeconds(5000);
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsTrue(currentTime<=turnCredentialsResponse.Value.ExpiresOn);
             Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
 
             foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
@@ -186,11 +188,15 @@ namespace Azure.Communication.NetworkTraversal.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, RouteType.Nearest, 4000);
+            DateTimeOffset currentTime = DateTimeOffset.Now;
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, RouteType.Nearest, 5000);
+            currentTime.AddSeconds(5000);
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
             Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+
             foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
             {
                 foreach (string url in serverCredential.Urls)

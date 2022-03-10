@@ -194,7 +194,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationRelayClient(connectionString);
             client = CreateClientWithConnectionString();
-            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(ttl: 4000);
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(ttl: 5000);
             DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
