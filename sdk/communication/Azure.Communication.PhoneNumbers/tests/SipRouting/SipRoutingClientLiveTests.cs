@@ -44,10 +44,9 @@ namespace Azure.Communication.SipRouting.Tests
             var trunks = response.Value;
 
             Assert.IsNotNull(trunks);
-            // updated value is set
             Assert.AreEqual(2, trunks.Count());
-            Assert.AreEqual(TestData.TrunkList[0].Fqdn, trunks[0].Fqdn);
-            Assert.AreEqual(TestData.TrunkList[1].Fqdn, trunks[1].Fqdn);
+            TrunkAreEqual(TestData.TrunkList[0], trunks[0]);
+            TrunkAreEqual(TestData.TrunkList[1], trunks[1]);
         }
 
         [Test]
@@ -59,7 +58,7 @@ namespace Azure.Communication.SipRouting.Tests
 
             Assert.IsNotNull(routes);
             Assert.AreEqual(routes.Count(), 1);
-            Assert.AreEqual(TestData.RuleNavigateToTrunk1.Name, routes[0].Name);
+            RouteAreEqual(TestData.RuleNavigateToTrunk1, routes[0]);
         }
 
         [Test]
@@ -71,20 +70,19 @@ namespace Azure.Communication.SipRouting.Tests
 
             Assert.AreEqual(3, actualTrunks.Value.Count());
             Assert.IsNotNull(actualTrunks.Value.FirstOrDefault(x => x.Fqdn == TestData.NewTrunk.Fqdn));
-
-            //Cleanup
-            await client.DeleteTrunkAsync(TestData.NewTrunk.Fqdn).ConfigureAwait(false);
         }
 
         [Test]
         public async Task AddSipRouteForResource()
         {
             var client = CreateClient();
-            var response = await client.SetRouteAsync(TestData.RuleNavigateToAllTrunks).ConfigureAwait(false);
-            var actualRoutes = await client.GetRoutesAsync().ConfigureAwait(false);
+            await client.SetRouteAsync(TestData.RuleNavigateToAllTrunks).ConfigureAwait(false);
+            var response = await client.GetRoutesAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(2, actualRoutes.Value.Count());
-            Assert.IsNotNull(actualRoutes.Value.FirstOrDefault(x => x.Name == TestData.RuleNavigateToAllTrunks.Name));
+            var actualRoutes = response.Value;
+
+            Assert.AreEqual(2, actualRoutes.Count());
+            RouteAreEqual(TestData.RuleNavigateToAllTrunks, actualRoutes[1]);
         }
 
         [Test]
@@ -131,6 +129,76 @@ namespace Azure.Communication.SipRouting.Tests
             var actualRoutes = await client.GetRoutesAsync().ConfigureAwait(false);
 
             Assert.AreEqual(expectedRoutes, actualRoutes.Value);
+        }
+
+        [Test]
+        public async Task GetSipTrunkForResource()
+        {
+            var client = CreateClient();
+            var response = await client.GetTrunkAsync(TestData.TrunkList[1].Fqdn).ConfigureAwait(false);
+            var trunk = response.Value;
+
+            Assert.IsNotNull(trunk);
+            TrunkAreEqual(TestData.TrunkList[1], trunk);
+        }
+
+        [Test]
+        public async Task GetSipRouteForResource()
+        {
+            var client = CreateClient();
+            var response = await client.GetRouteAsync(TestData.RuleNavigateToTrunk1.Name).ConfigureAwait(false);
+            var route = response.Value;
+
+            Assert.IsNotNull(route);
+            RouteAreEqual(TestData.RuleNavigateToTrunk1, route);
+        }
+
+        [Test]
+        public async Task ReplaceSipRoutesForResource()
+        {
+            var client = CreateClient();
+            await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData.RuleNavigateToAllTrunks }).ConfigureAwait(false);
+
+            var response = await client.GetRoutesAsync().ConfigureAwait(false);
+            var newRoutes = response.Value;
+
+            Assert.IsNotNull(newRoutes);
+            Assert.AreEqual(1, newRoutes.Count);
+            RouteAreEqual(TestData.RuleNavigateToAllTrunks, newRoutes[0]);
+        }
+
+        [Test]
+        public async Task ReplaceSipTrunksForResource()
+        {
+            var client = CreateClient();
+            await client.SetRoutesAsync(new List<SipTrunkRoute> ()).ConfigureAwait(false);  // Need to clear the routes first
+            await client.SetTrunksAsync(new List<SipTrunk> { TestData.NewTrunk });
+
+            var response = await client.GetTrunksAsync().ConfigureAwait(false);
+            var newTrunks = response.Value;
+
+            Assert.IsNotNull(newTrunks);
+            Assert.AreEqual(1, newTrunks.Count);
+            TrunkAreEqual(TestData.NewTrunk, newTrunks[0]);
+        }
+
+        private void RouteAreEqual(SipTrunkRoute expected, SipTrunkRoute actual)
+        {
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.NumberPattern, actual.NumberPattern);
+            Assert.AreEqual(expected.Trunks.Count, actual.Trunks.Count);
+
+            for (int i = 0; i < expected.Trunks.Count; i++)
+            {
+                Assert.AreEqual(expected.Trunks[i], actual.Trunks[i]);
+            }
+        }
+
+        private void TrunkAreEqual(SipTrunk expected, SipTrunk actual)
+        {
+            Assert.AreEqual(expected.Fqdn, actual.Fqdn);
+            Assert.AreEqual(expected.SipSignalingPort, actual.SipSignalingPort);
         }
 
         private TokenCredential GetToken() => Mode == RecordedTestMode.Playback
