@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     /// <remarks>
     /// The properties in `local.settings.json` or application settings will override the properties here.
     /// </remarks>
-    public class SignalROptions : IOptionsFormatter
+    internal class SignalROptions : IOptionsFormatter
     {
         /// <summary>
         /// Gets the list of SignalR service.
