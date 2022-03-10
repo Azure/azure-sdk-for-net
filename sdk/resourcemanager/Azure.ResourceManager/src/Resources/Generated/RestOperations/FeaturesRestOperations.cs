@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmFeatureData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FeatureData)null, message.Response);
+                    return Response.FromValue((ArmFeatureData)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureData> Get(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<ArmFeatureData> Get(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FeatureData)null, message.Response);
+                    return Response.FromValue((ArmFeatureData)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmFeatureData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureData> Register(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<ArmFeatureData> Register(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmFeatureData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureData> Unregister(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<ArmFeatureData> Unregister(string subscriptionId, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        FeatureData value = default;
+                        ArmFeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureData.DeserializeFeatureData(document.RootElement);
+                        value = ArmFeatureData.DeserializeArmFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

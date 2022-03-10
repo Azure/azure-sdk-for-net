@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of Features in the Feature. </summary>
-        /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
-        public virtual FeatureCollection GetFeatures()
+        /// <summary> Gets a collection of ArmFeatures in the ArmFeature. </summary>
+        /// <returns> An object representing collection of ArmFeatures and their operations over a ArmFeature. </returns>
+        public virtual ArmFeatureCollection GetArmFeatures()
         {
-            return new FeatureCollection(Client, Id);
+            return new ArmFeatureCollection(Client, Id);
         }
 
         /// <summary>

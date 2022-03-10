@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static FeatureOperationsListResult DeserializeFeatureOperationsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FeatureData>> value = default;
+            Optional<IReadOnlyList<ArmFeatureData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FeatureData> array = new List<FeatureData>();
+                    List<ArmFeatureData> array = new List<ArmFeatureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeatureData.DeserializeFeatureData(item));
+                        array.Add(ArmFeatureData.DeserializeArmFeatureData(item));
                     }
                     value = array;
                     continue;

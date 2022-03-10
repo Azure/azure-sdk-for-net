@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Resources
         private readonly TagsRestOperations _subscriptionTagsRestClient;
         private readonly ClientDiagnostics _resourceLinkClientDiagnostics;
         private readonly ResourceLinksRestOperations _resourceLinkRestClient;
-        private readonly ClientDiagnostics _featureClientDiagnostics;
-        private readonly FeaturesRestOperations _featureRestClient;
+        private readonly ClientDiagnostics _armFeatureFeaturesClientDiagnostics;
+        private readonly FeaturesRestOperations _armFeatureFeaturesRestClient;
         private readonly SubscriptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class for mocking. </summary>
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Resources
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
-            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
-            _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+            _armFeatureFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmFeature.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ArmFeature.ResourceType, out string armFeatureFeaturesApiVersion);
+            _armFeatureFeaturesRestClient = new FeaturesRestOperations(_armFeatureFeaturesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armFeatureFeaturesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -637,17 +637,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_ListAll
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Feature> GetFeaturesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmFeature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmFeature> GetFeaturesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArmFeature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await _featureRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _armFeatureFeaturesRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmFeature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -655,14 +655,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArmFeature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await _featureRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _armFeatureFeaturesRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmFeature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -679,17 +679,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_ListAll
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Feature> GetFeatures(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmFeature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmFeature> GetFeatures(CancellationToken cancellationToken = default)
         {
-            Page<Feature> FirstPageFunc(int? pageSizeHint)
+            Page<ArmFeature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = _featureRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _armFeatureFeaturesRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmFeature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -697,14 +697,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArmFeature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = _featureRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _armFeatureFeaturesRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmFeature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

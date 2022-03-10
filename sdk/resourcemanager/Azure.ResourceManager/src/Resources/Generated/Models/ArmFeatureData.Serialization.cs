@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class FeatureData
+    public partial class ArmFeatureData
     {
-        internal static FeatureData DeserializeFeatureData(JsonElement element)
+        internal static ArmFeatureData DeserializeArmFeatureData(JsonElement element)
         {
             Optional<FeatureProperties> properties = default;
             ResourceIdentifier id = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new FeatureData(id, name, type, systemData, properties.Value);
+            return new ArmFeatureData(id, name, type, systemData, properties.Value);
         }
     }
 }
