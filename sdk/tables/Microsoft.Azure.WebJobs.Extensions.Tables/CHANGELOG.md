@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.2 (2022-03-10)
 
 ### Bugs Fixed
 
-### Other Changes
+- Use value comparison for byte arrays when upserting.
 
 ## 1.0.0-beta.1 (2022-01-11)
 
