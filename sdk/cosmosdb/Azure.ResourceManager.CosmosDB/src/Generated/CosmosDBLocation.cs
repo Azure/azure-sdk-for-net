@@ -90,6 +90,34 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
+        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// </summary>
+        /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual async Task<Response<RestorableDatabaseAccount>> GetRestorableDatabaseAccountAsync(string instanceId, CancellationToken cancellationToken = default)
+        {
+            return await GetRestorableDatabaseAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
+        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
+        /// </summary>
+        /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual Response<RestorableDatabaseAccount> GetRestorableDatabaseAccount(string instanceId, CancellationToken cancellationToken = default)
+        {
+            return GetRestorableDatabaseAccounts().Get(instanceId, cancellationToken);
+        }
+
+        /// <summary>
         /// Get the properties of an existing Cosmos DB location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
         /// Operation Id: Locations_Get

@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkBatchRestClient(_pipeline, endpoint, sparkPoolName, livyApiVersion);
+            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
         }
 
         /// <summary> Initializes a new instance of SparkBatchClient. </summary>
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="sparkPoolName"/> or <paramref name="livyApiVersion"/> is null. </exception>
         internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
-            RestClient = new SparkBatchRestClient(pipeline, endpoint, sparkPoolName, livyApiVersion);
+            RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

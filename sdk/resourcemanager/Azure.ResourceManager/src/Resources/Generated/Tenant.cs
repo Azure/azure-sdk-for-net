@@ -78,11 +78,65 @@ namespace Azure.ResourceManager.Resources
             return new GenericResourceCollection(Client, Id);
         }
 
+        /// <summary>
+        /// Gets a resource by ID.
+        /// Request Path: /{resourceId}
+        /// Operation Id: Resources_GetById
+        /// </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public virtual async Task<Response<GenericResource>> GetGenericResourceAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        {
+            return await GetGenericResources().GetAsync(resourceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a resource by ID.
+        /// Request Path: /{resourceId}
+        /// Operation Id: Resources_GetById
+        /// </summary>
+        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public virtual Response<GenericResource> GetGenericResource(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
+        {
+            return GetGenericResources().Get(resourceId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of TenantPolicyDefinitions in the TenantPolicyDefinition. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitions and their operations over a TenantPolicyDefinition. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
             return new TenantPolicyDefinitionCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// This operation retrieves the built-in policy definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetBuiltIn
+        /// </summary>
+        /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        public virtual async Task<Response<TenantPolicyDefinition>> GetTenantPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the built-in policy definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetBuiltIn
+        /// </summary>
+        /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        public virtual Response<TenantPolicyDefinition> GetTenantPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return GetTenantPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantPolicySetDefinitions in the TenantPolicySetDefinition. </summary>
@@ -92,11 +146,67 @@ namespace Azure.ResourceManager.Resources
             return new TenantPolicySetDefinitionCollection(Client, Id);
         }
 
+        /// <summary>
+        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        public virtual async Task<Response<TenantPolicySetDefinition>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_GetBuiltIn
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        public virtual Response<TenantPolicySetDefinition> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        {
+            return GetTenantPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DataPolicyManifests in the DataPolicyManifest. </summary>
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifest. </returns>
         public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
             return new DataPolicyManifestCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        public virtual async Task<Response<DataPolicyManifest>> GetDataPolicyManifestAsync(string policyMode, CancellationToken cancellationToken = default)
+        {
+            return await GetDataPolicyManifests().GetAsync(policyMode, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        public virtual Response<DataPolicyManifest> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
+        {
+            return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceLinks in the ResourceLink. </summary>
@@ -110,11 +220,87 @@ namespace Azure.ResourceManager.Resources
             return new ResourceLinkCollection(Client, Id, scope);
         }
 
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
+        /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<ResourceLink>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            return await GetResourceLinks(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
+        /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<ResourceLink> GetResourceLink(string scope, CancellationToken cancellationToken = default)
+        {
+            return GetResourceLinks(scope).Get(cancellationToken);
+        }
+
         /// <summary> Gets a collection of Subscriptions in the Subscription. </summary>
         /// <returns> An object representing collection of Subscriptions and their operations over a Subscription. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
         {
             return new SubscriptionCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual async Task<Response<Subscription>> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptions().GetAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual Response<Subscription> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptions().Get(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets details about the default tenant.
+        /// Request Path: /
+        /// Operation Id: Tenants_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Tenant>> GetTenantAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetTenants().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details about the default tenant.
+        /// Request Path: /
+        /// Operation Id: Tenants_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Tenant> GetTenant(CancellationToken cancellationToken = default)
+        {
+            return GetTenants().Get(cancellationToken);
         }
 
         /// <summary>

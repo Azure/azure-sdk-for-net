@@ -90,6 +90,30 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerJobAgentJobExecutionStepTarget>> GetServerJobAgentJobExecutionStepTargetAsync(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return await GetServerJobAgentJobExecutionStepTargets().GetAsync(targetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerJobAgentJobExecutionStepTarget> GetServerJobAgentJobExecutionStepTarget(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return GetServerJobAgentJobExecutionStepTargets().Get(targetId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a step execution of a job execution.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
         /// Operation Id: JobStepExecutions_Get

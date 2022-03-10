@@ -95,6 +95,34 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual async Task<Response<Feature>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
+        {
+            return await GetFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual Response<Feature> GetFeature(string featureName, CancellationToken cancellationToken = default)
+        {
+            return GetFeatures().Get(featureName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the specified resource provider.
         /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
         /// Operation Id: Providers_Get

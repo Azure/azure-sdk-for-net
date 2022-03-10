@@ -90,6 +90,34 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Get managed database column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableColumn>> GetManagedInstanceDatabaseSchemaTableColumnAsync(string columnName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceDatabaseSchemaTableColumns().GetAsync(columnName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get managed database column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual Response<ManagedInstanceDatabaseSchemaTableColumn> GetManagedInstanceDatabaseSchemaTableColumn(string columnName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceDatabaseSchemaTableColumns().Get(columnName, cancellationToken);
+        }
+
+        /// <summary>
         /// Get managed database table
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
         /// Operation Id: ManagedDatabaseTables_Get

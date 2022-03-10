@@ -91,6 +91,34 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
+        /// Gets the specified version of the specified key in the specified key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// Operation Id: Keys_GetVersion
+        /// </summary>
+        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        public virtual async Task<Response<VaultKeyVersion>> GetVaultKeyVersionAsync(string keyVersion, CancellationToken cancellationToken = default)
+        {
+            return await GetVaultKeyVersions().GetAsync(keyVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified version of the specified key in the specified key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// Operation Id: Keys_GetVersion
+        /// </summary>
+        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        public virtual Response<VaultKeyVersion> GetVaultKeyVersion(string keyVersion, CancellationToken cancellationToken = default)
+        {
+            return GetVaultKeyVersions().Get(keyVersion, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the current version of the specified key from the specified key vault.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
         /// Operation Id: Keys_Get

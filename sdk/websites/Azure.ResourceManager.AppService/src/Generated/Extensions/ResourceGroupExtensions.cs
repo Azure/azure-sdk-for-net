@@ -35,12 +35,72 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetAppServiceCertificateOrders();
         }
 
+        /// <summary>
+        /// Description for Get a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public static async Task<Response<AppServiceCertificateOrder>> GetAppServiceCertificateOrderAsync(this ResourceGroup resourceGroup, string certificateOrderName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetAppServiceCertificateOrders().GetAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public static Response<AppServiceCertificateOrder> GetAppServiceCertificateOrder(this ResourceGroup resourceGroup, string certificateOrderName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of AppServiceDomains in the AppServiceDomain. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceDomains and their operations over a AppServiceDomain. </returns>
         public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetAppServiceDomains();
+        }
+
+        /// <summary>
+        /// Description for Get a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
+        /// Operation Id: Domains_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public static async Task<Response<AppServiceDomain>> GetAppServiceDomainAsync(this ResourceGroup resourceGroup, string domainName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
+        /// Operation Id: Domains_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public static Response<AppServiceDomain> GetAppServiceDomain(this ResourceGroup resourceGroup, string domainName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetAppServiceDomains().Get(domainName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppServiceEnvironments in the AppServiceEnvironment. </summary>
@@ -51,12 +111,72 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetAppServiceEnvironments();
         }
 
+        /// <summary>
+        /// Description for Get the properties of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<AppServiceEnvironment>> GetAppServiceEnvironmentAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the properties of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<AppServiceEnvironment> GetAppServiceEnvironment(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetAppServiceEnvironments().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of AppServicePlans in the AppServicePlan. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlan. </returns>
         public static AppServicePlanCollection GetAppServicePlans(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetAppServicePlans();
+        }
+
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<AppServicePlan>> GetAppServicePlanAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<AppServicePlan> GetAppServicePlan(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetAppServicePlans().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of Certificates in the Certificate. </summary>
@@ -67,12 +187,72 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetCertificates();
         }
 
+        /// <summary>
+        /// Description for Get a certificate.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
+        /// Operation Id: Certificates_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<Certificate>> GetCertificateAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a certificate.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
+        /// Operation Id: Certificates_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<Certificate> GetCertificate(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetCertificates().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of KubeEnvironments in the KubeEnvironment. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of KubeEnvironments and their operations over a KubeEnvironment. </returns>
         public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetKubeEnvironments();
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<KubeEnvironment>> GetKubeEnvironmentAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<KubeEnvironment> GetKubeEnvironment(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetKubeEnvironments().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
@@ -83,12 +263,72 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(resourceGroup).GetStaticSiteARMResources();
         }
 
+        /// <summary>
+        /// Description for Gets the details of a static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// Operation Id: StaticSites_GetStaticSite
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the static site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// Operation Id: StaticSites_GetStaticSite
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the static site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetStaticSiteARMResources().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of WebSites in the WebSite. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebSites and their operations over a WebSite. </returns>
         public static WebSiteCollection GetWebSites(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetWebSites();
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<WebSite>> GetWebSiteAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<WebSite> GetWebSite(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetWebSites().Get(name, cancellationToken);
         }
 
         /// <summary>

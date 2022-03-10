@@ -35,12 +35,76 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetDeletedVaults();
         }
 
+        /// <summary>
+        /// Gets the deleted Azure key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public static async Task<Response<DeletedVault>> GetDeletedVaultAsync(this Subscription subscription, string location, string vaultName, CancellationToken cancellationToken = default)
+        {
+            return await subscription.GetDeletedVaults().GetAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the deleted Azure key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public static Response<DeletedVault> GetDeletedVault(this Subscription subscription, string location, string vaultName, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetDeletedVaults().Get(location, vaultName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DeletedManagedHsms in the DeletedManagedHsm. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedManagedHsms and their operations over a DeletedManagedHsm. </returns>
         public static DeletedManagedHsmCollection GetDeletedManagedHsms(this Subscription subscription)
         {
             return GetExtensionClient(subscription).GetDeletedManagedHsms();
+        }
+
+        /// <summary>
+        /// Gets the specified deleted managed HSM.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+        /// Operation Id: ManagedHsms_GetDeleted
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public static async Task<Response<DeletedManagedHsm>> GetDeletedManagedHsmAsync(this Subscription subscription, string location, string name, CancellationToken cancellationToken = default)
+        {
+            return await subscription.GetDeletedManagedHsms().GetAsync(location, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified deleted managed HSM.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+        /// Operation Id: ManagedHsms_GetDeleted
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public static Response<DeletedManagedHsm> GetDeletedManagedHsm(this Subscription subscription, string location, string name, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetDeletedManagedHsms().Get(location, name, cancellationToken);
         }
 
         /// <summary>

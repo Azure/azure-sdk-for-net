@@ -90,6 +90,34 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Get managed database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: ManagedDatabaseTables_Get
+        /// </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual async Task<Response<ManagedInstanceDatabaseSchemaTable>> GetManagedInstanceDatabaseSchemaTableAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceDatabaseSchemaTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get managed database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: ManagedDatabaseTables_Get
+        /// </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual Response<ManagedInstanceDatabaseSchemaTable> GetManagedInstanceDatabaseSchemaTable(string tableName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceDatabaseSchemaTables().Get(tableName, cancellationToken);
+        }
+
+        /// <summary>
         /// Get managed database schema
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}
         /// Operation Id: ManagedDatabaseSchemas_Get

@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new ManagedPrivateEndpointsRestClient(_pipeline, endpoint, options.Version);
+            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         internal ManagedPrivateEndpointsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2020-12-01")
         {
-            RestClient = new ManagedPrivateEndpointsRestClient(pipeline, endpoint, apiVersion);
+            RestClient = new ManagedPrivateEndpointsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
