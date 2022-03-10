@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The alias type. </summary>
-    public partial class Alias
+    public partial class ResourceTypeAlias
     {
-        /// <summary> Initializes a new instance of Alias. </summary>
-        internal Alias()
+        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        internal ResourceTypeAlias()
         {
             Paths = new ChangeTrackingList<AliasPath>();
         }
 
-        /// <summary> Initializes a new instance of Alias. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="type"> The type of the alias. </param>
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
         /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </param>
-        internal Alias(string name, IReadOnlyList<AliasPath> paths, AliasType? type, string defaultPath, AliasPattern defaultPattern, AliasPathMetadata defaultMetadata)
+        internal ResourceTypeAlias(string name, IReadOnlyList<AliasPath> paths, AliasType? type, string defaultPath, AliasPattern defaultPattern, AliasPathMetadata defaultMetadata)
         {
             Name = name;
             Paths = paths;

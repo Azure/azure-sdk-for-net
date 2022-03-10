@@ -267,6 +267,10 @@ directive:
   - rename-model:
       from: ProviderRegistrationRequest
       to: ProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json

@@ -1197,16 +1197,6 @@ namespace Azure.ResourceManager.Resources
 }
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class Alias
-    {
-        internal Alias() { }
-        public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
-        public string DefaultPath { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AliasPath> Paths { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasType? Type { get { throw null; } }
-    }
     public partial class AliasPath
     {
         internal AliasPath() { }
@@ -1627,7 +1617,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ProviderResourceType
     {
         internal ProviderResourceType() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApiProfile> ApiProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public string Capabilities { get { throw null; } }
@@ -1704,10 +1694,20 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
         public string TargetResourceGroup { get { throw null; } set { } }
     }
+    public partial class ResourceTypeAlias
+    {
+        internal ResourceTypeAlias() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
+        public string DefaultPath { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AliasPath> Paths { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasType? Type { get { throw null; } }
+    }
     public partial class ResourceTypeAliases
     {
         internal ResourceTypeAliases() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
     public partial class RestApi

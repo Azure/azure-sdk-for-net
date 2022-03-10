@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class Alias
+    public partial class ResourceTypeAlias
     {
-        internal static Alias DeserializeAlias(JsonElement element)
+        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
         {
             Optional<string> name = default;
             Optional<IReadOnlyList<AliasPath>> paths = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Alias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
+            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
         }
     }
 }
