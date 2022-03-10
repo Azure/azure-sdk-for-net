@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StackHCI
         {
             _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", ArcSetting.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ArcSetting.ResourceType, out string arcSettingApiVersion);
-            _arcSettingRestClient = new ArcSettingsRestOperations(_arcSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
+            _arcSettingRestClient = new ArcSettingsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
-        public async virtual Task<ArmOperation<ArcSetting>> CreateOrUpdateAsync(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcSetting>> CreateOrUpdateAsync(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
             Argument.AssertNotNull(arcSetting, nameof(arcSetting));
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<ArcSetting>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSetting>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StackHCI
             {
                 var response = await _arcSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _arcSettingClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StackHCI
             {
                 var response = _arcSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken);
                 if (response.Value == null)
-                    throw _arcSettingClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<ArcSetting>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSetting>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 

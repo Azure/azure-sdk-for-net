@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StackHCI
         {
             _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StackHCI", HciCluster.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
-            _hciClusterClustersRestClient = new ClustersRestOperations(_hciClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
+            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
-        public async virtual Task<ArmOperation<HciCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HciCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(cluster, nameof(cluster));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<HciCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StackHCI
             {
                 var response = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hciClusterClustersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StackHCI
             {
                 var response = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
-                    throw _hciClusterClustersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<HciCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
