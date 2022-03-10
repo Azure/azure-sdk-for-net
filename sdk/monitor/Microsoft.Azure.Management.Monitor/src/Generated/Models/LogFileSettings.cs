@@ -10,31 +10,29 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The endpoint used by clients to access their configuration.
+    /// Settings for different log file formats
     /// </summary>
-    public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
+    public partial class LogFileSettings
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the LogFileSettings class.
         /// </summary>
-        public DataCollectionEndpointConfigurationAccess()
+        public LogFileSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the LogFileSettings class.
         /// </summary>
-        /// <param name="endpoint">The endpoint. This property is
-        /// READ-ONLY.</param>
-        public DataCollectionEndpointConfigurationAccess(string endpoint = default(string))
-            : base(endpoint)
+        /// <param name="text">Text settings</param>
+        public LogFileSettings(LogFileSettingsText text = default(LogFileSettingsText))
         {
+            Text = text;
             CustomInit();
         }
 
@@ -42,6 +40,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets text settings
+        /// </summary>
+        [JsonProperty(PropertyName = "text")]
+        public LogFileSettingsText Text { get; set; }
 
     }
 }

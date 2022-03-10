@@ -13,27 +13,24 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// The endpoint used by clients to access their configuration.
+    /// The log files specific settings.
     /// </summary>
-    public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
+    public partial class LogFilesDataSourceSettings : LogFileSettings
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the LogFilesDataSourceSettings class.
         /// </summary>
-        public DataCollectionEndpointConfigurationAccess()
+        public LogFilesDataSourceSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the LogFilesDataSourceSettings class.
         /// </summary>
-        /// <param name="endpoint">The endpoint. This property is
-        /// READ-ONLY.</param>
-        public DataCollectionEndpointConfigurationAccess(string endpoint = default(string))
-            : base(endpoint)
+        /// <param name="text">Text settings</param>
+        public LogFilesDataSourceSettings(LogFileSettingsText text = default(LogFileSettingsText))
+            : base(text)
         {
             CustomInit();
         }

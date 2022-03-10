@@ -10,31 +10,30 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The endpoint used by clients to access their configuration.
+    /// Metadata about the resource
     /// </summary>
-    public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
+    public partial class Metadata
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the Metadata class.
         /// </summary>
-        public DataCollectionEndpointConfigurationAccess()
+        public Metadata()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DataCollectionEndpointConfigurationAccess class.
+        /// Initializes a new instance of the Metadata class.
         /// </summary>
-        /// <param name="endpoint">The endpoint. This property is
-        /// READ-ONLY.</param>
-        public DataCollectionEndpointConfigurationAccess(string endpoint = default(string))
-            : base(endpoint)
+        /// <param name="provisionedBy">Azure offering managing this resource
+        /// on-behalf-of customer.</param>
+        public Metadata(string provisionedBy = default(string))
         {
+            ProvisionedBy = provisionedBy;
             CustomInit();
         }
 
@@ -42,6 +41,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets azure offering managing this resource on-behalf-of customer.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisionedBy")]
+        public string ProvisionedBy { get; private set; }
 
     }
 }
