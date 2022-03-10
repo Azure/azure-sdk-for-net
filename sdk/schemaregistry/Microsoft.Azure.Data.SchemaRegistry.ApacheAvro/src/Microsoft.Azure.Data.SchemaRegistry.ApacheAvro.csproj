@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
     <PackageReference Include="Azure.Data.SchemaRegistry" />  
-<!--    <PackageReference Include="Azure.Core.Experimental" />-->
+    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -26,8 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
 </Project>
