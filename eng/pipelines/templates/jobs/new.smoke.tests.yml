@@ -133,7 +133,7 @@ jobs:
           inputs:
             targetType: filePath
             filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI
+            arguments: -CI -PreferDevVersion
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
 
@@ -148,7 +148,7 @@ jobs:
           inputs:
             targetType: filePath
             filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+            arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
 
