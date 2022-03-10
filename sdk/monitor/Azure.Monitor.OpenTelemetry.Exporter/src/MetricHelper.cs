@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge)
                 {
-                    foreach (ref var metricPoint in metric.GetMetricPoints())
+                    foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                     {
                         string name = "Metric";
                         string utcTime = TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime);
@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MetricData",
-                            BaseData = new MetricsData(Version, metric, ref metricPoint)
+                            BaseData = new MetricsData(Version, metric, metricPoint)
                         };
                         telemetryItems.Add(telemetryItem);
                     }
