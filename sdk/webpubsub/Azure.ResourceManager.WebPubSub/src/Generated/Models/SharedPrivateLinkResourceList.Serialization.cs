@@ -12,11 +12,11 @@ using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class WebPubSubList
+    internal partial class SharedPrivateLinkResourceList
     {
-        internal static WebPubSubList DeserializeWebPubSubList(JsonElement element)
+        internal static SharedPrivateLinkResourceList DeserializeSharedPrivateLinkResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<WebPubSubData>> value = default;
+            Optional<IReadOnlyList<SharedPrivateLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WebPubSubData> array = new List<WebPubSubData>();
+                    List<SharedPrivateLinkData> array = new List<SharedPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubData.DeserializeWebPubSubData(item));
+                        array.Add(SharedPrivateLinkData.DeserializeSharedPrivateLinkData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubList(Optional.ToList(value), nextLink.Value);
+            return new SharedPrivateLinkResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

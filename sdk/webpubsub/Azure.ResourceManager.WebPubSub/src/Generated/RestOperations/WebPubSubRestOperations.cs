@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionId"> Gets subscription Id which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<WebPubSubList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebPubSubResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionId"> Gets subscription Id which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<WebPubSubList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<WebPubSubResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WebPubSubList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<WebPubSubResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WebPubSubList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<WebPubSubResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionId"> Gets subscription Id which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<WebPubSubList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebPubSubResourceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1094,9 +1094,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionId"> Gets subscription Id which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public Response<WebPubSubList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<WebPubSubResourceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1126,9 +1126,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<WebPubSubList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<WebPubSubResourceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1177,9 +1177,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<WebPubSubList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<WebPubSubResourceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1214,9 +1214,9 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case 200:
                     {
-                        WebPubSubList value = default;
+                        WebPubSubResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebPubSubList.DeserializeWebPubSubList(document.RootElement);
+                        value = WebPubSubResourceList.DeserializeWebPubSubResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
