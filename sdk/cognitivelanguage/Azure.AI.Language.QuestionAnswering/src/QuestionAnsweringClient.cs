@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 Options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
 
-            _restClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
+            _restClient = new(Pipeline, Endpoint, Options.Version);
         }
 
         /// <summary>

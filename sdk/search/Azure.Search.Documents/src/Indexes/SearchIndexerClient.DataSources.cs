@@ -26,7 +26,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="DataSourcesRestClient"/> to make requests.
         /// </summary>
         private DataSourcesRestClient DataSourcesClient => LazyInitializer.EnsureInitialized(ref _dataSourcesClient, () => new DataSourcesRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,

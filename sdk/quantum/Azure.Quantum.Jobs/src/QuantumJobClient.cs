@@ -42,10 +42,10 @@ namespace Azure.Quantum.Jobs
             var pipeline = HttpPipelineBuilder.Build(options, authPolicy);
             var endpoint = new Uri($"https://{location}.quantum.azure.com");
 
-            _jobs = new JobsRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
-            _providers = new ProvidersRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
-            _quotas = new QuotasRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
-            _storage = new StorageRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _jobs = new JobsRestClient(pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _providers = new ProvidersRestClient(pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _quotas = new QuotasRestClient(pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _storage = new StorageRestClient(pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
         }
 
         /// <summary> Get job by id. </summary>

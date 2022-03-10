@@ -614,13 +614,11 @@ namespace Azure.Storage.Files.DataLake
         private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri dfsUri, Uri blobUri)
         {
             PathRestClient dfsPathRestClient = new PathRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             PathRestClient blobPathRestClient = new PathRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

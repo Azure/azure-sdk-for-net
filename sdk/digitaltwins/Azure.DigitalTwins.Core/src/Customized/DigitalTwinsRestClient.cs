@@ -77,7 +77,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+                _ => throw new RequestFailedException(message.Response),
             };
         }
 
@@ -283,7 +283,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw ClientDiagnostics.CreateRequestFailedException(message.Response),
+                _ => throw new RequestFailedException(message.Response),
             };
         }
 
@@ -312,7 +312,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -405,7 +405,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -479,7 +479,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -511,7 +511,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -549,7 +549,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -581,7 +581,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -619,7 +619,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

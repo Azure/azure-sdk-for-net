@@ -48,7 +48,7 @@ namespace Azure.Template
         /// <param name="apiVersion"> Api Version. </param>
         internal MiniSecretClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            RestClient = new TemplateRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
+            RestClient = new TemplateRestClient(pipeline, vaultBaseUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

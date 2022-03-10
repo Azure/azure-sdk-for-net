@@ -420,7 +420,6 @@ namespace Azure.Storage.Blobs
         private ContainerRestClient BuildContainerRestClient(Uri containerUri)
         {
             return new ContainerRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: containerUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

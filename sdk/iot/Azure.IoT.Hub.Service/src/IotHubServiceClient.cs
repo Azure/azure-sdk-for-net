@@ -143,13 +143,13 @@ namespace Azure.IoT.Hub.Service
             options.AddPolicy(new SasTokenAuthenticationPolicy(credential), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
-            _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _modulesRestClient = new ModulesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _jobsRestClient = new JobsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
-            _bulkRegistryRestClient = new BulkRegistryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
+            _devicesRestClient = new DevicesRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _modulesRestClient = new ModulesRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _queryRestClient = new QueryRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _statisticsRestClient = new StatisticsRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _configurationRestClient = new ConfigurationRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _jobsRestClient = new JobsRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
+            _bulkRegistryRestClient = new BulkRegistryRestClient(_httpPipeline, credential.Endpoint, options.GetVersionString());
 
             // Note that the devices and modules subclient take a reference to the Query convenience layer client. This
             // is because they each expose a helper function that uses the query client for listing twins. By passing in

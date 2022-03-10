@@ -64,9 +64,9 @@ namespace Azure.Monitor.Query
             var pipeline = HttpPipelineBuilder.Build(options,
                 new BearerTokenAuthenticationPolicy(credential, scope));
 
-            _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
-            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
-            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
+            _metricDefinitionsClient = new MetricDefinitionsRestClient(pipeline, endpoint);
+            _metricsRestClient = new MetricsRestClient(pipeline, endpoint);
+            _namespacesRestClient = new MetricNamespacesRestClient(pipeline, endpoint);
         }
 
         /// <summary>

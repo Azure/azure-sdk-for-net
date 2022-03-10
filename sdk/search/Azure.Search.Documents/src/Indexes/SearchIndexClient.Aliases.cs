@@ -21,7 +21,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="AliasesRestClient"/> to make requests.
         /// </summary>
         private AliasesRestClient AliasesClient => LazyInitializer.EnsureInitialized(ref _aliasesRestClient, () => new AliasesRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,

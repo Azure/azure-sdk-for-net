@@ -126,11 +126,11 @@ namespace Azure.IoT.TimeSeriesInsights
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             string versionString = options.GetVersionString();
-            _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _modelSettingsRestClient = new ModelSettingsRestClient(_httpPipeline, environmentFqdn, versionString);
+            _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_httpPipeline, environmentFqdn, versionString);
+            _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_httpPipeline, environmentFqdn, versionString);
+            _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_httpPipeline, environmentFqdn, versionString);
+            _queryRestClient = new QueryRestClient(_httpPipeline, environmentFqdn, versionString);
         }
 
         /// <summary>

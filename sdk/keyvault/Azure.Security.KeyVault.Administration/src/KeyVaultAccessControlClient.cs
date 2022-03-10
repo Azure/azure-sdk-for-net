@@ -65,8 +65,8 @@ namespace Azure.Security.KeyVault.Administration
                     new ChallengeBasedAuthenticationPolicy(credential));
 
             _diagnostics = new ClientDiagnostics(options);
-            _definitionsRestClient = new RoleDefinitionsRestClient(_diagnostics, pipeline, apiVersion);
-            _assignmentsRestClient = new RoleAssignmentsRestClient(_diagnostics, pipeline, apiVersion);
+            _definitionsRestClient = new RoleDefinitionsRestClient(pipeline, apiVersion);
+            _assignmentsRestClient = new RoleAssignmentsRestClient(pipeline, apiVersion);
         }
 
         /// <summary>

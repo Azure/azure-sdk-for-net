@@ -74,10 +74,10 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyClient = new PolicyRestClient(_pipeline, Endpoint.AbsoluteUri, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_pipeline, Endpoint.AbsoluteUri, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);

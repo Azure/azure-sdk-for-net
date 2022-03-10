@@ -41,7 +41,7 @@ namespace Azure.Communication.Chat
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationTokenCredential);
-            _chatThreadRestClient = new ChatThreadRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, options.ApiVersion);
+            _chatThreadRestClient = new ChatThreadRestClient(pipeline, endpoint.AbsoluteUri, options.ApiVersion);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatThreadClient"/> for mocking.</summary>

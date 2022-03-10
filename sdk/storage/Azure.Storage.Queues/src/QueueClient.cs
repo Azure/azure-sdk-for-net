@@ -387,19 +387,16 @@ namespace Azure.Storage.Queues
         private (QueueRestClient QueueClient, MessagesRestClient MessagesClient, MessageIdRestClient MessageIdClient) BuildRestClients()
         {
             QueueRestClient queueRestClient = new QueueRestClient(
-                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
 
             MessagesRestClient messagesRestClient = new MessagesRestClient(
-                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
 
             MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
-                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());

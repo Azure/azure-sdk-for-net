@@ -82,8 +82,8 @@ namespace Azure.Communication.CallingServer
             _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             _contentDownloader = new(this);
-            CallConnectionRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ServerCallRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionsRestClient(httpPipeline, endpoint, options.ApiVersion);
+            ServerCallRestClient = new ServerCallsRestClient(httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion

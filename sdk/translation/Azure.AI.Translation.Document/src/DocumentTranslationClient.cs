@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Document
             _clientDiagnostics = new ClientDiagnostics(options);
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new DocumentTranslationRestClient(pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.AI.Translation.Document
             _clientDiagnostics = new ClientDiagnostics(options);
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new DocumentTranslationRestClient(pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>

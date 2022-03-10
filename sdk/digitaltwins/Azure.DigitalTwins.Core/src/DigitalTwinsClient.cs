@@ -91,10 +91,10 @@ namespace Azure.DigitalTwins.Core
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             string versionString = options.GetVersionString();
-            _dtRestClient = new DigitalTwinsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
-            _dtModelsRestClient = new DigitalTwinModelsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
-            _eventRoutesRestClient = new EventRoutesRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
-            _queryClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
+            _dtRestClient = new DigitalTwinsRestClient(_httpPipeline, endpoint, versionString);
+            _dtModelsRestClient = new DigitalTwinModelsRestClient(_httpPipeline, endpoint, versionString);
+            _eventRoutesRestClient = new EventRoutesRestClient(_httpPipeline, endpoint, versionString);
+            _queryClient = new QueryRestClient(_httpPipeline, endpoint, versionString);
         }
 
         /// <summary>

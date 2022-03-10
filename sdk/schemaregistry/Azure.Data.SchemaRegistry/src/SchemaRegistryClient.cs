@@ -49,7 +49,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="apiVersion">The API version of the service.</param>
         internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string fullyQualifiedNamespace, string apiVersion)
         {
-            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, fullyQualifiedNamespace, apiVersion);
+            RestClient = new SchemaRestClient(pipeline, fullyQualifiedNamespace, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             FullyQualifiedNamespace = fullyQualifiedNamespace;
         }

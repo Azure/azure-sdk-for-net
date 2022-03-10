@@ -78,7 +78,7 @@ namespace Azure.Communication.NetworkTraversal
         private CommunicationRelayClient(string endpoint, HttpPipeline httpPipeline, CommunicationRelayClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CommunicationNetworkTraversalRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new CommunicationNetworkTraversalRestClient(httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion

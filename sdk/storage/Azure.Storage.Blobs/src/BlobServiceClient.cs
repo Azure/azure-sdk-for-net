@@ -366,7 +366,6 @@ namespace Azure.Storage.Blobs
 
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

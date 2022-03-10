@@ -80,7 +80,7 @@ namespace Azure.Communication.Identity
         private CommunicationIdentityClient(string endpoint, HttpPipeline httpPipeline, CommunicationIdentityClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new CommunicationIdentityRestClient(httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion

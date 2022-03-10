@@ -284,7 +284,6 @@ namespace Azure.Storage.Files.Shares
         private ShareRestClient BuildShareRestClient(Uri uri)
         {
             return new ShareRestClient(
-                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());

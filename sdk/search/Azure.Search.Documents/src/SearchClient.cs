@@ -206,7 +206,6 @@ namespace Azure.Search.Documents
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
-                ClientDiagnostics,
                 Pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
@@ -265,7 +264,6 @@ namespace Azure.Search.Documents
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
-                ClientDiagnostics,
                 Pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
@@ -325,7 +323,6 @@ namespace Azure.Search.Documents
             Version = version;
 
             Protocol = new DocumentsRestClient(
-                ClientDiagnostics,
                 Pipeline,
                 endpoint.AbsoluteUri,
                 IndexName,

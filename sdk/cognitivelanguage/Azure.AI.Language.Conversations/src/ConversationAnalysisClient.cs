@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations
                 options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
 
-            _analysisRestClient = new(Diagnostics, Pipeline, Endpoint, options.Version);
+            _analysisRestClient = new(Pipeline, Endpoint, options.Version);
         }
 
         /// <summary>

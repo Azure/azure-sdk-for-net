@@ -83,7 +83,7 @@ namespace Azure.Communication.Sms
         private SmsClient(string endpoint, HttpPipeline httpPipeline, SmsClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new SmsRestClient(httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion

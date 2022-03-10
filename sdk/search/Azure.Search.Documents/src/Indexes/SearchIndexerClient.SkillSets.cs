@@ -27,7 +27,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="SkillsetsRestClient"/> to make requests.
         /// </summary>
         private SkillsetsRestClient SkillsetsClient => LazyInitializer.EnsureInitialized(ref _skillsetsClient, () => new SkillsetsRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,

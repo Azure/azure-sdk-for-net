@@ -440,13 +440,11 @@ namespace Azure.Storage.Files.DataLake
         private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri dfsUri, Uri blobUri)
         {
             FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
-                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());

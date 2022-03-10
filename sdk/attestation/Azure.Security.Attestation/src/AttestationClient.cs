@@ -70,9 +70,9 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Rest Client.
-            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _restClient = new AttestationRestClient(_pipeline, Endpoint.AbsoluteUri, options.Version);
 
-            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _metadataClient = new SigningCertificatesRestClient(_pipeline, Endpoint.AbsoluteUri);
         }
         /// <summary>
         /// Parameterless constructor for mocking.

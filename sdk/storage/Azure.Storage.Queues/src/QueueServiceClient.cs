@@ -290,7 +290,6 @@ namespace Azure.Storage.Queues
 
         private ServiceRestClient BuildServiceRestClient()
             => new ServiceRestClient(
-                _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());

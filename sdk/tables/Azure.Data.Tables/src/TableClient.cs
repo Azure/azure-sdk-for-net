@@ -218,7 +218,7 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
@@ -264,7 +264,7 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
@@ -310,7 +310,7 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
@@ -329,7 +329,7 @@ namespace Azure.Data.Tables
             if (endpoint.AbsoluteUri != _endpoint.AbsoluteUri)
             {
                 // GetEndpointWithoutTableName produced a different Uri, so construct a new TableRestClient with it.
-                _tableOperations = new TableRestClient(diagnostics, pipeline, _endpoint.AbsoluteUri, version);
+                _tableOperations = new TableRestClient(pipeline, _endpoint.AbsoluteUri, version);
             }
             else
             {
@@ -1466,7 +1466,7 @@ namespace Azure.Data.Tables
                 }
                 Dictionary<string, HttpMessage> requestLookup = new();
 
-                var batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+                var batchOperations = new TableRestClient(CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
                 var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
 

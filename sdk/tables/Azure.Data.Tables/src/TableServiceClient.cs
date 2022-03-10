@@ -226,9 +226,9 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _tableOperations = new TableRestClient(_pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_pipeline, secondaryEndpoint, _version);
         }
 
         /// <summary>
@@ -264,9 +264,9 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _tableOperations = new TableRestClient(_pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_pipeline, secondaryEndpoint, _version);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -294,9 +294,9 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _tableOperations = new TableRestClient(_pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_pipeline, secondaryEndpoint, _version);
         }
 
         /// <summary>

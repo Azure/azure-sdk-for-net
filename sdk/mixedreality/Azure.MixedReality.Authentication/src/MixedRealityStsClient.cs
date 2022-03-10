@@ -79,7 +79,7 @@ namespace Azure.MixedReality.Authentication
             Endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
-            _restClient = new MixedRealityStsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _restClient = new MixedRealityStsRestClient(_pipeline, endpoint, options.Version);
         }
 
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.

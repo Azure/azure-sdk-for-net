@@ -169,7 +169,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
         /// </summary>
         private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,
@@ -180,7 +179,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="IndexesRestClient"/> to make requests.
         /// </summary>
         private IndexesRestClient IndexesClient => LazyInitializer.EnsureInitialized(ref _indexesClient, () => new IndexesRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,
@@ -191,7 +189,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="SynonymMapsRestClient"/> to make requests.
         /// </summary>
         private SynonymMapsRestClient SynonymMapsClient => LazyInitializer.EnsureInitialized(ref _synonymMapsClient, () => new SynonymMapsRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,

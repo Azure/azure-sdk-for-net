@@ -79,7 +79,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
             await deploymentOperation.WaitForCompletionAsync();
 #endif
 
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
@@ -219,7 +219,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: true, newProjectName, newDeploymentName);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
             await deploymentOperation.WaitForCompletionAsync();
 #endif
 

@@ -106,8 +106,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             SupportedAssetFileTypesSet = options.SupportedAssetFileTypes;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
-            _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
-            _ingestionJobRestClient = new IngestionJobRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
+            _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_pipeline, serviceEndpoint, options.Version);
+            _ingestionJobRestClient = new IngestionJobRestClient(_pipeline, serviceEndpoint, options.Version);
         }
 
         /// <summary>

@@ -136,7 +136,6 @@ namespace Azure.Search.Documents.Indexes
         /// Gets the generated <see cref="IndexersRestClient"/> to make requests.
         /// </summary>
         private IndexersRestClient IndexersClient => LazyInitializer.EnsureInitialized(ref _indexersClient, () => new IndexersRestClient(
-            _clientDiagnostics,
             _pipeline,
             Endpoint.AbsoluteUri,
             null,

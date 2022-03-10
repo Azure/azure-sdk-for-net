@@ -75,7 +75,7 @@ namespace Azure.Monitor.Query
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
-            _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
+            _queryClient = new QueryRestClient(_pipeline, endpoint);
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
 
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+            _applicationInsightsRestClient = new ApplicationInsightsRestClient(HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)

@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Administration
                     new ChallengeBasedAuthenticationPolicy(credential));
 
             _diagnostics = new ClientDiagnostics(options);
-            _restClient = new BackupRestoreRestClient(_diagnostics, pipeline, apiVersion);
+            _restClient = new BackupRestoreRestClient(pipeline, apiVersion);
         }
 
         /// <summary>
