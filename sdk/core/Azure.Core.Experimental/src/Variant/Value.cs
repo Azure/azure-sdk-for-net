@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Azure {
     /// <summary>
-    /// Used to store primitive values without boxing, and other intstances.
+    /// Used to store primitive values without boxing, and other instances.
     /// </summary>
     public readonly partial struct Value
     {
@@ -112,7 +112,7 @@ namespace Azure {
         /// <param name="value"></param>
         public static implicit operator Value(byte value) => new(value);
         /// <summary>
-        /// Casts valure to byte, if possible.
+        /// Casts value to byte, if possible.
         /// </summary>
         /// <param name="value"></param>
         public static explicit operator byte(in Value value) => value.As<byte>();
