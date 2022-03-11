@@ -10,13 +10,13 @@ namespace Azure
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void UShortImplicit(ushort @ushort)
+        public void UShortImplicit(ushort testValue)
         {
-            Value value = @ushort;
-            Assert.AreEqual(@ushort, value.As<ushort>());
+            Value value = testValue;
+            Assert.AreEqual(testValue, value.As<ushort>());
             Assert.AreEqual(typeof(ushort), value.Type);
 
-            ushort? source = @ushort;
+            ushort? source = testValue;
             value = source;
             Assert.AreEqual(source, value.As<ushort?>());
             Assert.AreEqual(typeof(ushort), value.Type);
@@ -25,18 +25,18 @@ namespace Azure
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void UShortCreate(ushort @ushort)
+        public void UShortCreate(ushort testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@ushort);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@ushort, value.As<ushort>());
+            Assert.AreEqual(testValue, value.As<ushort>());
             Assert.AreEqual(typeof(ushort), value.Type);
 
-            ushort? source = @ushort;
+            ushort? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -50,72 +50,72 @@ namespace Azure
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void UShortInOut(ushort @ushort)
+        public void UShortInOut(ushort testValue)
         {
-            Value value = new(@ushort);
+            Value value = new(testValue);
             bool success = value.TryGetValue(out ushort result);
             Assert.True(success);
-            Assert.AreEqual(@ushort, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ushort, value.As<ushort>());
-            Assert.AreEqual(@ushort, (ushort)value);
+            Assert.AreEqual(testValue, value.As<ushort>());
+            Assert.AreEqual(testValue, (ushort)value);
         }
 
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void NullableUShortInUShortOut(ushort? @ushort)
+        public void NullableUShortInUShortOut(ushort? testValue)
         {
-            ushort? source = @ushort;
+            ushort? source = testValue;
             Value value = new(source);
 
             bool success = value.TryGetValue(out ushort result);
             Assert.True(success);
-            Assert.AreEqual(@ushort, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ushort, value.As<ushort>());
+            Assert.AreEqual(testValue, value.As<ushort>());
 
-            Assert.AreEqual(@ushort, (ushort)value);
+            Assert.AreEqual(testValue, (ushort)value);
         }
 
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void UShortInNullableUShortOut(ushort @ushort)
+        public void UShortInNullableUShortOut(ushort testValue)
         {
-            ushort source = @ushort;
+            ushort source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out ushort? result);
             Assert.True(success);
-            Assert.AreEqual(@ushort, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ushort, (ushort?)value);
+            Assert.AreEqual(testValue, (ushort?)value);
         }
 
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void BoxedUShort(ushort @ushort)
+        public void BoxedUShort(ushort testValue)
         {
-            ushort i = @ushort;
+            ushort i = testValue;
             object o = i;
             Value value = new(o);
 
             Assert.AreEqual(typeof(ushort), value.Type);
             Assert.True(value.TryGetValue(out ushort result));
-            Assert.AreEqual(@ushort, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ushort? nullableResult));
-            Assert.AreEqual(@ushort, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
 
-            ushort? n = @ushort;
+            ushort? n = testValue;
             o = n;
             value = new(o);
 
             Assert.AreEqual(typeof(ushort), value.Type);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@ushort, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(@ushort, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
         }
 
         [Test]
@@ -131,18 +131,18 @@ namespace Azure
         [TestCase((ushort)42)]
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        public void OutAsObject(ushort @ushort)
+        public void OutAsObject(ushort testValue)
         {
-            Value value = new(@ushort);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(ushort), o.GetType());
-            Assert.AreEqual(@ushort, (ushort)o);
+            Assert.AreEqual(testValue, (ushort)o);
 
-            ushort? n = @ushort;
+            ushort? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(ushort), o.GetType());
-            Assert.AreEqual(@ushort, (ushort)o);
+            Assert.AreEqual(testValue, (ushort)o);
         }
     }
 }

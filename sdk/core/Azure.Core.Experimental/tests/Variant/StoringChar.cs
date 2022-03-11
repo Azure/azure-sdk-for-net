@@ -9,13 +9,13 @@ namespace Azure
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void CharImplicit(char @char)
+        public void CharImplicit(char testValue)
         {
-            Value value = @char;
-            Assert.AreEqual(@char, value.As<char>());
+            Value value = testValue;
+            Assert.AreEqual(testValue, value.As<char>());
             Assert.AreEqual(typeof(char), value.Type);
 
-            char? source = @char;
+            char? source = testValue;
             value = source;
             Assert.AreEqual(source, value.As<char?>());
             Assert.AreEqual(typeof(char), value.Type);
@@ -24,18 +24,18 @@ namespace Azure
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void CharCreate(char @char)
+        public void CharCreate(char testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@char);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@char, value.As<char>());
+            Assert.AreEqual(testValue, value.As<char>());
             Assert.AreEqual(typeof(char), value.Type);
 
-            char? source = @char;
+            char? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -49,72 +49,72 @@ namespace Azure
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void CharInOut(char @char)
+        public void CharInOut(char testValue)
         {
-            Value value = new(@char);
+            Value value = new(testValue);
             bool success = value.TryGetValue(out char result);
             Assert.True(success);
-            Assert.AreEqual(@char, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@char, value.As<char>());
-            Assert.AreEqual(@char, (char)value);
+            Assert.AreEqual(testValue, value.As<char>());
+            Assert.AreEqual(testValue, (char)value);
         }
 
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void NullableCharInCharOut(char? @char)
+        public void NullableCharInCharOut(char? testValue)
         {
-            char? source = @char;
+            char? source = testValue;
             Value value = new(source);
 
             bool success = value.TryGetValue(out char result);
             Assert.True(success);
-            Assert.AreEqual(@char, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@char, value.As<char>());
+            Assert.AreEqual(testValue, value.As<char>());
 
-            Assert.AreEqual(@char, (char)value);
+            Assert.AreEqual(testValue, (char)value);
         }
 
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void CharInNullableCharOut(char @char)
+        public void CharInNullableCharOut(char testValue)
         {
-            char source = @char;
+            char source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out char? result);
             Assert.True(success);
-            Assert.AreEqual(@char, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@char, (char?)value);
+            Assert.AreEqual(testValue, (char?)value);
         }
 
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void BoxedChar(char @char)
+        public void BoxedChar(char testValue)
         {
-            char i = @char;
+            char i = testValue;
             object o = i;
             Value value = new(o);
 
             Assert.AreEqual(typeof(char), value.Type);
             Assert.True(value.TryGetValue(out char result));
-            Assert.AreEqual(@char, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out char? nullableResult));
-            Assert.AreEqual(@char, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
 
-            char? n = @char;
+            char? n = testValue;
             o = n;
             value = new(o);
 
             Assert.AreEqual(typeof(char), value.Type);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@char, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(@char, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
         }
 
         [Test]
@@ -130,18 +130,18 @@ namespace Azure
         [TestCase('!')]
         [TestCase(char.MaxValue)]
         [TestCase(char.MinValue)]
-        public void OutAsObject(char @char)
+        public void OutAsObject(char testValue)
         {
-            Value value = new(@char);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(char), o.GetType());
-            Assert.AreEqual(@char, (char)o);
+            Assert.AreEqual(testValue, (char)o);
 
-            char? n = @char;
+            char? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(char), o.GetType());
-            Assert.AreEqual(@char, (char)o);
+            Assert.AreEqual(testValue, (char)o);
         }
     }
 }

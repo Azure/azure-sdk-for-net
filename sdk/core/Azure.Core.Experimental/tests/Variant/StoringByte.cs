@@ -9,13 +9,13 @@ namespace Azure
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void ByteImplicit(byte @byte)
+        public void ByteImplicit(byte testValue)
         {
-            Value value = @byte;
-            Assert.AreEqual(@byte, value.As<byte>());
+            Value value = testValue;
+            Assert.AreEqual(testValue, value.As<byte>());
             Assert.AreEqual(typeof(byte), value.Type);
 
-            byte? source = @byte;
+            byte? source = testValue;
             value = source;
             Assert.AreEqual(source, value.As<byte?>());
             Assert.AreEqual(typeof(byte), value.Type);
@@ -24,18 +24,18 @@ namespace Azure
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void ByteCreate(byte @byte)
+        public void ByteCreate(byte testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@byte);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@byte, value.As<byte>());
+            Assert.AreEqual(testValue, value.As<byte>());
             Assert.AreEqual(typeof(byte), value.Type);
 
-            byte? source = @byte;
+            byte? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -49,72 +49,72 @@ namespace Azure
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void ByteInOut(byte @byte)
+        public void ByteInOut(byte testValue)
         {
-            Value value = new(@byte);
+            Value value = new(testValue);
             bool success = value.TryGetValue(out byte result);
             Assert.True(success);
-            Assert.AreEqual(@byte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@byte, value.As<byte>());
-            Assert.AreEqual(@byte, (byte)value);
+            Assert.AreEqual(testValue, value.As<byte>());
+            Assert.AreEqual(testValue, (byte)value);
         }
 
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void NullableByteInByteOut(byte? @byte)
+        public void NullableByteInByteOut(byte? testValue)
         {
-            byte? source = @byte;
+            byte? source = testValue;
             Value value = new(source);
 
             bool success = value.TryGetValue(out byte result);
             Assert.True(success);
-            Assert.AreEqual(@byte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@byte, value.As<byte>());
+            Assert.AreEqual(testValue, value.As<byte>());
 
-            Assert.AreEqual(@byte, (byte)value);
+            Assert.AreEqual(testValue, (byte)value);
         }
 
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void ByteInNullableByteOut(byte @byte)
+        public void ByteInNullableByteOut(byte testValue)
         {
-            byte source = @byte;
+            byte source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out byte? result);
             Assert.True(success);
-            Assert.AreEqual(@byte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@byte, (byte?)value);
+            Assert.AreEqual(testValue, (byte?)value);
         }
 
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void BoxedByte(byte @byte)
+        public void BoxedByte(byte testValue)
         {
-            byte i = @byte;
+            byte i = testValue;
             object o = i;
             Value value = new(o);
 
             Assert.AreEqual(typeof(byte), value.Type);
             Assert.True(value.TryGetValue(out byte result));
-            Assert.AreEqual(@byte, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out byte? nullableResult));
-            Assert.AreEqual(@byte, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
 
-            byte? n = @byte;
+            byte? n = testValue;
             o = n;
             value = new(o);
 
             Assert.AreEqual(typeof(byte), value.Type);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@byte, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(@byte, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
         }
 
         [Test]
@@ -130,18 +130,18 @@ namespace Azure
         [TestCase(42)]
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        public void OutAsObject(byte @byte)
+        public void OutAsObject(byte testValue)
         {
-            Value value = new(@byte);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(byte), o.GetType());
-            Assert.AreEqual(@byte, (byte)o);
+            Assert.AreEqual(testValue, (byte)o);
 
-            byte? n = @byte;
+            byte? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(byte), o.GetType());
-            Assert.AreEqual(@byte, (byte)o);
+            Assert.AreEqual(testValue, (byte)o);
         }
     }
 }

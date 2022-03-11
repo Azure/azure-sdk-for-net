@@ -11,13 +11,13 @@ namespace Azure
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void SByteImplicit(sbyte @sbyte)
+        public void SByteImplicit(sbyte testValue)
         {
-            Value value = @sbyte;
-            Assert.AreEqual(@sbyte, value.As<sbyte>());
+            Value value = testValue;
+            Assert.AreEqual(testValue, value.As<sbyte>());
             Assert.AreEqual(typeof(sbyte), value.Type);
 
-            sbyte? source = @sbyte;
+            sbyte? source = testValue;
             value = source;
             Assert.AreEqual(source, value.As<sbyte?>());
             Assert.AreEqual(typeof(sbyte), value.Type);
@@ -27,18 +27,18 @@ namespace Azure
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void SByteCreate(sbyte @sbyte)
+        public void SByteCreate(sbyte testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@sbyte);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@sbyte, value.As<sbyte>());
+            Assert.AreEqual(testValue, value.As<sbyte>());
             Assert.AreEqual(typeof(sbyte), value.Type);
 
-            sbyte? source = @sbyte;
+            sbyte? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -53,48 +53,48 @@ namespace Azure
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void SByteInOut(sbyte @sbyte)
+        public void SByteInOut(sbyte testValue)
         {
-            Value value = new(@sbyte);
+            Value value = new(testValue);
             bool success = value.TryGetValue(out sbyte result);
             Assert.True(success);
-            Assert.AreEqual(@sbyte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@sbyte, value.As<sbyte>());
-            Assert.AreEqual(@sbyte, (sbyte)value);
+            Assert.AreEqual(testValue, value.As<sbyte>());
+            Assert.AreEqual(testValue, (sbyte)value);
         }
 
         [TestCase(0)]
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void NullableSByteInSByteOut(sbyte? @sbyte)
+        public void NullableSByteInSByteOut(sbyte? testValue)
         {
-            sbyte? source = @sbyte;
+            sbyte? source = testValue;
             Value value = new(source);
 
             bool success = value.TryGetValue(out sbyte result);
             Assert.True(success);
-            Assert.AreEqual(@sbyte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@sbyte, value.As<sbyte>());
+            Assert.AreEqual(testValue, value.As<sbyte>());
 
-            Assert.AreEqual(@sbyte, (sbyte)value);
+            Assert.AreEqual(testValue, (sbyte)value);
         }
 
         [TestCase(0)]
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void SByteInNullableSByteOut(sbyte @sbyte)
+        public void SByteInNullableSByteOut(sbyte testValue)
         {
-            sbyte source = @sbyte;
+            sbyte source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out sbyte? result);
             Assert.True(success);
-            Assert.AreEqual(@sbyte, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@sbyte, (sbyte?)value);
+            Assert.AreEqual(testValue, (sbyte?)value);
         }
 
         [Test]
@@ -111,18 +111,18 @@ namespace Azure
         [TestCase(42)]
         [TestCase(sbyte.MinValue)]
         [TestCase(sbyte.MaxValue)]
-        public void OutAsObject(sbyte @sbyte)
+        public void OutAsObject(sbyte testValue)
         {
-            Value value = new(@sbyte);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(sbyte), o.GetType());
-            Assert.AreEqual(@sbyte, (sbyte)o);
+            Assert.AreEqual(testValue, (sbyte)o);
 
-            sbyte? n = @sbyte;
+            sbyte? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(sbyte), o.GetType());
-            Assert.AreEqual(@sbyte, (sbyte)o);
+            Assert.AreEqual(testValue, (sbyte)o);
         }
     }
 }

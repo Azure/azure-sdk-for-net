@@ -10,13 +10,13 @@ namespace Azure
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void ULongImplicit(ulong @ulong)
+        public void ULongImplicit(ulong testValue)
         {
-            Value value = @ulong;
-            Assert.AreEqual(@ulong, value.As<ulong>());
+            Value value = testValue;
+            Assert.AreEqual(testValue, value.As<ulong>());
             Assert.AreEqual(typeof(ulong), value.Type);
 
-            ulong? source = @ulong;
+            ulong? source = testValue;
             value = source;
             Assert.AreEqual(source, value.As<ulong?>());
             Assert.AreEqual(typeof(ulong), value.Type);
@@ -25,18 +25,18 @@ namespace Azure
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void ULongCreate(ulong @ulong)
+        public void ULongCreate(ulong testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@ulong);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@ulong, value.As<ulong>());
+            Assert.AreEqual(testValue, value.As<ulong>());
             Assert.AreEqual(typeof(ulong), value.Type);
 
-            ulong? source = @ulong;
+            ulong? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -50,72 +50,72 @@ namespace Azure
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void ULongInOut(ulong @ulong)
+        public void ULongInOut(ulong testValue)
         {
-            Value value = new(@ulong);
+            Value value = new(testValue);
             bool success = value.TryGetValue(out ulong result);
             Assert.True(success);
-            Assert.AreEqual(@ulong, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ulong, value.As<ulong>());
-            Assert.AreEqual(@ulong, (ulong)value);
+            Assert.AreEqual(testValue, value.As<ulong>());
+            Assert.AreEqual(testValue, (ulong)value);
         }
 
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void NullableULongInULongOut(ulong? @ulong)
+        public void NullableULongInULongOut(ulong? testValue)
         {
-            ulong? source = @ulong;
+            ulong? source = testValue;
             Value value = new(source);
 
             bool success = value.TryGetValue(out ulong result);
             Assert.True(success);
-            Assert.AreEqual(@ulong, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ulong, value.As<ulong>());
+            Assert.AreEqual(testValue, value.As<ulong>());
 
-            Assert.AreEqual(@ulong, (ulong)value);
+            Assert.AreEqual(testValue, (ulong)value);
         }
 
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void ULongInNullableULongOut(ulong @ulong)
+        public void ULongInNullableULongOut(ulong testValue)
         {
-            ulong source = @ulong;
+            ulong source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out ulong? result);
             Assert.True(success);
-            Assert.AreEqual(@ulong, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@ulong, (ulong?)value);
+            Assert.AreEqual(testValue, (ulong?)value);
         }
 
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void BoxedULong(ulong @ulong)
+        public void BoxedULong(ulong testValue)
         {
-            ulong i = @ulong;
+            ulong i = testValue;
             object o = i;
             Value value = new(o);
 
             Assert.AreEqual(typeof(ulong), value.Type);
             Assert.True(value.TryGetValue(out ulong result));
-            Assert.AreEqual(@ulong, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ulong? nullableResult));
-            Assert.AreEqual(@ulong, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
 
-            ulong? n = @ulong;
+            ulong? n = testValue;
             o = n;
             value = new(o);
 
             Assert.AreEqual(typeof(ulong), value.Type);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@ulong, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(@ulong, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
         }
 
         [Test]
@@ -131,18 +131,18 @@ namespace Azure
         [TestCase(42ul)]
         [TestCase(ulong.MinValue)]
         [TestCase(ulong.MaxValue)]
-        public void OutAsObject(ulong @ulong)
+        public void OutAsObject(ulong testValue)
         {
-            Value value = new(@ulong);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(ulong), o.GetType());
-            Assert.AreEqual(@ulong, (ulong)o);
+            Assert.AreEqual(testValue, (ulong)o);
 
-            ulong? n = @ulong;
+            ulong? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(ulong), o.GetType());
-            Assert.AreEqual(@ulong, (ulong)o);
+            Assert.AreEqual(testValue, (ulong)o);
         }
     }
 }

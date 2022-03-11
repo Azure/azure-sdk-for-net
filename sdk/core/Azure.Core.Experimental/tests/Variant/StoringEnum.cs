@@ -64,86 +64,86 @@ namespace Azure
 
         [TestCase(ByteEnum.MinValue)]
         [TestCase(ByteEnum.MaxValue)]
-        public void ByteSize(ByteEnum @enum)
+        public void ByteSize(ByteEnum testValue)
         {
-            Value value = Value.Create(@enum);
+            Value value = Value.Create(testValue);
             Assert.True(value.TryGetValue(out ByteEnum result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ByteEnum? nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = Value.Create((ByteEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = Value.Create((ByteEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
 
             // Create boxed
-            value = new(@enum);
+            value = new(testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = new((ByteEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = new((ByteEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
         }
 
         [TestCase(ShortEnum.MinValue)]
         [TestCase(ShortEnum.MaxValue)]
-        public void ShortSize(ShortEnum @enum)
+        public void ShortSize(ShortEnum testValue)
         {
-            Value value = Value.Create(@enum);
+            Value value = Value.Create(testValue);
             Assert.True(value.TryGetValue(out ShortEnum result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ShortEnum? nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = Value.Create((ShortEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = Value.Create((ShortEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
 
             // Create boxed
-            value = new(@enum);
+            value = new(testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = new((ShortEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = new((ShortEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
         }
 
         [TestCase(LongEnum.MinValue)]
         [TestCase(LongEnum.MaxValue)]
-        public void LongSize(LongEnum @enum)
+        public void LongSize(LongEnum testValue)
         {
-            Value value = Value.Create(@enum);
+            Value value = Value.Create(testValue);
             Assert.True(value.TryGetValue(out LongEnum result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out LongEnum? nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = Value.Create((LongEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = Value.Create((LongEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
 
             // Create boxed
-            value = new(@enum);
+            value = new(testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
-            value = new((LongEnum?)@enum);
+            Assert.AreEqual(testValue, nullResult!.Value);
+            value = new((LongEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@enum, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
-            Assert.AreEqual(@enum, nullResult!.Value);
+            Assert.AreEqual(testValue, nullResult!.Value);
         }
 
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]

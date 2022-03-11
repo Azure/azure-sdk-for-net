@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure
 {
@@ -9,18 +8,18 @@ namespace Azure
     {
         [TestCase(true)]
         [TestCase(false)]
-        public void BooleanImplicit(bool @bool)
+        public void BooleanImplicit(bool testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = @bool;
+                value = testValue;
             }
 
-            Assert.AreEqual(@bool, value.As<bool>());
+            Assert.AreEqual(testValue, value.As<bool>());
             Assert.AreEqual(typeof(bool), value.Type);
 
-            bool? source = @bool;
+            bool? source = testValue;
             using (MemoryWatch.Create)
             {
                 value = source;
@@ -31,18 +30,18 @@ namespace Azure
 
         [TestCase(true)]
         [TestCase(false)]
-        public void BooleanCreate(bool @bool)
+        public void BooleanCreate(bool testValue)
         {
             Value value;
             using (MemoryWatch.Create)
             {
-                value = Value.Create(@bool);
+                value = Value.Create(testValue);
             }
 
-            Assert.AreEqual(@bool, value.As<bool>());
+            Assert.AreEqual(testValue, value.As<bool>());
             Assert.AreEqual(typeof(bool), value.Type);
 
-            bool? source = @bool;
+            bool? source = testValue;
 
             using (MemoryWatch.Create)
             {
@@ -55,7 +54,7 @@ namespace Azure
 
         [TestCase(true)]
         [TestCase(false)]
-        public void BooleanInOut(bool @bool)
+        public void BooleanInOut(bool testValue)
         {
             Value value;
             bool success;
@@ -63,22 +62,22 @@ namespace Azure
 
             using (MemoryWatch.Create)
             {
-                value = new(@bool);
+                value = new(testValue);
                 success = value.TryGetValue(out result);
             }
 
             Assert.True(success);
-            Assert.AreEqual(@bool, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@bool, value.As<bool>());
-            Assert.AreEqual(@bool, (bool)value);
+            Assert.AreEqual(testValue, value.As<bool>());
+            Assert.AreEqual(testValue, (bool)value);
         }
 
         [TestCase(true)]
         [TestCase(false)]
-        public void NullableBooleanInBooleanOut(bool? @bool)
+        public void NullableBooleanInBooleanOut(bool? testValue)
         {
-            bool? source = @bool;
+            bool? source = testValue;
             Value value;
             bool success;
             bool result;
@@ -90,49 +89,49 @@ namespace Azure
             }
 
             Assert.True(success);
-            Assert.AreEqual(@bool, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@bool, value.As<bool>());
+            Assert.AreEqual(testValue, value.As<bool>());
 
-            Assert.AreEqual(@bool, (bool)value);
+            Assert.AreEqual(testValue, (bool)value);
         }
 
         [TestCase(true)]
         [TestCase(false)]
-        public void BooleanInNullableBooleanOut(bool @bool)
+        public void BooleanInNullableBooleanOut(bool testValue)
         {
-            bool source = @bool;
+            bool source = testValue;
             Value value = new(source);
             bool success = value.TryGetValue(out bool? result);
             Assert.True(success);
-            Assert.AreEqual(@bool, result);
+            Assert.AreEqual(testValue, result);
 
-            Assert.AreEqual(@bool, (bool?)value);
+            Assert.AreEqual(testValue, (bool?)value);
         }
 
         [TestCase(true)]
         [TestCase(false)]
-        public void BoxedBoolean(bool @bool)
+        public void BoxedBoolean(bool testValue)
         {
-            bool i = @bool;
+            bool i = testValue;
             object o = i;
             Value value = new(o);
 
             Assert.AreEqual(typeof(bool), value.Type);
             Assert.True(value.TryGetValue(out bool result));
-            Assert.AreEqual(@bool, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out bool? nullableResult));
-            Assert.AreEqual(@bool, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
 
-            bool? n = @bool;
+            bool? n = testValue;
             o = n;
             value = new(o);
 
             Assert.AreEqual(typeof(bool), value.Type);
             Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(@bool, result);
+            Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(@bool, nullableResult!.Value);
+            Assert.AreEqual(testValue, nullableResult!.Value);
         }
 
         [Test]
@@ -153,18 +152,18 @@ namespace Azure
 
         [TestCase(true)]
         [TestCase(false)]
-        public void OutAsObject(bool @bool)
+        public void OutAsObject(bool testValue)
         {
-            Value value = new(@bool);
+            Value value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(bool), o.GetType());
-            Assert.AreEqual(@bool, (bool)o);
+            Assert.AreEqual(testValue, (bool)o);
 
-            bool? n = @bool;
+            bool? n = testValue;
             value = new(n);
             o = value.As<object>();
             Assert.AreEqual(typeof(bool), o.GetType());
-            Assert.AreEqual(@bool, (bool)o);
+            Assert.AreEqual(testValue, (bool)o);
         }
     }
 }
