@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Azure
 {
-    public class StoringInt32
+    public class StoringInt
     {
         public static int[] Int32Data => new[]
         {
