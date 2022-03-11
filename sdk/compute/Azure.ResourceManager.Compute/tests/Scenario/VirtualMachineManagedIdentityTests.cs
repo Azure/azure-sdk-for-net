@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string userAssignedIdentityName = Recording.GenerateAssetName("testRi-");
             ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
             var input = new GenericResourceData(DefaultLocation);
-            var response = await _genericResourceCollection.CreateOrUpdateAsync(true, userIdentityId, input);
+            var response = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, userIdentityId, input);
             return response.Value;
         }
 

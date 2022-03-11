@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            var op = await genericResources.CreateOrUpdateAsync(true, asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, asetId, data);
             return op.Value;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
             var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(false, asetId, data);
+            return await genericResources.CreateOrUpdateAsync(WaitUntil.Started, asetId, data);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            ArmOperation<GenericResource> lro = await Client.GetGenericResources().CreateOrUpdateAsync(true, vnId, input);
+            ArmOperation<GenericResource> lro = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vnId, input);
             return lro.Value;
         }
 
