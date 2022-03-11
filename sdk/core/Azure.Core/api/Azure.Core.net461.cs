@@ -388,7 +388,7 @@ namespace Azure.Core
     }
     public partial class DiagnosticsOptions
     {
-        internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
