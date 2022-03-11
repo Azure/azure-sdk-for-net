@@ -28,7 +28,7 @@ namespace Azure
         public void UShortCreate(ushort testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -38,7 +38,7 @@ namespace Azure
 
             ushort? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

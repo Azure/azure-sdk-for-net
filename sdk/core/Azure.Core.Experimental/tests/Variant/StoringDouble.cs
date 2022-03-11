@@ -35,7 +35,7 @@ namespace Azure
         public void DoubleCreate([ValueSource("DoubleData")] double testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -45,7 +45,7 @@ namespace Azure
 
             double? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

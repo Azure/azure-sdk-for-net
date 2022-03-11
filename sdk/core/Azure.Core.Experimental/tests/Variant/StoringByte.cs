@@ -27,7 +27,7 @@ namespace Azure
         public void ByteCreate(byte testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -37,7 +37,7 @@ namespace Azure
 
             byte? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

@@ -27,7 +27,7 @@ namespace Azure
         public void CharCreate(char testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -37,7 +37,7 @@ namespace Azure
 
             char? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

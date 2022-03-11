@@ -32,7 +32,7 @@ namespace Azure
         public void ShortCreate([ValueSource("ShortData")] short testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -42,7 +42,7 @@ namespace Azure
 
             short? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

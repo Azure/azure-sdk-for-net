@@ -15,10 +15,13 @@ namespace Azure
             InitType();
             DayOfWeek day = DayOfWeek.Monday;
 
-            MemoryWatch watch = MemoryWatch.Create;
-            Value value = Value.Create(day);
-            DayOfWeek outDay = value.As<DayOfWeek>();
-            watch.Validate();
+            Value value;
+            DayOfWeek outDay;
+            using (MemoryWatch watch = MemoryWatch.Create())
+            {
+                value = Value.Create(day);
+                outDay = value.As<DayOfWeek>();
+            }
 
             Assert.AreEqual(day, outDay);
             Assert.AreEqual(typeof(DayOfWeek), value.Type);

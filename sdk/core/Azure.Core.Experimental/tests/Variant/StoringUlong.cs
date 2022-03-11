@@ -28,7 +28,7 @@ namespace Azure
         public void ULongCreate(ulong testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -38,7 +38,7 @@ namespace Azure
 
             ulong? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

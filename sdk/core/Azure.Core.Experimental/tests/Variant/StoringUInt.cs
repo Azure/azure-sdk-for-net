@@ -31,7 +31,7 @@ namespace Azure
         public void UIntCreate([ValueSource("UInt32Data")] uint testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -41,7 +41,7 @@ namespace Azure
 
             uint? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

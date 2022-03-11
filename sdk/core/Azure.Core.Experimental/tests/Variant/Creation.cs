@@ -10,8 +10,10 @@ namespace Azure
         [Test]
         public void CreateIsAllocationFree()
         {
-            var watch = MemoryWatch.Create;
+            var watch = MemoryWatch.Create();
 
+            Value.Create((bool)default);
+            watch.Validate();
             Value.Create((byte)default);
             watch.Validate();
             Value.Create((sbyte)default);

@@ -30,7 +30,7 @@ namespace Azure
         public void SByteCreate(sbyte testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -40,7 +40,7 @@ namespace Azure
 
             sbyte? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

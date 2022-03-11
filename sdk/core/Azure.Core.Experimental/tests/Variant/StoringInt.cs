@@ -32,7 +32,7 @@ namespace Azure
         public void IntCreate([ValueSource("Int32Data")] int testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -42,7 +42,7 @@ namespace Azure
 
             int? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

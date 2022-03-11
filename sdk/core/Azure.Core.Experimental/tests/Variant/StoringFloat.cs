@@ -35,7 +35,7 @@ namespace Azure
         public void FloatCreate([ValueSource("FloatData")] float testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -45,7 +45,7 @@ namespace Azure
 
             float? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }

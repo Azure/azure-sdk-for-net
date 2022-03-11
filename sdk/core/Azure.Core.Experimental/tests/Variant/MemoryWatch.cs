@@ -11,7 +11,7 @@ namespace Azure
         private static bool s_jit;
         private long _allocations;
 
-        public static void JIT()
+        private static void JIT()
         {
             if (s_jit)
             {
@@ -35,6 +35,10 @@ namespace Azure
             Value.Create((double)default).As<double>();
             Value.Create((DateTime)default).As<DateTime>();
             Value.Create((DateTimeOffset)default).As<DateTimeOffset>();
+            Value.Create(new byte[1]).As<byte[]>();
+            Value.Create(new char[1]).As<char[]>();
+            Value.Create(new ArraySegment<byte>(new byte[1])).As<ArraySegment<byte>>();
+            Value.Create(new ArraySegment<char>(new char[1])).As<ArraySegment<char>>();
 
             Value.Create((bool?)default).As<bool?>();
             Value.Create((byte?)default).As<byte?>();
@@ -72,15 +76,12 @@ namespace Azure
             s_jit = true;
         }
 
-        public MemoryWatch(long allocations) => _allocations = allocations;
+        private MemoryWatch(long allocations) => _allocations = allocations;
 
-        public static MemoryWatch Create
+        public static MemoryWatch Create()
         {
-            get
-            {
-                JIT();
-                return new(GetAllocatedBytesPortable());
-            }
+            JIT();
+            return new(GetAllocatedBytesPortable());
         }
 
         public void Dispose() => Validate();
@@ -94,7 +95,7 @@ namespace Azure
             _allocations = GetAllocatedBytesPortable();
         }
 
-        public static long GetAllocatedBytesPortable()
+        private static long GetAllocatedBytesPortable()
         {
 #if NET6_0
             return GC.GetAllocatedBytesForCurrentThread();

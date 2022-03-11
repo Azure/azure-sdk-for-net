@@ -12,9 +12,11 @@ namespace Azure
         public void ByteArray()
         {
             byte[] b = new byte[10];
-            Value value;
 
-            value = Value.Create(b);
+            var watch = MemoryWatch.Create();
+            Value value = Value.Create(b);
+            watch.Validate();
+
             Assert.AreEqual(typeof(byte[]), value.Type);
             Assert.AreSame(b, value.As<byte[]>());
             Assert.AreEqual(b, (byte[])value.As<object>());
@@ -26,9 +28,11 @@ namespace Azure
         public void CharArray()
         {
             char[] b = new char[10];
-            Value value;
 
-            value = Value.Create(b);
+            var watch = MemoryWatch.Create();
+            Value value = Value.Create(b);
+            watch.Validate();
+
             Assert.AreEqual(typeof(char[]), value.Type);
             Assert.AreSame(b, value.As<char[]>());
             Assert.AreEqual(b, (char[])value.As<object>());
@@ -40,10 +44,12 @@ namespace Azure
         public void ByteSegment()
         {
             byte[] b = new byte[10];
-            Value value;
-
             ArraySegment<byte> segment = new(b);
-            value = Value.Create(segment);
+
+            var watch = MemoryWatch.Create();
+            Value value = Value.Create(segment);
+            watch.Validate();
+
             Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
             Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
@@ -68,10 +74,12 @@ namespace Azure
         public void CharSegment()
         {
             char[] b = new char[10];
-            Value value;
-
             ArraySegment<char> segment = new(b);
-            value = Value.Create(segment);
+
+            var watch = MemoryWatch.Create();
+            Value value = Value.Create(segment);
+            watch.Validate();
+
             Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<char>>());
             Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());

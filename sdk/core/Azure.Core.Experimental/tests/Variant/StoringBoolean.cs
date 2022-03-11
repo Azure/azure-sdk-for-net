@@ -11,7 +11,7 @@ namespace Azure
         public void BooleanImplicit(bool testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = testValue;
             }
@@ -20,7 +20,7 @@ namespace Azure
             Assert.AreEqual(typeof(bool), value.Type);
 
             bool? source = testValue;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = source;
             }
@@ -33,7 +33,7 @@ namespace Azure
         public void BooleanCreate(bool testValue)
         {
             Value value;
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(testValue);
             }
@@ -43,7 +43,7 @@ namespace Azure
 
             bool? source = testValue;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = Value.Create(source);
             }
@@ -60,7 +60,7 @@ namespace Azure
             bool success;
             bool result;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = new(testValue);
                 success = value.TryGetValue(out result);
@@ -82,7 +82,7 @@ namespace Azure
             bool success;
             bool result;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = new(source);
                 success = value.TryGetValue(out result);
@@ -140,7 +140,7 @@ namespace Azure
             bool? source = null;
             Value value;
 
-            using (MemoryWatch.Create)
+            using (MemoryWatch.Create())
             {
                 value = source;
             }
