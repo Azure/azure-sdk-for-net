@@ -212,7 +212,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 var location = AzureLocation.WestUS;
 // Create ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
+ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, "myResourceGroup", new ResourceGroupData(location));
 ResourceGroup resourceGroup = rgOperation.Value;
 
 // Create AvailabilitySet
@@ -222,7 +222,7 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new ComputeSku() { Name = "Aligned" }
 };
-ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
+ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
 AvailabilitySet availabilitySet = asetOperation.Value;
 
 // Create VNet
@@ -239,7 +239,7 @@ var vnetData = new VirtualNetworkData()
     },
 };
 vnetData.AddressPrefixes.Add("10.0.0.0/16");
-ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
+ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualNetwork", vnetData);
 VirtualNetwork vnet = vnetOperation.Value;
 
 // Create Network interface
@@ -257,7 +257,7 @@ var nicData = new NetworkInterfaceData()
         }
     }
 };
-ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
+ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, "myNetworkInterface", nicData);
 NetworkInterface nic = nicOperation.Value;
 
 var vmData = new VirtualMachineData(location)
@@ -283,7 +283,7 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
+ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
 VirtualMachine vm = vmOperation.Value;
 ```
 

@@ -26,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -41,7 +41,7 @@ StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(s
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
+ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
@@ -61,7 +61,7 @@ Now that we have the blob service, we can manage the blob containers inside this
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
 string blobContainerName = "myBlobContainer";
 BlobContainerData blobContainerData = new BlobContainerData();
-ArmOperation<BlobContainer> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(true, blobContainerName, blobContainerData);
+ArmOperation<BlobContainer> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, blobContainerName, blobContainerData);
 BlobContainer blobContainer = blobContainerCreateOperation.Value;
 ```
 
@@ -104,7 +104,7 @@ if (await blobContainerCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_BlobContainers_DeleteBlobContainer
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
 BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
-await blobContainer.DeleteAsync(true);
+await blobContainer.DeleteAsync(WaitUntil.Completed);
 ```
 
 ## Next steps

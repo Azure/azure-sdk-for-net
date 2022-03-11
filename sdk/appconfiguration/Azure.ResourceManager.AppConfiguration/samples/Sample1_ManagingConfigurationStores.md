@@ -30,7 +30,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(true ,rgName, new ResourceGroupData(location))).Value;
+ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location))).Value;
 ```
 
 Now that we have the resource group created, we can manage the ConfigurationStore inside this resource group.
@@ -43,7 +43,7 @@ ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("west
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };
-ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
+ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 ```
 
 ***List all configurationStores***
@@ -87,5 +87,5 @@ if (await configurationStoreCollection.ExistsAsync("myApp"))
 ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
 ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-await configStore.DeleteAsync(true);
+await configStore.DeleteAsync(WaitUntil.Completed);
 ```
