@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             Assert.AreEqual(afdEndpointName, afdEndpointInstance.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(true, null, afdEndpointInstance.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(true, afdEndpointName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, null, afdEndpointInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, afdEndpointName, null));
         }
 
         [TestCase]

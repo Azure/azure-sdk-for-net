@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24" } }
             };
-            VirtualNetwork virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, vnetInput).WaitForCompletionAsync();
+            VirtualNetwork virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(WaitUntil.Completed, vnetName, vnetInput).WaitForCompletionAsync();
 
             #region Snippet:Managing_Networks_CreateANetworkInterface
             PublicIPAddressCollection publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     DomainNameLabel = "myDomain"
                 }
             };
-            PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(true, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+            PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(WaitUntil.Completed, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     }
                 }
             };
-            NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(true, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+            NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(WaitUntil.Completed, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
             #endregion
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
             NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-            await virtualNetwork.DeleteAsync(true);
+            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
         }
     }
 }

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName4Identities = "rg-for-DeployScript";
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(true, rgName4Identities, rgData);
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName4Identities, rgData);
             ResourceGroup rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");

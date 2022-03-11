@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             VaultCollection vaultCollection = resourceGroup.GetVaults();
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-            ArmOperation<Vault> lro = await vaultCollection.CreateOrUpdateAsync(true, "myVaultName", parameters);
+            ArmOperation<Vault> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
             Vault vault = lro.Value;
             #endregion
         }

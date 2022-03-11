@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdSecretName = Recording.GenerateAssetName("AFDSecret-");
             AfdSecret afdSecret = await CreateAfdSecret(afdProfile, afdSecretName);
             Assert.AreEqual(afdSecretName, afdSecret.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(true, null, afdSecret.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(true, afdSecretName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecret.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(WaitUntil.Completed, afdSecretName, null));
         }
 
         [TestCase]

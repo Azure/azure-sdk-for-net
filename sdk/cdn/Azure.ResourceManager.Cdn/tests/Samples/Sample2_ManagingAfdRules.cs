@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Create a new azure front door profile
             string AfdProfileName = "myAfdProfile";
             var input1 = new ProfileData("Global", new CdnSku { Name = CdnSkuName.StandardAzureFrontDoor });
-            ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, AfdProfileName, input1);
+            ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, AfdProfileName, input1);
             Profile AfdProfile = lro1.Value;
             // Get the rule set collection from the specific azure front door profile and create a rule set
             string ruleSetName = "myAfdRuleSet";
-            ArmOperation<AfdRuleSet> lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(true, ruleSetName);
+            ArmOperation<AfdRuleSet> lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
             AfdRuleSet ruleSet = lro2.Value;
             // Get the rule collection from the specific rule set and create a rule
             string ruleName = "myAfdRule";
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 CacheDuration = new TimeSpan(0, 0, 20)
             }));
-            ArmOperation<AfdRule> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(true, ruleName, input3);
+            ArmOperation<AfdRule> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input3);
             AfdRule rule = lro3.Value;
             #endregion Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 CacheDuration = new TimeSpan(0, 0, 30)
             }));
-            ArmOperation<AfdRule> lro = await rule.UpdateAsync(true, input);
+            ArmOperation<AfdRule> lro = await rule.UpdateAsync(WaitUntil.Completed, input);
             rule = lro.Value;
             #endregion Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the rule with GetAsync()
             AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
             // With DeleteAsync(), we can delete the rule
-            await rule.DeleteAsync(true);
+            await rule.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;

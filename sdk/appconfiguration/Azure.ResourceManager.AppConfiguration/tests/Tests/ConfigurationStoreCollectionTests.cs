@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
             }
         }
 
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            ConfigurationStore configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
+            ConfigurationStore configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
 
             configurationStore.Data.PublicNetworkAccess = PublicNetworkAccess.Enabled;
-            configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStore.Data)).Value;
+            configurationStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData);
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetAsync(configurationStoreName);
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName1, configurationStoreData);
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName2, configurationStoreData);
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName1, configurationStoreData);
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
             List<ConfigurationStore> configurationStores = await ResGroup.GetConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(configurationStores.Count == 2);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData);
+            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(configurationStoreName);
 
             Assert.IsTrue(configurationStore.Data.Name == configurationStoreName);

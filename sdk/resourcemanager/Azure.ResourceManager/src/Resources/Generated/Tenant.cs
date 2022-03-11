@@ -282,28 +282,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets details about the default tenant.
-        /// Request Path: /
-        /// Operation Id: Tenants_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Tenant>> GetTenantAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetTenants().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details about the default tenant.
-        /// Request Path: /
-        /// Operation Id: Tenants_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Tenant> GetTenant(CancellationToken cancellationToken = default)
-        {
-            return GetTenants().Get(cancellationToken);
-        }
-
-        /// <summary>
         /// Gets all resource providers for the tenant.
         /// Request Path: /providers
         /// Operation Id: Providers_ListAtTenantScope

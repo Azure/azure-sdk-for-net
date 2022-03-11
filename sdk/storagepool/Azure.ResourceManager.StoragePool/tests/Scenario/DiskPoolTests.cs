@@ -41,26 +41,26 @@ namespace Azure.ResourceManager.StoragePool.Tests
             diskPoolCreate.AdditionalCapabilities.Add("DiskPool.SkipInfrastructureDeployment");
 
             // create disk pool
-            var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
+            var response = await diskPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
             Assert.AreEqual(diskPoolName, diskPool.Data.Name);
             Assert.AreEqual(ProvisioningStates.Succeeded, diskPool.Data.ProvisioningState);
 
             // update disk pool -- by adding a new tag
             diskPoolCreate.Tags.Add("tag2", "value2");
-            var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
+            var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskPoolName, diskPoolCreate);
             diskPool = updateResponse.Value;
             Assert.AreEqual(diskPoolCreate.Tags, diskPool.Data.Tags);
             Assert.AreEqual(ProvisioningStates.Succeeded, diskPool.Data.ProvisioningState);
 
             // stop disk pool
-            var deallocateResponse = await diskPool.DeallocateAsync(true);
+            var deallocateResponse = await diskPool.DeallocateAsync(WaitUntil.Completed);
 
             // start disk pool
-            var startResponse = await diskPool.StartAsync(true);
+            var startResponse = await diskPool.StartAsync(WaitUntil.Completed);
 
             // delete disk pool
-            var deleteResponse = await diskPool.DeleteAsync(true);
+            var deleteResponse = await diskPool.DeleteAsync(WaitUntil.Completed);
 
             try
             {

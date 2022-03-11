@@ -35,7 +35,7 @@ EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestU
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
 EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(true, namespaceName, parameters).Value;
+EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
 
 //create eventhub
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -60,7 +60,7 @@ EventHubData eventHubData = new EventHubData()
         SkipEmptyArchives = true
     }
 };
-EventHub eventHub = eventHubCollection.CreateOrUpdate(true, eventhubName, eventHubData).Value;
+EventHub eventHub = eventHubCollection.CreateOrUpdate(WaitUntil.Completed, eventhubName, eventHubData).Value;
             #endregion
         }
     }

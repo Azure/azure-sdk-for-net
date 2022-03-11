@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
             Assert.AreEqual(cdnProfileName, cdnProfile.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(true, null, cdnProfile.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(true, cdnProfileName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnProfile.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, cdnProfileName, null));
         }
 
         [TestCase]

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     Tier = ServiceBusSkuTier.Premium
                 }
             };
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, parameters)).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             _topicCollection = serviceBusNamespace.GetServiceBusTopics();
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.IsTrue(await _topicCollection.ExistsAsync(topicName));
 
             //delete topic
-            await topic.DeleteAsync(true);
+            await topic.DeleteAsync(WaitUntil.Completed);
 
             //validate
             topic = await _topicCollection.GetIfExistsAsync(topicName);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             for (int i = 0; i < 10; i++)
             {
                 string topicName = Recording.GenerateAssetName("topic" + i.ToString());
-                _ = await _topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData());
+                _ = await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData());
             }
 
             //validate
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
             //update topic
             topic.Data.MaxMessageSizeInKilobytes = 13312;
-            topic = (await _topicCollection.CreateOrUpdateAsync(true, topicName, topic.Data)).Value;
+            topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, topic.Data)).Value;
             Assert.AreEqual(topic.Data.MaxMessageSizeInKilobytes, 13312);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceTopicAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceTopicAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //delete authorization rule
-            await authorizationRule.DeleteAsync(true);
+            await authorizationRule.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted
             Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
             NamespaceTopicAuthorizationRuleCollection ruleCollection = topic.GetNamespaceTopicAuthorizationRules();
 
             //create authorization rule
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceTopicAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceTopicAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 

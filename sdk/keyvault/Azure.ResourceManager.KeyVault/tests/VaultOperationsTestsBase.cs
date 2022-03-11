@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(true, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultCollection = ResourceGroup.GetVaults();

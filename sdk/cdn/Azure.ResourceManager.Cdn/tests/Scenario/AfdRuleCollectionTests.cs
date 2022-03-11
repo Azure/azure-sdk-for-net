@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdRuleName = Recording.GenerateAssetName("AFDRule");
             AfdRule afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
             Assert.AreEqual(afdRuleName, afdRule.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdRuleSet.GetAfdRules().CreateOrUpdateAsync(true, null, afdRule.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdRuleSet.GetAfdRules().CreateOrUpdateAsync(true, afdRuleName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdRuleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, null, afdRule.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdRuleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, afdRuleName, null));
         }
 
         [TestCase]

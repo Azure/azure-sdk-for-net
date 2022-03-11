@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
             AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
-            await afdSecurityPolicy.DeleteAsync(true);
+            await afdSecurityPolicy.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdSecurityPolicy.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewallParameters)updateOptions.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
-            var lro = await afdSecurityPolicy.UpdateAsync(true, updateOptions);
+            var lro = await afdSecurityPolicy.UpdateAsync(WaitUntil.Completed, updateOptions);
             AfdSecurityPolicy updatedSecurityPolicy = lro.Value;
             ResourceDataHelper.AssertAfdSecurityPolicyUpdate(updatedSecurityPolicy, updateOptions);
         }

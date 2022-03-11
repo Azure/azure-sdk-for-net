@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             return lro.Value;
         }
     }

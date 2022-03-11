@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Tests
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, null, policyDefinition.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, null));
-            await policyDefinition.DeleteAsync(true);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
+            await policyDefinition.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Tests
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             ManagementGroupPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, null, policyDefinition.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
         }
 
         [TestCase]

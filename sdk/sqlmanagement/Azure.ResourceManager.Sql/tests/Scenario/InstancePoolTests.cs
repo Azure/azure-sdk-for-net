@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1000");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
             //3. create Virtual network
             string vnetName = SessionRecording.GenerateAssetName("vnet-");
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
-            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 SubnetId = subnetId,
                 VCores = 8,
             };
-            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(true, instancePoolName, data);
+            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(WaitUntil.Completed, instancePoolName, data);
             return instancePoolLro.Value;
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
 
-            await instancePool.DeleteAsync(true);
+            await instancePool.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }

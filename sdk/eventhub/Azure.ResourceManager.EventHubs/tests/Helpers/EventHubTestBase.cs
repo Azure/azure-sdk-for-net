@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
             ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

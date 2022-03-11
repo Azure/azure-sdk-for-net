@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(true, name, vnet).WaitForCompletionAsync();
+            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Completed, name, vnet).WaitForCompletionAsync();
         }
 
         private async Task<StorageAccount> createStorageAccount()
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             if (virtualNetwork != null)
             {
-                await virtualNetwork.DeleteAsync(true);
+                await virtualNetwork.DeleteAsync(WaitUntil.Completed);
             }
             if (privateDnsZone != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
             Assert.AreEqual(name, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.IsEmpty(privateEndpoint.Data.Tags);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // update
             privateEndpointData.Tags.Add("test", "test");
-            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
+            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
             Assert.AreEqual(name, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.That(privateEndpoint.Data.Tags, Has.Count.EqualTo(1));
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(name, privateEndpoint.Data.Name);
 
             // delete
-            await privateEndpoint.DeleteAsync(true);
+            await privateEndpoint.DeleteAsync(WaitUntil.Completed);
 
             // list all
             privateEndpoints = (await _subscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
             var privateDnsZoneResourceId = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}");
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();
-            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(true, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
+            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
                 PrivateDnsZoneConfigs = {
                     new PrivateDnsZoneConfig
                     {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(privateDnsZone.Id, privateDnsZoneGroup.Data.PrivateDnsZoneConfigs[0].PrivateDnsZoneId);
 
             // update
-            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(true, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
+            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
             Assert.IsEmpty(privateDnsZoneGroup.Data.PrivateDnsZoneConfigs);
 
             // delete
-            await privateDnsZoneGroup.DeleteAsync(true);
+            await privateDnsZoneGroup.DeleteAsync(WaitUntil.Completed);
 
             // list again
             groups = (await privateDnsZoneGroupCollection.GetAllAsync().ToEnumerableAsync());
             Assert.IsEmpty(groups);
 
-            await privateEndpoint.DeleteAsync(true);
+            await privateEndpoint.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

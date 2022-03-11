@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             diskPoolCreate.AvailabilityZones.Add("1");
 
             // create disk pool
-            var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
+            var response = await diskPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
             Assert.AreEqual(diskPoolName, diskPool.Data.Name);
             Assert.AreEqual(ProvisioningStates.Succeeded, diskPool.Data.ProvisioningState);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var iscsiTargetName = Recording.GenerateAssetName("target-");
             var iscsiTargetCreate = new IscsiTargetCreate(IscsiTargetAclMode.Dynamic);
 
-            var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
+            var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(WaitUntil.Completed, iscsiTargetName, iscsiTargetCreate);
             var iscsiTarget = targetCreateResponse.Value;
             Assert.AreEqual(iscsiTargetName, iscsiTarget.Data.Name);
             Assert.AreEqual(ProvisioningStates.Succeeded, iscsiTarget.Data.ProvisioningState);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var dataStoreId = "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/myResourceGroup/providers/Microsoft.AVS/privateClouds/myPrivateCloud/clusters/Cluster-1/datastores/datastore1";
             iscsiTargetCreate.ManagedBy = dataStoreId;
             iscsiTargetCreate.ManagedByExtended.Add(dataStoreId);
-            var targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
+            var targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(WaitUntil.Completed, iscsiTargetName, iscsiTargetCreate);
             iscsiTarget = targetUpdateResponse.Value;
 
             Assert.AreEqual(dataStoreId, iscsiTarget.Data.ManagedBy);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.StoragePool.Tests
             // remove managed by reference
             iscsiTargetCreate.ManagedBy = "";
             iscsiTargetCreate.ManagedByExtended.Remove(dataStoreId);
-            targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
+            targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(WaitUntil.Completed, iscsiTargetName, iscsiTargetCreate);
             iscsiTarget = targetUpdateResponse.Value;
 
             Assert.AreEqual(null, iscsiTarget.Data.ManagedBy);
             Assert.AreEqual(ProvisioningStates.Succeeded, iscsiTarget.Data.ProvisioningState);
 
             // delete iSCSI target
-            var targetDeleteResponse = await iscsiTarget.DeleteAsync(true);
+            var targetDeleteResponse = await iscsiTarget.DeleteAsync(WaitUntil.Completed);
             try
             {
                 var getResponse = await targetCollection.GetAsync(iscsiTargetName);

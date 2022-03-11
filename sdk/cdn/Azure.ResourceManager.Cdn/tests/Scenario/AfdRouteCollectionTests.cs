@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             AfdRoute afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
             Assert.AreEqual(afdRouteName, afdRoute.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(true, null, afdRoute.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(true, afdRouteName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(WaitUntil.Completed, null, afdRoute.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(WaitUntil.Completed, afdRouteName, null));
         }
 
         [TestCase]

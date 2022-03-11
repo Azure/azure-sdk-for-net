@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
             AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
             Assert.AreEqual(afdSecurityPolicyName, afdSecurityPolicy.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(true, null, afdSecurityPolicy.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(true, afdSecurityPolicyName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecurityPolicy.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, afdSecurityPolicyName, null));
         }
 
         [TestCase]

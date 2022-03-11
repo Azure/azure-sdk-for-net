@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnOriginGroupName = Recording.GenerateAssetName("origingroup-");
             CdnOriginGroup cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
             Assert.AreEqual(cdnOriginGroupName, cdnOriginGroup.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, null, cdnOriginGroup.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, cdnOriginGroupName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnOriginGroup.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, cdnOriginGroupName, null));
         }
 
         [TestCase]

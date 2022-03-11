@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
             Assert.AreEqual(policyName, policy.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(true, null, policy.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(true, policyName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, null, policy.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, null));
         }
 
         [TestCase]
