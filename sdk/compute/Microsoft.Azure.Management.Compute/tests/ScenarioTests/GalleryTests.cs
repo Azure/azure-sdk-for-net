@@ -231,7 +231,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
 
@@ -276,7 +276,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
@@ -759,7 +759,7 @@ namespace Compute.Tests
             return new GalleryApplication
             {
                 Eula = "This is the gallery application EULA.",
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 SupportedOSType = OperatingSystemTypes.Windows,
                 PrivacyStatementUri = "www.privacystatement.com",
                 ReleaseNoteUri = "www.releasenote.com",
@@ -771,7 +771,7 @@ namespace Compute.Tests
         {
             return new GalleryApplicationVersion
             {
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile
                 {
                     Source = new UserArtifactSource
@@ -786,7 +786,7 @@ namespace Compute.Tests
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = ComputeManagementTestUtilities.DefaultLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 }
