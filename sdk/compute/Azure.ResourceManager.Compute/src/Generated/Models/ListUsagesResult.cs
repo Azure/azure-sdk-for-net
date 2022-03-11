@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListUsagesResult(IEnumerable<Usage> value)
+        internal ListUsagesResult(IEnumerable<ComputeUsage> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </param>
-        internal ListUsagesResult(IReadOnlyList<Usage> value, string nextLink)
+        internal ListUsagesResult(IReadOnlyList<ComputeUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of compute resource usages. </summary>
-        public IReadOnlyList<Usage> Value { get; }
+        public IReadOnlyList<ComputeUsage> Value { get; }
         /// <summary> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </summary>
         public string NextLink { get; }
     }

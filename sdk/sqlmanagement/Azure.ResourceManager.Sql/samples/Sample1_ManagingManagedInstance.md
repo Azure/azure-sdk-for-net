@@ -33,7 +33,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -48,7 +48,7 @@ NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData
     Location = AzureLocation.WestUS2,
 };
 string networkSecurityGroupName = "myNetworkSecurityGroup";
-var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
 //2. create Route table
 RouteTableData routeTableData = new RouteTableData()
@@ -56,7 +56,7 @@ RouteTableData routeTableData = new RouteTableData()
     Location = AzureLocation.WestUS2,
 };
 string routeTableName = "myRouteTable";
-var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
 //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
 var vnetData = new VirtualNetworkData()
@@ -79,7 +79,7 @@ var vnetData = new VirtualNetworkData()
 };
 vnetData.AddressPrefixes.Add("10.10.0.0/16");
 string vnetName = "myVnet";
-var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
 string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
 //4. create ManagedInstance
@@ -96,7 +96,7 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
-var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
+var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
 ManagedInstance managedInstance = managedInstanceLro.Value;
 ```
 
@@ -144,7 +144,7 @@ if (await managedInstanceCollection.ExistsAsync("bar"))
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
 ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
-await managedInstance.DeleteAsync(true);
+await managedInstance.DeleteAsync(WaitUntil.Completed);
 ```
 
 ## Next steps

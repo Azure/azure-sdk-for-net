@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PublicIPPrefix data model. </summary>
-    public partial class PublicIPPrefixData : Resource
+    public partial class PublicIPPrefixData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
         public PublicIPPrefixData()

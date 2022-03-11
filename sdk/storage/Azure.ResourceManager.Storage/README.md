@@ -54,7 +54,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -62,14 +62,14 @@ Then we can create a storage account inside this resource group.
 
 ```C# Snippet:Managing_StorageAccounts_CreateStorageAccount
 //first we need to define the StorageAccountCreateParameters
-Sku sku = new Sku(SkuName.StandardGRS);
-Kind kind = Kind.Storage;
+StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+StorageKind kind = StorageKind.Storage;
 string location = "westus2";
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
+ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
@@ -113,7 +113,7 @@ if (await accountCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
-await storageAccount.DeleteAsync(true);
+await storageAccount.DeleteAsync(WaitUntil.Completed);
 ```
 
 ### Add a tag to the storage account

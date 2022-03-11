@@ -33,9 +33,9 @@ dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
 
 ### Authenticate the client
 
-In order to interact with the service, you'll need to inject the Web PubSub service with valid credential. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal. Besides, if you want to invoke service REST API, you can call `AddWebPubSubServiceClient<THub>()` where `THub` is user implemented [`WebPubSubHub`](#webpubsubhub) listening to important events.
+In order to interact with the service, you'll need to provide the Web PubSub service with a valid credential. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal. Besides, if you want to invoke service REST API, you can call `AddWebPubSubServiceClient<THub>()` where `THub` is user implemented [`WebPubSubHub`](#webpubsubhub) listening to important events.
 
-### Inject Web PubSub service with options
+### Configure Web PubSub service options
 
 ```C# Snippet:WebPubSubDependencyInjection
 public void ConfigureServices(IServiceCollection services)
@@ -73,16 +73,27 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ## Examples
 
-### Handle Upstream event
+### Handle upstream `Connect` event
 
-```C# Snippet:WebPubSubConnectMethods
-public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+```C# Snippet:WebPubSubHubMethods
+private sealed class SampleHub : WebPubSubHub
 {
-    var response = new ConnectEventResponse
+    internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+    // Need to ensure service client is injected by call `AddServiceHub<SampleHub>` in ConfigureServices.
+    public SampleHub(WebPubSubServiceClient<SampleHub> serviceClient)
     {
-        UserId = request.ConnectionContext.UserId
-    };
-    return new ValueTask<ConnectEventResponse>(response);
+        _serviceClient = serviceClient;
+    }
+
+    public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+    {
+        var response = new ConnectEventResponse
+        {
+            UserId = request.ConnectionContext.UserId
+        };
+        return new ValueTask<ConnectEventResponse>(response);
+    }
 }
 ```
 

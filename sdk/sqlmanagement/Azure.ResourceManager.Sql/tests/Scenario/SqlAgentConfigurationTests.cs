@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             SqlAgentConfigurationData data = new SqlAgentConfigurationData()
             {
             };
-            var agentConfig = await collection.CreateOrUpdateAsync(true, data);
+            var agentConfig = await collection.CreateOrUpdateAsync(WaitUntil.Completed, data);
             Assert.IsNotNull(agentConfig);
             Assert.AreEqual("current", agentConfig.Value.Data.Name);
             Assert.AreEqual("Enabled", agentConfig.Value.Data.State.ToString());

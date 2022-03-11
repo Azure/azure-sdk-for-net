@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

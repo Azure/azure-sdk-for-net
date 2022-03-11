@@ -298,7 +298,7 @@
     <value>These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again.</value>
   </data>
   <data name="ListCheckpointsAsyncObsolete" xml:space="preserve">
-    <value>The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called.</value>
+    <value>The ListCheckpointsAsync method has been superseded by GetCheckpointAsync exists to preserve backwards compatibility; it is highly recommended that GetCheckpointAsync be used instead to improve efficiency.</value>
   </data>
   <data name="UnknownAmqpBodyType" xml:space="preserve">
     <value>The type of AMQP body for the message could not be determined.</value>

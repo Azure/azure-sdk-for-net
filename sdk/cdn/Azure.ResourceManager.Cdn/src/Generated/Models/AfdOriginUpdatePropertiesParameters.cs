@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin. </summary>
-    public partial class AfdOriginUpdatePropertiesParameters
+    internal partial class AfdOriginUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginUpdatePropertiesParameters. </summary>
         public AfdOriginUpdatePropertiesParameters()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BastionHost data model. </summary>
-    public partial class BastionHostData : Resource
+    public partial class BastionHostData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of BastionHostData. </summary>
         public BastionHostData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
         /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
-        internal BastionHostData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, Sku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal BastionHostData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Sku = sku;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
-        internal Sku Sku { get; set; }
+        internal NetworkSku Sku { get; set; }
         /// <summary> The name of this Bastion Host. </summary>
         public BastionHostSkuName? SkuName
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
             set
             {
                 if (Sku is null)
-                    Sku = new Sku();
+                    Sku = new NetworkSku();
                 Sku.Name = value;
             }
         }

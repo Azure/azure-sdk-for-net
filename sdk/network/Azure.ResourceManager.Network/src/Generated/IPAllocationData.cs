@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the IPAllocation data model. </summary>
-    public partial class IPAllocationData : Resource
+    public partial class IPAllocationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
         public IPAllocationData()

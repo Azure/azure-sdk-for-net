@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin group. </summary>
-    public partial class AfdOriginGroupUpdatePropertiesParameters
+    internal partial class AfdOriginGroupUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginGroupUpdatePropertiesParameters. </summary>
         public AfdOriginGroupUpdatePropertiesParameters()

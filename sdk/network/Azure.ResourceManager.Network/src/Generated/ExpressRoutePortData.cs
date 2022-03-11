@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRoutePort data model. </summary>
-    public partial class ExpressRoutePortData : Resource
+    public partial class ExpressRoutePortData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
         public ExpressRoutePortData()

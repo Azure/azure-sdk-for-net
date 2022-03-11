@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
         private readonly StorageTransmissionEvaluator _storageTransmissionEvaluator;
+        private readonly Stopwatch _stopwatch;
         private const int StorageTransmissionEvaluatorSampleSize = 10;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
@@ -32,23 +33,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _resourceParser = new ResourceParser();
 
             // Todo: Add check if offline storage is enabled by user via options
+            _stopwatch = Stopwatch.StartNew();
+
             _storageTransmissionEvaluator = new StorageTransmissionEvaluator(StorageTransmissionEvaluatorSampleSize);
         }
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {
+            // Get export start time
+            long exportStartTimeInMilliseconds = _stopwatch.ElapsedMilliseconds;
+
             // Add export time interval to data sample
-            _storageTransmissionEvaluator?.UpdateExportInterval();
+            _storageTransmissionEvaluator.AddExportIntervalToDataSample(exportStartTimeInMilliseconds);
 
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
             try
             {
-                // Get number ticks before export
-                long ticksBeforeExport =  Stopwatch.GetTimestamp();
-
                 var resource = ParentProvider.GetResource();
                 _resourceParser.UpdateRoleNameAndInstance(resource);
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
@@ -57,15 +60,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Validate CancellationToken and async pattern here.
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-                // Get number of ticks after export
-                long ticksAfterExport = Stopwatch.GetTimestamp();
+                // Get export end time
+                long exportEndTimeInMilliseconds = _stopwatch.ElapsedMilliseconds;
 
                 // Calculate duration and add it to data sample
-                double currentExportDuration = TimeSpan.FromTicks(ticksAfterExport - ticksBeforeExport).TotalSeconds;
-                _storageTransmissionEvaluator.UpdateExportDuration(currentExportDuration);
+                long currentBatchExportDurationInMilliseconds = exportEndTimeInMilliseconds - exportStartTimeInMilliseconds;
+                _storageTransmissionEvaluator.AddExportDurationToDataSample(currentBatchExportDurationInMilliseconds);
 
                 // Get max number of files we can transmit in this export and start transmitting
-                long maxFilesToTransmit = _storageTransmissionEvaluator.MaxFilesToTransmitFromStorage();
+                long maxFilesToTransmit = _storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
                 _transmitter.TransmitFromStorage(maxFilesToTransmit, false, CancellationToken.None);
 
                 return exportResult;
