@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary>
-    /// Summary description for Class1
+    /// This class extends the PhoneNumbersClientsOptions to be able to inject the x-ms-useragent header into the HttpPipeline
     /// </summary>
     internal static class PhoneNumbersClientOptionsExtensions
     {
