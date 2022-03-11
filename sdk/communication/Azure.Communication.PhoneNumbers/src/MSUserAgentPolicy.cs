@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// Summary description for Class1
     /// </summary>
-    public class MSUserAgentPolicy : HttpPipelinePolicy
+    internal class MSUserAgentPolicy : HttpPipelinePolicy
     {
         /// <summary>
         /// Processed message adding the HTTP header x-ms-useragent if applicable.
