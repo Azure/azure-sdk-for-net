@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -15,7 +14,6 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
-        private readonly bool _logAccountDetails;
 
         internal string RedirectUrl { get; }
 
@@ -27,7 +25,6 @@ namespace Azure.Identity
         {
             RedirectUrl = redirectUrl;
             _beforeBuildClient = beforeBuildClient;
-            _logAccountDetails = true; //TODO: get from options
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)

@@ -22,8 +22,6 @@ namespace Azure.Identity
 
         internal MsalConfidentialClient Client { get; }
 
-        private readonly bool _logAccountDetails;
-
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
         /// </summary>
@@ -115,11 +113,6 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
-
-                if (_logAccountDetails)
-                {
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(ClientId, TenantId, null, null);
-                }
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)

@@ -13,7 +13,7 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
-        private bool _logAccountDetails; //TODO: get from options
+        private bool _logAccountDetails;
 
         internal protected bool IsPiiLoggingEnabled { get; }
 
@@ -32,6 +32,7 @@ namespace Azure.Identity
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
             Validations.ValidateAuthorityHost(pipeline.AuthorityHost);
+            _logAccountDetails = options?.Diagnostics.IsAccountIdentifiersLoggingEnabled ?? false;
             ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
             IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
