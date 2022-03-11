@@ -39,6 +39,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private const int ERROR_FILE_NOT_FOUND = 2;
         private readonly bool _logPII;
+        private readonly bool _logAccountDetails;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
@@ -61,6 +62,7 @@ namespace Azure.Identity
         {
             UseLegacyPowerShell = false;
             _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
@@ -95,6 +97,10 @@ namespace Azure.Identity
             try
             {
                 AccessToken token = await RequestAzurePowerShellAccessTokenAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                if (_logAccountDetails)
+                {
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                }
                 return scope.Succeeded(token);
             }
             catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -103,6 +109,12 @@ namespace Azure.Identity
                 try
                 {
                     AccessToken token = await RequestAzurePowerShellAccessTokenAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+
+                    if (_logAccountDetails)
+                    {
+                        AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                    }
+
                     return scope.Succeeded(token);
                 }
                 catch (Exception e)
@@ -265,7 +277,8 @@ return $x.Objects.FirstChild.OuterXml
                         break;
                 }
 
-                if (expiresOn != default && accessToken != null) break;
+                if (expiresOn != default && accessToken != null)
+                    break;
             }
 
             if (accessToken == null)

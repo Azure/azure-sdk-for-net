@@ -77,7 +77,9 @@ namespace Azure.Identity
 
         public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenSilentCoreAsync(scopes, claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(scopes, claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
         }
 
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, string tenantId, bool async, CancellationToken cancellationToken)
@@ -131,7 +133,12 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingOnThreadPool();
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                return Task.Run(async () => await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, true, cancellationToken).ConfigureAwait(false)).GetAwaiter().GetResult();
+                return Task.Run(async () =>
+                {
+                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, true, cancellationToken).ConfigureAwait(false);
+                    LogAccountDetails(result);
+                    return result;
+                }).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 

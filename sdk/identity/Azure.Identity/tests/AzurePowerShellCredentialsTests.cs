@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Threading;
@@ -12,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.CodeAnalysis.Operations;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -24,6 +21,18 @@ namespace Azure.Identity.Tests
 
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var pwshOptions = new AzurePowerShellCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            return  InstrumentClient(
+                new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+        }
 
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential(

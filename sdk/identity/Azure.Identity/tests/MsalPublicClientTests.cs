@@ -55,12 +55,5 @@ namespace Azure.Identity.Tests
                 env?.Dispose();
             }
         }
-
-        [Test]
-        public void TestTest()
-        {
-            var cred = new InteractiveBrowserCredential();
-            cred.GetToken(new Core.TokenRequestContext(new[] { "https://storage.azure.com/.default" }));
-        }
     }
 }

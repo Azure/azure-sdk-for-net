@@ -17,12 +17,12 @@ namespace Azure.Identity
         /// If <c>true</c> we try to log the account identifiers by parsing the received access token.
         ///  The account identifiers we try to log are:
         /// <list type="bullet">
-        /// <item><description>The application or Client Identifier</description></item>
+        /// <item><description>The Application or Client Identifier</description></item>
         /// <item><description>User Principal Name</description></item>
         /// <item><description>Tenant Identifier</description></item>
         /// <item><description>Object Identifier of the authenticated user</description></item>
         /// </list>
         /// </summary>
-        public bool IsAccountIdentifiersLoggingEnabled { get; set; }
+        public bool IsAccountIdentifierLoggingEnabled { get; set; }
     }
 }

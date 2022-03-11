@@ -18,6 +18,9 @@ namespace Azure.Identity.Tests
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
+
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
         {

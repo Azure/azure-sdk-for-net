@@ -47,6 +47,7 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         private readonly string _tenantId;
         private readonly bool _logPII;
+        private readonly bool _logAccountDetails;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -66,6 +67,7 @@ namespace Azure.Identity
         internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
@@ -158,6 +160,11 @@ namespace Azure.Identity
                 }
 
                 throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+            }
+
+            if (_logAccountDetails)
+            {
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
             }
 
             return DeserializeOutput(output);

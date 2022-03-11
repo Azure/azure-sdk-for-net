@@ -16,6 +16,9 @@ namespace Azure.Identity.Tests
         public ClientSecretCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+
         [Test]
         public void VerifyCtorParametersValidation()
         {
@@ -36,7 +39,8 @@ namespace Azure.Identity.Tests
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
-            ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+            ClientSecretCredential client =
+                InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 

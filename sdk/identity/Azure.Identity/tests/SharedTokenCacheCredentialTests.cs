@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
@@ -16,6 +15,12 @@ namespace Azure.Identity.Tests
     {
         public SharedTokenCacheCredentialTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            mockPublicMsalClient.Accounts = new List<IAccount> { new MockAccount(expectedUsername, expectedTenantId) };
+            return InstrumentClient(new SharedTokenCacheCredential(TenantId, null, options, null, mockPublicMsalClient));
+        }
 
         [Test]
         public async Task VerifyAuthenticationRecordOption()
@@ -63,7 +68,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
@@ -578,10 +583,7 @@ namespace Azure.Identity.Tests
             var options = new SharedTokenCacheCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
-            mockPublicMsalClient.Accounts = new List<IAccount>
-            {
-                new MockAccount(expectedUsername, expectedTenantId)
-            };
+            mockPublicMsalClient.Accounts = new List<IAccount> { new MockAccount(expectedUsername, expectedTenantId) };
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(TenantId, null, options, null, mockPublicMsalClient));
 

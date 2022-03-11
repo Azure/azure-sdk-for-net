@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
@@ -14,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class CredentialTestBase : ClientTestBase
+    public abstract class CredentialTestBase : ClientTestBase
     {
         protected const string Scope = "https://vault.azure.net/.default";
         protected const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
@@ -39,12 +41,37 @@ namespace Azure.Identity.Tests
         public CredentialTestBase(bool isAsync) : base(isAsync)
         { }
 
-        public void TestSetup()
+        public abstract TokenCredential GetTokenCredential(TokenCredentialOptions options);
+
+        [Test]
+        public async Task IsAccountIdentifierLoggingEnabled([Values(true, false)] bool isOptionSet)
+        {
+            var options = new TokenCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = isOptionSet } };
+            TestSetup(options);
+            expectedTenantId = TenantId;
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
+            var credential = GetTokenCredential(options);
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
+            await credential.GetTokenAsync(context, default);
+
+            var loggedEvents = _listener.EventsById(AzureIdentityEventSource.AuthenticatedAccountDetailsEvent);
+            if (isOptionSet)
+            {
+                CollectionAssert.IsNotEmpty(loggedEvents);
+            }
+            else
+            {
+                CollectionAssert.IsEmpty(loggedEvents);
+            }
+        }
+
+        public void TestSetup(TokenCredentialOptions options = null)
         {
             expectedTenantId = null;
             expectedReplyUri = null;
             authCode = Guid.NewGuid().ToString();
-            options = new TokenCredentialOptions();
+            options = options ?? new TokenCredentialOptions();
             expectedToken = Guid.NewGuid().ToString();
             expectedUserAssertion = Guid.NewGuid().ToString();
             expiresOn = DateTimeOffset.Now.AddHours(1);
@@ -62,7 +89,7 @@ namespace Azure.Identity.Tests
                 null,
                 "Bearer");
 
-            mockConfidentialMsalClient = new MockMsalConfidentialClient()
+            mockConfidentialMsalClient = new MockMsalConfidentialClient(null, null, null, null, null, options)
                 .WithSilentFactory(
                     (_, _tenantId, _replyUri, _) =>
                     {
@@ -91,7 +118,7 @@ namespace Azure.Identity.Tests
                     });
 
             expectedCode = Guid.NewGuid().ToString();
-            mockPublicMsalClient = new MockMsalPublicClient();
+            mockPublicMsalClient = new MockMsalPublicClient(null, null, null, null, options);
             deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
             mockPublicMsalClient.DeviceCodeResult = deviceCodeResult;
             var publicResult = new AuthenticationResult(
@@ -190,7 +217,7 @@ namespace Azure.Identity.Tests
             return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", MsalEncode(id));
         }
 
-         private const char base64PadCharacter = '=';
+        private const char base64PadCharacter = '=';
 #if NET45
         private const string doubleBase64PadCharacter = "==";
 #endif

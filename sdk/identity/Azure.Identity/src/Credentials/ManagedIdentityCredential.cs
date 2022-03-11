@@ -47,7 +47,7 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(clientId, CredentialPipeline.GetInstance(options))
         {
-            _logAccountDetails = options?.Diagnostics.IsAccountIdentifiersLoggingEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.Identity
             : this(
                 new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options) }))
         {
-            _logAccountDetails = options?.Diagnostics.IsAccountIdentifiersLoggingEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _clientId = resourceId.ToString();
         }
 
