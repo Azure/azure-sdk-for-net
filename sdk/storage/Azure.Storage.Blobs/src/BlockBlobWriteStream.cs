@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs
                     //    Conditions = conditions,
                     //    ProgressHandler = _progressHandler
                     //},
-                    blockContentTransactionalMD5: default,
+                    validationOptions: default,
                     conditions: conditions,
                     progressHandler: _progressHandler,
                     async: async,

@@ -997,37 +997,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlobAppendInfo> AppendBlock(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            byte[] transactionalContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            AppendBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //AppendBlobAppendBlockOptions options = default;
-            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            //{
-            //    options = new AppendBlobAppendBlockOptions()
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return AppendBlockInternal(
                 content,
-                transactionalContentHash,
+                transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 conditions,
                 progressHandler,
                 false, // async
@@ -1078,37 +1066,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            byte[] transactionalContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            AppendBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //AppendBlobAppendBlockOptions options = default;
-            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            //{
-            //    options = new AppendBlobAppendBlockOptions()
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return await AppendBlockInternal(
                 content,
-                transactionalContentHash,
+                transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 conditions,
                 progressHandler,
                 true, // async
@@ -1116,91 +1092,91 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
         }
 
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
-        ///// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
-        ///// to the end of the existing append blob.  The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
-        ///// operation is only permitted if the blob was created as an append
-        ///// blob.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
-        ///// Append Block</see>.
-        ///// </summary>
-        ///// <param name="content">
-        ///// A <see cref="Stream"/> containing the content of the block to
-        ///// append.
-        ///// </param>
-        ///// <param name="options">
-        ///// Optional parameters.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{BlobAppendInfo}"/> describing the
-        ///// state of the updated append blob.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //public virtual Response<BlobAppendInfo> AppendBlock(
-        //    Stream content,
-        //    AppendBlobAppendBlockOptions options = default,
-        //    CancellationToken cancellationToken = default) =>
-        //    AppendBlockInternal(
-        //        content,
-        //        options,
-        //        transactionalContentMD5: default,
-        //        false, // async
-        //        cancellationToken)
-        //        .EnsureCompleted();
+        /// <summary>
+        /// The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
+        /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
+        /// to the end of the existing append blob.  The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        /// Append Block</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the block to
+        /// append.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
+        /// state of the updated append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobAppendInfo> AppendBlock(
+            Stream content,
+            AppendBlobAppendBlockOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            AppendBlockInternal(
+                content,
+                options?.TransactionalValidationOptions,
+                options?.Conditions,
+                options?.ProgressHandler,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
-        ///// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
-        ///// to the end of the existing append blob.  The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
-        ///// operation is only permitted if the blob was created as an append
-        ///// blob.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
-        ///// Append Block</see>.
-        ///// </summary>
-        ///// <param name="content">
-        ///// A <see cref="Stream"/> containing the content of the block to
-        ///// append.
-        ///// </param>
-        ///// <param name="options">
-        ///// Optional parameters.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{BlobAppendInfo}"/> describing the
-        ///// state of the updated append blob.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
-        //    Stream content,
-        //    AppendBlobAppendBlockOptions options = default,
-        //    CancellationToken cancellationToken = default) =>
-        //    await AppendBlockInternal(
-        //        content,
-        //        options,
-        //        transactionalContentMD5: default,
-        //        true, // async
-        //        cancellationToken)
-        //        .ConfigureAwait(false);
+        /// <summary>
+        /// The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
+        /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
+        /// to the end of the existing append blob.  The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        /// Append Block</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the block to
+        /// append.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
+        /// state of the updated append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+            Stream content,
+            AppendBlobAppendBlockOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await AppendBlockInternal(
+                content,
+                options?.TransactionalValidationOptions,
+                options?.Conditions,
+                options?.ProgressHandler,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="AppendBlockInternal"/> operation commits a new block
@@ -1217,14 +1193,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> containing the content of the block to
         /// append.
         /// </param>
+        /// <param name="validationOptions">
+        /// Validation options for content verification.
+        /// </param>
         /// <param name="conditions">
         /// Request conditions for append operation.
         /// </param>
         /// <param name="progressHandler">
         /// Progress handler for append progress.
-        /// </param>
-        /// <param name="transactionalContentMD5">
-        /// Transactional MD5 for content verification.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1243,7 +1219,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
-            byte[] transactionalContentMD5,
+            UploadTransferValidationOptions validationOptions,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
@@ -1274,8 +1250,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    // TODO #27253
-                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
 
@@ -1286,9 +1261,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            // TODO #27253
-                            //transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1309,9 +1283,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            // TODO #27253
-                            //transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
