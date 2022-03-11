@@ -38,16 +38,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
             _endpoint = endpoint;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, null)
+        {
         }
         #region DataFeed
 
@@ -226,16 +237,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 };
 
                 Response response = await CreateDataFeedAsync(content, context).ConfigureAwait(false);
-                var headers = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(response);
-                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> responseWithHeaders = ResponseWithHeaders.FromValue(headers, response);
 
-                string dataFeedId = ClientCommon.GetDataFeedId(responseWithHeaders.Headers.Location);
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string dataFeedId = ClientCommon.GetDataFeedId(location);
 
                 try
                 {
                     var createdDataFeed = await GetDataFeedAsync(dataFeedId, cancellationToken).ConfigureAwait(false);
 
-                    return Response.FromValue(createdDataFeed, responseWithHeaders.GetRawResponse());
+                    return Response.FromValue(createdDataFeed, response);
                 }
                 catch (Exception ex)
                 {
@@ -275,16 +285,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     CancellationToken = cancellationToken,
                 };
                 Response response = CreateDataFeed(content, context);
-                var headers = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(response);
-                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> responseWithHeaders = ResponseWithHeaders.FromValue(headers, response);
 
-                string dataFeedId = ClientCommon.GetDataFeedId(responseWithHeaders.Headers.Location);
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string dataFeedId = ClientCommon.GetDataFeedId(location);
 
                 try
                 {
                     var createdDataFeed = GetDataFeed(dataFeedId, cancellationToken);
 
-                    return Response.FromValue(createdDataFeed, responseWithHeaders.GetRawResponse());
+                    return Response.FromValue(createdDataFeed, response);
                 }
                 catch (Exception ex)
                 {

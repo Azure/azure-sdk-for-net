@@ -33,16 +33,27 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+        public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
             _endpoint = endpoint;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, null)
+        {
         }
 
         #region MetricFeedback
@@ -177,16 +188,15 @@ namespace Azure.AI.MetricsAdvisor
                     CancellationToken = cancellationToken,
                 };
                 Response response = await CreateMetricFeedbackAsync(content, context).ConfigureAwait(false);
-                var headers = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders(response);
-                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> responseWithHeaders = ResponseWithHeaders.FromValue(headers, response);
 
-                string feedbackId = ClientCommon.GetFeedbackId(responseWithHeaders.Headers.Location);
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string feedbackId = ClientCommon.GetFeedbackId(location);
 
                 try
                 {
                     var addedFeedback = await GetFeedbackAsync(feedbackId, cancellationToken).ConfigureAwait(false);
 
-                    return Response.FromValue(addedFeedback, responseWithHeaders.GetRawResponse());
+                    return Response.FromValue(addedFeedback, response);
                 }
                 catch (Exception ex)
                 {
@@ -225,16 +235,15 @@ namespace Azure.AI.MetricsAdvisor
                     CancellationToken = cancellationToken,
                 };
                 Response response = CreateMetricFeedback(content, context);
-                var headers = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders(response);
-                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> responseWithHeaders = ResponseWithHeaders.FromValue(headers, response);
 
-                string feedbackId = ClientCommon.GetFeedbackId(responseWithHeaders.Headers.Location);
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string feedbackId = ClientCommon.GetFeedbackId(location);
 
                 try
                 {
                     var addedFeedback = GetFeedback(feedbackId, cancellationToken);
 
-                    return Response.FromValue(addedFeedback, responseWithHeaders.GetRawResponse());
+                    return Response.FromValue(addedFeedback, response);
                 }
                 catch (Exception ex)
                 {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> Client options for MetricsAdvisorClient. </summary>
-    public partial class MetricsAdvisorClientOptions : ClientOptions
+    public partial class MetricsAdvisorClientsOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.MetricsAdvisor
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of MetricsAdvisorClientOptions. </summary>
-        public MetricsAdvisorClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of MetricsAdvisorClientsOptions. </summary>
+        public MetricsAdvisorClientsOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

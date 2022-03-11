@@ -103,9 +103,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
         }
 
-        private MetricsAdvisorClientOptions GetInstrumentedOptions()
+        private MetricsAdvisorClientsOptions GetInstrumentedOptions()
         {
-            var options = new MetricsAdvisorClientOptions();
+            var options = new MetricsAdvisorClientsOptions();
 
             options.Retry.MaxRetries = 6;
 
