@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SyncGroupData DeserializeSyncGroupData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<SqlSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

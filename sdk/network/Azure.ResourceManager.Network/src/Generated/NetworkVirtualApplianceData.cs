@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkVirtualAppliance data model. </summary>
-    public partial class NetworkVirtualApplianceData : Resource
+    public partial class NetworkVirtualApplianceData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
         public NetworkVirtualApplianceData()

@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Network.Tests
             var pcProperties = new PacketCaptureInput(vm.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
 
             var packetCaptureCollection = GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
-            var  createPacketCapture1Operation = await packetCaptureCollection.CreateOrUpdateAsync(true, pcName1, pcProperties);
+            var  createPacketCapture1Operation = await packetCaptureCollection.CreateOrUpdateAsync(WaitUntil.Completed, pcName1, pcProperties);
             var createPacketCapture1 = await createPacketCapture1Operation.WaitForCompletionAsync();;
             Response<PacketCapture> getPacketCapture = await packetCaptureCollection.GetAsync(pcName1);
-            var queryPCOperation = await getPacketCapture.Value.GetStatusAsync(true);
+            var queryPCOperation = await getPacketCapture.Value.GetStatusAsync(WaitUntil.Completed);
             await queryPCOperation.WaitForCompletionAsync();;
 
             //Validation
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(@"C:\tmp\Capture.cap", createPacketCapture1.Value.Data.StorageLocation.FilePath);
             Assert.AreEqual("Succeeded", getPacketCapture.Value.Data.ProvisioningState.ToString());
 
-            var  packetCapturesCreateOperation = await packetCaptureCollection.CreateOrUpdateAsync(true, pcName2, pcProperties);
+            var  packetCapturesCreateOperation = await packetCaptureCollection.CreateOrUpdateAsync(WaitUntil.Completed, pcName2, pcProperties);
             await packetCapturesCreateOperation.WaitForCompletionAsync();;
 
             AsyncPageable<PacketCapture> listPCByRg1AP = packetCaptureCollection.GetAllAsync();
             List<PacketCapture> listPCByRg1 = await listPCByRg1AP.ToEnumerableAsync();
 
-            var packetCapturesStopOperation = await getPacketCapture.Value.StopAsync(true);
+            var packetCapturesStopOperation = await getPacketCapture.Value.StopAsync(WaitUntil.Completed);
             await packetCapturesStopOperation.WaitForCompletionResponseAsync();;
 
-            var queryPCAfterStopOperation = await getPacketCapture.Value.GetStatusAsync(true);
+            var queryPCAfterStopOperation = await getPacketCapture.Value.GetStatusAsync(WaitUntil.Completed);
             Response<PacketCaptureQueryStatusResult> queryPCAfterStop = await queryPCAfterStopOperation.WaitForCompletionAsync();;
 
-            var packetCapturesDeleteOperation = await getPacketCapture.Value.DeleteAsync(true);
+            var packetCapturesDeleteOperation = await getPacketCapture.Value.DeleteAsync(WaitUntil.Completed);
             await packetCapturesDeleteOperation.WaitForCompletionResponseAsync();;
             AsyncPageable<PacketCapture> listPCByRg2 = packetCaptureCollection.GetAllAsync();
 

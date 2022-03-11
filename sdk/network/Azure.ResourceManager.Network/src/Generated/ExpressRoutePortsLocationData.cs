@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRoutePortsLocation data model. </summary>
-    public partial class ExpressRoutePortsLocationData : Resource
+    public partial class ExpressRoutePortsLocationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         public ExpressRoutePortsLocationData()

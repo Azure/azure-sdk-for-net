@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteFilter data model. </summary>
-    public partial class RouteFilterData : Resource
+    public partial class RouteFilterData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         public RouteFilterData()

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
         /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="protocolSettings"> Protocol settings for file service. </param>
-        internal FileServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.Sku sku, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, ProtocolSettings protocolSettings) : base(id, name, type, systemData)
+        internal FileServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, StorageSku sku, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, ProtocolSettings protocolSettings) : base(id, name, type, systemData)
         {
             Sku = sku;
             Cors = cors;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sku name and tier. </summary>
-        public Models.Sku Sku { get; }
+        public StorageSku Sku { get; }
         /// <summary> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </summary>
         internal CorsRules Cors { get; set; }
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>

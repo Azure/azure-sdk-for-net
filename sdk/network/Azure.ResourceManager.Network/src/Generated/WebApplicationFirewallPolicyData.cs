@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the WebApplicationFirewallPolicy data model. </summary>
-    public partial class WebApplicationFirewallPolicyData : Resource
+    public partial class WebApplicationFirewallPolicyData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
         public WebApplicationFirewallPolicyData()

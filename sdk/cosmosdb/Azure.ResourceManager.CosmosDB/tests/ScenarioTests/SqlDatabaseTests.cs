@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlDatabase database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
             if (database != null)
             {
-                await database.DeleteAsync(true);
+                await database.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            database = (await SqlDatabaseContainer.CreateOrUpdateAsync(true, _databaseName, updateOptions)).Value;
+            database = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.Id);
             database2 = await SqlDatabaseContainer.GetAsync(_databaseName);
             VerifyDatabases(database, database2);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountSqlDatabaseThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseThroughputSetting throughput = await database.GetDatabaseAccountSqlDatabaseThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlDatabaseToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlDatabaseToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseThroughputSetting throughput = await database.GetDatabaseAccountSqlDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlDatabaseToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseDelete()
         {
             var database = await CreateSqlDatabase(null);
-            await database.DeleteAsync(true);
+            await database.DeleteAsync(WaitUntil.Completed);
 
             database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
             Assert.Null(database);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var databaseLro = await collection.CreateOrUpdateAsync(true, name, sqlDatabaseCreateUpdateOptions);
+            var databaseLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, sqlDatabaseCreateUpdateOptions);
             return databaseLro.Value;
         }
 

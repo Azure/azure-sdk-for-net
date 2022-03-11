@@ -62,7 +62,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -70,7 +70,7 @@ ResourceGroup resourceGroup = lro.Value;
 AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySetData input = new AvailabilitySetData(location);
-ArmOperation<AvailabilitySet> lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
+ArmOperation<AvailabilitySet> lro = await availabilitySetCollection.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName, input);
 AvailabilitySet availabilitySet = lro.Value;
 ```
 
@@ -134,7 +134,7 @@ AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabil
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
 // delete the availability set
-await availabilitySet.DeleteAsync(true);
+await availabilitySet.DeleteAsync(WaitUntil.Completed);
 ```
 
 ### Check if availability set exists

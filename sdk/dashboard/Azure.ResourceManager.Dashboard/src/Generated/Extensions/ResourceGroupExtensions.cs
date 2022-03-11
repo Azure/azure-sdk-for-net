@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dashboard
@@ -27,6 +31,36 @@ namespace Azure.ResourceManager.Dashboard
         public static GrafanaResourceCollection GetGrafanaResources(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetGrafanaResources();
+        }
+
+        /// <summary>
+        /// Get the properties of a specific workspace for Grafana resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
+        /// Operation Id: Grafana_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public static async Task<Response<GrafanaResource>> GetGrafanaResourceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetGrafanaResources().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a specific workspace for Grafana resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
+        /// Operation Id: Grafana_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public static Response<GrafanaResource> GetGrafanaResource(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetGrafanaResources().Get(workspaceName, cancellationToken);
         }
     }
 }

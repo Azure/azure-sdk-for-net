@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGatewayConnection data model. </summary>
-    public partial class VirtualNetworkGatewayConnectionData : Resource
+    public partial class VirtualNetworkGatewayConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionData. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>

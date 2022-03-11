@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
 
         public static DedicatedHostData GetBasicDedicatedHost(AzureLocation location, string skuName, int platformFaultDomain)
         {
-            return new DedicatedHostData(location, new Models.Sku()
+            return new DedicatedHostData(location, new ComputeSku()
             {
                 Name = skuName
             })
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             return new VirtualMachineScaleSetData(location)
             {
-                Sku = new Models.Sku()
+                Sku = new ComputeSku()
                 {
                     Name = "Standard_F2",
                     Capacity = capacity,
