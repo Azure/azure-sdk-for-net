@@ -1565,7 +1565,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         [Event(TransactionDeclaredEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDeclared for LocalTransactionId: {0} AmqpTransactionId: {1}.")]
         public void TransactionDeclared(string transactionId, string amqpTransactionId)
         {
-            WriteEvent(TransactionDeclaredEvent, transactionId, amqpTransactionId);
+            if (IsEnabled())
+            {
+                WriteEvent(TransactionDeclaredEvent, transactionId, amqpTransactionId);
+            }
         }
 
         [NonEvent]
@@ -1580,7 +1583,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         [Event(TransactionDischargedEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDischarged for LocalTransactionId: {0} AmqpTransactionId: {1} Rollback: {2}.")]
         public void TransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
         {
-            TransactionDischargedCore(TransactionDischargedEvent, transactionId, amqpTransactionId, rollback);
+            if (IsEnabled())
+            {
+                TransactionDischargedCore(TransactionDischargedEvent, transactionId, amqpTransactionId, rollback);
+            }
         }
 
         [NonEvent]
