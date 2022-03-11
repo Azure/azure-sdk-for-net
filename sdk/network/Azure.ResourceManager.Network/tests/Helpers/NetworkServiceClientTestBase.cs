@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data));
+            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data));
             operation.WaitForCompletion();
             return operation.Value;
         }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data);
+            var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data);
             return operation.Value;
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data));
+            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data));
             operation.WaitForCompletion();
             return operation.Value;
         }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
         {
             var extensionId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent");
-            return (await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, extensionId, new GenericResourceData(location)
+            return (await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, extensionId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {

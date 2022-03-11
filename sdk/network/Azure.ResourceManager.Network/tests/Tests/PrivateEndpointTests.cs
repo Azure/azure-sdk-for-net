@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var name = Recording.GenerateAssetName("testsa");
             var parameters = new StorageAccountCreateParameters(new StorageSku(StorageSkuName.StandardLRS), StorageKind.Storage,TestEnvironment.Location);
-            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, name,parameters)).Value;
+            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, name,parameters)).Value;
             //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Network.Tests
             }
             if (privateDnsZone != null)
             {
-                await privateDnsZone.DeleteAsync(true);
+                await privateDnsZone.DeleteAsync(WaitUntil.Completed);
             }
             if (storageAccount != null)
             {
                 //await StorageManagementClient.StorageAccounts.DeleteAsync(resourceGroup.Data.Name, storageAccount.Name);
-                await storageAccount.DeleteAsync(true);
+                await storageAccount.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
             var privateDnsZoneResourceId = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}");
-            privateDnsZone = ArmClient.GetGenericResources().CreateOrUpdate(true, privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
+            privateDnsZone = ArmClient.GetGenericResources().CreateOrUpdate(WaitUntil.Completed, privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();

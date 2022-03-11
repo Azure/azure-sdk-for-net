@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 AccessTier = AccessTier.Hot
             };
-            StorageAccount account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName, storageAccountCreateParameters)).Value;
+            StorageAccount account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageAccountCreateParameters)).Value;
             if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(5000);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.StorageAccountResourceId, parameter.CaptureDescription.Destination.StorageAccountResourceId);
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.ArchiveNameFormat, parameter.CaptureDescription.Destination.ArchiveNameFormat);
 
-            await account.DeleteAsync(true);
+            await account.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

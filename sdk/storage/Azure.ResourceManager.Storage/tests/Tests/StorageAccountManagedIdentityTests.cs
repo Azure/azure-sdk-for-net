@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string userAssignedIdentityName = Recording.GenerateAssetName("testMsi-");
             ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
             var input = new GenericResourceData(DefaultLocation);
-            var response = await Client.GetGenericResources().CreateOrUpdateAsync(true, userIdentityId, input);
+            var response = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userIdentityId, input);
             return response.Value;
         }
 
