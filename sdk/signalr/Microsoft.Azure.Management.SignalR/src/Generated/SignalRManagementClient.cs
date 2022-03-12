@@ -208,10 +208,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw new System.ArgumentNullException("credentials");
             }
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials.InitializeServiceClient(this);
         }
 
         /// <summary>
@@ -235,10 +232,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw new System.ArgumentNullException("credentials");
             }
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials.InitializeServiceClient(this);
         }
 
         /// <summary>
@@ -263,10 +257,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw new System.ArgumentNullException("credentials");
             }
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials.InitializeServiceClient(this);
         }
 
         /// <summary>
@@ -296,10 +287,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
             BaseUri = baseUri;
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials.InitializeServiceClient(this);
         }
 
         /// <summary>
@@ -332,10 +320,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
             BaseUri = baseUri;
             Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
+            Credentials.InitializeServiceClient(this);
         }
 
         /// <summary>
