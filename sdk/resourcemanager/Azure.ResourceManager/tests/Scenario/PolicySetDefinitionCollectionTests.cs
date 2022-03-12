@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Tests
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
                     ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
-                    Assert.AreEqual(kvp.Value.Type, getParameterDefinitionsValue.Type);
+                    Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {
                         Assert.NotNull(kvp.Value.AllowedValues);

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceLinkType, getResult.Data.ResourceLinkType);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if(model.Data.Properties != null || getResult.Data.Properties != null)
             {
                 Assert.NotNull(model.Data.Properties);
