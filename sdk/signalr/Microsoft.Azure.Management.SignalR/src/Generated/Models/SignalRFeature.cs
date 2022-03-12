@@ -124,16 +124,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
-            if (Value != null)
+            if (Value.Length > 128)
             {
-                if (Value.Length > 128)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Value", 128);
-                }
-                if (Value.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Value", 1);
-                }
+                throw new ValidationException(ValidationRules.MaxLength, "Value", 128);
+            }
+            if (Value.Length < 1)
+            {
+                throw new ValidationException(ValidationRules.MinLength, "Value", 1);
             }
         }
     }
