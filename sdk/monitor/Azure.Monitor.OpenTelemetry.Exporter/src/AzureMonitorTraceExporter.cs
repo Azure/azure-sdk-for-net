@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
+        private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
         private readonly StorageTransmissionEvaluator _storageTransmissionEvaluator;
         private readonly Stopwatch _stopwatch;
@@ -26,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal AzureMonitorTraceExporter(ITransmitter transmitter)
         {
             _transmitter = transmitter;
+            _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
 
             // Todo: Add check if offline storage is enabled by user via options
@@ -54,8 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     _resourceParser.UpdateRoleNameAndInstance(resource);
                 }
 
-                var instrumentationKey = _transmitter.InstrumentationKey;
-                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, instrumentationKey);
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.

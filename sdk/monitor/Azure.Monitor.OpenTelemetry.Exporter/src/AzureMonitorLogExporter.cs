@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
+        private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
 
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
@@ -23,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal AzureMonitorLogExporter(ITransmitter transmitter)
         {
             _transmitter = transmitter;
+            _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
         }
 
@@ -40,8 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     _resourceParser.UpdateRoleNameAndInstance(resource);
                 }
 
-                var instrumentationKey = _transmitter.InstrumentationKey;
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
