@@ -18,6 +18,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27522")]
     public class CommunicationRelayClientLiveTests : CommunicationRelayClientLiveTestBase
     {
         /// <summary>
