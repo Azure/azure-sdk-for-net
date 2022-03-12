@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ExecutionActivityConverter))]
-    public partial class ExecutionActivity : IUtf8JsonSerializable
+    [JsonConverter(typeof(ScriptActivityConverter))]
+    public partial class ScriptActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,6 +58,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("typeProperties");
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Scripts))
+            {
+                writer.WritePropertyName("scripts");
+                writer.WriteStartArray();
+                foreach (var item in Scripts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LogSettings))
+            {
+                writer.WritePropertyName("logSettings");
+                writer.WriteObjectValue(LogSettings);
+            }
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -66,40 +84,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element)
+        internal static ScriptActivity DeserializeScriptActivity(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureDataExplorerCommand": return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element);
-                    case "AzureFunctionActivity": return AzureFunctionActivity.DeserializeAzureFunctionActivity(element);
-                    case "AzureMLBatchExecution": return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element);
-                    case "AzureMLExecutePipeline": return AzureMLExecutePipelineActivity.DeserializeAzureMLExecutePipelineActivity(element);
-                    case "AzureMLUpdateResource": return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element);
-                    case "Copy": return CopyActivity.DeserializeCopyActivity(element);
-                    case "Custom": return CustomActivity.DeserializeCustomActivity(element);
-                    case "DataLakeAnalyticsU-SQL": return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element);
-                    case "DatabricksNotebook": return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element);
-                    case "DatabricksSparkJar": return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element);
-                    case "DatabricksSparkPython": return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element);
-                    case "Delete": return DeleteActivity.DeserializeDeleteActivity(element);
-                    case "ExecuteDataFlow": return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element);
-                    case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element);
-                    case "GetMetadata": return GetMetadataActivity.DeserializeGetMetadataActivity(element);
-                    case "HDInsightHive": return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element);
-                    case "HDInsightMapReduce": return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element);
-                    case "HDInsightPig": return HDInsightPigActivity.DeserializeHDInsightPigActivity(element);
-                    case "HDInsightSpark": return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element);
-                    case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
-                    case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
-                    case "Script": return ScriptActivity.DeserializeScriptActivity(element);
-                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
-                    case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
-                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
-                    case "WebActivity": return WebActivity.DeserializeWebActivity(element);
-                }
-            }
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -107,6 +93,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ScriptActivityScriptBlock>> scripts = default;
+            Optional<ScriptActivityTypePropertiesLogSettings> logSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -176,22 +164,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
+                if (property.NameEquals("typeProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("scripts"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ScriptActivityScriptBlock> array = new List<ScriptActivityScriptBlock>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ScriptActivityScriptBlock.DeserializeScriptActivityScriptBlock(item));
+                            }
+                            scripts = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("logSettings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logSettings = ScriptActivityTypePropertiesLogSettings.DeserializeScriptActivityTypePropertiesLogSettings(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecutionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value);
+            return new ScriptActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(scripts), logSettings.Value);
         }
 
-        internal partial class ExecutionActivityConverter : JsonConverter<ExecutionActivity>
+        internal partial class ScriptActivityConverter : JsonConverter<ScriptActivity>
         {
-            public override void Write(Utf8JsonWriter writer, ExecutionActivity model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ScriptActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override ExecutionActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ScriptActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeExecutionActivity(document.RootElement);
+                return DeserializeScriptActivity(document.RootElement);
             }
         }
     }
