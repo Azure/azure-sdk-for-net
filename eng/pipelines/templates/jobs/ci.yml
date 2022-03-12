@@ -177,18 +177,18 @@ jobs:
           custom: 'tool'
           arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
           workingDirectory: '$(Agent.BuildDirectory)'
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        env:
-          EnableSourceLink: false
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-           -ServiceDirectory ${{ parameters.ServiceToTest }}
-           -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface
-          pwsh: true
-          failOnStderr: false
+      # - task: PowerShell@2
+      #   displayName: "Verify generated code"
+      #   env:
+      #     EnableSourceLink: false
+      #   inputs:
+      #     filePath: "eng/scripts/CodeChecks.ps1"
+      #     arguments: >
+      #      -ServiceDirectory ${{ parameters.ServiceToTest }}
+      #      -SDKType ${{ parameters.SDKType }}
+      #      -SpellCheckPublicApiSurface
+      #     pwsh: true
+      #     failOnStderr: false
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - job: Compliance

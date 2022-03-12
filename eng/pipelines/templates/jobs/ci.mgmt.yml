@@ -11,16 +11,16 @@ jobs:
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
-      - task: PowerShell@2
-        displayName: "Verify generated code"
-        condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'), not(contains(variables['System.PullRequest.TargetBranch'], 'feature/cplat')))
-        inputs:
-          filePath: "eng/scripts/Track1CodeCheck.ps1"
-          pwsh: true
-          failOnStderr:  false
-        env:
-          REPOSITORY_NAME: $(Build.Repository.Name)
-          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
+      # - task: PowerShell@2
+      #   displayName: "Verify generated code"
+      #   condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'), not(contains(variables['System.PullRequest.TargetBranch'], 'feature/cplat')))
+      #   inputs:
+      #     filePath: "eng/scripts/Track1CodeCheck.ps1"
+      #     pwsh: true
+      #     failOnStderr:  false
+      #   env:
+      #     REPOSITORY_NAME: $(Build.Repository.Name)
+      #     PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
