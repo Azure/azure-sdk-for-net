@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                if (_resourceParser.RoleName == _resourceParser.RoleInstance == default)
+                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
                 {
                     var resource = ParentProvider.GetResource();
                     _resourceParser.UpdateRoleNameAndInstance(resource);
