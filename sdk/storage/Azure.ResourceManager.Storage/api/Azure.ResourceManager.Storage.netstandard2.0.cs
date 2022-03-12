@@ -877,10 +877,10 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class BlobInventoryPolicySchema
     {
-        public BlobInventoryPolicySchema(bool enabled, Azure.ResourceManager.Storage.Models.InventoryRuleType type, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> rules) { }
+        public BlobInventoryPolicySchema(bool enabled, Azure.ResourceManager.Storage.Models.InventoryRuleType inventoryRuleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> rules) { }
         public bool Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.InventoryRuleType InventoryRuleType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> Rules { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.InventoryRuleType Type { get { throw null; } set { } }
     }
     public partial class BlobRestoreParameters
     {
@@ -1177,8 +1177,8 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
+        public Azure.ResourceManager.Storage.Models.ExtendedLocationTypes? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.ExtendedLocationTypes? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExtendedLocationTypes : System.IEquatable<Azure.ResourceManager.Storage.Models.ExtendedLocationTypes>
@@ -1622,11 +1622,11 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class ManagementPolicyRule
     {
-        public ManagementPolicyRule(string name, Azure.ResourceManager.Storage.Models.RuleType type, Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition definition) { }
+        public ManagementPolicyRule(string name, Azure.ResourceManager.Storage.Models.RuleType ruleType, Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition definition) { }
         public Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition Definition { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.RuleType Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.RuleType RuleType { get { throw null; } set { } }
     }
     public partial class ManagementPolicySnapShot
     {
@@ -1926,7 +1926,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal Restriction() { }
         public Azure.ResourceManager.Storage.Models.ReasonCode? ReasonCode { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string RestrictionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

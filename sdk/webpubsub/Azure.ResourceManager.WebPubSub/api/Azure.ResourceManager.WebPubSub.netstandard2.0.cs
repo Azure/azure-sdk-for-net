@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class ManagedIdentity
     {
         public ManagedIdentity() { }
+        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
     }
     public partial class NameAvailabilityParameters
     {
-        public NameAvailabilityParameters(string type, string name) { }
+        public NameAvailabilityParameters(string nameAvailabilityParametersType, string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string NameAvailabilityParametersType { get { throw null; } }
     }
     public partial class NetworkAcl
     {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public ShareablePrivateLinkProperties() { }
         public string Description { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public string ShareablePrivateLinkPropertiesType { get { throw null; } set { } }
     }
     public partial class ShareablePrivateLinkType
     {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         public UpstreamAuthSettings() { }
         public string ManagedIdentityResource { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? UpstreamAuthType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UpstreamAuthType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType>

@@ -1948,9 +1948,9 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } }
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
@@ -2148,9 +2148,9 @@ namespace Azure.ResourceManager.Compute
         public object ProtectedSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } }
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
@@ -2324,6 +2324,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public CloudServiceExtensionProperties() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public string CloudServiceExtensionPropertiesType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public string ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
@@ -2331,7 +2332,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RolesAppliedTo { get { throw null; } }
         public string Settings { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
     public partial class CloudServiceInstanceView
@@ -2811,7 +2811,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public Encryption() { }
         public string DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.EncryptionType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.EncryptionType? EncryptionType { get { throw null; } set { } }
     }
     public partial class EncryptionImages
     {
@@ -2912,8 +2912,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
+        public Azure.ResourceManager.Compute.Models.ExtendedLocationTypes? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationTypes? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Compute.Models.ExtendedLocationType>
@@ -3914,8 +3914,8 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get { throw null; } set { } }
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        public string VirtualMachineExtensionUpdatePropertiesType { get { throw null; } set { } }
     }
     public partial class PatchableVirtualMachineScaleSetData : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -3944,9 +3944,9 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } }
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
@@ -3959,9 +3959,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } }
         public object ProtectedSettings { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } }
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
@@ -4048,7 +4048,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirCommunityGalleryResource() { }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string PirCommunityGalleryResourceType { get { throw null; } }
         public string UniqueId { get { throw null; } }
     }
     public partial class PirResource
@@ -4372,8 +4372,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ResourceSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
         public string Location { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
@@ -4387,8 +4387,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ResourceSkuRestrictions() { }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public enum ResourceSkuRestrictionsReasonCode
@@ -4573,7 +4573,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string DefaultValue { get { throw null; } }
         public string Name { get { throw null; } }
         public bool? Required { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string RunCommandParameterDefinitionType { get { throw null; } }
     }
     public partial class RunCommandResult
     {
@@ -4664,7 +4664,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public SharingProfileGroup() { }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? SharingProfileGroupType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SharingProfileGroupTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes>
@@ -4879,7 +4879,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal UpgradeOperationHistoricalStatusInfo() { }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfoProperties Properties { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string UpgradeOperationHistoricalStatusInfoType { get { throw null; } }
     }
     public partial class UpgradeOperationHistoricalStatusInfoProperties
     {
@@ -5005,8 +5005,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal VirtualMachineExtensionHandlerInstanceView() { }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } }
+        public string VirtualMachineExtensionHandlerInstanceViewType { get { throw null; } }
     }
     public partial class VirtualMachineExtensionInstanceView
     {
@@ -5014,8 +5014,8 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Substatuses { get { throw null; } }
-        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        public string VirtualMachineExtensionInstanceViewType { get { throw null; } set { } }
     }
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageResource
     {
