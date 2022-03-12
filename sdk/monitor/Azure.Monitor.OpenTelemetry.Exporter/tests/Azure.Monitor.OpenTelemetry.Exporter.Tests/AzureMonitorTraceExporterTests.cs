@@ -63,14 +63,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // instrumentationKey: AzureMonitorTraceExporter.AzureMonitorTransmitter.instrumentationKey
             // endpoint: AzureMonitorTraceExporter.AzureMonitorTransmitter.ServiceRestClient.endpoint
 
-            ikey = typeof(AzureMonitorTraceExporter)
-                .GetField("_instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(exporter)
-                .ToString();
-
             var transmitter = typeof(AzureMonitorTraceExporter)
                 .GetField("_transmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
+
+            ikey = (transmitter as AzureMonitorTransmitter).InstrumentationKey;
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)
                 .GetField("_applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)

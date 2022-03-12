@@ -15,18 +15,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
-        private readonly AzureMonitorExporterOptions _options;
-        private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
 
-        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
+        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorMetricExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+        internal AzureMonitorMetricExporter(ITransmitter transmitter)
         {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-            ConnectionString.ConnectionStringParser.GetValues(_options.ConnectionString, out _instrumentationKey, out _);
             _transmitter = transmitter;
             _resourceParser = new ResourceParser();
         }
@@ -39,9 +35,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var resource = ParentProvider.GetResource();
-                _resourceParser.UpdateRoleNameAndInstance(resource);
-                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                if (_resourceParser.RoleName == _resourceParser.RoleInstance == default)
+                {
+                    var resource = ParentProvider.GetResource();
+                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                }
+
+                var instrumentationKey = (_transmitter as AzureMonitorTransmitter).InstrumentationKey;
+                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.

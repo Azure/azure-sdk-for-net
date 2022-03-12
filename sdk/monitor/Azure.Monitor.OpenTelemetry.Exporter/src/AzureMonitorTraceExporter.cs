@@ -14,21 +14,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
-        private readonly AzureMonitorExporterOptions _options;
-        private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
         private readonly StorageTransmissionEvaluator _storageTransmissionEvaluator;
         private readonly Stopwatch _stopwatch;
         private const int StorageTransmissionEvaluatorSampleSize = 10;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+        internal AzureMonitorTraceExporter(ITransmitter transmitter)
         {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-            ConnectionString.ConnectionStringParser.GetValues(_options.ConnectionString, out _instrumentationKey, out _);
             _transmitter = transmitter;
             _resourceParser = new ResourceParser();
 
@@ -52,9 +48,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var resource = ParentProvider.GetResource();
-                _resourceParser.UpdateRoleNameAndInstance(resource);
-                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                {
+                    var resource = ParentProvider.GetResource();
+                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                }
+
+                var instrumentationKey = (_transmitter as AzureMonitorTransmitter).InstrumentationKey;
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
