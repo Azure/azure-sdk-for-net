@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     _resourceParser.UpdateRoleNameAndInstance(resource);
                 }
 
-                var instrumentationKey = (_transmitter as AzureMonitorTransmitter).InstrumentationKey;
+                var instrumentationKey = _transmitter.InstrumentationKey;
                 var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
