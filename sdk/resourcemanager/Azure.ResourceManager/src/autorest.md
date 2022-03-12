@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 azure-arm: true
 save-inputs: true
 arm-core: true
@@ -42,8 +41,6 @@ directive:
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
   - remove-model: "ErrorResponse"
-  - remove-model: "ErrorDetail"
-  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
     where: $.definitions['Resource']
     transform: >

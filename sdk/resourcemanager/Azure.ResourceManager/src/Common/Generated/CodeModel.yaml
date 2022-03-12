@@ -176,7 +176,47 @@ schemas: !Schemas
           name: PlanVersion
           description: The version of the desired product/artifact.
       protocol: !Protocols {}
+    - !StringSchema &ref_27
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ErrorDetailCode
+          description: The error code.
+      protocol: !Protocols {}
     - !StringSchema &ref_28
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ErrorDetailMessage
+          description: The error message.
+      protocol: !Protocols {}
+    - !StringSchema &ref_29
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ErrorDetailTarget
+          description: The error target.
+      protocol: !Protocols {}
+    - !StringSchema &ref_31
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ErrorAdditionalInfoType
+          description: The additional info type.
+      protocol: !Protocols {}
+    - !StringSchema &ref_35
       type: string
       apiVersions:
         - !ApiVersion 
@@ -186,7 +226,7 @@ schemas: !Schemas
           name: KeyVaultPropertiesKeyIdentifier
           description: Key vault uri to access the encryption key.
       protocol: !Protocols {}
-    - !StringSchema &ref_29
+    - !StringSchema &ref_36
       type: string
       apiVersions:
         - !ApiVersion 
@@ -259,7 +299,7 @@ schemas: !Schemas
           name: CreatedByType
           description: The type of identity that created the resource.
       protocol: !Protocols {}
-    - !ChoiceSchema &ref_27
+    - !ChoiceSchema &ref_34
       choices:
         - !ChoiceValue 
           value: enabled
@@ -286,7 +326,7 @@ schemas: !Schemas
           name: EncryptionStatus
           description: Indicates whether or not the encryption is enabled for container registry.
       protocol: !Protocols {}
-    - !ChoiceSchema &ref_34
+    - !ChoiceSchema &ref_41
       choices:
         - !ChoiceValue 
           value: None
@@ -328,7 +368,7 @@ schemas: !Schemas
           name: ManagedServiceIdentityType
           description: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
       protocol: !Protocols {}
-    - !ChoiceSchema &ref_38
+    - !ChoiceSchema &ref_45
       choices:
         - !ChoiceValue 
           value: None
@@ -410,9 +450,9 @@ schemas: !Schemas
           name: TrackedResourceTags
           description: Resource tags.
       protocol: !Protocols {}
-    - !DictionarySchema &ref_35
+    - !DictionarySchema &ref_42
       type: dictionary
-      elementType: !ObjectSchema &ref_31
+      elementType: !ObjectSchema &ref_38
         type: object
         apiVersions:
           - !ApiVersion 
@@ -473,6 +513,14 @@ schemas: !Schemas
             The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form:
             '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
       protocol: !Protocols {}
+  anyObjects:
+    - !AnyObjectSchema &ref_32
+      type: any-object
+      language: !Languages 
+        default:
+          name: AnyObject
+          description: Any object
+      protocol: !Protocols {}
   dateTimes:
     - !DateTimeSchema &ref_13
       type: date-time
@@ -499,7 +547,7 @@ schemas: !Schemas
   uuids:
     - *ref_2
     - *ref_3
-    - !UuidSchema &ref_32
+    - !UuidSchema &ref_39
       type: uuid
       apiVersions:
         - !ApiVersion 
@@ -509,7 +557,7 @@ schemas: !Schemas
           name: ManagedServiceIdentityPrincipalId
           description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
       protocol: !Protocols {}
-    - !UuidSchema &ref_33
+    - !UuidSchema &ref_40
       type: uuid
       apiVersions:
         - !ApiVersion 
@@ -519,7 +567,7 @@ schemas: !Schemas
           name: ManagedServiceIdentityTenantId
           description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
       protocol: !Protocols {}
-    - !UuidSchema &ref_36
+    - !UuidSchema &ref_43
       type: uuid
       apiVersions:
         - !ApiVersion 
@@ -529,7 +577,7 @@ schemas: !Schemas
           name: SystemAssignedServiceIdentityPrincipalId
           description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
       protocol: !Protocols {}
-    - !UuidSchema &ref_37
+    - !UuidSchema &ref_44
       type: uuid
       apiVersions:
         - !ApiVersion 
@@ -860,7 +908,7 @@ schemas: !Schemas
           description: Plan for the resource.
           namespace: ''
       protocol: !Protocols {}
-    - !ObjectSchema 
+    - !ObjectSchema &ref_30
       type: object
       apiVersions:
         - !ApiVersion 
@@ -868,6 +916,125 @@ schemas: !Schemas
       properties:
         - !Property 
           schema: *ref_27
+          readOnly: true
+          serializedName: code
+          language: !Languages 
+            default:
+              name: code
+              description: The error code.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_28
+          readOnly: true
+          serializedName: message
+          language: !Languages 
+            default:
+              name: message
+              description: The error message.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_29
+          readOnly: true
+          serializedName: target
+          language: !Languages 
+            default:
+              name: target
+              description: The error target.
+          protocol: !Protocols {}
+        - !Property 
+          schema: !ArraySchema &ref_46
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '3.0'
+            elementType: *ref_30
+            language: !Languages 
+              default:
+                name: ErrorDetailDetails
+                description: The error details.
+            protocol: !Protocols {}
+          readOnly: true
+          serializedName: details
+          language: !Languages 
+            default:
+              name: details
+              description: The error details.
+          protocol: !Protocols {}
+        - !Property 
+          schema: !ArraySchema &ref_47
+            type: array
+            apiVersions:
+              - !ApiVersion 
+                version: '3.0'
+            elementType: !ObjectSchema &ref_33
+              type: object
+              apiVersions:
+                - !ApiVersion 
+                  version: '3.0'
+              properties:
+                - !Property 
+                  schema: *ref_31
+                  readOnly: true
+                  serializedName: type
+                  language: !Languages 
+                    default:
+                      name: type
+                      description: The additional info type.
+                  protocol: !Protocols {}
+                - !Property 
+                  schema: *ref_32
+                  readOnly: true
+                  serializedName: info
+                  language: !Languages 
+                    default:
+                      name: info
+                      description: The additional info.
+                  protocol: !Protocols {}
+              extensions:
+                x-accessibility: public
+                x-csharp-formats: json
+                x-csharp-usage: model,input,output
+                x-ms-mgmt-propertyReferenceType: true
+                x-namespace: Azure.ResourceManager.Models
+              language: !Languages 
+                default:
+                  name: ErrorAdditionalInfo
+                  description: The resource management error additional info.
+                  namespace: ''
+              protocol: !Protocols {}
+            language: !Languages 
+              default:
+                name: ErrorDetailAdditionalInfo
+                description: The error additional info.
+            protocol: !Protocols {}
+          readOnly: true
+          serializedName: additionalInfo
+          language: !Languages 
+            default:
+              name: additionalInfo
+              description: The error additional info.
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: ErrorDetail
+          description: The error detail.
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_33
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      properties:
+        - !Property 
+          schema: *ref_34
           serializedName: status
           extensions:
             x-accessibility: public
@@ -878,14 +1045,14 @@ schemas: !Schemas
               description: Indicates whether or not the encryption is enabled for container registry.
           protocol: !Protocols {}
         - !Property 
-          schema: !ObjectSchema &ref_30
+          schema: !ObjectSchema &ref_37
             type: object
             apiVersions:
               - !ApiVersion 
                 version: '3.0'
             properties:
               - !Property 
-                schema: *ref_28
+                schema: *ref_35
                 serializedName: keyIdentifier
                 language: !Languages 
                   default:
@@ -893,7 +1060,7 @@ schemas: !Schemas
                     description: Key vault uri to access the encryption key.
                 protocol: !Protocols {}
               - !Property 
-                schema: *ref_29
+                schema: *ref_36
                 serializedName: identity
                 language: !Languages 
                   default:
@@ -930,8 +1097,8 @@ schemas: !Schemas
           description: Configuration of key for data encryption
           namespace: ''
       protocol: !Protocols {}
-    - *ref_30
-    - *ref_31
+    - *ref_37
+    - *ref_38
     - !ObjectSchema 
       type: object
       apiVersions:
@@ -939,7 +1106,7 @@ schemas: !Schemas
           version: '4.0'
       properties:
         - !Property 
-          schema: *ref_32
+          schema: *ref_39
           readOnly: true
           required: false
           serializedName: principalId
@@ -949,7 +1116,7 @@ schemas: !Schemas
               description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
           protocol: !Protocols {}
         - !Property 
-          schema: *ref_33
+          schema: *ref_40
           readOnly: true
           required: false
           serializedName: tenantId
@@ -959,7 +1126,7 @@ schemas: !Schemas
               description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
           protocol: !Protocols {}
         - !Property 
-          schema: *ref_34
+          schema: *ref_41
           required: true
           serializedName: type
           language: !Languages 
@@ -968,7 +1135,7 @@ schemas: !Schemas
               description: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
           protocol: !Protocols {}
         - !Property 
-          schema: *ref_35
+          schema: *ref_42
           required: false
           serializedName: userAssignedIdentities
           language: !Languages 
@@ -997,7 +1164,7 @@ schemas: !Schemas
           version: '4.0'
       properties:
         - !Property 
-          schema: *ref_36
+          schema: *ref_43
           readOnly: true
           required: false
           serializedName: principalId
@@ -1007,7 +1174,7 @@ schemas: !Schemas
               description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
           protocol: !Protocols {}
         - !Property 
-          schema: *ref_37
+          schema: *ref_44
           readOnly: true
           required: false
           serializedName: tenantId
@@ -1017,7 +1184,7 @@ schemas: !Schemas
               description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
           protocol: !Protocols {}
         - !Property 
-          schema: *ref_38
+          schema: *ref_45
           required: true
           serializedName: type
           language: !Languages 
@@ -1037,6 +1204,9 @@ schemas: !Schemas
           description: Managed service identity (either system assigned, or none)
           namespace: ''
       protocol: !Protocols {}
+  arrays:
+    - *ref_46
+    - *ref_47
 operationGroups: []
 security: !Security 
   authenticationRequired: true
