@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityParameters. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type to check for name availability. </param>
+        /// <param name="configurationResourceType"> The resource type to check for name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityParameters(string name, ConfigurationResourceType type)
+        public CheckNameAvailabilityParameters(string name, ConfigurationResourceType configurationResourceType)
         {
             if (name == null)
             {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             Name = name;
-            Type = type;
+            ConfigurationResourceType = configurationResourceType;
         }
 
         /// <summary> The name to check for availability. </summary>
         public string Name { get; }
         /// <summary> The resource type to check for name availability. </summary>
-        public ConfigurationResourceType Type { get; }
+        public ConfigurationResourceType ConfigurationResourceType { get; }
     }
 }

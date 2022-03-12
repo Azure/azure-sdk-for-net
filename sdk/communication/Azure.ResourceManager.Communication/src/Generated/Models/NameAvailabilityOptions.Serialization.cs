@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(NameAvailabilityOptionsType);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WriteEndObject();

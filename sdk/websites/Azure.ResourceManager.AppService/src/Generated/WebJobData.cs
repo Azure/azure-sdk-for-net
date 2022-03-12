@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="runCommand"> Run command. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, resourceType, systemData, kind)
         {
             RunCommand = runCommand;
             Url = url;

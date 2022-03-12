@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(CheckNameAvailabilityResourceType);
             writer.WriteEndObject();
         }
     }

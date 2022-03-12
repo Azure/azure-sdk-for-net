@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedNetworkInterfaces"> Associated Network Interfaces to the DSCP Configuration. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
-        internal DscpConfigurationData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal DscpConfigurationData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Markings = markings;

@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MachineExtensionUpdatePropertiesType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(MachineExtensionUpdatePropertiesType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {

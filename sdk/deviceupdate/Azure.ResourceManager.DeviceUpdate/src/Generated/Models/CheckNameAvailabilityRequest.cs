@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public string CheckNameAvailabilityRequestType { get; set; }
     }
 }

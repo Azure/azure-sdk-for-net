@@ -13,26 +13,26 @@ namespace Azure.ResourceManager.Communication.Models
     public partial class NameAvailabilityOptions
     {
         /// <summary> Initializes a new instance of NameAvailabilityOptions. </summary>
-        /// <param name="type"> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
+        /// <param name="nameAvailabilityOptionsType"> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
         /// <param name="name"> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="name"/> is null. </exception>
-        public NameAvailabilityOptions(string type, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityOptionsType"/> or <paramref name="name"/> is null. </exception>
+        public NameAvailabilityOptions(string nameAvailabilityOptionsType, string name)
         {
-            if (type == null)
+            if (nameAvailabilityOptionsType == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException(nameof(nameAvailabilityOptionsType));
             }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Type = type;
+            NameAvailabilityOptionsType = nameAvailabilityOptionsType;
             Name = name;
         }
 
         /// <summary> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </summary>
-        public string Type { get; }
+        public string NameAvailabilityOptionsType { get; }
         /// <summary> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </summary>
         public string Name { get; }
     }

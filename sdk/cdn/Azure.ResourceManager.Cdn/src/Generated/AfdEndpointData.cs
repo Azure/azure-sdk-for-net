@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
-        internal AfdEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? originResponseTimeoutSeconds, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, type, systemData, tags, location)
+        internal AfdEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? originResponseTimeoutSeconds, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
             EnabledState = enabledState;

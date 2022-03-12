@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="serverKeyType"> The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="thumbprint"> Thumbprint of the key. </param>
         /// <param name="creationDate"> The key creation date. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationDate, bool? autoRotationEnabled) : base(id, name, type, systemData)
+        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationDate, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyType = serverKeyType;

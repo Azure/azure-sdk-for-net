@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="type"> Sub Resource type. </param>
+        /// <param name="resourceType"> Sub Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="containerNetworkInterfaceConfiguration"> Container network interface configuration from which this container network interface is created. </param>
         /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(string id, string name, string type, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterface(string id, string name, string resourceType, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             Etag = etag;
             ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
             Container = container;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> Sub Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>

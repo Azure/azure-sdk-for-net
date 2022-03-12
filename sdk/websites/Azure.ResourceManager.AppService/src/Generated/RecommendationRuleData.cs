@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="recommendationName"> Unique name of the rule. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, type, systemData, kind)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;

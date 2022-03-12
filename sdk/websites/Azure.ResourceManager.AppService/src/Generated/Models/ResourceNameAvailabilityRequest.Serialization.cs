@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(CheckNameResourceType.ToString());
             if (Optional.IsDefined(IsFqdn))
             {
                 writer.WritePropertyName("isFqdn");

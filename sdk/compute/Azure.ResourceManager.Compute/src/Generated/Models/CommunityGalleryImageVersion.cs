@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CommunityGalleryImageVersion. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="pirCommunityGalleryResourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="publishedDate"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal CommunityGalleryImageVersion(string name, string location, string type, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, type, uniqueId)
+        internal CommunityGalleryImageVersion(string name, string location, string pirCommunityGalleryResourceType, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, pirCommunityGalleryResourceType, uniqueId)
         {
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;
