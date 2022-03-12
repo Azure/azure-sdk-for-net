@@ -1,0 +1,12 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager",
+  "LibraryName": null,
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "ArmCore": true
+}

@@ -1,0 +1,1053 @@
+!CodeModel 
+info: !Info 
+  title: Common types
+schemas: !Schemas 
+  numbers:
+    - !NumberSchema &ref_21
+      type: integer
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      precision: 32
+      language: !Languages 
+        default:
+          name: SkuCapacity
+          description: If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+      protocol: !Protocols {}
+  strings:
+    - !StringSchema &ref_8
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ResourceId
+          description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+      protocol: !Protocols {}
+    - !StringSchema &ref_9
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ResourceName
+          description: The name of the resource
+      protocol: !Protocols {}
+    - !StringSchema &ref_10
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: ResourceType
+          description: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+      protocol: !Protocols {}
+    - !StringSchema &ref_11
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SystemDataCreatedBy
+          description: The identity that created the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_0
+      type: string
+      language: !Languages 
+        default:
+          name: String
+          description: simple string
+      protocol: !Protocols {}
+    - !StringSchema &ref_14
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SystemDataLastModifiedBy
+          description: The identity that last modified the resource.
+      protocol: !Protocols {}
+    - !StringSchema &ref_1
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: String
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema &ref_6
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      extensions:
+        x-ms-mutability:
+          - read
+          - create
+      language: !Languages 
+        default:
+          name: TrackedResourceLocation
+          description: The geo-location where the resource lives
+      protocol: !Protocols {}
+    - !StringSchema &ref_17
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SkuName
+          description: The name of the SKU. Ex - P3. It is typically a letter+number code
+      protocol: !Protocols {}
+    - !StringSchema &ref_19
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SkuSize
+          description: 'The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. '
+      protocol: !Protocols {}
+    - !StringSchema &ref_20
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SkuFamily
+          description: If the service has different generations of hardware, for the same SKU, then that can be captured here.
+      protocol: !Protocols {}
+    - !StringSchema &ref_22
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: PlanName
+          description: A user defined name of the 3rd Party Artifact that is being procured.
+      protocol: !Protocols {}
+    - !StringSchema &ref_23
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: PlanPublisher
+          description: The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic
+      protocol: !Protocols {}
+    - !StringSchema &ref_24
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: PlanProduct
+          description: 'The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. '
+      protocol: !Protocols {}
+    - !StringSchema &ref_25
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: PlanPromotionCode
+          description: A publisher provided promotion code as provisioned in Data Market for the said product/artifact.
+      protocol: !Protocols {}
+    - !StringSchema &ref_26
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: PlanVersion
+          description: The version of the desired product/artifact.
+      protocol: !Protocols {}
+    - !StringSchema &ref_28
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: KeyVaultPropertiesKeyIdentifier
+          description: Key vault uri to access the encryption key.
+      protocol: !Protocols {}
+    - !StringSchema &ref_29
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: KeyVaultPropertiesIdentity
+          description: The client ID of the identity which will be used to access key vault.
+      protocol: !Protocols {}
+    - !StringSchema 
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      minLength: 1
+      language: !Languages 
+        default:
+          name: String
+          description: ''
+      protocol: !Protocols {}
+    - !StringSchema 
+      type: string
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      maxLength: 90
+      minLength: 1
+      language: !Languages 
+        default:
+          name: String
+          description: ''
+      protocol: !Protocols {}
+  choices:
+    - !ChoiceSchema &ref_12
+      choices:
+        - !ChoiceValue 
+          value: User
+          language:
+            default:
+              name: User
+              description: ''
+        - !ChoiceValue 
+          value: Application
+          language:
+            default:
+              name: Application
+              description: ''
+        - !ChoiceValue 
+          value: ManagedIdentity
+          language:
+            default:
+              name: ManagedIdentity
+              description: ''
+        - !ChoiceValue 
+          value: Key
+          language:
+            default:
+              name: Key
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      choiceType: *ref_0
+      extensions:
+        x-accessibility: public
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: CreatedByType
+          description: The type of identity that created the resource.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_27
+      choices:
+        - !ChoiceValue 
+          value: enabled
+          language:
+            default:
+              name: Enabled
+              description: ''
+        - !ChoiceValue 
+          value: disabled
+          language:
+            default:
+              name: Disabled
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      choiceType: *ref_0
+      extensions:
+        x-accessibility: public
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: EncryptionStatus
+          description: Indicates whether or not the encryption is enabled for container registry.
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_34
+      choices:
+        - !ChoiceValue 
+          value: None
+          language:
+            default:
+              name: None
+              description: ''
+        - !ChoiceValue 
+          value: SystemAssigned
+          language:
+            default:
+              name: SystemAssigned
+              description: ''
+        - !ChoiceValue 
+          value: UserAssigned
+          language:
+            default:
+              name: UserAssigned
+              description: ''
+        - !ChoiceValue 
+          value: SystemAssigned, UserAssigned
+          language:
+            default:
+              name: SystemAssignedUserAssigned
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      choiceType: *ref_0
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: ManagedServiceIdentityType
+          description: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+      protocol: !Protocols {}
+    - !ChoiceSchema &ref_38
+      choices:
+        - !ChoiceValue 
+          value: None
+          language:
+            default:
+              name: None
+              description: ''
+        - !ChoiceValue 
+          value: SystemAssigned
+          language:
+            default:
+              name: SystemAssigned
+              description: ''
+      type: choice
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      choiceType: *ref_0
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: SystemAssignedServiceIdentityType
+          description: Type of managed service identity (either system assigned, or none).
+      protocol: !Protocols {}
+  sealedChoices:
+    - !SealedChoiceSchema &ref_18
+      choices:
+        - !ChoiceValue 
+          value: Free
+          language:
+            default:
+              name: Free
+              description: ''
+        - !ChoiceValue 
+          value: Basic
+          language:
+            default:
+              name: Basic
+              description: ''
+        - !ChoiceValue 
+          value: Standard
+          language:
+            default:
+              name: Standard
+              description: ''
+        - !ChoiceValue 
+          value: Premium
+          language:
+            default:
+              name: Premium
+              description: ''
+      type: sealed-choice
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      choiceType: *ref_0
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: SkuTier
+          description: This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
+      protocol: !Protocols {}
+  dictionaries:
+    - !DictionarySchema &ref_5
+      type: dictionary
+      elementType: *ref_1
+      language: !Languages 
+        default:
+          name: TrackedResourceTags
+          description: Resource tags.
+      protocol: !Protocols {}
+    - !DictionarySchema &ref_35
+      type: dictionary
+      elementType: !ObjectSchema &ref_31
+        type: object
+        apiVersions:
+          - !ApiVersion 
+            version: '4.0'
+        properties:
+          - !Property 
+            schema: !UuidSchema &ref_2
+              type: uuid
+              apiVersions:
+                - !ApiVersion 
+                  version: '4.0'
+              language: !Languages 
+                default:
+                  name: UserAssignedIdentityPrincipalId
+                  description: The principal ID of the assigned identity.
+              protocol: !Protocols {}
+            readOnly: true
+            serializedName: principalId
+            language: !Languages 
+              default:
+                name: principalId
+                description: The principal ID of the assigned identity.
+            protocol: !Protocols {}
+          - !Property 
+            schema: !UuidSchema &ref_3
+              type: uuid
+              apiVersions:
+                - !ApiVersion 
+                  version: '4.0'
+              language: !Languages 
+                default:
+                  name: UserAssignedIdentityClientId
+                  description: The client ID of the assigned identity.
+              protocol: !Protocols {}
+            readOnly: true
+            serializedName: clientId
+            language: !Languages 
+              default:
+                name: clientId
+                description: The client ID of the assigned identity.
+            protocol: !Protocols {}
+        extensions:
+          x-accessibility: public
+          x-csharp-formats: json
+          x-csharp-usage: model,input,output
+          x-ms-mgmt-propertyReferenceType: true
+          x-namespace: Azure.ResourceManager.Models
+        language: !Languages 
+          default:
+            name: UserAssignedIdentity
+            description: User assigned identity properties
+            namespace: ''
+        protocol: !Protocols {}
+      language: !Languages 
+        default:
+          name: UserAssignedIdentities
+          description: >-
+            The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form:
+            '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+      protocol: !Protocols {}
+  dateTimes:
+    - !DateTimeSchema &ref_13
+      type: date-time
+      format: date-time
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SystemDataCreatedAt
+          description: The timestamp of resource creation (UTC).
+      protocol: !Protocols {}
+    - !DateTimeSchema &ref_15
+      type: date-time
+      format: date-time
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      language: !Languages 
+        default:
+          name: SystemDataLastModifiedAt
+          description: The timestamp of resource last modification (UTC)
+      protocol: !Protocols {}
+  uuids:
+    - *ref_2
+    - *ref_3
+    - !UuidSchema &ref_32
+      type: uuid
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      language: !Languages 
+        default:
+          name: ManagedServiceIdentityPrincipalId
+          description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+      protocol: !Protocols {}
+    - !UuidSchema &ref_33
+      type: uuid
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      language: !Languages 
+        default:
+          name: ManagedServiceIdentityTenantId
+          description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+      protocol: !Protocols {}
+    - !UuidSchema &ref_36
+      type: uuid
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      language: !Languages 
+        default:
+          name: SystemAssignedServiceIdentityPrincipalId
+          description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+      protocol: !Protocols {}
+    - !UuidSchema &ref_37
+      type: uuid
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      language: !Languages 
+        default:
+          name: SystemAssignedServiceIdentityTenantId
+          description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+      protocol: !Protocols {}
+  objects:
+    - !ObjectSchema &ref_4
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      children: !Relations 
+        all:
+          - !ObjectSchema &ref_7
+            type: object
+            apiVersions:
+              - !ApiVersion 
+                version: '3.0'
+            parents: !Relations 
+              all:
+                - *ref_4
+              immediate:
+                - *ref_4
+            properties:
+              - !Property 
+                schema: *ref_5
+                required: false
+                serializedName: tags
+                extensions:
+                  x-ms-mutability:
+                    - read
+                    - create
+                    - update
+                language: !Languages 
+                  default:
+                    name: tags
+                    description: Resource tags.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_6
+                required: true
+                serializedName: location
+                extensions:
+                  x-ms-mutability:
+                    - read
+                    - create
+                language: !Languages 
+                  default:
+                    name: location
+                    description: The geo-location where the resource lives
+                protocol: !Protocols {}
+            summary: Tracked Resource
+            extensions:
+              x-accessibility: public
+              x-csharp-formats: json
+              x-csharp-usage: model,input,output
+              x-ms-mgmt-propertyReferenceType: true
+              x-ms-mgmt-referenceType: true
+              x-namespace: Azure.ResourceManager.Models
+            language: !Languages 
+              default:
+                name: TrackedResource
+                description: The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
+                namespace: ''
+                summary: Tracked Resource
+            protocol: !Protocols {}
+        immediate:
+          - *ref_7
+      properties:
+        - !Property 
+          schema: *ref_8
+          readOnly: true
+          serializedName: id
+          language: !Languages 
+            default:
+              name: id
+              description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_9
+          readOnly: true
+          serializedName: name
+          language: !Languages 
+            default:
+              name: name
+              description: The name of the resource
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_10
+          readOnly: true
+          serializedName: type
+          language: !Languages 
+            default:
+              name: type
+              description: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+          protocol: !Protocols {}
+        - !Property 
+          schema: !ObjectSchema &ref_16
+            type: object
+            apiVersions:
+              - !ApiVersion 
+                version: '3.0'
+            properties:
+              - !Property 
+                schema: *ref_11
+                readOnly: true
+                serializedName: createdBy
+                language: !Languages 
+                  default:
+                    name: createdBy
+                    description: The identity that created the resource.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_12
+                readOnly: true
+                serializedName: createdByType
+                extensions:
+                  x-accessibility: public
+                  x-namespace: Azure.ResourceManager.Models
+                language: !Languages 
+                  default:
+                    name: createdByType
+                    description: The type of identity that created the resource.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_13
+                readOnly: true
+                serializedName: createdAt
+                language: !Languages 
+                  default:
+                    name: createdAt
+                    description: The timestamp of resource creation (UTC).
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_14
+                readOnly: true
+                serializedName: lastModifiedBy
+                language: !Languages 
+                  default:
+                    name: lastModifiedBy
+                    description: The identity that last modified the resource.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_12
+                readOnly: true
+                serializedName: lastModifiedByType
+                extensions:
+                  x-accessibility: public
+                  x-namespace: Azure.ResourceManager.Models
+                language: !Languages 
+                  default:
+                    name: lastModifiedByType
+                    description: The type of identity that last modified the resource.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_15
+                readOnly: true
+                serializedName: lastModifiedAt
+                language: !Languages 
+                  default:
+                    name: lastModifiedAt
+                    description: The timestamp of resource last modification (UTC)
+                protocol: !Protocols {}
+            extensions:
+              x-accessibility: public
+              x-csharp-formats: json
+              x-csharp-usage: model,input,output
+              x-ms-mgmt-propertyReferenceType: true
+              x-namespace: Azure.ResourceManager.Models
+            language: !Languages 
+              default:
+                name: SystemData
+                description: Metadata pertaining to creation and last modification of the resource.
+                namespace: ''
+            protocol: !Protocols {}
+          readOnly: true
+          serializedName: systemData
+          language: !Languages 
+            default:
+              name: systemData
+              description: Azure Resource Manager metadata containing createdBy and modifiedBy information.
+          protocol: !Protocols {}
+      summary: Resource
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-azure-resource: true
+        x-ms-mgmt-propertyReferenceType: true
+        x-ms-mgmt-referenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: Resource
+          description: Common fields that are returned in the response for all Azure Resource Manager resources
+          namespace: ''
+          summary: Resource
+      protocol: !Protocols {}
+    - *ref_16
+    - *ref_7
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      properties:
+        - !Property 
+          schema: *ref_17
+          required: true
+          serializedName: name
+          language: !Languages 
+            default:
+              name: name
+              description: The name of the SKU. Ex - P3. It is typically a letter+number code
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_18
+          required: false
+          serializedName: tier
+          language: !Languages 
+            default:
+              name: tier
+              description: This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_19
+          required: false
+          serializedName: size
+          language: !Languages 
+            default:
+              name: size
+              description: 'The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. '
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_20
+          required: false
+          serializedName: family
+          language: !Languages 
+            default:
+              name: family
+              description: If the service has different generations of hardware, for the same SKU, then that can be captured here.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_21
+          required: false
+          serializedName: capacity
+          language: !Languages 
+            default:
+              name: capacity
+              description: If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: Sku
+          description: The resource model definition representing SKU
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      properties:
+        - !Property 
+          schema: *ref_22
+          required: true
+          serializedName: name
+          language: !Languages 
+            default:
+              name: name
+              description: A user defined name of the 3rd Party Artifact that is being procured.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_23
+          required: true
+          serializedName: publisher
+          language: !Languages 
+            default:
+              name: publisher
+              description: The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_24
+          required: true
+          serializedName: product
+          language: !Languages 
+            default:
+              name: product
+              description: 'The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. '
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_25
+          required: false
+          serializedName: promotionCode
+          language: !Languages 
+            default:
+              name: promotionCode
+              description: A publisher provided promotion code as provisioned in Data Market for the said product/artifact.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_26
+          required: false
+          serializedName: version
+          language: !Languages 
+            default:
+              name: version
+              description: The version of the desired product/artifact.
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: Plan
+          description: Plan for the resource.
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '3.0'
+      properties:
+        - !Property 
+          schema: *ref_27
+          serializedName: status
+          extensions:
+            x-accessibility: public
+            x-namespace: Azure.ResourceManager.Models
+          language: !Languages 
+            default:
+              name: status
+              description: Indicates whether or not the encryption is enabled for container registry.
+          protocol: !Protocols {}
+        - !Property 
+          schema: !ObjectSchema &ref_30
+            type: object
+            apiVersions:
+              - !ApiVersion 
+                version: '3.0'
+            properties:
+              - !Property 
+                schema: *ref_28
+                serializedName: keyIdentifier
+                language: !Languages 
+                  default:
+                    name: keyIdentifier
+                    description: Key vault uri to access the encryption key.
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_29
+                serializedName: identity
+                language: !Languages 
+                  default:
+                    name: identity
+                    description: The client ID of the identity which will be used to access key vault.
+                protocol: !Protocols {}
+            extensions:
+              x-accessibility: public
+              x-csharp-formats: json
+              x-csharp-usage: model,input,output
+              x-ms-mgmt-propertyReferenceType: true
+              x-namespace: Azure.ResourceManager.Models
+            language: !Languages 
+              default:
+                name: KeyVaultProperties
+                description: ''
+                namespace: ''
+            protocol: !Protocols {}
+          serializedName: keyVaultProperties
+          language: !Languages 
+            default:
+              name: keyVaultProperties
+              description: Key vault properties.
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: EncryptionProperties
+          description: Configuration of key for data encryption
+          namespace: ''
+      protocol: !Protocols {}
+    - *ref_30
+    - *ref_31
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      properties:
+        - !Property 
+          schema: *ref_32
+          readOnly: true
+          required: false
+          serializedName: principalId
+          language: !Languages 
+            default:
+              name: principalId
+              description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_33
+          readOnly: true
+          required: false
+          serializedName: tenantId
+          language: !Languages 
+            default:
+              name: tenantId
+              description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_34
+          required: true
+          serializedName: type
+          language: !Languages 
+            default:
+              name: type
+              description: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_35
+          required: false
+          serializedName: userAssignedIdentities
+          language: !Languages 
+            default:
+              name: userAssignedIdentities
+              description: >-
+                The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form:
+                '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: ManagedServiceIdentity
+          description: Managed service identity (system assigned and/or user assigned identities)
+          namespace: ''
+      protocol: !Protocols {}
+    - !ObjectSchema 
+      type: object
+      apiVersions:
+        - !ApiVersion 
+          version: '4.0'
+      properties:
+        - !Property 
+          schema: *ref_36
+          readOnly: true
+          required: false
+          serializedName: principalId
+          language: !Languages 
+            default:
+              name: principalId
+              description: The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_37
+          readOnly: true
+          required: false
+          serializedName: tenantId
+          language: !Languages 
+            default:
+              name: tenantId
+              description: The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+          protocol: !Protocols {}
+        - !Property 
+          schema: *ref_38
+          required: true
+          serializedName: type
+          language: !Languages 
+            default:
+              name: systemAssignedServiceIdentityType
+              description: Type of managed service identity (either system assigned, or none).
+          protocol: !Protocols {}
+      extensions:
+        x-accessibility: public
+        x-csharp-formats: json
+        x-csharp-usage: model,input,output
+        x-ms-mgmt-propertyReferenceType: true
+        x-namespace: Azure.ResourceManager.Models
+      language: !Languages 
+        default:
+          name: SystemAssignedServiceIdentity
+          description: Managed service identity (either system assigned, or none)
+          namespace: ''
+      protocol: !Protocols {}
+operationGroups: []
+security: !Security 
+  authenticationRequired: true
+  schemes:
+    - !AADTokenSecurityScheme 
+      type: AADToken
+      scopes:
+        - https://management.azure.com/.default
+language: !Languages 
+  default:
+    name: CommonTypes
+    description: ''
+protocol: !Protocols 
+  http: !HttpModel {}

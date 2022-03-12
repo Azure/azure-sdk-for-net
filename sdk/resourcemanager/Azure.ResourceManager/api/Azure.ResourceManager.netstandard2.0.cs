@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Management.Models
     {
         public CheckNameAvailabilityOptions() { }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
     }
     public partial class CheckNameAvailabilityResult
     {
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Management.Models
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public string Type { get { throw null; } }
     }
     public partial class DescendantInfo : Azure.ResourceManager.Models.ResourceData
     {
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.Management.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildInfo> Children { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? Type { get { throw null; } }
     }
     public partial class ManagementGroupChildOptions
     {
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.Management.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildOptions> Children { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementGroupChildType : System.IEquatable<Azure.ResourceManager.Management.Models.ManagementGroupChildType>
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Models
     public abstract partial class ArmResourceData
     {
         protected ArmResourceData() { }
-        protected ArmResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
+        protected ArmResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-        public Azure.Core.ResourceType Type { get { throw null; } }
     }
     public sealed partial class ArmSku : System.IEquatable<Azure.ResourceManager.Models.ArmSku>
     {
@@ -939,13 +939,10 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.ResourceLink> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ResourceLink>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ResourceLinkData
+    public partial class ResourceLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public ResourceLinkData() { }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceLinkProperties Properties { get { throw null; } set { } }
-        public object ResourceLinkType { get { throw null; } }
     }
     public partial class RestApiCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.RestApi>, System.Collections.IEnumerable
     {
@@ -1221,12 +1218,12 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class Alias
     {
         internal Alias() { }
+        public Azure.ResourceManager.Resources.Models.AliasType? AliasType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
         public string DefaultPath { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AliasPath> Paths { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasType? Type { get { throw null; } }
     }
     public partial class AliasPath
     {
@@ -1257,8 +1254,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class AliasPathMetadata
     {
         internal AliasPathMetadata() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathTokenType? AliasPathTokenType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPathAttributes? Attributes { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPathTokenType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathTokenType>
@@ -1287,8 +1284,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class AliasPattern
     {
         internal AliasPattern() { }
+        public Azure.ResourceManager.Resources.Models.AliasPatternType? AliasPatternType { get { throw null; } }
         public string Phrase { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPatternType? Type { get { throw null; } }
         public string Variable { get { throw null; } }
     }
     public enum AliasPatternType
@@ -1343,8 +1340,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ErrorAdditionalInfo
     {
         internal ErrorAdditionalInfo() { }
+        public string ErrorAdditionalInfoType { get { throw null; } }
         public object Info { get { throw null; } }
-        public string Type { get { throw null; } }
     }
     public partial class ErrorResponse
     {
@@ -1382,8 +1379,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Resources.Models.ExtendedLocationType>
@@ -1412,11 +1409,11 @@ namespace Azure.ResourceManager.Resources.Models
         internal LocationExpanded() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.LocationType? LocationType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.LocationMetadata Metadata { get { throw null; } }
         public string Name { get { throw null; } }
         public string RegionalDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.LocationType? Type { get { throw null; } }
         public static implicit operator Azure.Core.AzureLocation (Azure.ResourceManager.Resources.Models.LocationExpanded location) { throw null; }
     }
     public partial class LocationMetadata
@@ -1484,7 +1481,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<object> AllowedValues { get { throw null; } }
         public object DefaultValue { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ParameterType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ParameterType? ParameterType { get { throw null; } set { } }
     }
     public partial class ParameterDefinitionsValueMetadata
     {
@@ -1593,7 +1590,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class PredefinedTagCount
     {
         internal PredefinedTagCount() { }
-        public string Type { get { throw null; } }
+        public string PredefinedTagCountType { get { throw null; } }
         public int? Value { get { throw null; } }
     }
     public partial class PredefinedTagValue
@@ -1633,7 +1630,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal ProviderExtendedLocation() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
         public string Location { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ProviderExtendedLocationType { get { throw null; } }
     }
     public partial class ProviderInfo
     {

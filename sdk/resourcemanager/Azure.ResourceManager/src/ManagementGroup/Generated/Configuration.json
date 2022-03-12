@@ -1,0 +1,31 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Management",
+  "LibraryName": null,
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
+    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "NoPropertyTypeReplacement": [
+    "CheckNameAvailabilityOptions",
+    "DescendantParentGroupInfo"
+  ],
+  "OperationGroupsToOmit": [
+    "HierarchySettings",
+    "ManagementGroupSubscriptions",
+    "Entities",
+    "TenantBackfill"
+  ],
+  "RequestPathToParent": {
+    "/providers/Microsoft.Management/managementGroups": "/providers/Microsoft.Management/managementGroups/{groupId}",
+    "/providers/Microsoft.Management/checkNameAvailability": "/providers/Microsoft.Management/managementGroups/{groupId}"
+  },
+  "OperationPositions": {
+    "/providers/Microsoft.Management/checkNameAvailability": [
+      "collection"
+    ]
+  },
+  "ArmCore": true
+}

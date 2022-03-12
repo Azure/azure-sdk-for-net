@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ResourceLink data model. </summary>
-    public partial class ResourceLinkData
+    public partial class ResourceLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceLinkData. </summary>
         public ResourceLinkData()
@@ -18,24 +20,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of ResourceLinkData. </summary>
-        /// <param name="id"> The fully qualified ID of the resource link. </param>
-        /// <param name="name"> The name of the resource link. </param>
-        /// <param name="resourceLinkType"> The resource link object. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties for resource link. </param>
-        internal ResourceLinkData(string id, string name, object resourceLinkType, ResourceLinkProperties properties)
+        internal ResourceLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceLinkProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            ResourceLinkType = resourceLinkType;
             Properties = properties;
         }
 
-        /// <summary> The fully qualified ID of the resource link. </summary>
-        public string Id { get; }
-        /// <summary> The name of the resource link. </summary>
-        public string Name { get; }
-        /// <summary> The resource link object. </summary>
-        public object ResourceLinkType { get; }
         /// <summary> Properties for resource link. </summary>
         public ResourceLinkProperties Properties { get; set; }
     }

@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 azure-arm: true
 save-inputs: true
 arm-core: true
@@ -13,10 +14,10 @@ public-clients: false
 head-as-boolean: false
 mgmt-debug:
   show-request-path: true
-#batch:
-#  - tag: package-common-type
-tag: package-resources
-#  - tag: package-management
+batch:
+ - tag: package-common-type
+ - tag: package-resources
+ - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -105,8 +106,6 @@ list-exception:
   - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
-  # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
-  /{linkId}: ResourceLink
   # subscription does not have name and type
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
@@ -405,7 +404,9 @@ directive:
     transform: $["x-ms-client-name"] = "ManagementLock"
   - from: links.json
     where: $.definitions.ResourceLink.properties.type
-    transform: $["x-ms-client-name"] = "ResourceLinkType"
+    transform: >
+      $["x-ms-client-name"] = "ResourceType";
+      $["type"] = "string";
 ```
 
 ### Tag: package-management
@@ -442,6 +443,10 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityRequest.properties.type
+    transform: >
+      $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
       to: CheckNameAvailabilityOptions
