@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PatchableApplicationData DeserializePatchableApplicationData(JsonElement element)
         {
-            Optional<Plan> plan = default;
+            Optional<ArmPlan> plan = default;
             Optional<string> kind = default;
             Optional<ApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<Plan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))

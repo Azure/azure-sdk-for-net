@@ -5,12 +5,11 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -55,11 +54,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
              (factoryContext, singleDispatch) =>
              {
                  var options = _options.Value;
-                 var checkpointStore = new BlobsCheckpointStore(
+                 var checkpointStore = new BlobCheckpointStoreInternal(
                      _clientFactory.GetCheckpointStoreClient(),
-                     options.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
-                     _loggerFactory.CreateLogger<BlobsCheckpointStore>());
+                     _loggerFactory.CreateLogger<BlobCheckpointStoreInternal>());
 
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,

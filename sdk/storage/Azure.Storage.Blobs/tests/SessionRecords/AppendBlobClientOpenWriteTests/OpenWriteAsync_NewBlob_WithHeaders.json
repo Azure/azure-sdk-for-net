@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "a2843739-b960-252d-a7c6-c0a49588d948",
         "x-ms-date": "Thu, 20 Jan 2022 20:43:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "a2843739-b960-252d-a7c6-c0a49588d948",
         "x-ms-request-id": "6ce8096d-001e-0046-7d3e-0eee45000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-client-request-id": "10a2e574-ce89-a7d6-777d-240e4ec155aa",
         "x-ms-date": "Thu, 20 Jan 2022 20:43:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -49,7 +49,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "10a2e574-ce89-a7d6-777d-240e4ec155aa",
         "x-ms-request-id": "6ce80982-001e-0046-0c3e-0eee45000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

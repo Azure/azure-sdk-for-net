@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Tests
             string resourceLinkName = Recording.GenerateAssetName("link-");
             ResourceLink resourceLink = await CreateResourceLink(tenant, vn1, vn2, resourceLinkName);
             Assert.AreEqual(resourceLinkName, resourceLink.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(null).CreateOrUpdateAsync(true, null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(rg.Id).CreateOrUpdateAsync(true, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(null).CreateOrUpdateAsync(WaitUntil.Completed, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, null));
         }
 
         [TestCase]

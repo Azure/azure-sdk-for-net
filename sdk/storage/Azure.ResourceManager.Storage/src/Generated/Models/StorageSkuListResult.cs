@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageSkuListResult. </summary>
         internal StorageSkuListResult()
         {
-            Value = new ChangeTrackingList<SkuInformation>();
+            Value = new ChangeTrackingList<StorageSkuInformation>();
         }
 
         /// <summary> Initializes a new instance of StorageSkuListResult. </summary>
         /// <param name="value"> Get the list result of storage SKUs and their properties. </param>
-        internal StorageSkuListResult(IReadOnlyList<SkuInformation> value)
+        internal StorageSkuListResult(IReadOnlyList<StorageSkuInformation> value)
         {
             Value = value;
         }
 
         /// <summary> Get the list result of storage SKUs and their properties. </summary>
-        public IReadOnlyList<SkuInformation> Value { get; }
+        public IReadOnlyList<StorageSkuInformation> Value { get; }
     }
 }

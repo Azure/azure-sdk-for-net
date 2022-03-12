@@ -253,6 +253,12 @@ namespace Azure.Messaging.ServiceBus
                     isProcessor,
                     cancellationToken);
 
+        internal virtual TransportRuleManager CreateTransportRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier) =>
+            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy, identifier);
+
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the
         ///   requested connection type of the <see cref="ServiceBusClientOptions"/>.

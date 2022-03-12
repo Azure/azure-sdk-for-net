@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSku.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(NetworkVirtualApplianceSku.ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
-            _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+            _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualApplianceSku(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken);
                 if (response.Value == null)
-                    throw _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualApplianceSku(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async virtual Task<Response<NetworkVirtualApplianceSku>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVirtualApplianceSku>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 

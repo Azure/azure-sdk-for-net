@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
             DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-            ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
+            ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
             DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
                 Location = AzureLocation.WestUS2,
                 Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
             };
-            ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(true, updateOptions);
+            ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(WaitUntil.Completed, updateOptions);
             account = lro.Value;
             #endregion Snippet:Managing_Accounts_UpdateAnAccount
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Now we can get the account with GetAsync()
             DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
             // With DeleteAsync(), we can delete the account
-            await account.DeleteAsync(true);
+            await account.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Accounts_DeleteAnAccount
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

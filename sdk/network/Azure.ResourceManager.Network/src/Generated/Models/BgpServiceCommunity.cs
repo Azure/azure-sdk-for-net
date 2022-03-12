@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Service Community Properties. </summary>
-    public partial class BgpServiceCommunity : Resource
+    public partial class BgpServiceCommunity : NetworkResourceData
     {
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
         public BgpServiceCommunity()

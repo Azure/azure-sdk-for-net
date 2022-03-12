@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineTemplateBody.VCenterId = VcenterId;
             virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
             // create virtual machine template
-            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(true, vmtemplateName, virtualMachineTemplateBody)).Value;
+            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineTemplateBody.VCenterId = VcenterId;
             virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
             // create virtual machine template
-            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(true, vmtemplateName, virtualMachineTemplateBody)).Value;
+            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             // get vm template
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineTemplateBody.VCenterId = VcenterId;
             virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
             // create virtual machine template
-            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(true, vmtemplateName, virtualMachineTemplateBody)).Value;
+            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             // check for exists vm template
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineTemplateBody.VCenterId = VcenterId;
             virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
             // create virtual machine template
-            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(true, vmtemplateName, virtualMachineTemplateBody)).Value;
+            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             int count = 0;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineTemplateBody.VCenterId = VcenterId;
             virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
             // create virtual machine template
-            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(true, vmtemplateName, virtualMachineTemplateBody)).Value;
+            VirtualMachineTemplate vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             vmtemplate1 = null;

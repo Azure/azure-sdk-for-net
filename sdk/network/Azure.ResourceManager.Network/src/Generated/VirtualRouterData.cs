@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualRouter data model. </summary>
-    public partial class VirtualRouterData : Resource
+    public partial class VirtualRouterData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>
         public VirtualRouterData()

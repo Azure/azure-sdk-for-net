@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the LoadBalancer data model. </summary>
-    public partial class LoadBalancerData : Resource
+    public partial class LoadBalancerData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of LoadBalancerData. </summary>
         public LoadBalancerData()
