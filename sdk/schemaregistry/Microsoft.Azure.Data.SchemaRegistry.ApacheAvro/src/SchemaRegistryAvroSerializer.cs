@@ -83,6 +83,30 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             => (TEnvelope) await SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Serializes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
+        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        public BinaryContent Serialize<TData>(
+            TData data,
+            CancellationToken cancellationToken = default)
+            => Serialize<DefaultBinaryContent, TData>(data, cancellationToken);
+
+        /// <summary>
+        /// serializes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
+        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        public async ValueTask<BinaryContent> SerializeAsync<TData>(
+            TData data,
+            CancellationToken cancellationToken = default)
+            => await SerializeAsync<DefaultBinaryContent, TData>(data, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// serializes the message data as Avro and stores it in <see cref="BinaryContent.Data"/>. The <see cref="BinaryContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
         /// </summary>
@@ -129,7 +153,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
-            messageType ??= typeof(BinaryContent);
+            messageType ??= typeof(DefaultBinaryContent);
             var message = (BinaryContent)Activator.CreateInstance(messageType);
             message.Data = bd;
             message.ContentType = $"{AvroMimeType}+{schemaId}";

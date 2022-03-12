@@ -10,7 +10,7 @@ namespace Azure
     /// <summary>
     /// Content containing a content type along with its data.
     /// </summary>
-    public class BinaryContent
+    public abstract class BinaryContent
     {
         /// <summary>
         /// Gets or sets the data.
