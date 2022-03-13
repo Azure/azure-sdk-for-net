@@ -3,8 +3,8 @@
   "Namespace": "Azure.ResourceManager.Resources",
   "LibraryName": null,
   "SharedSourceFolders": [
-    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
-    "..\\..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
+    "..\\..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
+    "..\\..\\..\\..\\..\\..\\..\\..\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20220312.3\\content\\Generator.Shared\\"
   ],
   "azure-arm": true,
   "public-clients": true,
