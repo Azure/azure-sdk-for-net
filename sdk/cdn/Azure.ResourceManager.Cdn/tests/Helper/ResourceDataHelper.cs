@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
             Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
             Assert.AreEqual(model.Data.IsCompressionEnabled, getResult.Data.IsCompressionEnabled);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.OriginResponseTimeoutSeconds, getResult.Data.OriginResponseTimeoutSeconds);
             Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
             Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.AzureOrigin != null || getResult.Data.AzureOrigin != null)
             {
                 Assert.NotNull(model.Data.AzureOrigin);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
                 Assert.NotNull(model.Data.HealthProbeSettings);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.LoadBalancingSettings != null || getResult.Data.LoadBalancingSettings != null)
             {
                 Assert.NotNull(model.Data.LoadBalancingSettings);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.CustomHttpsProvisioningState, getResult.Data.CustomHttpsProvisioningState);
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.TlsSettings.CertificateType, getResult.Data.TlsSettings.CertificateType);
             Assert.AreEqual(model.Data.TlsSettings.MinimumTlsVersion, getResult.Data.TlsSettings.MinimumTlsVersion);
             if (model.Data.TlsSettings.Secret != null || getResult.Data.TlsSettings.Secret != null)
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Order, getResult.Data.Order);
             Assert.AreEqual(model.Data.Conditions.Count, getResult.Data.Conditions.Count);
             for (int i = 0; i < model.Data.Conditions.Count; ++i)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.CustomDomains.Count, getResult.Data.CustomDomains.Count);
             for (int i = 0; i < model.Data.CustomDomains.Count; ++i)
             {
@@ -475,10 +475,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
+            Assert.AreEqual(model.Data.Parameters.SecurityPolicyType, getResult.Data.Parameters.SecurityPolicyType);
         }
 
         public static void AssertAfdSecurityPolicyUpdate(AfdSecurityPolicy updatedSecurityPolicy, PatchableAfdSecurityPolicyData updateOptions)
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
@@ -510,10 +510,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
+            Assert.AreEqual(model.Data.Parameters.SecretType, getResult.Data.Parameters.SecretType);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).SecretVersion);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateParameters)getResult.Data.Parameters).CertificateAuthority);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).UseLatestVersion);
