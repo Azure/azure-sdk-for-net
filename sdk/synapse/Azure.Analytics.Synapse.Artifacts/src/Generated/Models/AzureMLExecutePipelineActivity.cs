@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mlPipelineId"/> is null. </exception>
-        public AzureMLExecutePipelineActivity(string name, object mlPipelineId) : base(name)
+        public AzureMLExecutePipelineActivity(string name, BinaryData mlPipelineId) : base(name)
         {
             if (name == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="mlPipelineParameters"> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </param>
         /// <param name="mlParentRunId"> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnStepFailure"> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </param>
-        internal AzureMLExecutePipelineActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object mlPipelineId, object experimentName, object mlPipelineParameters, object mlParentRunId, object continueOnStepFailure) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureMLExecutePipelineActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData mlPipelineId, BinaryData experimentName, BinaryData mlPipelineParameters, BinaryData mlParentRunId, BinaryData continueOnStepFailure) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             MlPipelineId = mlPipelineId;
             ExperimentName = experimentName;
@@ -57,14 +57,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
-        public object MlPipelineId { get; set; }
+        public BinaryData MlPipelineId { get; set; }
         /// <summary> Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public object ExperimentName { get; set; }
+        public BinaryData ExperimentName { get; set; }
         /// <summary> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
-        public object MlPipelineParameters { get; set; }
+        public BinaryData MlPipelineParameters { get; set; }
         /// <summary> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public object MlParentRunId { get; set; }
+        public BinaryData MlParentRunId { get; set; }
         /// <summary> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </summary>
-        public object ContinueOnStepFailure { get; set; }
+        public BinaryData ContinueOnStepFailure { get; set; }
     }
 }

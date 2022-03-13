@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
-        internal OracleTableDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object tableName, object schemaTypePropertiesSchema, object table) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal OracleTableDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
@@ -48,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        public object TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string). </summary>
-        public object SchemaTypePropertiesSchema { get; set; }
+        public BinaryData SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the on-premises Oracle database. Type: string (or Expression with resultType string). </summary>
-        public object Table { get; set; }
+        public BinaryData Table { get; set; }
     }
 }

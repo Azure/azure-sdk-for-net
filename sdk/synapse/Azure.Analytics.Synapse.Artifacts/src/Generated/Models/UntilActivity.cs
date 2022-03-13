@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="expression"> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </param>
         /// <param name="timeout"> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="activities"> List of activities to execute. </param>
-        internal UntilActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, Expression expression, object timeout, IList<Activity> activities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal UntilActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression expression, BinaryData timeout, IList<Activity> activities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             Expression = expression;
             Timeout = timeout;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </summary>
         public Expression Expression { get; set; }
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public object Timeout { get; set; }
+        public BinaryData Timeout { get; set; }
         /// <summary> List of activities to execute. </summary>
         public IList<Activity> Activities { get; }
     }

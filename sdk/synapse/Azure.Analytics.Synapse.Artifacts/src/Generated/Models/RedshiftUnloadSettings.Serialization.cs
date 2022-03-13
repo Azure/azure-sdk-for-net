@@ -21,14 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("s3LinkedServiceName");
             writer.WriteObjectValue(S3LinkedServiceName);
             writer.WritePropertyName("bucketName");
-            writer.WriteObjectValue(BucketName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BucketName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(BucketName.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
         }
 
         internal static RedshiftUnloadSettings DeserializeRedshiftUnloadSettings(JsonElement element)
         {
             LinkedServiceReference s3LinkedServiceName = default;
-            object bucketName = default;
+            BinaryData bucketName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("s3LinkedServiceName"))
@@ -38,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("bucketName"))
                 {
-                    bucketName = property.Value.GetObject();
+                    bucketName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

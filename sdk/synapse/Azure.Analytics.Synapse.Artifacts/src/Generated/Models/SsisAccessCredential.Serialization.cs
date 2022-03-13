@@ -19,9 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domain");
-            writer.WriteObjectValue(Domain);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Domain);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Domain.ToString()).RootElement);
+#endif
             writer.WritePropertyName("userName");
-            writer.WriteObjectValue(UserName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("password");
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
@@ -29,19 +37,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
         {
-            object domain = default;
-            object userName = default;
+            BinaryData domain = default;
+            BinaryData userName = default;
             SecretBase password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"))
                 {
-                    domain = property.Value.GetObject();
+                    domain = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userName"))
                 {
-                    userName = property.Value.GetObject();
+                    userName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"))

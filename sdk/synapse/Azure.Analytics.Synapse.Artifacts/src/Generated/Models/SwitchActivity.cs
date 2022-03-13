@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
         /// <param name="cases"> List of cases that correspond to expected values of the &apos;on&apos; property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </param>
         /// <param name="defaultActivities"> List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action. </param>
-        internal SwitchActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, Expression @on, IList<SwitchCase> cases, IList<Activity> defaultActivities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal SwitchActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression @on, IList<SwitchCase> cases, IList<Activity> defaultActivities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             On = @on;
             Cases = cases;

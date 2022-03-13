@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
@@ -19,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="partitionColumnName"> The name of the column in integer or datetime type that will be used for proceeding partitioning. If not specified, the primary key of the table is auto-detected and used as the partition column. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>
-        internal SqlPartitionSettings(object partitionColumnName, object partitionUpperBound, object partitionLowerBound)
+        internal SqlPartitionSettings(BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound)
         {
             PartitionColumnName = partitionColumnName;
             PartitionUpperBound = partitionUpperBound;
@@ -27,10 +29,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The name of the column in integer or datetime type that will be used for proceeding partitioning. If not specified, the primary key of the table is auto-detected and used as the partition column. Type: string (or Expression with resultType string). </summary>
-        public object PartitionColumnName { get; set; }
+        public BinaryData PartitionColumnName { get; set; }
         /// <summary> The maximum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </summary>
-        public object PartitionUpperBound { get; set; }
+        public BinaryData PartitionUpperBound { get; set; }
         /// <summary> The minimum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </summary>
-        public object PartitionLowerBound { get; set; }
+        public BinaryData PartitionLowerBound { get; set; }
     }
 }

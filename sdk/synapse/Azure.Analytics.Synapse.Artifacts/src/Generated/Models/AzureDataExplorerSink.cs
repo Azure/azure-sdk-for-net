@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="ingestionMappingName"> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </param>
         /// <param name="ingestionMappingAsJson"> An explicit column mapping description provided in a json format. Type: string. </param>
         /// <param name="flushImmediately"> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </param>
-        internal AzureDataExplorerSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object ingestionMappingName, object ingestionMappingAsJson, object flushImmediately) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal AzureDataExplorerSink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData ingestionMappingName, BinaryData ingestionMappingAsJson, BinaryData flushImmediately) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             IngestionMappingName = ingestionMappingName;
             IngestionMappingAsJson = ingestionMappingAsJson;
@@ -38,10 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </summary>
-        public object IngestionMappingName { get; set; }
+        public BinaryData IngestionMappingName { get; set; }
         /// <summary> An explicit column mapping description provided in a json format. Type: string. </summary>
-        public object IngestionMappingAsJson { get; set; }
+        public BinaryData IngestionMappingAsJson { get; set; }
         /// <summary> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </summary>
-        public object FlushImmediately { get; set; }
+        public BinaryData FlushImmediately { get; set; }
     }
 }

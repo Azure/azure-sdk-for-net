@@ -21,20 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing");
-                writer.WriteObjectValue(FileMissing);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileMissing);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileMissing.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency");
-                writer.WriteObjectValue(DataInconsistency);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataInconsistency);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataInconsistency.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
-            Optional<object> fileMissing = default;
-            Optional<object> dataInconsistency = default;
+            Optional<BinaryData> fileMissing = default;
+            Optional<BinaryData> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"))
@@ -44,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileMissing = property.Value.GetObject();
+                    fileMissing = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dataInconsistency"))
@@ -54,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataInconsistency = property.Value.GetObject();
+                    dataInconsistency = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

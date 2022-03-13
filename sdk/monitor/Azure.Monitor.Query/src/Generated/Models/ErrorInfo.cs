@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="details"> error details. </param>
         /// <param name="innererror"> Inner error details if they exist. </param>
         /// <param name="additionalProperties"> Additional properties that can be provided on the error info object. </param>
-        internal ErrorInfo(string code, string message, IReadOnlyList<ErrorDetail> details, ErrorInfo innererror, object additionalProperties)
+        internal ErrorInfo(string code, string message, IReadOnlyList<ErrorDetail> details, ErrorInfo innererror, BinaryData additionalProperties)
         {
             Code = code;
             Message = message;
@@ -58,6 +58,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Inner error details if they exist. </summary>
         public ErrorInfo Innererror { get; }
         /// <summary> Additional properties that can be provided on the error info object. </summary>
-        public object AdditionalProperties { get; }
+        public BinaryData AdditionalProperties { get; }
     }
 }

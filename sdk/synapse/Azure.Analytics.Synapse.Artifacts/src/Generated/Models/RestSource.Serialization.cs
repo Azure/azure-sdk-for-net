@@ -22,78 +22,122 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod");
-                writer.WriteObjectValue(RequestMethod);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestMethod);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody");
-                writer.WriteObjectValue(RequestBody);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestBody);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders");
-                writer.WriteObjectValue(AdditionalHeaders);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalHeaders);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules");
-                writer.WriteObjectValue(PaginationRules);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PaginationRules);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PaginationRules.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout");
-                writer.WriteObjectValue(HttpRequestTimeout);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HttpRequestTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpRequestTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval");
-                writer.WriteObjectValue(RequestInterval);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestInterval);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestInterval.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-                writer.WriteObjectValue(AdditionalColumns);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalColumns);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
-                writer.WriteObjectValue(SourceRetryCount);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
-                writer.WriteObjectValue(SourceRetryWait);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static RestSource DeserializeRestSource(JsonElement element)
         {
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> paginationRules = default;
-            Optional<object> httpRequestTimeout = default;
-            Optional<object> requestInterval = default;
-            Optional<object> additionalColumns = default;
+            Optional<BinaryData> requestMethod = default;
+            Optional<BinaryData> requestBody = default;
+            Optional<BinaryData> additionalHeaders = default;
+            Optional<BinaryData> paginationRules = default;
+            Optional<BinaryData> httpRequestTimeout = default;
+            Optional<BinaryData> requestInterval = default;
+            Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> sourceRetryCount = default;
+            Optional<BinaryData> sourceRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestMethod"))
@@ -103,7 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestMethod = property.Value.GetObject();
+                    requestMethod = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestBody"))
@@ -113,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestBody = property.Value.GetObject();
+                    requestBody = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"))
@@ -123,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalHeaders = property.Value.GetObject();
+                    additionalHeaders = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("paginationRules"))
@@ -133,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    paginationRules = property.Value.GetObject();
+                    paginationRules = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"))
@@ -143,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequestTimeout = property.Value.GetObject();
+                    httpRequestTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestInterval"))
@@ -153,7 +197,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestInterval = property.Value.GetObject();
+                    requestInterval = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"))
@@ -163,7 +207,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = property.Value.GetObject();
+                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -178,7 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = property.Value.GetObject();
+                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
@@ -188,7 +232,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = property.Value.GetObject();
+                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
@@ -198,10 +242,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = property.Value.GetObject();
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);

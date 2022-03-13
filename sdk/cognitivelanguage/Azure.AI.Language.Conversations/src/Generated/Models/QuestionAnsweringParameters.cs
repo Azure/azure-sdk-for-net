@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
@@ -17,6 +19,6 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> The options sent to a Question Answering KB. </summary>
-        public object CallingOptions { get; set; }
+        public BinaryData CallingOptions { get; set; }
     }
 }

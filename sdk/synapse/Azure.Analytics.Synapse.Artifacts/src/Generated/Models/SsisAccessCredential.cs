@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password"> Password for windows authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisAccessCredential(object domain, object userName, SecretBase password)
+        public SsisAccessCredential(BinaryData domain, BinaryData userName, SecretBase password)
         {
             if (domain == null)
             {
@@ -38,9 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Domain for windows authentication. </summary>
-        public object Domain { get; set; }
+        public BinaryData Domain { get; set; }
         /// <summary> UseName for windows authentication. </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password for windows authentication. </summary>
         public SecretBase Password { get; set; }
     }

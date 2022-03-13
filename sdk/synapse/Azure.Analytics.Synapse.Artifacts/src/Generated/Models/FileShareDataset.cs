@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="format"> The format of the files. </param>
         /// <param name="fileFilter"> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </param>
         /// <param name="compression"> The data compression method used for the file system. </param>
-        internal FileShareDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object folderPath, object fileName, object modifiedDatetimeStart, object modifiedDatetimeEnd, DatasetStorageFormat format, object fileFilter, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal FileShareDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData fileName, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, BinaryData fileFilter, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             FileName = fileName;
@@ -56,17 +56,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The path of the on-premises file system. Type: string (or Expression with resultType string). </summary>
-        public object FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> The name of the on-premises file system. Type: string (or Expression with resultType string). </summary>
-        public object FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary> The format of the files. </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </summary>
-        public object FileFilter { get; set; }
+        public BinaryData FileFilter { get; set; }
         /// <summary> The data compression method used for the file system. </summary>
         public DatasetCompression Compression { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal static AcsChatThreadCreatedEventData DeserializeAcsChatThreadCreatedEventData(JsonElement element)
         {
             Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
             Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
@@ -44,10 +44,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property.Value.GetRawText()));
                     }
                     properties = dictionary;
                     continue;

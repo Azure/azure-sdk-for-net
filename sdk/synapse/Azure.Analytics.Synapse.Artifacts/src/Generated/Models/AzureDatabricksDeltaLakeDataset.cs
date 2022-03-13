@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="table"> The name of delta table. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of delta table. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object table, object database) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDatabricksDeltaLakeDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table, BinaryData database) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
             Database = database;
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The name of delta table. Type: string (or Expression with resultType string). </summary>
-        public object Table { get; set; }
+        public BinaryData Table { get; set; }
         /// <summary> The database name of delta table. Type: string (or Expression with resultType string). </summary>
-        public object Database { get; set; }
+        public BinaryData Database { get; set; }
     }
 }

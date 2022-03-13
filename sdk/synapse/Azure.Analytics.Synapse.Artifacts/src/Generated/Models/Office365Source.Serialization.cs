@@ -22,72 +22,112 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups");
-                writer.WriteObjectValue(AllowedGroups);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowedGroups);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowedGroups.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri");
-                writer.WriteObjectValue(UserScopeFilterUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserScopeFilterUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserScopeFilterUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn");
-                writer.WriteObjectValue(DateFilterColumn);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DateFilterColumn);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFilterColumn.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteObjectValue(StartTime);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StartTime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(StartTime.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteObjectValue(EndTime);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EndTime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EndTime.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns");
-                writer.WriteObjectValue(OutputColumns);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(OutputColumns);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(OutputColumns.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
-                writer.WriteObjectValue(SourceRetryCount);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
-                writer.WriteObjectValue(SourceRetryWait);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static Office365Source DeserializeOffice365Source(JsonElement element)
         {
-            Optional<object> allowedGroups = default;
-            Optional<object> userScopeFilterUri = default;
-            Optional<object> dateFilterColumn = default;
-            Optional<object> startTime = default;
-            Optional<object> endTime = default;
-            Optional<object> outputColumns = default;
+            Optional<BinaryData> allowedGroups = default;
+            Optional<BinaryData> userScopeFilterUri = default;
+            Optional<BinaryData> dateFilterColumn = default;
+            Optional<BinaryData> startTime = default;
+            Optional<BinaryData> endTime = default;
+            Optional<BinaryData> outputColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> sourceRetryCount = default;
+            Optional<BinaryData> sourceRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedGroups"))
@@ -97,7 +137,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowedGroups = property.Value.GetObject();
+                    allowedGroups = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userScopeFilterUri"))
@@ -107,7 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userScopeFilterUri = property.Value.GetObject();
+                    userScopeFilterUri = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dateFilterColumn"))
@@ -117,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFilterColumn = property.Value.GetObject();
+                    dateFilterColumn = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -127,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetObject();
+                    startTime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -137,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = property.Value.GetObject();
+                    endTime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("outputColumns"))
@@ -147,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputColumns = property.Value.GetObject();
+                    outputColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -162,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = property.Value.GetObject();
+                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
@@ -172,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = property.Value.GetObject();
+                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
@@ -182,10 +222,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = property.Value.GetObject();
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);

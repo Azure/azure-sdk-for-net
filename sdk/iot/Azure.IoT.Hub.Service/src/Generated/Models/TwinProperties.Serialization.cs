@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -23,7 +24,11 @@ namespace Azure.IoT.Hub.Service.Models
                 foreach (var item in Desired)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -34,7 +39,11 @@ namespace Azure.IoT.Hub.Service.Models
                 foreach (var item in Reported)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -43,8 +52,8 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static TwinProperties DeserializeTwinProperties(JsonElement element)
         {
-            Optional<IDictionary<string, object>> desired = default;
-            Optional<IDictionary<string, object>> reported = default;
+            Optional<IDictionary<string, BinaryData>> desired = default;
+            Optional<IDictionary<string, BinaryData>> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"))
@@ -54,10 +63,10 @@ namespace Azure.IoT.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property.Value.GetRawText()));
                     }
                     desired = dictionary;
                     continue;
@@ -69,10 +78,10 @@ namespace Azure.IoT.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property.Value.GetRawText()));
                     }
                     reported = dictionary;
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(object text, ScriptType type)
+        public ScriptActivityScriptBlock(BinaryData text, ScriptType type)
         {
             if (text == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(object text, ScriptType type, IList<ScriptActivityParameter> parameters)
+        internal ScriptActivityScriptBlock(BinaryData text, ScriptType type, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
             Type = type;
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
-        public object Text { get; set; }
+        public BinaryData Text { get; set; }
         /// <summary> The type of the query. Type: string. </summary>
         public ScriptType Type { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
-        public SparkLinkedService(object host, object port, SparkAuthenticationType authenticationType)
+        public SparkLinkedService(BinaryData host, BinaryData port, SparkAuthenticationType authenticationType)
         {
             if (host == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SparkLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, SparkServerType? serverType, SparkThriftTransportProtocol? thriftTransportProtocol, SparkAuthenticationType authenticationType, object username, SecretBase password, object httpPath, object enableSsl, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SparkLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, SparkServerType? serverType, SparkThriftTransportProtocol? thriftTransportProtocol, SparkAuthenticationType authenticationType, BinaryData username, SecretBase password, BinaryData httpPath, BinaryData enableSsl, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData allowHostNameCNMismatch, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -76,9 +76,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> IP address or host name of the Spark server. </summary>
-        public object Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> The TCP port that the Spark server uses to listen for client connections. </summary>
-        public object Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> The type of Spark server. </summary>
         public SparkServerType? ServerType { get; set; }
         /// <summary> The transport protocol to use in the Thrift layer. </summary>
@@ -86,22 +86,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The authentication method used to access the Spark server. </summary>
         public SparkAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name that you use to access Spark Server. </summary>
-        public object Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The partial URL corresponding to the Spark server. </summary>
-        public object HttpPath { get; set; }
+        public BinaryData HttpPath { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        public object EnableSsl { get; set; }
+        public BinaryData EnableSsl { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        public object TrustedCertPath { get; set; }
+        public BinaryData TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        public object UseSystemTrustStore { get; set; }
+        public BinaryData UseSystemTrustStore { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        public object AllowHostNameCNMismatch { get; set; }
+        public BinaryData AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        public object AllowSelfSignedServerCert { get; set; }
+        public BinaryData AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

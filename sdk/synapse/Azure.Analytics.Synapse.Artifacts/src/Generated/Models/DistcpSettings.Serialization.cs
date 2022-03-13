@@ -19,32 +19,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint");
-            writer.WriteObjectValue(ResourceManagerEndpoint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResourceManagerEndpoint);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceManagerEndpoint.ToString()).RootElement);
+#endif
             writer.WritePropertyName("tempScriptPath");
-            writer.WriteObjectValue(TempScriptPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TempScriptPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TempScriptPath.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions");
-                writer.WriteObjectValue(DistcpOptions);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DistcpOptions);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DistcpOptions.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
         {
-            object resourceManagerEndpoint = default;
-            object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            BinaryData resourceManagerEndpoint = default;
+            BinaryData tempScriptPath = default;
+            Optional<BinaryData> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"))
                 {
-                    resourceManagerEndpoint = property.Value.GetObject();
+                    resourceManagerEndpoint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tempScriptPath"))
                 {
-                    tempScriptPath = property.Value.GetObject();
+                    tempScriptPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("distcpOptions"))
@@ -54,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    distcpOptions = property.Value.GetObject();
+                    distcpOptions = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

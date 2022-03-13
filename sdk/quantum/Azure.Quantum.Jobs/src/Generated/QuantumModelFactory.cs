@@ -35,7 +35,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
         /// <param name="tags"> List of user-supplied tags associated with the job. </param>
         /// <returns> A new <see cref="Models.JobDetails"/> instance for mocking. </returns>
-        public static JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, JobStatus? status = null, DateTimeOffset? creationTime = null, DateTimeOffset? beginExecutionTime = null, DateTimeOffset? endExecutionTime = null, DateTimeOffset? cancellationTime = null, CostEstimate costEstimate = null, ErrorData errorData = null, IEnumerable<string> tags = null)
+        public static JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, BinaryData inputParams = null, string providerId = null, string target = null, IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, JobStatus? status = null, DateTimeOffset? creationTime = null, DateTimeOffset? beginExecutionTime = null, DateTimeOffset? endExecutionTime = null, DateTimeOffset? cancellationTime = null, CostEstimate costEstimate = null, ErrorData errorData = null, IEnumerable<string> tags = null)
         {
             metadata ??= new Dictionary<string, string>();
             tags ??= new List<string>();

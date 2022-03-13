@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinData. </summary>
         public TwinData()
         {
-            Tags = new ChangeTrackingDictionary<string, object>();
+            Tags = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="x509Thumbprint"> The X509 thumbprint of the device. </param>
         /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
         /// <param name="deviceScope"> The scope of the device. </param>
-        internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope)
+        internal TwinData(string deviceId, string moduleId, IDictionary<string, BinaryData> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope)
         {
             DeviceId = deviceId;
             ModuleId = moduleId;
@@ -64,7 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
         public string ModuleId { get; set; }
         /// <summary> The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The values are JSON objects, up-to 4KB in length. </summary>
-        public IDictionary<string, object> Tags { get; }
+        public IDictionary<string, BinaryData> Tags { get; }
         /// <summary> The desired and reported properties of the twin. </summary>
         public TwinProperties Properties { get; set; }
         /// <summary> The string representing a ETag for the device twin, as per RFC7232. </summary>

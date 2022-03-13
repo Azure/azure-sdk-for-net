@@ -21,20 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel");
-                writer.WriteObjectValue(LogLevel);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging");
-                writer.WriteObjectValue(EnableReliableLogging);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableReliableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            Optional<BinaryData> logLevel = default;
+            Optional<BinaryData> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"))
@@ -44,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = property.Value.GetObject();
+                    logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"))
@@ -54,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableReliableLogging = property.Value.GetObject();
+                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

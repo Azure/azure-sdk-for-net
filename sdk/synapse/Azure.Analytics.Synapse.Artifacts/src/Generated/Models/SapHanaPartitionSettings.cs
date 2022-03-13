@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
@@ -17,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal SapHanaPartitionSettings(object partitionColumnName)
+        internal SapHanaPartitionSettings(BinaryData partitionColumnName)
         {
             PartitionColumnName = partitionColumnName;
         }
 
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public object PartitionColumnName { get; set; }
+        public BinaryData PartitionColumnName { get; set; }
     }
 }

@@ -20,7 +20,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text");
-            writer.WriteObjectValue(Text);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Text);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Text.ToString()).RootElement);
+#endif
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Parameters))
@@ -38,14 +42,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptActivityScriptBlock DeserializeScriptActivityScriptBlock(JsonElement element)
         {
-            object text = default;
+            BinaryData text = default;
             ScriptType type = default;
             Optional<IList<ScriptActivityParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
                 {
-                    text = property.Value.GetObject();
+                    text = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))

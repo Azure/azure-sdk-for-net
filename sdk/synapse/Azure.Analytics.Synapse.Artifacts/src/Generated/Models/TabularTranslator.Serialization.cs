@@ -22,32 +22,56 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ColumnMappings))
             {
                 writer.WritePropertyName("columnMappings");
-                writer.WriteObjectValue(ColumnMappings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ColumnMappings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnMappings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SchemaMapping))
             {
                 writer.WritePropertyName("schemaMapping");
-                writer.WriteObjectValue(SchemaMapping);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SchemaMapping);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SchemaMapping.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CollectionReference))
             {
                 writer.WritePropertyName("collectionReference");
-                writer.WriteObjectValue(CollectionReference);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CollectionReference);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CollectionReference.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MapComplexValuesToString))
             {
                 writer.WritePropertyName("mapComplexValuesToString");
-                writer.WriteObjectValue(MapComplexValuesToString);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MapComplexValuesToString);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MapComplexValuesToString.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings");
-                writer.WriteObjectValue(Mappings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Mappings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Mappings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TypeConversion))
             {
                 writer.WritePropertyName("typeConversion");
-                writer.WriteObjectValue(TypeConversion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TypeConversion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TypeConversion.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TypeConversionSettings))
             {
@@ -59,23 +83,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static TabularTranslator DeserializeTabularTranslator(JsonElement element)
         {
-            Optional<object> columnMappings = default;
-            Optional<object> schemaMapping = default;
-            Optional<object> collectionReference = default;
-            Optional<object> mapComplexValuesToString = default;
-            Optional<object> mappings = default;
-            Optional<object> typeConversion = default;
+            Optional<BinaryData> columnMappings = default;
+            Optional<BinaryData> schemaMapping = default;
+            Optional<BinaryData> collectionReference = default;
+            Optional<BinaryData> mapComplexValuesToString = default;
+            Optional<BinaryData> mappings = default;
+            Optional<BinaryData> typeConversion = default;
             Optional<TypeConversionSettings> typeConversionSettings = default;
             string type = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnMappings"))
@@ -85,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    columnMappings = property.Value.GetObject();
+                    columnMappings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schemaMapping"))
@@ -95,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schemaMapping = property.Value.GetObject();
+                    schemaMapping = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("collectionReference"))
@@ -105,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    collectionReference = property.Value.GetObject();
+                    collectionReference = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("mapComplexValuesToString"))
@@ -115,7 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mapComplexValuesToString = property.Value.GetObject();
+                    mapComplexValuesToString = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("mappings"))
@@ -125,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mappings = property.Value.GetObject();
+                    mappings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("typeConversion"))
@@ -135,7 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    typeConversion = property.Value.GetObject();
+                    typeConversion = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("typeConversionSettings"))
@@ -153,7 +181,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);

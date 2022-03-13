@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -33,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="transformations"> List of transformations in Flowlet. </param>
         /// <param name="script"> Flowlet script. </param>
         /// <param name="scriptLines"> Flowlet script lines. </param>
-        internal Flowlet(string type, string description, IList<object> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(type, description, annotations, folder)
+        internal Flowlet(string type, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(type, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;

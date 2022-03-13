@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
         /// <param name="importSettings"> Azure Databricks Delta Lake import settings. </param>
-        internal AzureDatabricksDeltaLakeSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript, AzureDatabricksDeltaLakeImportCommand importSettings) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal AzureDatabricksDeltaLakeSink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData preCopyScript, AzureDatabricksDeltaLakeImportCommand importSettings) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             PreCopyScript = preCopyScript;
             ImportSettings = importSettings;
@@ -36,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public object PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> Azure Databricks Delta Lake import settings. </summary>
         public AzureDatabricksDeltaLakeImportCommand ImportSettings { get; set; }
     }

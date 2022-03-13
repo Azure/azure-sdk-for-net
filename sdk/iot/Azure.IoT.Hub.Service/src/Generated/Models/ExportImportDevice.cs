@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
         public ExportImportDevice()
         {
-            Tags = new ChangeTrackingDictionary<string, object>();
+            Tags = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> The unique identifier of the device. </summary>
@@ -36,7 +37,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> The string representing a weak ETag for the device twin RFC7232. The value is only used if import mode is updateIfMatchETag, in that case the import operation is performed only if this ETag matches the value maintained by the server. </summary>
         public string TwinETag { get; set; }
         /// <summary> The JSON document read and written by the solution back end. The tags are not visible to device apps. </summary>
-        public IDictionary<string, object> Tags { get; }
+        public IDictionary<string, BinaryData> Tags { get; }
         /// <summary> The desired and reported properties for the device. </summary>
         public PropertyContainer Properties { get; set; }
         /// <summary> The status of capabilities enabled on the device. </summary>

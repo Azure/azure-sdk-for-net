@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -74,7 +75,11 @@ namespace Azure.ResourceManager.Cdn
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource");
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SharedPrivateLinkResource);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(SharedPrivateLinkResource.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> originHostHeader = default;
             Optional<int?> priority = default;
             Optional<int?> weight = default;
-            Optional<object> sharedPrivateLinkResource = default;
+            Optional<BinaryData> sharedPrivateLinkResource = default;
             Optional<EnabledState> enabledState = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
@@ -205,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = property0.Value.GetObject();
+                            sharedPrivateLinkResource = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))

@@ -22,36 +22,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem");
-                writer.WriteObjectValue(FileSystem);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileSystem);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileSystem.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteObjectValue(FolderPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName");
-                writer.WriteObjectValue(FileName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static AzureBlobFSLocation DeserializeAzureBlobFSLocation(JsonElement element)
         {
-            Optional<object> fileSystem = default;
+            Optional<BinaryData> fileSystem = default;
             string type = default;
-            Optional<object> folderPath = default;
-            Optional<object> fileName = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> folderPath = default;
+            Optional<BinaryData> fileName = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileSystem"))
@@ -61,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileSystem = property.Value.GetObject();
+                    fileSystem = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -76,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = property.Value.GetObject();
+                    folderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileName"))
@@ -86,10 +102,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileName = property.Value.GetObject();
+                    fileName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobFSLocation(type, folderPath.Value, fileName.Value, additionalProperties, fileSystem.Value);

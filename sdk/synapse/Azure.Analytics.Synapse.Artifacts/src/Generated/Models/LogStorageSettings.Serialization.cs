@@ -24,22 +24,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
-                writer.WriteObjectValue(Path);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Path);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel");
-                writer.WriteObjectValue(LogLevel);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging");
-                writer.WriteObjectValue(EnableReliableLogging);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableReliableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -47,11 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> path = default;
+            Optional<BinaryData> logLevel = default;
+            Optional<BinaryData> enableReliableLogging = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -66,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = property.Value.GetObject();
+                    path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("logLevel"))
@@ -76,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = property.Value.GetObject();
+                    logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"))
@@ -86,10 +102,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableReliableLogging = property.Value.GetObject();
+                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);

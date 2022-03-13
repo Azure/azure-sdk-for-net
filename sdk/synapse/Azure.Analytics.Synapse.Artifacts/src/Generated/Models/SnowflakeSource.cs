@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Snowflake Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="exportSettings"> Snowflake export settings. </param>
-        internal SnowflakeSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, SnowflakeExportCopyCommand exportSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        internal SnowflakeSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData query, SnowflakeExportCopyCommand exportSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             ExportSettings = exportSettings;
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
-        public object Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Snowflake export settings. </summary>
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
     }

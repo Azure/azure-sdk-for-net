@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,13 +25,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
-        internal AzureBlobFSWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties, object blockSizeInMB) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        internal AzureBlobFSWriteSettings(string type, BinaryData maxConcurrentConnections, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData blockSizeInMB) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
             Type = type ?? "AzureBlobFSWriteSettings";
         }
 
         /// <summary> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </summary>
-        public object BlockSizeInMB { get; set; }
+        public BinaryData BlockSizeInMB { get; set; }
     }
 }

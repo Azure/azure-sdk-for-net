@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sellerID"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceID"/>, <paramref name="sellerID"/> or <paramref name="accessKeyId"/> is null. </exception>
-        public AmazonMWSLinkedService(object endpoint, object marketplaceID, object sellerID, object accessKeyId)
+        public AmazonMWSLinkedService(BinaryData endpoint, BinaryData marketplaceID, BinaryData sellerID, BinaryData accessKeyId)
         {
             if (endpoint == null)
             {
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonMWSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object marketplaceID, object sellerID, SecretBase mwsAuthToken, object accessKeyId, SecretBase secretKey, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonMWSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData endpoint, BinaryData marketplaceID, BinaryData sellerID, SecretBase mwsAuthToken, BinaryData accessKeyId, SecretBase secretKey, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             MarketplaceID = marketplaceID;
@@ -78,24 +78,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </summary>
-        public object Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>
-        public object MarketplaceID { get; set; }
+        public BinaryData MarketplaceID { get; set; }
         /// <summary> The Amazon seller ID. </summary>
-        public object SellerID { get; set; }
+        public BinaryData SellerID { get; set; }
         /// <summary> The Amazon MWS authentication token. </summary>
         public SecretBase MwsAuthToken { get; set; }
         /// <summary> The access key id used to access data. </summary>
-        public object AccessKeyId { get; set; }
+        public BinaryData AccessKeyId { get; set; }
         /// <summary> The secret key used to access data. </summary>
         public SecretBase SecretKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public object UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public object UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public object UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

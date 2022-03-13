@@ -48,29 +48,53 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("host");
-            writer.WriteObjectValue(Host);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Host);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
+#endif
             writer.WritePropertyName("serverVersion");
-            writer.WriteObjectValue(ServerVersion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServerVersion);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerVersion.ToString()).RootElement);
+#endif
             writer.WritePropertyName("catalog");
-            writer.WriteObjectValue(Catalog);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Catalog);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Catalog.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
-                writer.WriteObjectValue(Port);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Port);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Port.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
-                writer.WriteObjectValue(Username);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Username);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -80,43 +104,75 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl");
-                writer.WriteObjectValue(EnableSsl);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableSsl);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableSsl.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath");
-                writer.WriteObjectValue(TrustedCertPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrustedCertPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore");
-                writer.WriteObjectValue(UseSystemTrustStore);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseSystemTrustStore);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemTrustStore.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch");
-                writer.WriteObjectValue(AllowHostNameCNMismatch);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowHostNameCNMismatch);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowHostNameCNMismatch.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert");
-                writer.WriteObjectValue(AllowSelfSignedServerCert);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowSelfSignedServerCert);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowSelfSignedServerCert.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TimeZoneID))
             {
                 writer.WritePropertyName("timeZoneID");
-                writer.WriteObjectValue(TimeZoneID);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TimeZoneID);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeZoneID.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -127,23 +183,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object host = default;
-            object serverVersion = default;
-            object catalog = default;
-            Optional<object> port = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData host = default;
+            BinaryData serverVersion = default;
+            BinaryData catalog = default;
+            Optional<BinaryData> port = default;
             PrestoAuthenticationType authenticationType = default;
-            Optional<object> username = default;
+            Optional<BinaryData> username = default;
             Optional<SecretBase> password = default;
-            Optional<object> enableSsl = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> allowHostNameCNMismatch = default;
-            Optional<object> allowSelfSignedServerCert = default;
-            Optional<object> timeZoneID = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> enableSsl = default;
+            Optional<BinaryData> trustedCertPath = default;
+            Optional<BinaryData> useSystemTrustStore = default;
+            Optional<BinaryData> allowHostNameCNMismatch = default;
+            Optional<BinaryData> allowSelfSignedServerCert = default;
+            Optional<BinaryData> timeZoneID = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -188,10 +244,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -207,17 +263,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("host"))
                         {
-                            host = property0.Value.GetObject();
+                            host = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serverVersion"))
                         {
-                            serverVersion = property0.Value.GetObject();
+                            serverVersion = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("catalog"))
                         {
-                            catalog = property0.Value.GetObject();
+                            catalog = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("port"))
@@ -227,7 +283,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            port = property0.Value.GetObject();
+                            port = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
@@ -242,7 +298,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            username = property0.Value.GetObject();
+                            username = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -262,7 +318,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableSsl = property0.Value.GetObject();
+                            enableSsl = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
@@ -272,7 +328,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedCertPath = property0.Value.GetObject();
+                            trustedCertPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
@@ -282,7 +338,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useSystemTrustStore = property0.Value.GetObject();
+                            useSystemTrustStore = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("allowHostNameCNMismatch"))
@@ -292,7 +348,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            allowHostNameCNMismatch = property0.Value.GetObject();
+                            allowHostNameCNMismatch = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("allowSelfSignedServerCert"))
@@ -302,7 +358,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            allowSelfSignedServerCert = property0.Value.GetObject();
+                            allowSelfSignedServerCert = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeZoneID"))
@@ -312,7 +368,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeZoneID = property0.Value.GetObject();
+                            timeZoneID = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -322,13 +378,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PrestoLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, serverVersion, catalog, port.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, timeZoneID.Value, encryptedCredential.Value);

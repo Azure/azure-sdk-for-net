@@ -19,8 +19,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             Optional<string> modelName = default;
             Optional<string> modelVersion = default;
-            Optional<object> modelTags = default;
-            Optional<object> modelProperties = default;
+            Optional<BinaryData> modelTags = default;
+            Optional<BinaryData> modelProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelName"))
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modelTags = property.Value.GetObject();
+                    modelTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modelProperties"))
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modelProperties = property.Value.GetObject();
+                    modelProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

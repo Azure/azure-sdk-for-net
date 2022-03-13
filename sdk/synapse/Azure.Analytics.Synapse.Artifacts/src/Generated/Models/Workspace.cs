@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             ConnectivityEndpoints = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
-            ExtraProperties = new ChangeTrackingDictionary<string, object>();
+            ExtraProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Workspace. </summary>
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
         /// <param name="adlaResourceId"> The ADLA resource ID. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, tags, location)
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, BinaryData> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The workspace unique identifier. </summary>
         public Guid? WorkspaceUID { get; }
         /// <summary> Workspace level configs and feature flags. </summary>
-        public IReadOnlyDictionary<string, object> ExtraProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> ExtraProperties { get; }
         /// <summary> Managed Virtual Network Settings. </summary>
         public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
         /// <summary> Git integration settings. </summary>

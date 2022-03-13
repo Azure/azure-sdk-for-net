@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The QueryFormat. </summary>
@@ -26,6 +28,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
         public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
         /// <summary> Any object. </summary>
-        public object ParquetTextConfiguration { get; set; }
+        public BinaryData ParquetTextConfiguration { get; set; }
     }
 }

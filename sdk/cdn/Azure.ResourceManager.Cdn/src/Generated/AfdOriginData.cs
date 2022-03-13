@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, object sharedPrivateLinkResource, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdOriginData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, BinaryData sharedPrivateLinkResource, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
             AzureOrigin = azureOrigin;
             HostName = hostName;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
         public int? Weight { get; set; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; set; }
+        public BinaryData SharedPrivateLinkResource { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; set; }
         /// <summary> Provisioning status. </summary>

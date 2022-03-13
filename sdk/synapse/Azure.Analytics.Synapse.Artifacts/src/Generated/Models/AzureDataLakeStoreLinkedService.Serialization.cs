@@ -48,18 +48,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("dataLakeStoreUri");
-            writer.WriteObjectValue(DataLakeStoreUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataLakeStoreUri);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(DataLakeStoreUri.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
-                writer.WriteObjectValue(ServicePrincipalId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServicePrincipalId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -69,38 +81,66 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant");
-                writer.WriteObjectValue(Tenant);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Tenant);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType");
-                writer.WriteObjectValue(AzureCloudType);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AzureCloudType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureCloudType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName");
-                writer.WriteObjectValue(AccountName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AccountName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AccountName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId");
-                writer.WriteObjectValue(SubscriptionId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SubscriptionId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SubscriptionId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName");
-                writer.WriteObjectValue(ResourceGroupName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResourceGroupName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceGroupName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -111,18 +151,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object dataLakeStoreUri = default;
-            Optional<object> servicePrincipalId = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData dataLakeStoreUri = default;
+            Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> accountName = default;
-            Optional<object> subscriptionId = default;
-            Optional<object> resourceGroupName = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> tenant = default;
+            Optional<BinaryData> azureCloudType = default;
+            Optional<BinaryData> accountName = default;
+            Optional<BinaryData> subscriptionId = default;
+            Optional<BinaryData> resourceGroupName = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -167,10 +207,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -186,7 +226,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("dataLakeStoreUri"))
                         {
-                            dataLakeStoreUri = property0.Value.GetObject();
+                            dataLakeStoreUri = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
@@ -196,7 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = property0.Value.GetObject();
+                            servicePrincipalId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
@@ -216,7 +256,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tenant = property0.Value.GetObject();
+                            tenant = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("azureCloudType"))
@@ -226,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureCloudType = property0.Value.GetObject();
+                            azureCloudType = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountName"))
@@ -236,7 +276,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accountName = property0.Value.GetObject();
+                            accountName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("subscriptionId"))
@@ -246,7 +286,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subscriptionId = property0.Value.GetObject();
+                            subscriptionId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceGroupName"))
@@ -256,7 +296,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceGroupName = property0.Value.GetObject();
+                            resourceGroupName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -266,13 +306,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, dataLakeStoreUri, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountName.Value, subscriptionId.Value, resourceGroupName.Value, encryptedCredential.Value);

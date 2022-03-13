@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public WebBasicAuthentication(object url, object username, SecretBase password) : base(url)
+        public WebBasicAuthentication(BinaryData url, BinaryData username, SecretBase password) : base(url)
         {
             if (url == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
-        internal WebBasicAuthentication(object url, WebAuthenticationType authenticationType, object username, SecretBase password) : base(url, authenticationType)
+        internal WebBasicAuthentication(BinaryData url, WebAuthenticationType authenticationType, BinaryData username, SecretBase password) : base(url, authenticationType)
         {
             Username = username;
             Password = password;
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        public object Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary> The password for Basic authentication. </summary>
         public SecretBase Password { get; set; }
     }

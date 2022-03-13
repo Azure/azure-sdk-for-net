@@ -125,9 +125,9 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
         /// <returns> A new <see cref="Models.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(QueryResultType? type = null, IEnumerable<object> items = null, string continuationToken = null)
+        public static QueryResult QueryResult(QueryResultType? type = null, IEnumerable<BinaryData> items = null, string continuationToken = null)
         {
-            items ??= new List<object>();
+            items ??= new List<BinaryData>();
 
             return new QueryResult(type, items?.ToList(), continuationToken);
         }
@@ -136,7 +136,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
         /// <returns> A new <see cref="Models.CloudToDeviceMethodResponse"/> instance for mocking. </returns>
-        public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = null, object payload = null)
+        public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = null, BinaryData payload = null)
         {
             return new CloudToDeviceMethodResponse(status, payload);
         }

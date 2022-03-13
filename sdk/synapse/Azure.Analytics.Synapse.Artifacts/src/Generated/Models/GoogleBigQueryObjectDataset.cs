@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tableName"> This property will be retired. Please consider using database + table properties instead. </param>
         /// <param name="table"> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <param name="dataset"> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
-        internal GoogleBigQueryObjectDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object tableName, object table, object dataset) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal GoogleBigQueryObjectDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData dataset) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;
@@ -48,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> This property will be retired. Please consider using database + table properties instead. </summary>
-        public object TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
-        public object Table { get; set; }
+        public BinaryData Table { get; set; }
         /// <summary> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
-        public object Dataset { get; set; }
+        public BinaryData Dataset { get; set; }
     }
 }

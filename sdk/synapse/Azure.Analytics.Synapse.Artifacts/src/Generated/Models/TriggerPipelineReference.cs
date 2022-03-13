@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         public TriggerPipelineReference()
         {
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         /// <param name="pipelineReference"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
-        internal TriggerPipelineReference(PipelineReference pipelineReference, IDictionary<string, object> parameters)
+        internal TriggerPipelineReference(PipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
@@ -31,6 +32,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Pipeline reference. </summary>
         public PipelineReference PipelineReference { get; set; }
         /// <summary> Pipeline parameters. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

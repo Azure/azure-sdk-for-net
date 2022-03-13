@@ -22,7 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath");
-                writer.WriteObjectValue(PackagePath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackagePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackagePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Type))
             {
@@ -44,7 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath");
-                writer.WriteObjectValue(ConfigurationPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConfigurationPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConfigurationPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
@@ -59,7 +67,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent");
-                writer.WriteObjectValue(PackageContent);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackageContent);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackageContent.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -82,14 +94,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
         {
-            Optional<object> packagePath = default;
+            Optional<BinaryData> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
             Optional<SecretBase> packagePassword = default;
             Optional<SsisAccessCredential> accessCredential = default;
-            Optional<object> configurationPath = default;
+            Optional<BinaryData> configurationPath = default;
             Optional<SsisAccessCredential> configurationAccessCredential = default;
             Optional<string> packageName = default;
-            Optional<object> packageContent = default;
+            Optional<BinaryData> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
             Optional<IList<SsisChildPackage>> childPackages = default;
             foreach (var property in element.EnumerateObject())
@@ -101,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    packagePath = property.Value.GetObject();
+                    packagePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -150,7 +162,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configurationPath = property0.Value.GetObject();
+                            configurationPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("configurationAccessCredential"))
@@ -175,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            packageContent = property0.Value.GetObject();
+                            packageContent = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("packageLastModifiedDate"))

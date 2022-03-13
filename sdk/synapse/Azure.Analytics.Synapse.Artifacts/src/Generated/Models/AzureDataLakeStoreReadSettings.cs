@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -33,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        internal AzureDataLakeStoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, object fileListPath, object listAfter, object listBefore, bool? enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd) : base(type, maxConcurrentConnections, additionalProperties)
+        internal AzureDataLakeStoreReadSettings(string type, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData fileListPath, BinaryData listAfter, BinaryData listBefore, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -50,26 +51,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> ADLS wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFolderPath { get; set; }
+        public BinaryData WildcardFolderPath { get; set; }
         /// <summary> ADLS wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFileName { get; set; }
+        public BinaryData WildcardFileName { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        public object FileListPath { get; set; }
+        public BinaryData FileListPath { get; set; }
         /// <summary> Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </summary>
-        public object ListAfter { get; set; }
+        public BinaryData ListAfter { get; set; }
         /// <summary> Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </summary>
-        public object ListBefore { get; set; }
+        public BinaryData ListBefore { get; set; }
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        public object PartitionRootPath { get; set; }
+        public BinaryData PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object DeleteFilesAfterCompletion { get; set; }
+        public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
     }
 }

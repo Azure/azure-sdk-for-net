@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> recursive = default;
             Optional<string> sequencer = default;
             Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            Optional<BinaryData> storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"))
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageDiagnostics = property.Value.GetObject();
+                    storageDiagnostics = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

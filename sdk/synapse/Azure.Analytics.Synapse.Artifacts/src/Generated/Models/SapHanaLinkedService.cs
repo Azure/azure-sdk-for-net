@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SapHanaLinkedService. </summary>
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
-        public SapHanaLinkedService(object server)
+        public SapHanaLinkedService(BinaryData server)
         {
             if (server == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to access the SAP HANA server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapHanaLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, SapHanaAuthenticationType? authenticationType, object userName, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapHanaLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData server, SapHanaAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Server = server;
@@ -52,16 +52,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public object ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </summary>
-        public object Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> The authentication type to be used to connect to the SAP HANA server. </summary>
         public SapHanaAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password to access the SAP HANA server. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

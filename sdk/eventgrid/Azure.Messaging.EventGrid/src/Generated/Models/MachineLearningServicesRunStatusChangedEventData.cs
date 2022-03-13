@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
@@ -23,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runTags"> The tags of the Machine Learning Run. </param>
         /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
         /// <param name="runStatus"> The status of the Machine Learning Run. </param>
-        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, string runStatus)
+        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, BinaryData runTags, BinaryData runProperties, string runStatus)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -43,9 +45,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Run Type of the Machine Learning Run. </summary>
         public string RunType { get; }
         /// <summary> The tags of the Machine Learning Run. </summary>
-        public object RunTags { get; }
+        public BinaryData RunTags { get; }
         /// <summary> The properties of the Machine Learning Run. </summary>
-        public object RunProperties { get; }
+        public BinaryData RunProperties { get; }
         /// <summary> The status of the Machine Learning Run. </summary>
         public string RunStatus { get; }
     }

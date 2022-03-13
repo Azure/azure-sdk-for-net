@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="bucketName"> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of amazon S3. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3Location(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties, object bucketName, object version) : base(type, folderPath, fileName, additionalProperties)
+        internal AmazonS3Location(string type, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(type, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
@@ -33,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </summary>
-        public object BucketName { get; set; }
+        public BinaryData BucketName { get; set; }
         /// <summary> Specify the version of amazon S3. Type: string (or Expression with resultType string). </summary>
-        public object Version { get; set; }
+        public BinaryData Version { get; set; }
     }
 }

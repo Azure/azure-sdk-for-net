@@ -32,14 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, object> additionalProperties)
+        internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, BinaryData> additionalProperties)
         {
             Activity = activity;
             DependencyConditions = dependencyConditions;
@@ -51,6 +51,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Match-Condition for the dependency. </summary>
         public IList<DependencyCondition> DependencyConditions { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

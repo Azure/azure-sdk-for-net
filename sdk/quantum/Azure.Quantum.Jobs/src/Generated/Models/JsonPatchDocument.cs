@@ -32,7 +32,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> A JSON-Pointer. </summary>
         public string Path { get; }
         /// <summary> A value to be used in the operation on the path. </summary>
-        public object Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> Optional field used in copy and move operations. </summary>
         public string From { get; set; }
     }

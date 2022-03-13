@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SftpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object fileListPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd, object disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
+        internal SftpReadSettings(string type, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData fileListPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, BinaryData disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -48,24 +49,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> Sftp wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFolderPath { get; set; }
+        public BinaryData WildcardFolderPath { get; set; }
         /// <summary> Sftp wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFileName { get; set; }
+        public BinaryData WildcardFileName { get; set; }
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        public object PartitionRootPath { get; set; }
+        public BinaryData PartitionRootPath { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        public object FileListPath { get; set; }
+        public BinaryData FileListPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object DeleteFilesAfterCompletion { get; set; }
+        public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object DisableChunking { get; set; }
+        public BinaryData DisableChunking { get; set; }
     }
 }

@@ -61,14 +61,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("pythonFile");
-            writer.WriteObjectValue(PythonFile);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PythonFile);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(PythonFile.ToString()).RootElement);
+#endif
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +90,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item0.Value);
+#else
+                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item0.Value.ToString()).RootElement);
+#endif
                     }
                     writer.WriteEndObject();
                 }
@@ -92,7 +104,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -106,11 +122,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object pythonFile = default;
-            Optional<IList<object>> parameters = default;
-            Optional<IList<IDictionary<string, object>>> libraries = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            BinaryData pythonFile = default;
+            Optional<IList<BinaryData>> parameters = default;
+            Optional<IList<IDictionary<string, BinaryData>>> libraries = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -189,7 +205,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("pythonFile"))
                         {
-                            pythonFile = property0.Value.GetObject();
+                            pythonFile = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -199,10 +215,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<object> array = new List<object>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                array.Add(BinaryData.FromString(property.Value.GetRawText()));
                             }
                             parameters = array;
                             continue;
@@ -214,13 +230,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IDictionary<string, object>> array = new List<IDictionary<string, object>>();
+                            List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                                 foreach (var property1 in item.EnumerateObject())
                                 {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property.Value.GetRawText()));
                                 }
                                 array.Add(dictionary);
                             }
@@ -230,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatabricksSparkPythonActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, pythonFile, Optional.ToList(parameters), Optional.ToList(libraries));

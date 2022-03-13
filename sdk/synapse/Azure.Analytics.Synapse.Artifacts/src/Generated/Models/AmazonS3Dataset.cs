@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName) : base(linkedServiceName)
+        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="modifiedDatetimeEnd"> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="format"> The format of files. </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
-        internal AmazonS3Dataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object bucketName, object key, object prefix, object version, object modifiedDatetimeStart, object modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonS3Dataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             BucketName = bucketName;
             Key = key;
@@ -64,17 +64,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>
-        public object BucketName { get; set; }
+        public BinaryData BucketName { get; set; }
         /// <summary> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </summary>
-        public object Key { get; set; }
+        public BinaryData Key { get; set; }
         /// <summary> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </summary>
-        public object Prefix { get; set; }
+        public BinaryData Prefix { get; set; }
         /// <summary> The version for the S3 object. Type: string (or Expression with resultType string). </summary>
-        public object Version { get; set; }
+        public BinaryData Version { get; set; }
         /// <summary> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary> The format of files. </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the Amazon S3 object. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> An item of the notebook cell execution output. </summary>
@@ -24,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="text"> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </param>
         /// <param name="data"> Output data. Use MIME type as key, and content as value. </param>
         /// <param name="metadata"> Metadata for the output item. </param>
-        internal NotebookCellOutputItem(string name, int? executionCount, CellOutputType outputType, object text, object data, object metadata)
+        internal NotebookCellOutputItem(string name, int? executionCount, CellOutputType outputType, object text, BinaryData data, BinaryData metadata)
         {
             Name = name;
             ExecutionCount = executionCount;
@@ -43,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </summary>
         public object Text { get; set; }
         /// <summary> Output data. Use MIME type as key, and content as value. </summary>
-        public object Data { get; set; }
+        public BinaryData Data { get; set; }
         /// <summary> Metadata for the output item. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
     }
 }

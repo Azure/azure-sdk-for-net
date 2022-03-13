@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public SnowflakeLinkedService(object connectionString)
+        public SnowflakeLinkedService(BinaryData connectionString)
         {
             if (connectionString == null)
             {
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SnowflakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SnowflakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference password, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Password = password;
@@ -46,10 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The connection string of snowflake. Type: string, SecureString. </summary>
-        public object ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

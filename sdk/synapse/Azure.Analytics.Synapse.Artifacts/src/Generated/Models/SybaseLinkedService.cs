@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
-        public SybaseLinkedService(object server, object database)
+        public SybaseLinkedService(BinaryData server, BinaryData database)
         {
             if (server == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SybaseLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object database, object schema, SybaseAuthenticationType? authenticationType, object username, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SybaseLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData database, BinaryData schema, SybaseAuthenticationType? authenticationType, BinaryData username, SecretBase password, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Database = database;
@@ -60,18 +60,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
-        public object Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
-        public object Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        public object Schema { get; set; }
+        public BinaryData Schema { get; set; }
         /// <summary> AuthenticationType to be used for connection. </summary>
         public SybaseAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        public object Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary> Password for authentication. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

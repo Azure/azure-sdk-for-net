@@ -39,7 +39,11 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(InputParams))
             {
                 writer.WritePropertyName("inputParams");
-                writer.WriteObjectValue(InputParams);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(InputParams);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(InputParams.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("providerId");
             writer.WriteStringValue(ProviderId);
@@ -100,7 +104,7 @@ namespace Azure.Quantum.Jobs.Models
             string containerUri = default;
             Optional<string> inputDataUri = default;
             string inputDataFormat = default;
-            Optional<object> inputParams = default;
+            Optional<BinaryData> inputParams = default;
             string providerId = default;
             string target = default;
             Optional<IDictionary<string, string>> metadata = default;
@@ -148,7 +152,7 @@ namespace Azure.Quantum.Jobs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inputParams = property.Value.GetObject();
+                    inputParams = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("providerId"))

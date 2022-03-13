@@ -27,29 +27,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode");
-                writer.WriteObjectValue(ValidationMode);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ValidationMode);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationMode.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType");
-                writer.WriteObjectValue(DetectDataType);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DetectDataType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DetectDataType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces");
-                writer.WriteObjectValue(Namespaces);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Namespaces);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Namespaces.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes");
-                writer.WriteObjectValue(NamespacePrefixes);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NamespacePrefixes);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -57,13 +77,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
             Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<object> validationMode = default;
-            Optional<object> detectDataType = default;
-            Optional<object> namespaces = default;
-            Optional<object> namespacePrefixes = default;
+            Optional<BinaryData> validationMode = default;
+            Optional<BinaryData> detectDataType = default;
+            Optional<BinaryData> namespaces = default;
+            Optional<BinaryData> namespacePrefixes = default;
             string type = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compressionProperties"))
@@ -83,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    validationMode = property.Value.GetObject();
+                    validationMode = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("detectDataType"))
@@ -93,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectDataType = property.Value.GetObject();
+                    detectDataType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespaces"))
@@ -103,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespaces = property.Value.GetObject();
+                    namespaces = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespacePrefixes"))
@@ -113,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespacePrefixes = property.Value.GetObject();
+                    namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -121,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);

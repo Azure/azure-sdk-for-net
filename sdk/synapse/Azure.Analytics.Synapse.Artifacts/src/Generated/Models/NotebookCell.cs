@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cellType"/>, <paramref name="metadata"/> or <paramref name="source"/> is null. </exception>
-        public NotebookCell(string cellType, object metadata, IEnumerable<string> source)
+        public NotebookCell(string cellType, BinaryData metadata, IEnumerable<string> source)
         {
             if (cellType == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Source = source.ToList();
             Outputs = new ChangeTrackingList<NotebookCellOutputItem>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of NotebookCell. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="attachments"> Attachments associated with the cell. </param>
         /// <param name="outputs"> Cell-level output items. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal NotebookCell(string cellType, object metadata, IList<string> source, object attachments, IList<NotebookCellOutputItem> outputs, IDictionary<string, object> additionalProperties)
+        internal NotebookCell(string cellType, BinaryData metadata, IList<string> source, BinaryData attachments, IList<NotebookCellOutputItem> outputs, IDictionary<string, BinaryData> additionalProperties)
         {
             CellType = cellType;
             Metadata = metadata;
@@ -62,14 +62,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> String identifying the type of cell. </summary>
         public string CellType { get; set; }
         /// <summary> Cell-level metadata. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
         /// <summary> Contents of the cell, represented as an array of lines. </summary>
         public IList<string> Source { get; }
         /// <summary> Attachments associated with the cell. </summary>
-        public object Attachments { get; set; }
+        public BinaryData Attachments { get; set; }
         /// <summary> Cell-level output items. </summary>
         public IList<NotebookCellOutputItem> Outputs { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunCompleted event. </summary>
@@ -22,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runType"> The Run Type of the completed Run. </param>
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
-        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties)
+        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, BinaryData runTags, BinaryData runProperties)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -41,8 +43,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Run Type of the completed Run. </summary>
         public string RunType { get; }
         /// <summary> The tags of the completed Run. </summary>
-        public object RunTags { get; }
+        public BinaryData RunTags { get; }
         /// <summary> The properties of the completed Run. </summary>
-        public object RunProperties { get; }
+        public BinaryData RunProperties { get; }
     }
 }

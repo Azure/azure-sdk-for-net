@@ -27,8 +27,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowReference(DataFlowReferenceType type, string referenceName, object datasetParameters, IDictionary<string, object> parameters, IDictionary<string, object> additionalProperties)
+        internal DataFlowReference(DataFlowReferenceType type, string referenceName, BinaryData datasetParameters, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference data flow name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Reference data flow parameters from dataset. </summary>
-        public object DatasetParameters { get; set; }
+        public BinaryData DatasetParameters { get; set; }
         /// <summary> Data flow parameters. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -63,16 +63,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("method");
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url");
-            writer.WriteObjectValue(Url);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Url);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Url.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteObjectValue(Headers);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Headers);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
-                writer.WriteObjectValue(Body);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -108,7 +120,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -123,15 +139,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             WebActivityMethod method = default;
-            object url = default;
-            Optional<object> headers = default;
-            Optional<object> body = default;
+            BinaryData url = default;
+            Optional<BinaryData> headers = default;
+            Optional<BinaryData> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<IList<DatasetReference>> datasets = default;
             Optional<IList<LinkedServiceReference>> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -215,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetObject();
+                            url = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headers"))
@@ -225,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headers = property0.Value.GetObject();
+                            headers = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"))
@@ -235,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            body = property0.Value.GetObject();
+                            body = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
@@ -291,7 +307,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);

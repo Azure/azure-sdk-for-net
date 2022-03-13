@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlConnection. </summary>
         public SqlConnection()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SqlConnection. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="poolName"> The associated SQL pool name (supported by SQL pool v3). </param>
         /// <param name="databaseName"> The associated database name (supported by SQL pool v3). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SqlConnection(SqlConnectionType? type, string name, string poolName, string databaseName, IDictionary<string, object> additionalProperties)
+        internal SqlConnection(SqlConnectionType? type, string name, string poolName, string databaseName, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             Name = name;
@@ -43,6 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The associated database name (supported by SQL pool v3). </summary>
         public string DatabaseName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

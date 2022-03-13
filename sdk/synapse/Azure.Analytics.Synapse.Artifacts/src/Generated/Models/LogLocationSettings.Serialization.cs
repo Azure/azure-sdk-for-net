@@ -23,7 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
-                writer.WriteObjectValue(Path);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Path);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -31,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element)
         {
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
+            Optional<BinaryData> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -46,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = property.Value.GetObject();
+                    path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

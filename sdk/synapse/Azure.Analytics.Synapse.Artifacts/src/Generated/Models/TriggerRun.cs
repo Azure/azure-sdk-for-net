@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Properties = new ChangeTrackingDictionary<string, string>();
             TriggeredPipelines = new ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggerRun. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal TriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, TriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, object> additionalProperties)
+        internal TriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, TriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             TriggerRunId = triggerRunId;
             TriggerName = triggerName;
@@ -62,6 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> List of pipeline name and run Id triggered by the trigger run. </summary>
         public IReadOnlyDictionary<string, string> TriggeredPipelines { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -62,12 +62,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging");
-                writer.WriteObjectValue(Staging);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Staging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Staging.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings");
-                writer.WriteObjectValue(DebugSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DebugSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DebugSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(IncrementalDebug))
             {
@@ -84,8 +92,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<DataFlowResource>> dataFlows = default;
             Optional<IList<DatasetResource>> datasets = default;
             Optional<IList<LinkedServiceResource>> linkedServices = default;
-            Optional<object> staging = default;
-            Optional<object> debugSettings = default;
+            Optional<BinaryData> staging = default;
+            Optional<BinaryData> debugSettings = default;
             Optional<bool> incrementalDebug = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -156,7 +164,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    staging = property.Value.GetObject();
+                    staging = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("debugSettings"))
@@ -166,7 +174,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    debugSettings = property.Value.GetObject();
+                    debugSettings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("incrementalDebug"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,13 +25,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="relativeUrl"> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </param>
-        internal HttpServerLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties, object relativeUrl) : base(type, folderPath, fileName, additionalProperties)
+        internal HttpServerLocation(string type, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUrl) : base(type, folderPath, fileName, additionalProperties)
         {
             RelativeUrl = relativeUrl;
             Type = type ?? "HttpServerLocation";
         }
 
         /// <summary> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </summary>
-        public object RelativeUrl { get; set; }
+        public BinaryData RelativeUrl { get; set; }
     }
 }

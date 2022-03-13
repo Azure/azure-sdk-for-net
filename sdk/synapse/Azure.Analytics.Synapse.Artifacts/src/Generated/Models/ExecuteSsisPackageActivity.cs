@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
-        internal ExecuteSsisPackageActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, object runtime, object loggingLevel, object environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ExecuteSsisPackageActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, BinaryData runtime, BinaryData loggingLevel, BinaryData environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;
@@ -85,11 +85,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation { get; set; }
         /// <summary> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </summary>
-        public object Runtime { get; set; }
+        public BinaryData Runtime { get; set; }
         /// <summary> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </summary>
-        public object LoggingLevel { get; set; }
+        public BinaryData LoggingLevel { get; set; }
         /// <summary> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </summary>
-        public object EnvironmentPath { get; set; }
+        public BinaryData EnvironmentPath { get; set; }
         /// <summary> The package execution credential. </summary>
         public SsisExecutionCredential ExecutionCredential { get; set; }
         /// <summary> The integration runtime reference. </summary>

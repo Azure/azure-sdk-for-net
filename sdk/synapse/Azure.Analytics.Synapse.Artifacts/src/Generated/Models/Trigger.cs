@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,8 +17,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Trigger. </summary>
         public Trigger()
         {
-            Annotations = new ChangeTrackingList<object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Trigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties)
+        internal Trigger(string type, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             Description = description;
@@ -42,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </summary>
         public TriggerRuntimeState? RuntimeState { get; }
         /// <summary> List of tags that can be used for describing the trigger. </summary>
-        public IList<object> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
-        public WebClientCertificateAuthentication(object url, SecretBase pfx, SecretBase password) : base(url)
+        public WebClientCertificateAuthentication(BinaryData url, SecretBase pfx, SecretBase password) : base(url)
         {
             if (url == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
-        internal WebClientCertificateAuthentication(object url, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(url, authenticationType)
+        internal WebClientCertificateAuthentication(BinaryData url, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(url, authenticationType)
         {
             Pfx = pfx;
             Password = password;

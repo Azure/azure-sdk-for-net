@@ -21,20 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName");
-                writer.WriteObjectValue(ColumnName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
-                writer.WriteObjectValue(DefaultValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DWCopyCommandDefaultValue DeserializeDWCopyCommandDefaultValue(JsonElement element)
         {
-            Optional<object> columnName = default;
-            Optional<object> defaultValue = default;
+            Optional<BinaryData> columnName = default;
+            Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"))
@@ -44,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    columnName = property.Value.GetObject();
+                    columnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("defaultValue"))
@@ -54,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultValue = property.Value.GetObject();
+                    defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

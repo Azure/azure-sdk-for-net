@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="distcpSettings"> Specifies Distcp-related settings. </param>
-        internal HdfsSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, DistcpSettings distcpSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        internal HdfsSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, DistcpSettings distcpSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             DistcpSettings = distcpSettings;
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> Specifies Distcp-related settings. </summary>
         public DistcpSettings DistcpSettings { get; set; }
     }

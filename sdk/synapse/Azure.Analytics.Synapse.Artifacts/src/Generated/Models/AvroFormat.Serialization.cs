@@ -24,17 +24,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer");
-                writer.WriteObjectValue(Serializer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Serializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer");
-                writer.WriteObjectValue(Deserializer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Deserializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -42,10 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static AvroFormat DeserializeAvroFormat(JsonElement element)
         {
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> serializer = default;
+            Optional<BinaryData> deserializer = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -60,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serializer = property.Value.GetObject();
+                    serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deserializer"))
@@ -70,10 +82,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deserializer = property.Value.GetObject();
+                    deserializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AvroFormat(type, serializer.Value, deserializer.Value, additionalProperties);

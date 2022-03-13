@@ -19,7 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath");
-            writer.WriteObjectValue(LogPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(LogPath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties");
@@ -32,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval");
-                writer.WriteObjectValue(LogRefreshInterval);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogRefreshInterval);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogRefreshInterval.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -40,15 +48,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
-            object logPath = default;
+            BinaryData logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
-            Optional<object> logRefreshInterval = default;
+            Optional<BinaryData> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"))
                 {
-                    logPath = property.Value.GetObject();
+                    logPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -82,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logRefreshInterval = property0.Value.GetObject();
+                            logRefreshInterval = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }

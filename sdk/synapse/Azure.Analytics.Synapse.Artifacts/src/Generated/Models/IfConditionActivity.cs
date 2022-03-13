@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
         /// <param name="ifTrueActivities"> List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any action. </param>
         /// <param name="ifFalseActivities"> List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any action. </param>
-        internal IfConditionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, Expression expression, IList<Activity> ifTrueActivities, IList<Activity> ifFalseActivities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal IfConditionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression expression, IList<Activity> ifTrueActivities, IList<Activity> ifFalseActivities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             Expression = expression;
             IfTrueActivities = ifTrueActivities;

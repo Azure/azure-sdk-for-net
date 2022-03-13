@@ -160,9 +160,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
-        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
         }
@@ -293,10 +293,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.PipelineRun"/> instance for mocking. </returns>
-        public static PipelineRun PipelineRun(string runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IReadOnlyDictionary<string, string> parameters = null, PipelineRunInvokedBy invokedBy = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? runStart = null, DateTimeOffset? runEnd = null, int? durationInMs = null, string status = null, string message = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static PipelineRun PipelineRun(string runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IReadOnlyDictionary<string, string> parameters = null, PipelineRunInvokedBy invokedBy = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? runStart = null, DateTimeOffset? runEnd = null, int? durationInMs = null, string status = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new Dictionary<string, string>();
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new PipelineRun(runId, runGroupId, isLatest, pipelineName, parameters, invokedBy, lastUpdated, runStart, runEnd, durationInMs, status, message, additionalProperties);
         }
@@ -338,9 +338,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="error"> The error if any from the activity run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ActivityRun"/> instance for mocking. </returns>
-        public static ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? activityRunStart = null, DateTimeOffset? activityRunEnd = null, int? durationInMs = null, object input = null, object output = null, object error = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? activityRunStart = null, DateTimeOffset? activityRunEnd = null, int? durationInMs = null, BinaryData input = null, BinaryData output = null, BinaryData error = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
         }
@@ -484,10 +484,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.Trigger"/> instance for mocking. </returns>
-        public static Trigger Trigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
+        public static Trigger Trigger(string type = null, string description = null, TriggerRuntimeState? runtimeState = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
-            annotations ??= new List<object>();
-            additionalProperties ??= new Dictionary<string, object>();
+            annotations ??= new List<BinaryData>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new Trigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
@@ -523,11 +523,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.TriggerRun"/> instance for mocking. </returns>
-        public static TriggerRun TriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, TriggerRunStatus? status = null, string message = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> triggeredPipelines = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static TriggerRun TriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, TriggerRunStatus? status = null, string message = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> triggeredPipelines = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             properties ??= new Dictionary<string, string>();
             triggeredPipelines ??= new Dictionary<string, string>();
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new TriggerRun(triggerRunId, triggerName, triggerType, triggerRunTimestamp, status, message, properties, triggeredPipelines, additionalProperties);
         }
@@ -556,12 +556,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
         /// <param name="adlaResourceId"> The ADLA resource ID. </param>
         /// <returns> A new <see cref="Models.Workspace"/> instance for mocking. </returns>
-        public static Workspace Workspace(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, ManagedIdentity identity = null, DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, VirtualNetworkProfile virtualNetworkProfile = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null, EncryptionDetails encryption = null, Guid? workspaceUID = null, IReadOnlyDictionary<string, object> extraProperties = null, ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null)
+        public static Workspace Workspace(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, ManagedIdentity identity = null, DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, VirtualNetworkProfile virtualNetworkProfile = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null, EncryptionDetails encryption = null, Guid? workspaceUID = null, IReadOnlyDictionary<string, BinaryData> extraProperties = null, ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null)
         {
             tags ??= new Dictionary<string, string>();
             connectivityEndpoints ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PrivateEndpointConnection>();
-            extraProperties ??= new Dictionary<string, object>();
+            extraProperties ??= new Dictionary<string, BinaryData>();
 
             return new Workspace(id, name, type, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkProfile, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewConfiguration, adlaResourceId);
         }
@@ -664,9 +664,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
+        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, BinaryData> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
         {
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
         }

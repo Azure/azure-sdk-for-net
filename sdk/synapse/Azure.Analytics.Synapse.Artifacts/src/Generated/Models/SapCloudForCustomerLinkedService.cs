@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
         /// <param name="url"> The URL of SAP Cloud for Customer OData API. For example, &apos;[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]&apos;. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public SapCloudForCustomerLinkedService(object url)
+        public SapCloudForCustomerLinkedService(BinaryData url)
         {
             if (url == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="username"> The username for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential or username/password must be provided. Type: string (or Expression with resultType string). </param>
-        internal SapCloudForCustomerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object username, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapCloudForCustomerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData url, BinaryData username, SecretBase password, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             Username = username;
@@ -48,12 +48,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The URL of SAP Cloud for Customer OData API. For example, &apos;[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]&apos;. Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> The username for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        public object Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary> The password for Basic authentication. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential or username/password must be provided. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

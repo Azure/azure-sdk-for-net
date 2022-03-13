@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -74,7 +75,11 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings");
-                writer.WriteObjectValue(CompressionSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CompressionSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CompressionSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
@@ -117,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<IList<WritableSubResource>> ruleSets = default;
             Optional<IList<AfdEndpointProtocols>> supportedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
-            Optional<object> compressionSettings = default;
+            Optional<BinaryData> compressionSettings = default;
             Optional<AfdQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
@@ -238,7 +243,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compressionSettings = property0.Value.GetObject();
+                            compressionSettings = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("queryStringCachingBehavior"))

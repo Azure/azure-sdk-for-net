@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             Optional<string> status = default;
             int executionCount = default;
-            Optional<object> data = default;
+            Optional<BinaryData> data = default;
             Optional<string> ename = default;
             Optional<string> evalue = default;
             Optional<IReadOnlyList<string>> traceback = default;
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    data = property.Value.GetObject();
+                    data = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("ename"))

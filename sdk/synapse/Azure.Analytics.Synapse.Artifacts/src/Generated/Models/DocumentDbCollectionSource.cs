@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nestingSeparator"> Nested properties separator. Type: string (or Expression with resultType string). </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal DocumentDbCollectionSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object nestingSeparator, object queryTimeout, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        internal DocumentDbCollectionSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData nestingSeparator, BinaryData queryTimeout, BinaryData additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
             NestingSeparator = nestingSeparator;
@@ -38,12 +39,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Documents query. Type: string (or Expression with resultType string). </summary>
-        public object Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Nested properties separator. Type: string (or Expression with resultType string). </summary>
-        public object NestingSeparator { get; set; }
+        public BinaryData NestingSeparator { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public object QueryTimeout { get; set; }
+        public BinaryData QueryTimeout { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public object AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

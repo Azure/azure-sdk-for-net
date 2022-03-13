@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sqlPool"/> or <paramref name="storedProcedureName"/> is null. </exception>
-        public SqlPoolStoredProcedureActivity(string name, SqlPoolReference sqlPool, object storedProcedureName) : base(name)
+        public SqlPoolStoredProcedureActivity(string name, SqlPoolReference sqlPool, BinaryData storedProcedureName) : base(name)
         {
             if (name == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
-        internal SqlPoolStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal SqlPoolStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SqlPoolReference sqlPool, BinaryData storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> SQL pool stored procedure reference. </summary>
         public SqlPoolReference SqlPool { get; set; }
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
-        public object StoredProcedureName { get; set; }
+        public BinaryData StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
     }

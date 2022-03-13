@@ -18,7 +18,11 @@ namespace Azure.AI.Language.Conversations
             if (Optional.IsDefined(CallingOptions))
             {
                 writer.WritePropertyName("callingOptions");
-                writer.WriteObjectValue(CallingOptions);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CallingOptions);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CallingOptions.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("targetKind");
             writer.WriteStringValue(TargetKind.ToString());

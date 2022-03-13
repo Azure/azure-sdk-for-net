@@ -34,7 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf");
-                writer.WriteObjectValue(Conf);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Conf);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Conf.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Args))
             {
@@ -89,7 +93,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -99,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             string file = default;
             Optional<string> className = default;
-            Optional<object> conf = default;
+            Optional<BinaryData> conf = default;
             Optional<IList<string>> args = default;
             Optional<IList<string>> jars = default;
             Optional<IList<string>> files = default;
@@ -109,8 +117,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string executorMemory = default;
             int executorCores = default;
             int numExecutors = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -135,7 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    conf = property.Value.GetObject();
+                    conf = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("args"))
@@ -223,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     numExecutors = property.Value.GetInt32();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(files), Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);

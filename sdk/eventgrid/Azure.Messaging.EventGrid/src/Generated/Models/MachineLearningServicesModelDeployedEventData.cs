@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
@@ -21,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
-        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties)
+        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, BinaryData serviceTags, BinaryData serviceProperties)
         {
             ServiceName = serviceName;
             ServiceComputeType = serviceComputeType;
@@ -37,8 +39,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> A common separated list of model IDs. The IDs of the models deployed in the service. </summary>
         public string ModelIds { get; }
         /// <summary> The tags of the deployed service. </summary>
-        public object ServiceTags { get; }
+        public BinaryData ServiceTags { get; }
         /// <summary> The properties of the deployed service. </summary>
-        public object ServiceProperties { get; }
+        public BinaryData ServiceProperties { get; }
     }
 }

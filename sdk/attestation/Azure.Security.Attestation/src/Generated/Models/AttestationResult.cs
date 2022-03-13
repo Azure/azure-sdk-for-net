@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
@@ -46,7 +48,7 @@ namespace Azure.Security.Attestation
         /// <param name="internalDeprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="internalDeprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="internalDeprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
-        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, string internalPolicyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, string internalEnclaveHeldData, object sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData)
+        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, BinaryData runtimeClaims, BinaryData inittimeClaims, BinaryData policyClaims, string verifierType, JsonWebKey internalPolicySigner, string internalPolicyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, string internalEnclaveHeldData, BinaryData sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData)
         {
             InternalJti = internalJti;
             InternalIss = internalIss;
@@ -88,11 +90,11 @@ namespace Azure.Security.Attestation
         /// <summary> The Schema version of this structure. Current Value: 1.0. </summary>
         public string Version { get; }
         /// <summary> Runtime Claims. </summary>
-        public object RuntimeClaims { get; }
+        public BinaryData RuntimeClaims { get; }
         /// <summary> Inittime Claims. </summary>
-        public object InittimeClaims { get; }
+        public BinaryData InittimeClaims { get; }
         /// <summary> Policy Generated Claims. </summary>
-        public object PolicyClaims { get; }
+        public BinaryData PolicyClaims { get; }
         /// <summary> The Attestation type being attested. </summary>
         public string VerifierType { get; }
         /// <summary> True if the enclave is debuggable, false otherwise. </summary>
@@ -106,6 +108,6 @@ namespace Azure.Security.Attestation
         /// <summary> The SGX SVN value for the enclave. </summary>
         public float? Svn { get; }
         /// <summary> The SGX SVN value for the enclave. </summary>
-        public object SgxCollateral { get; }
+        public BinaryData SgxCollateral { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,20 +17,20 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of QueryResult. </summary>
         internal QueryResult()
         {
-            Value = new ChangeTrackingList<object>();
+            Value = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>
         /// <param name="value"> The query results. </param>
         /// <param name="continuationToken"> A token which can be used to construct a new QuerySpecification to retrieve the next set of results. </param>
-        internal QueryResult(IReadOnlyList<object> value, string continuationToken)
+        internal QueryResult(IReadOnlyList<BinaryData> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
         /// <summary> The query results. </summary>
-        public IReadOnlyList<object> Value { get; }
+        public IReadOnlyList<BinaryData> Value { get; }
         /// <summary> A token which can be used to construct a new QuerySpecification to retrieve the next set of results. </summary>
         public string ContinuationToken { get; }
     }

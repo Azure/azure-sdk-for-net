@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="format"> The format of files. </param>
         /// <param name="compression"> The data compression method used on files. </param>
-        internal HttpDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object relativeUrl, object requestMethod, object requestBody, object additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal HttpDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUrl, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUrl = relativeUrl;
             RequestMethod = requestMethod;
@@ -58,17 +58,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
-        public object RelativeUrl { get; set; }
+        public BinaryData RelativeUrl { get; set; }
         /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>
-        public object RequestMethod { get; set; }
+        public BinaryData RequestMethod { get; set; }
         /// <summary> The body for the HTTP request. Type: string (or Expression with resultType string). </summary>
-        public object RequestBody { get; set; }
+        public BinaryData RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
-        public object AdditionalHeaders { get; set; }
+        public BinaryData AdditionalHeaders { get; set; }
         /// <summary> The format of files. </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used on files. </summary>

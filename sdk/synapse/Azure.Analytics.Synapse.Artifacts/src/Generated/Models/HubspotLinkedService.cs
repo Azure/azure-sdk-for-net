@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of HubspotLinkedService. </summary>
         /// <param name="clientId"> The client ID associated with your Hubspot application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
-        public HubspotLinkedService(object clientId)
+        public HubspotLinkedService(BinaryData clientId)
         {
             if (clientId == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal HubspotLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clientId, SecretBase clientSecret, SecretBase accessToken, SecretBase refreshToken, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal HubspotLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clientId, SecretBase clientSecret, SecretBase accessToken, SecretBase refreshToken, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The client ID associated with your Hubspot application. </summary>
-        public object ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary> The client secret associated with your Hubspot application. </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> The access token obtained when initially authenticating your OAuth integration. </summary>
@@ -64,12 +64,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The refresh token obtained when initially authenticating your OAuth integration. </summary>
         public SecretBase RefreshToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public object UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public object UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public object UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

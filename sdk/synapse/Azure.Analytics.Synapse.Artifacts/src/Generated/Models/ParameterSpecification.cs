@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Definition of a single parameter for an entity. </summary>
@@ -20,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ParameterSpecification. </summary>
         /// <param name="type"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
-        internal ParameterSpecification(ParameterType type, object defaultValue)
+        internal ParameterSpecification(ParameterType type, BinaryData defaultValue)
         {
             Type = type;
             DefaultValue = defaultValue;
@@ -29,6 +31,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Parameter type. </summary>
         public ParameterType Type { get; set; }
         /// <summary> Default value of parameter. </summary>
-        public object DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

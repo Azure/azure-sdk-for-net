@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine&apos;s endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
-        public AzureDataExplorerLinkedService(object endpoint, object database)
+        public AzureDataExplorerLinkedService(BinaryData endpoint, BinaryData database)
         {
             if (endpoint == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Kusto. </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData endpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData database, BinaryData tenant) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ServicePrincipalId = servicePrincipalId;
@@ -56,14 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The endpoint of Azure Data Explorer (the engine&apos;s endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </summary>
-        public object Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </summary>
-        public object ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Kusto. </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
-        public object Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public object Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
     }
 }

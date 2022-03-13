@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> Represents the Device Method Invocation Results. </summary>
@@ -18,7 +20,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
-        internal CloudToDeviceMethodResponse(int? status, object payload)
+        internal CloudToDeviceMethodResponse(int? status, BinaryData payload)
         {
             Status = status;
             Payload = payload;
@@ -27,6 +29,6 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Method invocation result status. </summary>
         public int? Status { get; }
         /// <summary> Method invocation result payload. </summary>
-        public object Payload { get; }
+        public BinaryData Payload { get; }
     }
 }

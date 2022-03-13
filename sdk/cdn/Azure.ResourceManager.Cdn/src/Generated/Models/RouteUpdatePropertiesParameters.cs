@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> compression settings. </summary>
-        public object CompressionSettings { get; set; }
+        public BinaryData CompressionSettings { get; set; }
         /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
         public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>

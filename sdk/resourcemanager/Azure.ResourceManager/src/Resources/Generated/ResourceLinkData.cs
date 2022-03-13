@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name of the resource link. </param>
         /// <param name="type"> The resource link object. </param>
         /// <param name="properties"> Properties for resource link. </param>
-        internal ResourceLinkData(string id, string name, object type, ResourceLinkProperties properties)
+        internal ResourceLinkData(string id, string name, BinaryData type, ResourceLinkProperties properties)
         {
             Id = id;
             Name = name;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The name of the resource link. </summary>
         public string Name { get; }
         /// <summary> The resource link object. </summary>
-        public object Type { get; }
+        public BinaryData Type { get; }
         /// <summary> Properties for resource link. </summary>
         public ResourceLinkProperties Properties { get; set; }
     }

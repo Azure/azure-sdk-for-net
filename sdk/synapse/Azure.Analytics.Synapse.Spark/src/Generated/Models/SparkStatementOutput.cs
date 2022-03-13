@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="errorName"></param>
         /// <param name="errorValue"></param>
         /// <param name="traceback"></param>
-        internal SparkStatementOutput(string status, int executionCount, object data, string errorName, string errorValue, IReadOnlyList<string> traceback)
+        internal SparkStatementOutput(string status, int executionCount, BinaryData data, string errorName, string errorValue, IReadOnlyList<string> traceback)
         {
             Status = status;
             ExecutionCount = executionCount;
@@ -43,7 +44,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <summary> Gets the execution count. </summary>
         public int ExecutionCount { get; }
         /// <summary> Any object. </summary>
-        public object Data { get; }
+        public BinaryData Data { get; }
         /// <summary> Gets the error name. </summary>
         public string ErrorName { get; }
         /// <summary> Gets the error value. </summary>

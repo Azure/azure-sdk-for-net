@@ -27,14 +27,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetReference. </summary>
         /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
-        internal DatasetReference(DatasetReferenceType type, string referenceName, IDictionary<string, object> parameters)
+        internal DatasetReference(DatasetReferenceType type, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -46,6 +46,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference dataset name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for dataset. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

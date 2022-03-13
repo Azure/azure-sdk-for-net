@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.Monitor.Query.Models
             string message = default;
             Optional<IReadOnlyList<ErrorDetail>> details = default;
             Optional<ErrorInfo> innererror = default;
-            Optional<object> additionalProperties = default;
+            Optional<BinaryData> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -64,7 +65,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalProperties = property.Value.GetObject();
+                    additionalProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

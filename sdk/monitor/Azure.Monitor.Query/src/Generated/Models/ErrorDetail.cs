@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="value"> Indicates which value in &apos;target&apos; is responsible for the error. </param>
         /// <param name="resources"> Indicates resources which were responsible for the error. </param>
         /// <param name="additionalProperties"> Additional properties that can be provided on the error details object. </param>
-        internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, object additionalProperties)
+        internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, BinaryData additionalProperties)
         {
             Code = code;
             Message = message;
@@ -62,6 +62,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Indicates resources which were responsible for the error. </summary>
         public IReadOnlyList<string> Resources { get; }
         /// <summary> Additional properties that can be provided on the error details object. </summary>
-        public object AdditionalProperties { get; }
+        public BinaryData AdditionalProperties { get; }
     }
 }

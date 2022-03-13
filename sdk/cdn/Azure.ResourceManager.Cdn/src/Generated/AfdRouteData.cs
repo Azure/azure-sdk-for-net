@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, BinaryData compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
             CustomDomains = customDomains;
             OriginGroup = originGroup;
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> compression settings. </summary>
-        public object CompressionSettings { get; set; }
+        public BinaryData CompressionSettings { get; set; }
         /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
         public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>

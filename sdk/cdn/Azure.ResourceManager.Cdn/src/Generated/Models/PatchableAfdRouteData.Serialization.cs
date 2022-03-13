@@ -70,7 +70,11 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings");
-                writer.WriteObjectValue(CompressionSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CompressionSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CompressionSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {

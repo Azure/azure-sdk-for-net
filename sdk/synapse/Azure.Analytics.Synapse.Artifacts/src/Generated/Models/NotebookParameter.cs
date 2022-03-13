@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Notebook parameter. </summary>
@@ -18,14 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of NotebookParameter. </summary>
         /// <param name="value"> Notebook parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Notebook parameter type. </param>
-        internal NotebookParameter(object value, NotebookParameterType? type)
+        internal NotebookParameter(BinaryData value, NotebookParameterType? type)
         {
             Value = value;
             Type = type;
         }
 
         /// <summary> Notebook parameter value. Type: string (or Expression with resultType string). </summary>
-        public object Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> Notebook parameter type. </summary>
         public NotebookParameterType? Type { get; set; }
     }

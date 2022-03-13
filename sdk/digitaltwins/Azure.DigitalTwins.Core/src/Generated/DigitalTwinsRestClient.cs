@@ -123,6 +123,121 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal HttpMessage CreateAddRequest(string id, BinaryData twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (digitalTwinsAddOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddOptions.IfNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(twin);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(twin.ToString()).RootElement);
+#endif
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// Adds or replaces a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or payload is invalid.
+        ///   * ModelDecommissioned - The model for the digital twin is decommissioned.
+        ///   * TwinLimitReached - The maximum number of digital twins allowed has been reached.
+        ///   * ValidationFailed - The digital twin payload is not valid.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="twin"> The digital twin instance being added. If provided, the $dtId property is ignored. </param>
+        /// <param name="digitalTwinsAddOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="twin"/> is null. </exception>
+        public async Task<Response<Stream>> AddAsync(string id, BinaryData twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (twin == null)
+            {
+                throw new ArgumentNullException(nameof(twin));
+            }
+
+            using var message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 202:
+                    return Response.FromValue((Stream)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Adds or replaces a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or payload is invalid.
+        ///   * ModelDecommissioned - The model for the digital twin is decommissioned.
+        ///   * TwinLimitReached - The maximum number of digital twins allowed has been reached.
+        ///   * ValidationFailed - The digital twin payload is not valid.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="twin"> The digital twin instance being added. If provided, the $dtId property is ignored. </param>
+        /// <param name="digitalTwinsAddOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="twin"/> is null. </exception>
+        public Response<Stream> Add(string id, BinaryData twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (twin == null)
+            {
+                throw new ArgumentNullException(nameof(twin));
+            }
+
+            using var message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 202:
+                    return Response.FromValue((Stream)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateDeleteRequest(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -210,7 +325,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
+        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<BinaryData> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,11 +346,97 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                content.JsonWriter.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
             return message;
+        }
+
+        /// <summary>
+        /// Updates a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or payload is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - Applying the patch results in an invalid digital twin.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="patchDocument"> An update specification described by JSON Patch. Updates to property values and $model elements may happen in the same request. Operations are limited to add, replace and remove. </param>
+        /// <param name="digitalTwinsUpdateOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patchDocument"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string id, IEnumerable<BinaryData> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Updates a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or payload is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - Applying the patch results in an invalid digital twin.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="patchDocument"> An update specification described by JSON Patch. Updates to property values and $model elements may happen in the same request. Operations are limited to add, replace and remove. </param>
+        /// <param name="digitalTwinsUpdateOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patchDocument"/> is null. </exception>
+        public Response Update(string id, IEnumerable<BinaryData> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateGetRelationshipByIdRequest(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions)
@@ -335,7 +536,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
+        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, BinaryData relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -355,9 +556,113 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(relationship);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(relationship);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(relationship.ToString()).RootElement);
+#endif
             request.Content = content;
             return message;
+        }
+
+        /// <summary>
+        /// Adds a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, relationship id, or payload is invalid.
+        ///   * InvalidRelationship - The relationship is invalid.
+        ///   * OperationNotAllowed - The relationship cannot connect to the same digital twin.
+        ///   * ValidationFailed - The relationship content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * TargetTwinNotFound - The digital twin target of the relationship was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="relationship"> The data for the relationship. </param>
+        /// <param name="digitalTwinsAddRelationshipOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="relationshipId"/> or <paramref name="relationship"/> is null. </exception>
+        public async Task<Response<Stream>> AddRelationshipAsync(string id, string relationshipId, BinaryData relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+            if (relationship == null)
+            {
+                throw new ArgumentNullException(nameof(relationship));
+            }
+
+            using var message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Adds a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, relationship id, or payload is invalid.
+        ///   * InvalidRelationship - The relationship is invalid.
+        ///   * OperationNotAllowed - The relationship cannot connect to the same digital twin.
+        ///   * ValidationFailed - The relationship content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * TargetTwinNotFound - The digital twin target of the relationship was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="relationship"> The data for the relationship. </param>
+        /// <param name="digitalTwinsAddRelationshipOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="relationshipId"/> or <paramref name="relationship"/> is null. </exception>
+        public Response<Stream> AddRelationship(string id, string relationshipId, BinaryData relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+            if (relationship == null)
+            {
+                throw new ArgumentNullException(nameof(relationship));
+            }
+
+            using var message = CreateAddRelationshipRequest(id, relationshipId, relationship, digitalTwinsAddRelationshipOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateDeleteRelationshipRequest(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions)
@@ -459,7 +764,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
+        internal HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, IEnumerable<BinaryData> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -482,11 +787,113 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                content.JsonWriter.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
             return message;
+        }
+
+        /// <summary>
+        /// Updates the properties on a relationship between two digital twins.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        ///   * InvalidRelationship - The relationship is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - The relationship content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// * 409 Conflict
+        ///   * RelationshipAlreadyExists - The relationship already exists.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="patchDocument"> JSON Patch description of the update to the relationship properties. </param>
+        /// <param name="digitalTwinsUpdateRelationshipOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="relationshipId"/> or <paramref name="patchDocument"/> is null. </exception>
+        public async Task<Response> UpdateRelationshipAsync(string id, string relationshipId, IEnumerable<BinaryData> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Updates the properties on a relationship between two digital twins.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        ///   * InvalidRelationship - The relationship is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - The relationship content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// * 409 Conflict
+        ///   * RelationshipAlreadyExists - The relationship already exists.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="patchDocument"> JSON Patch description of the update to the relationship properties. </param>
+        /// <param name="digitalTwinsUpdateRelationshipOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="relationshipId"/> or <paramref name="patchDocument"/> is null. </exception>
+        public Response UpdateRelationship(string id, string relationshipId, IEnumerable<BinaryData> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateListRelationshipsRequest(string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
@@ -597,7 +1004,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateSendTelemetryRequest(string id, string messageId, object telemetry, string telemetrySourceTime, PublishTelemetryOptions digitalTwinsSendTelemetryOptions)
+        internal HttpMessage CreateSendTelemetryRequest(string id, string messageId, BinaryData telemetry, string telemetrySourceTime, PublishTelemetryOptions digitalTwinsSendTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -617,12 +1024,102 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(telemetry);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(telemetry);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(telemetry.ToString()).RootElement);
+#endif
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string messageId, object telemetry, string telemetrySourceTime, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
+        /// <summary>
+        /// Sends telemetry on behalf of a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or message id is invalid.
+        ///   * ValidationFailed - The telemetry content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="messageId"> A unique message identifier (in the scope of the digital twin id) that is commonly used for de-duplicating messages. </param>
+        /// <param name="telemetry"> The telemetry measurements to send from the digital twin. </param>
+        /// <param name="telemetrySourceTime"> An RFC 3339 timestamp that identifies the time the telemetry was measured. </param>
+        /// <param name="digitalTwinsSendTelemetryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="messageId"/> or <paramref name="telemetry"/> is null. </exception>
+        public async Task<Response> SendTelemetryAsync(string id, string messageId, BinaryData telemetry, string telemetrySourceTime = null, PublishTelemetryOptions digitalTwinsSendTelemetryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using var message = CreateSendTelemetryRequest(id, messageId, telemetry, telemetrySourceTime, digitalTwinsSendTelemetryOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Sends telemetry on behalf of a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or message id is invalid.
+        ///   * ValidationFailed - The telemetry content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="messageId"> A unique message identifier (in the scope of the digital twin id) that is commonly used for de-duplicating messages. </param>
+        /// <param name="telemetry"> The telemetry measurements to send from the digital twin. </param>
+        /// <param name="telemetrySourceTime"> An RFC 3339 timestamp that identifies the time the telemetry was measured. </param>
+        /// <param name="digitalTwinsSendTelemetryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="messageId"/> or <paramref name="telemetry"/> is null. </exception>
+        public Response SendTelemetry(string id, string messageId, BinaryData telemetry, string telemetrySourceTime = null, PublishTelemetryOptions digitalTwinsSendTelemetryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using var message = CreateSendTelemetryRequest(id, messageId, telemetry, telemetrySourceTime, digitalTwinsSendTelemetryOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string messageId, BinaryData telemetry, string telemetrySourceTime, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -644,9 +1141,111 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(telemetry);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(telemetry);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(telemetry.ToString()).RootElement);
+#endif
             request.Content = content;
             return message;
+        }
+
+        /// <summary>
+        /// Sends telemetry on behalf of a component in a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, message id, or component path is invalid.
+        ///   * ValidationFailed - The telemetry content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="messageId"> A unique message identifier (in the scope of the digital twin id) that is commonly used for de-duplicating messages. </param>
+        /// <param name="telemetry"> The telemetry measurements to send from the digital twin&apos;s component. </param>
+        /// <param name="telemetrySourceTime"> An RFC 3339 timestamp that identifies the time the telemetry was measured. </param>
+        /// <param name="digitalTwinsSendComponentTelemetryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="componentPath"/>, <paramref name="messageId"/> or <paramref name="telemetry"/> is null. </exception>
+        public async Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string messageId, BinaryData telemetry, string telemetrySourceTime = null, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using var message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, telemetrySourceTime, digitalTwinsSendComponentTelemetryOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Sends telemetry on behalf of a component in a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, message id, or component path is invalid.
+        ///   * ValidationFailed - The telemetry content is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="messageId"> A unique message identifier (in the scope of the digital twin id) that is commonly used for de-duplicating messages. </param>
+        /// <param name="telemetry"> The telemetry measurements to send from the digital twin&apos;s component. </param>
+        /// <param name="telemetrySourceTime"> An RFC 3339 timestamp that identifies the time the telemetry was measured. </param>
+        /// <param name="digitalTwinsSendComponentTelemetryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="componentPath"/>, <paramref name="messageId"/> or <paramref name="telemetry"/> is null. </exception>
+        public Response SendComponentTelemetry(string id, string componentPath, string messageId, BinaryData telemetry, string telemetrySourceTime = null, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using var message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, telemetrySourceTime, digitalTwinsSendComponentTelemetryOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateGetComponentRequest(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions)
@@ -746,7 +1345,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
+        internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<BinaryData> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -769,11 +1368,107 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                content.JsonWriter.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
             return message;
+        }
+
+        /// <summary>
+        /// Updates a component on a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, component path, or payload is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - Applying the patch results in an invalid digital twin.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="patchDocument"> An update specification described by JSON Patch. Updates to property values and $model elements may happen in the same request. Operations are limited to add, replace and remove. </param>
+        /// <param name="digitalTwinsUpdateComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="componentPath"/> or <paramref name="patchDocument"/> is null. </exception>
+        public async Task<Response> UpdateComponentAsync(string id, string componentPath, IEnumerable<BinaryData> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Updates a component on a digital twin.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id, component path, or payload is invalid.
+        ///   * JsonPatchInvalid - The JSON Patch provided is invalid.
+        ///   * ValidationFailed - Applying the patch results in an invalid digital twin.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// * 412 Precondition Failed
+        ///   * PreconditionFailed - The precondition check (If-Match or If-None-Match) failed.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="patchDocument"> An update specification described by JSON Patch. Updates to property values and $model elements may happen in the same request. Operations are limited to add, replace and remove. </param>
+        /// <param name="digitalTwinsUpdateComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="componentPath"/> or <paramref name="patchDocument"/> is null. </exception>
+        public Response UpdateComponent(string id, string componentPath, IEnumerable<BinaryData> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (patchDocument == null)
+            {
+                throw new ArgumentNullException(nameof(patchDocument));
+            }
+
+            using var message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateListRelationshipsNextPageRequest(string nextLink, string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)

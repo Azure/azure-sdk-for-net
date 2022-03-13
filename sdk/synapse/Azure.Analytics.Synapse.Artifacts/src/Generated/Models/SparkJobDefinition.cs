@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             TargetBigDataPool = targetBigDataPool;
             JobProperties = jobProperties;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SparkJobDefinition. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="jobProperties"> The properties of the Spark job. </param>
         /// <param name="folder"> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, string requiredSparkVersion, string language, SparkJobProperties jobProperties, SparkJobDefinitionFolder folder, IDictionary<string, object> additionalProperties)
+        internal SparkJobDefinition(string description, BigDataPoolReference targetBigDataPool, string requiredSparkVersion, string language, SparkJobProperties jobProperties, SparkJobDefinitionFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             Description = description;
             TargetBigDataPool = targetBigDataPool;
@@ -66,6 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </summary>
         public SparkJobDefinitionFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

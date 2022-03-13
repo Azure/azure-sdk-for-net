@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="source"> Dataset-specific source properties, same as copy activity source. </param>
         /// <param name="dataset"> Lookup activity dataset reference. </param>
         /// <param name="firstRowOnly"> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal LookupActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, object firstRowOnly) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal LookupActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, BinaryData firstRowOnly) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Source = source;
             Dataset = dataset;
@@ -63,6 +63,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Lookup activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object FirstRowOnly { get; set; }
+        public BinaryData FirstRowOnly { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,20 +17,20 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>
         internal RelationshipCollection()
         {
-            Value = new ChangeTrackingList<object>();
+            Value = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>
         /// <param name="value"> The relationship objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
-        internal RelationshipCollection(IReadOnlyList<object> value, string nextLink)
+        internal RelationshipCollection(IReadOnlyList<BinaryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The relationship objects. </summary>
-        public IReadOnlyList<object> Value { get; }
+        public IReadOnlyList<BinaryData> Value { get; }
         /// <summary> A URI to retrieve the next page of objects. </summary>
         public string NextLink { get; }
     }

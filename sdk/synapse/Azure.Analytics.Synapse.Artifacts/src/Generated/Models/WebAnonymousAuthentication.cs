@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public WebAnonymousAuthentication(object url) : base(url)
+        public WebAnonymousAuthentication(BinaryData url) : base(url)
         {
             if (url == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal WebAnonymousAuthentication(object url, WebAuthenticationType authenticationType) : base(url, authenticationType)
+        internal WebAnonymousAuthentication(BinaryData url, WebAuthenticationType authenticationType) : base(url, authenticationType)
         {
             AuthenticationType = authenticationType;
         }

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
         /// <param name="url"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public AzureSearchLinkedService(object url)
+        public AzureSearchLinkedService(BinaryData url)
         {
             if (url == null)
             {
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="url"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
         /// <param name="key"> Admin Key for Azure Search service. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureSearchLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, SecretBase key, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureSearchLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData url, SecretBase key, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             Key = key;
@@ -46,10 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> Admin Key for Azure Search service. </summary>
         public SecretBase Key { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

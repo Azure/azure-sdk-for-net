@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
         /// <param name="host"> Host name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public CassandraLinkedService(object host)
+        public CassandraLinkedService(BinaryData host)
         {
             if (host == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal CassandraLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object authenticationType, object port, object username, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal CassandraLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData authenticationType, BinaryData port, BinaryData username, SecretBase password, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             AuthenticationType = authenticationType;
@@ -52,16 +52,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
-        public object Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> AuthenticationType to be used for connection. Type: string (or Expression with resultType string). </summary>
-        public object AuthenticationType { get; set; }
+        public BinaryData AuthenticationType { get; set; }
         /// <summary> The port for the connection. Type: integer (or Expression with resultType integer). </summary>
-        public object Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        public object Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary> Password for authentication. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

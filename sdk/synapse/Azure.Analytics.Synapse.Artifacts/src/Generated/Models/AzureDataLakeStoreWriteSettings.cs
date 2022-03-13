@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,13 +25,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="expiryDateTime"> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </param>
-        internal AzureDataLakeStoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties, object expiryDateTime) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        internal AzureDataLakeStoreWriteSettings(string type, BinaryData maxConcurrentConnections, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData expiryDateTime) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
         {
             ExpiryDateTime = expiryDateTime;
             Type = type ?? "AzureDataLakeStoreWriteSettings";
         }
 
         /// <summary> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </summary>
-        public object ExpiryDateTime { get; set; }
+        public BinaryData ExpiryDateTime { get; set; }
     }
 }

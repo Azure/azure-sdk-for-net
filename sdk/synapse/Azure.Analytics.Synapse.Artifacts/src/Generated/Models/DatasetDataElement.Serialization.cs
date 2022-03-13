@@ -21,20 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteObjectValue(Name);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Name);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Name.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteObjectValue(Type);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Type);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Type.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element)
         {
-            Optional<object> name = default;
-            Optional<object> type = default;
+            Optional<BinaryData> name = default;
+            Optional<BinaryData> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = property.Value.GetObject();
+                    name = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -54,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetObject();
+                    type = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

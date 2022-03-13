@@ -48,7 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -57,12 +61,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties");
-                writer.WriteObjectValue(ConnectionProperties);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionProperties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionProperties.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientCustomerID))
             {
                 writer.WritePropertyName("clientCustomerID");
-                writer.WriteObjectValue(ClientCustomerID);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientCustomerID);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientCustomerID.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DeveloperToken))
             {
@@ -82,7 +94,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
-                writer.WriteObjectValue(ClientId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -92,33 +108,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email");
-                writer.WriteObjectValue(Email);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Email);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Email.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath");
-                writer.WriteObjectValue(KeyFilePath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(KeyFilePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(KeyFilePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath");
-                writer.WriteObjectValue(TrustedCertPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrustedCertPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore");
-                writer.WriteObjectValue(UseSystemTrustStore);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseSystemTrustStore);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemTrustStore.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -129,21 +169,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> connectionProperties = default;
-            Optional<object> clientCustomerID = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> connectionProperties = default;
+            Optional<BinaryData> clientCustomerID = default;
             Optional<SecretBase> developerToken = default;
             Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
             Optional<SecretBase> refreshToken = default;
-            Optional<object> clientId = default;
+            Optional<BinaryData> clientId = default;
             Optional<SecretBase> clientSecret = default;
-            Optional<object> email = default;
-            Optional<object> keyFilePath = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> email = default;
+            Optional<BinaryData> keyFilePath = default;
+            Optional<BinaryData> trustedCertPath = default;
+            Optional<BinaryData> useSystemTrustStore = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -188,10 +228,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -212,7 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionProperties = property0.Value.GetObject();
+                            connectionProperties = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientCustomerID"))
@@ -222,7 +262,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientCustomerID = property0.Value.GetObject();
+                            clientCustomerID = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("developerToken"))
@@ -262,7 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientId = property0.Value.GetObject();
+                            clientId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"))
@@ -282,7 +322,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            email = property0.Value.GetObject();
+                            email = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("keyFilePath"))
@@ -292,7 +332,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyFilePath = property0.Value.GetObject();
+                            keyFilePath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
@@ -302,7 +342,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedCertPath = property0.Value.GetObject();
+                            trustedCertPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
@@ -312,7 +352,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useSystemTrustStore = property0.Value.GetObject();
+                            useSystemTrustStore = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -322,13 +362,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientCustomerID.Value, developerToken.Value, Optional.ToNullable(authenticationType), refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);

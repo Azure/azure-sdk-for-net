@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
         public ParameterDefinitionsValue()
         {
-            AllowedValues = new ChangeTrackingList<object>();
+            AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ParameterDefinitionsValue(ParameterType? type, IList<object> allowedValues, object defaultValue, ParameterDefinitionsValueMetadata metadata)
+        internal ParameterDefinitionsValue(ParameterType? type, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
         {
             Type = type;
             AllowedValues = allowedValues;
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The data type of the parameter. </summary>
         public ParameterType? Type { get; set; }
         /// <summary> The allowed values for the parameter. </summary>
-        public IList<object> AllowedValues { get; }
+        public IList<BinaryData> AllowedValues { get; }
         /// <summary> The default value for the parameter if no value is provided. </summary>
-        public object DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
         /// <summary> General metadata for the parameter. </summary>
         public ParameterDefinitionsValueMetadata Metadata { get; set; }
     }

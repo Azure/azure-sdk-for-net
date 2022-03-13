@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element)
         {
             Optional<int> status = default;
-            Optional<object> payload = default;
+            Optional<BinaryData> payload = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -35,7 +36,7 @@ namespace Azure.IoT.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    payload = property.Value.GetObject();
+                    payload = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

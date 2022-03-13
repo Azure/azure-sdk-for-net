@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties"> Compression settings. </param>
-        internal BinaryReadSettings(string type, IDictionary<string, object> additionalProperties, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
+        internal BinaryReadSettings(string type, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             Type = type ?? "BinaryReadSettings";

@@ -25,9 +25,9 @@ namespace Azure.Security.Attestation
             Optional<object> cnf = default;
             Optional<string> nonce = default;
             Optional<string> xMsVer = default;
-            Optional<object> xMsRuntime = default;
-            Optional<object> xMsInittime = default;
-            Optional<object> xMsPolicy = default;
+            Optional<BinaryData> xMsRuntime = default;
+            Optional<BinaryData> xMsInittime = default;
+            Optional<BinaryData> xMsPolicy = default;
             Optional<string> xMsAttestationType = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
             Optional<string> xMsPolicyHash = default;
@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
             Optional<string> xMsSgxMrsigner = default;
             Optional<float> xMsSgxSvn = default;
             Optional<string> xMsSgxEhd = default;
-            Optional<object> xMsSgxCollateral = default;
+            Optional<BinaryData> xMsSgxCollateral = default;
             Optional<string> ver = default;
             Optional<bool> isDebuggable = default;
             Optional<object> maaAttestationcollateral = default;
@@ -120,7 +120,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsRuntime = property.Value.GetObject();
+                    xMsRuntime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("x-ms-inittime"))
@@ -130,7 +130,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsInittime = property.Value.GetObject();
+                    xMsInittime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("x-ms-policy"))
@@ -140,7 +140,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsPolicy = property.Value.GetObject();
+                    xMsPolicy = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("x-ms-attestation-type"))
@@ -215,7 +215,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsSgxCollateral = property.Value.GetObject();
+                    xMsSgxCollateral = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("ver"))

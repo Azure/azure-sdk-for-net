@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<object> detail = default;
+            Optional<BinaryData> detail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -36,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detail = property.Value.GetObject();
+                    detail = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

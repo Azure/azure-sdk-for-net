@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,22 +17,22 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinProperties. </summary>
         public TwinProperties()
         {
-            Desired = new ChangeTrackingDictionary<string, object>();
-            Reported = new ChangeTrackingDictionary<string, object>();
+            Desired = new ChangeTrackingDictionary<string, BinaryData>();
+            Reported = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TwinProperties. </summary>
         /// <param name="desired"> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The desired porperty values are JSON objects, up-to 4KB in length. </param>
         /// <param name="reported"> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The reported property values are JSON objects, up-to 4KB in length. </param>
-        internal TwinProperties(IDictionary<string, object> desired, IDictionary<string, object> reported)
+        internal TwinProperties(IDictionary<string, BinaryData> desired, IDictionary<string, BinaryData> reported)
         {
             Desired = desired;
             Reported = reported;
         }
 
         /// <summary> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The desired porperty values are JSON objects, up-to 4KB in length. </summary>
-        public IDictionary<string, object> Desired { get; }
+        public IDictionary<string, BinaryData> Desired { get; }
         /// <summary> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The reported property values are JSON objects, up-to 4KB in length. </summary>
-        public IDictionary<string, object> Reported { get; }
+        public IDictionary<string, BinaryData> Reported { get; }
     }
 }

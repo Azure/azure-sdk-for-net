@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of HttpLinkedService. </summary>
         /// <param name="url"> The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public HttpLinkedService(object url)
+        public HttpLinkedService(BinaryData url)
         {
             if (url == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal HttpLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, HttpAuthenticationType? authenticationType, object userName, SecretBase password, object embeddedCertData, object certThumbprint, object encryptedCredential, object enableServerCertificateValidation) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal HttpLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData url, HttpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData embeddedCertData, BinaryData certThumbprint, BinaryData encryptedCredential, BinaryData enableServerCertificateValidation) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AuthenticationType = authenticationType;
@@ -56,20 +56,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> The authentication type to be used to connect to the HTTP server. </summary>
         public HttpAuthenticationType? AuthenticationType { get; set; }
         /// <summary> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </summary>
         public SecretBase Password { get; set; }
         /// <summary> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
-        public object EmbeddedCertData { get; set; }
+        public BinaryData EmbeddedCertData { get; set; }
         /// <summary> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
-        public object CertThumbprint { get; set; }
+        public BinaryData CertThumbprint { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object EnableServerCertificateValidation { get; set; }
+        public BinaryData EnableServerCertificateValidation { get; set; }
     }
 }

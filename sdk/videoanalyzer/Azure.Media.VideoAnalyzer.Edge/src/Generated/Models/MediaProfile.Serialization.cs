@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(MediaUri))
             {
                 writer.WritePropertyName("mediaUri");
-                writer.WriteObjectValue(MediaUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MediaUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MediaUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(VideoEncoderConfiguration))
             {
@@ -36,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal static MediaProfile DeserializeMediaProfile(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<object> mediaUri = default;
+            Optional<BinaryData> mediaUri = default;
             Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mediaUri = property.Value.GetObject();
+                    mediaUri = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("videoEncoderConfiguration"))

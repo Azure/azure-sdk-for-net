@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
         /// <param name="compressionProperties"> Compression settings. </param>
-        internal DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties, object skipLineCount, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
+        internal DelimitedTextReadSettings(string type, IDictionary<string, BinaryData> additionalProperties, BinaryData skipLineCount, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
-        public object SkipLineCount { get; set; }
+        public BinaryData SkipLineCount { get; set; }
         /// <summary> Compression settings. </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }

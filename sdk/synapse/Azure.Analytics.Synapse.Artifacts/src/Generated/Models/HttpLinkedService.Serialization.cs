@@ -48,14 +48,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("url");
-            writer.WriteObjectValue(Url);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Url);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Url.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType");
@@ -64,7 +72,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName");
-                writer.WriteObjectValue(UserName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -74,28 +86,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EmbeddedCertData))
             {
                 writer.WritePropertyName("embeddedCertData");
-                writer.WriteObjectValue(EmbeddedCertData);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EmbeddedCertData);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EmbeddedCertData.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint");
-                writer.WriteObjectValue(CertThumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CertThumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CertThumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation");
-                writer.WriteObjectValue(EnableServerCertificateValidation);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableServerCertificateValidation);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableServerCertificateValidation.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -106,17 +138,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object url = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData url = default;
             Optional<HttpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
+            Optional<BinaryData> userName = default;
             Optional<SecretBase> password = default;
-            Optional<object> embeddedCertData = default;
-            Optional<object> certThumbprint = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> enableServerCertificateValidation = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> embeddedCertData = default;
+            Optional<BinaryData> certThumbprint = default;
+            Optional<BinaryData> encryptedCredential = default;
+            Optional<BinaryData> enableServerCertificateValidation = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -161,10 +193,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -180,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetObject();
+                            url = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
@@ -200,7 +232,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userName = property0.Value.GetObject();
+                            userName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -220,7 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            embeddedCertData = property0.Value.GetObject();
+                            embeddedCertData = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("certThumbprint"))
@@ -230,7 +262,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            certThumbprint = property0.Value.GetObject();
+                            certThumbprint = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -240,7 +272,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableServerCertificateValidation"))
@@ -250,13 +282,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableServerCertificateValidation = property0.Value.GetObject();
+                            enableServerCertificateValidation = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HttpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, embeddedCertData.Value, certThumbprint.Value, encryptedCredential.Value, enableServerCertificateValidation.Value);

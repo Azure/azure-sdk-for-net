@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="storeSettings"> DelimitedText store settings. </param>
         /// <param name="formatSettings"> DelimitedText format settings. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal DelimitedTextSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, DelimitedTextReadSettings formatSettings, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        internal DelimitedTextSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, StoreReadSettings storeSettings, DelimitedTextReadSettings formatSettings, BinaryData additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;
@@ -40,6 +41,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> DelimitedText format settings. </summary>
         public DelimitedTextReadSettings FormatSettings { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public object AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

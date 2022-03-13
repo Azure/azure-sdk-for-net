@@ -23,7 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Value != null)
                 {
                     writer.WritePropertyName("value");
-                    writer.WriteObjectValue(Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -40,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
         {
-            Optional<object> value = default;
+            Optional<BinaryData> value = default;
             Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         value = null;
                         continue;
                     }
-                    value = property.Value.GetObject();
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))

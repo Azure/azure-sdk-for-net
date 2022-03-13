@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
         public RecurrenceScheduleOccurrence()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence, IDictionary<string, object> additionalProperties)
+        internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> additionalProperties)
         {
             Day = day;
             Occurrence = occurrence;
@@ -35,6 +36,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The occurrence. </summary>
         public int? Occurrence { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

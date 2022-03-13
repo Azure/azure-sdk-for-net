@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,13 +23,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal TarGZipReadSettings(string type, IDictionary<string, object> additionalProperties, object preserveCompressionFileNameAsFolder) : base(type, additionalProperties)
+        internal TarGZipReadSettings(string type, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveCompressionFileNameAsFolder) : base(type, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
             Type = type ?? "TarGZipReadSettings";
         }
 
         /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
-        public object PreserveCompressionFileNameAsFolder { get; set; }
+        public BinaryData PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

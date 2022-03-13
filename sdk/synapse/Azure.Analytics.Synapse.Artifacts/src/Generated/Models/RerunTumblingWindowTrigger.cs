@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
-        public RerunTumblingWindowTrigger(object parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency)
+        public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency)
         {
             if (parentTrigger == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, object parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency) : base(type, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency) : base(type, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartTime = requestedStartTime;
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The parent trigger reference. </summary>
-        public object ParentTrigger { get; set; }
+        public BinaryData ParentTrigger { get; set; }
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
         public DateTimeOffset RequestedStartTime { get; set; }
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>

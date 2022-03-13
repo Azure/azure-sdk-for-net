@@ -61,32 +61,56 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("mlPipelineId");
-            writer.WriteObjectValue(MlPipelineId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlPipelineId);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineId.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName");
-                writer.WriteObjectValue(ExperimentName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ExperimentName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExperimentName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MlPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters");
-                writer.WriteObjectValue(MlPipelineParameters);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlPipelineParameters);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineParameters.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MlParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId");
-                writer.WriteObjectValue(MlParentRunId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlParentRunId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlParentRunId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure");
-                writer.WriteObjectValue(ContinueOnStepFailure);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ContinueOnStepFailure);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnStepFailure.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -100,13 +124,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object mlPipelineId = default;
-            Optional<object> experimentName = default;
-            Optional<object> mlPipelineParameters = default;
-            Optional<object> mlParentRunId = default;
-            Optional<object> continueOnStepFailure = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            BinaryData mlPipelineId = default;
+            Optional<BinaryData> experimentName = default;
+            Optional<BinaryData> mlPipelineParameters = default;
+            Optional<BinaryData> mlParentRunId = default;
+            Optional<BinaryData> continueOnStepFailure = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -185,7 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("mlPipelineId"))
                         {
-                            mlPipelineId = property0.Value.GetObject();
+                            mlPipelineId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("experimentName"))
@@ -195,7 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            experimentName = property0.Value.GetObject();
+                            experimentName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineParameters"))
@@ -205,7 +229,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlPipelineParameters = property0.Value.GetObject();
+                            mlPipelineParameters = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlParentRunId"))
@@ -215,7 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlParentRunId = property0.Value.GetObject();
+                            mlParentRunId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnStepFailure"))
@@ -225,13 +249,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            continueOnStepFailure = property0.Value.GetObject();
+                            continueOnStepFailure = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLExecutePipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, mlPipelineId, experimentName.Value, mlPipelineParameters.Value, mlParentRunId.Value, continueOnStepFailure.Value);

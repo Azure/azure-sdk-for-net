@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="partitionOption"> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal AmazonRdsForOracleSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object oracleReaderQuery, object queryTimeout, object partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        internal AmazonRdsForOracleSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData oracleReaderQuery, BinaryData queryTimeout, BinaryData partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, BinaryData additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
@@ -40,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </summary>
-        public object OracleReaderQuery { get; set; }
+        public BinaryData OracleReaderQuery { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public object QueryTimeout { get; set; }
+        public BinaryData QueryTimeout { get; set; }
         /// <summary> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </summary>
-        public object PartitionOption { get; set; }
+        public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
         public AmazonRdsForOraclePartitionSettings PartitionSettings { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public object AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

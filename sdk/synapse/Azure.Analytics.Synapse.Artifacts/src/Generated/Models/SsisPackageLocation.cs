@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packageContent"> The embedded package content. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
-        internal SsisPackageLocation(object packagePath, SsisPackageLocationType? type, SecretBase packagePassword, SsisAccessCredential accessCredential, object configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, object packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
+        internal SsisPackageLocation(BinaryData packagePath, SsisPackageLocationType? type, SecretBase packagePassword, SsisAccessCredential accessCredential, BinaryData configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, BinaryData packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
         {
             PackagePath = packagePath;
             Type = type;
@@ -45,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The SSIS package path. Type: string (or Expression with resultType string). </summary>
-        public object PackagePath { get; set; }
+        public BinaryData PackagePath { get; set; }
         /// <summary> The type of SSIS package location. </summary>
         public SsisPackageLocationType? Type { get; set; }
         /// <summary> Password of the package. </summary>
@@ -53,13 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>
-        public object ConfigurationPath { get; set; }
+        public BinaryData ConfigurationPath { get; set; }
         /// <summary> The configuration file access credential. </summary>
         public SsisAccessCredential ConfigurationAccessCredential { get; set; }
         /// <summary> The package name. </summary>
         public string PackageName { get; set; }
         /// <summary> The embedded package content. Type: string (or Expression with resultType string). </summary>
-        public object PackageContent { get; set; }
+        public BinaryData PackageContent { get; set; }
         /// <summary> The embedded package last modified date. </summary>
         public string PackageLastModifiedDate { get; set; }
         /// <summary> The embedded child package list. </summary>

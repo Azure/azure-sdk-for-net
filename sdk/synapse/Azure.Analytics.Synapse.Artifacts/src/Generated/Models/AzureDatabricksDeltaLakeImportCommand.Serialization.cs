@@ -22,30 +22,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat");
-                writer.WriteObjectValue(DateFormat);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DateFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFormat.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat");
-                writer.WriteObjectValue(TimestampFormat);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TimestampFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimestampFormat.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static AzureDatabricksDeltaLakeImportCommand DeserializeAzureDatabricksDeltaLakeImportCommand(JsonElement element)
         {
-            Optional<object> dateFormat = default;
-            Optional<object> timestampFormat = default;
+            Optional<BinaryData> dateFormat = default;
+            Optional<BinaryData> timestampFormat = default;
             string type = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateFormat"))
@@ -55,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFormat = property.Value.GetObject();
+                    dateFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("timestampFormat"))
@@ -65,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timestampFormat = property.Value.GetObject();
+                    timestampFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -73,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);

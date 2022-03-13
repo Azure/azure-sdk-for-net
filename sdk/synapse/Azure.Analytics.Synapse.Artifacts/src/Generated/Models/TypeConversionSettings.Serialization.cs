@@ -21,44 +21,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation");
-                writer.WriteObjectValue(AllowDataTruncation);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowDataTruncation);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowDataTruncation.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber");
-                writer.WriteObjectValue(TreatBooleanAsNumber);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TreatBooleanAsNumber);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TreatBooleanAsNumber.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat");
-                writer.WriteObjectValue(DateTimeFormat);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DateTimeFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateTimeFormat.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat");
-                writer.WriteObjectValue(DateTimeOffsetFormat);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DateTimeOffsetFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateTimeOffsetFormat.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat");
-                writer.WriteObjectValue(TimeSpanFormat);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TimeSpanFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeSpanFormat.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture");
-                writer.WriteObjectValue(Culture);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Culture);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Culture.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element)
         {
-            Optional<object> allowDataTruncation = default;
-            Optional<object> treatBooleanAsNumber = default;
-            Optional<object> dateTimeFormat = default;
-            Optional<object> dateTimeOffsetFormat = default;
-            Optional<object> timeSpanFormat = default;
-            Optional<object> culture = default;
+            Optional<BinaryData> allowDataTruncation = default;
+            Optional<BinaryData> treatBooleanAsNumber = default;
+            Optional<BinaryData> dateTimeFormat = default;
+            Optional<BinaryData> dateTimeOffsetFormat = default;
+            Optional<BinaryData> timeSpanFormat = default;
+            Optional<BinaryData> culture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDataTruncation"))
@@ -68,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowDataTruncation = property.Value.GetObject();
+                    allowDataTruncation = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("treatBooleanAsNumber"))
@@ -78,7 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    treatBooleanAsNumber = property.Value.GetObject();
+                    treatBooleanAsNumber = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dateTimeFormat"))
@@ -88,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateTimeFormat = property.Value.GetObject();
+                    dateTimeFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dateTimeOffsetFormat"))
@@ -98,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateTimeOffsetFormat = property.Value.GetObject();
+                    dateTimeOffsetFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("timeSpanFormat"))
@@ -108,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeSpanFormat = property.Value.GetObject();
+                    timeSpanFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("culture"))
@@ -118,7 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    culture = property.Value.GetObject();
+                    culture = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -22,84 +22,132 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter");
-                writer.WriteObjectValue(ColumnDelimiter);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ColumnDelimiter);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnDelimiter.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter");
-                writer.WriteObjectValue(RowDelimiter);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RowDelimiter);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RowDelimiter.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar");
-                writer.WriteObjectValue(EscapeChar);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EscapeChar);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EscapeChar.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar");
-                writer.WriteObjectValue(QuoteChar);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(QuoteChar);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(QuoteChar.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue");
-                writer.WriteObjectValue(NullValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NullValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NullValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName");
-                writer.WriteObjectValue(EncodingName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncodingName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncodingName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull");
-                writer.WriteObjectValue(TreatEmptyAsNull);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TreatEmptyAsNull);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TreatEmptyAsNull.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount");
-                writer.WriteObjectValue(SkipLineCount);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SkipLineCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SkipLineCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader");
-                writer.WriteObjectValue(FirstRowAsHeader);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FirstRowAsHeader);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer");
-                writer.WriteObjectValue(Serializer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Serializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer");
-                writer.WriteObjectValue(Deserializer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Deserializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static TextFormat DeserializeTextFormat(JsonElement element)
         {
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> escapeChar = default;
-            Optional<object> quoteChar = default;
-            Optional<object> nullValue = default;
-            Optional<object> encodingName = default;
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipLineCount = default;
-            Optional<object> firstRowAsHeader = default;
+            Optional<BinaryData> columnDelimiter = default;
+            Optional<BinaryData> rowDelimiter = default;
+            Optional<BinaryData> escapeChar = default;
+            Optional<BinaryData> quoteChar = default;
+            Optional<BinaryData> nullValue = default;
+            Optional<BinaryData> encodingName = default;
+            Optional<BinaryData> treatEmptyAsNull = default;
+            Optional<BinaryData> skipLineCount = default;
+            Optional<BinaryData> firstRowAsHeader = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> serializer = default;
+            Optional<BinaryData> deserializer = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnDelimiter"))
@@ -109,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    columnDelimiter = property.Value.GetObject();
+                    columnDelimiter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rowDelimiter"))
@@ -119,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rowDelimiter = property.Value.GetObject();
+                    rowDelimiter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("escapeChar"))
@@ -129,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    escapeChar = property.Value.GetObject();
+                    escapeChar = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("quoteChar"))
@@ -139,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    quoteChar = property.Value.GetObject();
+                    quoteChar = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("nullValue"))
@@ -149,7 +197,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nullValue = property.Value.GetObject();
+                    nullValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("encodingName"))
@@ -159,7 +207,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encodingName = property.Value.GetObject();
+                    encodingName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("treatEmptyAsNull"))
@@ -169,7 +217,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    treatEmptyAsNull = property.Value.GetObject();
+                    treatEmptyAsNull = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("skipLineCount"))
@@ -179,7 +227,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skipLineCount = property.Value.GetObject();
+                    skipLineCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("firstRowAsHeader"))
@@ -189,7 +237,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    firstRowAsHeader = property.Value.GetObject();
+                    firstRowAsHeader = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -204,7 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serializer = property.Value.GetObject();
+                    serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deserializer"))
@@ -214,10 +262,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deserializer = property.Value.GetObject();
+                    deserializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);

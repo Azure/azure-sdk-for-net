@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,13 +23,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="filePattern"> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </param>
-        internal JsonWriteSettings(string type, IDictionary<string, object> additionalProperties, object filePattern) : base(type, additionalProperties)
+        internal JsonWriteSettings(string type, IDictionary<string, BinaryData> additionalProperties, BinaryData filePattern) : base(type, additionalProperties)
         {
             FilePattern = filePattern;
             Type = type ?? "JsonWriteSettings";
         }
 
         /// <summary> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </summary>
-        public object FilePattern { get; set; }
+        public BinaryData FilePattern { get; set; }
     }
 }

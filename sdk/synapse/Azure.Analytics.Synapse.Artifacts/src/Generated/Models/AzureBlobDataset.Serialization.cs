@@ -29,12 +29,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure");
-                writer.WriteObjectValue(Structure);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Structure);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema");
-                writer.WriteObjectValue(Schema);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Schema);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
@@ -55,7 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -69,27 +81,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteObjectValue(FolderPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TableRootLocation))
             {
                 writer.WritePropertyName("tableRootLocation");
-                writer.WriteObjectValue(TableRootLocation);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TableRootLocation);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TableRootLocation.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName");
-                writer.WriteObjectValue(FileName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart");
-                writer.WriteObjectValue(ModifiedDatetimeStart);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ModifiedDatetimeStart);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeStart.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd");
-                writer.WriteObjectValue(ModifiedDatetimeEnd);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ModifiedDatetimeEnd);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeEnd.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Format))
             {
@@ -105,7 +137,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -114,21 +150,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string type = default;
             Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            Optional<BinaryData> structure = default;
+            Optional<BinaryData> schema = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<object> folderPath = default;
-            Optional<object> tableRootLocation = default;
-            Optional<object> fileName = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
+            Optional<BinaryData> folderPath = default;
+            Optional<BinaryData> tableRootLocation = default;
+            Optional<BinaryData> fileName = default;
+            Optional<BinaryData> modifiedDatetimeStart = default;
+            Optional<BinaryData> modifiedDatetimeEnd = default;
             Optional<DatasetStorageFormat> format = default;
             Optional<DatasetCompression> compression = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -148,7 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = property.Value.GetObject();
+                    structure = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"))
@@ -158,7 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = property.Value.GetObject();
+                    schema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
@@ -188,10 +224,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -222,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = property0.Value.GetObject();
+                            folderPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tableRootLocation"))
@@ -232,7 +268,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableRootLocation = property0.Value.GetObject();
+                            tableRootLocation = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileName"))
@@ -242,7 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            fileName = property0.Value.GetObject();
+                            fileName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeStart"))
@@ -252,7 +288,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeStart = property0.Value.GetObject();
+                            modifiedDatetimeStart = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeEnd"))
@@ -262,7 +298,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeEnd = property0.Value.GetObject();
+                            modifiedDatetimeEnd = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"))
@@ -288,7 +324,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, folderPath.Value, tableRootLocation.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, compression.Value);

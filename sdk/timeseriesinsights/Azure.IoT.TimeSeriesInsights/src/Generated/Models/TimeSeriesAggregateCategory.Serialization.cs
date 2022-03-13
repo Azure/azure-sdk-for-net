@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -22,7 +23,11 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -31,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal static TimeSeriesAggregateCategory DeserializeTimeSeriesAggregateCategory(JsonElement element)
         {
             string label = default;
-            IList<object> values = default;
+            IList<BinaryData> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"))
@@ -41,10 +46,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 if (property.NameEquals("values"))
                 {
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     values = array;
                     continue;

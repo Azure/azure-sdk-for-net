@@ -23,7 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles");
-            writer.WriteObjectValue(Roles);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Roles);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Roles.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
@@ -36,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             string uri = default;
-            object roles = default;
+            BinaryData roles = default;
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("roles"))
                 {
-                    roles = property.Value.GetObject();
+                    roles = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"))

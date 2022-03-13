@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StoreReadSettings. </summary>
         public StoreReadSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StoreReadSettings. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties)
+        internal StoreReadSettings(string type, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -33,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The read setting type. </summary>
         internal string Type { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
-        public object MaxConcurrentConnections { get; set; }
+        public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

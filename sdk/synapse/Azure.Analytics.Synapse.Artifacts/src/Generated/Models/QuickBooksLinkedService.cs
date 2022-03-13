@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="accessToken"> The access token for OAuth 1.0 authentication. </param>
         /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/>, <paramref name="consumerSecret"/>, <paramref name="accessToken"/> or <paramref name="accessTokenSecret"/> is null. </exception>
-        public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret)
+        public QuickBooksLinkedService(BinaryData endpoint, BinaryData companyId, BinaryData consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret)
         {
             if (endpoint == null)
             {
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal QuickBooksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, object useEncryptedEndpoints, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData endpoint, BinaryData companyId, BinaryData consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, BinaryData useEncryptedEndpoints, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -88,13 +88,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
-        public object ConnectionProperties { get; set; }
+        public BinaryData ConnectionProperties { get; set; }
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
-        public object Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
-        public object CompanyId { get; set; }
+        public BinaryData CompanyId { get; set; }
         /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
-        public object ConsumerKey { get; set; }
+        public BinaryData ConsumerKey { get; set; }
         /// <summary> The consumer secret for OAuth 1.0 authentication. </summary>
         public SecretBase ConsumerSecret { get; set; }
         /// <summary> The access token for OAuth 1.0 authentication. </summary>
@@ -102,8 +102,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The access token secret for OAuth 1.0 authentication. </summary>
         public SecretBase AccessTokenSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public object UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

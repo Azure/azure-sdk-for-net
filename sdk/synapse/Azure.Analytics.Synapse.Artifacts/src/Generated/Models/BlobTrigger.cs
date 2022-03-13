@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        internal BlobTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(type, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal BlobTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(type, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;

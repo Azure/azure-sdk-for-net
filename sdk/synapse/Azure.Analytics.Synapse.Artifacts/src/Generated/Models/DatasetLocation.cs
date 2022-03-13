@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
         public DatasetLocation()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties)
+        internal DatasetLocation(string type, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             FolderPath = folderPath;
@@ -35,10 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Type of dataset storage location. </summary>
         internal string Type { get; set; }
         /// <summary> Specify the folder path of dataset. Type: string (or Expression with resultType string). </summary>
-        public object FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> Specify the file name of dataset. Type: string (or Expression with resultType string). </summary>
-        public object FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

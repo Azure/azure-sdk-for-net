@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
         /// <param name="useBinaryTransfer"> Specify whether to use binary transfer mode for FTP stores. </param>
         /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal FtpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object fileListPath, bool? useBinaryTransfer, object disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
+        internal FtpReadSettings(string type, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData fileListPath, bool? useBinaryTransfer, BinaryData disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -46,22 +47,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public object Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> Ftp wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFolderPath { get; set; }
+        public BinaryData WildcardFolderPath { get; set; }
         /// <summary> Ftp wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        public object WildcardFileName { get; set; }
+        public BinaryData WildcardFileName { get; set; }
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        public object PartitionRootPath { get; set; }
+        public BinaryData PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object DeleteFilesAfterCompletion { get; set; }
+        public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        public object FileListPath { get; set; }
+        public BinaryData FileListPath { get; set; }
         /// <summary> Specify whether to use binary transfer mode for FTP stores. </summary>
         public bool? UseBinaryTransfer { get; set; }
         /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object DisableChunking { get; set; }
+        public BinaryData DisableChunking { get; set; }
     }
 }

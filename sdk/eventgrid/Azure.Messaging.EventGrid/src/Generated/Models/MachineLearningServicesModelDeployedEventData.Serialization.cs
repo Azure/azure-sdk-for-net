@@ -20,8 +20,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> serviceName = default;
             Optional<string> serviceComputeType = default;
             Optional<string> modelIds = default;
-            Optional<object> serviceTags = default;
-            Optional<object> serviceProperties = default;
+            Optional<BinaryData> serviceTags = default;
+            Optional<BinaryData> serviceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"))
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceTags = property.Value.GetObject();
+                    serviceTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("serviceProperties"))
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceProperties = property.Value.GetObject();
+                    serviceProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

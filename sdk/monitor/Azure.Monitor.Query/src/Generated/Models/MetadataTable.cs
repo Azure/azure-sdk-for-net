@@ -46,9 +46,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The user defined labels of the table. </summary>
         public IReadOnlyList<string> Labels { get; }
         /// <summary> The tags associated with the table. </summary>
-        public object Tags { get; }
+        public BinaryData Tags { get; }
         /// <summary> The properties of the table. </summary>
-        public object Properties { get; }
+        public BinaryData Properties { get; }
         /// <summary> The list of columns defined on the table. </summary>
         public IReadOnlyList<MetadataTableColumnsItem> Columns { get; }
         /// <summary> The related metadata items for the table. </summary>

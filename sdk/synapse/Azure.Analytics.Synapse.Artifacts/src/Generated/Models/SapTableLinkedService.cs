@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapTableLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object language, object systemId, object userName, SecretBase password, object messageServer, object messageServerService, object sncMode, object sncMyName, object sncPartnerName, object sncLibraryPath, object sncQop, object logonGroup, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapTableLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, SecretBase password, BinaryData messageServer, BinaryData messageServerService, BinaryData sncMode, BinaryData sncMyName, BinaryData sncPartnerName, BinaryData sncLibraryPath, BinaryData sncQop, BinaryData logonGroup, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -63,36 +64,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        public object SystemNumber { get; set; }
+        public BinaryData SystemNumber { get; set; }
         /// <summary> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        public object ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
-        public object Language { get; set; }
+        public BinaryData Language { get; set; }
         /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object SystemId { get; set; }
+        public BinaryData SystemId { get; set; }
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password to access the SAP server where the table is located. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
-        public object MessageServer { get; set; }
+        public BinaryData MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
-        public object MessageServerService { get; set; }
+        public BinaryData MessageServerService { get; set; }
         /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
-        public object SncMode { get; set; }
+        public BinaryData SncMode { get; set; }
         /// <summary> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object SncMyName { get; set; }
+        public BinaryData SncMyName { get; set; }
         /// <summary> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object SncPartnerName { get; set; }
+        public BinaryData SncPartnerName { get; set; }
         /// <summary> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public object SncLibraryPath { get; set; }
+        public BinaryData SncLibraryPath { get; set; }
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
-        public object SncQop { get; set; }
+        public BinaryData SncQop { get; set; }
         /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
-        public object LogonGroup { get; set; }
+        public BinaryData LogonGroup { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

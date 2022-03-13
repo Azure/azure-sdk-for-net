@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
         /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public RedirectIncompatibleRowSettings(object linkedServiceName)
+        public RedirectIncompatibleRowSettings(BinaryData linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -25,14 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
         /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
         /// <param name="path"> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedirectIncompatibleRowSettings(object linkedServiceName, object path, IDictionary<string, object> additionalProperties)
+        internal RedirectIncompatibleRowSettings(BinaryData linkedServiceName, BinaryData path, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -40,10 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </summary>
-        public object LinkedServiceName { get; set; }
+        public BinaryData LinkedServiceName { get; set; }
         /// <summary> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </summary>
-        public object Path { get; set; }
+        public BinaryData Path { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

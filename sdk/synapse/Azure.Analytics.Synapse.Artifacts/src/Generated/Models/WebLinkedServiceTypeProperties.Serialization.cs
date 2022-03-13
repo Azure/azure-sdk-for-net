@@ -19,7 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("url");
-            writer.WriteObjectValue(Url);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Url);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Url.ToString()).RootElement);
+#endif
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
@@ -36,13 +40,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ClientCertificate": return WebClientCertificateAuthentication.DeserializeWebClientCertificateAuthentication(element);
                 }
             }
-            object url = default;
+            BinaryData url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetObject();
+                    url = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authenticationType"))

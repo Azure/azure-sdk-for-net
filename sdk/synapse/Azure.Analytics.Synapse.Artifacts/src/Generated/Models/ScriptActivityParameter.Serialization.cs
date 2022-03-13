@@ -21,7 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteObjectValue(Name);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Name);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Name.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Type))
             {
@@ -31,7 +35,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteObjectValue(Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Direction))
             {
@@ -48,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptActivityParameter DeserializeScriptActivityParameter(JsonElement element)
         {
-            Optional<object> name = default;
+            Optional<BinaryData> name = default;
             Optional<ScriptActivityParameterType> type = default;
-            Optional<object> value = default;
+            Optional<BinaryData> value = default;
             Optional<ScriptActivityParameterDirection> direction = default;
             Optional<int> size = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = property.Value.GetObject();
+                    name = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -82,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    value = property.Value.GetObject();
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("direction"))

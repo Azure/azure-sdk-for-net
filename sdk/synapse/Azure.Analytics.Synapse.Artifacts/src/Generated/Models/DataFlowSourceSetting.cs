@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
         public DataFlowSourceSetting()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
         /// <param name="sourceName"> The data flow source name. </param>
         /// <param name="rowLimit"> Defines the row limit of data flow source in debug. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowSourceSetting(string sourceName, int? rowLimit, IDictionary<string, object> additionalProperties)
+        internal DataFlowSourceSetting(string sourceName, int? rowLimit, IDictionary<string, BinaryData> additionalProperties)
         {
             SourceName = sourceName;
             RowLimit = rowLimit;
@@ -35,6 +36,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Defines the row limit of data flow source in debug. </summary>
         public int? RowLimit { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

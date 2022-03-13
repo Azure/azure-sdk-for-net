@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="database"> The name of the database. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKey"> The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal CosmosDbLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object accountEndpoint, object database, SecretBase accountKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDbLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, SecretBase accountKey, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
@@ -41,14 +42,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public object ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string). </summary>
-        public object AccountEndpoint { get; set; }
+        public BinaryData AccountEndpoint { get; set; }
         /// <summary> The name of the database. Type: string (or Expression with resultType string). </summary>
-        public object Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference. </summary>
         public SecretBase AccountKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

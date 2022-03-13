@@ -22,37 +22,65 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount");
-                writer.WriteObjectValue(RowCount);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RowCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RowCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips");
-                writer.WriteObjectValue(RowSkips);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RowSkips);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RowSkips.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields");
-                writer.WriteObjectValue(RfcTableFields);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RfcTableFields);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RfcTableFields.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions");
-                writer.WriteObjectValue(RfcTableOptions);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RfcTableOptions);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RfcTableOptions.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize");
-                writer.WriteObjectValue(BatchSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BatchSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(BatchSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule");
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CustomRfcReadTableFunctionModule);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CustomRfcReadTableFunctionModule.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter");
-                writer.WriteObjectValue(SapDataColumnDelimiter);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SapDataColumnDelimiter);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SapDataColumnDelimiter.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionOption))
             {
@@ -67,57 +95,81 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout");
-                writer.WriteObjectValue(QueryTimeout);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(QueryTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(QueryTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-                writer.WriteObjectValue(AdditionalColumns);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalColumns);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
-                writer.WriteObjectValue(SourceRetryCount);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
-                writer.WriteObjectValue(SourceRetryWait);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SapTableSource DeserializeSapTableSource(JsonElement element)
         {
-            Optional<object> rowCount = default;
-            Optional<object> rowSkips = default;
-            Optional<object> rfcTableFields = default;
-            Optional<object> rfcTableOptions = default;
-            Optional<object> batchSize = default;
-            Optional<object> customRfcReadTableFunctionModule = default;
-            Optional<object> sapDataColumnDelimiter = default;
+            Optional<BinaryData> rowCount = default;
+            Optional<BinaryData> rowSkips = default;
+            Optional<BinaryData> rfcTableFields = default;
+            Optional<BinaryData> rfcTableOptions = default;
+            Optional<BinaryData> batchSize = default;
+            Optional<BinaryData> customRfcReadTableFunctionModule = default;
+            Optional<BinaryData> sapDataColumnDelimiter = default;
             Optional<SapTablePartitionOption> partitionOption = default;
             Optional<SapTablePartitionSettings> partitionSettings = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            Optional<BinaryData> queryTimeout = default;
+            Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> sourceRetryCount = default;
+            Optional<BinaryData> sourceRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowCount"))
@@ -127,7 +179,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rowCount = property.Value.GetObject();
+                    rowCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rowSkips"))
@@ -137,7 +189,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rowSkips = property.Value.GetObject();
+                    rowSkips = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rfcTableFields"))
@@ -147,7 +199,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rfcTableFields = property.Value.GetObject();
+                    rfcTableFields = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rfcTableOptions"))
@@ -157,7 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rfcTableOptions = property.Value.GetObject();
+                    rfcTableOptions = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("batchSize"))
@@ -167,7 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    batchSize = property.Value.GetObject();
+                    batchSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("customRfcReadTableFunctionModule"))
@@ -177,7 +229,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customRfcReadTableFunctionModule = property.Value.GetObject();
+                    customRfcReadTableFunctionModule = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sapDataColumnDelimiter"))
@@ -187,7 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sapDataColumnDelimiter = property.Value.GetObject();
+                    sapDataColumnDelimiter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionOption"))
@@ -217,7 +269,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    queryTimeout = property.Value.GetObject();
+                    queryTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"))
@@ -227,7 +279,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = property.Value.GetObject();
+                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -242,7 +294,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = property.Value.GetObject();
+                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
@@ -252,7 +304,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = property.Value.GetObject();
+                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
@@ -262,10 +314,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = property.Value.GetObject();
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public SynapseNotebookReference(NotebookReferenceType type, object referenceName)
+        public SynapseNotebookReference(NotebookReferenceType type, BinaryData referenceName)
         {
             if (referenceName == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Synapse notebook reference type. </summary>
         public NotebookReferenceType Type { get; set; }
         /// <summary> Reference notebook name. Type: string (or Expression with resultType string). </summary>
-        public object ReferenceName { get; set; }
+        public BinaryData ReferenceName { get; set; }
     }
 }

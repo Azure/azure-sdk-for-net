@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Settings for copy activity log. </summary>
@@ -18,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
-        internal CopyActivityLogSettings(object logLevel, object enableReliableLogging)
+        internal CopyActivityLogSettings(BinaryData logLevel, BinaryData enableReliableLogging)
         {
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
         }
 
         /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
-        public object LogLevel { get; set; }
+        public BinaryData LogLevel { get; set; }
         /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
-        public object EnableReliableLogging { get; set; }
+        public BinaryData EnableReliableLogging { get; set; }
     }
 }

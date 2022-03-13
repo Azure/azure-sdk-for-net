@@ -21,7 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog");
-                writer.WriteObjectValue(EnableCopyActivityLog);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableCopyActivityLog);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableCopyActivityLog.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
@@ -35,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
-            Optional<object> enableCopyActivityLog = default;
+            Optional<BinaryData> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableCopyActivityLog = property.Value.GetObject();
+                    enableCopyActivityLog = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyActivityLogSettings"))

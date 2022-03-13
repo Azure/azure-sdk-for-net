@@ -50,9 +50,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The KQL body of the function. </summary>
         public string Body { get; }
         /// <summary> The tags associated with the function. </summary>
-        public object Tags { get; }
+        public BinaryData Tags { get; }
         /// <summary> The properties of the function. </summary>
-        public object Properties { get; }
+        public BinaryData Properties { get; }
         /// <summary> The related metadata items for the function. </summary>
         public MetadataFunctionRelated Related { get; }
     }

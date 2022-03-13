@@ -25,14 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Name = name;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
         /// <param name="name"> The programming language which this kernel runs. </param>
         /// <param name="codemirrorMode"> The codemirror mode to use for code in this language. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal NotebookLanguageInfo(string name, string codemirrorMode, IDictionary<string, object> additionalProperties)
+        internal NotebookLanguageInfo(string name, string codemirrorMode, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             CodemirrorMode = codemirrorMode;
@@ -44,6 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The codemirror mode to use for code in this language. </summary>
         public string CodemirrorMode { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

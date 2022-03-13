@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,11 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload");
-                writer.WriteObjectValue(Payload);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Payload);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Payload.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
@@ -41,7 +46,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element)
         {
             Optional<string> methodName = default;
-            Optional<object> payload = default;
+            Optional<BinaryData> payload = default;
             Optional<int> responseTimeoutInSeconds = default;
             Optional<int> connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +63,7 @@ namespace Azure.IoT.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    payload = property.Value.GetObject();
+                    payload = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("responseTimeoutInSeconds"))

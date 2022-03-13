@@ -50,7 +50,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Retrieves metadata about the attestation signing keys in use by the attestation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<object>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<BinaryData>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -58,9 +58,9 @@ namespace Azure.Security.Attestation
             {
                 case 200:
                     {
-                        object value = default;
+                        BinaryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetObject();
+                        value = BinaryData.FromString(property.Value.GetRawText());
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -70,7 +70,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Retrieves metadata about the attestation signing keys in use by the attestation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<object> Get(CancellationToken cancellationToken = default)
+        public Response<BinaryData> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -78,9 +78,9 @@ namespace Azure.Security.Attestation
             {
                 case 200:
                     {
-                        object value = default;
+                        BinaryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetObject();
+                        value = BinaryData.FromString(property.Value.GetRawText());
                         return Response.FromValue(value, message.Response);
                     }
                 default:

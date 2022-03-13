@@ -45,9 +45,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The user defined labels associated with the query. </summary>
         public IReadOnlyList<string> Labels { get; }
         /// <summary> The tags associated with the query. </summary>
-        public object Tags { get; }
+        public BinaryData Tags { get; }
         /// <summary> The properties of the query. </summary>
-        public object Properties { get; }
+        public BinaryData Properties { get; }
         /// <summary> The related metadata items for the query. </summary>
         public MetadataQueryRelated Related { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="allowCopyCommand"> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyCommandSettings"> Specifies Copy Command related settings when allowCopyCommand is true. </param>
         /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
-        internal SqlDWSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript, object allowPolyBase, PolybaseSettings polyBaseSettings, object allowCopyCommand, DWCopyCommandSettings copyCommandSettings, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal SqlDWSink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData preCopyScript, BinaryData allowPolyBase, PolybaseSettings polyBaseSettings, BinaryData allowCopyCommand, DWCopyCommandSettings copyCommandSettings, BinaryData tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             PreCopyScript = preCopyScript;
             AllowPolyBase = allowPolyBase;
@@ -44,16 +45,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public object PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean). </summary>
-        public object AllowPolyBase { get; set; }
+        public BinaryData AllowPolyBase { get; set; }
         /// <summary> Specifies PolyBase-related settings when allowPolyBase is true. </summary>
         public PolybaseSettings PolyBaseSettings { get; set; }
         /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
-        public object AllowCopyCommand { get; set; }
+        public BinaryData AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
-        public object TableOption { get; set; }
+        public BinaryData TableOption { get; set; }
     }
 }

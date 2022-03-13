@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal ExcelDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object sheetName, object range, object firstRowAsHeader, DatasetCompression compression, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ExcelDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData sheetName, BinaryData range, BinaryData firstRowAsHeader, DatasetCompression compression, BinaryData nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             SheetName = sheetName;
@@ -56,14 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The location of the excel storage. </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The sheet of excel file. Type: string (or Expression with resultType string). </summary>
-        public object SheetName { get; set; }
+        public BinaryData SheetName { get; set; }
         /// <summary> The partial data of one sheet. Type: string (or Expression with resultType string). </summary>
-        public object Range { get; set; }
+        public BinaryData Range { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object FirstRowAsHeader { get; set; }
+        public BinaryData FirstRowAsHeader { get; set; }
         /// <summary> The data compression method used for the json dataset. </summary>
         public DatasetCompression Compression { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
-        public object NullValue { get; set; }
+        public BinaryData NullValue { get; set; }
     }
 }

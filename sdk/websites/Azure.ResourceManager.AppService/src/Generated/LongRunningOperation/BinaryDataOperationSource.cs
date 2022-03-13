@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,18 +14,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class ObjectOperationSource : IOperationSource<object>
+    internal class BinaryDataOperationSource : IOperationSource<BinaryData>
     {
-        object IOperationSource<object>.CreateResult(Response response, CancellationToken cancellationToken)
+        BinaryData IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return document.RootElement.GetObject();
+            return BinaryData.FromString(property.Value.GetRawText());
         }
 
-        async ValueTask<object> IOperationSource<object>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BinaryData> IOperationSource<BinaryData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return document.RootElement.GetObject();
+            return BinaryData.FromString(property.Value.GetRawText());
         }
     }
 }

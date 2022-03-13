@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SQL stored procedure parameter. </summary>
@@ -18,14 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
         /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Stored procedure parameter type. </param>
-        internal StoredProcedureParameter(object value, StoredProcedureParameterType? type)
+        internal StoredProcedureParameter(BinaryData value, StoredProcedureParameterType? type)
         {
             Value = value;
             Type = type;
         }
 
         /// <summary> Stored procedure parameter value. Type: string (or Expression with resultType string). </summary>
-        public object Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> Stored procedure parameter type. </summary>
         public StoredProcedureParameterType? Type { get; set; }
     }

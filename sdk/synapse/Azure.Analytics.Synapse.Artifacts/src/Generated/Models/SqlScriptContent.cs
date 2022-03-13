@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Query = query;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SqlScriptContent. </summary>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="resultLimit"> Limit of results, &apos;-1&apos; for no limit. </param>
         /// <param name="metadata"> The metadata of the SQL script. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SqlScriptContent(string query, SqlConnection currentConnection, int? resultLimit, SqlScriptMetadata metadata, IDictionary<string, object> additionalProperties)
+        internal SqlScriptContent(string query, SqlConnection currentConnection, int? resultLimit, SqlScriptMetadata metadata, IDictionary<string, BinaryData> additionalProperties)
         {
             Query = query;
             CurrentConnection = currentConnection;
@@ -52,6 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The metadata of the SQL script. </summary>
         public SqlScriptMetadata Metadata { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

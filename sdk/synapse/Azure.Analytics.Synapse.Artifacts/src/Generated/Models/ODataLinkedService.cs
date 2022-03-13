@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ODataLinkedService. </summary>
         /// <param name="url"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ODataLinkedService(object url)
+        public ODataLinkedService(BinaryData url)
         {
             if (url == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ODataLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, ODataAuthenticationType? authenticationType, object userName, SecretBase password, object tenant, object servicePrincipalId, object azureCloudType, object aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, SecretBase servicePrincipalKey, SecretBase servicePrincipalEmbeddedCert, SecretBase servicePrincipalEmbeddedCertPassword, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal ODataLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData url, ODataAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData tenant, BinaryData servicePrincipalId, BinaryData azureCloudType, BinaryData aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, SecretBase servicePrincipalKey, SecretBase servicePrincipalEmbeddedCert, SecretBase servicePrincipalEmbeddedCertPassword, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AuthenticationType = authenticationType;
@@ -66,21 +66,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> Type of authentication used to connect to the OData service. </summary>
         public ODataAuthenticationType? AuthenticationType { get; set; }
         /// <summary> User name of the OData service. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password of the OData service. </summary>
         public SecretBase Password { get; set; }
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </summary>
-        public object Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        public object ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public object AzureCloudType { get; set; }
+        public BinaryData AzureCloudType { get; set; }
         /// <summary> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </summary>
-        public object AadResourceId { get; set; }
+        public BinaryData AadResourceId { get; set; }
         /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
         public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType { get; set; }
         /// <summary> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
@@ -90,6 +90,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
         public SecretBase ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

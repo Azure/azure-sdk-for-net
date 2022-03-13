@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="azureTableSourceQuery"> Azure Table source query. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTableSourceIgnoreTableNotFound"> Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean). </param>
-        internal AzureTableSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object azureTableSourceQuery, object azureTableSourceIgnoreTableNotFound) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal AzureTableSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData azureTableSourceQuery, BinaryData azureTableSourceIgnoreTableNotFound) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             AzureTableSourceQuery = azureTableSourceQuery;
             AzureTableSourceIgnoreTableNotFound = azureTableSourceIgnoreTableNotFound;
@@ -36,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Azure Table source query. Type: string (or Expression with resultType string). </summary>
-        public object AzureTableSourceQuery { get; set; }
+        public BinaryData AzureTableSourceQuery { get; set; }
         /// <summary> Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean). </summary>
-        public object AzureTableSourceIgnoreTableNotFound { get; set; }
+        public BinaryData AzureTableSourceIgnoreTableNotFound { get; set; }
     }
 }

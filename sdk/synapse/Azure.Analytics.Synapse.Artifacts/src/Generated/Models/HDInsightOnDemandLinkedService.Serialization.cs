@@ -48,26 +48,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("clusterSize");
-            writer.WriteObjectValue(ClusterSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterSize);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterSize.ToString()).RootElement);
+#endif
             writer.WritePropertyName("timeToLive");
-            writer.WriteObjectValue(TimeToLive);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TimeToLive);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeToLive.ToString()).RootElement);
+#endif
             writer.WritePropertyName("version");
-            writer.WriteObjectValue(Version);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Version);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
+#endif
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
             writer.WritePropertyName("hostSubscriptionId");
-            writer.WriteObjectValue(HostSubscriptionId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HostSubscriptionId);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(HostSubscriptionId.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
-                writer.WriteObjectValue(ServicePrincipalId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServicePrincipalId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -75,18 +99,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant");
-            writer.WriteObjectValue(Tenant);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Tenant);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
+#endif
             writer.WritePropertyName("clusterResourceGroup");
-            writer.WriteObjectValue(ClusterResourceGroup);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterResourceGroup);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterResourceGroup.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix");
-                writer.WriteObjectValue(ClusterNamePrefix);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterNamePrefix);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterNamePrefix.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterUserName))
             {
                 writer.WritePropertyName("clusterUserName");
-                writer.WriteObjectValue(ClusterUserName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterUserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterUserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterPassword))
             {
@@ -96,7 +136,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName");
-                writer.WriteObjectValue(ClusterSshUserName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterSshUserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterSshUserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterSshPassword))
             {
@@ -121,72 +165,128 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType");
-                writer.WriteObjectValue(ClusterType);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion");
-                writer.WriteObjectValue(SparkVersion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SparkVersion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SparkVersion.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CoreConfiguration))
             {
                 writer.WritePropertyName("coreConfiguration");
-                writer.WriteObjectValue(CoreConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CoreConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HBaseConfiguration))
             {
                 writer.WritePropertyName("hBaseConfiguration");
-                writer.WriteObjectValue(HBaseConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HBaseConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HBaseConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HdfsConfiguration))
             {
                 writer.WritePropertyName("hdfsConfiguration");
-                writer.WriteObjectValue(HdfsConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HdfsConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HdfsConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HiveConfiguration))
             {
                 writer.WritePropertyName("hiveConfiguration");
-                writer.WriteObjectValue(HiveConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HiveConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HiveConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MapReduceConfiguration))
             {
                 writer.WritePropertyName("mapReduceConfiguration");
-                writer.WriteObjectValue(MapReduceConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MapReduceConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MapReduceConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(OozieConfiguration))
             {
                 writer.WritePropertyName("oozieConfiguration");
-                writer.WriteObjectValue(OozieConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(OozieConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(OozieConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StormConfiguration))
             {
                 writer.WritePropertyName("stormConfiguration");
-                writer.WriteObjectValue(StormConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StormConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(StormConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(YarnConfiguration))
             {
                 writer.WritePropertyName("yarnConfiguration");
-                writer.WriteObjectValue(YarnConfiguration);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(YarnConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(YarnConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
                 writer.WritePropertyName("headNodeSize");
-                writer.WriteObjectValue(HeadNodeSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HeadNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HeadNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataNodeSize))
             {
                 writer.WritePropertyName("dataNodeSize");
-                writer.WriteObjectValue(DataNodeSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ZookeeperNodeSize))
             {
                 writer.WritePropertyName("zookeeperNodeSize");
-                writer.WriteObjectValue(ZookeeperNodeSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ZookeeperNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ZookeeperNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(ScriptActions))
             {
@@ -201,18 +301,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId");
-                writer.WriteObjectValue(VirtualNetworkId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(VirtualNetworkId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(VirtualNetworkId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName");
-                writer.WriteObjectValue(SubnetName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SubnetName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SubnetName.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -223,42 +335,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object clusterSize = default;
-            object timeToLive = default;
-            object version = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData clusterSize = default;
+            BinaryData timeToLive = default;
+            BinaryData version = default;
             LinkedServiceReference linkedServiceName = default;
-            object hostSubscriptionId = default;
-            Optional<object> servicePrincipalId = default;
+            BinaryData hostSubscriptionId = default;
+            Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
-            object tenant = default;
-            object clusterResourceGroup = default;
-            Optional<object> clusterNamePrefix = default;
-            Optional<object> clusterUserName = default;
+            BinaryData tenant = default;
+            BinaryData clusterResourceGroup = default;
+            Optional<BinaryData> clusterNamePrefix = default;
+            Optional<BinaryData> clusterUserName = default;
             Optional<SecretBase> clusterPassword = default;
-            Optional<object> clusterSshUserName = default;
+            Optional<BinaryData> clusterSshUserName = default;
             Optional<SecretBase> clusterSshPassword = default;
             Optional<IList<LinkedServiceReference>> additionalLinkedServiceNames = default;
             Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<object> clusterType = default;
-            Optional<object> sparkVersion = default;
-            Optional<object> coreConfiguration = default;
-            Optional<object> hBaseConfiguration = default;
-            Optional<object> hdfsConfiguration = default;
-            Optional<object> hiveConfiguration = default;
-            Optional<object> mapReduceConfiguration = default;
-            Optional<object> oozieConfiguration = default;
-            Optional<object> stormConfiguration = default;
-            Optional<object> yarnConfiguration = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> headNodeSize = default;
-            Optional<object> dataNodeSize = default;
-            Optional<object> zookeeperNodeSize = default;
+            Optional<BinaryData> clusterType = default;
+            Optional<BinaryData> sparkVersion = default;
+            Optional<BinaryData> coreConfiguration = default;
+            Optional<BinaryData> hBaseConfiguration = default;
+            Optional<BinaryData> hdfsConfiguration = default;
+            Optional<BinaryData> hiveConfiguration = default;
+            Optional<BinaryData> mapReduceConfiguration = default;
+            Optional<BinaryData> oozieConfiguration = default;
+            Optional<BinaryData> stormConfiguration = default;
+            Optional<BinaryData> yarnConfiguration = default;
+            Optional<BinaryData> encryptedCredential = default;
+            Optional<BinaryData> headNodeSize = default;
+            Optional<BinaryData> dataNodeSize = default;
+            Optional<BinaryData> zookeeperNodeSize = default;
             Optional<IList<ScriptAction>> scriptActions = default;
-            Optional<object> virtualNetworkId = default;
-            Optional<object> subnetName = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> virtualNetworkId = default;
+            Optional<BinaryData> subnetName = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -303,10 +415,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -322,17 +434,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("clusterSize"))
                         {
-                            clusterSize = property0.Value.GetObject();
+                            clusterSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeToLive"))
                         {
-                            timeToLive = property0.Value.GetObject();
+                            timeToLive = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("version"))
                         {
-                            version = property0.Value.GetObject();
+                            version = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("linkedServiceName"))
@@ -342,7 +454,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("hostSubscriptionId"))
                         {
-                            hostSubscriptionId = property0.Value.GetObject();
+                            hostSubscriptionId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
@@ -352,7 +464,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = property0.Value.GetObject();
+                            servicePrincipalId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
@@ -367,12 +479,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("tenant"))
                         {
-                            tenant = property0.Value.GetObject();
+                            tenant = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterResourceGroup"))
                         {
-                            clusterResourceGroup = property0.Value.GetObject();
+                            clusterResourceGroup = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterNamePrefix"))
@@ -382,7 +494,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterNamePrefix = property0.Value.GetObject();
+                            clusterNamePrefix = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterUserName"))
@@ -392,7 +504,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterUserName = property0.Value.GetObject();
+                            clusterUserName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterPassword"))
@@ -412,7 +524,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterSshUserName = property0.Value.GetObject();
+                            clusterSshUserName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterSshPassword"))
@@ -457,7 +569,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterType = property0.Value.GetObject();
+                            clusterType = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"))
@@ -467,7 +579,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sparkVersion = property0.Value.GetObject();
+                            sparkVersion = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("coreConfiguration"))
@@ -477,7 +589,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            coreConfiguration = property0.Value.GetObject();
+                            coreConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hBaseConfiguration"))
@@ -487,7 +599,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hBaseConfiguration = property0.Value.GetObject();
+                            hBaseConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hdfsConfiguration"))
@@ -497,7 +609,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hdfsConfiguration = property0.Value.GetObject();
+                            hdfsConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hiveConfiguration"))
@@ -507,7 +619,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hiveConfiguration = property0.Value.GetObject();
+                            hiveConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mapReduceConfiguration"))
@@ -517,7 +629,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mapReduceConfiguration = property0.Value.GetObject();
+                            mapReduceConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("oozieConfiguration"))
@@ -527,7 +639,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            oozieConfiguration = property0.Value.GetObject();
+                            oozieConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("stormConfiguration"))
@@ -537,7 +649,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            stormConfiguration = property0.Value.GetObject();
+                            stormConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("yarnConfiguration"))
@@ -547,7 +659,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            yarnConfiguration = property0.Value.GetObject();
+                            yarnConfiguration = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -557,7 +669,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headNodeSize"))
@@ -567,7 +679,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headNodeSize = property0.Value.GetObject();
+                            headNodeSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataNodeSize"))
@@ -577,7 +689,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataNodeSize = property0.Value.GetObject();
+                            dataNodeSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("zookeeperNodeSize"))
@@ -587,7 +699,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            zookeeperNodeSize = property0.Value.GetObject();
+                            zookeeperNodeSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("scriptActions"))
@@ -612,7 +724,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetworkId = property0.Value.GetObject();
+                            virtualNetworkId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("subnetName"))
@@ -622,13 +734,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnetName = property0.Value.GetObject();
+                            subnetName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value);

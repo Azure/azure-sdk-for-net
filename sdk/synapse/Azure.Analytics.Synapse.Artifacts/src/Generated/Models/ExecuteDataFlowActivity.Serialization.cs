@@ -80,23 +80,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel");
-                writer.WriteObjectValue(TraceLevel);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TraceLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TraceLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError");
-                writer.WriteObjectValue(ContinueOnError);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ContinueOnError);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnError.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently");
-                writer.WriteObjectValue(RunConcurrently);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RunConcurrently);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RunConcurrently.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -114,11 +130,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DataFlowStagingInfo> staging = default;
             Optional<IntegrationRuntimeReference> integrationRuntime = default;
             Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
-            Optional<object> traceLevel = default;
-            Optional<object> continueOnError = default;
-            Optional<object> runConcurrently = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> traceLevel = default;
+            Optional<BinaryData> continueOnError = default;
+            Optional<BinaryData> runConcurrently = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -237,7 +253,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            traceLevel = property0.Value.GetObject();
+                            traceLevel = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnError"))
@@ -247,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            continueOnError = property0.Value.GetObject();
+                            continueOnError = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("runConcurrently"))
@@ -257,13 +273,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            runConcurrently = property0.Value.GetObject();
+                            runConcurrently = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value);

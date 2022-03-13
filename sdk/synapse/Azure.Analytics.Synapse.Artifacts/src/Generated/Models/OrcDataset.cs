@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="location"> The location of the ORC data storage. </param>
         /// <param name="orcCompressionCodec"> The data orcCompressionCodec. Type: string (or Expression with resultType string). </param>
-        internal OrcDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object orcCompressionCodec) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal OrcDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData orcCompressionCodec) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             OrcCompressionCodec = orcCompressionCodec;
@@ -48,6 +48,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The location of the ORC data storage. </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The data orcCompressionCodec. Type: string (or Expression with resultType string). </summary>
-        public object OrcCompressionCodec { get; set; }
+        public BinaryData OrcCompressionCodec { get; set; }
     }
 }

@@ -31,14 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Name = name;
             DisplayName = displayName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>
         /// <param name="name"> Name of the kernel specification. </param>
         /// <param name="displayName"> Name to display in UI. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal NotebookKernelSpec(string name, string displayName, IDictionary<string, object> additionalProperties)
+        internal NotebookKernelSpec(string name, string displayName, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -50,6 +50,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Name to display in UI. </summary>
         public string DisplayName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

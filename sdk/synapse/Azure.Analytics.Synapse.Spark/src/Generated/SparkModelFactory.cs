@@ -225,7 +225,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="errorValue"></param>
         /// <param name="traceback"></param>
         /// <returns> A new <see cref="Models.SparkStatementOutput"/> instance for mocking. </returns>
-        public static SparkStatementOutput SparkStatementOutput(string status = null, int executionCount = default, object data = null, string errorName = null, string errorValue = null, IEnumerable<string> traceback = null)
+        public static SparkStatementOutput SparkStatementOutput(string status = null, int executionCount = default, BinaryData data = null, string errorName = null, string errorValue = null, IEnumerable<string> traceback = null)
         {
             traceback ??= new List<string>();
 

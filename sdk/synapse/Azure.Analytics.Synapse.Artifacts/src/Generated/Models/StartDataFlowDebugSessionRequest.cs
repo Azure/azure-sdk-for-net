@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="incrementalDebug"> The type of new Databricks cluster. </param>
-        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
+        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, BinaryData staging, BinaryData debugSettings, bool? incrementalDebug)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
@@ -53,9 +54,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> List of linked services. </summary>
         public IList<LinkedServiceResource> LinkedServices { get; }
         /// <summary> Staging info for debug session. </summary>
-        public object Staging { get; set; }
+        public BinaryData Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>
-        public object DebugSettings { get; set; }
+        public BinaryData DebugSettings { get; set; }
         /// <summary> The type of new Databricks cluster. </summary>
         public bool? IncrementalDebug { get; set; }
     }

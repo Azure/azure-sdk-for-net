@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of Annotations. </summary>
         public Annotations()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Annotations. </summary>
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="title"> Human-readable title of the image. </param>
         /// <param name="description"> Human-readable description of the software packaged in the image. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Annotations(DateTimeOffset? created, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
+        internal Annotations(DateTimeOffset? created, string authors, string url, string documentation, string source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, BinaryData> additionalProperties)
         {
             Created = created;
             Authors = authors;
@@ -76,6 +76,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Human-readable description of the software packaged in the image. </summary>
         public string Description { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>
-        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType type, string referenceName, IDictionary<string, object> parameters)
+        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType type, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -46,6 +46,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference integration runtime name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for integration runtime. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

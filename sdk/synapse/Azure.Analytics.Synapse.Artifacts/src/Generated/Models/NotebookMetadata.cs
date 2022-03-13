@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
         public NotebookMetadata()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
         /// <param name="kernelspec"> Kernel information. </param>
         /// <param name="languageInfo"> Language info. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal NotebookMetadata(NotebookKernelSpec kernelspec, NotebookLanguageInfo languageInfo, IDictionary<string, object> additionalProperties)
+        internal NotebookMetadata(NotebookKernelSpec kernelspec, NotebookLanguageInfo languageInfo, IDictionary<string, BinaryData> additionalProperties)
         {
             Kernelspec = kernelspec;
             LanguageInfo = languageInfo;
@@ -35,6 +36,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Language info. </summary>
         public NotebookLanguageInfo LanguageInfo { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

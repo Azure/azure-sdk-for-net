@@ -61,7 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("storedProcedureName");
-            writer.WriteObjectValue(StoredProcedureName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StoredProcedureName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(StoredProcedureName.ToString()).RootElement);
+#endif
             if (Optional.IsCollectionDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters");
@@ -77,7 +81,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -91,10 +99,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object storedProcedureName = default;
+            BinaryData storedProcedureName = default;
             Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -173,7 +181,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("storedProcedureName"))
                         {
-                            storedProcedureName = property0.Value.GetObject();
+                            storedProcedureName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("storedProcedureParameters"))
@@ -194,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlServerStoredProcedureActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, storedProcedureName, Optional.ToDictionary(storedProcedureParameters));

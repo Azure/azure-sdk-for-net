@@ -61,7 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("command");
-            writer.WriteObjectValue(Command);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Command);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Command.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ResourceLinkedService))
             {
                 writer.WritePropertyName("resourceLinkedService");
@@ -70,7 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteObjectValue(FolderPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ReferenceObjects))
             {
@@ -84,25 +92,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ExtendedProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays");
-                writer.WriteObjectValue(RetentionTimeInDays);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RetentionTimeInDays);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RetentionTimeInDays.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AutoUserSpecification))
             {
                 writer.WritePropertyName("autoUserSpecification");
-                writer.WriteObjectValue(AutoUserSpecification);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AutoUserSpecification);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AutoUserSpecification.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -116,15 +140,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object command = default;
+            BinaryData command = default;
             Optional<LinkedServiceReference> resourceLinkedService = default;
-            Optional<object> folderPath = default;
+            Optional<BinaryData> folderPath = default;
             Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, object>> extendedProperties = default;
-            Optional<object> retentionTimeInDays = default;
-            Optional<object> autoUserSpecification = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<IDictionary<string, BinaryData>> extendedProperties = default;
+            Optional<BinaryData> retentionTimeInDays = default;
+            Optional<BinaryData> autoUserSpecification = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -203,7 +227,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("command"))
                         {
-                            command = property0.Value.GetObject();
+                            command = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceLinkedService"))
@@ -223,7 +247,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = property0.Value.GetObject();
+                            folderPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("referenceObjects"))
@@ -243,10 +267,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property.Value.GetRawText()));
                             }
                             extendedProperties = dictionary;
                             continue;
@@ -258,7 +282,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            retentionTimeInDays = property0.Value.GetObject();
+                            retentionTimeInDays = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("autoUserSpecification"))
@@ -268,13 +292,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUserSpecification = property0.Value.GetObject();
+                            autoUserSpecification = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CustomActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);

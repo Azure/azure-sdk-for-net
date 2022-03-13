@@ -21,14 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
-            writer.WriteObjectValue(ReferenceName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ReferenceName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ReferenceName.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
         }
 
         internal static BigDataPoolParametrizationReference DeserializeBigDataPoolParametrizationReference(JsonElement element)
         {
             BigDataPoolReferenceType type = default;
-            object referenceName = default;
+            BinaryData referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -38,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("referenceName"))
                 {
-                    referenceName = property.Value.GetObject();
+                    referenceName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
         public StoreWriteSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties)
+        internal StoreWriteSettings(string type, BinaryData maxConcurrentConnections, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -35,10 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The write setting type. </summary>
         internal string Type { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
-        public object MaxConcurrentConnections { get; set; }
+        public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public object CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

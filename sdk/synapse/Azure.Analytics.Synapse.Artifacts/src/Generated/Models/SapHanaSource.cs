@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packetSize"> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for SAP HANA read in parallel. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP HANA source partitioning. </param>
-        internal SapHanaSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object query, object packetSize, SapHanaPartitionOption? partitionOption, SapHanaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal SapHanaSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, BinaryData packetSize, SapHanaPartitionOption? partitionOption, SapHanaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PacketSize = packetSize;
@@ -40,9 +41,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SAP HANA Sql query. Type: string (or Expression with resultType string). </summary>
-        public object Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </summary>
-        public object PacketSize { get; set; }
+        public BinaryData PacketSize { get; set; }
         /// <summary> The partition mechanism that will be used for SAP HANA read in parallel. </summary>
         public SapHanaPartitionOption? PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>

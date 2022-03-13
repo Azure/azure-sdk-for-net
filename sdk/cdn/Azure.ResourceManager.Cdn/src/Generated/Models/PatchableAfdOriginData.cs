@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
         public int? Weight { get; set; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; set; }
+        public BinaryData SharedPrivateLinkResource { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; set; }
     }

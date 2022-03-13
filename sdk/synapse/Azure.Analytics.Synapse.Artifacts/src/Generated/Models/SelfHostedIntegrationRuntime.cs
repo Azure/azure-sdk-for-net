@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedInfo"> Linked integration runtime type from data factory. </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(type, description, additionalProperties)
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(type, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
             Type = type;

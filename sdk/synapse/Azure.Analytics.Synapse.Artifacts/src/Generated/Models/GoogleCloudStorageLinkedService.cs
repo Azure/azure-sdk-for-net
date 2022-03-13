@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="secretAccessKey"> The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUrl"> This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal GoogleCloudStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accessKeyId, SecretBase secretAccessKey, object serviceUrl, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleCloudStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUrl, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -39,12 +40,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
-        public object AccessKeyId { get; set; }
+        public BinaryData AccessKeyId { get; set; }
         /// <summary> The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user. </summary>
         public SecretBase SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
-        public object ServiceUrl { get; set; }
+        public BinaryData ServiceUrl { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

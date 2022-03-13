@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
         /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
         /// <param name="dependsOn"> Triggers that this trigger depends on. Only tumbling window triggers are supported. </param>
-        internal TumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startTime, DateTimeOffset? endTime, object delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(type, description, runtimeState, annotations, additionalProperties)
+        internal TumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startTime, DateTimeOffset? endTime, BinaryData delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(type, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             Frequency = frequency;
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
         public DateTimeOffset? EndTime { get; set; }
         /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public object Delay { get; set; }
+        public BinaryData Delay { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a new run is triggered. </summary>
         public int MaxConcurrency { get; set; }
         /// <summary> Retry policy that will be applied for failed pipeline runs. </summary>

@@ -26,8 +26,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             LinkedServiceName = linkedServiceName;
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
-            Annotations = new ChangeTrackingList<object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Dataset. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Dataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties)
+        internal Dataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             Description = description;
@@ -58,18 +58,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Dataset description. </summary>
         public string Description { get; set; }
         /// <summary> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </summary>
-        public object Structure { get; set; }
+        public BinaryData Structure { get; set; }
         /// <summary> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </summary>
-        public object Schema { get; set; }
+        public BinaryData Schema { get; set; }
         /// <summary> Linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Parameters for dataset. </summary>
         public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of tags that can be used for describing the Dataset. </summary>
-        public IList<object> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </summary>
         public DatasetFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

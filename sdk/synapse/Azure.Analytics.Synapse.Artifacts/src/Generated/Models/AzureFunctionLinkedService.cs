@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureFunctionLinkedService. </summary>
         /// <param name="functionAppUrl"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
-        public AzureFunctionLinkedService(object functionAppUrl)
+        public AzureFunctionLinkedService(BinaryData functionAppUrl)
         {
             if (functionAppUrl == null)
             {
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="functionAppUrl"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </param>
         /// <param name="functionKey"> Function or Host key for Azure Function App. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object functionAppUrl, SecretBase functionKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFunctionLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUrl, SecretBase functionKey, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUrl = functionAppUrl;
             FunctionKey = functionKey;
@@ -46,10 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </summary>
-        public object FunctionAppUrl { get; set; }
+        public BinaryData FunctionAppUrl { get; set; }
         /// <summary> Function or Host key for Azure Function App. </summary>
         public SecretBase FunctionKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

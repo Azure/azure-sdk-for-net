@@ -21,14 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName");
-                writer.WriteObjectValue(PartitionColumnName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
-            Optional<object> partitionColumnName = default;
+            Optional<BinaryData> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"))
@@ -38,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionColumnName = property.Value.GetObject();
+                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -67,7 +67,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
         /// <param name="tags"> List of user-supplied tags associated with the job. </param>
-        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags)
+        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, BinaryData inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags)
         {
             Id = id;
             Name = name;
@@ -101,7 +101,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> The format of the input data. </summary>
         public string InputDataFormat { get; set; }
         /// <summary> The input parameters for the job. JSON object used by the target solver. It is expected that the size of this object is small and only used to specify parameters for the execution target, not the input data. </summary>
-        public object InputParams { get; set; }
+        public BinaryData InputParams { get; set; }
         /// <summary> The unique identifier for the provider. </summary>
         public string ProviderId { get; set; }
         /// <summary> The target identifier to run the job. </summary>

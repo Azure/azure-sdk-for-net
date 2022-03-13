@@ -19,7 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value");
-            writer.WriteObjectValue(Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive");
@@ -30,13 +34,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisPropertyOverride DeserializeSsisPropertyOverride(JsonElement element)
         {
-            object value = default;
+            BinaryData value = default;
             Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    value = property.Value.GetObject();
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isSensitive"))

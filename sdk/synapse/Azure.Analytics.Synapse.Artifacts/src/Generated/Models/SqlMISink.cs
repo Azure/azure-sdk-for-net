@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="storedProcedureParameters"> SQL stored procedure parameters. </param>
         /// <param name="storedProcedureTableTypeParameterName"> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </param>
         /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
-        internal SqlMISink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object sqlWriterStoredProcedureName, object sqlWriterTableType, object preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, object storedProcedureTableTypeParameterName, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal SqlMISink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData sqlWriterStoredProcedureName, BinaryData sqlWriterTableType, BinaryData preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, BinaryData storedProcedureTableTypeParameterName, BinaryData tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
@@ -46,16 +47,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SQL writer stored procedure name. Type: string (or Expression with resultType string). </summary>
-        public object SqlWriterStoredProcedureName { get; set; }
+        public BinaryData SqlWriterStoredProcedureName { get; set; }
         /// <summary> SQL writer table type. Type: string (or Expression with resultType string). </summary>
-        public object SqlWriterTableType { get; set; }
+        public BinaryData SqlWriterTableType { get; set; }
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public object PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> SQL stored procedure parameters. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
         /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
-        public object StoredProcedureTableTypeParameterName { get; set; }
+        public BinaryData StoredProcedureTableTypeParameterName { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
-        public object TableOption { get; set; }
+        public BinaryData TableOption { get; set; }
     }
 }

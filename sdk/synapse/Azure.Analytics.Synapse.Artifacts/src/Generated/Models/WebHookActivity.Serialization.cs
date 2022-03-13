@@ -53,7 +53,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("method");
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url");
-            writer.WriteObjectValue(Url);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Url);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Url.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
@@ -62,12 +66,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteObjectValue(Headers);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Headers);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
-                writer.WriteObjectValue(Body);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -77,13 +89,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack");
-                writer.WriteObjectValue(ReportStatusOnCallBack);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ReportStatusOnCallBack);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ReportStatusOnCallBack.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -96,14 +116,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             WebHookActivityMethod method = default;
-            object url = default;
+            BinaryData url = default;
             Optional<string> timeout = default;
-            Optional<object> headers = default;
-            Optional<object> body = default;
+            Optional<BinaryData> headers = default;
+            Optional<BinaryData> body = default;
             Optional<WebActivityAuthentication> authentication = default;
-            Optional<object> reportStatusOnCallBack = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> reportStatusOnCallBack = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -167,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetObject();
+                            url = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeout"))
@@ -182,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headers = property0.Value.GetObject();
+                            headers = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"))
@@ -192,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            body = property0.Value.GetObject();
+                            body = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
@@ -212,13 +232,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reportStatusOnCallBack = property0.Value.GetObject();
+                            reportStatusOnCallBack = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebHookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);

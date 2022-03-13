@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
         public IntegrationRuntimeComputeProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
         /// <param name="vNetProperties"> VNet properties for managed integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeComputeProperties(string location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, object> additionalProperties)
+        internal IntegrationRuntimeComputeProperties(string location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
@@ -51,6 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> VNet properties for managed integration runtime. </summary>
         public IntegrationRuntimeVNetProperties VNetProperties { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

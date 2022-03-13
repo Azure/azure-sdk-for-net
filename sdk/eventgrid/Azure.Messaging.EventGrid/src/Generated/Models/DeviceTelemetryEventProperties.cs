@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties)
+        internal DeviceTelemetryEventProperties(BinaryData body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties)
         {
             Body = body;
             Properties = properties;
@@ -32,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The content of the message from the device. </summary>
-        public object Body { get; }
+        public BinaryData Body { get; }
         /// <summary> Application properties are user-defined strings that can be added to the message. These fields are optional. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> System properties help identify contents and source of the messages. </summary>

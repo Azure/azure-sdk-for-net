@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="blobWriterDateTimeFormat"> Blob writer date time format. Type: string (or Expression with resultType string). </param>
         /// <param name="blobWriterAddHeader"> Blob writer add header. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
-        internal BlobSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object blobWriterOverwriteFiles, object blobWriterDateTimeFormat, object blobWriterAddHeader, object copyBehavior) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal BlobSink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData blobWriterOverwriteFiles, BinaryData blobWriterDateTimeFormat, BinaryData blobWriterAddHeader, BinaryData copyBehavior) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
             BlobWriterDateTimeFormat = blobWriterDateTimeFormat;
@@ -40,12 +41,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Blob writer overwrite files. Type: boolean (or Expression with resultType boolean). </summary>
-        public object BlobWriterOverwriteFiles { get; set; }
+        public BinaryData BlobWriterOverwriteFiles { get; set; }
         /// <summary> Blob writer date time format. Type: string (or Expression with resultType string). </summary>
-        public object BlobWriterDateTimeFormat { get; set; }
+        public BinaryData BlobWriterDateTimeFormat { get; set; }
         /// <summary> Blob writer add header. Type: boolean (or Expression with resultType boolean). </summary>
-        public object BlobWriterAddHeader { get; set; }
+        public BinaryData BlobWriterAddHeader { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public object CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
     }
 }

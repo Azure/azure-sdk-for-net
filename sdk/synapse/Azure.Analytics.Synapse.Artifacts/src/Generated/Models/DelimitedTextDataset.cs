@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object columnDelimiter, object rowDelimiter, object encodingName, object compressionCodec, object compressionLevel, object quoteChar, object escapeChar, object firstRowAsHeader, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             ColumnDelimiter = columnDelimiter;
@@ -64,22 +64,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The location of the delimited text storage. </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
-        public object ColumnDelimiter { get; set; }
+        public BinaryData ColumnDelimiter { get; set; }
         /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>
-        public object RowDelimiter { get; set; }
+        public BinaryData RowDelimiter { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
-        public object EncodingName { get; set; }
+        public BinaryData EncodingName { get; set; }
         /// <summary> The data compressionCodec. Type: string (or Expression with resultType string). </summary>
-        public object CompressionCodec { get; set; }
+        public BinaryData CompressionCodec { get; set; }
         /// <summary> The data compression method used for DelimitedText. </summary>
-        public object CompressionLevel { get; set; }
+        public BinaryData CompressionLevel { get; set; }
         /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
-        public object QuoteChar { get; set; }
+        public BinaryData QuoteChar { get; set; }
         /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>
-        public object EscapeChar { get; set; }
+        public BinaryData EscapeChar { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object FirstRowAsHeader { get; set; }
+        public BinaryData FirstRowAsHeader { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
-        public object NullValue { get; set; }
+        public BinaryData NullValue { get; set; }
     }
 }

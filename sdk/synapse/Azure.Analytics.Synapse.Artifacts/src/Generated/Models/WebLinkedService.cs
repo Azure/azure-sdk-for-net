@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties"> Web linked service properties. </param>
-        internal WebLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, WebLinkedServiceTypeProperties typeProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal WebLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, WebLinkedServiceTypeProperties typeProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             Type = type ?? "Web";

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(type, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(type, description, additionalProperties)
         {
             State = state;
             ManagedVirtualNetwork = managedVirtualNetwork;

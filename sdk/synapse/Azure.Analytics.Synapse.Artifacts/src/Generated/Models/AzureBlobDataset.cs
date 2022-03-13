@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="modifiedDatetimeEnd"> The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="format"> The format of the Azure Blob storage. </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
-        internal AzureBlobDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object folderPath, object tableRootLocation, object fileName, object modifiedDatetimeStart, object modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureBlobDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData tableRootLocation, BinaryData fileName, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;
@@ -56,15 +56,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The path of the Azure Blob storage. Type: string (or Expression with resultType string). </summary>
-        public object FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> The root of blob path. Type: string (or Expression with resultType string). </summary>
-        public object TableRootLocation { get; set; }
+        public BinaryData TableRootLocation { get; set; }
         /// <summary> The name of the Azure Blob. Type: string (or Expression with resultType string). </summary>
-        public object FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public object ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary> The format of the Azure Blob storage. </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the blob storage. </summary>

@@ -22,12 +22,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
-                writer.WriteObjectValue(Timeout);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Timeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry");
-                writer.WriteObjectValue(Retry);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Retry);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Retry.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -47,20 +55,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
-            Optional<object> timeout = default;
-            Optional<object> retry = default;
+            Optional<BinaryData> timeout = default;
+            Optional<BinaryData> retry = default;
             Optional<int> retryIntervalInSeconds = default;
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeout"))
@@ -70,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeout = property.Value.GetObject();
+                    timeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retry"))
@@ -80,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retry = property.Value.GetObject();
+                    retry = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))
@@ -113,7 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);

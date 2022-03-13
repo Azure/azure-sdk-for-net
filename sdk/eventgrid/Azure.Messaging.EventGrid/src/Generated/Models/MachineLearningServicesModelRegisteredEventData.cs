@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelRegistered event. </summary>
@@ -20,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
-        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties)
+        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, BinaryData modelTags, BinaryData modelProperties)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;
@@ -33,8 +35,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The version of the model that was registered. </summary>
         public string ModelVersion { get; }
         /// <summary> The tags of the model that was registered. </summary>
-        public object ModelTags { get; }
+        public BinaryData ModelTags { get; }
         /// <summary> The properties of the model that was registered. </summary>
-        public object ModelProperties { get; }
+        public BinaryData ModelProperties { get; }
     }
 }

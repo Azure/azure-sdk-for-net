@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="logStorageSettings"> Log storage settings customer need to provide when enableLogging is true. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
         /// <param name="storeSettings"> Delete activity store settings. </param>
-        internal DeleteActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object recursive, int? maxConcurrentConnections, object enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DeleteActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData recursive, int? maxConcurrentConnections, BinaryData enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Recursive = recursive;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -59,11 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> The max concurrent connections to connect data source at the same time. </summary>
         public int? MaxConcurrentConnections { get; set; }
         /// <summary> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object EnableLogging { get; set; }
+        public BinaryData EnableLogging { get; set; }
         /// <summary> Log storage settings customer need to provide when enableLogging is true. </summary>
         public LogStorageSettings LogStorageSettings { get; set; }
         /// <summary> Delete activity dataset reference. </summary>

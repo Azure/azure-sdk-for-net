@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         {
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<object> type = default;
+            Optional<BinaryData> type = default;
             Optional<ResourceLinkProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetObject();
+                    type = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))

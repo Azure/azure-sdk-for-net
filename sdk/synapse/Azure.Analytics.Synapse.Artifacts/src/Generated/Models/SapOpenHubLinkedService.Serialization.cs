@@ -48,32 +48,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("server");
-            writer.WriteObjectValue(Server);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Server);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
+#endif
             writer.WritePropertyName("systemNumber");
-            writer.WriteObjectValue(SystemNumber);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SystemNumber);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
+#endif
             writer.WritePropertyName("clientId");
-            writer.WriteObjectValue(ClientId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientId);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
-                writer.WriteObjectValue(Language);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Language);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Language.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId");
-                writer.WriteObjectValue(SystemId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SystemId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName");
-                writer.WriteObjectValue(UserName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -83,28 +111,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer");
-                writer.WriteObjectValue(MessageServer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MessageServer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService");
-                writer.WriteObjectValue(MessageServerService);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MessageServerService);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServerService.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup");
-                writer.WriteObjectValue(LogonGroup);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogonGroup);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogonGroup.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -115,20 +163,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object server = default;
-            object systemNumber = default;
-            object clientId = default;
-            Optional<object> language = default;
-            Optional<object> systemId = default;
-            Optional<object> userName = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData server = default;
+            BinaryData systemNumber = default;
+            BinaryData clientId = default;
+            Optional<BinaryData> language = default;
+            Optional<BinaryData> systemId = default;
+            Optional<BinaryData> userName = default;
             Optional<SecretBase> password = default;
-            Optional<object> messageServer = default;
-            Optional<object> messageServerService = default;
-            Optional<object> logonGroup = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> messageServer = default;
+            Optional<BinaryData> messageServerService = default;
+            Optional<BinaryData> logonGroup = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -173,10 +221,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -192,17 +240,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("server"))
                         {
-                            server = property0.Value.GetObject();
+                            server = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"))
                         {
-                            systemNumber = property0.Value.GetObject();
+                            systemNumber = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"))
                         {
-                            clientId = property0.Value.GetObject();
+                            clientId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("language"))
@@ -212,7 +260,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            language = property0.Value.GetObject();
+                            language = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemId"))
@@ -222,7 +270,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemId = property0.Value.GetObject();
+                            systemId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"))
@@ -232,7 +280,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userName = property0.Value.GetObject();
+                            userName = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -252,7 +300,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServer = property0.Value.GetObject();
+                            messageServer = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"))
@@ -262,7 +310,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServerService = property0.Value.GetObject();
+                            messageServerService = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"))
@@ -272,7 +320,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logonGroup = property0.Value.GetObject();
+                            logonGroup = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -282,13 +330,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, systemNumber, clientId, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);

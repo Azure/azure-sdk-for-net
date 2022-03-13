@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Default value. </summary>
@@ -18,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
-        internal DWCopyCommandDefaultValue(object columnName, object defaultValue)
+        internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
         {
             ColumnName = columnName;
             DefaultValue = defaultValue;
         }
 
         /// <summary> Column name. Type: object (or Expression with resultType string). </summary>
-        public object ColumnName { get; set; }
+        public BinaryData ColumnName { get; set; }
         /// <summary> The default value of the column. Type: object (or Expression with resultType string). </summary>
-        public object DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

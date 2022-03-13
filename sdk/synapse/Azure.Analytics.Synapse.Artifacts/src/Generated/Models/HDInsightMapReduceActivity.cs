@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
-        public HDInsightMapReduceActivity(string name, object className, object jarFilePath) : base(name)
+        public HDInsightMapReduceActivity(string name, BinaryData className, BinaryData jarFilePath) : base(name)
         {
             if (name == null)
             {
@@ -35,11 +35,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Arguments = new ChangeTrackingList<object>();
+            Arguments = new ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
-            JarLibs = new ChangeTrackingList<object>();
-            Defines = new ChangeTrackingDictionary<string, object>();
+            JarLibs = new ChangeTrackingList<BinaryData>();
+            Defines = new ChangeTrackingDictionary<string, BinaryData>();
             Type = "HDInsightMapReduce";
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        internal HDInsightMapReduceActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, IList<object> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, object className, object jarFilePath, LinkedServiceReference jarLinkedService, IList<object> jarLibs, IDictionary<string, object> defines) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightMapReduceActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData className, BinaryData jarFilePath, LinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -76,18 +76,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>
-        public IList<object> Arguments { get; }
+        public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
-        public object ClassName { get; set; }
+        public BinaryData ClassName { get; set; }
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
-        public object JarFilePath { get; set; }
+        public BinaryData JarFilePath { get; set; }
         /// <summary> Jar linked service reference. </summary>
         public LinkedServiceReference JarLinkedService { get; set; }
         /// <summary> Jar libs. </summary>
-        public IList<object> JarLibs { get; }
+        public IList<BinaryData> JarLibs { get; }
         /// <summary> Allows user to specify defines for the MapReduce job request. </summary>
-        public IDictionary<string, object> Defines { get; }
+        public IDictionary<string, BinaryData> Defines { get; }
     }
 }

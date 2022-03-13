@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,14 +18,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
         /// <param name="sourceSettings"> Source setting for data flow debug. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="datasetParameters"> Parameters for dataset. </param>
-        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, object> parameters, object datasetParameters)
+        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, BinaryData> parameters, BinaryData datasetParameters)
         {
             SourceSettings = sourceSettings;
             Parameters = parameters;
@@ -34,8 +35,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Source setting for data flow debug. </summary>
         public IList<DataFlowSourceSetting> SourceSettings { get; }
         /// <summary> Data flow parameters. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Parameters for dataset. </summary>
-        public object DatasetParameters { get; set; }
+        public BinaryData DatasetParameters { get; set; }
     }
 }

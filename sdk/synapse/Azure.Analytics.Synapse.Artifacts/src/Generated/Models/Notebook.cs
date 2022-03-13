@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             NotebookFormat = notebookFormat;
             NotebookFormatMinor = notebookFormatMinor;
             Cells = cells.ToList();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="cells"> Array of cells of the current notebook. </param>
         /// <param name="folder"> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, object> additionalProperties)
+        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             Description = description;
             BigDataPool = bigDataPool;
@@ -79,6 +79,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </summary>
         public NotebookFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
-        public WaitActivity(string name, object waitTimeInSeconds) : base(name)
+        public WaitActivity(string name, BinaryData waitTimeInSeconds) : base(name)
         {
             if (name == null)
             {
@@ -40,13 +40,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
-        internal WaitActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, object waitTimeInSeconds) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal WaitActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData waitTimeInSeconds) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             Type = type ?? "Wait";
         }
 
         /// <summary> Duration in seconds. </summary>
-        public object WaitTimeInSeconds { get; set; }
+        public BinaryData WaitTimeInSeconds { get; set; }
     }
 }

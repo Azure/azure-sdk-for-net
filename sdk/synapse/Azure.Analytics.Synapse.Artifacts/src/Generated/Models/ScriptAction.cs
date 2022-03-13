@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
-        public ScriptAction(string name, string uri, object roles)
+        public ScriptAction(string name, string uri, BinaryData roles)
         {
             if (name == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
         /// <param name="parameters"> The parameters for the script action. </param>
-        internal ScriptAction(string name, string uri, object roles, string parameters)
+        internal ScriptAction(string name, string uri, BinaryData roles, string parameters)
         {
             Name = name;
             Uri = uri;
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The URI for the script action. </summary>
         public string Uri { get; set; }
         /// <summary> The node types on which the script action should be executed. </summary>
-        public object Roles { get; set; }
+        public BinaryData Roles { get; set; }
         /// <summary> The parameters for the script action. </summary>
         public string Parameters { get; set; }
     }

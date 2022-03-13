@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="produceAdditionalTypes"> Which additional types to produce. </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Sql source partitioning. </param>
-        internal AmazonRdsForSqlServerSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object sqlReaderQuery, object sqlReaderStoredProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, object produceAdditionalTypes, object partitionOption, SqlPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal AmazonRdsForSqlServerSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData sqlReaderQuery, BinaryData sqlReaderStoredProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, BinaryData produceAdditionalTypes, BinaryData partitionOption, SqlPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             SqlReaderQuery = sqlReaderQuery;
             SqlReaderStoredProcedureName = sqlReaderStoredProcedureName;
@@ -46,15 +47,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> SQL reader query. Type: string (or Expression with resultType string). </summary>
-        public object SqlReaderQuery { get; set; }
+        public BinaryData SqlReaderQuery { get; set; }
         /// <summary> Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string). </summary>
-        public object SqlReaderStoredProcedureName { get; set; }
+        public BinaryData SqlReaderStoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
         /// <summary> Which additional types to produce. </summary>
-        public object ProduceAdditionalTypes { get; set; }
+        public BinaryData ProduceAdditionalTypes { get; set; }
         /// <summary> The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;. </summary>
-        public object PartitionOption { get; set; }
+        public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
         public SqlPartitionSettings PartitionSettings { get; set; }
     }

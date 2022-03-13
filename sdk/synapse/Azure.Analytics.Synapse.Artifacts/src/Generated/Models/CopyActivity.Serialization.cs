@@ -87,12 +87,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator");
-                writer.WriteObjectValue(Translator);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Translator);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Translator.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging");
-                writer.WriteObjectValue(EnableStaging);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableStaging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableStaging.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StagingSettings))
             {
@@ -102,17 +110,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies");
-                writer.WriteObjectValue(ParallelCopies);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ParallelCopies);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ParallelCopies.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits");
-                writer.WriteObjectValue(DataIntegrationUnits);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataIntegrationUnits);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataIntegrationUnits.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow");
-                writer.WriteObjectValue(EnableSkipIncompatibleRow);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableSkipIncompatibleRow);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableSkipIncompatibleRow.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
@@ -135,7 +155,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in PreserveRules)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -145,14 +169,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Preserve)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency");
-                writer.WriteObjectValue(ValidateDataConsistency);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ValidateDataConsistency);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidateDataConsistency.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
@@ -163,7 +195,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -181,21 +217,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<UserProperty>> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            Optional<object> translator = default;
-            Optional<object> enableStaging = default;
+            Optional<BinaryData> translator = default;
+            Optional<BinaryData> enableStaging = default;
             Optional<StagingSettings> stagingSettings = default;
-            Optional<object> parallelCopies = default;
-            Optional<object> dataIntegrationUnits = default;
-            Optional<object> enableSkipIncompatibleRow = default;
+            Optional<BinaryData> parallelCopies = default;
+            Optional<BinaryData> dataIntegrationUnits = default;
+            Optional<BinaryData> enableSkipIncompatibleRow = default;
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             Optional<LogSettings> logSettings = default;
-            Optional<IList<object>> preserveRules = default;
-            Optional<IList<object>> preserve = default;
-            Optional<object> validateDataConsistency = default;
+            Optional<IList<BinaryData>> preserveRules = default;
+            Optional<IList<BinaryData>> preserve = default;
+            Optional<BinaryData> validateDataConsistency = default;
             Optional<SkipErrorFile> skipErrorFile = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"))
@@ -319,7 +355,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            translator = property0.Value.GetObject();
+                            translator = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableStaging"))
@@ -329,7 +365,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableStaging = property0.Value.GetObject();
+                            enableStaging = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("stagingSettings"))
@@ -349,7 +385,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parallelCopies = property0.Value.GetObject();
+                            parallelCopies = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataIntegrationUnits"))
@@ -359,7 +395,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataIntegrationUnits = property0.Value.GetObject();
+                            dataIntegrationUnits = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSkipIncompatibleRow"))
@@ -369,7 +405,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableSkipIncompatibleRow = property0.Value.GetObject();
+                            enableSkipIncompatibleRow = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("redirectIncompatibleRowSettings"))
@@ -409,10 +445,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<object> array = new List<object>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                array.Add(BinaryData.FromString(property.Value.GetRawText()));
                             }
                             preserveRules = array;
                             continue;
@@ -424,10 +460,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<object> array = new List<object>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                array.Add(BinaryData.FromString(property.Value.GetRawText()));
                             }
                             preserve = array;
                             continue;
@@ -439,7 +475,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            validateDataConsistency = property0.Value.GetObject();
+                            validateDataConsistency = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("skipErrorFile"))
@@ -455,7 +491,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CopyActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);

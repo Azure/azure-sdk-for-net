@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Error information. </summary>
@@ -19,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="detail"> Error details. </param>
-        internal AcrErrorInfo(string code, string message, object detail)
+        internal AcrErrorInfo(string code, string message, BinaryData detail)
         {
             Code = code;
             Message = message;
@@ -31,6 +33,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Error details. </summary>
-        public object Detail { get; }
+        public BinaryData Detail { get; }
     }
 }

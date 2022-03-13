@@ -22,7 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("cell_type");
             writer.WriteStringValue(CellType);
             writer.WritePropertyName("metadata");
-            writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             writer.WritePropertyName("source");
             writer.WriteStartArray();
             foreach (var item in Source)
@@ -35,7 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Attachments != null)
                 {
                     writer.WritePropertyName("attachments");
-                    writer.WriteObjectValue(Attachments);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Attachments);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Attachments.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -55,7 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -63,12 +75,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static NotebookCell DeserializeNotebookCell(JsonElement element)
         {
             string cellType = default;
-            object metadata = default;
+            BinaryData metadata = default;
             IList<string> source = default;
-            Optional<object> attachments = default;
+            Optional<BinaryData> attachments = default;
             Optional<IList<NotebookCellOutputItem>> outputs = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cell_type"))
@@ -78,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("metadata"))
                 {
-                    metadata = property.Value.GetObject();
+                    metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("source"))
@@ -98,7 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         attachments = null;
                         continue;
                     }
-                    attachments = property.Value.GetObject();
+                    attachments = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("outputs"))
@@ -116,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     outputs = array;
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);

@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             NumExecutors = numExecutors;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SparkJobProperties. </summary>
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorCores"> Number of cores to use for each executor. </param>
         /// <param name="numExecutors"> Number of executors to launch for this job. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SparkJobProperties(string name, string file, string className, object conf, IList<string> args, IList<string> jars, IList<string> files, IList<string> archives, string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors, IDictionary<string, object> additionalProperties)
+        internal SparkJobProperties(string name, string file, string className, BinaryData conf, IList<string> args, IList<string> jars, IList<string> files, IList<string> archives, string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             File = file;
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Main class for Java/Scala application. </summary>
         public string ClassName { get; set; }
         /// <summary> Spark configuration properties. </summary>
-        public object Conf { get; set; }
+        public BinaryData Conf { get; set; }
         /// <summary> Command line arguments for the application. </summary>
         public IList<string> Args { get; }
         /// <summary> Jars to be used in this job. </summary>
@@ -110,6 +110,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Number of executors to launch for this job. </summary>
         public int NumExecutors { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

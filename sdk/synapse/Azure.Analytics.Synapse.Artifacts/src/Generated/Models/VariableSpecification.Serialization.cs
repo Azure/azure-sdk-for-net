@@ -23,7 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
-                writer.WriteObjectValue(DefaultValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -31,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static VariableSpecification DeserializeVariableSpecification(JsonElement element)
         {
             VariableType type = default;
-            Optional<object> defaultValue = default;
+            Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -46,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultValue = property.Value.GetObject();
+                    defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

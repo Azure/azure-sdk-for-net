@@ -27,22 +27,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue");
-                writer.WriteObjectValue(RejectValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RejectValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue");
-                writer.WriteObjectValue(RejectSampleValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RejectSampleValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectSampleValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault");
-                writer.WriteObjectValue(UseTypeDefault);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseTypeDefault);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTypeDefault.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -50,11 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
             Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<object> rejectValue = default;
-            Optional<object> rejectSampleValue = default;
-            Optional<object> useTypeDefault = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> rejectValue = default;
+            Optional<BinaryData> rejectSampleValue = default;
+            Optional<BinaryData> useTypeDefault = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rejectType"))
@@ -74,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectValue = property.Value.GetObject();
+                    rejectValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"))
@@ -84,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectSampleValue = property.Value.GetObject();
+                    rejectSampleValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("useTypeDefault"))
@@ -94,10 +110,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useTypeDefault = property.Value.GetObject();
+                    useTypeDefault = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public WebLinkedServiceTypeProperties(object url)
+        public WebLinkedServiceTypeProperties(BinaryData url)
         {
             if (url == null)
             {
@@ -28,14 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal WebLinkedServiceTypeProperties(object url, WebAuthenticationType authenticationType)
+        internal WebLinkedServiceTypeProperties(BinaryData url, WebAuthenticationType authenticationType)
         {
             Url = url;
             AuthenticationType = authenticationType;
         }
 
         /// <summary> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> Type of authentication used to connect to the web table source. </summary>
         internal WebAuthenticationType AuthenticationType { get; set; }
     }

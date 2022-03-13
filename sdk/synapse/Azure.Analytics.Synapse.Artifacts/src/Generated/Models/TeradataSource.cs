@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="query"> Teradata query. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for teradata read in parallel. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for teradata source partitioning. </param>
-        internal TeradataSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object query, TeradataPartitionOption? partitionOption, TeradataPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal TeradataSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, TeradataPartitionOption? partitionOption, TeradataPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Teradata query. Type: string (or Expression with resultType string). </summary>
-        public object Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> The partition mechanism that will be used for teradata read in parallel. </summary>
         public TeradataPartitionOption? PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for teradata source partitioning. </summary>

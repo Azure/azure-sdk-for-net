@@ -63,7 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive");
-                writer.WriteObjectValue(Recursive);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Recursive);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
@@ -73,7 +77,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging");
-                writer.WriteObjectValue(EnableLogging);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableLogging.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
@@ -91,7 +99,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -105,14 +117,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Optional<object> recursive = default;
+            Optional<BinaryData> recursive = default;
             Optional<int> maxConcurrentConnections = default;
-            Optional<object> enableLogging = default;
+            Optional<BinaryData> enableLogging = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             DatasetReference dataset = default;
             Optional<StoreReadSettings> storeSettings = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -196,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            recursive = property0.Value.GetObject();
+                            recursive = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrentConnections"))
@@ -216,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableLogging = property0.Value.GetObject();
+                            enableLogging = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"))
@@ -247,7 +259,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DeleteActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);

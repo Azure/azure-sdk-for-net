@@ -22,27 +22,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive");
-                writer.WriteObjectValue(Recursive);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Recursive);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath");
-                writer.WriteObjectValue(WildcardFolderPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WildcardFolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName");
-                writer.WriteObjectValue(WildcardFileName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WildcardFileName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFileName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix");
-                writer.WriteObjectValue(Prefix);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Prefix);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Prefix.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath");
-                writer.WriteObjectValue(FileListPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileListPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileListPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
@@ -52,54 +72,78 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath");
-                writer.WriteObjectValue(PartitionRootPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionRootPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionRootPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion");
-                writer.WriteObjectValue(DeleteFilesAfterCompletion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DeleteFilesAfterCompletion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DeleteFilesAfterCompletion.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart");
-                writer.WriteObjectValue(ModifiedDatetimeStart);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ModifiedDatetimeStart);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeStart.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd");
-                writer.WriteObjectValue(ModifiedDatetimeEnd);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ModifiedDatetimeEnd);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeEnd.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteObjectValue(MaxConcurrentConnections);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static GoogleCloudStorageReadSettings DeserializeGoogleCloudStorageReadSettings(JsonElement element)
         {
-            Optional<object> recursive = default;
-            Optional<object> wildcardFolderPath = default;
-            Optional<object> wildcardFileName = default;
-            Optional<object> prefix = default;
-            Optional<object> fileListPath = default;
+            Optional<BinaryData> recursive = default;
+            Optional<BinaryData> wildcardFolderPath = default;
+            Optional<BinaryData> wildcardFileName = default;
+            Optional<BinaryData> prefix = default;
+            Optional<BinaryData> fileListPath = default;
             Optional<bool> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
-            Optional<object> modifiedDatetimeStart = default;
-            Optional<object> modifiedDatetimeEnd = default;
+            Optional<BinaryData> partitionRootPath = default;
+            Optional<BinaryData> deleteFilesAfterCompletion = default;
+            Optional<BinaryData> modifiedDatetimeStart = default;
+            Optional<BinaryData> modifiedDatetimeEnd = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> maxConcurrentConnections = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recursive"))
@@ -109,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recursive = property.Value.GetObject();
+                    recursive = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"))
@@ -119,7 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wildcardFolderPath = property.Value.GetObject();
+                    wildcardFolderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"))
@@ -129,7 +173,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wildcardFileName = property.Value.GetObject();
+                    wildcardFileName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("prefix"))
@@ -139,7 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    prefix = property.Value.GetObject();
+                    prefix = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileListPath"))
@@ -149,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileListPath = property.Value.GetObject();
+                    fileListPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enablePartitionDiscovery"))
@@ -169,7 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionRootPath = property.Value.GetObject();
+                    partitionRootPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deleteFilesAfterCompletion"))
@@ -179,7 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deleteFilesAfterCompletion = property.Value.GetObject();
+                    deleteFilesAfterCompletion = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"))
@@ -189,7 +233,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedDatetimeStart = property.Value.GetObject();
+                    modifiedDatetimeStart = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeEnd"))
@@ -199,7 +243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedDatetimeEnd = property.Value.GetObject();
+                    modifiedDatetimeEnd = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -214,10 +258,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = property.Value.GetObject();
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleCloudStorageReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);

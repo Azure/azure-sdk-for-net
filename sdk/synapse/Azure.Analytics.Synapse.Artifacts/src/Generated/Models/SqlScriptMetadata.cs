@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlScriptMetadata. </summary>
         public SqlScriptMetadata()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SqlScriptMetadata. </summary>
         /// <param name="language"> The language of the SQL script. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SqlScriptMetadata(string language, IDictionary<string, object> additionalProperties)
+        internal SqlScriptMetadata(string language, IDictionary<string, BinaryData> additionalProperties)
         {
             Language = language;
             AdditionalProperties = additionalProperties;
@@ -31,6 +32,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The language of the SQL script. </summary>
         public string Language { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

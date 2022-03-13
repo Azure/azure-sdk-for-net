@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentValidateResult DeserializeDeploymentValidateResult(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
+            Optional<ErrorResponse> error = default;
             Optional<DeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DeploymentValidateResult(error, properties.Value);
+            return new DeploymentValidateResult(error.Value, properties.Value);
         }
     }
 }

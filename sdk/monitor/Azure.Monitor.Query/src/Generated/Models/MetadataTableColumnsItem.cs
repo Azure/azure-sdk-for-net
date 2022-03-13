@@ -36,6 +36,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> A flag indicating this column is a preferred facet. </summary>
         public bool? IsPreferredFacet { get; }
         /// <summary> an indication of the source of the column, used only when multiple workspaces have conflicting definition for the column. </summary>
-        public object Source { get; }
+        public BinaryData Source { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ImportSettings. </summary>
         public ImportSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ImportSettings. </summary>
         /// <param name="type"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ImportSettings(string type, IDictionary<string, object> additionalProperties)
+        internal ImportSettings(string type, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             AdditionalProperties = additionalProperties;
@@ -31,6 +32,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The import setting type. </summary>
         internal string Type { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

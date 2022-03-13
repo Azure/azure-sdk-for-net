@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Defines = new ChangeTrackingDictionary<string, object>();
+            Defines = new ChangeTrackingDictionary<string, BinaryData>();
             Type = "HDInsightPig";
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
-        internal HDInsightPigActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, object arguments, HDInsightActivityDebugInfoOption? getDebugInfo, object scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, object> defines) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -58,14 +58,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
-        public object Arguments { get; set; }
+        public BinaryData Arguments { get; set; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
-        public object ScriptPath { get; set; }
+        public BinaryData ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
         public LinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary> Allows user to specify defines for Pig job request. </summary>
-        public IDictionary<string, object> Defines { get; }
+        public IDictionary<string, BinaryData> Defines { get; }
     }
 }

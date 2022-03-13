@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ActivityRun. </summary>
         internal ActivityRun()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ActivityRun. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="output"> The output for the activity. </param>
         /// <param name="error"> The error if any from the activity run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityRun(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, object input, object output, object error, IReadOnlyDictionary<string, object> additionalProperties)
+        internal ActivityRun(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;
@@ -74,12 +74,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The duration of the activity run. </summary>
         public int? DurationInMs { get; }
         /// <summary> The input for the activity. </summary>
-        public object Input { get; }
+        public BinaryData Input { get; }
         /// <summary> The output for the activity. </summary>
-        public object Output { get; }
+        public BinaryData Output { get; }
         /// <summary> The error if any from the activity run. </summary>
-        public object Error { get; }
+        public BinaryData Error { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

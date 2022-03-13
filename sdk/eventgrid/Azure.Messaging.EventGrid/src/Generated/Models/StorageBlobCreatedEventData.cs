@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobCreated event. </summary>
@@ -28,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
-        internal StorageBlobCreatedEventData(string api, string clientRequestId, string requestId, string eTag, string contentType, long? contentLength, long? contentOffset, string blobType, string url, string sequencer, string identity, object storageDiagnostics)
+        internal StorageBlobCreatedEventData(string api, string clientRequestId, string requestId, string eTag, string contentType, long? contentLength, long? contentOffset, string blobType, string url, string sequencer, string identity, BinaryData storageDiagnostics)
         {
             Api = api;
             ClientRequestId = clientRequestId;
@@ -67,6 +69,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The identity of the requester that triggered this event. </summary>
         public string Identity { get; }
         /// <summary> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </summary>
-        public object StorageDiagnostics { get; }
+        public BinaryData StorageDiagnostics { get; }
     }
 }

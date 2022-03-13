@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
         /// <param name="type"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        public DatasetCompression(object type)
+        public DatasetCompression(BinaryData type)
         {
             if (type == null)
             {
@@ -25,14 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Type = type;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
         /// <param name="type"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetCompression(object type, object level, IDictionary<string, object> additionalProperties)
+        internal DatasetCompression(BinaryData type, BinaryData level, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             Level = level;
@@ -40,10 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
-        public object Type { get; set; }
+        public BinaryData Type { get; set; }
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
-        public object Level { get; set; }
+        public BinaryData Level { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

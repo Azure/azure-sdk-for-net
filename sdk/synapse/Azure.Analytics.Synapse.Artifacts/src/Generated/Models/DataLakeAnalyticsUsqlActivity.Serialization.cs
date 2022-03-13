@@ -61,18 +61,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("scriptPath");
-            writer.WriteObjectValue(ScriptPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ScriptPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ScriptPath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("scriptLinkedService");
             writer.WriteObjectValue(ScriptLinkedService);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism");
-                writer.WriteObjectValue(DegreeOfParallelism);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DegreeOfParallelism);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DegreeOfParallelism.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
-                writer.WriteObjectValue(Priority);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Priority);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Priority.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -81,25 +93,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion");
-                writer.WriteObjectValue(RuntimeVersion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RuntimeVersion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RuntimeVersion.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CompilationMode))
             {
                 writer.WritePropertyName("compilationMode");
-                writer.WriteObjectValue(CompilationMode);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CompilationMode);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CompilationMode.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -113,15 +141,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object scriptPath = default;
+            BinaryData scriptPath = default;
             LinkedServiceReference scriptLinkedService = default;
-            Optional<object> degreeOfParallelism = default;
-            Optional<object> priority = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<object> runtimeVersion = default;
-            Optional<object> compilationMode = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> degreeOfParallelism = default;
+            Optional<BinaryData> priority = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
+            Optional<BinaryData> runtimeVersion = default;
+            Optional<BinaryData> compilationMode = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -200,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("scriptPath"))
                         {
-                            scriptPath = property0.Value.GetObject();
+                            scriptPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("scriptLinkedService"))
@@ -215,7 +243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            degreeOfParallelism = property0.Value.GetObject();
+                            degreeOfParallelism = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("priority"))
@@ -225,7 +253,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = property0.Value.GetObject();
+                            priority = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -235,10 +263,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property.Value.GetRawText()));
                             }
                             parameters = dictionary;
                             continue;
@@ -250,7 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            runtimeVersion = property0.Value.GetObject();
+                            runtimeVersion = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("compilationMode"))
@@ -260,13 +288,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compilationMode = property0.Value.GetObject();
+                            compilationMode = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);

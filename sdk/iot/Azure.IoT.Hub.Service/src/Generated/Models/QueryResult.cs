@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of QueryResult. </summary>
         internal QueryResult()
         {
-            Items = new ChangeTrackingList<object>();
+            Items = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
-        internal QueryResult(QueryResultType? type, IReadOnlyList<object> items, string continuationToken)
+        internal QueryResult(QueryResultType? type, IReadOnlyList<BinaryData> items, string continuationToken)
         {
             Type = type;
             Items = items;
@@ -33,7 +34,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> The query result type. </summary>
         public QueryResultType? Type { get; }
         /// <summary> The query result items, as a collection. </summary>
-        public IReadOnlyList<object> Items { get; }
+        public IReadOnlyList<BinaryData> Items { get; }
         /// <summary> The continuation token. </summary>
         public string ContinuationToken { get; }
     }

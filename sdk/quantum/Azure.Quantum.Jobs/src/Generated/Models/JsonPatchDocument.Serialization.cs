@@ -22,7 +22,11 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteObjectValue(Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(From))
             {

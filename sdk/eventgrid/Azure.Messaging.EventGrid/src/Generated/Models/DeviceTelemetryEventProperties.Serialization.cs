@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTelemetryEventProperties DeserializeDeviceTelemetryEventProperties(JsonElement element)
         {
-            Optional<object> body = default;
+            Optional<BinaryData> body = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             Optional<IReadOnlyDictionary<string, string>> systemProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    body = property.Value.GetObject();
+                    body = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))

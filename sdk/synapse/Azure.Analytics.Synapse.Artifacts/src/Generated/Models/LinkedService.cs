@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,8 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public LinkedService()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
-            Annotations = new ChangeTrackingList<object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of LinkedService. </summary>
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties)
+        internal LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             ConnectVia = connectVia;
@@ -47,8 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Parameters for linked service. </summary>
         public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of tags that can be used for describing the linked service. </summary>
-        public IList<object> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

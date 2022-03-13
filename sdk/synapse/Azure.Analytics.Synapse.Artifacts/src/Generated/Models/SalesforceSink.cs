@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="writeBehavior"> The write behavior for the operation. Default is Insert. </param>
         /// <param name="externalIdFieldName"> The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string). </param>
         /// <param name="ignoreNullValues"> The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean). </param>
-        internal SalesforceSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, SalesforceSinkWriteBehavior? writeBehavior, object externalIdFieldName, object ignoreNullValues) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal SalesforceSink(string type, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, SalesforceSinkWriteBehavior? writeBehavior, BinaryData externalIdFieldName, BinaryData ignoreNullValues) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             ExternalIdFieldName = externalIdFieldName;
@@ -40,8 +41,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The write behavior for the operation. Default is Insert. </summary>
         public SalesforceSinkWriteBehavior? WriteBehavior { get; set; }
         /// <summary> The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string). </summary>
-        public object ExternalIdFieldName { get; set; }
+        public BinaryData ExternalIdFieldName { get; set; }
         /// <summary> The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean). </summary>
-        public object IgnoreNullValues { get; set; }
+        public BinaryData IgnoreNullValues { get; set; }
     }
 }

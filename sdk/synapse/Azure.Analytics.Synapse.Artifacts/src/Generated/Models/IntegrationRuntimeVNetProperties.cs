@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IntegrationRuntimeVNetProperties()
         {
             PublicIPs = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, IDictionary<string, object> additionalProperties)
+        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, IDictionary<string, BinaryData> additionalProperties)
         {
             VNetId = vNetId;
             Subnet = subnet;
@@ -40,6 +41,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
         public IList<string> PublicIPs { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

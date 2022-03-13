@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="url"> The url to connect Zendesk source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, object url)
+        public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, BinaryData url)
         {
             if (url == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="password"> The password of the Zendesk source. </param>
         /// <param name="apiToken"> The api token for the Zendesk source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ZendeskLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, ZendeskAuthenticationType authenticationType, object url, object userName, SecretBase password, SecretBase apiToken, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal ZendeskLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ZendeskAuthenticationType authenticationType, BinaryData url, BinaryData userName, SecretBase password, SecretBase apiToken, BinaryData encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
             Url = url;
@@ -56,14 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The authentication type to use. </summary>
         public ZendeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect Zendesk source. Type: string (or Expression with resultType string). </summary>
-        public object Url { get; set; }
+        public BinaryData Url { get; set; }
         /// <summary> The username of the Zendesk source. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> The password of the Zendesk source. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The api token for the Zendesk source. </summary>
         public SecretBase ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

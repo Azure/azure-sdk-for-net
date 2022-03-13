@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
         /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public SftpServerLinkedService(object host)
+        public SftpServerLinkedService(BinaryData host)
         {
             if (host == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="passPhrase"> The password to decrypt the SSH private key if the SSH private key is encrypted. </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
-        internal SftpServerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, SftpAuthenticationType? authenticationType, object userName, SecretBase password, object encryptedCredential, object privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, object skipHostKeyValidation, object hostKeyFingerprint) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SftpServerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, SftpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential, BinaryData privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, BinaryData skipHostKeyValidation, BinaryData hostKeyFingerprint) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -62,26 +62,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The SFTP server host name. Type: string (or Expression with resultType string). </summary>
-        public object Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public object Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> The authentication type to be used to connect to the FTP server. </summary>
         public SftpAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </summary>
-        public object UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password to logon the SFTP server for Basic authentication. </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public object EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </summary>
-        public object PrivateKeyPath { get; set; }
+        public BinaryData PrivateKeyPath { get; set; }
         /// <summary> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </summary>
         public SecretBase PrivateKeyContent { get; set; }
         /// <summary> The password to decrypt the SSH private key if the SSH private key is encrypted. </summary>
         public SecretBase PassPhrase { get; set; }
         /// <summary> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public object SkipHostKeyValidation { get; set; }
+        public BinaryData SkipHostKeyValidation { get; set; }
         /// <summary> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </summary>
-        public object HostKeyFingerprint { get; set; }
+        public BinaryData HostKeyFingerprint { get; set; }
     }
 }

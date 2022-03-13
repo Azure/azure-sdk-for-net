@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Columns that define the structure of the dataset. </summary>
@@ -18,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetDataElement. </summary>
         /// <param name="name"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Type of the column. Type: string (or Expression with resultType string). </param>
-        internal DatasetDataElement(object name, object type)
+        internal DatasetDataElement(BinaryData name, BinaryData type)
         {
             Name = name;
             Type = type;
         }
 
         /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
-        public object Name { get; set; }
+        public BinaryData Name { get; set; }
         /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
-        public object Type { get; set; }
+        public BinaryData Type { get; set; }
     }
 }

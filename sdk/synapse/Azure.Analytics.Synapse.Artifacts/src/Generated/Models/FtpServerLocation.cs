@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FtpServerLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties) : base(type, folderPath, fileName, additionalProperties)
+        internal FtpServerLocation(string type, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(type, folderPath, fileName, additionalProperties)
         {
             Type = type ?? "FtpServerLocation";
         }

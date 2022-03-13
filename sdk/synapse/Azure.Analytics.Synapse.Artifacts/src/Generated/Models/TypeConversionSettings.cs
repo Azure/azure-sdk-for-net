@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Type conversion settings. </summary>
@@ -22,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dateTimeOffsetFormat"> The format for DateTimeOffset values. Type: string (or Expression with resultType string). </param>
         /// <param name="timeSpanFormat"> The format for TimeSpan values. Type: string (or Expression with resultType string). </param>
         /// <param name="culture"> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </param>
-        internal TypeConversionSettings(object allowDataTruncation, object treatBooleanAsNumber, object dateTimeFormat, object dateTimeOffsetFormat, object timeSpanFormat, object culture)
+        internal TypeConversionSettings(BinaryData allowDataTruncation, BinaryData treatBooleanAsNumber, BinaryData dateTimeFormat, BinaryData dateTimeOffsetFormat, BinaryData timeSpanFormat, BinaryData culture)
         {
             AllowDataTruncation = allowDataTruncation;
             TreatBooleanAsNumber = treatBooleanAsNumber;
@@ -33,16 +35,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Whether to allow data truncation when converting the data. Type: boolean (or Expression with resultType boolean). </summary>
-        public object AllowDataTruncation { get; set; }
+        public BinaryData AllowDataTruncation { get; set; }
         /// <summary> Whether to treat boolean values as numbers. Type: boolean (or Expression with resultType boolean). </summary>
-        public object TreatBooleanAsNumber { get; set; }
+        public BinaryData TreatBooleanAsNumber { get; set; }
         /// <summary> The format for DateTime values. Type: string (or Expression with resultType string). </summary>
-        public object DateTimeFormat { get; set; }
+        public BinaryData DateTimeFormat { get; set; }
         /// <summary> The format for DateTimeOffset values. Type: string (or Expression with resultType string). </summary>
-        public object DateTimeOffsetFormat { get; set; }
+        public BinaryData DateTimeOffsetFormat { get; set; }
         /// <summary> The format for TimeSpan values. Type: string (or Expression with resultType string). </summary>
-        public object TimeSpanFormat { get; set; }
+        public BinaryData TimeSpanFormat { get; set; }
         /// <summary> The culture used to convert data from/to string. Type: string (or Expression with resultType string). </summary>
-        public object Culture { get; set; }
+        public BinaryData Culture { get; set; }
     }
 }

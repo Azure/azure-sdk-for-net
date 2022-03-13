@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The settings that will be leveraged for Oracle source partitioning. </summary>
@@ -20,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal OraclePartitionSettings(object partitionNames, object partitionColumnName, object partitionUpperBound, object partitionLowerBound)
+        internal OraclePartitionSettings(BinaryData partitionNames, BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound)
         {
             PartitionNames = partitionNames;
             PartitionColumnName = partitionColumnName;
@@ -29,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Names of the physical partitions of Oracle table. </summary>
-        public object PartitionNames { get; set; }
+        public BinaryData PartitionNames { get; set; }
         /// <summary> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public object PartitionColumnName { get; set; }
+        public BinaryData PartitionColumnName { get; set; }
         /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public object PartitionUpperBound { get; set; }
+        public BinaryData PartitionUpperBound { get; set; }
         /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public object PartitionLowerBound { get; set; }
+        public BinaryData PartitionLowerBound { get; set; }
     }
 }

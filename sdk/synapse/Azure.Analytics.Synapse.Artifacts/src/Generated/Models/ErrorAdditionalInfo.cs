@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The resource management error additional info. </summary>
@@ -18,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        internal ErrorAdditionalInfo(string type, object info)
+        internal ErrorAdditionalInfo(string type, BinaryData info)
         {
             Type = type;
             Info = info;
@@ -27,6 +29,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The additional info type. </summary>
         public string Type { get; }
         /// <summary> The additional info. </summary>
-        public object Info { get; }
+        public BinaryData Info { get; }
     }
 }

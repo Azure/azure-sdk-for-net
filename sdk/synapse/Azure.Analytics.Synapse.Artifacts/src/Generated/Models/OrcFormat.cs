@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OrcFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties) : base(type, serializer, deserializer, additionalProperties)
+        internal OrcFormat(string type, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties) : base(type, serializer, deserializer, additionalProperties)
         {
             Type = type ?? "OrcFormat";
         }

@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<EncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
-            Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
@@ -296,10 +296,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property.Value.GetRawText()));
                             }
                             extraProperties = dictionary;
                             continue;

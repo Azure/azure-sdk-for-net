@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -196,7 +197,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        internal HttpMessage CreatePublishCustomEventEventsRequest(string topicHostname, IEnumerable<object> events)
+        internal HttpMessage CreatePublishCustomEventEventsRequest(string topicHostname, IEnumerable<BinaryData> events)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -212,7 +213,11 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -224,7 +229,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
-        public async Task<Response> PublishCustomEventEventsAsync(string topicHostname, IEnumerable<object> events, CancellationToken cancellationToken = default)
+        public async Task<Response> PublishCustomEventEventsAsync(string topicHostname, IEnumerable<BinaryData> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
             {
@@ -251,7 +256,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicHostname"/> or <paramref name="events"/> is null. </exception>
-        public Response PublishCustomEventEvents(string topicHostname, IEnumerable<object> events, CancellationToken cancellationToken = default)
+        public Response PublishCustomEventEvents(string topicHostname, IEnumerable<BinaryData> events, CancellationToken cancellationToken = default)
         {
             if (topicHostname == null)
             {

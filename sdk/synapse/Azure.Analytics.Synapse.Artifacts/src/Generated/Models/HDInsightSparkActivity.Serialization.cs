@@ -61,16 +61,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("rootPath");
-            writer.WriteObjectValue(RootPath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RootPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(RootPath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("entryFilePath");
-            writer.WriteObjectValue(EntryFilePath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EntryFilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(EntryFilePath.ToString()).RootElement);
+#endif
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +104,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser");
-                writer.WriteObjectValue(ProxyUser);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProxyUser);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProxyUser.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -101,7 +117,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in SparkConfig)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -109,7 +129,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -123,16 +147,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object rootPath = default;
-            object entryFilePath = default;
-            Optional<IList<object>> arguments = default;
+            BinaryData rootPath = default;
+            BinaryData entryFilePath = default;
+            Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<LinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
-            Optional<object> proxyUser = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> proxyUser = default;
+            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -211,12 +235,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("rootPath"))
                         {
-                            rootPath = property0.Value.GetObject();
+                            rootPath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("entryFilePath"))
                         {
-                            entryFilePath = property0.Value.GetObject();
+                            entryFilePath = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("arguments"))
@@ -226,10 +250,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<object> array = new List<object>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                array.Add(BinaryData.FromString(property.Value.GetRawText()));
                             }
                             arguments = array;
                             continue;
@@ -266,7 +290,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proxyUser = property0.Value.GetObject();
+                            proxyUser = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sparkConfig"))
@@ -276,10 +300,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property.Value.GetRawText()));
                             }
                             sparkConfig = dictionary;
                             continue;
@@ -287,7 +311,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightSparkActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, rootPath, entryFilePath, Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), sparkJobLinkedService.Value, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));

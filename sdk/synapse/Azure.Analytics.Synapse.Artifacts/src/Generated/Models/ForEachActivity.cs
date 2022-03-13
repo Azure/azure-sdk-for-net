@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="batchCount"> Batch count to be used for controlling the number of parallel execution (when isSequential is set to false). </param>
         /// <param name="items"> Collection to iterate. </param>
         /// <param name="activities"> List of activities to execute . </param>
-        internal ForEachActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, bool? isSequential, int? batchCount, Expression items, IList<Activity> activities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal ForEachActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, bool? isSequential, int? batchCount, Expression items, IList<Activity> activities) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             IsSequential = isSequential;
             BatchCount = batchCount;

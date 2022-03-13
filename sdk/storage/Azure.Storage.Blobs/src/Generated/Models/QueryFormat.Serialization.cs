@@ -32,7 +32,9 @@ namespace Azure.Storage.Blobs.Models
             }
             if (Optional.IsDefined(ParquetTextConfiguration))
             {
-                writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
+                writer.WriteStartElement("ParquetTextConfiguration");
+                writer.WriteValue(ParquetTextConfiguration);
+                writer.WriteEndElement();
             }
             writer.WriteEndElement();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
         public DatasetStorageFormat()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetStorageFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties)
+        internal DatasetStorageFormat(string type, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties)
         {
             Type = type;
             Serializer = serializer;
@@ -35,10 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Type of dataset storage format. </summary>
         internal string Type { get; set; }
         /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
-        public object Serializer { get; set; }
+        public BinaryData Serializer { get; set; }
         /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
-        public object Deserializer { get; set; }
+        public BinaryData Deserializer { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

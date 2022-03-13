@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DataFlows = new ChangeTrackingList<DataFlowDebugResource>();
             Datasets = new ChangeTrackingList<DatasetDebugResource>();
             LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowDebugPackage(string sessionId, DataFlowDebugResource dataFlow, IList<DataFlowDebugResource> dataFlows, IList<DatasetDebugResource> datasets, IList<LinkedServiceDebugResource> linkedServices, DataFlowStagingInfo staging, DataFlowDebugPackageDebugSettings debugSettings, IDictionary<string, object> additionalProperties)
+        internal DataFlowDebugPackage(string sessionId, DataFlowDebugResource dataFlow, IList<DataFlowDebugResource> dataFlows, IList<DatasetDebugResource> datasets, IList<LinkedServiceDebugResource> linkedServices, DataFlowStagingInfo staging, DataFlowDebugPackageDebugSettings debugSettings, IDictionary<string, BinaryData> additionalProperties)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
@@ -58,6 +59,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Data flow debug settings. </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

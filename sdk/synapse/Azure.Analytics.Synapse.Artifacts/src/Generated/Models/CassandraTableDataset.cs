@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The table name of the Cassandra database. Type: string (or Expression with resultType string). </param>
         /// <param name="keyspace"> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </param>
-        internal CassandraTableDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object tableName, object keyspace) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CassandraTableDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData keyspace) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Keyspace = keyspace;
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The table name of the Cassandra database. Type: string (or Expression with resultType string). </summary>
-        public object TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </summary>
-        public object Keyspace { get; set; }
+        public BinaryData Keyspace { get; set; }
     }
 }

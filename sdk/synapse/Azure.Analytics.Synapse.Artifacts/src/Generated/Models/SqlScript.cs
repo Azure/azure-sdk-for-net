@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Content = content;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SqlScript. </summary>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="content"> The content of the SQL script. </param>
         /// <param name="folder"> The folder that this SQL script is in. If not specified, this SQL script will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SqlScript(string description, SqlScriptType? type, SqlScriptContent content, SqlScriptFolder folder, IDictionary<string, object> additionalProperties)
+        internal SqlScript(string description, SqlScriptType? type, SqlScriptContent content, SqlScriptFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             Description = description;
             Type = type;
@@ -52,6 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The folder that this SQL script is in. If not specified, this SQL script will appear at the root level. </summary>
         public SqlScriptFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -75,12 +75,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file");
-                writer.WriteObjectValue(File);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(File);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(File.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className");
-                writer.WriteObjectValue(ClassName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClassName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClassName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Files))
             {
@@ -100,17 +108,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize");
-                writer.WriteObjectValue(ExecutorSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ExecutorSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExecutorSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf");
-                writer.WriteObjectValue(Conf);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Conf);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Conf.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize");
-                writer.WriteObjectValue(DriverSize);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DriverSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DriverSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NumExecutors))
             {
@@ -121,7 +141,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -137,16 +161,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<UserProperty>> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
             Optional<IList<object>> args = default;
-            Optional<object> file = default;
-            Optional<object> className = default;
+            Optional<BinaryData> file = default;
+            Optional<BinaryData> className = default;
             Optional<IList<object>> files = default;
             Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
-            Optional<object> executorSize = default;
-            Optional<object> conf = default;
-            Optional<object> driverSize = default;
+            Optional<BinaryData> executorSize = default;
+            Optional<BinaryData> conf = default;
+            Optional<BinaryData> driverSize = default;
             Optional<int> numExecutors = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -250,7 +274,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            file = property0.Value.GetObject();
+                            file = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("className"))
@@ -260,7 +284,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            className = property0.Value.GetObject();
+                            className = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("files"))
@@ -295,7 +319,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            executorSize = property0.Value.GetObject();
+                            executorSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("conf"))
@@ -305,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            conf = property0.Value.GetObject();
+                            conf = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("driverSize"))
@@ -315,7 +339,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            driverSize = property0.Value.GetObject();
+                            driverSize = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("numExecutors"))
@@ -331,7 +355,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args), file.Value, className.Value, Optional.ToList(files), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, Optional.ToNullable(numExecutors));

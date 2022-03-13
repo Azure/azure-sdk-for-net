@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> experimentName = default;
             Optional<string> runId = default;
             Optional<string> runType = default;
-            Optional<object> runTags = default;
-            Optional<object> runProperties = default;
+            Optional<BinaryData> runTags = default;
+            Optional<BinaryData> runProperties = default;
             Optional<string> runStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runTags = property.Value.GetObject();
+                    runTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("runProperties"))
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runProperties = property.Value.GetObject();
+                    runProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("runStatus"))

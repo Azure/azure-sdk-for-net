@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public BigDataPoolParametrizationReference(BigDataPoolReferenceType type, object referenceName)
+        public BigDataPoolParametrizationReference(BigDataPoolReferenceType type, BinaryData referenceName)
         {
             if (referenceName == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Big data pool reference type. </summary>
         public BigDataPoolReferenceType Type { get; set; }
         /// <summary> Reference big data pool name. Type: string (or Expression with resultType string). </summary>
-        public object ReferenceName { get; set; }
+        public BinaryData ReferenceName { get; set; }
     }
 }

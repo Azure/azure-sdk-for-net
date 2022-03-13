@@ -20,31 +20,43 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteObjectValue(Type);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Type);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Type.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
-                writer.WriteObjectValue(Level);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Level);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Level.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
-            object type = default;
-            Optional<object> level = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            BinaryData type = default;
+            Optional<BinaryData> level = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetObject();
+                    type = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("level"))
@@ -54,10 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetObject();
+                    level = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetCompression(type, level.Value, additionalProperties);

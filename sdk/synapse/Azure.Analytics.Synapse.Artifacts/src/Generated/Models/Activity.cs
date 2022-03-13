@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Name = name;
             DependsOn = new ChangeTrackingList<ActivityDependency>();
             UserProperties = new ChangeTrackingList<UserProperty>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Activity. </summary>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Activity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties)
+        internal Activity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             Type = type;
@@ -58,6 +58,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Activity user properties. </summary>
         public IList<UserProperty> UserProperties { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

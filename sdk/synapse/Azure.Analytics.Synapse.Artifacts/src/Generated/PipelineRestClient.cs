@@ -390,7 +390,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        internal HttpMessage CreateCreatePipelineRunRequest(string pipelineName, string referencePipelineRunId, bool? isRecovery, string startActivityName, IDictionary<string, object> parameters)
+        internal HttpMessage CreateCreatePipelineRunRequest(string pipelineName, string referencePipelineRunId, bool? isRecovery, string startActivityName, IDictionary<string, BinaryData> parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -423,7 +423,11 @@ namespace Azure.Analytics.Synapse.Artifacts
                 foreach (var item in parameters)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
-                    content.JsonWriter.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -439,7 +443,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, BinaryData> parameters = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -470,7 +474,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        public Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, BinaryData> parameters = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {

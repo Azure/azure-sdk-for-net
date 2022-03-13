@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class representing the ONVIF MediaProfiles. </summary>
@@ -19,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> The name of the Media Profile. </param>
         /// <param name="mediaUri"> Object representing the URI that will be used to request for media streaming. </param>
         /// <param name="videoEncoderConfiguration"> The Video encoder configuration. </param>
-        internal MediaProfile(string name, object mediaUri, VideoEncoderConfiguration videoEncoderConfiguration)
+        internal MediaProfile(string name, BinaryData mediaUri, VideoEncoderConfiguration videoEncoderConfiguration)
         {
             Name = name;
             MediaUri = mediaUri;
@@ -29,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> The name of the Media Profile. </summary>
         public string Name { get; set; }
         /// <summary> Object representing the URI that will be used to request for media streaming. </summary>
-        public object MediaUri { get; set; }
+        public BinaryData MediaUri { get; set; }
         /// <summary> The Video encoder configuration. </summary>
         public VideoEncoderConfiguration VideoEncoderConfiguration { get; set; }
     }

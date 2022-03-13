@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,13 +25,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="fileSystem"> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobFSLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties, object fileSystem) : base(type, folderPath, fileName, additionalProperties)
+        internal AzureBlobFSLocation(string type, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData fileSystem) : base(type, folderPath, fileName, additionalProperties)
         {
             FileSystem = fileSystem;
             Type = type ?? "AzureBlobFSLocation";
         }
 
         /// <summary> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </summary>
-        public object FileSystem { get; set; }
+        public BinaryData FileSystem { get; set; }
     }
 }

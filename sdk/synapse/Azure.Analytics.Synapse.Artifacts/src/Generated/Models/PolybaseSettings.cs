@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PolybaseSettings. </summary>
         public PolybaseSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PolybaseSettings. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="rejectSampleValue"> Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="useTypeDefault"> Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PolybaseSettings(PolybaseSettingsRejectType? rejectType, object rejectValue, object rejectSampleValue, object useTypeDefault, IDictionary<string, object> additionalProperties)
+        internal PolybaseSettings(PolybaseSettingsRejectType? rejectType, BinaryData rejectValue, BinaryData rejectSampleValue, BinaryData useTypeDefault, IDictionary<string, BinaryData> additionalProperties)
         {
             RejectType = rejectType;
             RejectValue = rejectValue;
@@ -37,12 +38,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reject type. </summary>
         public PolybaseSettingsRejectType? RejectType { get; set; }
         /// <summary> Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number), minimum: 0. </summary>
-        public object RejectValue { get; set; }
+        public BinaryData RejectValue { get; set; }
         /// <summary> Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public object RejectSampleValue { get; set; }
+        public BinaryData RejectSampleValue { get; set; }
         /// <summary> Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean (or Expression with resultType boolean). </summary>
-        public object UseTypeDefault { get; set; }
+        public BinaryData UseTypeDefault { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

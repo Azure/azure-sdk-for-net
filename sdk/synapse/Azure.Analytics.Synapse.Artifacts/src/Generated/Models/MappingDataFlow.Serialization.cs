@@ -32,7 +32,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string type = default;
             Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
+            Optional<IList<BinaryData>> annotations = default;
             Optional<DataFlowFolder> folder = default;
             Optional<IList<DataFlowSource>> sources = default;
             Optional<IList<DataFlowSink>> sinks = default;
@@ -122,10 +126,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;

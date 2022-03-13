@@ -69,7 +69,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource");
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SharedPrivateLinkResource);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(SharedPrivateLinkResource.ToString()).RootElement);
+#endif
                 }
                 else
                 {

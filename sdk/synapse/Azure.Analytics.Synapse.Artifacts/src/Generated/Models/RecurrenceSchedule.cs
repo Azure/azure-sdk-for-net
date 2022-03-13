@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WeekDays = new ChangeTrackingList<DayOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DayOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, object> additionalProperties)
+        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DayOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
         {
             Minutes = minutes;
             Hours = hours;
@@ -52,6 +53,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The monthly occurrences. </summary>
         public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,16 +17,16 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
         public ConfigurationContent()
         {
-            DeviceContent = new ChangeTrackingDictionary<string, object>();
-            ModulesContent = new ChangeTrackingDictionary<string, IDictionary<string, object>>();
-            ModuleContent = new ChangeTrackingDictionary<string, object>();
+            DeviceContent = new ChangeTrackingDictionary<string, BinaryData>();
+            ModulesContent = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
+            ModuleContent = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
         /// <param name="deviceContent"> The device configuration content. </param>
         /// <param name="modulesContent"> The modules configuration content. </param>
         /// <param name="moduleContent"> The module configuration content. </param>
-        internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, IDictionary<string, object>> modulesContent, IDictionary<string, object> moduleContent)
+        internal ConfigurationContent(IDictionary<string, BinaryData> deviceContent, IDictionary<string, IDictionary<string, BinaryData>> modulesContent, IDictionary<string, BinaryData> moduleContent)
         {
             DeviceContent = deviceContent;
             ModulesContent = modulesContent;
@@ -33,10 +34,10 @@ namespace Azure.IoT.Hub.Service.Models
         }
 
         /// <summary> The device configuration content. </summary>
-        public IDictionary<string, object> DeviceContent { get; }
+        public IDictionary<string, BinaryData> DeviceContent { get; }
         /// <summary> The modules configuration content. </summary>
-        public IDictionary<string, IDictionary<string, object>> ModulesContent { get; }
+        public IDictionary<string, IDictionary<string, BinaryData>> ModulesContent { get; }
         /// <summary> The module configuration content. </summary>
-        public IDictionary<string, object> ModuleContent { get; }
+        public IDictionary<string, BinaryData> ModuleContent { get; }
     }
 }

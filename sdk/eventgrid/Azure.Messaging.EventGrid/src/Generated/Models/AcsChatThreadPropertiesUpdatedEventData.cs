@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
         internal AcsChatThreadPropertiesUpdatedEventData()
         {
-            Properties = new ChangeTrackingDictionary<string, object>();
+            Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
-        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties) : base(transactionId, threadId, createTime, version)
+        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, BinaryData> properties) : base(transactionId, threadId, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
@@ -40,6 +40,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The time at which the properties of the thread were updated. </summary>
         public DateTimeOffset? EditTime { get; }
         /// <summary> The updated thread properties. </summary>
-        public IReadOnlyDictionary<string, object> Properties { get; }
+        public IReadOnlyDictionary<string, BinaryData> Properties { get; }
     }
 }

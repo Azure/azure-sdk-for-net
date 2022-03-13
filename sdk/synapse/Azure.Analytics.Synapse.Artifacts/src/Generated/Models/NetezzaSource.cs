@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="query"> A query to retrieve data from source. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for Netezza read in parallel. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Netezza source partitioning. </param>
-        internal NetezzaSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object query, NetezzaPartitionOption? partitionOption, NetezzaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal NetezzaSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, NetezzaPartitionOption? partitionOption, NetezzaPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> A query to retrieve data from source. Type: string (or Expression with resultType string). </summary>
-        public object Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> The partition mechanism that will be used for Netezza read in parallel. </summary>
         public NetezzaPartitionOption? PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>

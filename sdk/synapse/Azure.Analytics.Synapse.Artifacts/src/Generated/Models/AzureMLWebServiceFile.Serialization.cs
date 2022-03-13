@@ -19,7 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filePath");
-            writer.WriteObjectValue(FilePath);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
             writer.WriteEndObject();
@@ -27,13 +31,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
         {
-            object filePath = default;
+            BinaryData filePath = default;
             LinkedServiceReference linkedServiceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePath"))
                 {
-                    filePath = property.Value.GetObject();
+                    filePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))

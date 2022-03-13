@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Definition of a single variable for a Pipeline. </summary>
@@ -20,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of VariableSpecification. </summary>
         /// <param name="type"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
-        internal VariableSpecification(VariableType type, object defaultValue)
+        internal VariableSpecification(VariableType type, BinaryData defaultValue)
         {
             Type = type;
             DefaultValue = defaultValue;
@@ -29,6 +31,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Variable type. </summary>
         public VariableType Type { get; set; }
         /// <summary> Default value of variable. </summary>
-        public object DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal static QueryResult DeserializeQueryResult(JsonElement element)
         {
             Optional<QueryResultType> type = default;
-            Optional<IReadOnlyList<object>> items = default;
+            Optional<IReadOnlyList<BinaryData>> items = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,10 +38,10 @@ namespace Azure.IoT.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     items = array;
                     continue;

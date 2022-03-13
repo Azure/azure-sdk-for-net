@@ -48,18 +48,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("host");
-            writer.WriteObjectValue(Host);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Host);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId");
-                writer.WriteObjectValue(UserId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -69,7 +81,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
-                writer.WriteObjectValue(ConnectionString);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionString);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -79,7 +95,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri");
-                writer.WriteObjectValue(SasUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SasUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SasUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -89,23 +109,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare");
-                writer.WriteObjectValue(FileShare);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileShare);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileShare.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot");
-                writer.WriteObjectValue(Snapshot);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Snapshot);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Snapshot.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -116,19 +152,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object host = default;
-            Optional<object> userId = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData host = default;
+            Optional<BinaryData> userId = default;
             Optional<SecretBase> password = default;
-            Optional<object> connectionString = default;
+            Optional<BinaryData> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<object> sasUri = default;
+            Optional<BinaryData> sasUri = default;
             Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<object> fileShare = default;
-            Optional<object> snapshot = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> fileShare = default;
+            Optional<BinaryData> snapshot = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -173,10 +209,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -192,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("host"))
                         {
-                            host = property0.Value.GetObject();
+                            host = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userId"))
@@ -202,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userId = property0.Value.GetObject();
+                            userId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -222,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionString = property0.Value.GetObject();
+                            connectionString = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"))
@@ -242,7 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sasUri = property0.Value.GetObject();
+                            sasUri = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasToken"))
@@ -262,7 +298,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            fileShare = property0.Value.GetObject();
+                            fileShare = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("snapshot"))
@@ -272,7 +308,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            snapshot = property0.Value.GetObject();
+                            snapshot = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -282,13 +318,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, userId.Value, password.Value, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, fileShare.Value, snapshot.Value, encryptedCredential.Value);

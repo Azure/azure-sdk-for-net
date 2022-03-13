@@ -21,11 +21,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("store");
             writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName");
-            writer.WriteObjectValue(SecretName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SecretName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(SecretName.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion");
-                writer.WriteObjectValue(SecretVersion);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SecretVersion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SecretVersion.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -35,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static AzureKeyVaultSecretReference DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
             LinkedServiceReference store = default;
-            object secretName = default;
-            Optional<object> secretVersion = default;
+            BinaryData secretName = default;
+            Optional<BinaryData> secretVersion = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("secretName"))
                 {
-                    secretName = property.Value.GetObject();
+                    secretName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"))
@@ -57,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    secretVersion = property.Value.GetObject();
+                    secretVersion = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))

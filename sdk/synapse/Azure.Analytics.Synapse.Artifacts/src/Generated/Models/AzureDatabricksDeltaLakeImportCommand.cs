@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="dateFormat"> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         /// <param name="timestampFormat"> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeImportCommand(string type, IDictionary<string, object> additionalProperties, object dateFormat, object timestampFormat) : base(type, additionalProperties)
+        internal AzureDatabricksDeltaLakeImportCommand(string type, IDictionary<string, BinaryData> additionalProperties, BinaryData dateFormat, BinaryData timestampFormat) : base(type, additionalProperties)
         {
             DateFormat = dateFormat;
             TimestampFormat = timestampFormat;
@@ -31,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
-        public object DateFormat { get; set; }
+        public BinaryData DateFormat { get; set; }
         /// <summary> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
-        public object TimestampFormat { get; set; }
+        public BinaryData TimestampFormat { get; set; }
     }
 }

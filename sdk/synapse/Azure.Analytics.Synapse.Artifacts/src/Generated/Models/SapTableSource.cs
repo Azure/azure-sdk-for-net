@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP table source partitioning. </param>
-        internal SapTableSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object rowCount, object rowSkips, object rfcTableFields, object rfcTableOptions, object batchSize, object customRfcReadTableFunctionModule, object sapDataColumnDelimiter, SapTablePartitionOption? partitionOption, SapTablePartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal SapTableSource(string type, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData rowCount, BinaryData rowSkips, BinaryData rfcTableFields, BinaryData rfcTableOptions, BinaryData batchSize, BinaryData customRfcReadTableFunctionModule, BinaryData sapDataColumnDelimiter, SapTablePartitionOption? partitionOption, SapTablePartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;
@@ -50,19 +51,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The number of rows to be retrieved. Type: integer(or Expression with resultType integer). </summary>
-        public object RowCount { get; set; }
+        public BinaryData RowCount { get; set; }
         /// <summary> The number of rows that will be skipped. Type: integer (or Expression with resultType integer). </summary>
-        public object RowSkips { get; set; }
+        public BinaryData RowSkips { get; set; }
         /// <summary> The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string). </summary>
-        public object RfcTableFields { get; set; }
+        public BinaryData RfcTableFields { get; set; }
         /// <summary> The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string). </summary>
-        public object RfcTableOptions { get; set; }
+        public BinaryData RfcTableOptions { get; set; }
         /// <summary> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </summary>
-        public object BatchSize { get; set; }
+        public BinaryData BatchSize { get; set; }
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
-        public object CustomRfcReadTableFunctionModule { get; set; }
+        public BinaryData CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
-        public object SapDataColumnDelimiter { get; set; }
+        public BinaryData SapDataColumnDelimiter { get; set; }
         /// <summary> The partition mechanism that will be used for SAP table read in parallel. </summary>
         public SapTablePartitionOption? PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>

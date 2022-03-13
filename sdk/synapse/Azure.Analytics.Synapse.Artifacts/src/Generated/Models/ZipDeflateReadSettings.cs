@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,13 +23,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal ZipDeflateReadSettings(string type, IDictionary<string, object> additionalProperties, object preserveZipFileNameAsFolder) : base(type, additionalProperties)
+        internal ZipDeflateReadSettings(string type, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveZipFileNameAsFolder) : base(type, additionalProperties)
         {
             PreserveZipFileNameAsFolder = preserveZipFileNameAsFolder;
             Type = type ?? "ZipDeflateReadSettings";
         }
 
         /// <summary> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
-        public object PreserveZipFileNameAsFolder { get; set; }
+        public BinaryData PreserveZipFileNameAsFolder { get; set; }
     }
 }

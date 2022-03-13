@@ -48,25 +48,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint");
-            writer.WriteObjectValue(Endpoint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Endpoint);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Endpoint.ToString()).RootElement);
+#endif
             writer.WritePropertyName("marketplaceID");
-            writer.WriteObjectValue(MarketplaceID);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MarketplaceID);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(MarketplaceID.ToString()).RootElement);
+#endif
             writer.WritePropertyName("sellerID");
-            writer.WriteObjectValue(SellerID);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SellerID);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(SellerID.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken");
                 writer.WriteObjectValue(MwsAuthToken);
             }
             writer.WritePropertyName("accessKeyId");
-            writer.WriteObjectValue(AccessKeyId);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AccessKeyId);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(AccessKeyId.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey");
@@ -75,28 +95,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints");
-                writer.WriteObjectValue(UseEncryptedEndpoints);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseEncryptedEndpoints);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseEncryptedEndpoints.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification");
-                writer.WriteObjectValue(UseHostVerification);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseHostVerification);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseHostVerification.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification");
-                writer.WriteObjectValue(UsePeerVerification);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UsePeerVerification);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UsePeerVerification.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteObjectValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -107,19 +147,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            object endpoint = default;
-            object marketplaceID = default;
-            object sellerID = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData endpoint = default;
+            BinaryData marketplaceID = default;
+            BinaryData sellerID = default;
             Optional<SecretBase> mwsAuthToken = default;
-            object accessKeyId = default;
+            BinaryData accessKeyId = default;
             Optional<SecretBase> secretKey = default;
-            Optional<object> useEncryptedEndpoints = default;
-            Optional<object> useHostVerification = default;
-            Optional<object> usePeerVerification = default;
-            Optional<object> encryptedCredential = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Optional<BinaryData> useEncryptedEndpoints = default;
+            Optional<BinaryData> useHostVerification = default;
+            Optional<BinaryData> usePeerVerification = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -164,10 +204,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -183,17 +223,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("endpoint"))
                         {
-                            endpoint = property0.Value.GetObject();
+                            endpoint = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("marketplaceID"))
                         {
-                            marketplaceID = property0.Value.GetObject();
+                            marketplaceID = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sellerID"))
                         {
-                            sellerID = property0.Value.GetObject();
+                            sellerID = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mwsAuthToken"))
@@ -208,7 +248,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("accessKeyId"))
                         {
-                            accessKeyId = property0.Value.GetObject();
+                            accessKeyId = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("secretKey"))
@@ -228,7 +268,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useEncryptedEndpoints = property0.Value.GetObject();
+                            useEncryptedEndpoints = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useHostVerification"))
@@ -238,7 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useHostVerification = property0.Value.GetObject();
+                            useHostVerification = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("usePeerVerification"))
@@ -248,7 +288,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            usePeerVerification = property0.Value.GetObject();
+                            usePeerVerification = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -258,13 +298,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonMWSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, marketplaceID, sellerID, mwsAuthToken.Value, accessKeyId, secretKey.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -19,9 +20,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Activities = new ChangeTrackingList<Activity>();
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
             Variables = new ChangeTrackingDictionary<string, VariableSpecification>();
-            Annotations = new ChangeTrackingList<object>();
-            RunDimensions = new ChangeTrackingDictionary<string, object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            RunDimensions = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<object> annotations, IDictionary<string, object> runDimensions, PipelineFolder folder, IDictionary<string, object> additionalProperties) : base(id, name, type, etag)
+        internal PipelineResource(string id, string name, string type, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(id, name, type, etag)
         {
             Description = description;
             Activities = activities;
@@ -62,12 +63,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The max number of concurrent runs for the pipeline. </summary>
         public int? Concurrency { get; set; }
         /// <summary> List of tags that can be used for describing the Pipeline. </summary>
-        public IList<object> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> Dimensions emitted by Pipeline. </summary>
-        public IDictionary<string, object> RunDimensions { get; }
+        public IDictionary<string, BinaryData> RunDimensions { get; }
         /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
         public PipelineFolder Folder { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

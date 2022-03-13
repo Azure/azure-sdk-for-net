@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
         public IntegrationRuntimeSsisCatalogInfo()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, IDictionary<string, object> additionalProperties)
+        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
@@ -43,6 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
         public IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

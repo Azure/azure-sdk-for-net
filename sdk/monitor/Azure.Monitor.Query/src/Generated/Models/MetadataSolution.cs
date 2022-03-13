@@ -46,9 +46,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The description of the Log Analytics solution. </summary>
         public string Description { get; }
         /// <summary> The tags that are associated with the Log Analytics solution. </summary>
-        public object Tags { get; }
+        public BinaryData Tags { get; }
         /// <summary> The properties of the Log Analytics solution. </summary>
-        public object Properties { get; }
+        public BinaryData Properties { get; }
         /// <summary> The related metadata items for the Log Analytics solution. </summary>
         public MetadataSolutionRelated Related { get; }
     }

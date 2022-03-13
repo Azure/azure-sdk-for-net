@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileName"> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </param>
         /// <param name="format"> The format of the Azure Data Lake Storage Gen2 storage. </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
-        internal AzureBlobFSDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object folderPath, object fileName, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureBlobFSDataset(string type, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData fileName, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             FileName = fileName;
@@ -50,9 +50,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string). </summary>
-        public object FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </summary>
-        public object FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> The format of the Azure Data Lake Storage Gen2 storage. </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the blob storage. </summary>

@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="label"> The name of the category which will be used in constructing the output variable names. </param>
         /// <param name="values"> The list of values that a category maps to. Can be either a unique list of string or list of long. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="values"/> is null. </exception>
-        public TimeSeriesAggregateCategory(string label, IEnumerable<object> values)
+        public TimeSeriesAggregateCategory(string label, IEnumerable<BinaryData> values)
         {
             if (label == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesAggregateCategory. </summary>
         /// <param name="label"> The name of the category which will be used in constructing the output variable names. </param>
         /// <param name="values"> The list of values that a category maps to. Can be either a unique list of string or list of long. </param>
-        internal TimeSeriesAggregateCategory(string label, IList<object> values)
+        internal TimeSeriesAggregateCategory(string label, IList<BinaryData> values)
         {
             Label = label;
             Values = values;
@@ -45,6 +45,6 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> The name of the category which will be used in constructing the output variable names. </summary>
         public string Label { get; set; }
         /// <summary> The list of values that a category maps to. Can be either a unique list of string or list of long. </summary>
-        public IList<object> Values { get; }
+        public IList<BinaryData> Values { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
         public DatasetSchemaDataElement()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
         /// <param name="name"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetSchemaDataElement(object name, object type, IDictionary<string, object> additionalProperties)
+        internal DatasetSchemaDataElement(BinaryData name, BinaryData type, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             Type = type;
@@ -31,10 +32,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
-        public object Name { get; set; }
+        public BinaryData Name { get; set; }
         /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
-        public object Type { get; set; }
+        public BinaryData Type { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

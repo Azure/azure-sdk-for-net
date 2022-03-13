@@ -21,26 +21,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName");
-                writer.WriteObjectValue(PartitionColumnName);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound");
-                writer.WriteObjectValue(PartitionUpperBound);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionUpperBound);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionUpperBound.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound");
-                writer.WriteObjectValue(PartitionLowerBound);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionLowerBound);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionLowerBound.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SqlPartitionSettings DeserializeSqlPartitionSettings(JsonElement element)
         {
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            Optional<BinaryData> partitionColumnName = default;
+            Optional<BinaryData> partitionUpperBound = default;
+            Optional<BinaryData> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"))
@@ -50,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionColumnName = property.Value.GetObject();
+                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"))
@@ -60,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionUpperBound = property.Value.GetObject();
+                    partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"))
@@ -70,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionLowerBound = property.Value.GetObject();
+                    partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

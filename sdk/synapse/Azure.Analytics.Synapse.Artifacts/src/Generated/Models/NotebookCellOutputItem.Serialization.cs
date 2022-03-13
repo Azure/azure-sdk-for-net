@@ -38,12 +38,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -54,8 +62,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<int> executionCount = default;
             CellOutputType outputType = default;
             Optional<object> text = default;
-            Optional<object> data = default;
-            Optional<object> metadata = default;
+            Optional<BinaryData> data = default;
+            Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -95,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    data = property.Value.GetObject();
+                    data = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -105,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    metadata = property.Value.GetObject();
+                    metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

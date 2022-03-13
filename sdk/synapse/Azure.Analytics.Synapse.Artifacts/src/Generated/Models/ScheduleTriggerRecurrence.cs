@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
         public ScheduleTriggerRecurrence()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeZone, RecurrenceSchedule schedule, IDictionary<string, object> additionalProperties)
+        internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -52,6 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The recurrence schedule. </summary>
         public RecurrenceSchedule Schedule { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

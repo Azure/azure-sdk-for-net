@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
         internal DataFlowDebugSessionInfo()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, string sessionId, string startTime, int? timeToLiveInMinutes, string lastActivityTime, IReadOnlyDictionary<string, object> additionalProperties)
+        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, string sessionId, string startTime, int? timeToLiveInMinutes, string lastActivityTime, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             DataFlowName = dataFlowName;
             ComputeType = computeType;
@@ -63,6 +64,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Last activity time of data flow debug session. </summary>
         public string LastActivityTime { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

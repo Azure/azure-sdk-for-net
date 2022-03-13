@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Specify the column name and value of additional columns. </summary>
@@ -16,8 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Additional column name. Type: string (or Expression with resultType string). </summary>
-        public object Name { get; }
+        public BinaryData Name { get; }
         /// <summary> Additional column value. Type: string (or Expression with resultType string). </summary>
-        public object Value { get; }
+        public BinaryData Value { get; }
     }
 }
