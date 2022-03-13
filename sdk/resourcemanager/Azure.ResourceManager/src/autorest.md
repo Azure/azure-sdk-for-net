@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-save-inputs: true
 arm-core: true
 clear-output-folder: true
 skip-csproj: true
