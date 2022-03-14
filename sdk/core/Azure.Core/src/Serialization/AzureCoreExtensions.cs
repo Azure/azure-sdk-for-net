@@ -54,7 +54,7 @@ namespace Azure
         public static IDictionary<string, object?> ToDictionaryFromJson(this BinaryData data)
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
-            return element.GetObject() as Dictionary<string, object?> ?? new Dictionary<string, object?>();
+            return element.GetObject() as Dictionary<string, object?> ?? throw new InvalidOperationException("BinaryData was not a json object");
         }
 
         private static object? GetObject(in this JsonElement element)
