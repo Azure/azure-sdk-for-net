@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             }
         }
 
-        private static ThreatIntelligenceIndicatorModelForRequestBody GetThreatIntelligenceIndicatorModel() => new ThreatIntelligenceIndicatorModelForRequestBody()
+        private static ThreatIntelligenceIndicatorModel GetThreatIntelligenceIndicatorModel() => new ThreatIntelligenceIndicatorModel()
         {
             DisplayName = "SDK Test",
             PatternType = "ipv4-addr",

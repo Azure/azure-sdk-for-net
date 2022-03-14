@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -46,11 +45,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             CustomInit();
         }
 
-
-
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
     }
 }

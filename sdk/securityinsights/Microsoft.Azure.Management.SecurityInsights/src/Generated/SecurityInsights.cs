@@ -563,8 +563,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Settings>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ThreatIntelligenceInformation>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ThreatIntelligenceInformation>("kind"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ThreatIntelligenceResourceKind>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ThreatIntelligenceResourceKind>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnectorsCheckRequirements>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataConnectorsCheckRequirements>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnector>("kind"));

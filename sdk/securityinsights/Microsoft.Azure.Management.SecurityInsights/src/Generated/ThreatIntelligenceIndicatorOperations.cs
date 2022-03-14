@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateIndicatorWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateIndicatorWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -591,7 +591,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1565,7 +1565,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> ReplaceTagsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ThreatIntelligenceInformation>> ReplaceTagsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
