@@ -51,7 +51,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Username / Password Credentials to provision guest agent. </summary>
         public GuestCredential Credentials { get; set; }
         /// <summary> HTTP Proxy configuration for the VM. </summary>
-        public HttpProxyConfiguration HttpProxyConfig { get; set; }
+        internal HttpProxyConfiguration HttpProxyConfig { get; set; }
+        /// <summary> Gets or sets httpsProxy url. </summary>
+        public string HttpsProxy
+        {
+            get => HttpProxyConfig is null ? default : HttpProxyConfig.HttpsProxy;
+            set
+            {
+                if (HttpProxyConfig is null)
+                    HttpProxyConfig = new HttpProxyConfiguration();
+                HttpProxyConfig.HttpsProxy = value;
+            }
+        }
+
         /// <summary> Gets or sets the guest agent provisioning action. </summary>
         public ProvisioningAction? ProvisioningAction { get; set; }
         /// <summary> Gets or sets the guest agent status. </summary>

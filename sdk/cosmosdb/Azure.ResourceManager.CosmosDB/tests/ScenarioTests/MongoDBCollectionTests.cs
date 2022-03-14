@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(collection);
         }
 
-        protected async Task<MongoDBCollection> CreateMongoDBCollection(AutoscaleSettings autoscale)
+        internal async Task<MongoDBCollection> CreateMongoDBCollection(AutoscaleSettings autoscale)
         {
             _collectionName = Recording.GenerateAssetName("mongodb-collection-");
             return await CreateMongoDBCollection(_collectionName, autoscale, MongoDBCollectionCollection);

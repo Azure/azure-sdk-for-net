@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureVMValue = "AzureVM";
+        private const string AzureVmValue = "AzureVM";
         private const string AzureVNetValue = "AzureVNet";
         private const string AzureSubnetValue = "AzureSubnet";
         private const string ExternalAddressValue = "ExternalAddress";
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
 
         /// <summary> AzureVM. </summary>
-        public static EndpointType AzureVM { get; } = new EndpointType(AzureVMValue);
+        public static EndpointType AzureVm { get; } = new EndpointType(AzureVmValue);
         /// <summary> AzureVNet. </summary>
         public static EndpointType AzureVNet { get; } = new EndpointType(AzureVNetValue);
         /// <summary> AzureSubnet. </summary>

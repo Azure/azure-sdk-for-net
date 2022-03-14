@@ -98,7 +98,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>
-        public ApplicationBillingDetailsDefinition BillingDetails { get; }
+        internal ApplicationBillingDetailsDefinition BillingDetails { get; }
+        /// <summary> The managed application resource usage Id. </summary>
+        public string BillingDetailsResourceUsageId
+        {
+            get => BillingDetails.ResourceUsageId;
+        }
+
         /// <summary> The managed application Jit access policy. </summary>
         public ApplicationJitAccessPolicy JitAccessPolicy { get; set; }
         /// <summary> The publisher tenant Id. </summary>

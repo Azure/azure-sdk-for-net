@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         public string ApplicationDefinitionId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationBillingDetailsDefinition BillingDetails { get { throw null; } }
+        public string BillingDetailsResourceUsageId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationClientDetails CreatedBy { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationPackageContact CustomerSupport { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentity Identity { get { throw null; } set { } }
@@ -102,15 +102,15 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
         public object CreateUiDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationDeploymentPolicy DeploymentPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.DeploymentMode DeploymentMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationPackageLockingPolicyDefinition LockingPolicy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LockingAllowedActions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationLockLevel LockLevel { get { throw null; } set { } }
         public object MainTemplate { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationManagementPolicy ManagementPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationNotificationPolicy NotificationPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationNotificationEndpoint> NotificationEndpoints { get { throw null; } set { } }
         public System.Uri PackageFileUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationPolicy> Policies { get { throw null; } }
     }
@@ -459,11 +459,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
     }
-    public partial class ApplicationBillingDetailsDefinition
-    {
-        internal ApplicationBillingDetailsDefinition() { }
-        public string ResourceUsageId { get { throw null; } }
-    }
     public partial class ApplicationClientDetails
     {
         internal ApplicationClientDetails() { }
@@ -497,11 +492,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName left, Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ApplicationDeploymentPolicy
-    {
-        public ApplicationDeploymentPolicy(Azure.ResourceManager.Resources.Models.DeploymentMode deploymentMode) { }
-        public Azure.ResourceManager.Resources.Models.DeploymentMode DeploymentMode { get { throw null; } set { } }
     }
     public partial class ApplicationJitAccessPolicy
     {
@@ -551,20 +541,10 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ApplicationManagementMode left, Azure.ResourceManager.Resources.Models.ApplicationManagementMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationManagementPolicy
-    {
-        public ApplicationManagementPolicy() { }
-        public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? Mode { get { throw null; } set { } }
-    }
     public partial class ApplicationNotificationEndpoint
     {
         public ApplicationNotificationEndpoint(System.Uri uri) { }
         public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class ApplicationNotificationPolicy
-    {
-        public ApplicationNotificationPolicy(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ApplicationNotificationEndpoint> notificationEndpoints) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationNotificationEndpoint> NotificationEndpoints { get { throw null; } }
     }
     public partial class ApplicationPackageContact
     {
@@ -572,11 +552,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContactName { get { throw null; } }
         public string Email { get { throw null; } }
         public string Phone { get { throw null; } }
-    }
-    public partial class ApplicationPackageLockingPolicyDefinition
-    {
-        public ApplicationPackageLockingPolicyDefinition() { }
-        public System.Collections.Generic.IList<string> AllowedActions { get { throw null; } }
     }
     public partial class ApplicationPackageSupportUrls
     {
@@ -613,7 +588,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ApplicationDefinitionId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationBillingDetailsDefinition BillingDetails { get { throw null; } }
+        public string BillingDetailsResourceUsageId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationClientDetails CreatedBy { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationPackageContact CustomerSupport { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentity Identity { get { throw null; } set { } }
@@ -635,7 +610,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzCliVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.CleanupOptions? CleanupPreference { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ContainerConfiguration ContainerSettings { get { throw null; } set { } }
+        public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
@@ -654,7 +629,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzPowerShellVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.CleanupOptions? CleanupPreference { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ContainerConfiguration ContainerSettings { get { throw null; } set { } }
+        public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
@@ -703,11 +678,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.CleanupOptions left, Azure.ResourceManager.Resources.Models.CleanupOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContainerConfiguration
-    {
-        public ContainerConfiguration() { }
-        public string ContainerGroupName { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Resources.Models.CreatedByType>
     {
@@ -727,11 +697,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.CreatedByType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DebugSetting
-    {
-        public DebugSetting() { }
-        public string DetailLevel { get { throw null; } set { } }
     }
     public partial class Dependency
     {
@@ -785,8 +750,8 @@ namespace Azure.ResourceManager.Resources.Models
         public string Duration { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningOperation? ProvisioningOperation { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.HttpMessage Request { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.HttpMessage Response { get { throw null; } }
+        public object RequestContent { get { throw null; } }
+        public object ResponseContent { get { throw null; } }
         public string ServiceRequestId { get { throw null; } }
         public string StatusCode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.StatusMessage StatusMessage { get { throw null; } }
@@ -796,8 +761,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentProperties
     {
         public DeploymentProperties(Azure.ResourceManager.Resources.Models.DeploymentMode mode) { }
-        public Azure.ResourceManager.Resources.Models.DebugSetting DebugSetting { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptions ExpressionEvaluationOptions { get { throw null; } set { } }
+        public string DebugDetailLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType? ExpressionEvaluationScope { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.DeploymentMode Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.OnErrorDeployment OnErrorDeployment { get { throw null; } set { } }
         public object Parameters { get { throw null; } set { } }
@@ -809,7 +774,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal DeploymentPropertiesExtended() { }
         public string CorrelationId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.DebugSetting DebugSetting { get { throw null; } }
+        public string DebugSettingDetailLevel { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Dependency> Dependencies { get { throw null; } }
         public string Duration { get { throw null; } }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
@@ -870,12 +835,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentWhatIfProperties : Azure.ResourceManager.Resources.Models.DeploymentProperties
     {
         public DeploymentWhatIfProperties(Azure.ResourceManager.Resources.Models.DeploymentMode mode) : base (default(Azure.ResourceManager.Resources.Models.DeploymentMode)) { }
-        public Azure.ResourceManager.Resources.Models.DeploymentWhatIfSettings WhatIfSettings { get { throw null; } set { } }
-    }
-    public partial class DeploymentWhatIfSettings
-    {
-        public DeploymentWhatIfSettings() { }
-        public Azure.ResourceManager.Resources.Models.WhatIfResultFormat? ResultFormat { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.WhatIfResultFormat? WhatIfResultFormat { get { throw null; } set { } }
     }
     public partial class EnvironmentVariable
     {
@@ -883,11 +843,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } set { } }
         public string SecureValue { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-    }
-    public partial class ExpressionEvaluationOptions
-    {
-        public ExpressionEvaluationOptions() { }
-        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType? Scope { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExpressionEvaluationOptionsScopeType : System.IEquatable<Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType>
@@ -907,11 +862,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType left, Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class HttpMessage
-    {
-        internal HttpMessage() { }
-        public object Content { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitApprovalMode : System.IEquatable<Azure.ResourceManager.Resources.Models.JitApprovalMode>

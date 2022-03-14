@@ -41,7 +41,19 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Private endpoint associated with the private endpoint connection. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
+        /// <summary> Full qualified Id of the private endpoint. </summary>
+        public string PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new PrivateEndpoint();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Group IDs. </summary>
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state. </summary>

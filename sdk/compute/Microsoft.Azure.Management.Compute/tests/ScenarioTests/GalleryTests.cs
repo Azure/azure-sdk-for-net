@@ -119,7 +119,8 @@ namespace Compute.Tests
 
                 IPage<GalleryImage> listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
                 Assert.Single(listGalleryImagesResult);
-                Assert.Null(listGalleryImagesResult.NextPageLink);
+                Assert.Equal(1, listGalleryImagesResult.Count());
+                //Assert.Null(listGalleryImagesResult.NextPageLink);
 
                 m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
                 listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
@@ -194,13 +195,13 @@ namespace Compute.Tests
                     IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Single(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
+                    Assert.Equal(1, listGalleryImageVersionsResult.Count());
+                    //Assert.Null(listGalleryImageVersionsResult.NextPageLink);
 
                     m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, galleryImageVersionName);
                     listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Empty(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
 

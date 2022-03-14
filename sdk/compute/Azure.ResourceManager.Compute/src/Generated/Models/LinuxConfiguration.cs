@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
@@ -31,7 +33,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies whether password authentication should be disabled. </summary>
         public bool? DisablePasswordAuthentication { get; set; }
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
-        public SshConfiguration Ssh { get; set; }
+        internal SshConfiguration Ssh { get; set; }
+        /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
+        public IList<SshPublicKeyInfo> SshPublicKeys
+        {
+            get
+            {
+                if (Ssh is null)
+                    Ssh = new SshConfiguration();
+                return Ssh.PublicKeys;
+            }
+        }
+
         /// <summary> Indicates whether virtual machine agent should be provisioned on the virtual machine. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body, default behavior is to set it to true.  This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </summary>
         public bool? ProvisionVmAgent { get; set; }
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>

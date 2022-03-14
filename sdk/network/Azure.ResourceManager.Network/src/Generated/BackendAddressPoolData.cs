@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>
-        public WritableSubResource OutboundRule { get; }
+        internal WritableSubResource OutboundRule { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OutboundRuleId
+        {
+            get => OutboundRule.Id;
+            set => OutboundRule.Id = value;
+        }
+
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> OutboundRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> id = default;
             Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
             Optional<WritableSubResource> container = default;
-            Optional<IReadOnlyList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<ContainerNetworkInterfaceIPConfiguration>> ipConfigurations = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContainerNetworkInterfaceIpConfiguration> array = new List<ContainerNetworkInterfaceIpConfiguration>();
+                            List<ContainerNetworkInterfaceIPConfiguration> array = new List<ContainerNetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterfaceIpConfiguration.DeserializeContainerNetworkInterfaceIpConfiguration(item));
+                                array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;

@@ -49,12 +49,9 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Create_Vnet_and_Subnet
             string virtualNetworkName = "MYVM" + "_vnet";
             string subnetName = "mySubnet";
-            AddressSpace addressSpace = new AddressSpace();
-            addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
             VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
             {
-                AddressSpace = addressSpace,
                 Subnets =
                 {
                     new SubnetData()
@@ -65,6 +62,7 @@ namespace Azure.ResourceManager.Tests.Samples
                 }
             };
             VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
+            virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
             ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(true, virtualNetworkName, virtualNetworkData);
             VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
             #endregion
@@ -89,7 +87,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
             NetworkInterfaceData nicData = new NetworkInterfaceData();
             nicData.Location = location;
-            nicData.IpConfigurations.Add(networkInterfaceIPConfiguration);
+            nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
             NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
             ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(true, networkInterfaceName, nicData);
             NetworkInterface networkInterface = networkInterfaceOperation.Value;
@@ -100,8 +98,7 @@ namespace Azure.ResourceManager.Tests.Samples
             virutalMachineData.OSProfile.AdminUsername = "admin-username";
             virutalMachineData.OSProfile.AdminPassword = "admin-p4$$w0rd";
             virutalMachineData.OSProfile.ComputerName = "computer-name";
-            virutalMachineData.AvailabilitySet = new WritableSubResource();
-            virutalMachineData.AvailabilitySet.Id = availabilitySet.Id;
+            virutalMachineData.AvailabilitySetId = availabilitySet.Id;
             NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
             nicReference.Id = networkInterface.Id;
             virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);

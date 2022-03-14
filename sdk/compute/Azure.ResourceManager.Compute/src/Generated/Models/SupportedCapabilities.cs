@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of supported capabilities (like accelerated networking) persisted on the disk resource for VM use. </summary>
-    public partial class SupportedCapabilities
+    internal partial class SupportedCapabilities
     {
         /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
         public SupportedCapabilities()
