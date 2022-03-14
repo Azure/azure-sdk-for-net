@@ -3915,7 +3915,7 @@ namespace Azure.ResourceManager.Compute.Models
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
-        public string VirtualMachineExtensionUpdatePropertiesType { get { throw null; } set { } }
+        public string VirtualMachineExtensionType { get { throw null; } set { } }
     }
     public partial class PatchableVirtualMachineScaleSetData : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -3963,7 +3963,7 @@ namespace Azure.ResourceManager.Compute.Models
         public object Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
-        public string TypePropertiesType { get { throw null; } set { } }
+        public string VirtualMachineExtensionType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchAssessmentState : System.IEquatable<Azure.ResourceManager.Compute.Models.PatchAssessmentState>
@@ -4048,7 +4048,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirCommunityGalleryResource() { }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public string PirCommunityGalleryResourceType { get { throw null; } }
+        public string ResourceType { get { throw null; } }
         public string UniqueId { get { throw null; } }
     }
     public partial class PirResource
