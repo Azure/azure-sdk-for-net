@@ -7,6 +7,7 @@ using Azure.Communication.Tests;
 using Azure.Communication.Identity;
 using NUnit.Framework;
 using System.Text.Json;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.NetworkTraversal.Tests
 {
@@ -17,6 +18,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27522")]
     public class CommunicationRelayClientLiveTests : CommunicationRelayClientLiveTestBase
     {
         /// <summary>
@@ -156,7 +158,14 @@ namespace Azure.Communication.NetworkTraversal.Tests
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-            Assert.IsTrue(currentTime<=turnCredentialsResponse.Value.ExpiresOn);
+
+            // We only check if we are actually hitting an endpoint.
+            // If we compare them when running from playback, the expiresOn value will be the one that was previously recorded so it will always fail.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
+            }
+
             Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
 
             foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
@@ -194,7 +203,14 @@ namespace Azure.Communication.NetworkTraversal.Tests
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-            Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
+
+            // We only check if we are actually hitting an endpoint.
+            // If we compare them when running from playback, the expiresOn value will be the one that was previously recorded so it will always fail.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
+            }
+
             Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
 
             foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
