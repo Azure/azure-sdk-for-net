@@ -129,14 +129,14 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// The configuation<see cref="BlobClientConfiguration"/>.
+        /// The configuation<see cref="Storage.Blobs.BlobClientConfiguration"/>.
         /// </summary>
-        internal readonly BlobClientConfiguration _clientConfiguration;
+        internal readonly Storage.Blobs.BlobClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// <see cref="BlobClientConfiguration"/>.
+        /// <see cref="Storage.Blobs.BlobClientConfiguration"/>.
         /// </summary>
-        internal virtual BlobClientConfiguration ClientConfiguration => _clientConfiguration;
+        internal virtual Storage.Blobs.BlobClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
         /// A <see cref="BlobContainerClient"/> assoicated with the file system.
@@ -209,6 +209,191 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
         /// class.
         /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="blobContainerName">
+        /// The name of the container containing this blob directory.
+        /// </param>
+        /// <param name="blobDirectoryPath">
+        /// The path of the blob directory.
+        /// </param>
+        internal BlobVirtualDirectoryClient(string connectionString, string blobContainerName, string blobDirectoryPath)
+            : this(connectionString, blobContainerName, blobDirectoryPath, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="blobContainerName">
+        /// The name of the container containing this blob directory.
+        /// </param>
+        /// <param name="blobDirectoryPath">
+        /// The path of this blob directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobVirtualDirectoryClient(string connectionString, string blobContainerName, string blobDirectoryPath, BlobClientOptions options)
+        {
+            options ??= new BlobClientOptions();
+            var conn = StorageConnectionString.Parse(connectionString);
+            var builder =
+                new BlobUriBuilder(conn.BlobEndpoint)
+                {
+                    BlobContainerName = blobContainerName,
+                    BlobName = blobDirectoryPath
+                };
+            _uri = builder.ToUri();
+            _directoryPath = blobDirectoryPath;
+
+            _clientConfiguration = new Storage.Blobs.BlobClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new StorageClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                encryptionScope: options.EncryptionScope);
+
+            _containerClient = new BlobContainerClient(connectionString, blobContainerName, options);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobDirectoryUri">
+        /// A <see cref="Uri"/> referencing the blob directory that includes the
+        /// name of the account, the name of the container, and the path to
+        /// the blob directory.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_directory}".
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, BlobClientOptions options = default)
+            : this(blobDirectoryUri, (HttpPipelinePolicy)null, options, null)
+        {
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobDirectoryUri">
+        /// A <see cref="Uri"/> referencing the blob directory that includes the
+        /// name of the account, the name of the container, and the path of
+        /// the blob directory.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_directory}".
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            : this(blobDirectoryUri, credential.AsPolicy(), options, credential)
+        {
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobDirectoryUri">
+        /// A <see cref="Uri"/> referencing the blob directory that includes the
+        /// name of the account, the name of the container, and the path of
+        /// the blob directory.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_directory}".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(blobDirectoryUri, credential.AsPolicy<BlobUriBuilder>(blobDirectoryUri), options, null)
+        {
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobDirectoryUri">
+        /// A <see cref="Uri"/> referencing the blob directory that includes the
+        /// name of the account, the name of the container, and the path of
+        /// the blob directory.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_directory}".
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, TokenCredential credential, BlobClientOptions options = default)
+            : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
+        {
+            Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
+            BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
+            // Clear the blob directory path to get the Uri with just the container name
+            builder.BlobName = "";
+            _containerClient = new BlobContainerClient(builder.ToUri(), credential, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobVirtualDirectoryClient"/>
+        /// class.
+        /// </summary>
         /// <param name="blobDirectoryUri">
         /// A <see cref="Uri"/> referencing the blob directory that includes the
         /// name of the account, the name of the container, and the name of
@@ -236,7 +421,7 @@ namespace Azure.Storage.DataMovement.Blobs
             options ??= new BlobClientOptions();
             _uri = blobDirectoryUri;
 
-            _clientConfiguration = new BlobClientConfiguration(
+            _clientConfiguration = new Storage.Blobs.BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
@@ -326,6 +511,33 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobContainerClient.GetClientOptions(client);
         }
         #endregion
+
+        #region protected static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="BlobVirtualDirectoryClient"/>'s <see cref="HttpPipeline"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static HttpPipeline GetHttpPipeline(BlobVirtualDirectoryClient client) =>
+            client.ClientConfiguration.Pipeline;
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static BlobClientOptions GetClientOptions(BlobVirtualDirectoryClient client) =>
+            new BlobClientOptions(client.ClientConfiguration.Version)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.

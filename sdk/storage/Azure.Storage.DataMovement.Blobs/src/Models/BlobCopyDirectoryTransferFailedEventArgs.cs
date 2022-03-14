@@ -17,12 +17,12 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
         /// </summary>
-        public Uri SourceDirectoryUri { get; }
+        public BlobVirtualDirectoryClient SourceDirectoryClient { get; }
 
         /// <summary>
         /// Gets the source path to the contents to upload to the destination.
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationDirectoryPath { get; }
+        public BlobVirtualDirectoryClient DestinationDirectoryClient { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -55,17 +55,17 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// </exception>
         public BlobCopyDirectoryTransferFailedEventArgs(
             string jobId,
-            Uri sourceDirectoryUri,
+            BlobVirtualDirectoryClient sourceDirectoryUri,
             BlobVirtualDirectoryClient destinationDirectoryClient,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(jobId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(SourceDirectoryUri, nameof(BlobBaseClient));
+            Argument.AssertNotNull(sourceDirectoryUri, nameof(BlobBaseClient));
             Argument.AssertNotNull(destinationDirectoryClient, nameof(BlobBaseClient));
-            DestinationDirectoryPath = destinationDirectoryClient;
-            SourceDirectoryUri = sourceDirectoryUri;
+            DestinationDirectoryClient = destinationDirectoryClient;
+            SourceDirectoryClient = sourceDirectoryUri;
             Exception = exception;
         }
     }

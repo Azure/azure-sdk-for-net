@@ -18,19 +18,21 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     internal class BlobServiceCopyDirectoryTransferJob : BlobTransferJobInternal
     {
-        private BlobVirtualDirectoryClient _sourceDirectoryClient;
+        /// <summary>
+        /// Holds Source Blob Configurations
+        /// </summary>
+        public BlobClientConfiguration SourceBlobConfiguration;
 
         /// <summary>
-        /// Source Directory Uri jobs.
+        /// Holds Source Blob Configurations
         /// </summary>
-        public BlobVirtualDirectoryClient SourceDirectoryClient => _sourceDirectoryClient;
-
-        internal BlobVirtualDirectoryClient _destinationDirectoryClient;
+        public BlobClientConfiguration DestinationBlobConfiguration;
 
         /// <summary>
-        /// Destination directory for the finished copies
+        /// Directory clients to perform the copy directory job
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationBlobDirectoryClient => _destinationDirectoryClient;
+        internal BlobVirtualDirectoryClient SourceBlobDirectoryClient;
+        internal BlobVirtualDirectoryClient DestinationBlobDirectoryClient;
 
         /// <summary>
         /// Copy method to choose between StartCopyFromUri or SyncCopyFromUri
@@ -65,8 +67,20 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobDirectoryCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
-            _sourceDirectoryClient = sourceClient;
-            _destinationDirectoryClient = destinationClient;
+            SourceBlobDirectoryClient = sourceClient;
+            SourceBlobConfiguration = new BlobClientConfiguration()
+            {
+                BlobContainerName = sourceClient.BlobContainerName,
+                AccountName = sourceClient.AccountName,
+                Name = sourceClient.DirectoryPath
+            };
+            DestinationBlobDirectoryClient = destinationClient;
+            DestinationBlobConfiguration = new BlobClientConfiguration()
+            {
+                BlobContainerName = destinationClient.BlobContainerName,
+                AccountName = destinationClient.AccountName,
+                Name = destinationClient.DirectoryPath
+            };
             CopyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
         }
@@ -79,7 +93,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal async Task<CopyFromUriOperation> GetSingleAsyncCopyTaskAsync(string blobName)
         {
             //TODO: check if the listing operation gives the full blob path name or just everything but the prefix
-            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
+            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobDirectoryClient.Uri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
             BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
@@ -96,6 +110,55 @@ namespace Azure.Storage.DataMovement.Blobs
             return await blockBlobClient.StartCopyFromUriAsync(sourceUriBuilder.ToUri(), blobCopyFromUriOptions).ConfigureAwait(false);
         }
 
+#pragma warning disable CA1801 // Review unused parameters
+        public Action ProcessDirectoryTransfer(TaskFactory taskFactory, BlobJobTransferScheduler scheduler, bool async = true)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            return () =>
+            {
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Begin enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}",
+                    false).EnsureCompleted();
+                */
+                Pageable<BlobItem> blobs = SourceBlobDirectoryClient.GetBlobs();
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                logLevel: DataMovementLogLevel.Information,
+                message: $"Completed enumerating files within source directory: {transferJob.SourceDirectoryUri.AbsoluteUri}\n",
+                false).EnsureCompleted();
+                */
+
+                List<Task> fileUploadTasks = new List<Task>();
+                foreach (BlobItem blob in blobs)
+                {
+                    Task singleDownloadTask = taskFactory.StartNew(
+                        ProcessSingleCopyTransfer(blob.Name),
+                        cancellationToken: CancellationTokenSource.Token,
+                        creationOptions: TaskCreationOptions.LongRunning,
+                        scheduler: scheduler);
+                    fileUploadTasks.Add(singleDownloadTask);
+                }
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                    false).EnsureCompleted();
+                */
+
+                // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
+                Task.WhenAll(fileUploadTasks).Wait();
+
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
+                    false).EnsureCompleted();
+                */
+            };
+        }
+
         /// <summary>
         /// Gets sing copy job for the job scheduler
         /// </summary>
@@ -104,7 +167,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal async Task<Response<BlobCopyInfo>> GetSingleSyncCopyTaskAsync(string blobName)
         {
             //TODO: check if the listing operation gives the full blob path name or just everything but the prefix
-            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
+            BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobDirectoryClient.Uri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
             BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
@@ -133,7 +196,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return () =>
             {
-                BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryClient.Uri);
+                BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobDirectoryClient.Uri);
                 sourceUriBuilder.BlobName += $"/{blobName}";
                 Uri sourceBlobUri = sourceUriBuilder.ToUri();
 
@@ -222,6 +285,122 @@ namespace Azure.Storage.DataMovement.Blobs
         public override BlobTransferJobProperties GetJobDetails()
         {
             return this.ToBlobTransferJobDetails();
+        }
+
+        /// <summary>
+        /// Resumes respective job
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        public override Action ProcessResumeTransfer(
+            TaskFactory taskFactory,
+            BlobJobTransferScheduler scheduler,
+            ResumeTransferCredentials credential = default)
+        {
+            // Recreate source client if new credentials are present
+            if (credential?.SourceTransferCredential != default)
+            {
+                if (!string.IsNullOrEmpty(credential.SourceTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.SourceTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobDirectoryClient.Uri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
+                    {
+                        SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                            credential.SourceTransferCredential.ConnectionString,
+                            SourceBlobConfiguration.BlobContainerName,
+                            SourceBlobConfiguration.Name,
+                            BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                    }
+                    else
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                }
+                else if (credential.SourceTransferCredential.SasCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SasCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.SharedKeyCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SharedKeyCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.TokenCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.TokenCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else
+                {
+                    throw Errors.InvalidArgument(nameof(credential));
+                }
+            }
+            // Recreate destination client if new credentials are present
+            if (credential?.DestinationTransferCredential != default)
+            {
+                if (!string.IsNullOrEmpty(credential.DestinationTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.DestinationTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(DestinationBlobDirectoryClient.Uri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
+                    {
+                        DestinationBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                            credential.DestinationTransferCredential.ConnectionString,
+                            SourceBlobConfiguration.BlobContainerName,
+                            SourceBlobConfiguration.Name,
+                            BlobVirtualDirectoryClientInternals.GetClientOptions(DestinationBlobDirectoryClient));
+                    }
+                    else
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                }
+                else if (credential.SourceTransferCredential.SasCredential != default)
+                {
+                    DestinationBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.SasCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(DestinationBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.SharedKeyCredential != default)
+                {
+                    DestinationBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.SharedKeyCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(DestinationBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.TokenCredential != default)
+                {
+                    DestinationBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.TokenCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(DestinationBlobDirectoryClient));
+                }
+                else
+                {
+                    throw Errors.InvalidArgument(nameof(credential));
+                }
+            }
+            // TODO: do we throw an error if they specify the destination?
+            // Read in Job Plan File
+            // JobPlanReader.Read(file)
+            return ProcessDirectoryTransfer(taskFactory, scheduler);
         }
     }
 }

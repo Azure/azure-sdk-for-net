@@ -1,23 +1,36 @@
 namespace Azure.Storage.DataMovement
 {
+    public partial class ResumeTransferCredentials
+    {
+        protected ResumeTransferCredentials() { }
+        public ResumeTransferCredentials(Azure.Storage.DataMovement.StorageTransferCredential sourceTransferCredential, Azure.Storage.DataMovement.StorageTransferCredential destinationTransferCredential) { }
+        public Azure.Storage.DataMovement.StorageTransferCredential DestinationTransferCredential { get { throw null; } }
+        public Azure.Storage.DataMovement.StorageTransferCredential SourceTransferCredential { get { throw null; } }
+    }
     public enum StorageJobTransferStatus
     {
-        Queued = 0,
-        InProgress = 1,
-        Completed = 2,
+        Queued = 1,
+        InProgress = 2,
+        Paused = 3,
+        Completed = 4,
+        CompletedWithErrors = 5,
+    }
+    public partial class StorageTransferCredential
+    {
+        protected StorageTransferCredential() { }
+        public StorageTransferCredential(Azure.AzureSasCredential azureSasCredential) { }
+        public StorageTransferCredential(Azure.Core.TokenCredential tokenCredential) { }
+        public StorageTransferCredential(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { }
+        public StorageTransferCredential(string connectionString) { }
+        public string ConnectionString { get { throw null; } }
+        public Azure.AzureSasCredential SasCredential { get { throw null; } }
+        public Azure.Storage.StorageSharedKeyCredential SharedKeyCredential { get { throw null; } }
+        public Azure.Core.TokenCredential TokenCredential { get { throw null; } }
     }
     public partial class StorageTransferEventArgs : Azure.SyncAsyncEventArgs
     {
         public StorageTransferEventArgs(string jobId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public string JobId { get { throw null; } }
-    }
-    public partial class StorageTransferJobDetails
-    {
-        protected internal StorageTransferJobDetails() { }
-        protected internal StorageTransferJobDetails(string jobId, Azure.Storage.DataMovement.StorageJobTransferStatus status, System.DateTimeOffset? jobStartTime) { }
-        public string JobId { get { throw null; } }
-        public System.DateTimeOffset? JobStartTime { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageJobTransferStatus Status { get { throw null; } }
     }
     public abstract partial class StorageTransferManager
     {
@@ -29,8 +42,7 @@ namespace Azure.Storage.DataMovement
         public abstract System.Threading.Tasks.Task CleanAsync();
         public abstract System.Threading.Tasks.Task PauseAllTransferJobsAsync();
         public abstract System.Threading.Tasks.Task PauseTransferJobAsync(string jobId);
-        public abstract System.Threading.Tasks.Task ResumeAllTransferJobsAsync();
-        public abstract System.Threading.Tasks.Task ResumeTransferJobAsync(string jobId);
+        public abstract System.Threading.Tasks.Task ResumeTransferJobAsync(string jobId, Azure.Storage.DataMovement.ResumeTransferCredentials transferCredentials);
     }
     public partial class StorageTransferManagerOptions
     {

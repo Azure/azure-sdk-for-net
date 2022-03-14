@@ -13,10 +13,10 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public class BlobDownloadDirectoryEventHandler
     {
         /// <summary>
-        /// Number of files/blobs transferred succesfully
+        /// If a blob gets transferred successfully the event will get added to this handler
         /// </summary>
-        public event SyncAsyncEventHandler<BlobDownloadTransferSuccessEventArgs> FilesTransferred;
-        internal SyncAsyncEventHandler<BlobDownloadTransferSuccessEventArgs> GetFilesTransferred() => FilesTransferred;
+        public event SyncAsyncEventHandler<BlobDownloadTransferSuccessEventArgs> BlobTransferred;
+        internal SyncAsyncEventHandler<BlobDownloadTransferSuccessEventArgs> GetBlobsTransferred() => BlobTransferred;
 
         /// <summary>
         /// Number of directories transferred
@@ -25,14 +25,14 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         internal SyncAsyncEventHandler<BlobDownloadDirectoryTransferSuccessEventArgs> GetDirectoriesTransferred() => DirectoriesTransferred;
 
         /// <summary>
-        /// Number of Files Failing Transfer either due to no access or just failing transfer in general
+        /// Number of blobs Failing Transfer either due to no access or just failing transfer in general
         /// </summary>
-        public event SyncAsyncEventHandler<BlobDownloadTransferFailedEventArgs> FilesFailedTransferred;
+        public event SyncAsyncEventHandler<BlobDownloadTransferFailedEventArgs> BlobsFailedTransferred;
 
-        internal SyncAsyncEventHandler<BlobDownloadTransferFailedEventArgs> GetFileFailed() => FilesFailedTransferred;
+        internal SyncAsyncEventHandler<BlobDownloadTransferFailedEventArgs> GetBlobFailed() => BlobsFailedTransferred;
 
         /// <summary>
-        /// Number of directories skipped transfer. Due to inaccessability not sure if we should keep track if a few files in a folder are unable to transfer
+        /// Number of directories skipped transfer. Due to inaccessability not sure if we should keep track if a few blobs in a folder are unable to transfer
         /// </summary>
         public event SyncAsyncEventHandler<BlobDownloadDirectoryTransferFailedEventArgs> DirectoriesFailed;
         internal SyncAsyncEventHandler<BlobDownloadDirectoryTransferFailedEventArgs> GetDirectoriesFailed() => DirectoriesFailed;

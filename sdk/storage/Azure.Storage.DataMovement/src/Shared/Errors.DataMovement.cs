@@ -32,5 +32,9 @@ namespace Azure.Storage
         public static InvalidOperationException TooManyTransferStateFiles(string transferStateFolderPath, string jobId)
             => new InvalidOperationException($"Path:\"{transferStateFolderPath}\" cannot be used to store transfer state file for job \"{jobId}\"" +
                 $"due to limit of duplicate job transfer state file names. Please clear out the folder or use a different folder path");
+
+        public static ArgumentException InvalidConnectionString()
+            => new ArgumentException($"Cannot resume job due to mismatch of storage account endpoint contained in the connection string passed and " +
+                $"the original endpoint which was passed when the job was first scheduled.");
     }
 }

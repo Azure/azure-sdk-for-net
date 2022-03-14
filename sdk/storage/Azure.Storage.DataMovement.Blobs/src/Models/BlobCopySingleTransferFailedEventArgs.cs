@@ -6,39 +6,35 @@ using System.Text;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
-    /// Event Argument for Failed Single Blob Upload Transfers
+    /// Event Argument for Failed Single Blob Transfers
     /// </summary>
-    public class BlobCopyTransferSuccessEventArgs : StorageTransferEventArgs
+    public class BlobCopySingleTransferFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
+        /// Gets the <see cref="Uri"/> that was the destination blob for the upload.
         /// </summary>
-        public Uri SourceUri { get; }
+        public BlobBaseClient SourceBlobClient { get; }
 
         /// <summary>
-        /// Gets the source path to the contents to upload to the destination.
+        /// Gets the <see cref="Uri"/> to the contents to upload to the destination.
         /// </summary>
         public BlobBaseClient DestinationBlobClient { get; }
 
         /// <summary>
-        /// Gets the response returned from a successful copy transfer.
-        ///
-        /// For a Async Service Copy the response will be the GetProperties call of the last updated full copy status (is that okay?)
+        /// Gets the <see cref="Exception"/> that was thrown during the job.
         /// </summary>
-        public Response Response { get; }
+        public Exception Exception { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobCopyTransferSuccessEventArgs"/>.
+        /// Initializes a new instance of the <see cref="BlobCopySingleTransferFailedEventArgs"/>.
         /// </summary>
         /// <param name="jobId"></param>
-        /// <param name="destinationBlobClient"></param>
-        /// <param name="sourceUri"></param>
-        /// <param name="response"></param>
+        /// <param name="sourceClient"></param>
+        /// <param name="destinationClient"></param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
@@ -53,23 +49,21 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// </param>
         /// <exception cref="System.ArgumentNullException">
         /// Trhown if <paramref name="jobId"/> is empty or null.
-        /// Thrown if <paramref name="destinationBlobClient"/> is empty or null.
-        /// Thown if <paramref name="sourceUri"/> is empty or null.
+        /// Thrown if <paramref name="sourceClient"/> is null.
+        /// Thrown if <paramref name="destinationClient"/> is null.
         /// </exception>
-        public BlobCopyTransferSuccessEventArgs(
+        public BlobCopySingleTransferFailedEventArgs(
             string jobId,
-            Uri sourceUri,
-            BlobBaseClient destinationBlobClient,
-            Response response,
+            BlobBaseClient sourceClient,
+            BlobBaseClient destinationClient,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(jobId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNullOrEmpty(sourceUri.AbsoluteUri, nameof(sourceUri));
-            Argument.AssertNotNull(destinationBlobClient, nameof(BlobBaseClient));
-            DestinationBlobClient = destinationBlobClient;
-            SourceUri = sourceUri;
-            Response = response;
+            Argument.AssertNotNull(sourceClient, nameof(Uri));
+            Argument.AssertNotNull(destinationClient, nameof(Uri));
+            SourceBlobClient = sourceClient;
+            DestinationBlobClient = destinationClient;
         }
     }
 }

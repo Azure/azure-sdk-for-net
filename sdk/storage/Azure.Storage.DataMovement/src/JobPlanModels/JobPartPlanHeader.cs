@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement
 {
@@ -21,12 +22,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The start time of the job part
         /// </summary>
-        public UInt16 startTime;
+        public ushort startTime;
 
         /// <summary>
         /// The Job Id
+        ///
+        /// 16 byte array
         /// </summary>
-        public string jobId;
+        public byte[] jobId;
 
         /// <summary>
         /// Job Part's part number (0+)
@@ -34,12 +37,12 @@ namespace Azure.Storage.DataMovement
         /// We don't expect there to be more than 50,000 job parts (this number is from the number of blocks in a blob)
         /// So reaching int.MAX is extremely unlikely
         /// </summary>
-        public int PartNum;
+        public uint PartNum;
 
         /// <summary>
         /// The length of the source root path
         /// </summary>
-        public UInt16 SourceRootLength;
+        public ushort SourceRootLength;
 
         /// <summary>
         /// The root directory of the source
@@ -51,7 +54,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Length of the extra source query params if applicable.
         /// </summary>
-	    public UInt16 SourceExtraQueryLength;
+	    public ushort SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
@@ -63,7 +66,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The length of the destination root path
         /// </summary>
-	    public UInt16 DestinationRootLength;
+	    public ushort DestinationRootLength;
 
         /// <summary>
         /// The root directory of the destination.
@@ -75,7 +78,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Length of the extra destination query params if applicable.
         /// </summary>
-	    public UInt16 DestExtraQueryLength;
+	    public ushort DestExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the dest
@@ -92,7 +95,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
         /// </summary>
-        public bool ForceWrite;
+        public byte ForceWrite;
 
         /// <summary>
         /// Supplements ForceWrite with an additional setting for Azure Files. If true, the read-only attribute will be cleared before we overwrite
@@ -114,14 +117,14 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: change to DateTimeOffset object, and make convert from DateTimeOffset to UInt32
         /// </summary>
-        public UInt32 TTLAfterCompletion;
+        public uint TTLAfterCompletion;
 
         /// <summary>
         /// The location of the transfer's source and destination
         ///
         /// TODO: change to object for storing transfer source and destination
         /// </summary>
-        public UInt16 FromTo;
+        public uint FromTo;
 
         /// <summary>
         /// option specifying how folders will be handled
@@ -133,12 +136,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// TBD might remove
         /// </summary>
-        public UInt32 CommandStringLength;
+        public uint CommandStringLength;
 
         /// <summary>
         /// The number of transfers in the Job part
         /// </summary>
-        public UInt32 NumTransfers;
+        public uint NumTransfers;
 
         /// <summary>
         /// This Job Part's minimal log level
@@ -150,14 +153,13 @@ namespace Azure.Storage.DataMovement
         /// Additional data for blob destinations
         ///
         /// holds the additional information about the blob, see BlobProperties and request conditions
-        /// TODO: change to proper struct to hold all blob information
         /// </summary>
-        public UInt32 DstBlobData;
+        public JobPartPlanDestinationBlob DstBlobData;
 
         /// <summary>
         /// Additional data for local destinations
         /// </summary>
-        public UInt32 DstLocalData;
+        public JobPartPlanDestinationLocal DstLocalData;
 
         /// <summary>
         /// If applicable the SMB information
@@ -197,7 +199,7 @@ namespace Azure.Storage.DataMovement
         // jobStatus_doNotUse represents the current status of JobPartPlan
         // jobStatus_doNotUse is a private member whose value can be accessed by Status and SetJobStatus
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
-        public StorageJobTransferStatus atomicJobStatus;
+        public uint atomicJobStatus;
 
         /// <summary>
         /// For delete operation specify what to do with snapshots

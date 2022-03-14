@@ -67,19 +67,22 @@ namespace Azure.Storage.DataMovement.Blobs
             await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
         }
 
-        public virtual async Task ResumeTransferJob()
-        {
-            CancellationTokenSource.Cancel();
-                /* TODO: replace with Azure.Core.Diagnotiscs logger
-            await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been resumed.").ConfigureAwait(false);
-                */
-            await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
-        }
-
         /// <summary>
         /// Gets the job details
         /// </summary>
         /// <returns></returns>
         public abstract BlobTransferJobProperties GetJobDetails();
+
+        /// <summary>
+        /// Resume respective job
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        public abstract Action ProcessResumeTransfer(
+            TaskFactory taskFactory = default,
+            BlobJobTransferScheduler scheduler = default,
+            ResumeTransferCredentials credential = default);
     }
 }

@@ -26,17 +26,11 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public BlobVirtualDirectoryClient DestinationDirectoryClient { get; }
 
         /// <summary>
-        /// Gets the <see cref="Exception"/> that was thrown during the job.
-        /// </summary>
-        public Exception Exception { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BlobUploadDirectoryTransferFailedEventArgs"/>.
         /// </summary>
         /// <param name="jobId"></param>
         /// <param name="sourcePath"></param>
         /// <param name="destinationBlobClient"></param>
-        /// <param name="exception"></param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
@@ -58,7 +52,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
             string jobId,
             string sourcePath,
             BlobVirtualDirectoryClient destinationBlobClient,
-            Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(jobId, isRunningSynchronously, cancellationToken)
@@ -67,7 +60,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
             Argument.AssertNotNull(destinationBlobClient, nameof(BlobBaseClient));
             SourceDirectoryPath = sourcePath;
             DestinationDirectoryClient = destinationBlobClient;
-            Exception = exception;
         }
     }
 }

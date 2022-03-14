@@ -17,22 +17,22 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
         /// </summary>
-        public Uri SourceDirectoryUri { get; }
+        public BlobVirtualDirectoryClient SourceDirectoryClient { get; }
 
         /// <summary>
         /// Gets the source path to the contents to upload to the destination.
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationDirectoryPath { get; }
+        public BlobVirtualDirectoryClient DestinationDirectoryClient { get; }
 
         /// Removed the need for response because that would require totalling up all the responses from
         /// each copy command. That's unnecessary, and can be done with each individual successful copy
-        /// e.g <see cref="BlobCopyTransferSuccessEventArgs"/>
+        /// e.g <see cref="BlobCopySingleTransferSuccessEventArgs"/>
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobCopyDirectoryTransferSuccessEventArgs"/>.
         /// </summary>
         /// <param name="jobId"></param>
-        /// <param name="sourceDirectoryUri"></param>
+        /// <param name="sourceDirectoryClient"></param>
         /// <param name="destinationDirectoryClient"></param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
@@ -48,21 +48,21 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// </param>
         /// <exception cref="System.ArgumentNullException">
         /// Trhown if <paramref name="jobId"/> is empty or null.
-        /// Thrown if <paramref name="sourceDirectoryUri"/> is null.
+        /// Thrown if <paramref name="sourceDirectoryClient"/> is null.
         /// Thrown if <paramref name="destinationDirectoryClient"/> is null.
         /// </exception>
         public BlobCopyDirectoryTransferSuccessEventArgs(
             string jobId,
-            Uri sourceDirectoryUri,
+            BlobVirtualDirectoryClient sourceDirectoryClient,
             BlobVirtualDirectoryClient destinationDirectoryClient,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(jobId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(SourceDirectoryUri, nameof(BlobBaseClient));
-            Argument.AssertNotNull(destinationDirectoryClient, nameof(BlobBaseClient));
-            DestinationDirectoryPath = destinationDirectoryClient;
-            SourceDirectoryUri = sourceDirectoryUri;
+            Argument.AssertNotNull(SourceDirectoryClient, nameof(BlobVirtualDirectoryClient));
+            Argument.AssertNotNull(destinationDirectoryClient, nameof(BlobVirtualDirectoryClient));
+            DestinationDirectoryClient = destinationDirectoryClient;
+            SourceDirectoryClient = sourceDirectoryClient;
         }
     }
 }

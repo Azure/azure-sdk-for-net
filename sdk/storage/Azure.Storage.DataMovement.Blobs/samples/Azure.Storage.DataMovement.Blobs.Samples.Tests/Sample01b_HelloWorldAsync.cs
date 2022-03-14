@@ -65,7 +65,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Upload file data
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
                 {
-                    T
                 }
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
@@ -230,20 +229,16 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                BlobDirectoryUploadOptions uploadOptions = new BlobDirectoryUploadOptions();
+                BlobDirectoryUploadOptions uploadOptions = new BlobDirectoryUploadOptions()
+                {
+                    AccessTier = AccessTier.Cool,
+                };
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 uploadOptions.EventHandler.FilesFailedTransferred += async (BlobUploadTransferFailedEventArgs args) =>
                 {
-                    if (args.Exception.Message == "500")
-                    {
-                        Console.WriteLine("We're getting throttled stop trying and lets try later");
-                    }
-                    else if (args.Exception.Message == "403")
-                    {
-                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
-                    }
-                    // Remove stub
-                    await Task.CompletedTask;
+                    //await LogFailedFileAsync(args.SourcePath, args.DestinationBlobClient.Uri, args.Exception.Message);
                 };
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
                 BlobTransferManager transferManager = new BlobTransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
@@ -253,21 +248,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobTransferJobProperties uploadDirectoryJobId2 = transferManager.ScheduleUploadDirectory(
                     sourcePath2,
                     destinationBlob,
-                    options: new BlobDirectoryUploadOptions());
+                    options: uploadOptions);
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
                 BlobTransferJobProperties uploadDirectoryJobId3 = transferManager.ScheduleUploadDirectory(
                     sourcePath,
                     destinationBlob2,
-                    options: new BlobDirectoryUploadOptions()
-                    {
-                        //This is where we would put the progress handler if we wanted to provide a more grandular control
-                        //ProgressHandler = blob2Progress,
-                        TransferOptions = new StorageTransferOptions()
-                        {
-                            MaximumConcurrency = 4
-                        }
-                    });
+                    options: uploadOptions);
             }
             finally
             {
@@ -327,7 +314,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
                 BlobDirectoryDownloadOptions downloadOptions = new BlobDirectoryDownloadOptions();
-                downloadOptions.EventHandler.FilesFailedTransferred += async (BlobDownloadTransferFailedEventArgs args) =>
+                downloadOptions.EventHandler.BlobsFailedTransferred += async (BlobDownloadTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.Message == "500")
                     {
@@ -433,7 +420,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         /// Use a shared key to access a Storage Account to download two single blobs
         /// </summary>
         [Test]
-        public async Task CopySingle_SharedKeyAuthAsync()
+        public async Task CopyDirectory()
         {
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string originalPath = CreateTempFile(SampleFileContent);
@@ -469,32 +456,29 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 // Get a reference to a source blobs and upload sample content to download
-                BlobClient sourceBlob = container.GetBlobClient(Randomize("sample-blob"));
-                BlobClient sourceBlob2 = container.GetBlobClient(Randomize("sample-blob"));
+                BlobVirtualDirectoryClient sourceBlobDirectory = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
+                BlobVirtualDirectoryClient destinationBlobDirectory = container.GetBlobVirtualDirectoryClient(Randomize("sample-blob-directory"));
 
-                await sourceBlob.UploadAsync(originalPath);
-                await sourceBlob2.UploadAsync(originalPath);
+                await sourceBlobDirectory.UploadAsync(originalPath);
 
                 // Create Blob Transfer Manager
                 BlobTransferManager transferManager = new BlobTransferManager(default);
+                BlobDirectoryCopyFromUriOptions copyOptions = new BlobDirectoryCopyFromUriOptions()
+                {
+                    AccessTier = AccessTier.Cool,
+                };
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+                copyOptions.EventHandler.BlobFailed += async (BlobCopySingleTransferFailedEventArgs args) =>
+                {
+                    //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
+                };
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
-                // Simple Download Single Blob Job
-                transferManager.ScheduleDownload(sourceBlob, downloadPath);
-
-                // Create transfer single blob upload job with transfer options concurrency specified
-                // i.e. it's a bigger blob so it maybe need more help uploading fast
-                Progress<long> blob2Progress = new Progress<long>();
-                transferManager.ScheduleDownload(
-                    sourceBlob2,
-                    downloadPath2,
-                    options: new BlobDownloadToOptions()
-                    {
-                        ProgressHandler = blob2Progress,
-                        TransferOptions = new StorageTransferOptions
-                        {
-                            MaximumConcurrency = 4
-                        }
-                    });
+                transferManager.ScheduleCopyDirectory(
+                    sourceBlobDirectory,
+                    destinationBlobDirectory,
+                    BlobCopyMethod.ServiceSideSyncCopy,
+                    copyOptions: copyOptions);
             }
             finally
             {
@@ -566,7 +550,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 BlobDirectoryDownloadOptions downloadOptions = new BlobDirectoryDownloadOptions();
-                downloadOptions.EventHandler.FilesFailedTransferred += async (BlobDownloadTransferFailedEventArgs args) =>
+                downloadOptions.EventHandler.BlobsFailedTransferred += async (BlobDownloadTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.Message == "Permissions Denied")
                     {
@@ -586,7 +570,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                             await transferManager.PauseTransferJobAsync(args.JobId);
                             rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
                             skippedDirectory.SetAccessControl(rights);
-                            await transferManager.ResumeTransferJobAsync(args.JobId);
+                            await transferManager.ResumeTransferJobAsync(args.JobId, new ResumeTransferCredentials(default,default));
                             */
                         }
                     }
@@ -665,6 +649,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 BlobDirectoryDownloadOptions downloadOptions = new BlobDirectoryDownloadOptions();
+                BlobDirectoryDownloadOptions downloadOptions1 = new BlobDirectoryDownloadOptions();
+                BlobDirectoryDownloadOptions downloadOptions2 = new BlobDirectoryDownloadOptions();
                 downloadOptions.TransferOptions = new StorageTransferOptions { MaximumConcurrency = 4 };
                 BlobTransferJobProperties jobProps = transferManager.ScheduleDownloadDirectory(
                     sourceDirectoryBlob2,
@@ -684,7 +670,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseAllTransferJobsAsync();
 
                 //  When they decide to allow the transferManager to resume
-                await transferManager.ResumeAllTransferJobsAsync();
+                //await transferManager.ResumeAllTransferJobsAsync();
             }
             finally
             {
@@ -773,7 +759,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferJobAsync(jobProperties2.JobId);
 
                 //  When they decide to allow the transferManager to resume
-                await transferManager.ResumeTransferJobsAsync(jobProperties2.JobId);
+                await transferManager.ResumeTransferJobAsync(jobProperties2.JobId, new ResumeTransferCredentials(default,default));
             }
             finally
             {
@@ -916,14 +902,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Option 2: CX wants transfer manager to just rerun all failed jobs
                 // cons: how would the customer know how to resolve all the failed jobs without looking at
                 // the event handler
-                await transferManager.ResumeTransferJobsAsync(StorageJobTransferStatus.CompletedWithErrors);
+                //await transferManager.ResumeTransferJobStatusAsync(StorageJobTransferStatus.CompletedWithErrors);
 
                 // Something else happens in the CX which causes them to pause all jobs the CX is using
                 // like an interrupt or something
                 await transferManager.PauseTransferJobAsync(jobProperties2.JobId);
 
                 //  When they decide to allow the transferManager to resume
-                await transferManager.ResumeTransferJobsAsync(jobProperties2.JobId);
+                await transferManager.ResumeTransferJobAsync(jobProperties2.JobId, new ResumeTransferCredentials(default,default));
             }
             finally
             {

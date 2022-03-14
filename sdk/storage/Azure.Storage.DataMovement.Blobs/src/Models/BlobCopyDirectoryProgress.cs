@@ -15,9 +15,25 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Number of Blobs that succeeded in transfer
         /// </summary>
         public int BlobsSuccesfullyTransferred { get; internal set; }
+
         /// <summary>
         /// Number of blobs that failed transferred.
         /// </summary>
         public int BlobsFailedTransferred { get; internal set; }
+
+        /// <summary>
+        /// Number of virtual directories transferred fully successfully.
+        /// </summary>
+        public int DirectoriesSuccessfullyTranferred { get; internal set; }
+
+        /// <summary>
+        /// Number of virtual directories that failed transfering any one file.
+        /// </summary>
+        public int DirectoriesFailedTranferred { get; internal set; }
+
+        /// <summary>
+        /// Transfer Status
+        /// </summary>
+        public StorageJobTransferStatus TransferStatus { get; internal set; }
     }
 }

@@ -101,21 +101,24 @@ namespace Azure.Storage.DataMovement
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task ResumeTransferJobsAsync(string jobId);
+        /// <param name="transferCredentials"></param>
+        public abstract Task ResumeTransferJobAsync(string jobId, ResumeTransferCredentials transferCredentials);
 
+        /*
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
-        /// <param name="jobId"></param>
-        public abstract Task ResumeTransferJobsAsync(StorageJobTransferStatus jobId);
-
+        /// <param name="status"></param>
+        //internal abstract Task ResumeTransferJobStatusAsync(StorageJobTransferStatus status);
+        ///
         /// <summary>
         /// Resumes transfers that are currently being processed.
         /// Does not allow any other transfer start.
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public abstract Task ResumeAllTransferJobsAsync();
+        //internal abstract Task ResumeAllTransferJobsAsync();
+        */
 
         /// <summary>
         /// Pauses transfers that are currently being processed.

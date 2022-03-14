@@ -37,10 +37,5 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Gets the local path which will store the contents for a single blob to be downloaded.
         /// </summary>
         public Uri DestinationUri { get; internal set; }
-
-        /// <summary>
-        /// Current job status at the time retrieving the job properties
-        /// </summary>
-        public StorageJobTransferStatus TransferStatus { get; internal set; }
     }
 }

@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 JobId = transferJob.JobId,
                 TransferType = BlobTransferType.DirectorySyncCopy,
-                SourcePath = transferJob.SourceDirectoryClient.Uri,
+                SourcePath = transferJob.SourceBlobDirectoryClient.Uri,
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }

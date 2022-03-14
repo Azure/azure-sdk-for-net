@@ -20,14 +20,14 @@ namespace Azure.Storage.DataMovement.Blobs
     internal class BlobDownloadDirectoryTransferJob : BlobTransferJobInternal
     {
         /// <summary>
-        /// The source blob where it's contents will be downloaded when the job is performed.
+        /// Holds Source Blob Configurations
         /// </summary>
-        private BlobVirtualDirectoryClient _sourceBlobClient;
+        public BlobClientConfiguration SourceBlobConfiguration;
 
         /// <summary>
         /// The source blob where it's contents will be downloaded when the job is performed.
         /// </summary>
-        public BlobVirtualDirectoryClient SourceBlobDirectoryClient => _sourceBlobClient;
+        internal BlobVirtualDirectoryClient SourceBlobDirectoryClient;
 
         /// <summary>
         /// Local Path to store the downloaded contents from the source blob
@@ -65,7 +65,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationLocalPath = destinationPath;
-            _sourceBlobClient = sourceClient;
+            SourceBlobDirectoryClient = sourceClient;
+            SourceBlobConfiguration = new BlobClientConfiguration()
+            {
+                BlobContainerName = sourceClient.BlobContainerName,
+                AccountName = sourceClient.AccountName,
+                Name = sourceClient.DirectoryPath
+            };
             _options = options;
         }
 
@@ -92,6 +98,58 @@ namespace Azure.Storage.DataMovement.Blobs
             return response;
         }
 
+#pragma warning disable CA1801 // Review unused parameters
+        public Action ProcessDirectoryTransfer(TaskFactory taskFactory, BlobJobTransferScheduler scheduler, bool async = true)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            return () =>
+            {
+                /* TODO: move this to Core.Diagnostics Logger
+                    transferJob.Logger.LogAsync(
+                        logLevel: DataMovementLogLevel.Information,
+                        message: $"Begin enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}",
+                        false).EnsureCompleted();
+                    */
+                Pageable<BlobItem> blobs = SourceBlobDirectoryClient.GetBlobs();
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Completed enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}\n",
+                    false).EnsureCompleted();
+                */
+                List<Task> fileUploadTasks = new List<Task>();
+                foreach (BlobItem blob in blobs)
+                {
+                    Task singleDownloadTask = taskFactory.StartNew(
+                        ProcessSingleDownloadTransfer(blob.Name),
+                        cancellationToken: CancellationTokenSource.Token,
+                        creationOptions: TaskCreationOptions.LongRunning,
+                        scheduler: scheduler);
+                    fileUploadTasks.Add(singleDownloadTask);
+                }
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Created all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} to upload to the destination directory: {transferJob.DestinationLocalPath}",
+                    false).EnsureCompleted();
+                */
+                // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
+                Task.WhenAll(fileUploadTasks).Wait();
+                /* TODO: move this to Core.Diagnostics Logger
+                transferJob.Logger.LogAsync(
+                    logLevel: DataMovementLogLevel.Information,
+                    message: $"Completed all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} and uploaded to the destination directory: {transferJob.DestinationLocalPath}",
+                    false).EnsureCompleted();
+                */
+            };
+        }
+
+        /// <summary>
+        /// Process Single Download Transfer
+        /// </summary>
+        /// <param name="blobName"></param>
+        /// <param name="async"></param>
+        /// <returns></returns>
 #pragma warning disable CA1801 // Review unused parameters
         public Action ProcessSingleDownloadTransfer(string blobName, bool async = true)
 #pragma warning restore CA1801 // Review unused parameters
@@ -168,6 +226,72 @@ namespace Azure.Storage.DataMovement.Blobs
         public override BlobTransferJobProperties GetJobDetails()
         {
             return this.ToBlobTransferJobDetails();
+        }
+
+        /// <summary>
+        /// Resumes respective job
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        public override Action ProcessResumeTransfer(
+            TaskFactory taskFactory,
+            BlobJobTransferScheduler scheduler,
+            ResumeTransferCredentials credential = default)
+        {
+            if (credential?.SourceTransferCredential != default)
+            {
+                if (!string.IsNullOrEmpty(credential.SourceTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.SourceTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobDirectoryClient.Uri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
+                    {
+                        SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                            credential.SourceTransferCredential.ConnectionString,
+                            SourceBlobConfiguration.BlobContainerName,
+                            SourceBlobConfiguration.Name,
+                            BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                    }
+                    else
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                }
+                else if (credential.SourceTransferCredential.SasCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SasCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.SharedKeyCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SharedKeyCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else if (credential.SourceTransferCredential.TokenCredential != default)
+                {
+                    SourceBlobDirectoryClient = new BlobVirtualDirectoryClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.TokenCredential,
+                        BlobVirtualDirectoryClientInternals.GetClientOptions(SourceBlobDirectoryClient));
+                }
+                else
+                {
+                    throw Errors.InvalidArgument(nameof(credential));
+                }
+            }
+            // TODO: do we throw an error if they specify the destination?
+            // Read in Job Plan File
+            // JobPlanReader.Read(file)
+            return ProcessDirectoryTransfer(taskFactory, scheduler);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Number of blobs that were skipped in transfer due to overwrite being set to not overwrite files, but the files exists already
         /// </summary>
-        public int BlobsSkippedTransfering { get; internal set; }
+        public int BlobsSkippedTransferring { get; internal set; }
         /// <summary>
         /// Number of blobs that failed transferred.
         /// </summary>
@@ -27,5 +27,10 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Number of bytes transferred succesfully.
         /// </summary>
         public long TotalBytesTransferred { get; internal set; }
+
+        /// <summary>
+        /// Transfer Status
+        /// </summary>
+        public StorageJobTransferStatus TransferStatus { get; internal set; }
     }
 }

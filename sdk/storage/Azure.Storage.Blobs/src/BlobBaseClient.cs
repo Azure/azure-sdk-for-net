@@ -569,6 +569,33 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
+        #region protected static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpPipeline"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static HttpPipeline GetHttpPipeline(BlobBaseClient client) =>
+            client.ClientConfiguration.Pipeline;
+
+        /// <summary>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
+            new BlobClientOptions(client.ClientConfiguration.Version)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
+
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
         ///// </summary>

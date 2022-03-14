@@ -33,6 +33,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Transfer Status
         /// </summary>
-        public StorageJobTransferStatus TransferStatus { get; internal set;}
+        public StorageJobTransferStatus TransferStatus { get; internal set; }
     }
 }

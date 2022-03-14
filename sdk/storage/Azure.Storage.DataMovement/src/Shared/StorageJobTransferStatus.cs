@@ -25,16 +25,16 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Paused jobs
         /// </summary>
-        Paused = 4,
+        Paused = 3,
 
         /// <summary>
         /// The Job has completed.
         /// </summary>
-        Completed = 8,
+        Completed = 4,
 
         /// <summary>
         /// The job has completed but errors occured during the transfer.
         /// </summary>
-        CompletedWithErrors = 24,
+        CompletedWithErrors = 5,
     };
 }

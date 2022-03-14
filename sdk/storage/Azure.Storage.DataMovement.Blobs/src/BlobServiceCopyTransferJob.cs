@@ -8,6 +8,8 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -17,19 +19,20 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     internal class BlobServiceCopyTransferJob : BlobTransferJobInternal
     {
-        private Uri _sourceUri;
-
         /// <summary>
         /// The source Uri
         /// </summary>
-        public Uri SourceUri => _sourceUri;
+        public Uri SourceUri { get; internal set; }
 
-        internal BlobBaseClient _destinationBlobClient;
+        /// <summary>
+        /// Holds Source Blob Configurations
+        /// </summary>
+        public BlobClientConfiguration DestinationBlobConfiguration;
 
         /// <summary>
         /// The destination blob client for the copy job
         /// </summary>
-        public BlobBaseClient DestinationBlobClient => _destinationBlobClient;
+        internal BlobBaseClient DestinationBlobClient;
 
         /// <summary>
         /// Type of Copy to occur
@@ -61,8 +64,14 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
-            _sourceUri = sourceUri;
-            _destinationBlobClient = destinationClient;
+            SourceUri = sourceUri;
+            DestinationBlobClient = destinationClient;
+            DestinationBlobConfiguration = new BlobClientConfiguration()
+            {
+                BlobContainerName = destinationClient.BlobContainerName,
+                AccountName = destinationClient.AccountName,
+                Name = destinationClient.Name,
+            };
             CopyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
         }
@@ -158,6 +167,97 @@ namespace Azure.Storage.DataMovement.Blobs
         public override BlobTransferJobProperties GetJobDetails()
         {
             return this.ToBlobTransferJobDetails();
+        }
+
+        /// <summary>
+        /// Resumes respective job
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        public override Action ProcessResumeTransfer(
+            TaskFactory taskFactory,
+            BlobJobTransferScheduler scheduler,
+            ResumeTransferCredentials credential = default)
+        {
+            // Recreate source client if new credentials are present
+            if (credential?.SourceTransferCredential != default)
+            {
+                // Current single copy only supports SAS
+                if (!string.IsNullOrEmpty(credential.SourceTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.SourceTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceUri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host != sourceUriBuilder.Host ||
+                        parsedConnectionString.BlobEndpoint.AbsolutePath != sourceUriBuilder.BlobName)
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                    SourceUri = parsedConnectionString.BlobEndpoint;
+                }
+                else
+                {
+                    // TODO: throw an argument that says invalid credentials for this operation?
+                    throw Errors.InvalidArgument(nameof(credential));
+                }
+            }
+            // Recreate destination client if new credentials are present
+            if (credential?.DestinationTransferCredential != default)
+            {
+                if (!string.IsNullOrEmpty(credential.DestinationTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.DestinationTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(DestinationBlobConfiguration.Uri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
+                    {
+                        DestinationBlobClient = new BlobBaseClient(
+                            credential.DestinationTransferCredential.ConnectionString,
+                            DestinationBlobConfiguration.BlobContainerName,
+                            DestinationBlobConfiguration.Name,
+                            BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                    }
+                    else
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                }
+                else if (credential.SourceTransferCredential.SasCredential != default)
+                {
+                    DestinationBlobClient = new BlobBaseClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.SasCredential,
+                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                }
+                else if (credential.SourceTransferCredential.SharedKeyCredential != default)
+                {
+                    DestinationBlobClient = new BlobBaseClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.SharedKeyCredential,
+                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                }
+                else if (credential.SourceTransferCredential.TokenCredential != default)
+                {
+                    DestinationBlobClient = new BlobBaseClient(
+                        DestinationBlobConfiguration.Uri,
+                        credential.DestinationTransferCredential.TokenCredential,
+                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                }
+                else
+                {
+                    throw Errors.InvalidArgument(nameof(credential));
+                }
+            }
+            // TODO: do we throw an error if they specify the destination?
+            // Read in Job Plan File
+            // JobPlanReader.Read(file)
+            return ProcessCopyTransfer();
         }
     }
 }

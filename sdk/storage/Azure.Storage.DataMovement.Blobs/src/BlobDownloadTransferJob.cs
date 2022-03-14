@@ -8,19 +8,22 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Blobs.Models;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     internal class BlobDownloadTransferJob : BlobTransferJobInternal
     {
-        // Might have to change BlobBaseClient to other client, when we do page blob and append blob
-        internal BlobBaseClient _sourceBlobClient;
+        /// <summary>
+        /// Holds Source Blob Configurations
+        /// </summary>
+        public BlobClientConfiguration SourceBlobConfiguration;
 
         /// <summary>
         /// The source blob client. This client contains the information and methods required to perform
         /// the download from the source blob.
         /// </summary>
-        public BlobBaseClient SourceBlobClient => _sourceBlobClient;
+        internal BlobBaseClient SourceBlobClient;
 
         /// <summary>
         /// The local path which will store the contents of the blob to be downloaded.
@@ -65,10 +68,14 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobDownloadToOptions options)
             : base(jobId)
         {
-            _sourceBlobClient = sourceClient;
+            SourceBlobConfiguration = new BlobClientConfiguration()
+            {
+                Uri = sourceClient.Uri,
+                AccountName = sourceClient.AccountName,
+            };
+            SourceBlobClient = sourceClient;
             _destinationLocalPath = destinationPath;
             _options = options;
-            //ProgressTracker = progressTracker;
         }
 
         /// <summary>
@@ -78,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadToAsync(
+            return SourceBlobClient.DownloadToAsync(
                 _destinationLocalPath,
                 transferOptions:_options.TransferOptions);
         }
@@ -89,8 +96,6 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return () =>
             {
-                // TODO: make logging messages similar to the errors class where we only take in params
-                // so we dont have magic strings hanging out here
                 /* TODO: replace with Azure.Core.Diagnotiscs logger
                 Logger.LogAsync(DataMovementLogLevel.Information,
                     $"Processing Upload Transfer source: {SourceBlobClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}", async).EnsureCompleted();
@@ -140,6 +145,71 @@ namespace Azure.Storage.DataMovement.Blobs
         public override BlobTransferJobProperties GetJobDetails()
         {
             return this.ToBlobTransferJobDetails();
+        }
+
+        /// <summary>
+        /// Resumes respective job
+        /// </summary>
+        /// <param name="taskFactory"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        public override Action ProcessResumeTransfer(
+            TaskFactory taskFactory = default,
+            BlobJobTransferScheduler scheduler = default,
+            ResumeTransferCredentials credential = default)
+        {
+            if (credential?.SourceTransferCredential != default)
+            {
+                if (!string.IsNullOrEmpty(credential.SourceTransferCredential.ConnectionString))
+                {
+                    // Check if an endpoint was passed in the connection string and if that matches the original source uri
+                    StorageConnectionString parsedConnectionString = StorageConnectionString.Parse(credential.SourceTransferCredential.ConnectionString);
+                    BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceBlobClient.Uri);
+
+                    if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
+                    {
+                        SourceBlobClient = new BlobBaseClient(
+                            credential.SourceTransferCredential.ConnectionString,
+                            SourceBlobConfiguration.BlobContainerName,
+                            SourceBlobConfiguration.Name,
+                            BlobBaseClientInternals.GetClientOptions(SourceBlobClient));
+                    }
+                    else
+                    {
+                        // Mismatch in storage account host in the URL
+                        throw Errors.InvalidConnectionString();
+                    }
+                }
+                else if (credential.SourceTransferCredential.SasCredential != default)
+                {
+                    SourceBlobClient = new BlobBaseClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SasCredential,
+                        BlobBaseClientInternals.GetClientOptions(SourceBlobClient));
+                }
+                else if (credential.SourceTransferCredential.SharedKeyCredential != default)
+                {
+                    SourceBlobClient = new BlobBaseClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.SharedKeyCredential,
+                        BlobBaseClientInternals.GetClientOptions(SourceBlobClient));
+                }
+                else if (credential.SourceTransferCredential.TokenCredential != default)
+                {
+                    SourceBlobClient = new BlobBaseClient(
+                        SourceBlobConfiguration.Uri,
+                        credential.SourceTransferCredential.TokenCredential,
+                        BlobBaseClientInternals.GetClientOptions(SourceBlobClient));
+                }
+                else
+                {
+                    throw Errors.InvalidArgument(nameof(credential.SourceTransferCredential));
+                }
+            }
+            // Read in Job Plan File
+            // JobPlanReader.Read(file)
+            return ProcessDownloadTransfer();
         }
     }
 }

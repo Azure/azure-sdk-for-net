@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// to go through each exception and resolve each one.
         /// </param>
         /// <param name="options"></param>
-        public BlobTransferManager(BlobVirtualDirectoryClient transferStateDirectoryClient, StorageTransferManagerOptions options)
+        internal BlobTransferManager(BlobVirtualDirectoryClient transferStateDirectoryClient, StorageTransferManagerOptions options)
             : this(options)
         {
             TransferStateDirectoryClient = transferStateDirectoryClient;
@@ -307,11 +307,11 @@ namespace Azure.Storage.DataMovement.Blobs
                     foreach (BlobItem blob in blobs)
                     {
                         Task singleDownloadTask = _taskFactory.StartNew(
-                    transferJob.ProcessSingleDownloadTransfer(blob.Name),
-                    cancellationToken: transferJob.CancellationTokenSource.Token,
-                    creationOptions: TaskCreationOptions.LongRunning,
-                    scheduler: _jobTransferScheduler);
-                        fileUploadTasks.Add(singleDownloadTask);
+                            transferJob.ProcessSingleDownloadTransfer(blob.Name),
+                            cancellationToken: transferJob.CancellationTokenSource.Token,
+                            creationOptions: TaskCreationOptions.LongRunning,
+                            scheduler: _jobTransferScheduler);
+                         fileUploadTasks.Add(singleDownloadTask);
                     }
                     /* TODO: move this to Core.Diagnostics Logger
                     transferJob.Logger.LogAsync(
@@ -523,7 +523,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public override async Task ResumeTransferJobsAsync(string jobId)
+        /// <param name="transferCredentials"></param>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async Task ResumeTransferJobAsync(string jobId, ResumeTransferCredentials transferCredentials)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
             {
@@ -536,18 +539,24 @@ namespace Azure.Storage.DataMovement.Blobs
                     }
                     else
                     {
-                        await currentJob.ResumeTransferJob().ConfigureAwait(false);
+                        Task singleDownloadTask = _taskFactory.StartNew(
+                                action: currentJob.ProcessResumeTransfer(_taskFactory, _jobTransferScheduler, transferCredentials),
+                                cancellationToken: currentJob.CancellationTokenSource.Token,
+                                creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
+                                scheduler: _jobTransferScheduler);
                     }
                 }
             }
-            throw Errors.InvalidJobId(nameof(ResumeTransferJobsAsync), jobId);
+            throw Errors.InvalidJobId(nameof(ResumeTransferJobAsync), jobId);
         }
 
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="transferStatus">Resume job based on status</param>
-        public override async Task ResumeTransferJobsAsync(StorageJobTransferStatus transferStatus)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task ResumeTransferJobStatusAsync(StorageJobTransferStatus transferStatus)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (transferStatus != StorageJobTransferStatus.Completed ||
                 transferStatus != StorageJobTransferStatus.InProgress ||
@@ -559,12 +568,15 @@ namespace Azure.Storage.DataMovement.Blobs
                     {
                         if (!currentJob.CancellationTokenSource.IsCancellationRequested)
                         {
-                            await currentJob.ResumeTransferJob().ConfigureAwait(false);
+                            Task singleDownloadTask = _taskFactory.StartNew(
+                                action: currentJob.ProcessResumeTransfer(_taskFactory, _jobTransferScheduler),
+                                cancellationToken: currentJob.CancellationTokenSource.Token,
+                                creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
+                                scheduler: _jobTransferScheduler);
                         }
                     }
+                    // TODO: do we have to throw an error if there are no jobs with this job status?
                 }
-
-                // TODO: do we have to throw an error if there are no jobs with this job status?
             }
             else
             {
@@ -578,13 +590,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public override async Task ResumeAllTransferJobsAsync()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task ResumeAllTransferJobsAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             _managerTransferStatus = StorageManagerTransferStatus.InProgress;
 
-            foreach (BlobTransferJobInternal job in _totalTransferJobs)
+            foreach (BlobTransferJobInternal currentJob in _totalTransferJobs)
             {
-                await job.ResumeTransferJob().ConfigureAwait(false);
+                Task singleDownloadTask = _taskFactory.StartNew(
+                        action: currentJob.ProcessResumeTransfer(_taskFactory, _jobTransferScheduler),
+                        cancellationToken: currentJob.CancellationTokenSource.Token,
+                        creationOptions: TaskCreationOptions.LongRunning, //TODO: look into if setting this to TaskCreationOptions.None would be better if the transfer is small
+                        scheduler: _jobTransferScheduler);
                 //TODO: log cancellation of job
                 //Call job update transfer status
             }
