@@ -2,7 +2,13 @@
 
 ## SubClients
 
-Previously, the code generator would generate a publicly constructible client type for each operation group. This leads to many top level clients which can lead to user confusion, because it is not clear which client is the "entry point" to the service. The Sub Clients feature allows a way to configure the code generator such that it does not generate publicly constructible clients for certain operation groups and instead generates a factory method on a different client which can be used to construct the client (which reuses the same underlying HttpPipeline).
+There are two categories of clients: service clients and their subclients. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service.
+
+There are two approaches to organize subclients and service client.
+
+- **Single top-level client**: define one top-level service client with the name $"{language.default.name}Client", all other clients will be its sub-client.
+
+- **client hierarchy**: define the parent-subclient hierarchy dependency.
 
 ### Single top-level client
 
@@ -40,18 +46,18 @@ namespace Azure.Service.SubClients
 
 ``` yaml
 namespace: Azure.Service.SubClients
-require: $(this-folder)/../../../readme.md
-input-file: $(this-folder)/SubClients-LowLevel.json
+input-file: $(this-folder)/SubClients.json
 data-plane: true
 security: AzureKey
 security-header-name: Fake-Subscription-Key
 single-top-level-client: true
+
 ```
 
 **Generated code after:**
 
-``` C#
-//Top-level-client Generated\SubClientsClient
+```C#
+//Top-level-client Generated\SubClientsClient.cs
 namespace Azure.Service.SubClients
 {
     public partial class SubClientsClient
@@ -97,7 +103,8 @@ namespace Azure.Service.SubClients
 
 ### Client hierarchy
 
-Each client can be made a subclient of another client (without circular dependency) using CodeGenClientAttribute.ParentClient parameter. Since CodeGenClientAttribute is applied to the client type, user will explicitly specify new client type name. According to guideline, type should have a name without "Client" suffix and an internal constructor. autorest.csharp will add a factory method to the type, specified in ParentClient.
+Each client can be made a subclient of another client (without circular dependency) using CodeGenClientAttribute.ParentClient parameter.
+Since CodeGenClientAttribute is applied to the client type, user will explicitly specify new client type name. According to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients), type should have a name without "Client" suffix and an internal constructor. A factory method will be added to the type, specified in ParentClient.
 
 <details>
 
