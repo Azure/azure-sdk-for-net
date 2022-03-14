@@ -37,4 +37,9 @@
     <!-- This is needed to resolve a build conflict and force the correct version -->
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1'">
+    <!-- This package is supports netcoreapp3.1 -->
+    <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
+  </ItemGroup>
 </Project>
