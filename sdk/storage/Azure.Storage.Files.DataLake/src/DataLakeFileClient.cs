@@ -4008,7 +4008,7 @@ namespace Azure.Storage.Files.DataLake
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
                 // TODO #27253
-                //options.TransactionalHashingOptions,
+                validationOptions: default,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4778,15 +4778,13 @@ namespace Azure.Storage.Files.DataLake
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                // TODO #27253
-                //hashingOptions,
+                validationOptions,
                 arrayPool,
                 operationName);
 
@@ -4804,7 +4802,7 @@ namespace Azure.Storage.Files.DataLake
                         args.Conditions,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
+                SingleUpload = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -4840,7 +4838,7 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
+                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
                         offset,

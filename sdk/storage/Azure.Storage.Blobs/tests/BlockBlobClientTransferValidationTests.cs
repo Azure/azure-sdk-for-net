@@ -41,16 +41,16 @@ namespace Azure.Storage.Blobs.Tests
         //    });
         //}
 
-        //protected override async Task ParallelUploadAsync(
-        //    BlockBlobClient client,
-        //    Stream source,
-        //    UploadTransferValidationOptions hashingOptions,
-        //    StorageTransferOptions transferOptions)
-        //    => await client.UploadAsync(source, new BlobUploadOptions
-        //    {
-        //        ValidationOptions = hashingOptions,
-        //        TransferOptions = transferOptions
-        //    });
+        protected override async Task ParallelUploadAsync(
+            BlockBlobClient client,
+            Stream source,
+            UploadTransferValidationOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+            => await client.UploadAsync(source, new BlobUploadOptions
+            {
+                ValidationOptions = hashingOptions,
+                TransferOptions = transferOptions
+            });
 
         protected override async Task<Response> UploadPartitionAsync(
             BlockBlobClient client,

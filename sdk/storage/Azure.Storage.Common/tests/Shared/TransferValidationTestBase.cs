@@ -86,18 +86,18 @@ namespace Azure.Storage.Test.Shared
         //    DownloadTransferValidationOptions validationOptions,
         //    HttpRange range = default);
 
-        ///// <summary>
-        ///// Calls the parallel upload method for the given resource client.
-        ///// </summary>
-        ///// <param name="client">Client to call upload on.</param>
-        ///// <param name="source">Data to upload.</param>
-        ///// <param name="validationOptions">Validation options to use on upload.</param>
-        ///// <param name="transferOptions">Storage transfer options to use on upload.</param>
-        //protected abstract Task ParallelUploadAsync(
-        //    TResourceClient client,
-        //    Stream source,
-        //    UploadTransferValidationOptions validationOptions,
-        //    StorageTransferOptions transferOptions);
+        /// <summary>
+        /// Calls the parallel upload method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call upload on.</param>
+        /// <param name="source">Data to upload.</param>
+        /// <param name="validationOptions">Validation options to use on upload.</param>
+        /// <param name="transferOptions">Storage transfer options to use on upload.</param>
+        protected abstract Task ParallelUploadAsync(
+            TResourceClient client,
+            Stream source,
+            UploadTransferValidationOptions validationOptions,
+            StorageTransferOptions transferOptions);
 
         ///// <summary>
         ///// Calls the parallel download method for the given resource client.

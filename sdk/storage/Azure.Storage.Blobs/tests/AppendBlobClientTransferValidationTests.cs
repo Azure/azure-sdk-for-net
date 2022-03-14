@@ -46,15 +46,15 @@ namespace Azure.Storage.Blobs.Tests
         //    });
         //}
 
-        //protected override Task ParallelUploadAsync(
-        //    AppendBlobClient client,
-        //    Stream source,
-        //    UploadTransferValidationOptions hashingOptions,
-        //    StorageTransferOptions transferOptions)
-        //{
-        //    TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient contains no definition for parallel upload.");
-        //    return Task.CompletedTask;
-        //}
+        protected override Task ParallelUploadAsync(
+            AppendBlobClient client,
+            Stream source,
+            UploadTransferValidationOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+        {
+            TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient contains no definition for parallel upload.");
+            return Task.CompletedTask;
+        }
 
         protected override async Task<Response> UploadPartitionAsync(
             AppendBlobClient client,

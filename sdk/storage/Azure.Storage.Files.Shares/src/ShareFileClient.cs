@@ -5191,7 +5191,7 @@ namespace Azure.Storage.Files.Shares
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 // TODO #27253
-                //hashingOptions,
+                validationOptions: default,
                 arrayPool,
                 operationName);
 
@@ -5199,7 +5199,7 @@ namespace Azure.Storage.Files.Shares
         internal static PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors GetPartitionedUploaderBehaviors(ShareFileClient client)
             => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors
             {
-                SingleUpload = async (stream, data, progressHandler, operationName, async, cancellationToken) =>
+                SingleUpload = async (stream, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     return await client.UploadRangeInternal(
                         new HttpRange(offset: 0, length: stream.Length),
@@ -5218,7 +5218,7 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, data, progressHandler, async, cancellationToken) =>
+                UploadPartition = async (stream, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
                 {
                     data.LastUploadRangeResponse = await client.UploadRangeInternal(
                         new HttpRange(offset: offset, length: stream.Length),
