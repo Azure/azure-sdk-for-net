@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment What-If operation settings. </summary>
-    public partial class DeploymentWhatIfSettings
+    internal partial class DeploymentWhatIfSettings
     {
         /// <summary> Initializes a new instance of DeploymentWhatIfSettings. </summary>
         public DeploymentWhatIfSettings()

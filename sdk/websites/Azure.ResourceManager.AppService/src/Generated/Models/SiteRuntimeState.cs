@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The SiteRuntimeState. </summary>
     public enum SiteRuntimeState
     {
+        /// <summary> UNKNOWN. </summary>
+        Unknown,
         /// <summary> READY. </summary>
         Ready,
         /// <summary> STOPPED. </summary>
-        Stopped,
-        /// <summary> UNKNOWN. </summary>
-        Unknown
+        Stopped
     }
 }

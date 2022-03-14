@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientIPsecParameters. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client.. </param>
-        /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
-        /// <param name="ipsecIntegrity"> The IPSec integrity algorithm (IKE phase 1). </param>
+        /// <param name="iPsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
+        /// <param name="iPsecIntegrity"> The IPSec integrity algorithm (IKE phase 1). </param>
         /// <param name="ikeEncryption"> The IKE encryption algorithm (IKE phase 2). </param>
         /// <param name="ikeIntegrity"> The IKE integrity algorithm (IKE phase 2). </param>
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
-        public VpnClientIPsecParameters(int saLifeTimeSeconds, int saDataSizeKilobytes, IpsecEncryption ipsecEncryption, IpsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup)
+        public VpnClientIPsecParameters(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption iPsecEncryption, IPsecIntegrity iPsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
-            IpsecEncryption = ipsecEncryption;
-            IpsecIntegrity = ipsecIntegrity;
+            IPsecEncryption = iPsecEncryption;
+            IPsecIntegrity = iPsecIntegrity;
             IkeEncryption = ikeEncryption;
             IkeIntegrity = ikeIntegrity;
             DhGroup = dhGroup;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client.. </summary>
         public int SaDataSizeKilobytes { get; set; }
         /// <summary> The IPSec encryption algorithm (IKE phase 1). </summary>
-        public IpsecEncryption IpsecEncryption { get; set; }
+        public IPsecEncryption IPsecEncryption { get; set; }
         /// <summary> The IPSec integrity algorithm (IKE phase 1). </summary>
-        public IpsecIntegrity IpsecIntegrity { get; set; }
+        public IPsecIntegrity IPsecIntegrity { get; set; }
         /// <summary> The IKE encryption algorithm (IKE phase 2). </summary>
         public IkeEncryption IkeEncryption { get; set; }
         /// <summary> The IKE integrity algorithm (IKE phase 2). </summary>

@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the SecurityPartnerProvider data model. </summary>
-    public partial class SecurityPartnerProviderData : Resource
+    public partial class SecurityPartnerProviderData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
         public SecurityPartnerProviderData()
@@ -48,6 +49,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> The connection status with the Security Partner Provider. </summary>
         public SecurityPartnerProviderConnectionStatus? ConnectionStatus { get; }
         /// <summary> The virtualHub to which the Security Partner Provider belongs. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
     }
 }

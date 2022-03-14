@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="databaseId"> Resource ID of the database to store job metadata in. </param>
         /// <param name="state"> The state of the job agent. </param>
-        internal JobAgentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string databaseId, JobAgentState? state) : base(id, name, type, systemData, tags, location)
+        internal JobAgentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseId, JobAgentState? state) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
             DatabaseId = databaseId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and tier of the SKU. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Resource ID of the database to store job metadata in. </summary>
         public string DatabaseId { get; set; }
         /// <summary> The state of the job agent. </summary>

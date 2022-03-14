@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -44,9 +45,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Ip configuration type. </summary>
         public string Type { get; }
         /// <summary> Reference of the subnet resource. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Reference of the PublicIP resource. </summary>
-        public WritableSubResource PublicIPAddress { get; set; }
+        internal WritableSubResource PublicIPAddress { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            set
+            {
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the bastion host IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Private IP allocation method. </summary>

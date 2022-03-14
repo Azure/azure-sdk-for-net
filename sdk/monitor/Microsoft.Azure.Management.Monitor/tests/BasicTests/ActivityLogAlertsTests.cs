@@ -34,7 +34,7 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            var result = insightsClient.ActivityLogAlerts.CreateOrUpdate(resourceGroupName: "rg1", activityLogAlertName: expectedParameters.Name, activityLogAlert: expectedParameters);
+            var result = insightsClient.ActivityLogAlerts.CreateOrUpdate(resourceGroupName: "rg1", activityLogAlertName: expectedParameters.Name, activityLogAlertRule: expectedParameters);
 
             AreEqual(expectedParameters, result);
         }
@@ -146,7 +146,7 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             monitorManagementClient = GetMonitorManagementClient(handler);
 
-            ActivityLogAlertPatchBody bodyParameter = new ActivityLogAlertPatchBody
+            AlertRulePatchObject bodyParameter = new AlertRulePatchObject
             {
                 Enabled = true,
                 Tags = null
@@ -155,7 +155,7 @@ namespace Monitor.Tests.BasicTests
             ActivityLogAlertResource response = monitorManagementClient.ActivityLogAlerts.Update(
                 resourceGroupName: "rg1",
                 activityLogAlertName: "name1",
-                activityLogAlertPatch: bodyParameter);
+                activityLogAlertRulePatch: bodyParameter);
 
             AreEqual(expectedParameters, response);
         }
@@ -198,7 +198,7 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
-        private static void AreEqual(ActivityLogAlertAllOfCondition exp, ActivityLogAlertAllOfCondition act)
+        private static void AreEqual(AlertRuleAllOfCondition exp, AlertRuleAllOfCondition act)
         {
             if (exp != null)
             {
@@ -211,7 +211,7 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
-        private static void AreEqual(ActivityLogAlertActionList exp, ActivityLogAlertActionList act)
+        private static void AreEqual(ActionList exp, ActionList act)
         {
             if (exp != null)
             {
@@ -224,16 +224,16 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
-        private static void AreEqual(ActivityLogAlertActionGroup exp, ActivityLogAlertActionGroup act)
+        private static void AreEqual(ActionGroup exp, ActionGroup act)
         {
             if (exp != null)
             {
-                Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
-                Assert.Equal(exp.WebhookProperties, act.WebhookProperties);
+                Assert.Equal(exp.GroupShortName, act.GroupShortName);
+                Assert.Equal(exp.WebhookReceivers, act.WebhookReceivers);
             }
         }
 
-        private static void AreEqual(ActivityLogAlertLeafCondition exp, ActivityLogAlertLeafCondition act)
+        private static void AreEqual(AlertRuleAnyOfOrLeafCondition exp, AlertRuleAnyOfOrLeafCondition act)
         {
             if (exp != null)
             {
@@ -256,8 +256,8 @@ namespace Monitor.Tests.BasicTests
                 },
                 enabled: true,
                 description: "",
-                actions: new ActivityLogAlertActionList(new List<ActivityLogAlertActionGroup> { }),
-                condition: new ActivityLogAlertAllOfCondition(allOf: new List<ActivityLogAlertLeafCondition> { }),
+                actions: new ActionList(new List<ActionGroup> { }),
+                condition: new AlertRuleAllOfCondition(allOf: new List<AlertRuleAnyOfOrLeafCondition> { }),
                 scopes: new List<string> { "s1" }
             );
         }

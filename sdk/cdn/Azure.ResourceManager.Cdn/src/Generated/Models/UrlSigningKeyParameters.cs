@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Url signing key parameters. </summary>
-    public partial class UrlSigningKeyParameters : SecretParameters
+    internal partial class UrlSigningKeyParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of UrlSigningKeyParameters. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
@@ -49,7 +50,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </summary>
         public string KeyId { get; set; }
         /// <summary> Resource reference to the KV secret. </summary>
-        public WritableSubResource SecretSource { get; set; }
+        internal WritableSubResource SecretSource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource is null ? default : SecretSource.Id;
+            set
+            {
+                if (SecretSource is null)
+                    SecretSource = new WritableSubResource();
+                SecretSource.Id = value;
+            }
+        }
+
         /// <summary> Version of the secret to be used. </summary>
         public string SecretVersion { get; set; }
     }

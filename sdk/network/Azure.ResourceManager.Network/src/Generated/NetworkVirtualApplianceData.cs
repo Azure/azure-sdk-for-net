@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkVirtualAppliance data model. </summary>
-    public partial class NetworkVirtualApplianceData : Resource
+    public partial class NetworkVirtualApplianceData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
         public NetworkVirtualApplianceData()
@@ -73,7 +73,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
         public IList<string> BootStrapConfigurationBlobs { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>

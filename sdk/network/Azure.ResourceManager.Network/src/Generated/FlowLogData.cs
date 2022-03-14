@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FlowLog data model. </summary>
-    public partial class FlowLogData : Resource
+    public partial class FlowLogData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of FlowLogData. </summary>
         public FlowLogData()
@@ -61,7 +61,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Parameters that define the flow log format. </summary>
         public FlowLogFormatParameters Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> The provisioning state of the flow log. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         private ClientDiagnostics ServiceBusNamespaceNamespacesClientDiagnostics => _serviceBusNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespace.ResourceType.Namespace, DiagnosticOptions);
-        private NamespacesRestOperations ServiceBusNamespaceNamespacesRestClient => _serviceBusNamespaceNamespacesRestClient ??= new NamespacesRestOperations(ServiceBusNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceBusNamespace.ResourceType));
+        private NamespacesRestOperations ServiceBusNamespaceNamespacesRestClient => _serviceBusNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceBusNamespace.ResourceType));
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(NamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckServiceBusNameAvailability");
             scope.Start();

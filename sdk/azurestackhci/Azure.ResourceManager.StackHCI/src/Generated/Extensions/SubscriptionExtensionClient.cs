@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         private ClientDiagnostics HciClusterClustersClientDiagnostics => _hciClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StackHCI", HciCluster.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(HciClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HciCluster.ResourceType));
+        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HciCluster.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

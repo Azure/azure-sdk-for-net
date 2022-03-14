@@ -4208,7 +4208,7 @@
     }
   ],
   "Variables": {
-    "NOTIFICATION_HUBS_CONNECTION_STRING": "Endpoint=sb://notification-hub-namespace-0000.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=0X/4OghGPPLmhnfC/LpB/F2fGAkBl7NicOGvhfg5kbk=",
+    "NOTIFICATION_HUBS_CONNECTION_STRING": "Endpoint=sb://notification-hub-namespace-0000.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=Kg==",
     "NOTIFICATION_HUBS_RESOURCE_ID": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-0000/providers/Microsoft.NotificationHubs/namespaces/notification-hub-namespace-0000/NotificationHubs/notification-hub-0000",
     "RandomSeed": "722905594",
     "RESOURCE_MANAGER_URL": null,

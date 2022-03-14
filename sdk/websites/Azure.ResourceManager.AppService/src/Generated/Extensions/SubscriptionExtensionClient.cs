@@ -69,39 +69,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         private ClientDiagnostics AppServiceCertificateOrderClientDiagnostics => _appServiceCertificateOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateOrder.ResourceType.Namespace, DiagnosticOptions);
-        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrderRestClient => _appServiceCertificateOrderRestClient ??= new AppServiceCertificateOrdersRestOperations(AppServiceCertificateOrderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceCertificateOrder.ResourceType));
+        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrderRestClient => _appServiceCertificateOrderRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceCertificateOrder.ResourceType));
         private ClientDiagnostics AppServiceCertificateOrdersClientDiagnostics => _appServiceCertificateOrdersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrdersRestOperations(AppServiceCertificateOrdersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(DomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AppServiceDomainDomainsClientDiagnostics => _appServiceDomainDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomain.ResourceType.Namespace, DiagnosticOptions);
-        private DomainsRestOperations AppServiceDomainDomainsRestClient => _appServiceDomainDomainsRestClient ??= new DomainsRestOperations(AppServiceDomainDomainsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceDomain.ResourceType));
+        private DomainsRestOperations AppServiceDomainDomainsRestClient => _appServiceDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceDomain.ResourceType));
         private ClientDiagnostics AppServiceEnvironmentClientDiagnostics => _appServiceEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironment.ResourceType.Namespace, DiagnosticOptions);
-        private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(AppServiceEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceEnvironment.ResourceType));
+        private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceEnvironment.ResourceType));
         private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlan.ResourceType.Namespace, DiagnosticOptions);
-        private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(AppServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServicePlan.ResourceType));
+        private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServicePlan.ResourceType));
         private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", Certificate.ResourceType.Namespace, DiagnosticOptions);
-        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(CertificateClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Certificate.ResourceType));
+        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Certificate.ResourceType));
         private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-        private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(DeletedSiteDeletedWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSite.ResourceType));
+        private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSite.ResourceType));
         private ClientDiagnostics DeletedSiteGlobalClientDiagnostics => _deletedSiteGlobalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-        private GlobalRestOperations DeletedSiteGlobalRestClient => _deletedSiteGlobalRestClient ??= new GlobalRestOperations(DeletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSite.ResourceType));
+        private GlobalRestOperations DeletedSiteGlobalRestClient => _deletedSiteGlobalRestClient ??= new GlobalRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSite.ResourceType));
         private ClientDiagnostics KubeEnvironmentClientDiagnostics => _kubeEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironment.ResourceType.Namespace, DiagnosticOptions);
-        private KubeEnvironmentsRestOperations KubeEnvironmentRestClient => _kubeEnvironmentRestClient ??= new KubeEnvironmentsRestOperations(KubeEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(KubeEnvironment.ResourceType));
+        private KubeEnvironmentsRestOperations KubeEnvironmentRestClient => _kubeEnvironmentRestClient ??= new KubeEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(KubeEnvironment.ResourceType));
         private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(ProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics RecommendationsClientDiagnostics => _recommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private RecommendationsRestOperations RecommendationsRestClient => _recommendationsRestClient ??= new RecommendationsRestOperations(RecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private RecommendationsRestOperations RecommendationsRestClient => _recommendationsRestClient ??= new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ResourceHealthMetadataClientDiagnostics => _resourceHealthMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(ResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(StaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics StaticSiteARMResourceStaticSitesClientDiagnostics => _staticSiteARMResourceStaticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, DiagnosticOptions);
-        private StaticSitesRestOperations StaticSiteARMResourceStaticSitesRestClient => _staticSiteARMResourceStaticSitesRestClient ??= new StaticSitesRestOperations(StaticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
+        private StaticSitesRestOperations StaticSiteARMResourceStaticSitesRestClient => _staticSiteARMResourceStaticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
         private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSite.ResourceType.Namespace, DiagnosticOptions);
-        private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(WebSiteWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebSite.ResourceType));
+        private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebSite.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
         {
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(NameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckAvailabilityDomain");
             scope.Start();
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_GetControlCenterSsoRequest
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetControlCenterSsoRequestDomain");
             scope.Start();
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(string location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteGlobalClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSubscriptionOperationWithAsyncResponseGlobal");
             scope.Start();
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_ResetAllFilters
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ResetAllFiltersRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllFiltersRecommendationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.ResetAllFiltersRecommendation");
             scope.Start();
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(string name, CancellationToken cancellationToken = default)
         {
             using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.DisableRecommendationForSubscriptionRecommendation");
             scope.Start();
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckAppServiceNameAvailability");
             scope.Start();
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSubscriptionDeploymentLocations");
             scope.Start();
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GeoRegion> GetGeoRegionsAsync(SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<GeoRegion>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1628,7 +1628,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GeoRegion> GetGeoRegions(SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GeoRegion> GetGeoRegions(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Page<GeoRegion> FirstPageFunc(int? pageSizeHint)
             {
@@ -1839,7 +1839,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SkuInfos>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SkuInfos>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSkus");
             scope.Start();
@@ -1884,7 +1884,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
         {
             using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionExtensionClient.PreviewWorkflowStaticSite");
             scope.Start();

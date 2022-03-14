@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(listNsgSubsciptionResponse);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(true);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             networkSecurityGroup.SecurityRules.Add(SecurityRule);
 
-            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
+            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
             getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.AreEqual(listDefaultSecurityGroups.First().Name, getDefaultSecurityGroups.Value.Name);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(true);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();

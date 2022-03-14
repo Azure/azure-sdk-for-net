@@ -11,17 +11,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class AccountProperties
     {
         /// <summary> Initializes a new instance of AccountProperties. </summary>
-        /// <param name="count"> Number of custom models in the current resource. </param>
-        /// <param name="limit"> Maximum number of custom models supported in the current resource. </param>
-        internal AccountProperties(int count, int limit)
+        /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
+        internal AccountProperties(int documentModelCount, int documentModelLimit)
         {
-            Count = count;
-            Limit = limit;
+            DocumentModelCount = documentModelCount;
+            DocumentModelLimit = documentModelLimit;
         }
-
-        /// <summary> Number of custom models in the current resource. </summary>
-        public int Count { get; }
-        /// <summary> Maximum number of custom models supported in the current resource. </summary>
-        public int Limit { get; }
     }
 }

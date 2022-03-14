@@ -37,8 +37,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected BoundariesClient() { }
         public BoundariesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string boundaryId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string boundaryId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, string boundaryId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, string boundaryId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(string farmerId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string farmerId, string boundaryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string farmerId, string boundaryId, Azure.RequestContext context = null) { throw null; }
@@ -101,8 +101,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected FarmClient() { }
         public FarmClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDataIngestionJobDetails(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context = null) { throw null; }
     }
@@ -111,8 +111,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected FarmersClient() { }
         public FarmersClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(string farmerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string farmerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string farmerId, Azure.RequestContext context = null) { throw null; }
@@ -129,8 +129,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected FarmsClient() { }
         public FarmsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string farmId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string farmId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, string farmId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, string farmId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(string farmerId, string farmId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string farmerId, string farmId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string farmerId, string farmId, Azure.RequestContext context = null) { throw null; }
@@ -149,8 +149,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected FieldsClient() { }
         public FieldsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string fieldId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string fieldId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, string fieldId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, string fieldId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(string farmerId, string fieldId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string farmerId, string fieldId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string farmerId, string fieldId, Azure.RequestContext context = null) { throw null; }
@@ -185,8 +185,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected ImageProcessingClient() { }
         public ImageProcessingClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateRasterizeJob(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateRasterizeJobAsync(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateRasterizeJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateRasterizeJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetRasterizeJob(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRasterizeJobAsync(string jobId, Azure.RequestContext context = null) { throw null; }
     }
@@ -209,8 +209,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected OAuthTokensClient() { }
         public OAuthTokensClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string oauthProviderId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCascadeDeleteJobDetails(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCascadeDeleteJobDetailsAsync(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetOAuthConnectionLink(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -239,8 +239,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected ScenesClient() { }
         public ScenesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateSatelliteDataIngestionJob(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateSatelliteDataIngestionJobAsync(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateSatelliteDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateSatelliteDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string filePath, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string filePath, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSatelliteDataIngestionJobDetails(string jobId, Azure.RequestContext context = null) { throw null; }
@@ -253,8 +253,8 @@ namespace Azure.Verticals.AgriFood.Farming
         protected SeasonalFieldsClient() { }
         public SeasonalFieldsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string seasonalFieldId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string seasonalFieldId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateCascadeDeleteJob(Azure.WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateCascadeDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(string farmerId, string seasonalFieldId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string farmerId, string seasonalFieldId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string farmerId, string seasonalFieldId, Azure.RequestContext context = null) { throw null; }
@@ -303,10 +303,10 @@ namespace Azure.Verticals.AgriFood.Farming
         protected WeatherClient() { }
         public WeatherClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> CreateDataDeleteJob(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataDeleteJobAsync(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(bool waitForCompletion, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateDataDeleteJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataDeleteJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateDataIngestionJob(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDataIngestionJobAsync(Azure.WaitUntil waitUntil, string jobId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDataDeleteJobDetails(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDataDeleteJobDetailsAsync(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDataIngestionJobDetails(string jobId, Azure.RequestContext context = null) { throw null; }

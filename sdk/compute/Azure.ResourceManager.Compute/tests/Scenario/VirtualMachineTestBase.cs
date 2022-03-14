@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, vnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
             return operation.Value;
         }
 
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, subnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetId, input);
             return operation.Value;
         }
 
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, nicId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
             return operation.Value;
         }
 
@@ -118,6 +119,15 @@ namespace Azure.ResourceManager.Compute.Tests
             //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             return nic;
+        }
+
+        protected async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
+        {
+            var collection = await GetVirtualMachineCollectionAsync();
+            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+            return lro.Value;
         }
     }
 }

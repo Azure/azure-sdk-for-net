@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     {
         public static HashSet<string> DefaultLocations = new HashSet<string>(new[] { "East US", "West US", "Central US", "West Europe" }, StringComparer.OrdinalIgnoreCase);
 
-        public static HashSet<string> Ipv6SupportedLocations = new HashSet<string>(new[] { "East US", "West US", "Central US", "West Europe" }, StringComparer.OrdinalIgnoreCase);
+        public static HashSet<string> IPv6SupportedLocations = new HashSet<string>(new[] { "East US", "West US", "Central US", "West Europe" }, StringComparer.OrdinalIgnoreCase);
 
         public static HashSet<string> AllFeaturesSupportedLocations = new HashSet<string>(new[] { "West US", "West Europe" }, StringComparer.OrdinalIgnoreCase);
 
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             Default,
 
-            Ipv6,
+            IPv6,
 
             MultiCA,
 

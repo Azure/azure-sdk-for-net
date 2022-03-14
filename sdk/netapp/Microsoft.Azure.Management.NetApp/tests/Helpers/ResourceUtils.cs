@@ -41,13 +41,13 @@ namespace NetApp.Tests.Helpers
         public const string volumeName1 = "sdk-net-tests-vol-2105";
 
         //Backup
-        public const string backupLocation = "eastus2euap"; //"westusstage";
-        public const string backupVnet = "sdknettestqa2vnet464euap";
-        //public const string backupLocation = "southcentralusstage";
-        //public const string backupVnet = "sdknettestqa2vnet464southcentralus";
+        //public const string backupLocation = "eastus2euap"; //"westusstage";        
+        //public const string backupVnet = "sdknettestqa2vnet464euap";
+        public const string backupLocation = "southcentralusstage";
+        public const string backupVnet = "sdknettestqa2vnet464southcentralus";
         public const string volumeBackupAccountName1 = "sdk-net-tests-acc-214v";
         public const string backupPoolName1 = "sdk-net-tests-pool-206";
-        public const string backupVolumeName1 = "sdk-net-tests-vol-2111";
+        public const string backupVolumeName1 = "sdk-net-tests-vol-2112";
         public const string backupName1 = backupVolumeName1 + "-b1";
         public const string backupName2 = backupVolumeName1 + "-b2";
 
@@ -61,10 +61,22 @@ namespace NetApp.Tests.Helpers
         public const string backupPolicyName1 = "sdk-net-tests-backupPolicy-105a";
         public const string backupPolicyName2 = "sdk-net-tests-backupPolicy-105b";
 
+        //West us Volume gorup
+        //public const string volumeGroupName1 = "sdk-net-tests-volGroup-1";
+        //public const string vgVnet = "sdknettestqa2vnet464";
+        //public const string vgLocation = "westus2";
+        //public const string proximityPlacementGroup = "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_standard_ppg";
+        //public const string GENPOPDeploymentSpecID = "30542149-bfca-5618-1879-9863dc6767f1";
+        //public const string SAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
+
+        //northeurope 
         public const string volumeGroupName1 = "sdk-net-tests-volGroup-1";
-        public const string proximityPlacementGroup = "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_standard_ppt";
+        public const string vgVnet = "vnetnortheurope-anf";
+        public const string vgLocation = "northeurope";
+        public const string proximityPlacementGroup = "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_northeurope_ppg";
         public const string GENPOPDeploymentSpecID = "30542149-bfca-5618-1879-9863dc6767f1";
         public const string SAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
+
 
         public const string subnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default";
 
@@ -171,7 +183,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "", long poolSize = 4398046511104)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "", long poolSize = 4398046511104, string enableSubvolumes = EnableSubvolumes.Disabled)
         {
             if (!volumeOnly)
             {                
@@ -189,7 +201,8 @@ namespace NetApp.Tests.Helpers
                 Tags = tags,
                 ExportPolicy = exportPolicy,
                 SnapshotId = snapshotId, 
-                SecurityStyle = "unix"
+                SecurityStyle = "unix",
+                EnableSubvolumes = enableSubvolumes
             };
             if (snapshotPolicyId != null)
             {
@@ -295,7 +308,7 @@ namespace NetApp.Tests.Helpers
         }
 
 
-        public static VolumeGroupDetails CreateVolumeGroup(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeGroupName = volumeGroupName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeGroupOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "", long poolSize = 4398046511104)
+        public static VolumeGroupDetails CreateVolumeGroup(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeGroupName = volumeGroupName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = vgLocation, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vgVnet, bool volumeGroupOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "", long poolSize = 4398046511104)
         {
             CapacityPool pool = null;
             if (!volumeGroupOnly)
@@ -326,7 +339,7 @@ namespace NetApp.Tests.Helpers
                     ThroughputMibps = 6,
                     ProtocolTypes = volumeProtocolTypes,
                     CreationToken = $"{volumeGroupName}-log-1",
-                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + backupVnet + "/subnets/default",
+                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                     Tags = tags,
                     ExportPolicy = exportPolicy                    
                 },
@@ -339,7 +352,7 @@ namespace NetApp.Tests.Helpers
                     UsageThreshold = 100 * gibibyte,
                     ProtocolTypes = volumeProtocolTypes,
                     CreationToken = $"{volumeGroupName}-DataBackup-2",
-                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + backupVnet + "/subnets/default",
+                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                     Tags = tags,
                     ExportPolicy = exportPolicy
                 },
@@ -352,7 +365,7 @@ namespace NetApp.Tests.Helpers
                     UsageThreshold = 100 * gibibyte,
                     ProtocolTypes = volumeProtocolTypes,
                     CreationToken = $"{volumeGroupName}-DataVol-3",
-                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + backupVnet + "/subnets/default",
+                    SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                     Tags = tags,
                     ExportPolicy = exportPolicy
                 }
@@ -374,7 +387,7 @@ namespace NetApp.Tests.Helpers
             };                        
 
             var resource = netAppMgmtClient.VolumeGroups.Create(volumeGroup, resourceGroup, accountName, volumeGroupName);
-            Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeGroupName);
+            Assert.Equal(accountName + '/' + volumeGroupName, resource.Name);
 
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
             {
@@ -384,7 +397,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static void CreateSnapshot(AzureNetAppFilesManagementClient netAppMgmtClient, string snapshotName = snapshotName1, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, bool snapshotOnly = false)
+        public static Snapshot CreateSnapshot(AzureNetAppFilesManagementClient netAppMgmtClient, string snapshotName = snapshotName1, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, bool snapshotOnly = false)
         {
             Volume volume = null;
             var snapshot = new Snapshot();
@@ -414,6 +427,7 @@ namespace NetApp.Tests.Helpers
             }
             var resource = netAppMgmtClient.Snapshots.Create(snapshot, resourceGroup, accountName, poolName, volumeName, snapshotName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName + '/' + snapshotName);
+            return resource;
         }
 
         public static void DeleteAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, bool deep = false)

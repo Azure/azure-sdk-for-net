@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.Sku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type, systemData)
         {
             Sku = sku;
             Interval = interval;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and capacity of the SKU. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Sync interval of the sync group. </summary>
         public int? Interval { get; set; }
         /// <summary> Last sync time of the sync group. </summary>

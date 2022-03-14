@@ -88,10 +88,25 @@ namespace Azure.Core.Pipeline
                 {
                     foreach (var policy in options.Policies)
                     {
-                        if (policy.Position == position)
+                        // skip null policies to ensure that calculations for perCallIndex and perRetryIndex are accurate
+                        if (policy.Position == position && policy.Policy != null)
                         {
                             policies.Add(policy.Policy);
                         }
+                    }
+                }
+            }
+
+            // A helper to ensure that we only add non-null policies to the policies list
+            // This ensures that calculations for perCallIndex and perRetryIndex are accurate
+            void AddNonNullPolicies(HttpPipelinePolicy[] policiesToAdd)
+            {
+                for (int i = 0; i < policiesToAdd.Length; i++)
+                {
+                    var policy = policiesToAdd[i];
+                    if (policy != null)
+                    {
+                        policies.Add(policy);
                     }
                 }
             }
@@ -104,11 +119,10 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ReadClientRequestIdPolicy.Shared);
 
-            policies.AddRange(perCallPolicies);
+            AddNonNullPolicies(perCallPolicies);
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
-            policies.RemoveAll(static policy => policy == null);
             var perCallIndex = policies.Count;
 
             policies.Add(ClientRequestIdPolicy.Shared);
@@ -123,11 +137,9 @@ namespace Azure.Core.Pipeline
 
             policies.Add(RedirectPolicy.Shared);
 
-            policies.AddRange(perRetryPolicies);
+            AddNonNullPolicies(perRetryPolicies);
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
-
-            policies.RemoveAll(static policy => policy == null);
 
             var perRetryIndex = policies.Count;
 
@@ -143,7 +155,6 @@ namespace Azure.Core.Pipeline
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly), sanitizer));
 
             AddCustomerPolicies(HttpPipelinePosition.BeforeTransport);
-            policies.RemoveAll(static policy => policy == null);
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = options.Transport;
@@ -176,31 +187,9 @@ namespace Azure.Core.Pipeline
         // internal for testing
         internal static TelemetryPolicy CreateTelemetryPolicy(ClientOptions options)
         {
-            const string PackagePrefix = "Azure.";
-
-            Assembly clientAssembly = options.GetType().Assembly!;
-
-            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            if (versionAttribute == null)
-            {
-                throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
-            }
-
-            string version = versionAttribute.InformationalVersion;
-
-            string assemblyName = clientAssembly.GetName().Name!;
-            if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
-            {
-                assemblyName = assemblyName.Substring(PackagePrefix.Length);
-            }
-
-            int hashSeparator = version.IndexOfOrdinal('+');
-            if (hashSeparator != -1)
-            {
-                version = version.Substring(0, hashSeparator);
-            }
-
-            return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);
+            var type = options.GetType();
+            var userAgentValue = new TelemetryDetails(type.Assembly, options.Diagnostics.ApplicationId);
+            return new TelemetryPolicy(userAgentValue);
         }
     }
 }

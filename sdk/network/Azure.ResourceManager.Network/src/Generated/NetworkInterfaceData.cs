@@ -13,12 +13,12 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterface data model. </summary>
-    public partial class NetworkInterfaceData : Resource
+    public partial class NetworkInterfaceData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()
         {
-            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
             HostedWorkloads = new ChangeTrackingList<string>();
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
             PrivateEndpoint = privateEndpoint;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             TapConfigurations = tapConfigurations;
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
@@ -78,13 +78,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to a virtual machine. </summary>
-        public WritableSubResource VirtualMachine { get; }
+        internal WritableSubResource VirtualMachine { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualMachineId
+        {
+            get => VirtualMachine.Id;
+            set => VirtualMachine.Id = value;
+        }
+
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
         public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A list of IPConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations { get; }
+        public IList<NetworkInterfaceIPConfigurationData> IPConfigurations { get; }
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> TapConfigurations { get; }
         /// <summary> The DNS settings in network interface. </summary>
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of references to linked BareMetal resources. </summary>
         public IReadOnlyList<string> HostedWorkloads { get; }
         /// <summary> A reference to the dscp configuration to which the network interface is linked. </summary>
-        public WritableSubResource DscpConfiguration { get; }
+        internal WritableSubResource DscpConfiguration { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DscpConfigurationId
+        {
+            get => DscpConfiguration.Id;
+            set => DscpConfiguration.Id = value;
+        }
+
         /// <summary> The resource GUID property of the network interface resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network interface resource. </summary>

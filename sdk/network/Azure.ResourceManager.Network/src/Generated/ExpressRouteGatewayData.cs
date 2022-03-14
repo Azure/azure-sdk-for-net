@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteGateway data model. </summary>
-    public partial class ExpressRouteGatewayData : Resource
+    public partial class ExpressRouteGatewayData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
         public ExpressRouteGatewayData()
@@ -44,12 +44,35 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Configuration for auto scaling. </summary>
-        public ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
+        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
+        /// <summary> Minimum and maximum number of scale units to deploy. </summary>
+        public ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds
+        {
+            get => AutoScaleConfiguration is null ? default : AutoScaleConfiguration.Bounds;
+            set
+            {
+                if (AutoScaleConfiguration is null)
+                    AutoScaleConfiguration = new ExpressRouteGatewayPropertiesAutoScaleConfiguration();
+                AutoScaleConfiguration.Bounds = value;
+            }
+        }
+
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
         public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
     }
 }

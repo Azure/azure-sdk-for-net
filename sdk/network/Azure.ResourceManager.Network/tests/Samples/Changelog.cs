@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 AddressPrefix = "10.0.0.0/24",
             });
 
-            ArmOperation<VirtualNetwork> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
+            ArmOperation<VirtualNetwork> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
             VirtualNetwork virtualNetwork = vnetOperation.Value;
             #endregion
         }
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public void CreateModel()
         {
             #region Snippet:Changelog_CreateModel
-            IpsecPolicy policy = new IpsecPolicy(
+            IPsecPolicy policy = new IPsecPolicy(
                300,
                1024,
-               IpsecEncryption.AES128,
-               IpsecIntegrity.SHA256,
+               IPsecEncryption.AES128,
+               IPsecIntegrity.SHA256,
                IkeEncryption.AES192,
                IkeIntegrity.SHA1,
                DhGroup.DHGroup2,

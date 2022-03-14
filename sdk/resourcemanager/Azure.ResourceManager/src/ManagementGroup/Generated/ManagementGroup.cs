@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Management
         {
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
-            _managementGroupRestClient = new ManagementGroupsRestOperations(_managementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
+            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Get");
             scope.Start();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = await _managementGroupRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managementGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = _managementGroupRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
-                    throw _managementGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = await _managementGroupRestClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = _managementGroupRestClient.Delete(Id.Name, cacheControl, cancellationToken);
                 var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -205,19 +205,19 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Update
         /// </summary>
-        /// <param name="options"> Management group patch parameters. </param>
+        /// <param name="data"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> UpdateAsync(ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroup>> UpdateAsync(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.UpdateAsync(Id.Name, options, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.UpdateAsync(Id.Name, data, cacheControl, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,19 +233,19 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Update
         /// </summary>
-        /// <param name="options"> Management group patch parameters. </param>
+        /// <param name="data"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<ManagementGroup> Update(ManagementGroupUpdateOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ManagementGroup> Update(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Update(Id.Name, options, cacheControl, cancellationToken);
+                var response = _managementGroupRestClient.Update(Id.Name, data, cacheControl, cancellationToken);
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, DeviceUpdateAccountUpdateOptions updateParameters)
+        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, PatchableDeviceUpdateAccountData updateParameters)
         {
             Assert.AreEqual(updatedAccount.Data.Location.ToString(), updateParameters.Location);
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)

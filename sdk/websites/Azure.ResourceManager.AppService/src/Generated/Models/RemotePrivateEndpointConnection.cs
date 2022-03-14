@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        public SubResource PrivateEndpoint { get; set; }
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+        }
+
         /// <summary> The state of a private link connection. </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>

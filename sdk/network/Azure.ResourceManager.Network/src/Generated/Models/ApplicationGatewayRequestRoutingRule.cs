@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -58,17 +59,89 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the request routing rule. </summary>
         public int? Priority { get; set; }
         /// <summary> Backend address pool resource of the application gateway. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        internal WritableSubResource BackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            set
+            {
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> Backend http settings resource of the application gateway. </summary>
-        public WritableSubResource BackendHttpSettings { get; set; }
+        internal WritableSubResource BackendHttpSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendHttpSettingsId
+        {
+            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
+            set
+            {
+                if (BackendHttpSettings is null)
+                    BackendHttpSettings = new WritableSubResource();
+                BackendHttpSettings.Id = value;
+            }
+        }
+
         /// <summary> Http listener resource of the application gateway. </summary>
-        public WritableSubResource HttpListener { get; set; }
+        internal WritableSubResource HttpListener { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HttpListenerId
+        {
+            get => HttpListener is null ? default : HttpListener.Id;
+            set
+            {
+                if (HttpListener is null)
+                    HttpListener = new WritableSubResource();
+                HttpListener.Id = value;
+            }
+        }
+
         /// <summary> URL path map resource of the application gateway. </summary>
-        public WritableSubResource UrlPathMap { get; set; }
+        internal WritableSubResource UrlPathMap { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier UrlPathMapId
+        {
+            get => UrlPathMap is null ? default : UrlPathMap.Id;
+            set
+            {
+                if (UrlPathMap is null)
+                    UrlPathMap = new WritableSubResource();
+                UrlPathMap.Id = value;
+            }
+        }
+
         /// <summary> Rewrite Rule Set resource in Basic rule of the application gateway. </summary>
-        public WritableSubResource RewriteRuleSet { get; set; }
+        internal WritableSubResource RewriteRuleSet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RewriteRuleSetId
+        {
+            get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
+            set
+            {
+                if (RewriteRuleSet is null)
+                    RewriteRuleSet = new WritableSubResource();
+                RewriteRuleSet.Id = value;
+            }
+        }
+
         /// <summary> Redirect configuration resource of the application gateway. </summary>
-        public WritableSubResource RedirectConfiguration { get; set; }
+        internal WritableSubResource RedirectConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RedirectConfigurationId
+        {
+            get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
+            set
+            {
+                if (RedirectConfiguration is null)
+                    RedirectConfiguration = new WritableSubResource();
+                RedirectConfiguration.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

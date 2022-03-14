@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuit data model. </summary>
-    public partial class ExpressRouteCircuitData : Resource
+    public partial class ExpressRouteCircuitData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
         public ExpressRouteCircuitData()
@@ -85,7 +85,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ServiceProviderProperties. </summary>
         public ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties { get; set; }
         /// <summary> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </summary>
-        public WritableSubResource ExpressRoutePort { get; set; }
+        internal WritableSubResource ExpressRoutePort { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRoutePortId
+        {
+            get => ExpressRoutePort is null ? default : ExpressRoutePort.Id;
+            set
+            {
+                if (ExpressRoutePort is null)
+                    ExpressRoutePort = new WritableSubResource();
+                ExpressRoutePort.Id = value;
+            }
+        }
+
         /// <summary> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </summary>
         public float? BandwidthInGbps { get; set; }
         /// <summary> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </summary>

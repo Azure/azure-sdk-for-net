@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "c");
             }
             if (Optional.IsDefined(OutputUrl))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<TriggeredWebJobStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<string> duration = default;
+            Optional<TimeSpan> duration = default;
             Optional<string> outputUrl = default;
             Optional<string> errorUrl = default;
             Optional<string> url = default;
@@ -131,7 +131,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("output_url"))
@@ -160,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), duration.Value, outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
+            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
         }
     }
 }

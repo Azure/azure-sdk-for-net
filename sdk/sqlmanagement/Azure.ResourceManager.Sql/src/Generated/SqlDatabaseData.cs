@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, Models.Sku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, systemData, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// ````
         /// 
         /// </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Kind of database. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> Resource that manages the database. </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
-        public Models.Sku CurrentSku { get; }
+        public SqlSku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>

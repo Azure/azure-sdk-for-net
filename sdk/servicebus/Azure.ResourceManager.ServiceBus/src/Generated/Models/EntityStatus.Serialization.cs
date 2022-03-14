@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         public static string ToSerialString(this EntityStatus value) => value switch
         {
+            EntityStatus.Unknown => "Unknown",
             EntityStatus.Active => "Active",
             EntityStatus.Disabled => "Disabled",
             EntityStatus.Restoring => "Restoring",
@@ -21,12 +22,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
             EntityStatus.Creating => "Creating",
             EntityStatus.Deleting => "Deleting",
             EntityStatus.Renaming => "Renaming",
-            EntityStatus.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityStatus value.")
         };
 
         public static EntityStatus ToEntityStatus(this string value)
         {
+            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Unknown;
             if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Active;
             if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Disabled;
             if (string.Equals(value, "Restoring", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Restoring;
@@ -35,7 +36,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Creating;
             if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Deleting;
             if (string.Equals(value, "Renaming", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Renaming;
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return EntityStatus.Unknown;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityStatus value.");
         }
     }
