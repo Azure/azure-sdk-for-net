@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hostCaching">The host caching of the disk. Valid
         /// values are 'None', 'ReadOnly', and 'ReadWrite'. Possible values
         /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        public SharedGalleryDiskImage(int? diskSizeGB = default(int?), HostCaching? hostCaching = default(HostCaching?))
+        public SharedGalleryDiskImage(int? diskSizeGB = default(int?), string hostCaching = default(string))
         {
             DiskSizeGB = diskSizeGB;
             HostCaching = hostCaching;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "hostCaching")]
-        public HostCaching? HostCaching { get; set; }
+        public string HostCaching { get; set; }
 
     }
 }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hostCaching">The host caching of the disk. Valid
         /// values are 'None', 'ReadOnly', and 'ReadWrite'. Possible values
         /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        public SharedGalleryDataDiskImage(int lun, int? diskSizeGB = default(int?), HostCaching? hostCaching = default(HostCaching?))
+        public SharedGalleryDataDiskImage(int lun, int? diskSizeGB = default(int?), string hostCaching = default(string))
             : base(diskSizeGB, hostCaching)
         {
             Lun = lun;
