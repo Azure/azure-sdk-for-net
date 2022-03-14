@@ -87,7 +87,6 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $service = $PackageMetadata.MSDocService
   }
 
-
   # Generate the release tag for use in link substitution
   $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
   Write-Host "The tag of package: $tag"
