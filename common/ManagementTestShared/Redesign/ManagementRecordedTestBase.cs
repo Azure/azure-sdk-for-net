@@ -8,7 +8,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -35,6 +34,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
+
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
@@ -224,8 +225,5 @@ namespace Azure.ResourceManager.TestFramework
             if (!(GlobalClient is null))
                 throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
         }
-
-        protected override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, new ManagementInterceptor(this));
     }
 }
