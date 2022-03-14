@@ -34,6 +34,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueDouble());
                     metricDataPoint.DataPointType = DataPointType.Measurement;
                     break;
+                case MetricType.Histogram:
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetHistogramSum());
+                    metricDataPoint.DataPointType = DataPointType.Aggregation;
+                    metricDataPoint.Count = (int?)metricPoint.GetHistogramCount();
+                    break;
             }
 
             metricDataPoints.Add(metricDataPoint);

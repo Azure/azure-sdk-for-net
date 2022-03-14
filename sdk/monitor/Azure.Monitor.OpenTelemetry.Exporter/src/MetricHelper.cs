@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var metric in batch)
             {
-                if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge)
+                if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge || metric.MetricType == MetricType.Histogram)
                 {
                     foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                     {
