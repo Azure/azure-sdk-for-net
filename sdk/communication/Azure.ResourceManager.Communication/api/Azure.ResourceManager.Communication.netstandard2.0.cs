@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Communication.Models
     }
     public partial class NameAvailabilityOptions
     {
-        public NameAvailabilityOptions(string nameAvailabilityOptionsType, string name) { }
+        public NameAvailabilityOptions(string resourceType, string name) { }
         public string Name { get { throw null; } }
-        public string NameAvailabilityOptionsType { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Communication.Models.ProvisioningState>

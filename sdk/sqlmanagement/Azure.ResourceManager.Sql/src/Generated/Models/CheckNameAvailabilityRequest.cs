@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             Name = name;
-            CheckNameAvailabilityResourceType = "Microsoft.Sql/servers";
+            ResourceType = "Microsoft.Sql/servers";
         }
 
         /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Gets the check name availability resource type. </summary>
-        public string CheckNameAvailabilityResourceType { get; }
+        /// <summary> Gets the resource type. </summary>
+        public string ResourceType { get; }
     }
 }

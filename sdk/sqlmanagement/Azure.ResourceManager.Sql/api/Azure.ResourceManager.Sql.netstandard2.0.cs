@@ -4571,8 +4571,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class CheckNameAvailabilityRequest
     {
         public CheckNameAvailabilityRequest(string name) { }
-        public string CheckNameAvailabilityResourceType { get { throw null; } }
         public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class CheckNameAvailabilityResponse
     {

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CheckNameAvailabilityRequestType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(CheckNameAvailabilityRequestType);
+                writer.WriteStringValue(ResourceType);
             }
             writer.WriteEndObject();
         }

@@ -13,26 +13,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class NameAvailabilityParameters
     {
         /// <summary> Initializes a new instance of NameAvailabilityParameters. </summary>
-        /// <param name="nameAvailabilityParametersType"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>
+        /// <param name="resourceType"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>
         /// <param name="name"> The resource name to validate. e.g.&quot;my-resource-name&quot;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityParametersType"/> or <paramref name="name"/> is null. </exception>
-        public NameAvailabilityParameters(string nameAvailabilityParametersType, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
+        public NameAvailabilityParameters(string resourceType, string name)
         {
-            if (nameAvailabilityParametersType == null)
+            if (resourceType == null)
             {
-                throw new ArgumentNullException(nameof(nameAvailabilityParametersType));
+                throw new ArgumentNullException(nameof(resourceType));
             }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            NameAvailabilityParametersType = nameAvailabilityParametersType;
+            ResourceType = resourceType;
             Name = name;
         }
 
         /// <summary> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </summary>
-        public string NameAvailabilityParametersType { get; }
+        public string ResourceType { get; }
         /// <summary> The resource name to validate. e.g.&quot;my-resource-name&quot;. </summary>
         public string Name { get; }
     }

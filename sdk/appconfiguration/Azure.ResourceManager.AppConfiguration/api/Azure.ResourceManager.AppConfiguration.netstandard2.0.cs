@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     }
     public partial class CheckNameAvailabilityParameters
     {
-        public CheckNameAvailabilityParameters(string name, Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType configurationResourceType) { }
-        public Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType ConfigurationResourceType { get { throw null; } }
+        public CheckNameAvailabilityParameters(string name, Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType resourceType) { }
         public string Name { get { throw null; } }
+        public Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfigurationResourceType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.ConfigurationResourceType>

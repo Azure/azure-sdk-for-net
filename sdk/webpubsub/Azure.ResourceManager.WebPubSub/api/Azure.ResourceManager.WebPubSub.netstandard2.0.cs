@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
     }
     public partial class NameAvailabilityParameters
     {
-        public NameAvailabilityParameters(string nameAvailabilityParametersType, string name) { }
+        public NameAvailabilityParameters(string resourceType, string name) { }
         public string Name { get { throw null; } }
-        public string NameAvailabilityParametersType { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class NetworkAcl
     {

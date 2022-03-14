@@ -2167,7 +2167,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public StorageAccountCheckNameAvailabilityParameters(string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class StorageAccountCreateParameters
     {
