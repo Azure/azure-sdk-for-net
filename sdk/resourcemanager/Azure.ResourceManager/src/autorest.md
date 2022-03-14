@@ -152,7 +152,7 @@ override-operation-name:
   Resources_ListByResourceGroup: GetGenericResources
   Providers_RegisterAtManagementGroupScope: RegisterProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider;ErrorResponse;ErrorAdditionalInfo # TODO: remove error models after updating
+no-property-type-replacement: ProviderData;Provider;
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
