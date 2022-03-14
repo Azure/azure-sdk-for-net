@@ -8,7 +8,7 @@ There are two approaches to organize subclients and service client.
 
 - **Single top-level client**: define one top-level service client with the name $"{language.default.name}Client", all other clients will be its sub-client.
 
-- **client hierarchy**: define the parent-subclient hierarchy dependency.
+- **client hierarchy**: organize the client service and subclients via defining the parent-subclient hierarchy dependency.
 
 ### Single top-level client
 
@@ -155,6 +155,8 @@ namespace Azure.Service.SubClients
         private readonly string _cachedParameter;
         public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, RootClientOptions options = null){}
     }
+
+    private Parameter _cachedParameter0;
     public virtual Parameter GetParameterClient()
     {
         return Volatile.Read(ref _cachedParameter0) ?? Interlocked.CompareExchange(ref _cachedParameter0, new Parameter(ClientDiagnostics, _pipeline, _keyCredential, _endpoint), null) ?? _cachedParameter0;
