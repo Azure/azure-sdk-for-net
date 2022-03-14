@@ -86,7 +86,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
     $service = $PackageMetadata.MSDocService
   }
-
+  Write-Host "The service of package: $service"
   # Generate the release tag for use in link substitution
   $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
   Write-Host "The tag of package: $tag"
