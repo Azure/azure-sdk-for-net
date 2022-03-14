@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A web application firewall rule set. </summary>
-    public partial class ApplicationGatewayFirewallRuleSet : Resource
+    public partial class ApplicationGatewayFirewallRuleSet : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         public ApplicationGatewayFirewallRuleSet()

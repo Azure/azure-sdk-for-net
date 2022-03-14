@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the SecurityPartnerProvider data model. </summary>
-    public partial class SecurityPartnerProviderData : Resource
+    public partial class SecurityPartnerProviderData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
         public SecurityPartnerProviderData()

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            IpConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             EnableIPForwarding = enableIPForwarding;
             DeleteOption = deleteOption;
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualMachineScaleSetIPConfiguration> IPConfigurations { get; }
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> SKU details. </summary>
-        public Sku Sku { get; set; }
+        public KeyVaultSku Sku { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
         public IList<AccessPolicyEntry> AccessPolicies { get; }
         /// <summary> Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault. </summary>

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             // get host
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             // check for exists host
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             int count = 0;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             host1 = null;

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ApplicationSecurityGroup data model. </summary>
-    public partial class ApplicationSecurityGroupData : Resource
+    public partial class ApplicationSecurityGroupData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationSecurityGroupData. </summary>
         public ApplicationSecurityGroupData()

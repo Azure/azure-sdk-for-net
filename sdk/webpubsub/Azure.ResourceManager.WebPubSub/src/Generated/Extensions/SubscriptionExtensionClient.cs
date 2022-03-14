@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSub.ResourceType.Namespace, DiagnosticOptions);
-        private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(WebPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebPubSub.ResourceType));
+        private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebPubSub.ResourceType));
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(UsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();

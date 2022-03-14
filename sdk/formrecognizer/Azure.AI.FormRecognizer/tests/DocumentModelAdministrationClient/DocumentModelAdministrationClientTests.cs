@@ -133,8 +133,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync(null, copyAuth));
-            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync(string.Empty, copyAuth));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelToAsync(null, copyAuth));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelToAsync(string.Empty, copyAuth));
         }
 
         [Test]

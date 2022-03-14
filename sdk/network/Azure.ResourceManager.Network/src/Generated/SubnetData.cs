@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network
             ServiceEndpoints = new ChangeTrackingList<ServiceEndpointPropertiesFormat>();
             ServiceEndpointPolicies = new ChangeTrackingList<ServiceEndpointPolicyData>();
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
-            IpConfigurations = new ChangeTrackingList<IPConfiguration>();
-            IpConfigurationProfiles = new ChangeTrackingList<IPConfigurationProfile>();
-            IpAllocations = new ChangeTrackingList<WritableSubResource>();
+            IPConfigurations = new ChangeTrackingList<IPConfiguration>();
+            IPConfigurationProfiles = new ChangeTrackingList<IPConfigurationProfile>();
+            IPAllocations = new ChangeTrackingList<WritableSubResource>();
             ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
             ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
             Delegations = new ChangeTrackingList<Delegation>();
-            ApplicationGatewayIpConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
+            ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SubnetData. </summary>
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
-        /// <param name="applicationGatewayIpConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIpConfigurations) : base(id)
+        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
+        internal SubnetData(string id, string name, string etag, string type, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<Delegation> delegations, string purpose, ProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicies? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicies? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Network
             ServiceEndpoints = serviceEndpoints;
             ServiceEndpointPolicies = serviceEndpointPolicies;
             PrivateEndpoints = privateEndpoints;
-            IpConfigurations = ipConfigurations;
-            IpConfigurationProfiles = ipConfigurationProfiles;
-            IpAllocations = ipAllocations;
+            IPConfigurations = ipConfigurations;
+            IPConfigurationProfiles = ipConfigurationProfiles;
+            IPAllocations = ipAllocations;
             ResourceNavigationLinks = resourceNavigationLinks;
             ServiceAssociationLinks = serviceAssociationLinks;
             Delegations = delegations;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             PrivateEndpointNetworkPolicies = privateEndpointNetworkPolicies;
             PrivateLinkServiceNetworkPolicies = privateLinkServiceNetworkPolicies;
-            ApplicationGatewayIpConfigurations = applicationGatewayIpConfigurations;
+            ApplicationGatewayIPConfigurations = applicationGatewayIPConfigurations;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of references to private endpoints. </summary>
         public IReadOnlyList<PrivateEndpointData> PrivateEndpoints { get; }
         /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
-        public IReadOnlyList<IPConfiguration> IpConfigurations { get; }
+        public IReadOnlyList<IPConfiguration> IPConfigurations { get; }
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
-        public IReadOnlyList<IPConfigurationProfile> IpConfigurationProfiles { get; }
+        public IReadOnlyList<IPConfigurationProfile> IPConfigurationProfiles { get; }
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
-        public IList<WritableSubResource> IpAllocations { get; }
+        public IList<WritableSubResource> IPAllocations { get; }
         /// <summary> An array of references to the external resources using subnet. </summary>
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks { get; }
         /// <summary> An array of references to services injecting into this subnet. </summary>
@@ -136,6 +136,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
         public VirtualNetworkPrivateLinkServiceNetworkPolicies? PrivateLinkServiceNetworkPolicies { get; set; }
         /// <summary> Application gateway IP configurations of virtual network resource. </summary>
-        public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIpConfigurations { get; }
+        public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations { get; }
     }
 }

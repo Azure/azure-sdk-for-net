@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(mgmtGroup, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(subscription, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Tests
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
             PolicyExemption policyExemption = await CreatePolicyExemption(vn, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]

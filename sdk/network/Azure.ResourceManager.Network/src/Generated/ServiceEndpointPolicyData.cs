@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ServiceEndpointPolicy data model. </summary>
-    public partial class ServiceEndpointPolicyData : Resource
+    public partial class ServiceEndpointPolicyData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         public ServiceEndpointPolicyData()

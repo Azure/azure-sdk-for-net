@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
+save-inputs: true
 arm-core: true
 clear-output-folder: true
 skip-csproj: true
@@ -12,10 +13,10 @@ public-clients: false
 head-as-boolean: false
 mgmt-debug:
   show-request-path: true
-batch:
-  - tag: package-common-type
-  - tag: package-resources
-  - tag: package-management
+#batch:
+#  - tag: package-common-type
+tag: package-resources
+#  - tag: package-management
 ```
 
 ### Tag: package-common-type

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterface data model. </summary>
-    public partial class NetworkInterfaceData : Resource
+    public partial class NetworkInterfaceData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()
         {
-            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
             HostedWorkloads = new ChangeTrackingList<string>();
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
             PrivateEndpoint = privateEndpoint;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             TapConfigurations = tapConfigurations;
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A list of IPConfigurations of the network interface. </summary>
-        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations { get; }
+        public IList<NetworkInterfaceIPConfigurationData> IPConfigurations { get; }
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> TapConfigurations { get; }
         /// <summary> The DNS settings in network interface. </summary>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The type of the Security policy to create. </summary>
-    public readonly partial struct SecurityPolicyType : IEquatable<SecurityPolicyType>
+    internal readonly partial struct SecurityPolicyType : IEquatable<SecurityPolicyType>
     {
         private readonly string _value;
 

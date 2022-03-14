@@ -248,7 +248,19 @@ directive:
     where: $.definitions.SiteSourceControl.properties.properties.properties.gitHubActionConfiguration
     transform: >
         $["x-nullable"] = true;
-        
+  - from: CommonDefinitions.json
+    where: $.definitions.LogSpecification.properties.blobDuration
+    transform: >
+        $["format"] = "duration";
+  - from: CommonDefinitions.json
+    where: $.definitions.MetricAvailability.properties.blobDuration
+    transform: >
+        $["format"] = "duration";
+  - from: WebApps.json
+    where: $.definitions.TriggeredJobRun.properties.duration
+    transform: >
+        $["format"] = "duration";
+        $["x-ms-format"] = "duration-constant";
 #   - from: swagger-document
 #     where: $.definitions.SiteConfig.properties.defaultDocuments
 #     transform: >

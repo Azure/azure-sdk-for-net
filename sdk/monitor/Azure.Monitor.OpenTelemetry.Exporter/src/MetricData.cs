@@ -10,7 +10,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MetricsData
     {
-        public MetricsData(int version, Metric metric, ref MetricPoint metricPoint) : base(version)
+        // TODO: Change the export value when AzureMonitorExporterOptions
+        // could take a customized ExportIntervalMilliseconds.
+        internal const string DefaultExportIntervalMilliseconds = "60000";
+        internal const string AggregationIntervalMsKey = "_MS.AggregationIntervalMs";
+
+        public MetricsData(int version, Metric metric, MetricPoint metricPoint) : base(version)
         {
             if (metric == null)
             {
@@ -38,6 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value?.ToString()));
             }
+            Properties.Add(AggregationIntervalMsKey, DefaultExportIntervalMilliseconds);
         }
     }
 }

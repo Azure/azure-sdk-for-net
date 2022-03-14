@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnSite data model. </summary>
-    public partial class VpnSiteData : Resource
+    public partial class VpnSiteData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
         public VpnSiteData()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
             Etag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SiteKey = siteKey;
             AddressSpace = addressSpace;
             BgpProperties = bgpProperties;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The device properties. </summary>
         public DeviceProperties DeviceProperties { get; set; }
         /// <summary> The ip-address for the vpn-site. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
