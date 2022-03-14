@@ -60,6 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             : this(endpoint, credential, null)
         {
         }
+
         #region DataFeed
 
         /// <summary>
