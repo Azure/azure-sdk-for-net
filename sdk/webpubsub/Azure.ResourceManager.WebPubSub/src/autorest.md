@@ -39,6 +39,9 @@ directive:
       from: PrivateLinkResource
       to: PrivateLink
   - rename-model:
+      from: Sku
+      to: WebPubSubResourceSku
+  - rename-model:
       from: SharedPrivateLinkResource
       to: SharedPrivateLink
   - rename-model:

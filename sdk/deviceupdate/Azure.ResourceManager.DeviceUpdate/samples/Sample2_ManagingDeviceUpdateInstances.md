@@ -28,7 +28,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -40,13 +40,13 @@ Now that we have the resource group created, we can manage the instances inside 
 // Create a new account
 string accountName = "myAccount";
 DeviceUpdateAccountData input1 = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-ArmOperation<DeviceUpdateAccount> lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input1);
+ArmOperation<DeviceUpdateAccount> lro1 = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, input1);
 DeviceUpdateAccount account = lro1.Value;
 // Get the instance collection from the specific account and create an instance
 string instanceName = "myInstance";
 DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(AzureLocation.WestUS2);
 input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
-ArmOperation<DeviceUpdateInstance> lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(true, instanceName, input2);
+ArmOperation<DeviceUpdateInstance> lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, instanceName, input2);
 DeviceUpdateInstance instance = lro2.Value;
 ```
 
@@ -85,5 +85,5 @@ DeviceUpdateInstanceCollection instanceCollection = account.GetDeviceUpdateInsta
 // Now we can get the instance with GetAsync()
 DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
 // With DeleteAsync(), we can delete the instance
-await instance.DeleteAsync(true);
+await instance.DeleteAsync(WaitUntil.Completed);
 ```

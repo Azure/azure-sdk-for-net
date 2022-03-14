@@ -222,7 +222,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     host,
                                     false,
                                     consumerClientMock.Object,
-                                    Mock.Of<BlobsCheckpointStore>(),
+                                    Mock.Of<BlobCheckpointStoreInternal>(),
                                     new EventHubOptions(),
                                     Mock.Of<LoggerFactory>());
 
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 host.Object,
                 false,
                 consumerClientMock.Object,
-                Mock.Of<BlobsCheckpointStore>(),
+                Mock.Of<BlobCheckpointStoreInternal>(),
                 new EventHubOptions(),
                 Mock.Of<LoggerFactory>());
 

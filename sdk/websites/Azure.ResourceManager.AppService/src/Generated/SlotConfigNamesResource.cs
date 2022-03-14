@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _slotConfigNamesResourceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string slotConfigNamesResourceWebAppsApiVersion);
-            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(_slotConfigNamesResourceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, slotConfigNamesResourceWebAppsApiVersion);
+            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, slotConfigNamesResourceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _slotConfigNamesResourceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _slotConfigNamesResourceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
-        public async virtual Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _slotConfigNamesResourceWebAppsRestClient.UpdateSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, slotConfigNames, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
-        public virtual ArmOperation<SlotConfigNamesResource> CreateOrUpdate(bool waitForCompletion, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SlotConfigNamesResource> CreateOrUpdate(WaitUntil waitUntil, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _slotConfigNamesResourceWebAppsRestClient.UpdateSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, slotConfigNames, cancellationToken);
                 var operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

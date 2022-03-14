@@ -9,6 +9,7 @@
     <IsMgmtLibrary>true</IsMgmtLibrary>
     <NoWarn>$(NoWarn);AZC0001;AZC0008;AZC0012;CS1591</NoWarn>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
-    internal partial class ApplicationGatewayAvailableSslOptions : Resource
+    internal partial class ApplicationGatewayAvailableSslOptions : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptions. </summary>
         public ApplicationGatewayAvailableSslOptions()

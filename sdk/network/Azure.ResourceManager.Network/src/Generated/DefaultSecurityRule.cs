@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
-            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(_defaultSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
+            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: DefaultSecurityRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DefaultSecurityRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultSecurityRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRule.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _defaultSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _defaultSecurityRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _defaultSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _defaultSecurityRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

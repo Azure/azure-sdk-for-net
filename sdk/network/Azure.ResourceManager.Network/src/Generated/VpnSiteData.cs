@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnSite data model. </summary>
-    public partial class VpnSiteData : Resource
+    public partial class VpnSiteData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
         public VpnSiteData()

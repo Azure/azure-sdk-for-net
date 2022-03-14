@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _gremlinDatabase.Delete(true);
-            _databaseAccount.Delete(true);
+            _gremlinDatabase.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraph graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             if (graph != null)
             {
-                await graph.DeleteAsync(true);
+                await graph.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(false, _graphName, parameters)).WaitForCompletionAsync();
+            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(WaitUntil.Started, _graphName, parameters)).WaitForCompletionAsync();
             Assert.AreEqual(_graphName, grpah.Data.Resource.Id);
             VerifyGremlinGraphCreation(grpah, parameters);
             // Seems bug in swagger definition
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task GremlinGraphDelete()
         {
             var graph = await CreateGremlinGraph(null);
-            await graph.DeleteAsync(true);
+            await graph.DeleteAsync(WaitUntil.Completed);
 
             graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             Assert.Null(graph);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(true, _graphName, parameters);
+            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(WaitUntil.Completed, _graphName, parameters);
             return graphLro.Value;
         }
 

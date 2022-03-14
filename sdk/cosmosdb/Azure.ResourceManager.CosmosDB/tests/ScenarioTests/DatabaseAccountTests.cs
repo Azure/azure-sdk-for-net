@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccount account = await DatabaseAccountCollection.GetIfExistsAsync(_databaseAccountName);
             if (account != null)
             {
-                await account.DeleteAsync(true);
+                await account.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
             updateOptions.Tags.Add("key3", "value3");
             updateOptions.Tags.Add("key4", "value4");
-            await account2.UpdateAsync(true, updateOptions);
+            await account2.UpdateAsync(WaitUntil.Completed, updateOptions);
 
             var failoverPolicyList = new List<FailoverPolicy>
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 }
             };
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
-            await account2.FailoverPriorityChangeAsync(true, new FailoverPolicies(failoverPolicyList));
+            await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, new FailoverPolicies(failoverPolicyList));
 
             DatabaseAccount account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account3, updateOptions);
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.Primary));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(true, new DatabaseAccountRegenerateKeyData(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Primary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Secondary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.SecondaryReadonly));
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
 
-            await account.DeleteAsync(true);
+            await account.DeleteAsync(WaitUntil.Completed);
 
             List<DatabaseAccount> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(accounts);

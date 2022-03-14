@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnection data model. </summary>
-    public partial class ExpressRouteCrossConnectionData : Resource
+    public partial class ExpressRouteCrossConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
         public ExpressRouteCrossConnectionData()

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> List of Azure resource ids that manage this resource. </summary>
         public IList<string> ManagedByExtended { get; }
         /// <summary> Determines the SKU of the Disk Pool. </summary>
-        public Sku Sku { get; set; }
+        public StoragePoolSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> List of Azure Managed Disks to attach to a Disk Pool. </summary>

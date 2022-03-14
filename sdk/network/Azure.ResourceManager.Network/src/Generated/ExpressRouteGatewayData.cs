@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteGateway data model. </summary>
-    public partial class ExpressRouteGatewayData : Resource
+    public partial class ExpressRouteGatewayData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
         public ExpressRouteGatewayData()

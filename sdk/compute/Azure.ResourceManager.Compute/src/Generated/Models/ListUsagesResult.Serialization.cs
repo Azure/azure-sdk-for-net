@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ListUsagesResult DeserializeListUsagesResult(JsonElement element)
         {
-            IReadOnlyList<Usage> value = default;
+            IReadOnlyList<ComputeUsage> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Usage> array = new List<Usage>();
+                    List<ComputeUsage> array = new List<ComputeUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Usage.DeserializeUsage(item));
+                        array.Add(ComputeUsage.DeserializeComputeUsage(item));
                     }
                     value = array;
                     continue;

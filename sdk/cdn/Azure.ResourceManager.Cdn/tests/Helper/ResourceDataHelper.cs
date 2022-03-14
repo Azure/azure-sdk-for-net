@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = skuName });
+        public static ProfileData CreateProfileData(CdnSkuName skuName) => new ProfileData(AzureLocation.WestUS, new CdnSku { Name = skuName });
 
-        public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Models.Sku { Name = skuName });
+        public static ProfileData CreateAfdProfileData(CdnSkuName skuName) => new ProfileData("Global", new CdnSku { Name = skuName });
 
         public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(AzureLocation.WestUS)
         {
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Models.Sku
+        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new CdnSku
         {
-            Name = SkuName.StandardMicrosoft
+            Name = CdnSkuName.StandardMicrosoft
         });
 
         public static void AssertValidProfile(Profile model, Profile getResult)
