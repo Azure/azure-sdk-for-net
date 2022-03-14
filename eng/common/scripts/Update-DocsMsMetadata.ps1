@@ -80,7 +80,7 @@ $TITLE_REGEX = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library fo
 function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata) {
   # The $PackageMetadata could be $null if there is no associated metadata entry
   # based on how the metadata CSV is filtered
-  $service = $PackageInfo.ServiceDirectory.ToLower()    
+  $service = $PackageInfo.ServiceDirectory.ToLower()
   if ($PackageMetadata -and $PackageMetadata.MSDocService) {
     # Use MSDocService in csv metadata to override the service directory
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
