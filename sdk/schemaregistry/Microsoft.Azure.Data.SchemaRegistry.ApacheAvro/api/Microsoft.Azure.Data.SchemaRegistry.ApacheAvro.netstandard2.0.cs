@@ -9,7 +9,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         public TData Deserialize<TData>(Azure.BinaryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.BinaryContent Serialize(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.BinaryContent> SerializeAsync(object data, System.Type dataType = null, System.Type messageType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.BinaryContent> SerializeAsync<TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEnvelope : Azure.BinaryContent, new() { throw null; }
+        public Azure.BinaryContent Serialize<TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public TEnvelope Serialize<TEnvelope, TData>(TData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TEnvelope : Azure.BinaryContent, new() { throw null; }
     }
     public partial class SchemaRegistryAvroSerializerOptions

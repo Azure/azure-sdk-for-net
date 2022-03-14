@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             #region Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            BinaryContent content = await serializer.SerializeAsync(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
             #endregion
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, Employee_V2>(employee);
+            var content = await serializer.SerializeAsync(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
             // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee() { Age = 42, Name = "Caketown"};
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            var content = await serializer.SerializeAsync<Employee>(employee);
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             record.Add("Age", 42);
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, GenericRecord>(record);
+            var content = await serializer.SerializeAsync(record);
 
             var deserializedObject = await serializer.DeserializeAsync<GenericRecord>(content);
             var readRecord = deserializedObject as GenericRecord;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var timeZoneInfo = TimeZoneInfo.Utc;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync<BinaryContent, TimeZoneInfo>(timeZoneInfo));
+            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync<TimeZoneInfo>(timeZoneInfo));
             await Task.CompletedTask;
         }
 
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = new BinaryContent
+            var content = new DefaultBinaryContent
             {
                 Data = new BinaryData(Array.Empty<byte>()),
                 ContentType = "avro/binary+234234"
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = new BinaryContent
+            var content = new DefaultBinaryContent
             {
                 Data = new BinaryData(Array.Empty<byte>()),
                 ContentType = null
