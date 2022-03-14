@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A common class for general resource information. </summary>
-    public partial class VirtualNetworkGatewayConnectionListEntity : Resource
+    public partial class VirtualNetworkGatewayConnectionListEntity : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>

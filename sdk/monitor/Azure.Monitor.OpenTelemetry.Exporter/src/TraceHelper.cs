@@ -24,26 +24,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var activity in batchActivity)
             {
-                MonitorBase telemetryData = new MonitorBase();
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags);
-                telemetryItem.InstrumentationKey = instrumentationKey;
-                telemetryItem.SetResource(roleName, roleInstance);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
                     case TelemetryType.Request:
-                        telemetryData.BaseType = "RequestData";
-                        telemetryData.BaseData = new RequestData(Version, activity, ref monitorTags);
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "RequestData",
+                            BaseData = new RequestData(Version, activity, ref monitorTags),
+                        };
                         break;
                     case TelemetryType.Dependency:
-                        telemetryData.BaseType = "RemoteDependencyData";
-                        telemetryData.BaseData = new RemoteDependencyData(Version, activity, ref monitorTags);
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "RemoteDependencyData",
+                            BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
+                        };
                         break;
                 }
 
                 monitorTags.Return();
-                telemetryItem.Data = telemetryData;
                 telemetryItems.Add(telemetryItem);
             }
 

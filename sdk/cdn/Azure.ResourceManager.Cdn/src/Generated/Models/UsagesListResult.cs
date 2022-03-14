@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UsagesListResult. </summary>
         internal UsagesListResult()
         {
-            Value = new ChangeTrackingList<Usage>();
+            Value = new ChangeTrackingList<CdnUsage>();
         }
 
         /// <summary> Initializes a new instance of UsagesListResult. </summary>
         /// <param name="value"> The list of resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal UsagesListResult(IReadOnlyList<Usage> value, string nextLink)
+        internal UsagesListResult(IReadOnlyList<CdnUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of resource usages. </summary>
-        public IReadOnlyList<Usage> Value { get; }
+        public IReadOnlyList<CdnUsage> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

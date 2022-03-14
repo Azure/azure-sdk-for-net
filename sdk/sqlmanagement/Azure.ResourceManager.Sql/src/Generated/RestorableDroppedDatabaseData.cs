@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.Sku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type, systemData)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type, systemData)
         {
             Sku = sku;
             Location = location;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and tier of the SKU. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Resource location. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>

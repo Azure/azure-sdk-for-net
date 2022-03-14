@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected CassandraTableCollection CassandraTableCollection { get => _cassandraKeyspace.GetCassandraTables(); }
+        protected CassandraTableCollection CassandraTableCollection => _cassandraKeyspace.GetCassandraTables();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _cassandraKeyspace.Delete(true);
-            _databaseAccount.Delete(true);
+            _cassandraKeyspace.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CassandraTable table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             if (table != null)
             {
-                await table.DeleteAsync(true);
+                await table.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            table = (await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters)).Value;
+            table = (await CassandraTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _tableName, parameters)).Value;
             Assert.AreEqual(_tableName, table.Data.Resource.Id);
             VerifyCassandraTableCreation(table, parameters);
             // Seems bug in swagger definition
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -155,27 +155,27 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraTableDelete()
         {
             var table = await CreateCassandraTable(null);
-            await table.DeleteAsync(true);
+            await table.DeleteAsync(WaitUntil.Completed);
 
             table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             Assert.Null(table);
         }
 
-        protected async Task<CassandraTable> CreateCassandraTable(CassandraTableCreateUpdateOptions parameters)
+        protected async Task<CassandraTable> CreateCassandraTable(CassandraTableCreateUpdateData parameters)
         {
             if (parameters == null)
             {
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters);
+            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _tableName, parameters);
             return tableLro.Value;
         }
 
-        private CassandraTableCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private CassandraTableCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateOptions(AzureLocation.WestUS,
+            return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
                     Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        private void VerifyCassandraTableCreation(CassandraTable cassandraTable, CassandraTableCreateUpdateOptions cassandraTableCreateUpdateOptions)
+        private void VerifyCassandraTableCreation(CassandraTable cassandraTable, CassandraTableCreateUpdateData cassandraTableCreateUpdateOptions)
         {
             Assert.AreEqual(cassandraTable.Data.Resource.Id, cassandraTableCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count);

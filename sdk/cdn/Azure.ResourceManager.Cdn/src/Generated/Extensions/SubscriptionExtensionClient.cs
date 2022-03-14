@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.Cdn
         }
 
         private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", Profile.ResourceType.Namespace, DiagnosticOptions);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(ProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Profile.ResourceType));
+        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Profile.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceUsageRestOperations ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsageRestOperations(ResourceUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ResourceUsageRestOperations ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsageRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(ManagedRuleSetsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="validateProbeInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ValidateProbeOutput>> ValidateProbeAsync(ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidateProbe");
             scope.Start();

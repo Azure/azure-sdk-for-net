@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using Azure.Monitor.OpenTelemetry.Exporter.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Contrib.Extensions.PersistentStorage;
@@ -23,9 +21,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal IPersistentStorage _storage;
+        private readonly string _instrumentationKey;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            options.Retry.MaxRetries = 0;
+            ConnectionString.ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
+            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+
             try
             {
                 _storage = new FileStorage(options.StorageDirectory);
@@ -38,10 +46,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // So if someone opts in for storage and we cannot initialize, we can throw.
                 // Change needed on persistent storage side to throw if not able to create storage directory.
             }
-            ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
-            options.Retry.MaxRetries = 0;
+        }
 
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+        public string InstrumentationKey
+        {
+            get
+            {
+                return _instrumentationKey;
+            }
         }
 
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
@@ -172,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result =_storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;

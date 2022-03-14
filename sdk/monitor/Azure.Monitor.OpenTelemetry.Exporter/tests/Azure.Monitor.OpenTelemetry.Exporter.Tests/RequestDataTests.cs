@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);

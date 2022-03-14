@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualWan data model. </summary>
-    public partial class VirtualWanData : Resource
+    public partial class VirtualWanData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualWanData. </summary>
         public VirtualWanData()

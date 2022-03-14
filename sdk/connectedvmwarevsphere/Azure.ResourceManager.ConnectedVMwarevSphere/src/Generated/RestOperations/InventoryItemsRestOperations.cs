@@ -24,22 +24,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of InventoryItemsRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public InventoryItemsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public InventoryItemsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-10-01-preview";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
@@ -80,24 +75,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -123,24 +107,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, body);
             _pipeline.Send(message, cancellationToken);
@@ -154,7 +127,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -187,24 +160,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -220,7 +182,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 404:
                     return Response.FromValue((InventoryItemData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -231,24 +193,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemData> Get(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName);
             _pipeline.Send(message, cancellationToken);
@@ -264,7 +215,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 404:
                     return Response.FromValue((InventoryItemData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -297,24 +248,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -324,7 +264,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -335,24 +275,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName);
             _pipeline.Send(message, cancellationToken);
@@ -362,7 +291,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -393,20 +322,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemsList>> ListByVCenterAsync(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -420,7 +341,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -430,20 +351,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemsList> ListByVCenter(string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var message = CreateListByVCenterRequest(subscriptionId, resourceGroupName, vcenterName);
             _pipeline.Send(message, cancellationToken);
@@ -457,7 +370,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -482,24 +395,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemsList>> ListByVCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var message = CreateListByVCenterNextPageRequest(nextLink, subscriptionId, resourceGroupName, vcenterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -513,7 +415,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -524,24 +426,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemsList> ListByVCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var message = CreateListByVCenterNextPageRequest(nextLink, subscriptionId, resourceGroupName, vcenterName);
             _pipeline.Send(message, cancellationToken);
@@ -555,7 +446,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

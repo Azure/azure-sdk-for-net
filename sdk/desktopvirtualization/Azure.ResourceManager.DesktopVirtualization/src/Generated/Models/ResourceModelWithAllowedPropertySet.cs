@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="identity"></param>
         /// <param name="sku"></param>
         /// <param name="plan"></param>
-        internal ResourceModelWithAllowedPropertySet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan) : base(id, name, type, systemData, tags, location)
+        internal ResourceModelWithAllowedPropertySet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan) : base(id, name, type, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Kind = kind;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Gets or sets the sku. </summary>
         public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>
-        public Plan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
     }
 }

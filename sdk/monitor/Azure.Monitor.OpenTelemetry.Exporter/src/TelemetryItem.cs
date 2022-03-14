@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using Azure.Core;
+using System.Runtime.CompilerServices;
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -18,12 +19,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             [TelemetryType.Dependency] = "RemoteDependency",
         };
 
-        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
+        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
+            this(s_telemetryItem_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
         {
-            Name = s_telemetryItem_Name_Mapping[activity.GetTelemetryType()];
-            Time = FormatUtcTimestamp(activity.StartTimeUtc);
-            Tags = new ChangeTrackingDictionary<string, string>();
-
             if (activity.ParentSpanId != default)
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
@@ -41,15 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.MappedTags);
             }
 
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
         }
 
-        public TelemetryItem (LogRecord logRecord)
+        public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :
+            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
         {
-            Name = logRecord.Exception != null ? "Exception" : "Message";
-            Time = FormatUtcTimestamp(logRecord.Timestamp);
-            Tags = new ChangeTrackingDictionary<string, string>();
-
             if (logRecord.TraceId != default)
             {
                 Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
@@ -60,13 +55,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            InstrumentationKey = instrumentationKey;
+            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
         }
 
-        internal void SetResource(string roleName, string roleInstance)
+        public TelemetryItem(DateTime time, string roleName, string roleInstance, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
         {
+            SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetResourceSdkVersionAndIkey(string roleName, string roleInstance, string instrumentationKey)
+        {
+            InstrumentationKey = instrumentationKey;
             Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 
         internal static string FormatUtcTimestamp(System.DateTime utcTimestamp)

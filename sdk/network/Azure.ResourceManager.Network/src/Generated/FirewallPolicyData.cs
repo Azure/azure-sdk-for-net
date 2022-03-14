@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FirewallPolicy data model. </summary>
-    public partial class FirewallPolicyData : Resource
+    public partial class FirewallPolicyData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
         public FirewallPolicyData()

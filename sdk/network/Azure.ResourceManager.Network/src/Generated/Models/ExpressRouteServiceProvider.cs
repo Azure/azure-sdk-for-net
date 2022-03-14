@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A ExpressRouteResourceProvider object. </summary>
-    public partial class ExpressRouteServiceProvider : Resource
+    public partial class ExpressRouteServiceProvider : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         public ExpressRouteServiceProvider()

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The managed identity information for the configuration store. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU of the configuration store. </summary>
-        internal Sku Sku { get; set; }
+        internal AppConfigurationSku Sku { get; set; }
         /// <summary> The SKU name of the configuration store. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
-            set => Sku = new Sku(value);
+            set => Sku = new AppConfigurationSku(value);
         }
 
         /// <summary> The ARM resource tags. </summary>

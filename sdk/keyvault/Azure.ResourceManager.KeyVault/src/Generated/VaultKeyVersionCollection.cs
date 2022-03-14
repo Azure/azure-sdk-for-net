@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _vaultKeyVersionKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKeyVersion.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(VaultKeyVersion.ResourceType, out string vaultKeyVersionKeysApiVersion);
-            _vaultKeyVersionKeysRestClient = new KeysRestOperations(_vaultKeyVersionKeysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyVersionKeysApiVersion);
+            _vaultKeyVersionKeysRestClient = new KeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyVersionKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public async virtual Task<Response<VaultKeyVersion>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKeyVersion>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _vaultKeyVersionKeysRestClient.GetVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _vaultKeyVersionKeysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _vaultKeyVersionKeysRestClient.GetVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken);
                 if (response.Value == null)
-                    throw _vaultKeyVersionKeysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public async virtual Task<Response<VaultKeyVersion>> GetIfExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKeyVersion>> GetIfExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             return lro.Value;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var setName = Recording.GenerateAssetName("testAS-");
             var availabilitySet = await CreateAvailabilitySetAsync(setName);
-            await availabilitySet.DeleteAsync(true);
+            await availabilitySet.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ResourceGroup rg = Client.GetResourceGroup(ResourceGroup.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
             var proxGrpName = Recording.GenerateAssetName("proxGrp-");
-            ProximityPlacementGroup proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(true, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
+            ProximityPlacementGroup proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
 
             PatchableAvailabilitySetData updateOptions = new PatchableAvailabilitySetData();
             updateOptions.ProximityPlacementGroupId = proxGrp.Id;
