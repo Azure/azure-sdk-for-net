@@ -9,12 +9,13 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary>
-    /// Summary description for Class1
+    /// HTTP pipeline policy that configures the HTTP header `x-ms-useragent`,
+    /// using the environment variable `AZURE_USERAGENT_OVERRIDE`.
     /// </summary>
     internal class MSUserAgentPolicy : HttpPipelinePolicy
     {
         /// <summary>
-        /// Processed message adding the HTTP header x-ms-useragent if applicable.
+        /// Processes message adding the HTTP header x-ms-useragent if applicable.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="pipeline"></param>
@@ -25,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Processed message asynchronously adding the HTTP header x-ms-useragent if applicable.
+        /// Processes message asynchronously adding the HTTP header x-ms-useragent if applicable.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="pipeline"></param>
