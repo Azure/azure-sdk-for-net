@@ -56,6 +56,7 @@ jobs:
         Cloud: Public
       MatrixFilters: []
       MatrixReplace: []
+      PreGenerationSteps: []
 ```
 
 ## Matrix config file syntax
