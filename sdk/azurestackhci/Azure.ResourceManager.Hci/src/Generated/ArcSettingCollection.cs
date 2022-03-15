@@ -71,13 +71,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, arcSetting, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSettingCollection.cs
                 var operation = new HciArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSettingCollection.cs
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -109,13 +104,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, arcSetting, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSettingCollection.cs
                 var operation = new HciArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSettingCollection.cs
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

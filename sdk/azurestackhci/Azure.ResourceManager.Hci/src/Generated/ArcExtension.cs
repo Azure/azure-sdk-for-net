@@ -144,13 +144,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtension.cs
                 var operation = new HciArmOperation(_arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(_arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtension.cs
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -175,13 +170,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtension.cs
                 var operation = new HciArmOperation(_arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(_arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtension.cs
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -210,13 +200,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtension.cs
                 var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtension.cs
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -245,13 +230,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtension.cs
                 var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtension.cs
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

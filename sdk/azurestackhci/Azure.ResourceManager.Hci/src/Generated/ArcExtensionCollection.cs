@@ -71,13 +71,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtensionCollection.cs
                 var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtensionCollection.cs
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -109,13 +104,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcExtensionCollection.cs
                 var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcExtensionCollection.cs
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

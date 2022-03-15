@@ -179,13 +179,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcSettingRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSetting.cs
                 var operation = new HciArmOperation(_arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(_arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSetting.cs
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -210,13 +205,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcSettingRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSetting.cs
                 var operation = new HciArmOperation(_arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(_arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSetting.cs
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }

@@ -2,11 +2,11 @@
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
-Install the Azure azurestackhci management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Stack HCI management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
 Install-Package Azure.ResourceManager.Hci -Version 1.0.0-beta.1

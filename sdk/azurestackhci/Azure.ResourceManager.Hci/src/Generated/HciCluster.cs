@@ -181,13 +181,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _hciClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/HciCluster.cs
                 var operation = new HciArmOperation(response);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/HciCluster.cs
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -212,13 +207,8 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _hciClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/HciCluster.cs
                 var operation = new HciArmOperation(response);
-                if (waitForCompletion)
-=======
-                var operation = new StackHCIArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/HciCluster.cs
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
