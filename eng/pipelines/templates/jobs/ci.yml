@@ -202,6 +202,7 @@ jobs:
           /p:IncludeStress=false
           /p:PublicSign=false
           /p:Configuration=$(BuildConfiguration)
+          /p:EnableSourceLink=false
           /p:BuildSnippets=true
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
