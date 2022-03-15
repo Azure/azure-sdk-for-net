@@ -491,11 +491,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
@@ -517,11 +517,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
