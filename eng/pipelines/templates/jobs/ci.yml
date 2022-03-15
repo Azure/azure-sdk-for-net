@@ -17,6 +17,9 @@ parameters:
 - name: ServiceToTest
   type: string
   default: ''
+- name: TestDocSnippets
+  type: boolean
+  default: false
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -192,6 +195,7 @@ jobs:
       - script: >-
           dotnet build eng/service.proj -warnaserror
           /t:rebuild
+          /p:DebugType=none
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludePerf=false
@@ -200,6 +204,7 @@ jobs:
           /p:Configuration=$(BuildConfiguration)
           /p:DefineConstants=SNIPPET
         displayName: Build snippets
+        condition: and(succeeded(), eq(${{ parameters.TestDocSnippets }}, true))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - job: Compliance
