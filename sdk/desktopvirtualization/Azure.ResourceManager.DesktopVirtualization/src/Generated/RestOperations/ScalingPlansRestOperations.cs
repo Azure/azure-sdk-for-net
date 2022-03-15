@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     internal partial class ScalingPlansRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-12";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scalingPlanName)
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(scalingPlan);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -450,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -521,7 +520,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -593,7 +592,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -665,7 +664,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -733,7 +732,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

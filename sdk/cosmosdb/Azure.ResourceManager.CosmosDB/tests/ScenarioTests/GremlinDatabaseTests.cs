@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            GremlinDatabaseCreateUpdateData updateOptions = new GremlinDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.Type, null,
+            GremlinDatabaseCreateUpdateData updateOptions = new GremlinDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
             Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.Type, actualValue.Data.Type);
+            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 

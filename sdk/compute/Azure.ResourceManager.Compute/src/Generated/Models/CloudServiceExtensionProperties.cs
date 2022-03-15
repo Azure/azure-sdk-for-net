@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of CloudServiceExtensionProperties. </summary>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension. </param>
+        /// <param name="cloudServiceExtensionPropertiesType"> Specifies the type of the extension. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the extension. Specifies the version of the extension. If this element is not specified or an asterisk (*) is used as the value, the latest version of the extension is used. If the value is specified with a major version number and an asterisk as the minor version number (X.), the latest minor version of the specified major version is selected. If a major version number and a minor version number are specified (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade is performed on the role instance. </param>
         /// <param name="autoUpgradeMinorVersion"> Explicitly specify whether platform can automatically upgrade typeHandlerVersion to higher minor versions when they become available. </param>
         /// <param name="settings"> Public settings for the extension. For JSON extensions, this is the JSON settings for the extension. For XML Extension (like RDP), this is the XML setting for the extension. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or &apos;*&apos; is specified, extension is applied to all roles in the cloud service. </param>
-        internal CloudServiceExtensionProperties(string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, string settings, string protectedSettings, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault, string forceUpdateTag, string provisioningState, IList<string> rolesAppliedTo)
+        internal CloudServiceExtensionProperties(string publisher, string cloudServiceExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, string settings, string protectedSettings, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault, string forceUpdateTag, string provisioningState, IList<string> rolesAppliedTo)
         {
             Publisher = publisher;
-            Type = type;
+            CloudServiceExtensionPropertiesType = cloudServiceExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
         /// <summary> Specifies the type of the extension. </summary>
-        public string Type { get; set; }
+        public string CloudServiceExtensionPropertiesType { get; set; }
         /// <summary> Specifies the version of the extension. Specifies the version of the extension. If this element is not specified or an asterisk (*) is used as the value, the latest version of the extension is used. If the value is specified with a major version number and an asterisk as the minor version number (X.), the latest minor version of the specified major version is selected. If a major version number and a minor version number are specified (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade is performed on the role instance. </summary>
         public string TypeHandlerVersion { get; set; }
         /// <summary> Explicitly specify whether platform can automatically upgrade typeHandlerVersion to higher minor versions when they become available. </summary>

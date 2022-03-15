@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListContainerItem. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        internal ListContainerItem(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash) : base(id, name, type, systemData, etag)
+        internal ListContainerItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash) : base(id, name, resourceType, systemData, etag)
         {
             Version = version;
             Deleted = deleted;

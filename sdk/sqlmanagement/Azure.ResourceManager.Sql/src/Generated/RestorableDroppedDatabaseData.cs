@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="location"> Resource location. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type, systemData)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;

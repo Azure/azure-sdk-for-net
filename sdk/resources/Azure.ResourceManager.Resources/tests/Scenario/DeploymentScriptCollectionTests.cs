@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Id, getResult.Id);
             Assert.AreEqual(model.Name, getResult.Name);
-            Assert.AreEqual(model.Type, getResult.Type);
+            Assert.AreEqual(model.ResourceType, getResult.ResourceType);
             if (model.ContainerSettings != null || getResult.ContainerSettings != null)
             {
                 Assert.NotNull(model.ContainerSettings);

@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotNull(agentConfig);
             Assert.AreEqual("current", agentConfig.Value.Data.Name);
             Assert.AreEqual("Enabled", agentConfig.Value.Data.State.ToString());
-            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", agentConfig.Value.Data.Type.ToString());
+            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", agentConfig.Value.Data.ResourceType.ToString());
 
             // 3.Get
             var getAgentConfig = await collection.GetAsync();
             Assert.IsNotNull(getAgentConfig);
             Assert.AreEqual("current", getAgentConfig.Value.Data.Name);
             Assert.AreEqual("Enabled", getAgentConfig.Value.Data.State.ToString());
-            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", getAgentConfig.Value.Data.Type.ToString());
+            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", getAgentConfig.Value.Data.ResourceType.ToString());
 
             // 4.GetAvailableLocations
             var getAvailableLocationsAgentConf = await collection.GetAvailableLocationsAsync();

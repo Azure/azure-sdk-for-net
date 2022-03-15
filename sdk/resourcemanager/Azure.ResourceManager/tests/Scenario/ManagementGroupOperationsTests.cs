@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(mgmtGroup.Data.Id, patchedMgmtGroup.Data.Id);
             Assert.AreEqual(mgmtGroup.Data.Name, patchedMgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroup.Data.TenantId, patchedMgmtGroup.Data.TenantId);
-            Assert.AreEqual(mgmtGroup.Data.Type, patchedMgmtGroup.Data.Type);
+            Assert.AreEqual(mgmtGroup.Data.ResourceType, patchedMgmtGroup.Data.ResourceType);
         }
     }
 }

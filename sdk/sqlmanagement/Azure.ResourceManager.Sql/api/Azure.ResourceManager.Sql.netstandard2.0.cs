@@ -4572,7 +4572,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public CheckNameAvailabilityRequest(string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class CheckNameAvailabilityResponse
     {
@@ -5297,10 +5297,10 @@ namespace Azure.ResourceManager.Sql.Models
         internal InstancePoolUsage() { }
         public int? CurrentValue { get { throw null; } }
         public string Id { get { throw null; } }
+        public string InstancePoolUsageType { get { throw null; } }
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.UsageName Name { get { throw null; } }
         public int? RequestedLimit { get { throw null; } }
-        public string Type { get { throw null; } }
         public string Unit { get { throw null; } }
     }
     public partial class InstancePoolVcoresCapability
@@ -5368,8 +5368,8 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal JobExecutionTarget() { }
         public string DatabaseName { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.JobTargetType? JobTargetType { get { throw null; } }
         public string ServerName { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.JobTargetType? Type { get { throw null; } }
     }
     public partial class JobSchedule
     {
@@ -5377,8 +5377,8 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public string Interval { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobScheduleType? JobScheduleType { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobScheduleType? Type { get { throw null; } set { } }
     }
     public enum JobScheduleType
     {
@@ -5388,8 +5388,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class JobStepAction
     {
         public JobStepAction(string value) { }
+        public Azure.ResourceManager.Sql.Models.JobStepActionType? JobStepActionType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobStepActionSource? Source { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobStepActionType? Type { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5440,12 +5440,12 @@ namespace Azure.ResourceManager.Sql.Models
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential) { }
         public string Credential { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobStepOutputType? JobStepOutputType { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
         public string SchemaName { get { throw null; } set { } }
         public string ServerName { get { throw null; } set { } }
         public System.Guid? SubscriptionId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobStepOutputType? Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStepOutputType : System.IEquatable<Azure.ResourceManager.Sql.Models.JobStepOutputType>
@@ -5466,14 +5466,14 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class JobTarget
     {
-        public JobTarget(Azure.ResourceManager.Sql.Models.JobTargetType type) { }
+        public JobTarget(Azure.ResourceManager.Sql.Models.JobTargetType jobTargetType) { }
         public string DatabaseName { get { throw null; } set { } }
         public string ElasticPoolName { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobTargetType JobTargetType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobTargetGroupMembershipType? MembershipType { get { throw null; } set { } }
         public string RefreshCredential { get { throw null; } set { } }
         public string ServerName { get { throw null; } set { } }
         public string ShardMapName { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobTargetType Type { get { throw null; } set { } }
     }
     public enum JobTargetGroupMembershipType
     {
@@ -6693,7 +6693,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceWithWritableName() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RestorableDroppedDatabasePropertiesBackupStorageRedundancy : System.IEquatable<Azure.ResourceManager.Sql.Models.RestorableDroppedDatabasePropertiesBackupStorageRedundancy>
@@ -7278,9 +7278,9 @@ namespace Azure.ResourceManager.Sql.Models
         public string Details { get { throw null; } }
         public string OperationStatus { get { throw null; } }
         public string Source { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SyncGroupLogType? SyncGroupLogType { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Guid? TracingId { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.SyncGroupLogType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SyncGroupLogType : System.IEquatable<Azure.ResourceManager.Sql.Models.SyncGroupLogType>

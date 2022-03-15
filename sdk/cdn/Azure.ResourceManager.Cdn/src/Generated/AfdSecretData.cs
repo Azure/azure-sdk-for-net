@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdSecretData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="parameters"> object which contains secret parameters. </param>
-        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, SecretParameters parameters) : base(id, name, type, systemData)
+        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, SecretParameters parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> object which contains secret parameters. </summary>
         internal SecretParameters Parameters { get; set; }
         /// <summary> The type of the Secret to create. </summary>
-        internal SecretType ParametersType
+        internal SecretType ParametersSecretType
         {
-            get => Parameters is null ? default : Parameters.Type;
+            get => Parameters is null ? default : Parameters.SecretType;
             set
             {
                 if (Parameters is null)
                     Parameters = new SecretParameters();
-                Parameters.Type = value;
+                Parameters.SecretType = value;
             }
         }
     }

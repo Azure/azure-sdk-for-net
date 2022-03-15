@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.LockLevel, getResult.Data.LockLevel);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.IsEnabled, getResult.Data.IsEnabled);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Name, getResult.Name);
             Assert.AreEqual(model.Uri, getResult.Uri);
-            Assert.AreEqual(model.Type, getResult.Type);
+            Assert.AreEqual(model.ApplicationArtifactType, getResult.ApplicationArtifactType);
         }
 
         private static void AssertValidPolicy(ApplicationPolicy model, ApplicationPolicy getResult)

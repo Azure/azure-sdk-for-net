@@ -36,7 +36,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
 
-            IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
+            IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.7).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
             Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 136 && answer.Source == "surface-pro-4-user-guide-EN.pdf"));
         }

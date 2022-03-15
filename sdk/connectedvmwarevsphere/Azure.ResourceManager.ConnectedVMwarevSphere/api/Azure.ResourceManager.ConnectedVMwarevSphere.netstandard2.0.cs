@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionPropertiesInstanceView InstanceView { get { throw null; } set { } }
+        public string MachineExtensionType { get { throw null; } set { } }
         public object ProtectedSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public object Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
-        public string TypePropertiesType { get { throw null; } set { } }
     }
     public static partial class ResourceGroupExtensions
     {
@@ -731,8 +731,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
+        public string ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FirmwareType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.FirmwareType>
@@ -825,9 +825,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class MachineExtensionInstanceView
     {
         public MachineExtensionInstanceView() { }
+        public string MachineExtensionInstanceViewType { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionInstanceViewStatus Status { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } }
     }
     public partial class MachineExtensionInstanceViewStatus
@@ -944,10 +944,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public PatchableMachineExtensionData() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
+        public string MachineExtensionType { get { throw null; } set { } }
         public object ProtectedSettings { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public object Settings { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
     public partial class PatchableVirtualMachineData
@@ -1039,9 +1039,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public System.DateTimeOffset? LastUpdatedAt { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        public string ResourceStatusType { get { throw null; } }
         public string Severity { get { throw null; } }
         public string Status { get { throw null; } }
-        public string Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScsiControllerType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType>
@@ -1149,9 +1149,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal VirtualScsiController() { }
         public int? BusNumber { get { throw null; } }
         public int? ControllerKey { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType? ScsiControllerType { get { throw null; } }
         public int? ScsiCtlrUnitNumber { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing? Sharing { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualScsiSharing : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing>
