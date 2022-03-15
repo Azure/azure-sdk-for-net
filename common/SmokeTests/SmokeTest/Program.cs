@@ -126,6 +126,12 @@ void ProcessType(Type type)
                 // Expected; this occurs when the parameterless constructor is present but has been marked obsolete.  Since we do
                 // not report types without a parameterless constructor, ignore the type and do not log.
             }
+            catch (TargetInvocationException ex) when (ex.InnerException is ArgumentException)
+            {
+                // Expected; this occurs when the parameterless constructor is present but the type cannot be constructed due to failing
+                // an internal state validation.  Since we do not report types without a parameterless constructor, ignore the type
+                // and do not log.
+            }
             catch (TargetInvocationException ex) when (ex.InnerException is FileNotFoundException fileEx)
             {
                 // Expected; this indicates that a library is not available on a platform.  For
