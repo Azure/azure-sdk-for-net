@@ -28,9 +28,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
 
-            // TODO: Add check if offline storage is enabled by user via options
-            // If disabled do not initialize AzureMonitorPersistentStorage
-            _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
+            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
+            {
+                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
+            }
         }
 
         /// <inheritdoc/>
