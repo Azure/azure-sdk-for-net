@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Models
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
             Optional<string> type = default;
-            Optional<BinaryData> data = default;
+            Optional<BinaryData> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    data = BinaryData.FromString(property.Value.GetRawText());
+                    info = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

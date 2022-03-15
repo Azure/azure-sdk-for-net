@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         [SerializationConstructor]
-        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData data)
+        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
         {
             ErrorAdditionalInfoType = errorAdditionalInfoType;
             Info = info;
