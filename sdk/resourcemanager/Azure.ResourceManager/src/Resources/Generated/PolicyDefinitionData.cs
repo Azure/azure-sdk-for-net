@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type, systemData)
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             Mode = mode;

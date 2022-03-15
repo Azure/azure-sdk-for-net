@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
             Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.Type, actualValue.Data.Type);
+            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 

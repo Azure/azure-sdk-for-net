@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     }
     public partial class FilterableProperty
     {
-        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes type, System.Collections.Generic.IEnumerable<string> supportedValues) { }
+        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
+        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes SupportedFilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedValues { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes Type { get { throw null; } set { } }
     }
     public partial class ForwardShippingDetails
     {

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of HostingEnvironmentDetectors and their operations over a HostingEnvironmentDetector. </returns>
         public virtual HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
         {
-            return new HostingEnvironmentDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new HostingEnvironmentDetectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of HostingEnvironmentWorkerPools and their operations over a HostingEnvironmentWorkerPool. </returns>
         public virtual HostingEnvironmentWorkerPoolCollection GetHostingEnvironmentWorkerPools()
         {
-            return new HostingEnvironmentWorkerPoolCollection(Client, Id);
+            return GetCachedClient(Client => new HostingEnvironmentWorkerPoolCollection(Client, Id));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of HostingEnvironmentPrivateEndpointConnections and their operations over a HostingEnvironmentPrivateEndpointConnection. </returns>
         public virtual HostingEnvironmentPrivateEndpointConnectionCollection GetHostingEnvironmentPrivateEndpointConnections()
         {
-            return new HostingEnvironmentPrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new HostingEnvironmentPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of HostingEnvironmentRecommendations and their operations over a HostingEnvironmentRecommendation. </returns>
         public virtual HostingEnvironmentRecommendationCollection GetHostingEnvironmentRecommendations()
         {
-            return new HostingEnvironmentRecommendationCollection(Client, Id);
+            return GetCachedClient(Client => new HostingEnvironmentRecommendationCollection(Client, Id));
         }
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Tests
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
                     ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
-                    Assert.AreEqual(kvp.Value.Type, getParameterDefinitionsValue.Type);
+                    Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {
                         Assert.NotNull(kvp.Value.AllowedValues);

@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
         /// <returns> A new <see cref="LuisTargetIntentResult"/> instance for mocking. </returns>
-        public static LuisTargetIntentResult LuisTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidenceScore = default, object result = null)
+        public static LuisTargetIntentResult LuisTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, float confidenceScore = default, object result = null)
         {
             return new LuisTargetIntentResult(targetKind, apiVersion, confidenceScore, result);
         }

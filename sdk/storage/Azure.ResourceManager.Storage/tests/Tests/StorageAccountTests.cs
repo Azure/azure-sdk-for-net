@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.PremiumLRS), kind: StorageKind.StorageV2, location: AzureLocation.EastUS2);
             parameters.ExtendedLocation = new Models.ExtendedLocation
             {
-                Type = Storage.Models.ExtendedLocationTypes.EdgeZone,
+                ExtendedLocationType = Storage.Models.ExtendedLocationTypes.EdgeZone,
                 Name = "microsoftrrdclab1"
             };
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account, false);
             Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
-            Assert.AreEqual(ExtendedLocationTypes.EdgeZone, account.Data.ExtendedLocation.Type);
+            Assert.AreEqual(ExtendedLocationTypes.EdgeZone, account.Data.ExtendedLocation.ExtendedLocationType);
             Assert.AreEqual("microsoftrrdclab1", account.Data.ExtendedLocation.Name);
         }
 

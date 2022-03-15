@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
-        /// <param name="type"> Log entry type. </param>
+        /// <param name="msDeployLogEntryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
-        internal MsDeployLogEntry(DateTimeOffset? time, MSDeployLogEntryType? type, string message)
+        internal MsDeployLogEntry(DateTimeOffset? time, MSDeployLogEntryType? msDeployLogEntryType, string message)
         {
             Time = time;
-            Type = type;
+            MSDeployLogEntryType = msDeployLogEntryType;
             Message = message;
         }
 
         /// <summary> Timestamp of log entry. </summary>
         public DateTimeOffset? Time { get; }
         /// <summary> Log entry type. </summary>
-        public MSDeployLogEntryType? Type { get; }
+        public MSDeployLogEntryType? MSDeployLogEntryType { get; }
         /// <summary> Log entry message. </summary>
         public string Message { get; }
     }

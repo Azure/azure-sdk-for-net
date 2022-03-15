@@ -443,8 +443,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ApplicationArtifact
     {
         internal ApplicationArtifact() { }
+        public Azure.ResourceManager.Resources.Models.ApplicationArtifactType ApplicationArtifactType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationArtifactName Name { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationArtifactType Type { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ApplicationDefinitionArtifact
     {
-        public ApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ApplicationArtifactType type) { }
+        public ApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ApplicationArtifactType applicationArtifactType) { }
+        public Azure.ResourceManager.Resources.Models.ApplicationArtifactType ApplicationArtifactType { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifactName Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ApplicationArtifactType Type { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ApplicationManagedIdentity
     {
         public ApplicationManagedIdentity() { }
+        public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentityType? ApplicationManagedIdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ApplicationManagedIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedResourceIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public enum ApplicationManagedIdentityType
@@ -772,8 +772,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentScriptManagedIdentity
     {
         public DeploymentScriptManagedIdentity() { }
+        public Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType? DeploymentScriptManagedIdentityType { get { throw null; } set { } }
         public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Resources.Models
         public JitApproverDefinition(string id) { }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.JitApproverType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.JitApproverType? JitApproverType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitApproverType : System.IEquatable<Azure.ResourceManager.Resources.Models.JitApproverType>
@@ -912,10 +912,10 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class JitSchedulingPolicy
     {
-        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType type, System.TimeSpan duration, System.DateTimeOffset startTime) { }
+        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType jitSchedulingType, System.TimeSpan duration, System.DateTimeOffset startTime) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.JitSchedulingType JitSchedulingType { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.JitSchedulingType Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitSchedulingType : System.IEquatable<Azure.ResourceManager.Resources.Models.JitSchedulingType>
@@ -946,14 +946,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public OnErrorDeployment() { }
         public string DeploymentName { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.OnErrorDeploymentType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.OnErrorDeploymentType? OnErrorDeploymentType { get { throw null; } set { } }
     }
     public partial class OnErrorDeploymentExtended
     {
         internal OnErrorDeploymentExtended() { }
         public string DeploymentName { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.OnErrorDeploymentType? OnErrorDeploymentType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.OnErrorDeploymentType? Type { get { throw null; } }
     }
     public enum OnErrorDeploymentType
     {

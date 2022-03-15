@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateUpdateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra keyspace. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal CassandraKeyspaceCreateUpdateData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspaceResource resource, CreateUpdateOptions options) : base(id, name, type, systemData, tags, location)
+        internal CassandraKeyspaceCreateUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspaceResource resource, CreateUpdateOptions options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

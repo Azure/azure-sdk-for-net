@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteInstanceProcessModules and their operations over a SiteInstanceProcessModule. </returns>
         public virtual SiteInstanceProcessModuleCollection GetSiteInstanceProcessModules()
         {
-            return new SiteInstanceProcessModuleCollection(Client, Id);
+            return GetCachedClient(Client => new SiteInstanceProcessModuleCollection(Client, Id));
         }
 
         /// <summary>

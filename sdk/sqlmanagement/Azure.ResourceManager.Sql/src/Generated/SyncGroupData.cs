@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SyncGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
         /// <param name="interval"> Sync interval of the sync group. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Interval = interval;

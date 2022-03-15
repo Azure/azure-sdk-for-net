@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
         public virtual FeatureCollection GetFeatures()
         {
-            return new FeatureCollection(Client, Id);
+            return GetCachedClient(Client => new FeatureCollection(Client, Id));
         }
 
         /// <summary>

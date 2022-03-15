@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _tableName = Recording.GenerateAssetName("cassandra-table-");
             return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
-                    Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
+                    Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
                 }, default))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.Columns.Count; i++)
             {
                 Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name);
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Type, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Type);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].CassandraColumnType, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].CassandraColumnType);
             }
 
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
             Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.Type, actualValue.Data.Type);
+            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 

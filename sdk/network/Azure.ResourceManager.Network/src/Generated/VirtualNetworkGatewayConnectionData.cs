@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
-        internal VirtualNetworkGatewayConnectionData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayConnectionData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             AuthorizationKey = authorizationKey;

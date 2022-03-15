@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(mgmtGroup.Data.Id, "Id was null");
             Assert.IsNotNull(mgmtGroup.Data.Name, "Name was null");
             Assert.IsNotNull(mgmtGroup.Data.TenantId, "TenantId was null");
-            Assert.IsNotNull(mgmtGroup.Data.Type, "Type was null");
+            Assert.IsNotNull(mgmtGroup.Data.ResourceType, "Type was null");
             Assert.IsEmpty(mgmtGroup.Data.Children);
             Assert.IsNull(mgmtGroup.Data.Details);
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.Type);
+            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.Type);
+            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of PatchableMsixPackageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isActive"> Set a version of the package to be active across hostpool. </param>
         /// <param name="isRegularRegistration"> Set Registration mode. Regular or Delayed. </param>
         /// <param name="displayName"> Display name for MSIX Package. </param>
-        internal PatchableMsixPackageData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName) : base(id, name, type, systemData)
+        internal PatchableMsixPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName) : base(id, name, resourceType, systemData)
         {
             IsActive = isActive;
             IsRegularRegistration = isRegularRegistration;

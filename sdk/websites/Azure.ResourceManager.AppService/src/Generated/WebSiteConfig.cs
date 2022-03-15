@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigSnapshots and their operations over a SiteConfigSnapshot. </returns>
         public virtual SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {
-            return new SiteConfigSnapshotCollection(Client, Id);
+            return GetCachedClient(Client => new SiteConfigSnapshotCollection(Client, Id));
         }
 
         /// <summary>

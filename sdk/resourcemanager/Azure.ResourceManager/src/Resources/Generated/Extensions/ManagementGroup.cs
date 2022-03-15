@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Management
         /// <returns> An object representing collection of ManagementGroupPolicyDefinitions and their operations over a ManagementGroupPolicyDefinition. </returns>
         public virtual ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions()
         {
-            return new ManagementGroupPolicyDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new ManagementGroupPolicyDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Management
         /// <returns> An object representing collection of ManagementGroupPolicySetDefinitions and their operations over a ManagementGroupPolicySetDefinition. </returns>
         public virtual ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions()
         {
-            return new ManagementGroupPolicySetDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new ManagementGroupPolicySetDefinitionCollection(Client, Id));
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDiagnosticAnalyses and their operations over a SiteSlotDiagnosticAnalysis. </returns>
         public virtual SiteSlotDiagnosticAnalysisCollection GetSiteSlotDiagnosticAnalyses()
         {
-            return new SiteSlotDiagnosticAnalysisCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDiagnosticAnalysisCollection(Client, Id));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDiagnosticDetectors and their operations over a SiteSlotDiagnosticDetector. </returns>
         public virtual SiteSlotDiagnosticDetectorCollection GetSiteSlotDiagnosticDetectors()
         {
-            return new SiteSlotDiagnosticDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDiagnosticDetectorCollection(Client, Id));
         }
 
         /// <summary>

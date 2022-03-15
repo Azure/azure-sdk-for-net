@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnectionGateways and their operations over a ServerfarmVirtualNetworkConnectionGateway. </returns>
         public virtual ServerfarmVirtualNetworkConnectionGatewayCollection GetServerfarmVirtualNetworkConnectionGateways()
         {
-            return new ServerfarmVirtualNetworkConnectionGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new ServerfarmVirtualNetworkConnectionGatewayCollection(Client, Id));
         }
 
         /// <summary>

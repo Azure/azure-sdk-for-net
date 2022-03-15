@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpecVersion. </returns>
         public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
         {
-            return new TemplateSpecVersionCollection(Client, Id);
+            return GetCachedClient(Client => new TemplateSpecVersionCollection(Client, Id));
         }
 
         /// <summary>

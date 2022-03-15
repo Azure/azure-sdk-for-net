@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SourceControls and their operations over a SourceControl. </returns>
         public virtual SourceControlCollection GetSourceControls()
         {
-            return new SourceControlCollection(Client, Id);
+            return GetCachedClient(Client => new SourceControlCollection(Client, Id));
         }
 
         /// <summary>

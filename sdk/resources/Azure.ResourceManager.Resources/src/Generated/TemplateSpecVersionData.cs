@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
         /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
-        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, object metadata, object mainTemplate, object uiFormDefinition) : base(id, name, type, systemData)
+        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, object metadata, object mainTemplate, object uiFormDefinition) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
