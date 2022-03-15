@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             foreach (var v in deletedVaults)
             {
-                await v.PurgeDeletedAsync(true);
+                await v.PurgeDeletedAsync(WaitUntil.Completed);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
-            var rawVault = await VaultCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
             var createdVault = rawVault.Value.Data;
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
-            createdVault.Properties.Sku.Name = SkuName.Premium;
+            createdVault.Properties.Sku.Name = KeyVaultSkuName.Premium;
 
             parameters = new VaultCreateOrUpdateParameters(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
-            var rawUpdateVault = await VaultCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var rawUpdateVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
             var updateVault = rawUpdateVault.Value.Data;
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Premium,
+                KeyVaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Premium,
+                KeyVaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            var deleteVault = await rawRetrievedVault.Value.DeleteAsync(true);
+            var deleteVault = await rawRetrievedVault.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
-            var createVault = await VaultCollection.CreateOrUpdateAsync(true,
+            var createVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 vaultName: VaultName,
                 parameters: parameters
                 ).ConfigureAwait(false);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                SkuName.Standard,
+                KeyVaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            await retrievedVault.Value.DeleteAsync(true);
+            await retrievedVault.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 string vaultName = Recording.GenerateAssetName("sdktest-vault-");
                 var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
                 parameters.Tags.InitializeFrom(Tags);
-                var createdVault = await VaultCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
+                var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
                 var vaultValue = createdVault.Value;
 
                 Assert.NotNull(vaultValue);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             foreach (var item in vaultList)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
-            var createdVault = await VaultCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
             var vaultValue = createdVault.Value;
 
             // Delete
-            await vaultValue.DeleteAsync(true);
+            await vaultValue.DeleteAsync(WaitUntil.Completed);
 
             // Get deleted vault
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             // Recover in default mode
-            var recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(true, VaultName,parameters).ConfigureAwait(false);
+            var recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
             var recoveredVault = recoveredRawVault.Value;
             Assert.True(recoveredVault.Data.IsEqual(vaultValue.Data));
 
@@ -260,13 +260,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var getResult =  await VaultCollection.GetAsync(VaultName);
 
             // Delete
-            await getResult.Value.DeleteAsync(true);
+            await getResult.Value.DeleteAsync(WaitUntil.Completed);
 
             VaultProperties.CreateMode = CreateMode.Recover;
             parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
 
             // Recover in recover mode
-            var recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
             var recoveredVault2 = recoveredRawVault.Value;
 
             Assert.True(recoveredVault2.Data.IsEqual(vaultValue.Data));
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             getResult = await VaultCollection.GetAsync(VaultName);
 
             // Delete
-            await getResult.Value.DeleteAsync(true);
+            await getResult.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Ignore("Add this back when fix get with name/location issue")]
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktestvault");
-                var createdRawVault = await VaultCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
+                var createdRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
 
                 var createdVault = createdRawVault.Value;
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 resourceIds.Add(createdVault.Data.Id);
                 vaultList.Add(createdVault);
 
-                await createdVault.DeleteAsync(true).ConfigureAwait(false);
+                await createdVault.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
                 var deletedVault = await DeletedVaultCollection.GetAsync(Location, vaultName).ConfigureAwait(false);
                 Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             string expectedLocation,
             string expectedSkuFamily,
-            SkuName expectedSku,
+            KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             string expectedLocation,
             string expectedSkuFamily,
-            SkuName expectedSku,
+            KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(vaultData.Properties.NetworkAcls);
             Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkAcls.DefaultAction);
             Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkAcls.Bypass);
-            Assert.True(vaultData.Properties.NetworkAcls.IpRules != null && vaultData.Properties.NetworkAcls.IpRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IpRules[0].Value, vaultData.Properties.NetworkAcls.IpRules[0].Value);
-            Assert.AreEqual(networkRuleSet.IpRules[1].Value, vaultData.Properties.NetworkAcls.IpRules[1].Value);
+            Assert.True(vaultData.Properties.NetworkAcls.IPRules != null && vaultData.Properties.NetworkAcls.IPRules.Count == 2);
+            Assert.AreEqual(networkRuleSet.IPRules[0].Value, vaultData.Properties.NetworkAcls.IPRules[0].Value);
+            Assert.AreEqual(networkRuleSet.IPRules[1].Value, vaultData.Properties.NetworkAcls.IPRules[1].Value);
         }
     }
 }

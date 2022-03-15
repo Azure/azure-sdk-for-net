@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> The identity type. </summary>
-    public readonly partial struct ResourceIdentityType : IEquatable<ResourceIdentityType>
+    internal readonly partial struct ResourceIdentityType : IEquatable<ResourceIdentityType>
     {
         private readonly string _value;
 

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
-            Optional<Models.Plan> plan = default;
+            Optional<ComputePlan> plan = default;
             Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = Models.Plan.DeserializePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"))

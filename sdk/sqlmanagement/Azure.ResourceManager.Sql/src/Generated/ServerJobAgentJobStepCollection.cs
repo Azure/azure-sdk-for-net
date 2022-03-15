@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverJobAgentJobStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobStep.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServerJobAgentJobStep.ResourceType, out string serverJobAgentJobStepJobStepsApiVersion);
-            _serverJobAgentJobStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobStepJobStepsApiVersion);
+            _serverJobAgentJobStepJobStepsRestClient = new JobStepsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/steps/{stepName}
         /// Operation Id: JobSteps_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ServerJobAgentJobStep>> CreateOrUpdateAsync(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServerJobAgentJobStep>> CreateOrUpdateAsync(WaitUntil waitUntil, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobStepJobStepsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<ServerJobAgentJobStep>(Response.FromValue(new ServerJobAgentJobStep(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/steps/{stepName}
         /// Operation Id: JobSteps_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerJobAgentJobStep> CreateOrUpdate(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerJobAgentJobStep> CreateOrUpdate(WaitUntil waitUntil, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobStepJobStepsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, parameters, cancellationToken);
                 var operation = new SqlArmOperation<ServerJobAgentJobStep>(Response.FromValue(new ServerJobAgentJobStep(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<ServerJobAgentJobStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobStepJobStepsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobStepJobStepsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobStepJobStepsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, stepName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<ServerJobAgentJobStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 

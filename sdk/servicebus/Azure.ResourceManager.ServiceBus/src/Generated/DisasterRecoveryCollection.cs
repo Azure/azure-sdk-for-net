@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
-            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
         /// Operation Id: DisasterRecoveryConfigs_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DisasterRecovery>> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DisasterRecovery>> CreateOrUpdateAsync(WaitUntil waitUntil, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
         /// Operation Id: DisasterRecoveryConfigs_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<DisasterRecovery> CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DisasterRecovery> CreateOrUpdate(WaitUntil waitUntil, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
                 var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public async virtual Task<Response<DisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
                 if (response.Value == null)
-                    throw _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public async virtual Task<Response<DisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 

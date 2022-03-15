@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rules to create. </summary>
-    public partial class RuleProperties : RuleUpdatePropertiesParameters
+    internal partial class RuleProperties : RuleUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RuleProperties. </summary>
         public RuleProperties()

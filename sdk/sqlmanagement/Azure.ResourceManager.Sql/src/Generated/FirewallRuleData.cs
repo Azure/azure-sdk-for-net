@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of FirewallRuleData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
-        internal FirewallRuleData(string id, string name, string type, string startIPAddress, string endIPAddress) : base(id, name, type)
+        internal FirewallRuleData(string id, string name, string resourceType, string startIPAddress, string endIPAddress) : base(id, name, resourceType)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;

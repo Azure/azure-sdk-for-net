@@ -356,10 +356,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Pretend a separate process was started subsequently and we need to get the operation again.
             CertificateOperation operation = new CertificateOperation(Client, certName);
+            operation = InstrumentOperation(operation);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
             using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
-            await operation.WaitForCompletionAsync(PollingInterval, cts.Token);
+            await operation.WaitForCompletionAsync(cts.Token);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

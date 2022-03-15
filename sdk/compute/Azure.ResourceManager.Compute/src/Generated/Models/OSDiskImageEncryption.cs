@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains encryption settings for an OS disk image. </summary>
-    public partial class OSDiskImageEncryption : DiskImageEncryption
+    internal partial class OSDiskImageEncryption : DiskImageEncryption
     {
         /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
         public OSDiskImageEncryption()

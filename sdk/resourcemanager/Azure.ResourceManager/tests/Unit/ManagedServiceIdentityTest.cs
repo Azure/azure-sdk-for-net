@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
             Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.Type.ToString());
+            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
         }
 
         [TestCase]
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
             Assert.IsTrue(identityJson.Contains("SystemAssigned,UserAssigned"));
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.Type.ToString());
+            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
         }
 
         [TestCase]
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
             Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", userIdentities.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.Type.ToString());
+            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v3
             string user = "{}";
             string expectedV3 = "{" +
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
             Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", userIdentities.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.Type.ToString());
+            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v4
             string user = "{}";
             string expectedV4 = "{" +

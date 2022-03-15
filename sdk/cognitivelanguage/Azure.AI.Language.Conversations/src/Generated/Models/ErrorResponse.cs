@@ -5,20 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> Error response. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(Error error)
         {
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
+
             Error = error;
         }
 

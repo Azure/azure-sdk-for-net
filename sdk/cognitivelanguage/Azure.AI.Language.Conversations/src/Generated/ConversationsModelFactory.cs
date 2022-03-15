@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Conversations.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, ConversationResult result = null)
+        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, float confidence = default, ConversationResult result = null)
         {
             return new NoneLinkedTargetIntentResult(targetKind, apiVersion, confidence, result);
         }
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="Conversations.TargetIntentResult"/> instance for mocking. </returns>
-        public static TargetIntentResult TargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default)
+        public static TargetIntentResult TargetIntentResult(TargetKind targetKind = default, string apiVersion = null, float confidence = default)
         {
             return new TargetIntentResult(targetKind, apiVersion, confidence);
         }
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Conversations.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, ConversationResult result = null)
+        public static ConversationTargetIntentResult ConversationTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, float confidence = default, ConversationResult result = null)
         {
             return new ConversationTargetIntentResult(targetKind, apiVersion, confidence, result);
         }
@@ -130,7 +130,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
         /// <returns> A new <see cref="Conversations.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, KnowledgeBaseAnswers result = null)
+        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, float confidence = default, KnowledgeBaseAnswers result = null)
         {
             return new QuestionAnsweringTargetIntentResult(targetKind, apiVersion, confidence, result);
         }

@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// means archive attribute will be set on a target file despite attribute
         /// overrides or a source file state.
         /// </summary>
-        public bool? SetArchiveAttribute { get; set; }
+        public bool? Archive { get; set; }
 
         /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions

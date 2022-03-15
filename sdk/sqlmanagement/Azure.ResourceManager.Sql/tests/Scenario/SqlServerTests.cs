@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             foreach (var item in SqlServerList)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 AdministratorLogin = "Admin-" + sqlServerName,
                 AdministratorLoginPassword = CreateGeneralPassword(),
             };
-            var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(true, sqlServerName, data);
+            var SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
             return SqlServer.Value;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, SqlServerList.Count);
 
-            await SqlServerList[0].DeleteAsync(true);
+            await SqlServerList[0].DeleteAsync(WaitUntil.Completed);
             SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, SqlServerList.Count);
         }

@@ -24,22 +24,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of UserSessionsRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public UserSessionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public UserSessionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-12";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
@@ -75,20 +70,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolRequest(subscriptionId, resourceGroupName, hostPoolName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -113,20 +100,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolRequest(subscriptionId, resourceGroupName, hostPoolName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -140,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -176,28 +155,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionData>> GetAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -213,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 404:
                     return Response.FromValue((UserSessionData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -225,28 +190,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionData> Get(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             _pipeline.Send(message, cancellationToken);
@@ -262,7 +213,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 404:
                     return Response.FromValue((UserSessionData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -303,28 +254,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="force"> Force flag to login off userSession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, force);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -334,7 +271,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -347,28 +284,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="force"> Force flag to login off userSession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, force);
             _pipeline.Send(message, cancellationToken);
@@ -378,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -412,24 +335,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -443,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -454,24 +366,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> List(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName);
             _pipeline.Send(message, cancellationToken);
@@ -485,7 +386,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -522,28 +423,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DisconnectAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -552,7 +439,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -564,28 +451,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Disconnect(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             _pipeline.Send(message, cancellationToken);
@@ -594,7 +467,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -639,28 +512,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sendMessage"> Object containing message includes title and message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SendMessageAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, SendMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateSendMessageRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, sendMessage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -669,7 +528,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -682,28 +541,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sendMessage"> Object containing message includes title and message body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SendMessage(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, SendMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateSendMessageRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, sendMessage);
             _pipeline.Send(message, cancellationToken);
@@ -712,7 +557,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -738,24 +583,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListByHostPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -769,7 +603,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -781,24 +615,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListByHostPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -812,7 +635,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -838,28 +661,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, sessionHostName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -873,7 +682,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -885,28 +694,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, sessionHostName);
             _pipeline.Send(message, cancellationToken);
@@ -920,7 +715,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

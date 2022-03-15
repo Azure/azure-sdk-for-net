@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public static string ToSerialString(this ApplicationLockLevel value) => value switch
         {
+            ApplicationLockLevel.None => "None",
             ApplicationLockLevel.CanNotDelete => "CanNotDelete",
             ApplicationLockLevel.ReadOnly => "ReadOnly",
-            ApplicationLockLevel.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplicationLockLevel value.")
         };
 
         public static ApplicationLockLevel ToApplicationLockLevel(this string value)
         {
+            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ApplicationLockLevel.None;
             if (string.Equals(value, "CanNotDelete", StringComparison.InvariantCultureIgnoreCase)) return ApplicationLockLevel.CanNotDelete;
             if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return ApplicationLockLevel.ReadOnly;
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ApplicationLockLevel.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApplicationLockLevel value.");
         }
     }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicyExemptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="policyAssignmentId"> The ID of the policy assignment that is being exempted. </param>
         /// <param name="policyDefinitionReferenceIds"> The policy definition reference ID list when the associated policy assignment is an assignment of a policy set definition. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> The display name of the policy exemption. </param>
         /// <param name="description"> The description of the policy exemption. </param>
         /// <param name="metadata"> The policy exemption metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string policyAssignmentId, IList<string> policyDefinitionReferenceIds, ExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, object metadata) : base(id, name, type, systemData)
+        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyAssignmentId, IList<string> policyDefinitionReferenceIds, ExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, object metadata) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceIds = policyDefinitionReferenceIds;

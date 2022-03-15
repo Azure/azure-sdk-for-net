@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _afdOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOrigin.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AfdOrigin.ResourceType, out string afdOriginApiVersion);
-            _afdOriginRestClient = new AfdOriginsRestOperations(_afdOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginApiVersion);
+            _afdOriginRestClient = new AfdOriginsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
         /// Operation Id: AfdOrigins_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public async virtual Task<ArmOperation<AfdOrigin>> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdOrigin>> CreateOrUpdateAsync(WaitUntil waitUntil, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             Argument.AssertNotNull(origin, nameof(origin));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
                 var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
         /// Operation Id: AfdOrigins_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public virtual ArmOperation<AfdOrigin> CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdOrigin> CreateOrUpdate(WaitUntil waitUntil, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             Argument.AssertNotNull(origin, nameof(origin));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
                 var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<AfdOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdOriginClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
                 if (response.Value == null)
-                    throw _afdOriginClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AfdOrigin(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<AfdOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 

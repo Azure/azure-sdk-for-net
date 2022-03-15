@@ -376,7 +376,7 @@ namespace Azure.Core.Tests
 
         // How classifiers will be generated in DPG.
         private static ResponseClassifier _responseClassifier200204304;
-        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc ushort[] { 200, 204, 304 });
+        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 });
         #endregion
 
     }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            DdosProtectionPlan ddosProtectionPlan = await (await container.CreateOrUpdateAsync(true, name, new DdosProtectionPlanData(TestEnvironment.Location))).WaitForCompletionAsync();
+            DdosProtectionPlan ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location))).WaitForCompletionAsync();
 
             Assert.True(await container.ExistsAsync(name));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
             data.Tags.Add("tag1", "value1");
             data.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await (await container.CreateOrUpdateAsync(true, name, data)).WaitForCompletionAsync();
+            ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).WaitForCompletionAsync();
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await ddosProtectionPlan.DeleteAsync(true);
+            await ddosProtectionPlan.DeleteAsync(WaitUntil.Completed);
 
             Assert.False(await container.ExistsAsync(name));
 

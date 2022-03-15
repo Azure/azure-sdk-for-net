@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Url signing key parameters. </summary>
-    public partial class UrlSigningKeyParameters : SecretParameters
+    internal partial class UrlSigningKeyParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of UrlSigningKeyParameters. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Cdn.Models
 
             KeyId = keyId;
             SecretSource = secretSource;
-            Type = SecretType.UrlSigningKey;
+            SecretType = SecretType.UrlSigningKey;
         }
 
         /// <summary> Initializes a new instance of UrlSigningKeyParameters. </summary>
-        /// <param name="type"> The type of the Secret to create. </param>
+        /// <param name="secretType"> The type of the Secret to create. </param>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the KV secret. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UrlSigningKeyParameters(SecretType type, string keyId, WritableSubResource secretSource, string secretVersion) : base(type)
+        internal UrlSigningKeyParameters(SecretType secretType, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType)
         {
             KeyId = keyId;
             SecretSource = secretSource;
             SecretVersion = secretVersion;
-            Type = type;
+            SecretType = secretType;
         }
 
         /// <summary> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </summary>

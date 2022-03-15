@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
-        private readonly BlobsCheckpointStore _checkpointStore;
+        private readonly BlobCheckpointStoreInternal _checkpointStore;
         private readonly EventHubOptions _options;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
             IEventHubConsumerClient consumerClient,
-            BlobsCheckpointStore checkpointStore,
+            BlobCheckpointStoreInternal checkpointStore,
             EventHubOptions options,
             ILoggerFactory loggerFactory)
         {

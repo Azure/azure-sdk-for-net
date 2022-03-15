@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static CapacityReservationData DeserializeCapacityReservationData(JsonElement element)
         {
-            Models.Sku sku = default;
+            ComputeSku sku = default;
             Optional<IList<string>> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"))

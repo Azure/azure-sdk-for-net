@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string resourceGroupName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupData resourceGroupData = new ResourceGroupData(location);
-            ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(true, resourceGroupName, resourceGroupData);
+            ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
             ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
-            await resourceGroup.DeleteAsync(true);
+            await resourceGroup.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Resource_Groups_DeleteResourceGroup
         }
     }
