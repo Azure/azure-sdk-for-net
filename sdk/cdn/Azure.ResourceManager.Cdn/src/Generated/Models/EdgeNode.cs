@@ -26,11 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="ipAddressGroups"> List of ip address groups. </param>
-<<<<<<< HEAD
-        internal EdgeNode(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<IPAddressGroup> ipAddressGroups) : base(id, name, type, systemData)
-=======
         internal EdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<IPAddressGroup> ipAddressGroups) : base(id, name, resourceType, systemData)
->>>>>>> upstream/main
         {
             IPAddressGroups = ipAddressGroups;
         }

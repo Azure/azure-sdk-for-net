@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
@@ -12,9 +13,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = skuName });
+        public static ProfileData CreateProfileData(CdnSkuName skuName) => new ProfileData(AzureLocation.WestUS, new CdnSku { Name = skuName });
 
-        public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Models.Sku { Name = skuName });
+        public static ProfileData CreateAfdProfileData(CdnSkuName skuName) => new ProfileData("Global", new CdnSku { Name = skuName });
 
         public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(AzureLocation.WestUS)
         {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
         {
-            CacheDuration = "00:00:20"
+            CacheDuration = new TimeSpan(0, 0, 20)
         });
 
         public static DeliveryRuleAction UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
         {
-            CacheDuration = "00:00:30"
+            CacheDuration = new TimeSpan(0, 0, 30)
         });
 
         //public static AfdRouteData CreateAfdRouteData(AfdOriginGroup originGroup) => new AfdRouteData
@@ -144,16 +145,16 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         //    }
         //};
 
-        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Models.Sku
+        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new CdnSku
         {
-            Name = SkuName.StandardMicrosoft
+            Name = CdnSkuName.StandardMicrosoft
         });
 
         public static void AssertValidProfile(Profile model, Profile getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
             Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
             Assert.AreEqual(model.Data.IsCompressionEnabled, getResult.Data.IsCompressionEnabled);
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
-        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, CdnEndpointUpdateOptions updateOptions)
+        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, PatchableCdnEndpointData updateOptions)
         {
             Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateOptions.IsHttpAllowed);
             Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateOptions.OriginPath);
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
             Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.PrivateEndpointStatus, getResult.Data.PrivateEndpointStatus);
         }
 
-        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, CdnOriginUpdateOptions updateOptions)
+        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, PatchableCdnOriginData updateOptions)
         {
             Assert.AreEqual(updatedOrigin.Data.HttpPort, updateOptions.HttpPort);
             Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateOptions.HttpsPort);
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
                 Assert.NotNull(model.Data.HealthProbeSettings);
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ResponseBasedOriginErrorDetectionSettings
         }
 
-        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, CdnOriginGroupUpdateOptions updateOptions)
+        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, PatchableCdnOriginGroupData updateOptions)
         {
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbePath, updateOptions.HealthProbeSettings.ProbePath);
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType, updateOptions.HealthProbeSettings.ProbeRequestType);
@@ -347,7 +348,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.CustomHttpsProvisioningState, getResult.Data.CustomHttpsProvisioningState);
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);

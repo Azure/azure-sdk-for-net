@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, input);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateCdnProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateCdnProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(true, profileName, input);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
             return lro.Value;
         }
 
-        protected async Task<Profile> CreateAfdProfile(ResourceGroup rg, string profileName, SkuName skuName)
+        protected async Task<Profile> CreateAfdProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateAfdProfileData(skuName);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(true, profileName, input);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
             return lro.Value;
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointData input = ResourceDataHelper.CreateEndpointData();
             DeepCreatedOrigin deepCreatedOrigin = ResourceDataHelper.CreateDeepCreatedOrigin();
             input.Origins.Add(deepCreatedOrigin);
-            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input);
+            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, endpointName, input);
             return lro.Value;
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Id = new ResourceIdentifier($"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}")
             };
-            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input);
+            var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, endpointName, input);
             return lro.Value;
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<CdnOrigin> CreateCdnOrigin(CdnEndpoint endpoint, string originName)
         {
             CdnOriginData input = ResourceDataHelper.CreateOriginData();
-            var lro = await endpoint.GetCdnOrigins().CreateOrUpdateAsync(true, originName, input);
+            var lro = await endpoint.GetCdnOrigins().CreateOrUpdateAsync(WaitUntil.Completed, originName, input);
             return lro.Value;
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Id = new ResourceIdentifier($"{endpoint.Id}/origins/{originName}")
             });
-            var lro = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input);
+            var lro = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, originGroupName, input);
             return lro.Value;
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<CdnCustomDomain> CreateCdnCustomDomain(CdnEndpoint endpoint, string customDomainName, string hostName)
         {
             CustomDomainOptions input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
-            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(true, customDomainName, input);
+            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
             return lro.Value;
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<CdnWebApplicationFirewallPolicy> CreatePolicy(ResourceGroup rg, string policyName)
         {
             CdnWebApplicationFirewallPolicyData input = ResourceDataHelper.CreateCdnWebApplicationFirewallPolicyData();
-            var lro = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(true, policyName, input);
+            var lro = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
             return lro.Value;
         }
     }
