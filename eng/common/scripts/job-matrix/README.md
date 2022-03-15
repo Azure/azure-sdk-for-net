@@ -1,23 +1,25 @@
 # Azure Pipelines Matrix Generator
 
-* [Usage in a pipeline](#usage-in-a-pipeline)
-* [Matrix config file syntax](#matrix-config-file-syntax)
- * [Fields](#fields)
-    * [matrix](#matrix)
-    * [include](#include)
-    * [exclude](#exclude)
-    * [displayNames](#displaynames)
-    * [$IMPORT](#import)
-* [Matrix Generation behavior](#matrix-generation-behavior)
-    * [all](#all)
-    * [sparse](#sparse)
-    * [include/exclude](#includeexclude)
-    * [displayNames](#displaynames-1)
-    * [Filters](#filters)
-    * [Replace/Modify/Append](#replacemodifyappend-values)
-    * [NonSparseParameters](#nonsparseparameters)
-    * [Under the hood](#under-the-hood)
-* [Testing](#testing)
+- [Azure Pipelines Matrix Generator](#azure-pipelines-matrix-generator)
+  - [Usage in a pipeline](#usage-in-a-pipeline)
+    - [A note regarding PreGenerationSteps](#a-note-regarding-pregenerationsteps)
+  - [Matrix config file syntax](#matrix-config-file-syntax)
+    - [Fields](#fields)
+      - [matrix](#matrix)
+      - [include](#include)
+      - [exclude](#exclude)
+      - [displayNames](#displaynames)
+      - [$IMPORT](#import)
+  - [Matrix Generation behavior](#matrix-generation-behavior)
+      - [all](#all)
+      - [sparse](#sparse)
+      - [include/exclude](#includeexclude)
+      - [displayNames](#displaynames-1)
+      - [Filters](#filters)
+      - [Replace/Modify/Append Values](#replacemodifyappend-values)
+      - [NonSparseParameters](#nonsparseparameters)
+      - [Under the hood](#under-the-hood)
+  - [Testing](#testing)
 
 
 This directory contains scripts supporting dynamic, cross-product matrix generation for azure pipeline jobs.
@@ -58,6 +60,10 @@ jobs:
       MatrixReplace: []
       PreGenerationSteps: []
 ```
+
+### A note regarding PreGenerationSteps
+
+The generation template laid out above runs as its own job. A limitation of this method is that it disallows any runtime matrix customization due to the fact that an individual job clones the targeted build SHA. The stepList `PreGenerationSteps` allows users to update matrix json however they like prior to actually invoking the matrix generation. Injected steps are run after the repository checkout, but before any matrix generation is invoked.
 
 ## Matrix config file syntax
 
