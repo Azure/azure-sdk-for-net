@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A sensitivity label update operation. </summary>
-    public partial class SensitivityLabelUpdate : Resource
+    public partial class SensitivityLabelUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
         public SensitivityLabelUpdate()
@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="op"></param>
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
-        internal SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel) : base(id, name, type, systemData)
+        internal SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;

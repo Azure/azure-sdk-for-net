@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionUsage"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionUsage(ArmClient armClient, SubscriptionUsageData data) : this(armClient, data.Id)
+        internal SubscriptionUsage(ArmClient client, SubscriptionUsageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionUsage"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionUsage(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionUsage(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionUsageApiVersion);
-            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
+            TryGetApiVersion(ResourceType, out string subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// OperationId: SubscriptionUsages_Get
-        /// <summary> Gets a subscription usage metric. </summary>
+        /// <summary>
+        /// Gets a subscription usage metric.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SubscriptionUsage>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionUsage>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsage.Get");
             scope.Start();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _subscriptionUsageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// OperationId: SubscriptionUsages_Get
-        /// <summary> Gets a subscription usage metric. </summary>
+        /// <summary>
+        /// Gets a subscription usage metric.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
+        /// Operation Id: SubscriptionUsages_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionUsage> Get(CancellationToken cancellationToken = default)
         {
@@ -119,44 +120,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _subscriptionUsageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsage.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsage.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

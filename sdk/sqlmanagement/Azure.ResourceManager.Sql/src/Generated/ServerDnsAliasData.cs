@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerDnsAlias data model. </summary>
-    public partial class ServerDnsAliasData : Resource
+    public partial class ServerDnsAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerDnsAliasData. </summary>
         public ServerDnsAliasData()
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ServerDnsAliasData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="azureDnsRecord"> The fully qualified DNS record for alias. </param>
-        internal ServerDnsAliasData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string azureDnsRecord) : base(id, name, type, systemData)
+        internal ServerDnsAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureDnsRecord) : base(id, name, resourceType, systemData)
         {
             AzureDnsRecord = azureDnsRecord;
         }

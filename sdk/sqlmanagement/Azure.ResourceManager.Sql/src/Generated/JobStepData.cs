@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobStep data model. </summary>
-    public partial class JobStepData : Resource
+    public partial class JobStepData : ResourceData
     {
         /// <summary> Initializes a new instance of JobStepData. </summary>
         public JobStepData()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of JobStepData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="stepId"> The job step&apos;s index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
         /// <param name="targetGroup"> The resource ID of the target group that the job step will be executed on. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="action"> The action payload of the job step. </param>
         /// <param name="output"> Output destination properties of the job step. </param>
         /// <param name="executionOptions"> Execution options for the job step. </param>
-        internal JobStepData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, int? stepId, string targetGroup, string credential, JobStepAction action, JobStepOutput output, JobStepExecutionOptions executionOptions) : base(id, name, type, systemData)
+        internal JobStepData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? stepId, string targetGroup, string credential, JobStepAction action, JobStepOutput output, JobStepExecutionOptions executionOptions) : base(id, name, resourceType, systemData)
         {
             StepId = stepId;
             TargetGroup = targetGroup;

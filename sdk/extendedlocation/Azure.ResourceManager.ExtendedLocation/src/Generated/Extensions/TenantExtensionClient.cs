@@ -17,7 +17,7 @@ using Azure.ResourceManager.ExtendedLocation.Models;
 
 namespace Azure.ResourceManager.ExtendedLocation
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Tenant. </summary>
     internal partial class TenantExtensionClient : ArmResource
     {
         private ClientDiagnostics _customLocationClientDiagnostics;
@@ -29,25 +29,26 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TenantExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics CustomLocationClientDiagnostics => _customLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
-        private CustomLocationsRestOperations CustomLocationRestClient => _customLocationRestClient ??= new CustomLocationsRestOperations(CustomLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomLocation.ResourceType));
+        private CustomLocationsRestOperations CustomLocationRestClient => _customLocationRestClient ??= new CustomLocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomLocation.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
-        /// ContextualPath: /
-        /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists all available Custom Locations operations. </summary>
+        /// <summary>
+        /// Lists all available Custom Locations operations.
+        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
+        /// Operation Id: CustomLocations_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(CancellationToken cancellationToken = default)
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
-        /// ContextualPath: /
-        /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists all available Custom Locations operations. </summary>
+        /// <summary>
+        /// Lists all available Custom Locations operations.
+        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
+        /// Operation Id: CustomLocations_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocationOperation> GetOperationsCustomLocations(CancellationToken cancellationToken = default)

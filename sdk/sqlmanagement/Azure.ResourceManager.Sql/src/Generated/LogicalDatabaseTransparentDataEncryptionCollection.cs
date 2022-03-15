@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -32,12 +33,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="LogicalDatabaseTransparentDataEncryptionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal LogicalDatabaseTransparentDataEncryptionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal LogicalDatabaseTransparentDataEncryptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LogicalDatabaseTransparentDataEncryption.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(LogicalDatabaseTransparentDataEncryption.ResourceType, out string logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
-            _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient = new TransparentDataEncryptionsRestOperations(_logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
+            TryGetApiVersion(LogicalDatabaseTransparentDataEncryption.ResourceType, out string logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
+            _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient = new TransparentDataEncryptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,64 +51,27 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_CreateOrUpdate
-        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Updates a logical database&apos;s transparent data encryption configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="parameters"> The database transparent data encryption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual LogicalDatabaseTransparentDataEncryptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogicalDatabaseTransparentDataEncryption>> CreateOrUpdateAsync(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, parameters, cancellationToken);
-                var operation = new LogicalDatabaseTransparentDataEncryptionCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_CreateOrUpdate
-        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="parameters"> The database transparent data encryption. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LogicalDatabaseTransparentDataEncryptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicalDatabaseTransparentDataEncryptionCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
+                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryption>(Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -117,10 +82,67 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_Get
-        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
+        /// <summary>
+        /// Updates a logical database&apos;s transparent data encryption configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="parameters"> The database transparent data encryption. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<LogicalDatabaseTransparentDataEncryption> CreateOrUpdate(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, parameters, cancellationToken);
+                var operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryption>(Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a logical database&apos;s transparent data encryption.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryption>> GetAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a logical database&apos;s transparent data encryption.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogicalDatabaseTransparentDataEncryption> Get(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
@@ -131,8 +153,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken);
                 if (response.Value == null)
-                    throw _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,22 +163,105 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_Get
-        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
+        /// <summary>
+        /// Gets a list of the logical database&apos;s transparent data encryption.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption
+        /// Operation Id: TransparentDataEncryptions_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="LogicalDatabaseTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogicalDatabaseTransparentDataEncryption> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<LogicalDatabaseTransparentDataEncryption>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<LogicalDatabaseTransparentDataEncryption>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a list of the logical database&apos;s transparent data encryption.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption
+        /// Operation Id: TransparentDataEncryptions_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LogicalDatabaseTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogicalDatabaseTransparentDataEncryption> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<LogicalDatabaseTransparentDataEncryption> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<LogicalDatabaseTransparentDataEncryption> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LogicalDatabaseTransparentDataEncryption>> GetAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.Get");
+            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,49 +270,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogicalDatabaseTransparentDataEncryption> GetIfExists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
-                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LogicalDatabaseTransparentDataEncryption>> GetIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
-                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
@@ -226,17 +293,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryption>> GetIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.Exists");
+            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,86 +318,29 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_ListByDatabase
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}
+        /// Operation Id: TransparentDataEncryptions_Get
+        /// </summary>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicalDatabaseTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogicalDatabaseTransparentDataEncryption> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<LogicalDatabaseTransparentDataEncryption> GetIfExists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
-            Page<LogicalDatabaseTransparentDataEncryption> FirstPageFunc(int? pageSizeHint)
+            using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<LogicalDatabaseTransparentDataEncryption>(null, response.GetRawResponse());
+                return Response.FromValue(new LogicalDatabaseTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
             }
-            Page<LogicalDatabaseTransparentDataEncryption> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: TransparentDataEncryptions_ListByDatabase
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicalDatabaseTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogicalDatabaseTransparentDataEncryption> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<LogicalDatabaseTransparentDataEncryption>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LogicalDatabaseTransparentDataEncryption>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics.CreateScope("LogicalDatabaseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalDatabaseTransparentDataEncryption(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<LogicalDatabaseTransparentDataEncryption> IEnumerable<LogicalDatabaseTransparentDataEncryption>.GetEnumerator()

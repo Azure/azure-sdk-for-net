@@ -18,7 +18,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _eventHubClusterClustersClientDiagnostics;
@@ -34,26 +34,30 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics EventHubClusterClustersClientDiagnostics => _eventHubClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations EventHubClusterClustersRestClient => _eventHubClusterClustersRestClient ??= new ClustersRestOperations(EventHubClusterClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubCluster.ResourceType));
+        private ClustersRestOperations EventHubClusterClustersRestClient => _eventHubClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubCluster.ResourceType));
         private ClientDiagnostics EventHubNamespaceNamespacesClientDiagnostics => _eventHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespace.ResourceType.Namespace, DiagnosticOptions);
-        private NamespacesRestOperations EventHubNamespaceNamespacesRestClient => _eventHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(EventHubNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubNamespace.ResourceType));
+        private NamespacesRestOperations EventHubNamespaceNamespacesRestClient => _eventHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubNamespace.ResourceType));
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(NamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(CancellationToken cancellationToken = default)
@@ -76,7 +80,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableCluster> GetAvailableClusterRegionClusters(CancellationToken cancellationToken = default)
@@ -99,7 +107,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <summary>
+        /// Lists the available Event Hubs Clusters within an ARM resource group
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubCluster> GetEventHubClustersAsync(CancellationToken cancellationToken = default)
@@ -111,7 +123,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -126,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -137,7 +149,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <summary>
+        /// Lists the available Event Hubs Clusters within an ARM resource group
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubCluster> GetEventHubClusters(CancellationToken cancellationToken = default)
@@ -149,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,7 +180,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -175,7 +191,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the available Namespaces within a subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubNamespace> GetEventHubNamespacesAsync(CancellationToken cancellationToken = default)
@@ -187,7 +207,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,7 +222,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -213,7 +233,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the available Namespaces within a subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubNamespace> GetEventHubNamespaces(CancellationToken cancellationToken = default)
@@ -225,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -251,17 +275,15 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Check the give Namespace name availability. </summary>
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
             scope.Start();
             try
@@ -276,17 +298,15 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Check the give Namespace name availability. </summary>
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
             scope.Start();
             try

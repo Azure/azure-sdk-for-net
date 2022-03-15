@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
         {
             var resourceGroupName = Recording.GenerateAssetName("testConnectedVMwareRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

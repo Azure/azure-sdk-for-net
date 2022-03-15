@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Extension operation result resource. </summary>
-    public partial class ImportExportExtensionsOperationResult : Resource
+    public partial class ImportExportExtensionsOperationResult : ResourceData
     {
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
         public ImportExportExtensionsOperationResult()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
-        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, type, systemData)
+        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;

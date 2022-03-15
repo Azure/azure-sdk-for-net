@@ -3,8 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Azure.Storage.Blobs.Models;
+using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -85,9 +84,16 @@ namespace Azure.Storage.Blobs.Models
         public Uri CopySource { get; }
 
         /// <summary>
+        /// Legacy facade for <see cref="BlobCopyStatus"/>.
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
-        public CopyStatus CopyStatus { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public CopyStatus CopyStatus => BlobCopyStatus ?? CopyStatus.Pending;
+
+        /// <summary>
+        /// State of the most recent copy operation identified by x-ms-copy-id, if any.
+        /// </summary>
+        public CopyStatus? BlobCopyStatus { get; }
 
         /// <summary>
         /// Included if the blob is incremental copy blob.
@@ -293,7 +299,7 @@ namespace Azure.Storage.Blobs.Models
             string copyId,
             string copyProgress,
             Uri copySource,
-            CopyStatus copyStatus,
+            CopyStatus? blobCopyStatus,
             bool isIncrementalCopy,
             string destinationSnapshot,
             LeaseDurationType leaseDuration,
@@ -344,7 +350,7 @@ namespace Azure.Storage.Blobs.Models
             BlobCommittedBlockCount = blobCommittedBlockCount;
             IsIncrementalCopy = isIncrementalCopy;
             IsServerEncrypted = isServerEncrypted;
-            CopyStatus = copyStatus;
+            BlobCopyStatus = blobCopyStatus;
             EncryptionKeySha256 = encryptionKeySha256;
             CopySource = copySource;
             EncryptionScope = encryptionScope;

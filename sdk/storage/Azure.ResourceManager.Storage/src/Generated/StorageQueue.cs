@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -39,22 +37,22 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of the <see cref = "StorageQueue"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageQueue(ArmClient armClient, StorageQueueData data) : this(armClient, data.Id)
+        internal StorageQueue(ArmClient client, StorageQueueData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="StorageQueue"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageQueue(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal StorageQueue(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string storageQueueQueueApiVersion);
-            _storageQueueQueueRestClient = new QueueRestOperations(_storageQueueQueueClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
+            TryGetApiVersion(ResourceType, out string storageQueueQueueApiVersion);
+            _storageQueueQueueRestClient = new QueueRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,9 +82,13 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StorageQueue>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageQueue>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Get");
             scope.Start();
@@ -94,8 +96,8 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _storageQueueQueueClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StorageQueue(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +106,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageQueue> Get(CancellationToken cancellationToken = default)
         {
@@ -114,8 +120,8 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _storageQueueQueueClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageQueue(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,54 +130,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StorageQueueDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Delete");
             scope.Start();
             try
             {
                 var response = await _storageQueueQueueRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageQueueDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new StorageArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -182,18 +156,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StorageQueueDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Delete");
             scope.Start();
             try
             {
                 var response = _storageQueueQueueRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageQueueDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new StorageArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -204,23 +182,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Update
+        /// </summary>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
-        public async virtual Task<Response<StorageQueue>> UpdateAsync(StorageQueueData queue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageQueue>> UpdateAsync(StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
+            Argument.AssertNotNull(queue, nameof(queue));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Update");
             scope.Start();
             try
             {
                 var response = await _storageQueueQueueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StorageQueue(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,23 +208,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Update
+        /// </summary>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
         public virtual Response<StorageQueue> Update(StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
+            Argument.AssertNotNull(queue, nameof(queue));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueue.Update");
             scope.Start();
             try
             {
                 var response = _storageQueueQueueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken);
-                return Response.FromValue(new StorageQueue(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageQueue(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

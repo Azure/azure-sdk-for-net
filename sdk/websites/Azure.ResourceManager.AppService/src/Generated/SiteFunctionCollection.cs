@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of FunctionEnvelope and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteFunction and their operations over its parent. </summary>
     public partial class SiteFunctionCollection : ArmCollection, IEnumerable<SiteFunction>, IAsyncEnumerable<SiteFunction>
     {
         private readonly ClientDiagnostics _siteFunctionWebAppsClientDiagnostics;
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteFunctionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteFunctionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteFunctionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteFunctionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteFunction.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteFunction.ResourceType, out string siteFunctionWebAppsApiVersion);
-            _siteFunctionWebAppsRestClient = new WebAppsRestOperations(_siteFunctionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteFunctionWebAppsApiVersion);
+            TryGetApiVersion(SiteFunction.ResourceType, out string siteFunctionWebAppsApiVersion);
+            _siteFunctionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteFunctionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,68 +50,29 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_CreateFunction
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Create function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_CreateFunction
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public virtual SiteFunctionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteFunction>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            if (functionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(functionEnvelope));
-            }
-
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _siteFunctionWebAppsRestClient.CreateFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope, cancellationToken);
-                var operation = new SiteFunctionCreateOrUpdateOperation(ArmClient, _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_CreateFunction
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public async virtual Task<SiteFunctionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            if (functionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(functionEnvelope));
-            }
+            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
 
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _siteFunctionWebAppsRestClient.CreateFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteFunctionCreateOrUpdateOperation(ArmClient, _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope).Request, response);
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation<SiteFunction>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -121,13 +83,76 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetFunction
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Create function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_CreateFunction
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="functionEnvelope"> Function details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
+        public virtual ArmOperation<SiteFunction> CreateOrUpdate(WaitUntil waitUntil, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
+
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _siteFunctionWebAppsRestClient.CreateFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteFunction>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, functionEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual async Task<Response<SiteFunction>> GetAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<SiteFunction> Get(string functionName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +164,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteFunctionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteFunction(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,26 +174,109 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetFunction
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for List the functions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions
+        /// Operation Id: WebApps_ListFunctions
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SiteFunction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteFunction> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SiteFunction>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteFunctionWebAppsRestClient.ListFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SiteFunction>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteFunctionWebAppsRestClient.ListFunctionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for List the functions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions
+        /// Operation Id: WebApps_ListFunctions
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteFunction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteFunction> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SiteFunction> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteFunctionWebAppsRestClient.ListFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SiteFunction> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteFunctionWebAppsRestClient.ListFunctionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<SiteFunction>> GetAsync(string functionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.Get");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _siteFunctionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteFunction(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,60 +285,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual Response<SiteFunction> GetIfExists(string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteFunction(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<SiteFunction>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteFunction(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionName, CancellationToken cancellationToken = default)
         {
@@ -250,21 +312,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteFunction>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,86 +341,33 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListFunctions
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteFunction> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual Response<SiteFunction> GetIfExists(string functionName, CancellationToken cancellationToken = default)
         {
-            Page<SiteFunction> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteFunctionWebAppsRestClient.ListFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteFunction> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteFunctionWebAppsRestClient.ListFunctionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListFunctions
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteFunction> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SiteFunction>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteFunctionWebAppsRestClient.ListFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteFunction>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteFunction(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteFunction>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteFunctionWebAppsRestClient.ListFunctionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteFunction(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<SiteFunction> IEnumerable<SiteFunction>.GetEnumerator()

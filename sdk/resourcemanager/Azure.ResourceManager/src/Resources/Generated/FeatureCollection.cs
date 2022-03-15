@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -31,12 +32,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="FeatureCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal FeatureCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal FeatureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
-            _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+            TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,15 +50,43 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Provider.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual async Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
@@ -68,8 +98,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken);
                 if (response.Value == null)
-                    throw _featureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,26 +108,109 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets all the preview features in a provider namespace that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
+        /// Operation Id: Features_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Feature> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _featureRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _featureRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all the preview features in a provider namespace that are available through AFEC for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
+        /// Operation Id: Features_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Feature> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _featureRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _featureRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Get");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _featureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,60 +219,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
-
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<Feature>(null, response.GetRawResponse());
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
-
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Feature>(null, response.GetRawResponse());
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<bool> Exists(string featureName, CancellationToken cancellationToken = default)
         {
@@ -179,21 +246,27 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Exists");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Feature>(null, response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,86 +275,33 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_List
-        /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Feature> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            Page<Feature> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _featureRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _featureRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// OperationId: Features_List
-        /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Feature> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _featureRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Feature>(null, response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _featureRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Feature> IEnumerable<Feature>.GetEnumerator()

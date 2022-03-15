@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SensitivityLabel data model. </summary>
-    public partial class SensitivityLabelData : Resource
+    public partial class SensitivityLabelData : ResourceData
     {
         /// <summary> Initializes a new instance of SensitivityLabelData. </summary>
         public SensitivityLabelData()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SensitivityLabelData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="managedBy"> Resource that manages the sensitivity label. </param>
         /// <param name="schemaName"> The schema name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="informationTypeId"> The information type ID. </param>
         /// <param name="isDisabled"> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </param>
         /// <param name="rank"></param>
-        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank) : base(id, name, type, systemData)
+        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             SchemaName = schemaName;

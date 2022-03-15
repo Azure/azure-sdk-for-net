@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocation
@@ -12,23 +16,51 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region CustomLocation
-        /// <summary> Gets an object representing a CustomLocationCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CustomLocationCollection" /> object. </returns>
-        public static CustomLocationCollection GetCustomLocations(this ResourceGroup resourceGroup)
-        {
-            return new CustomLocationCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of CustomLocations in the CustomLocation. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CustomLocations and their operations over a CustomLocation. </returns>
+        public static CustomLocationCollection GetCustomLocations(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetCustomLocations();
+        }
+
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> Custom Locations name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static async Task<Response<CustomLocation>> GetCustomLocationAsync(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> Custom Locations name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public static Response<CustomLocation> GetCustomLocation(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetCustomLocations().Get(resourceName, cancellationToken);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,22 +38,22 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         /// <summary> Initializes a new instance of the <see cref = "IscsiTarget"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IscsiTarget(ArmClient armClient, IscsiTargetData data) : this(armClient, data.Id)
+        internal IscsiTarget(ArmClient client, IscsiTargetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="IscsiTarget"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal IscsiTarget(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal IscsiTarget(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string iscsiTargetApiVersion);
-            _iscsiTargetRestClient = new IscsiTargetsRestOperations(_iscsiTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
+            TryGetApiVersion(ResourceType, out string iscsiTargetApiVersion);
+            _iscsiTargetRestClient = new IscsiTargetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,12 +83,13 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Get
-        /// <summary> Get an iSCSI Target. </summary>
+        /// <summary>
+        /// Get an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IscsiTarget>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IscsiTarget>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Get");
             scope.Start();
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.StoragePool
             {
                 var response = await _iscsiTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _iscsiTargetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,10 +107,11 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Get
-        /// <summary> Get an iSCSI Target. </summary>
+        /// <summary>
+        /// Get an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IscsiTarget> Get(CancellationToken cancellationToken = default)
         {
@@ -120,8 +121,8 @@ namespace Azure.ResourceManager.StoragePool
             {
                 var response = _iscsiTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _iscsiTargetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,57 +131,22 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Delete
-        /// <summary> Delete an iSCSI Target. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Delete an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<IscsiTargetDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Delete");
             scope.Start();
             try
             {
                 var response = await _iscsiTargetRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IscsiTargetDeleteOperation(_iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new StoragePoolArmOperation(_iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -191,21 +157,22 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Delete
-        /// <summary> Delete an iSCSI Target. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Delete an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual IscsiTargetDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Delete");
             scope.Start();
             try
             {
                 var response = _iscsiTargetRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new IscsiTargetDeleteOperation(_iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new StoragePoolArmOperation(_iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -216,28 +183,26 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Update
-        /// <summary> Update an iSCSI Target. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
+        /// <summary>
+        /// Update an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Update
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
-        public async virtual Task<IscsiTargetUpdateOperation> UpdateAsync(bool waitForCompletion, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<IscsiTarget>> UpdateAsync(WaitUntil waitUntil, PatchableIscsiTargetData data, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetUpdatePayload));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Update");
             scope.Start();
             try
             {
-                var response = await _iscsiTargetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, iscsiTargetUpdatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new IscsiTargetUpdateOperation(ArmClient, _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, iscsiTargetUpdatePayload).Request, response);
-                if (waitForCompletion)
+                var response = await _iscsiTargetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<IscsiTarget>(new IscsiTargetOperationSource(Client), _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -248,28 +213,26 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
-        /// OperationId: IscsiTargets_Update
-        /// <summary> Update an iSCSI Target. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
+        /// <summary>
+        /// Update an iSCSI Target.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
+        /// Operation Id: IscsiTargets_Update
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
-        public virtual IscsiTargetUpdateOperation Update(bool waitForCompletion, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<IscsiTarget> Update(WaitUntil waitUntil, PatchableIscsiTargetData data, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetUpdatePayload == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetUpdatePayload));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTarget.Update");
             scope.Start();
             try
             {
-                var response = _iscsiTargetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, iscsiTargetUpdatePayload, cancellationToken);
-                var operation = new IscsiTargetUpdateOperation(ArmClient, _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, iscsiTargetUpdatePayload).Request, response);
-                if (waitForCompletion)
+                var response = _iscsiTargetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new StoragePoolArmOperation<IscsiTarget>(new IscsiTargetOperationSource(Client), _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

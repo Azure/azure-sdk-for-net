@@ -2316,7 +2316,7 @@
         "x-ms-request-id": "1fd78f3a-e5bc-4cf6-ae52-e41808718303",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220118T065033Z:cc6eb7cc-1cde-4ef5-b45d-734a8048af64"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Communication/locations/WESTUS2/operationStatuses/1fd78f3a-e5bc-4cf6-ae52-e41808718303*6DA2616DF181093203D7B28ADDD75C69C53AF2B6EC0994B0ACA2DC4CC1CA369A?api-version=2020-08-20",
@@ -4356,7 +4356,7 @@
     }
   ],
   "Variables": {
-    "NOTIFICATION_HUBS_CONNECTION_STRING": "Endpoint=sb://notification-hub-namespace-0000.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=0X/4OghGPPLmhnfC/LpB/F2fGAkBl7NicOGvhfg5kbk=",
+    "NOTIFICATION_HUBS_CONNECTION_STRING": "Endpoint=sb://notification-hub-namespace-0000.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=Kg==",
     "NOTIFICATION_HUBS_RESOURCE_ID": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-0000/providers/Microsoft.NotificationHubs/namespaces/notification-hub-namespace-0000/NotificationHubs/notification-hub-0000",
     "RandomSeed": "1835788040",
     "RESOURCE_MANAGER_URL": null,

@@ -18,13 +18,13 @@ using System.Threading.Tasks;
 Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
-string rgName = "myResourceGroup";
-ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+string resourceGroupName = "myResourceGroup";
+ResourceGroupData resourceGroupData = new ResourceGroupData(AzureLocation.WestUS2);
+ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network

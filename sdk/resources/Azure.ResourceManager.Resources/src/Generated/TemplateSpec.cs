@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TemplateSpec"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TemplateSpec(ArmClient armClient, TemplateSpecData data) : this(armClient, data.Id)
+        internal TemplateSpec(ArmClient client, TemplateSpecData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpec"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateSpec(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TemplateSpec(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
-            _templateSpecRestClient = new TemplateSpecsRestOperations(_templateSpecClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
+            TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
+            _templateSpecRestClient = new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,10 +84,49 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a Template Spec with a given name. </summary>
+        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpecVersion. </summary>
+        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpecVersion. </returns>
+        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
+        {
+            return new TemplateSpecVersionCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
+        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpecVersion>> GetTemplateSpecVersionAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
+        {
+            return await GetTemplateSpecVersions().GetAsync(templateSpecVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
+        /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        public virtual Response<TemplateSpecVersion> GetTemplateSpecVersion(string templateSpecVersion, CancellationToken cancellationToken = default)
+        {
+            return GetTemplateSpecVersions().Get(templateSpecVersion, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TemplateSpec>> GetAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateSpec>> GetAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Get");
             scope.Start();
@@ -95,8 +134,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _templateSpecClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,7 +144,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a Template Spec with a given name. </summary>
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpec> Get(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
@@ -116,8 +159,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _templateSpecClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,54 +169,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Template Spec by name. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a Template Spec by name. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<TemplateSpecDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
                 var response = await _templateSpecRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new TemplateSpecDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -184,18 +195,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a Template Spec by name. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a Template Spec by name. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual TemplateSpecDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
                 var response = _templateSpecRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new TemplateSpecDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -206,17 +221,24 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec tags with specified values. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary>
+        /// Updates Template Spec tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Update
+        /// </summary>
+        /// <param name="data"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TemplateSpec>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpec>> UpdateAsync(PatchableTemplateSpecData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try
             {
-                var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,17 +247,24 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec tags with specified values. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary>
+        /// Updates Template Spec tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Update
+        /// </summary>
+        /// <param name="data"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateSpec> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<TemplateSpec> Update(PatchableTemplateSpecData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try
             {
-                var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,14 +273,184 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        #region TemplateSpecVersion
-
-        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpec. </summary>
-        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpec. </returns>
-        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpec>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new TemplateSpecVersionCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<TemplateSpec> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpec>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<TemplateSpec> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpec>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<TemplateSpec> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

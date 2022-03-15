@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -32,12 +33,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExtendedDatabaseBlobAuditingPolicyCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExtendedDatabaseBlobAuditingPolicyCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ExtendedDatabaseBlobAuditingPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _extendedDatabaseBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ExtendedDatabaseBlobAuditingPolicy.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ExtendedDatabaseBlobAuditingPolicy.ResourceType, out string extendedDatabaseBlobAuditingPolicyApiVersion);
-            _extendedDatabaseBlobAuditingPolicyRestClient = new ExtendedDatabaseBlobAuditingPoliciesRestOperations(_extendedDatabaseBlobAuditingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, extendedDatabaseBlobAuditingPolicyApiVersion);
+            TryGetApiVersion(ExtendedDatabaseBlobAuditingPolicy.ResourceType, out string extendedDatabaseBlobAuditingPolicyApiVersion);
+            _extendedDatabaseBlobAuditingPolicyRestClient = new ExtendedDatabaseBlobAuditingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, extendedDatabaseBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,64 +51,27 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_CreateOrUpdate
-        /// <summary> Creates or updates an extended database&apos;s blob auditing policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="parameters"> The extended database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExtendedDatabaseBlobAuditingPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _extendedDatabaseBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
-                var operation = new ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_CreateOrUpdate
-        /// <summary> Creates or updates an extended database&apos;s blob auditing policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="parameters"> The extended database blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _extendedDatabaseBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
+                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicy>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -117,10 +82,67 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_Get
-        /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
+        /// <summary>
+        /// Creates or updates an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="parameters"> The extended database blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<ExtendedDatabaseBlobAuditingPolicy> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _extendedDatabaseBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
+                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicy>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _extendedDatabaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtendedDatabaseBlobAuditingPolicy> Get(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
@@ -131,8 +153,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _extendedDatabaseBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,22 +163,105 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_Get
-        /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
+        /// <summary>
+        /// Lists extended auditing settings of a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ExtendedDatabaseBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExtendedDatabaseBlobAuditingPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ExtendedDatabaseBlobAuditingPolicy>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ExtendedDatabaseBlobAuditingPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists extended auditing settings of a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExtendedDatabaseBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExtendedDatabaseBlobAuditingPolicy> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ExtendedDatabaseBlobAuditingPolicy> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ExtendedDatabaseBlobAuditingPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Get");
+            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _extendedDatabaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,49 +270,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _extendedDatabaseBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ExtendedDatabaseBlobAuditingPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _extendedDatabaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ExtendedDatabaseBlobAuditingPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
@@ -226,17 +293,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.Exists");
+            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _extendedDatabaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ExtendedDatabaseBlobAuditingPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,86 +318,29 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_ListByDatabase
-        /// <summary> Lists extended auditing settings of a database. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtendedDatabaseBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExtendedDatabaseBlobAuditingPolicy> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedDatabaseBlobAuditingPolicy> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            Page<ExtendedDatabaseBlobAuditingPolicy> FirstPageFunc(int? pageSizeHint)
+            using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _extendedDatabaseBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ExtendedDatabaseBlobAuditingPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ExtendedDatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
-            Page<ExtendedDatabaseBlobAuditingPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_ListByDatabase
-        /// <summary> Lists extended auditing settings of a database. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExtendedDatabaseBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExtendedDatabaseBlobAuditingPolicy> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ExtendedDatabaseBlobAuditingPolicy>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExtendedDatabaseBlobAuditingPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _extendedDatabaseBlobAuditingPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedDatabaseBlobAuditingPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<ExtendedDatabaseBlobAuditingPolicy> IEnumerable<ExtendedDatabaseBlobAuditingPolicy>.GetEnumerator()

@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetwork"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmClient armClient, VirtualNetworkData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal VirtualNetwork(ArmClient client, VirtualNetworkData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetwork"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal VirtualNetwork(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
-            _virtualNetworkRestClient = new VirtualNetworksRestOperations(_virtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkApiVersion);
+            TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
+            _virtualNetworkRestClient = new VirtualNetworksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,10 +84,86 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified virtual network by resource group. </summary>
+        /// <summary> Gets a collection of Subnets in the Subnet. </summary>
+        /// <returns> An object representing collection of Subnets and their operations over a Subnet. </returns>
+        public virtual SubnetCollection GetSubnets()
+        {
+            return new SubnetCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
+        /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VirtualNetwork>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        public virtual async Task<Response<Subnet>> GetSubnetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSubnets().GetAsync(subnetName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
+        /// <param name="subnetName"> The name of the subnet. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        public virtual Response<Subnet> GetSubnet(string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubnets().Get(subnetName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkPeerings in the VirtualNetworkPeering. </summary>
+        /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetworkPeering. </returns>
+        public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
+        {
+            return new VirtualNetworkPeeringCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets the specified virtual network peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/virtualNetworkPeerings/{virtualNetworkPeeringName}
+        /// Operation Id: VirtualNetworkPeerings_Get
+        /// </summary>
+        /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkPeering>> GetVirtualNetworkPeeringAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
+        {
+            return await GetVirtualNetworkPeerings().GetAsync(virtualNetworkPeeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified virtual network peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/virtualNetworkPeerings/{virtualNetworkPeeringName}
+        /// Operation Id: VirtualNetworkPeerings_Get
+        /// </summary>
+        /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        public virtual Response<VirtualNetworkPeering> GetVirtualNetworkPeering(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
+        {
+            return GetVirtualNetworkPeerings().Get(virtualNetworkPeeringName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the specified virtual network by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<VirtualNetwork>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Get");
             scope.Start();
@@ -95,8 +171,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualNetworkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,7 +181,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified virtual network by resource group. </summary>
+        /// <summary>
+        /// Gets the specified virtual network by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualNetwork> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -116,8 +196,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualNetworkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,54 +206,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified virtual network. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkDeleteOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -184,18 +232,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified virtual network. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
             try
             {
                 var response = _virtualNetworkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkDeleteOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -206,66 +258,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a virtual network tags. </summary>
-        /// <param name="parameters"> Parameters supplied to update virtual network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetwork>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Update");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a virtual network tags. </summary>
-        /// <param name="parameters"> Parameters supplied to update virtual network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VirtualNetwork> Update(TagsObject parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Update");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether a private IP address is available for use. </summary>
+        /// <summary>
+        /// Checks whether a private IP address is available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/CheckIPAddressAvailability
+        /// Operation Id: VirtualNetworks_CheckIPAddressAvailability
+        /// </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async virtual Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
         {
-            if (ipAddress == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddress));
-            }
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
@@ -281,16 +284,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks whether a private IP address is available for use. </summary>
+        /// <summary>
+        /// Checks whether a private IP address is available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/CheckIPAddressAvailability
+        /// Operation Id: VirtualNetworks_CheckIPAddressAvailability
+        /// </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public virtual Response<IPAddressAvailabilityResult> CheckIPAddressAvailability(string ipAddress, CancellationToken cancellationToken = default)
         {
-            if (ipAddress == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddress));
-            }
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
@@ -306,7 +310,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists usage stats. </summary>
+        /// <summary>
+        /// Lists usage stats.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/usages
+        /// Operation Id: VirtualNetworks_ListUsage
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkUsage> GetUsageAsync(CancellationToken cancellationToken = default)
@@ -344,7 +352,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists usage stats. </summary>
+        /// <summary>
+        /// Lists usage stats.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/usages
+        /// Operation Id: VirtualNetworks_ListUsage
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkUsage> GetUsage(CancellationToken cancellationToken = default)
@@ -382,24 +394,184 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region Subnet
-
-        /// <summary> Gets a collection of Subnets in the VirtualNetwork. </summary>
-        /// <returns> An object representing collection of Subnets and their operations over a VirtualNetwork. </returns>
-        public virtual SubnetCollection GetSubnets()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetwork>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new SubnetCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region VirtualNetworkPeering
-
-        /// <summary> Gets a collection of VirtualNetworkPeerings in the VirtualNetwork. </summary>
-        /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetwork. </returns>
-        public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<VirtualNetwork> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new VirtualNetworkPeeringCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetwork>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<VirtualNetwork> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetwork>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _virtualNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<VirtualNetwork> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _virtualNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new VirtualNetwork(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : Resource
+    public partial class PrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         public PrivateEndpointConnectionData()
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, systemData)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The resource of private end point. </summary>
-        public SubResource PrivateEndpoint { get; set; }
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+        }
+
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>

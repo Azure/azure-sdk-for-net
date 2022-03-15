@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
@@ -38,7 +40,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        public AddressSpace VpnClientAddressPool { get; set; }
+        internal AddressSpace VpnClientAddressPool { get; set; }
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        public IList<string> VpnClientAddressPrefixes
+        {
+            get
+            {
+                if (VpnClientAddressPool is null)
+                    VpnClientAddressPool = new AddressSpace();
+                return VpnClientAddressPool.AddressPrefixes;
+            }
+        }
+
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>

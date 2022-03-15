@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -45,7 +46,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Reference to the remote virtual network. </summary>
-        public WritableSubResource RemoteVirtualNetwork { get; set; }
+        internal WritableSubResource RemoteVirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RemoteVirtualNetworkId
+        {
+            get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
+            set
+            {
+                if (RemoteVirtualNetwork is null)
+                    RemoteVirtualNetwork = new WritableSubResource();
+                RemoteVirtualNetwork.Id = value;
+            }
+        }
+
         /// <summary> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </summary>
         public bool? AllowHubToRemoteVnetTransit { get; set; }
         /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub&apos;s gateways. </summary>

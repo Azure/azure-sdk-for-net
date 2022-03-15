@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -31,12 +32,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagedInstanceOperationCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ManagedInstanceOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceOperation.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ManagedInstanceOperation.ResourceType, out string managedInstanceOperationApiVersion);
-            _managedInstanceOperationRestClient = new ManagedInstanceRestOperations(_managedInstanceOperationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceOperationApiVersion);
+            TryGetApiVersion(ManagedInstanceOperation.ResourceType, out string managedInstanceOperationApiVersion);
+            _managedInstanceOperationRestClient = new ManagedInstanceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceOperationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,12 +50,36 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
+        /// <summary>
+        /// Gets a management operation on a managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
+        /// <param name="operationId"> The Uuid to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ManagedInstanceOperation>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceOperations_Get
-        /// <summary> Gets a management operation on a managed instance. </summary>
+        /// <summary>
+        /// Gets a management operation on a managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceOperation> Get(Guid operationId, CancellationToken cancellationToken = default)
@@ -64,8 +90,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 if (response.Value == null)
-                    throw _managedInstanceOperationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -74,22 +100,105 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceOperations_Get
-        /// <summary> Gets a management operation on a managed instance. </summary>
+        /// <summary>
+        /// Gets a list of operations performed on the managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
+        /// Operation Id: ManagedInstanceOperations_ListByManagedInstance
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedInstanceOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceOperation> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ManagedInstanceOperation>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ManagedInstanceOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a list of operations performed on the managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
+        /// Operation Id: ManagedInstanceOperations_ListByManagedInstance
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedInstanceOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceOperation> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ManagedInstanceOperation> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedInstanceOperationRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ManagedInstanceOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedInstanceOperationRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceOperation>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _managedInstanceOperationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -98,49 +207,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceOperation> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceOperation>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid operationId, CancellationToken cancellationToken = default)
@@ -159,17 +230,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceOperation>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,86 +255,29 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceOperations_ListByManagedInstance
-        /// <summary> Gets a list of operations performed on the managed instance. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
+        /// Operation Id: ManagedInstanceOperations_Get
+        /// </summary>
+        /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceOperation> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceOperation> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceOperation> FirstPageFunc(int? pageSizeHint)
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceOperationRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(Client, response.Value), response.GetRawResponse());
             }
-            Page<ManagedInstanceOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceOperationRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceOperations_ListByManagedInstance
-        /// <summary> Gets a list of operations performed on the managed instance. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceOperation> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ManagedInstanceOperation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstanceOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<ManagedInstanceOperation> IEnumerable<ManagedInstanceOperation>.GetEnumerator()

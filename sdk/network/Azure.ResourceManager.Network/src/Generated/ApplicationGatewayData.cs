@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ApplicationGateway data model. </summary>
-    public partial class ApplicationGatewayData : Models.Resource
+    public partial class ApplicationGatewayData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
         public ApplicationGatewayData()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
         /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
         /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
-        internal ApplicationGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<string> zones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, string resourceGuid, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation) : base(id, name, type, location, tags)
+        internal ApplicationGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<string> zones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, string resourceGuid, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Zones = zones;
@@ -164,7 +164,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Web application firewall configuration. </summary>
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public WritableSubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
+
         /// <summary> Whether HTTP2 is enabled on the application gateway resource. </summary>
         public bool? EnableHttp2 { get; set; }
         /// <summary> Whether FIPS is enabled on the application gateway resource. </summary>

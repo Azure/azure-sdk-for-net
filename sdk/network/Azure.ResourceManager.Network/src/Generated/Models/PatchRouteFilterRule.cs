@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Route Filter Rule Resource. </summary>
-    public partial class PatchRouteFilterRule : SubResource
+    internal partial class PatchRouteFilterRule : SubResource
     {
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
         public PatchRouteFilterRule()

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,22 +38,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PacketCapture"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PacketCapture(ArmClient armClient, PacketCaptureData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal PacketCapture(ArmClient client, PacketCaptureData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="PacketCapture"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PacketCapture(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal PacketCapture(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _packetCaptureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string packetCaptureApiVersion);
-            _packetCaptureRestClient = new PacketCapturesRestOperations(_packetCaptureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
+            TryGetApiVersion(ResourceType, out string packetCaptureApiVersion);
+            _packetCaptureRestClient = new PacketCapturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,9 +83,13 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a packet capture session by name. </summary>
+        /// <summary>
+        /// Gets a packet capture session by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// Operation Id: PacketCaptures_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PacketCapture>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PacketCapture>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.Get");
             scope.Start();
@@ -94,8 +97,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _packetCaptureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +107,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a packet capture session by name. </summary>
+        /// <summary>
+        /// Gets a packet capture session by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// Operation Id: PacketCaptures_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PacketCapture> Get(CancellationToken cancellationToken = default)
         {
@@ -114,8 +121,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _packetCaptureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,54 +131,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// Operation Id: PacketCaptures_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCaptureDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.Delete");
             scope.Start();
             try
             {
                 var response = await _packetCaptureRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PacketCaptureDeleteOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -182,18 +157,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}
+        /// Operation Id: PacketCaptures_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCaptureDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.Delete");
             scope.Start();
             try
             {
                 var response = _packetCaptureRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PacketCaptureDeleteOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -204,18 +183,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops a specified packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Stops a specified packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/stop
+        /// Operation Id: PacketCaptures_Stop
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCaptureStopOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.Stop");
             scope.Start();
             try
             {
                 var response = await _packetCaptureRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PacketCaptureStopOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -226,18 +209,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops a specified packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Stops a specified packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/stop
+        /// Operation Id: PacketCaptures_Stop
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCaptureStopOperation Stop(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.Stop");
             scope.Start();
             try
             {
                 var response = _packetCaptureRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PacketCaptureStopOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -248,18 +235,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Query the status of a running packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Query the status of a running packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/queryStatus
+        /// Operation Id: PacketCaptures_GetStatus
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCaptureGetStatusOperation> GetStatusAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PacketCaptureQueryStatusResult>> GetStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.GetStatus");
             scope.Start();
             try
             {
                 var response = await _packetCaptureRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PacketCaptureGetStatusOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation<PacketCaptureQueryStatusResult>(new PacketCaptureQueryStatusResultOperationSource(), _packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -270,18 +261,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Query the status of a running packet capture session. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Query the status of a running packet capture session.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/queryStatus
+        /// Operation Id: PacketCaptures_GetStatus
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCaptureGetStatusOperation GetStatus(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PacketCaptureQueryStatusResult> GetStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCapture.GetStatus");
             scope.Start();
             try
             {
                 var response = _packetCaptureRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PacketCaptureGetStatusOperation(_packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation<PacketCaptureQueryStatusResult>(new PacketCaptureQueryStatusResultOperationSource(), _packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

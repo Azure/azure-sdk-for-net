@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
@@ -12,23 +16,51 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region ConfigurationStore
-        /// <summary> Gets an object representing a ConfigurationStoreCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ConfigurationStoreCollection" /> object. </returns>
-        public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroup resourceGroup)
-        {
-            return new ConfigurationStoreCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of ConfigurationStores in the ConfigurationStore. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ConfigurationStores and their operations over a ConfigurationStore. </returns>
+        public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetConfigurationStores();
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public static async Task<Response<ConfigurationStore>> GetConfigurationStoreAsync(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public static Response<ConfigurationStore> GetConfigurationStore(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetConfigurationStores().Get(configStoreName, cancellationToken);
         }
     }
 }

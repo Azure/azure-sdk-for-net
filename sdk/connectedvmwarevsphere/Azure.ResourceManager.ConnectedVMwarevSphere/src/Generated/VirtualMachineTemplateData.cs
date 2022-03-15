@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VirtualMachineTemplate data model. </summary>
-    public partial class VirtualMachineTemplateData : TrackedResource
+    public partial class VirtualMachineTemplateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
         /// <param name="location"> The location. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Gets or sets the number of cores per socket for the template.
         /// Defaults to 1 if unspecified.
         /// </param>
-        /// <param name="oSType"> Gets or sets the type of the os. </param>
-        /// <param name="oSName"> Gets or sets os name. </param>
+        /// <param name="osType"> Gets or sets the type of the os. </param>
+        /// <param name="osName"> Gets or sets os name. </param>
         /// <param name="folderPath"> Gets or sets the folder path of the template. </param>
         /// <param name="networkInterfaces"> Gets or sets the network interfaces of the template. </param>
         /// <param name="disks"> Gets or sets the disks the template. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="firmwareType"> Firmware type. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? oSType, string oSName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, systemData, tags, location)
+        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MemorySizeMB = memorySizeMB;
             NumCpus = numCpus;
             NumCoresPerSocket = numCoresPerSocket;
-            OSType = oSType;
-            OSName = oSName;
+            OSType = osType;
+            OSName = osName;
             FolderPath = folderPath;
             NetworkInterfaces = networkInterfaces;
             Disks = disks;

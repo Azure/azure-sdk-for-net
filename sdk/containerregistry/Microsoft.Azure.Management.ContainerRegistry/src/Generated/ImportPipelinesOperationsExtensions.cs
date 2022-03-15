@@ -21,6 +21,46 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     public static partial class ImportPipelinesOperationsExtensions
     {
             /// <summary>
+            /// Lists all import pipelines for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            public static IPage<ImportPipeline> List(this IImportPipelinesOperations operations, string resourceGroupName, string registryName)
+            {
+                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all import pipelines for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<IPage<ImportPipeline>> ListAsync(this IImportPipelinesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the properties of the import pipeline.
             /// </summary>
             /// <param name='operations'>
@@ -161,46 +201,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             public static async System.Threading.Tasks.Task DeleteAsync(this IImportPipelinesOperations operations, string resourceGroupName, string registryName, string importPipelineName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, registryName, importPipelineName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists all import pipelines for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            public static IPage<ImportPipeline> List(this IImportPipelinesOperations operations, string resourceGroupName, string registryName)
-            {
-                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all import pipelines for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<IPage<ImportPipeline>> ListAsync(this IImportPipelinesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

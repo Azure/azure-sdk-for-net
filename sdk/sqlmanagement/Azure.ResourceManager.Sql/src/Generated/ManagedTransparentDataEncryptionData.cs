@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedTransparentDataEncryption data model. </summary>
-    public partial class ManagedTransparentDataEncryptionData : Resource
+    public partial class ManagedTransparentDataEncryptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionData. </summary>
         public ManagedTransparentDataEncryptionData()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
-        internal ManagedTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, TransparentDataEncryptionState? state) : base(id, name, type, systemData)
+        internal ManagedTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state) : base(id, name, resourceType, systemData)
         {
             State = state;
         }

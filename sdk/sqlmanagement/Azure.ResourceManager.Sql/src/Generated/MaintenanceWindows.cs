@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -39,22 +37,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "MaintenanceWindows"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceWindows(ArmClient armClient, MaintenanceWindowsData data) : this(armClient, data.Id)
+        internal MaintenanceWindows(ArmClient client, MaintenanceWindowsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindows"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceWindows(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal MaintenanceWindows(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _maintenanceWindowsMaintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
-            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_maintenanceWindowsMaintenanceWindowsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
+            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,19 +82,17 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// OperationId: MaintenanceWindows_Get
-        /// <summary> Gets maintenance windows settings for a database. </summary>
+        /// <summary>
+        /// Gets maintenance windows settings for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
+        /// Operation Id: MaintenanceWindows_Get
+        /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
-        public async virtual Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.Get");
             scope.Start();
@@ -104,8 +100,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceWindows(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,19 +110,17 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// OperationId: MaintenanceWindows_Get
-        /// <summary> Gets maintenance windows settings for a database. </summary>
+        /// <summary>
+        /// Gets maintenance windows settings for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
+        /// Operation Id: MaintenanceWindows_Get
+        /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         public virtual Response<MaintenanceWindows> Get(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.Get");
             scope.Start();
@@ -134,8 +128,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken);
                 if (response.Value == null)
-                    throw _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceWindows(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,69 +138,28 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// OperationId: MaintenanceWindows_CreateOrUpdate
-        /// <summary> Sets maintenance windows settings for a database. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets maintenance windows settings for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
+        /// Operation Id: MaintenanceWindows_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="parameters"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<MaintenanceWindowsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MaintenanceWindowsCreateOrUpdateOperation(response);
-                if (waitForCompletion)
+                var operation = new SqlArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -217,33 +170,28 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
-        /// OperationId: MaintenanceWindows_CreateOrUpdate
-        /// <summary> Sets maintenance windows settings for a database. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets maintenance windows settings for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
+        /// Operation Id: MaintenanceWindows_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="parameters"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual MaintenanceWindowsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindows.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, parameters, cancellationToken);
-                var operation = new MaintenanceWindowsCreateOrUpdateOperation(response);
-                if (waitForCompletion)
+                var operation = new SqlArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }

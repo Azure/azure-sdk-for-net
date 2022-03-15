@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerAzureADAdministrator data model. </summary>
-    public partial class ServerAzureADAdministratorData : Resource
+    public partial class ServerAzureADAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerAzureADAdministratorData. </summary>
         public ServerAzureADAdministratorData()
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ServerAzureADAdministratorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="administratorType"> Type of the sever administrator. </param>
         /// <param name="login"> Login name of the server administrator. </param>
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="azureADOnlyAuthentication"> Azure Active Directory only Authentication enabled. </param>
-        internal ServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? azureADOnlyAuthentication) : base(id, name, type, systemData)
+        internal ServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? azureADOnlyAuthentication) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;

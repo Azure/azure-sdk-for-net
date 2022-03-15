@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System.Text.Json;
 using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. You can use the `GetDefaultSubscription`/`GetDefaultSubscriptionAsync` methods to return the default subscription configured for your user:
@@ -29,7 +30,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -46,7 +47,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
 {
     TemplateLink = new TemplateLink()
     {
-        Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+        Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
     Parameters = new JsonObject()
     {
@@ -57,7 +58,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
         }
     }
 });
-DeploymentCreateOrUpdateOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -74,7 +75,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     Template = File.ReadAllText("storage-template.json"),
     Parameters = File.ReadAllText("storage-parameters.json")
 });
-DeploymentCreateOrUpdateOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -94,11 +95,11 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
 {
     TemplateLink = new TemplateLink()
     {
-        Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json"
+        Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
     Parameters = parameters
 });
-DeploymentCreateOrUpdateOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -123,7 +124,7 @@ DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
 // Now we can get the deployment with GetAsync()
 Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
 // With DeleteAsync(), we can delete the deployment
-await deployment.DeleteAsync(true);
+await deployment.DeleteAsync(WaitUntil.Completed);
 ```
 
 

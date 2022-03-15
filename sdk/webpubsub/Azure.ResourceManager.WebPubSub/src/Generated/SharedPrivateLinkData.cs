@@ -12,7 +12,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing the SharedPrivateLink data model. </summary>
-    public partial class SharedPrivateLinkData : Resource
+    public partial class SharedPrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
         public SharedPrivateLinkData()
@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, type, systemData)
+        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;

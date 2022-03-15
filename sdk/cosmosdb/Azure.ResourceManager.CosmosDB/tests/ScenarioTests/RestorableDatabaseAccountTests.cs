@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_restorableDatabaseAccount != null)
             {
-                await _restorableDatabaseAccount.DeleteAsync(true);
+                await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task RestorableDatabaseAccountListByLocation()
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccounts(AzureLocation.WestUS).GetAllAsync().ToEnumerableAsync();
+            CosmosDBLocation location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestUS);
+            var restorableAccounts = await location.GetRestorableDatabaseAccounts().GetAllAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS, locations)
+            var createOptions = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 BackupPolicy = new ContinuousModeBackupPolicy(),
             };
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createOptions);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createOptions);
             return accountLro.Value;
         }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,16 +19,16 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(ApplicationArtifactType.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static ApplicationDefinitionArtifact DeserializeApplicationDefinitionArtifact(JsonElement element)
         {
             ApplicationDefinitionArtifactName name = default;
-            string uri = default;
+            Uri uri = default;
             ApplicationArtifactType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))

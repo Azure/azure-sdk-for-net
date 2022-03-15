@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Tenant. </summary>
     internal partial class TenantExtensionClient : ArmResource
     {
         private ClientDiagnostics _deploymentClientDiagnostics;
@@ -29,32 +29,37 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TenantExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics DeploymentClientDiagnostics => _deploymentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", Deployment.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(DeploymentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Deployment.ResourceType));
+        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Deployment.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Calculate the hash of the given template. </summary>
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public virtual DeploymentCollection GetDeployments()
+        {
+            return new DeploymentCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Calculate the hash of the given template.
+        /// Request Path: /providers/Microsoft.Resources/calculateTemplateHash
+        /// Operation Id: Deployments_CalculateTemplateHash
+        /// </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public async virtual Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(object template, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(object template, CancellationToken cancellationToken = default)
         {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
-
             using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateTemplateHashDeployment");
             scope.Start();
             try
@@ -69,17 +74,15 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Calculate the hash of the given template. </summary>
+        /// <summary>
+        /// Calculate the hash of the given template.
+        /// Request Path: /providers/Microsoft.Resources/calculateTemplateHash
+        /// Operation Id: Deployments_CalculateTemplateHash
+        /// </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public virtual Response<TemplateHashResult> CalculateTemplateHashDeployment(object template, CancellationToken cancellationToken = default)
         {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
-
             using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateTemplateHashDeployment");
             scope.Start();
             try

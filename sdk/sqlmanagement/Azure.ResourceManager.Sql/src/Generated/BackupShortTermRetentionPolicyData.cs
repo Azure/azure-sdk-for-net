@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the BackupShortTermRetentionPolicy data model. </summary>
-    public partial class BackupShortTermRetentionPolicyData : Resource
+    public partial class BackupShortTermRetentionPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
         public BackupShortTermRetentionPolicyData()
@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
-        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours) : base(id, name, type, systemData)
+        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours) : base(id, name, resourceType, systemData)
         {
             RetentionDays = retentionDays;
             DiffBackupIntervalInHours = diffBackupIntervalInHours;

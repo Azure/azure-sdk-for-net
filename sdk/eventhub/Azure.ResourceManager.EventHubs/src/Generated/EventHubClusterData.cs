@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the EventHubCluster data model. </summary>
-    public partial class EventHubClusterData : TrackedResource
+    public partial class EventHubClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubClusterData. </summary>
         /// <param name="location"> The location. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedAt"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterSku sku, string createdAt, string updatedAt, string metricId, string status) : base(id, name, type, systemData, tags, location)
+        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterSku sku, string createdAt, string updatedAt, string metricId, string status) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CreatedAt = createdAt;

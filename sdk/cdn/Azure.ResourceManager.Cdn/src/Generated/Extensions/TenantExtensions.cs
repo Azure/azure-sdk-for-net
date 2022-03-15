@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -18,42 +20,66 @@ namespace Azure.ResourceManager.Cdn
     {
         private static TenantExtensionClient GetExtensionClient(Tenant tenant)
         {
-            return tenant.GetCachedClient((armClient) =>
+            return tenant.GetCachedClient((client) =>
             {
-                return new TenantExtensionClient(armClient, tenant.Id);
+                return new TenantExtensionClient(client, tenant.Id);
             }
             );
         }
 
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+
             return await GetExtensionClient(tenant).CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+
             return GetExtensionClient(tenant).CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
         }
 
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeNode> GetEdgeNodesAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenant).GetEdgeNodesAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeNode> GetEdgeNodes(this Tenant tenant, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenant).GetEdgeNodes(cancellationToken);

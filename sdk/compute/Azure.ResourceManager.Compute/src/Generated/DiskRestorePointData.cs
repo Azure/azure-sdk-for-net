@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskRestorePoint data model. </summary>
-    public partial class DiskRestorePointData : Resource
+    public partial class DiskRestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
         internal DiskRestorePointData()
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
         /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
-        /// <param name="oSType"> The Operating System type. </param>
+        /// <param name="osType"> The Operating System type. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, type, systemData)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, resourceType, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
-            OSType = oSType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
         public DiskPurchasePlan PurchasePlan { get; }
         /// <summary> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; }
+        internal SupportedCapabilities SupportedCapabilities { get; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities.AcceleratedNetwork;
+            set => SupportedCapabilities.AcceleratedNetwork = value;
+        }
+
         /// <summary> id of the backing snapshot&apos;s MIS family. </summary>
         public string FamilyId { get; }
         /// <summary> unique incarnation id of the source disk. </summary>

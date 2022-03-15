@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -39,22 +37,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagementLock"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementLock(ArmClient armClient, ManagementLockData data) : this(armClient, data.Id)
+        internal ManagementLock(ArmClient client, ManagementLockData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementLock"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementLock(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ManagementLock(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string managementLockApiVersion);
-            _managementLockRestClient = new ManagementLocksRestOperations(_managementLockClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
+            TryGetApiVersion(ResourceType, out string managementLockApiVersion);
+            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,12 +82,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementLock>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementLock>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Get");
             scope.Start();
@@ -97,8 +96,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _managementLockRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managementLockClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementLock> Get(CancellationToken cancellationToken = default)
         {
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _managementLockRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _managementLockClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,57 +130,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// OperationId: ManagementLocks_DeleteByScope
-        /// <summary> Delete a management lock by scope. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Delete a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_DeleteByScope
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementLockDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
                 var response = await _managementLockRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -191,21 +156,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// OperationId: ManagementLocks_DeleteByScope
-        /// <summary> Delete a management lock by scope. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Delete a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_DeleteByScope
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementLockDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
                 var response = _managementLockRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ManagementLockDeleteOperation(response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }

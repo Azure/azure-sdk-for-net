@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "HybridConnectionLimits"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HybridConnectionLimits(ArmClient armClient, HybridConnectionLimitsData data) : this(armClient, data.Id)
+        internal HybridConnectionLimits(ArmClient client, HybridConnectionLimitsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="HybridConnectionLimits"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HybridConnectionLimits(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal HybridConnectionLimits(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
-            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(_hybridConnectionLimitsAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
+            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,13 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// OperationId: AppServicePlans_GetHybridConnectionPlanLimit
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
+        /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HybridConnectionLimits>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectionLimits>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimits.Get");
             scope.Start();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HybridConnectionLimits(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
-        /// OperationId: AppServicePlans_GetHybridConnectionPlanLimit
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
+        /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridConnectionLimits> Get(CancellationToken cancellationToken = default)
         {
@@ -119,44 +120,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridConnectionLimits(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimits.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimits.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

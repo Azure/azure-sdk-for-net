@@ -10,6 +10,7 @@ using Azure.ResourceManager.Dns.Tests;
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
+    [Ignore("These tests will work once the conversion to new track 2 is complete")]
     public class ScenarioTestsZones : DnsManagementClientBase
     {
         private string location;
@@ -124,7 +125,7 @@ namespace Azure.Management.Dns.Tests
                 }
             }
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
-            await (await ResourceGroupsOperations.GetAsync(this.resourceGroup + "-Two")).Value.DeleteAsync(true);
+            await (await ResourceGroupsOperations.GetAsync(this.resourceGroup + "-Two")).Value.DeleteAsync(WaitUntil.Completed);
             await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne));
         }
 

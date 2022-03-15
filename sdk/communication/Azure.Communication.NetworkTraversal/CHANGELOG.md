@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2022-03-11)
+
+### Features Added
+
+- Adding optional parameter to GetRelayConfiguration to choose credential Time-To-Live in seconds of max 48 hours.
+  The default value will be used if given value exceeds it.
+
+## 1.0.0 (2022-02-09) (Deprecated)
+
+### Breaking Changes
+
+- Removing GetRelayConfigurationOptions to call GetRelayConfiguration and GetRelayConfigurationAsync passing 
+  RouteType and CommunicationUserIdentifier explicitly.
 
 ## 1.0.0-beta.3 (2021-11-18)
 

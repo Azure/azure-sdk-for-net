@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteInstance"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteInstance(ArmClient armClient, WebSiteInstanceStatusData data) : this(armClient, data.Id)
+        internal SiteInstance(ArmClient client, WebSiteInstanceStatusData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteInstance"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteInstance(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteInstance(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteInstanceWebAppsApiVersion);
-            _siteInstanceWebAppsRestClient = new WebAppsRestOperations(_siteInstanceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceWebAppsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteInstanceWebAppsApiVersion);
+            _siteInstanceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,55 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
-        /// OperationId: WebApps_GetInstanceInfo
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets an object representing a SiteInstanceExtension along with the instance operations that can be performed on it in the SiteInstance. </summary>
+        /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
+        public virtual SiteInstanceExtension GetSiteInstanceExtension()
+        {
+            return new SiteInstanceExtension(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+        }
+
+        /// <summary> Gets a collection of SiteInstanceProcesses in the SiteInstanceProcess. </summary>
+        /// <returns> An object representing collection of SiteInstanceProcesses and their operations over a SiteInstanceProcess. </returns>
+        public virtual SiteInstanceProcessCollection GetSiteInstanceProcesses()
+        {
+            return new SiteInstanceProcessCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcess
+        /// </summary>
+        /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteInstance>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual async Task<Response<SiteInstanceProcess>> GetSiteInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteInstanceProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcess
+        /// </summary>
+        /// <param name="processId"> PID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual Response<SiteInstanceProcess> GetSiteInstanceProcess(string processId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteInstanceProcesses().Get(processId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Gets all scale-out instances of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
+        /// Operation Id: WebApps_GetInstanceInfo
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteInstance>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstance.Get");
             scope.Start();
@@ -96,8 +138,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceWebAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteInstance(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +148,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
-        /// OperationId: WebApps_GetInstanceInfo
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary>
+        /// Description for Gets all scale-out instances of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
+        /// Operation Id: WebApps_GetInstanceInfo
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteInstance> Get(CancellationToken cancellationToken = default)
         {
@@ -119,8 +162,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstance(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,61 +171,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstance.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstance.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region SiteInstanceExtension
-
-        /// <summary> Gets an object representing a SiteInstanceExtension along with the instance operations that can be performed on it in the SiteInstance. </summary>
-        /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
-        public virtual SiteInstanceExtension GetSiteInstanceExtension()
-        {
-            return new SiteInstanceExtension(ArmClient, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
-        }
-        #endregion
-
-        #region SiteInstanceProcess
-
-        /// <summary> Gets a collection of SiteInstanceProcesses in the SiteInstance. </summary>
-        /// <returns> An object representing collection of SiteInstanceProcesses and their operations over a SiteInstance. </returns>
-        public virtual SiteInstanceProcessCollection GetSiteInstanceProcesses()
-        {
-            return new SiteInstanceProcessCollection(this);
-        }
-        #endregion
     }
 }

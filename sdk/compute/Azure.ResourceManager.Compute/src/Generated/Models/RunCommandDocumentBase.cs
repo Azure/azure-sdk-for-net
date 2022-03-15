@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
-        /// <param name="oSType"> The Operating System type. </param>
+        /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes oSType, string label, string description)
+        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
+        internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description)
         {
             if (schema == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Schema = schema;
             Id = id;
-            OSType = oSType;
+            OSType = osType;
             Label = label;
             Description = description;
         }

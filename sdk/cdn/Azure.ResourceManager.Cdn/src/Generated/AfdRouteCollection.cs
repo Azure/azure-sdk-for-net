@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdRouteCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AfdRouteCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AfdRouteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _afdRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdRoute.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(AfdRoute.ResourceType, out string afdRouteApiVersion);
-            _afdRouteRestClient = new AfdRoutesRestOperations(_afdRouteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRouteApiVersion);
+            TryGetApiVersion(AfdRoute.ResourceType, out string afdRouteApiVersion);
+            _afdRouteRestClient = new AfdRoutesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdRouteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,62 +50,29 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AfdEndpoint.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual AfdRouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AfdRoute>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-
-            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _afdRouteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route, cancellationToken);
-                var operation = new AfdRouteCreateOrUpdateOperation(ArmClient, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="routeName"> Name of the routing rule. </param>
-        /// <param name="route"> Route properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public async virtual Task<AfdRouteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNull(route, nameof(route));
 
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _afdRouteRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRouteCreateOrUpdateOperation(ArmClient, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response);
-                if (waitForCompletion)
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -115,10 +83,76 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="routeName"> Name of the routing rule. </param>
+        /// <param name="route"> Route properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
+        public virtual ArmOperation<AfdRoute> CreateOrUpdate(WaitUntil waitUntil, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(route, nameof(route));
+
+            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _afdRouteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route, cancellationToken);
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        public virtual async Task<Response<AfdRoute>> GetAsync(string routeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+
+            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _afdRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
+        /// <param name="routeName"> Name of the routing rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<AfdRoute> Get(string routeName, CancellationToken cancellationToken = default)
         {
@@ -130,8 +164,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _afdRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken);
                 if (response.Value == null)
-                    throw _afdRouteClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdRoute(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,23 +174,109 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Lists all of the existing origins within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes
+        /// Operation Id: AfdRoutes_ListByEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AfdRoute> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AfdRoute>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _afdRouteRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AfdRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _afdRouteRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists all of the existing origins within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes
+        /// Operation Id: AfdRoutes_ListByEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AfdRoute> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<AfdRoute> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdRouteRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AfdRoute> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdRouteRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<AfdRoute>> GetAsync(string routeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.Get");
+            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _afdRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _afdRouteClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdRoute(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,60 +285,14 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public virtual Response<AfdRoute> GetIfExists(string routeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
-
-            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _afdRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<AfdRoute>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdRoute(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeName"> Name of the routing rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<AfdRoute>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
-
-            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _afdRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AfdRoute>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdRoute(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeName"> Name of the routing rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
@@ -238,21 +312,27 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdRoute>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.Exists");
+            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _afdRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<AfdRoute>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,80 +341,33 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists all of the existing origins within a profile. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
+        /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AfdRoute> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        public virtual Response<AfdRoute> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            Page<AfdRoute> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdRouteRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AfdRoute> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdRouteRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-        /// <summary> Lists all of the existing origins within a profile. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AfdRoute> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AfdRoute>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _afdRouteRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _afdRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<AfdRoute>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdRoute(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<AfdRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _afdRouteRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdRoute(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<AfdRoute> IEnumerable<AfdRoute>.GetEnumerator()

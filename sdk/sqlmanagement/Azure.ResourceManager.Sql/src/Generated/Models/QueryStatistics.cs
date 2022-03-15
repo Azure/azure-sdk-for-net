@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The QueryStatistics. </summary>
-    public partial class QueryStatistics : Resource
+    public partial class QueryStatistics : ResourceData
     {
         /// <summary> Initializes a new instance of QueryStatistics. </summary>
         public QueryStatistics()
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of QueryStatistics. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
-        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, type, systemData)
+        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             QueryId = queryId;

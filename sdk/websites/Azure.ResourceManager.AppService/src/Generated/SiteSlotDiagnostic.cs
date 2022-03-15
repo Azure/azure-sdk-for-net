@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotDiagnostic(ArmClient armClient, DiagnosticCategoryData data) : this(armClient, data.Id)
+        internal SiteSlotDiagnostic(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotDiagnostic(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotDiagnostic(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotDiagnosticDiagnosticsApiVersion);
-            _siteSlotDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDiagnosticDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDiagnosticsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteSlotDiagnosticDiagnosticsApiVersion);
+            _siteSlotDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,83 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteDiagnosticCategorySlot
-        /// <summary> Description for Get Diagnostics Category. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticAnalyses in the SiteSlotDiagnosticAnalysis. </summary>
+        /// <returns> An object representing collection of SiteSlotDiagnosticAnalyses and their operations over a SiteSlotDiagnosticAnalysis. </returns>
+        public virtual SiteSlotDiagnosticAnalysisCollection GetSiteSlotDiagnosticAnalyses()
+        {
+            return new SiteSlotDiagnosticAnalysisCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotDiagnostic>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotDiagnosticAnalysis>> GetSiteSlotDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotDiagnosticAnalyses().GetAsync(analysisName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual Response<SiteSlotDiagnosticAnalysis> GetSiteSlotDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotDiagnosticAnalyses().Get(analysisName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteSlotDiagnosticDetectors in the SiteSlotDiagnosticDetector. </summary>
+        /// <returns> An object representing collection of SiteSlotDiagnosticDetectors and their operations over a SiteSlotDiagnosticDetector. </returns>
+        public virtual SiteSlotDiagnosticDetectorCollection GetSiteSlotDiagnosticDetectors()
+        {
+            return new SiteSlotDiagnosticDetectorCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorSlot
+        /// </summary>
+        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotDiagnosticDetector>> GetSiteSlotDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotDiagnosticDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorSlot
+        /// </summary>
+        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual Response<SiteSlotDiagnosticDetector> GetSiteSlotDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotDiagnosticDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteSlotDiagnostic>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnostic.Get");
             scope.Start();
@@ -96,8 +166,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +176,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteDiagnosticCategorySlot
-        /// <summary> Description for Get Diagnostics Category. </summary>
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotDiagnostic> Get(CancellationToken cancellationToken = default)
         {
@@ -119,8 +190,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,61 +199,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnostic.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnostic.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region SiteSlotDiagnosticAnalysis
-
-        /// <summary> Gets a collection of SiteSlotDiagnosticAnalyses in the SiteSlotDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteSlotDiagnosticAnalyses and their operations over a SiteSlotDiagnostic. </returns>
-        public virtual SiteSlotDiagnosticAnalysisCollection GetSiteSlotDiagnosticAnalyses()
-        {
-            return new SiteSlotDiagnosticAnalysisCollection(this);
-        }
-        #endregion
-
-        #region SiteSlotDiagnosticDetector
-
-        /// <summary> Gets a collection of SiteSlotDiagnosticDetectors in the SiteSlotDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteSlotDiagnosticDetectors and their operations over a SiteSlotDiagnostic. </returns>
-        public virtual SiteSlotDiagnosticDetectorCollection GetSiteSlotDiagnosticDetectors()
-        {
-            return new SiteSlotDiagnosticDetectorCollection(this);
-        }
-        #endregion
     }
 }

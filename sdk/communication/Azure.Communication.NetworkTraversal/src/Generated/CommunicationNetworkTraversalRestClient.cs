@@ -17,41 +17,44 @@ namespace Azure.Communication.NetworkTraversal
 {
     internal partial class CommunicationNetworkTraversalRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of CommunicationNetworkTraversalRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-08-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-03-01-preview")
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateIssueRelayConfigurationRequest(string id, RouteType? routeType)
+        internal HttpMessage CreateIssueRelayConfigurationRequest(string id, RouteType? routeType, int? ttl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/networktraversal/:issueRelayConfiguration", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/networkTraversal/:issueRelayConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var model = new CommunicationRelayConfigurationRequest()
             {
                 Id = id,
-                RouteType = routeType
+                RouteType = routeType,
+                Ttl = ttl
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -59,13 +62,14 @@ namespace Azure.Communication.NetworkTraversal
             return message;
         }
 
-        /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
-        /// <param name="id"> An existing ACS identity. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
+        /// <summary> Issue a configuration for an STUN/TURN server. </summary>
+        /// <param name="id"> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </param>
+        /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
+        /// <param name="ttl"> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, int? ttl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateIssueRelayConfigurationRequest(id, routeType);
+            using var message = CreateIssueRelayConfigurationRequest(id, routeType, ttl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -77,17 +81,18 @@ namespace Azure.Communication.NetworkTraversal
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
-        /// <param name="id"> An existing ACS identity. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
+        /// <summary> Issue a configuration for an STUN/TURN server. </summary>
+        /// <param name="id"> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </param>
+        /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
+        /// <param name="ttl"> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, int? ttl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateIssueRelayConfigurationRequest(id, routeType);
+            using var message = CreateIssueRelayConfigurationRequest(id, routeType, ttl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -99,7 +104,7 @@ namespace Azure.Communication.NetworkTraversal
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

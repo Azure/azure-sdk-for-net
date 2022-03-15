@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseColumn data model. </summary>
-    public partial class DatabaseColumnData : Resource
+    public partial class DatabaseColumnData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
         public DatabaseColumnData()
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="columnType"> The column data type. </param>
         /// <param name="temporalType"> The table temporal type. </param>
         /// <param name="memoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
-        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed) : base(id, name, type, systemData)
+        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             TemporalType = temporalType;

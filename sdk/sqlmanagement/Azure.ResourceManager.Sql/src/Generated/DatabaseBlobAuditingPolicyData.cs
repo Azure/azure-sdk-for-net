@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseBlobAuditingPolicy data model. </summary>
-    public partial class DatabaseBlobAuditingPolicyData : Resource
+    public partial class DatabaseBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyData. </summary>
         public DatabaseBlobAuditingPolicyData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal DatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type, systemData)
+        internal DatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             RetentionDays = retentionDays;

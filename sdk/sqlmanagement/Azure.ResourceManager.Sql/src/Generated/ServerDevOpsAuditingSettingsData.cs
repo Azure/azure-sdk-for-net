@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerDevOpsAuditingSettings data model. </summary>
-    public partial class ServerDevOpsAuditingSettingsData : Resource
+    public partial class ServerDevOpsAuditingSettingsData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerDevOpsAuditingSettingsData. </summary>
         public ServerDevOpsAuditingSettingsData()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ServerDevOpsAuditingSettingsData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether DevOps audit events are sent to Azure Monitor. 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal ServerDevOpsAuditingSettingsData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? isAzureMonitorTargetEnabled, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type, systemData)
+        internal ServerDevOpsAuditingSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureMonitorTargetEnabled, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, resourceType, systemData)
         {
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             State = state;

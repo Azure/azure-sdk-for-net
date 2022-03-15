@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -18,56 +20,68 @@ namespace Azure.ResourceManager.ServiceBus
     {
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return subscription.GetCachedClient((armClient) =>
+            return subscription.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(armClient, subscription.Id);
+                return new SubscriptionExtensionClient(client, subscription.Id);
             }
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceBusNamespace> GetServiceBusNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetServiceBusNamespacesAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceBusNamespace> GetServiceBusNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetServiceBusNamespaces(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             return await GetExtensionClient(subscription).CheckServiceBusNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             return GetExtensionClient(subscription).CheckServiceBusNameAvailability(parameters, cancellationToken);
         }
     }

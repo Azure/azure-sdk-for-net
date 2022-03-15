@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineScaleSet data model. </summary>
-    public partial class VirtualMachineScaleSetData : TrackedResource
+    public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="scaleInPolicy"> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </param>
         /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
         /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, Models.Plan plan, ManagedServiceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy) : base(id, name, type, systemData, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Plan = plan;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
-        public Models.Sku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
-        public Models.Plan Plan { get; set; }
+        public ComputePlan Plan { get; set; }
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set. </summary>
@@ -107,9 +107,33 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Fault Domain count for each placement group. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public WritableSubResource ProximityPlacementGroup { get; set; }
+        internal WritableSubResource ProximityPlacementGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ProximityPlacementGroupId
+        {
+            get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            set
+            {
+                if (ProximityPlacementGroup is null)
+                    ProximityPlacementGroup = new WritableSubResource();
+                ProximityPlacementGroup.Id = value;
+            }
+        }
+
         /// <summary> Specifies information about the dedicated host group that the virtual machine scale set resides in. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>
-        public WritableSubResource HostGroup { get; set; }
+        internal WritableSubResource HostGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HostGroupId
+        {
+            get => HostGroup is null ? default : HostGroup.Id;
+            set
+            {
+                if (HostGroup is null)
+                    HostGroup = new WritableSubResource();
+                HostGroup.Id = value;
+            }
+        }
+
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>

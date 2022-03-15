@@ -456,7 +456,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PartitionId = partitionId;
             }
 
-            public override Task SendAsync(IEnumerable<EventData> events,
+            public override Task SendAsync(IReadOnlyCollection<EventData> events,
                                            SendEventOptions sendOptions,
                                            CancellationToken cancellationToken)
             {
@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override int Count { get; }
             public override TransportProducerFeatures ActiveFeatures { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
-            public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
 
             public override void Clear()

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallRCAction : IUtf8JsonSerializable
+    internal partial class AzureFirewallRCAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AzureFirewallRCActionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AzureFirewallRCActionType.Value.ToString());
             }
             writer.WriteEndObject();
         }

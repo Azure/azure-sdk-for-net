@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobVersion data model. </summary>
-    public partial class JobVersionData : Resource
+    public partial class JobVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of JobVersionData. </summary>
         public JobVersionData()
@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of JobVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        internal JobVersionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData) : base(id, name, type, systemData)
+        internal JobVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData) : base(id, name, resourceType, systemData)
         {
         }
     }

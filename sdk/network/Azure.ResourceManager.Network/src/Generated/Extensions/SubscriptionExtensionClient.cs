@@ -18,13 +18,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _applicationGatewayClientDiagnostics;
         private ApplicationGatewaysRestOperations _applicationGatewayRestClient;
-        private ClientDiagnostics _applicationGatewaysClientDiagnostics;
-        private ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
         private ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
         private ApplicationSecurityGroupsRestOperations _applicationSecurityGroupRestClient;
         private ClientDiagnostics _availableDelegationsClientDiagnostics;
@@ -39,8 +37,8 @@ namespace Azure.ResourceManager.Network
         private BastionHostsRestOperations _bastionHostRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private NetworkManagementRestOperations _defaultRestClient;
-        private ClientDiagnostics _customIpPrefixCustomIPPrefixesClientDiagnostics;
-        private CustomIPPrefixesRestOperations _customIpPrefixCustomIPPrefixesRestClient;
+        private ClientDiagnostics _customIPPrefixClientDiagnostics;
+        private CustomIPPrefixesRestOperations _customIPPrefixRestClient;
         private ClientDiagnostics _ddosProtectionPlanClientDiagnostics;
         private DdosProtectionPlansRestOperations _ddosProtectionPlanRestClient;
         private ClientDiagnostics _dscpConfigurationClientDiagnostics;
@@ -57,10 +55,10 @@ namespace Azure.ResourceManager.Network
         private ExpressRoutePortsRestOperations _expressRoutePortRestClient;
         private ClientDiagnostics _firewallPolicyClientDiagnostics;
         private FirewallPoliciesRestOperations _firewallPolicyRestClient;
-        private ClientDiagnostics _ipAllocationClientDiagnostics;
-        private IpAllocationsRestOperations _ipAllocationRestClient;
-        private ClientDiagnostics _ipGroupClientDiagnostics;
-        private IpGroupsRestOperations _ipGroupRestClient;
+        private ClientDiagnostics _ipAllocationIpAllocationsClientDiagnostics;
+        private IpAllocationsRestOperations _ipAllocationIpAllocationsRestClient;
+        private ClientDiagnostics _ipGroupIpGroupsClientDiagnostics;
+        private IpGroupsRestOperations _ipGroupIpGroupsRestClient;
         private ClientDiagnostics _loadBalancerClientDiagnostics;
         private LoadBalancersRestOperations _loadBalancerRestClient;
         private ClientDiagnostics _natGatewayClientDiagnostics;
@@ -107,8 +105,8 @@ namespace Azure.ResourceManager.Network
         private VirtualNetworkTapsRestOperations _virtualNetworkTapRestClient;
         private ClientDiagnostics _virtualRouterClientDiagnostics;
         private VirtualRoutersRestOperations _virtualRouterRestClient;
-        private ClientDiagnostics _virtualWANVirtualWansClientDiagnostics;
-        private VirtualWansRestOperations _virtualWANVirtualWansRestClient;
+        private ClientDiagnostics _virtualWanClientDiagnostics;
+        private VirtualWansRestOperations _virtualWanRestClient;
         private ClientDiagnostics _vpnSiteClientDiagnostics;
         private VpnSitesRestOperations _vpnSiteRestClient;
         private ClientDiagnostics _vpnServerConfigurationClientDiagnostics;
@@ -130,131 +128,145 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(ApplicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationGateway.ResourceType));
-        private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ApplicationGatewaysRestOperations ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGatewaysRestOperations(ApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationGateway.ResourceType));
         private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(ApplicationSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationSecurityGroup.ResourceType));
+        private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationSecurityGroup.ResourceType));
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableDelegationsRestOperations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegationsRestOperations(AvailableDelegationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableDelegationsRestOperations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(AvailableServiceAliasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AzureFirewallClientDiagnostics => _azureFirewallClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
-        private AzureFirewallsRestOperations AzureFirewallRestClient => _azureFirewallRestClient ??= new AzureFirewallsRestOperations(AzureFirewallClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AzureFirewall.ResourceType));
+        private AzureFirewallsRestOperations AzureFirewallRestClient => _azureFirewallRestClient ??= new AzureFirewallsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AzureFirewall.ResourceType));
         private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics BastionHostClientDiagnostics => _bastionHostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", BastionHost.ResourceType.Namespace, DiagnosticOptions);
-        private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(BastionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(BastionHost.ResourceType));
+        private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(BastionHost.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private NetworkManagementRestOperations DefaultRestClient => _defaultRestClient ??= new NetworkManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics CustomIpPrefixCustomIPPrefixesClientDiagnostics => _customIpPrefixCustomIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", CustomIpPrefix.ResourceType.Namespace, DiagnosticOptions);
-        private CustomIPPrefixesRestOperations CustomIpPrefixCustomIPPrefixesRestClient => _customIpPrefixCustomIPPrefixesRestClient ??= new CustomIPPrefixesRestOperations(CustomIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomIpPrefix.ResourceType));
+        private NetworkManagementRestOperations DefaultRestClient => _defaultRestClient ??= new NetworkManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ClientDiagnostics CustomIPPrefixClientDiagnostics => _customIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefix.ResourceType.Namespace, DiagnosticOptions);
+        private CustomIPPrefixesRestOperations CustomIPPrefixRestClient => _customIPPrefixRestClient ??= new CustomIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomIPPrefix.ResourceType));
         private ClientDiagnostics DdosProtectionPlanClientDiagnostics => _ddosProtectionPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlan.ResourceType.Namespace, DiagnosticOptions);
-        private DdosProtectionPlansRestOperations DdosProtectionPlanRestClient => _ddosProtectionPlanRestClient ??= new DdosProtectionPlansRestOperations(DdosProtectionPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DdosProtectionPlan.ResourceType));
+        private DdosProtectionPlansRestOperations DdosProtectionPlanRestClient => _ddosProtectionPlanRestClient ??= new DdosProtectionPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DdosProtectionPlan.ResourceType));
         private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfiguration.ResourceType.Namespace, DiagnosticOptions);
-        private DscpConfigurationRestOperations DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfigurationRestOperations(DscpConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DscpConfiguration.ResourceType));
+        private DscpConfigurationRestOperations DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DscpConfiguration.ResourceType));
         private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableEndpointServicesRestOperations AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServicesRestOperations(AvailableEndpointServicesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableEndpointServicesRestOperations AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ExpressRouteCircuitClientDiagnostics => _expressRouteCircuitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuit.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteCircuitsRestOperations ExpressRouteCircuitRestClient => _expressRouteCircuitRestClient ??= new ExpressRouteCircuitsRestOperations(ExpressRouteCircuitClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCircuit.ResourceType));
+        private ExpressRouteCircuitsRestOperations ExpressRouteCircuitRestClient => _expressRouteCircuitRestClient ??= new ExpressRouteCircuitsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCircuit.ResourceType));
         private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ExpressRouteServiceProvidersRestOperations ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProvidersRestOperations(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ExpressRouteServiceProvidersRestOperations ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ExpressRouteCrossConnectionClientDiagnostics => _expressRouteCrossConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnection.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteCrossConnectionsRestOperations ExpressRouteCrossConnectionRestClient => _expressRouteCrossConnectionRestClient ??= new ExpressRouteCrossConnectionsRestOperations(ExpressRouteCrossConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCrossConnection.ResourceType));
+        private ExpressRouteCrossConnectionsRestOperations ExpressRouteCrossConnectionRestClient => _expressRouteCrossConnectionRestClient ??= new ExpressRouteCrossConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteCrossConnection.ResourceType));
         private ClientDiagnostics ExpressRoutePortClientDiagnostics => _expressRoutePortClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePort.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(ExpressRoutePortClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRoutePort.ResourceType));
+        private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRoutePort.ResourceType));
         private ClientDiagnostics FirewallPolicyClientDiagnostics => _firewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(FirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(FirewallPolicy.ResourceType));
-        private ClientDiagnostics IpAllocationClientDiagnostics => _ipAllocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IpAllocation.ResourceType.Namespace, DiagnosticOptions);
-        private IpAllocationsRestOperations IpAllocationRestClient => _ipAllocationRestClient ??= new IpAllocationsRestOperations(IpAllocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IpAllocation.ResourceType));
-        private ClientDiagnostics IpGroupClientDiagnostics => _ipGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IpGroup.ResourceType.Namespace, DiagnosticOptions);
-        private IpGroupsRestOperations IpGroupRestClient => _ipGroupRestClient ??= new IpGroupsRestOperations(IpGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IpGroup.ResourceType));
+        private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(FirewallPolicy.ResourceType));
+        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIpAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocation.ResourceType.Namespace, DiagnosticOptions);
+        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIpAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPAllocation.ResourceType));
+        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIpGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroup.ResourceType.Namespace, DiagnosticOptions);
+        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIpGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(IPGroup.ResourceType));
         private ClientDiagnostics LoadBalancerClientDiagnostics => _loadBalancerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancer.ResourceType.Namespace, DiagnosticOptions);
-        private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(LoadBalancerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(LoadBalancer.ResourceType));
+        private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(LoadBalancer.ResourceType));
         private ClientDiagnostics NatGatewayClientDiagnostics => _natGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NatGateway.ResourceType.Namespace, DiagnosticOptions);
-        private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(NatGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NatGateway.ResourceType));
+        private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NatGateway.ResourceType));
         private ClientDiagnostics NetworkInterfaceClientDiagnostics => _networkInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterface.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(NetworkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkInterface.ResourceType));
+        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkInterface.ResourceType));
         private ClientDiagnostics NetworkProfileClientDiagnostics => _networkProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfile.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(NetworkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkProfile.ResourceType));
+        private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkProfile.ResourceType));
         private ClientDiagnostics NetworkSecurityGroupClientDiagnostics => _networkSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(NetworkSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkSecurityGroup.ResourceType));
+        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkSecurityGroup.ResourceType));
         private ClientDiagnostics NetworkVirtualApplianceClientDiagnostics => _networkVirtualApplianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualAppliance.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkVirtualAppliancesRestOperations NetworkVirtualApplianceRestClient => _networkVirtualApplianceRestClient ??= new NetworkVirtualAppliancesRestOperations(NetworkVirtualApplianceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkVirtualAppliance.ResourceType));
+        private NetworkVirtualAppliancesRestOperations NetworkVirtualApplianceRestClient => _networkVirtualApplianceRestClient ??= new NetworkVirtualAppliancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkVirtualAppliance.ResourceType));
         private ClientDiagnostics NetworkWatcherClientDiagnostics => _networkWatcherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcher.ResourceType.Namespace, DiagnosticOptions);
-        private NetworkWatchersRestOperations NetworkWatcherRestClient => _networkWatcherRestClient ??= new NetworkWatchersRestOperations(NetworkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkWatcher.ResourceType));
+        private NetworkWatchersRestOperations NetworkWatcherRestClient => _networkWatcherRestClient ??= new NetworkWatchersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(NetworkWatcher.ResourceType));
         private ClientDiagnostics PrivateEndpointClientDiagnostics => _privateEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpoint.ResourceType.Namespace, DiagnosticOptions);
-        private PrivateEndpointsRestOperations PrivateEndpointRestClient => _privateEndpointRestClient ??= new PrivateEndpointsRestOperations(PrivateEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateEndpoint.ResourceType));
+        private PrivateEndpointsRestOperations PrivateEndpointRestClient => _privateEndpointRestClient ??= new PrivateEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateEndpoint.ResourceType));
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics PrivateLinkServiceClientDiagnostics => _privateLinkServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkService.ResourceType.Namespace, DiagnosticOptions);
-        private PrivateLinkServicesRestOperations PrivateLinkServiceRestClient => _privateLinkServiceRestClient ??= new PrivateLinkServicesRestOperations(PrivateLinkServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateLinkService.ResourceType));
+        private PrivateLinkServicesRestOperations PrivateLinkServiceRestClient => _privateLinkServiceRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PrivateLinkService.ResourceType));
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(PrivateLinkServicesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics PublicIPAddressClientDiagnostics => _publicIPAddressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddress.ResourceType.Namespace, DiagnosticOptions);
-        private PublicIPAddressesRestOperations PublicIPAddressRestClient => _publicIPAddressRestClient ??= new PublicIPAddressesRestOperations(PublicIPAddressClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPAddress.ResourceType));
+        private PublicIPAddressesRestOperations PublicIPAddressRestClient => _publicIPAddressRestClient ??= new PublicIPAddressesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPAddress.ResourceType));
         private ClientDiagnostics PublicIPPrefixClientDiagnostics => _publicIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefix.ResourceType.Namespace, DiagnosticOptions);
-        private PublicIPPrefixesRestOperations PublicIPPrefixRestClient => _publicIPPrefixRestClient ??= new PublicIPPrefixesRestOperations(PublicIPPrefixClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPPrefix.ResourceType));
+        private PublicIPPrefixesRestOperations PublicIPPrefixRestClient => _publicIPPrefixRestClient ??= new PublicIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(PublicIPPrefix.ResourceType));
         private ClientDiagnostics RouteFilterClientDiagnostics => _routeFilterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilter.ResourceType.Namespace, DiagnosticOptions);
-        private RouteFiltersRestOperations RouteFilterRestClient => _routeFilterRestClient ??= new RouteFiltersRestOperations(RouteFilterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteFilter.ResourceType));
+        private RouteFiltersRestOperations RouteFilterRestClient => _routeFilterRestClient ??= new RouteFiltersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteFilter.ResourceType));
         private ClientDiagnostics RouteTableClientDiagnostics => _routeTableClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteTable.ResourceType.Namespace, DiagnosticOptions);
-        private RouteTablesRestOperations RouteTableRestClient => _routeTableRestClient ??= new RouteTablesRestOperations(RouteTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteTable.ResourceType));
+        private RouteTablesRestOperations RouteTableRestClient => _routeTableRestClient ??= new RouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RouteTable.ResourceType));
         private ClientDiagnostics SecurityPartnerProviderClientDiagnostics => _securityPartnerProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProvider.ResourceType.Namespace, DiagnosticOptions);
-        private SecurityPartnerProvidersRestOperations SecurityPartnerProviderRestClient => _securityPartnerProviderRestClient ??= new SecurityPartnerProvidersRestOperations(SecurityPartnerProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SecurityPartnerProvider.ResourceType));
+        private SecurityPartnerProvidersRestOperations SecurityPartnerProviderRestClient => _securityPartnerProviderRestClient ??= new SecurityPartnerProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SecurityPartnerProvider.ResourceType));
         private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private BgpServiceCommunitiesRestOperations BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunitiesRestOperations(BgpServiceCommunitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private BgpServiceCommunitiesRestOperations BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunitiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ServiceEndpointPolicyClientDiagnostics => _serviceEndpointPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(ServiceEndpointPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceEndpointPolicy.ResourceType));
+        private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ServiceEndpointPolicy.ResourceType));
         private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(ServiceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(UsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetwork.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(VirtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetwork.ResourceType));
+        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetwork.ResourceType));
         private ClientDiagnostics VirtualNetworkTapClientDiagnostics => _virtualNetworkTapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTap.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualNetworkTapsRestOperations VirtualNetworkTapRestClient => _virtualNetworkTapRestClient ??= new VirtualNetworkTapsRestOperations(VirtualNetworkTapClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetworkTap.ResourceType));
+        private VirtualNetworkTapsRestOperations VirtualNetworkTapRestClient => _virtualNetworkTapRestClient ??= new VirtualNetworkTapsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetworkTap.ResourceType));
         private ClientDiagnostics VirtualRouterClientDiagnostics => _virtualRouterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouter.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualRoutersRestOperations VirtualRouterRestClient => _virtualRouterRestClient ??= new VirtualRoutersRestOperations(VirtualRouterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualRouter.ResourceType));
-        private ClientDiagnostics VirtualWANVirtualWansClientDiagnostics => _virtualWANVirtualWansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWAN.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualWansRestOperations VirtualWANVirtualWansRestClient => _virtualWANVirtualWansRestClient ??= new VirtualWansRestOperations(VirtualWANVirtualWansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWAN.ResourceType));
+        private VirtualRoutersRestOperations VirtualRouterRestClient => _virtualRouterRestClient ??= new VirtualRoutersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualRouter.ResourceType));
+        private ClientDiagnostics VirtualWanClientDiagnostics => _virtualWanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWan.ResourceType.Namespace, DiagnosticOptions);
+        private VirtualWansRestOperations VirtualWanRestClient => _virtualWanRestClient ??= new VirtualWansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWan.ResourceType));
         private ClientDiagnostics VpnSiteClientDiagnostics => _vpnSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnSite.ResourceType.Namespace, DiagnosticOptions);
-        private VpnSitesRestOperations VpnSiteRestClient => _vpnSiteRestClient ??= new VpnSitesRestOperations(VpnSiteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnSite.ResourceType));
+        private VpnSitesRestOperations VpnSiteRestClient => _vpnSiteRestClient ??= new VpnSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnSite.ResourceType));
         private ClientDiagnostics VpnServerConfigurationClientDiagnostics => _vpnServerConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfiguration.ResourceType.Namespace, DiagnosticOptions);
-        private VpnServerConfigurationsRestOperations VpnServerConfigurationRestClient => _vpnServerConfigurationRestClient ??= new VpnServerConfigurationsRestOperations(VpnServerConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnServerConfiguration.ResourceType));
+        private VpnServerConfigurationsRestOperations VpnServerConfigurationRestClient => _vpnServerConfigurationRestClient ??= new VpnServerConfigurationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnServerConfiguration.ResourceType));
         private ClientDiagnostics VirtualHubClientDiagnostics => _virtualHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHub.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(VirtualHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualHub.ResourceType));
+        private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualHub.ResourceType));
         private ClientDiagnostics VpnGatewayClientDiagnostics => _vpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnGateway.ResourceType.Namespace, DiagnosticOptions);
-        private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(VpnGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnGateway.ResourceType));
+        private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VpnGateway.ResourceType));
         private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGateway.ResourceType.Namespace, DiagnosticOptions);
-        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2SVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(P2SVpnGateway.ResourceType));
+        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2SVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(P2SVpnGateway.ResourceType));
         private ClientDiagnostics ExpressRouteGatewayClientDiagnostics => _expressRouteGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGateway.ResourceType.Namespace, DiagnosticOptions);
-        private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(ExpressRouteGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteGateway.ResourceType));
+        private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ExpressRouteGateway.ResourceType));
         private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
-        private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(WebApplicationFirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebApplicationFirewallPolicy.ResourceType));
+        private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebApplicationFirewallPolicy.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        #region ApplicationGatewayAvailableSslOptions
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public virtual ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions()
+        /// <summary> Gets a collection of AzureWebCategories in the AzureWebCategory. </summary>
+        /// <returns> An object representing collection of AzureWebCategories and their operations over a AzureWebCategory. </returns>
+        public virtual AzureWebCategoryCollection GetAzureWebCategories()
         {
-            return new ApplicationGatewayAvailableSslOptions(ArmClient, new ResourceIdentifier(Id + "/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"));
+            return new AzureWebCategoryCollection(Client, Id);
         }
-        #endregion
 
-        /// <summary> Gets all the application gateways in a subscription. </summary>
+        /// <summary> Gets a collection of ExpressRoutePortsLocations in the ExpressRoutePortsLocation. </summary>
+        /// <returns> An object representing collection of ExpressRoutePortsLocations and their operations over a ExpressRoutePortsLocation. </returns>
+        public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
+        {
+            return new ExpressRoutePortsLocationCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of NetworkVirtualApplianceSkus in the NetworkVirtualApplianceSku. </summary>
+        /// <returns> An object representing collection of NetworkVirtualApplianceSkus and their operations over a NetworkVirtualApplianceSku. </returns>
+        public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
+        {
+            return new NetworkVirtualApplianceSkuCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets all the application gateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
+        /// Operation Id: ApplicationGateways_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGateway> GetApplicationGatewaysAsync(CancellationToken cancellationToken = default)
@@ -266,7 +278,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ApplicationGatewayRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -281,7 +293,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ApplicationGatewayRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -292,7 +304,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the application gateways in a subscription. </summary>
+        /// <summary>
+        /// Gets all the application gateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways
+        /// Operation Id: ApplicationGateways_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGateway> GetApplicationGateways(CancellationToken cancellationToken = default)
@@ -304,7 +320,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ApplicationGatewayRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -319,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ApplicationGatewayRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -330,18 +346,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all available server variables. </summary>
+        /// <summary>
+        /// Lists all available server variables.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
+        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServerVariablesApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServerVariablesApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = await ApplicationGatewaysRestClient.ListAvailableServerVariablesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApplicationGatewayRestClient.ListAvailableServerVariablesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,18 +373,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available server variables. </summary>
+        /// <summary>
+        /// Lists all available server variables.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables
+        /// Operation Id: ApplicationGateways_ListAvailableServerVariables
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServerVariablesApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServerVariablesApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = ApplicationGatewaysRestClient.ListAvailableServerVariables(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApplicationGatewayRestClient.ListAvailableServerVariables(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -376,18 +400,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available request headers. </summary>
+        /// <summary>
+        /// Lists all available request headers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
+        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableRequestHeadersApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableRequestHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = await ApplicationGatewaysRestClient.ListAvailableRequestHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApplicationGatewayRestClient.ListAvailableRequestHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -399,18 +427,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available request headers. </summary>
+        /// <summary>
+        /// Lists all available request headers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders
+        /// Operation Id: ApplicationGateways_ListAvailableRequestHeaders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableRequestHeadersApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableRequestHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = ApplicationGatewaysRestClient.ListAvailableRequestHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApplicationGatewayRestClient.ListAvailableRequestHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -422,18 +454,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available response headers. </summary>
+        /// <summary>
+        /// Lists all available response headers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
+        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableResponseHeadersApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableResponseHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = await ApplicationGatewaysRestClient.ListAvailableResponseHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApplicationGatewayRestClient.ListAvailableResponseHeadersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -445,18 +481,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available response headers. </summary>
+        /// <summary>
+        /// Lists all available response headers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders
+        /// Operation Id: ApplicationGateways_ListAvailableResponseHeaders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableResponseHeadersApplicationGateways");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableResponseHeadersApplicationGateways");
                 scope.Start();
                 try
                 {
-                    var response = ApplicationGatewaysRestClient.ListAvailableResponseHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApplicationGatewayRestClient.ListAvailableResponseHeaders(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -468,18 +508,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available web application firewall rule sets. </summary>
+        /// <summary>
+        /// Lists all available web application firewall rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
+        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationGatewayFirewallRuleSet>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
                 scope.Start();
                 try
                 {
-                    var response = await ApplicationGatewaysRestClient.ListAvailableWafRuleSetsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApplicationGatewayRestClient.ListAvailableWafRuleSetsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -491,18 +535,22 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all available web application firewall rule sets. </summary>
+        /// <summary>
+        /// Lists all available web application firewall rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets
+        /// Operation Id: ApplicationGateways_ListAvailableWafRuleSets
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
         {
             Page<ApplicationGatewayFirewallRuleSet> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApplicationGatewaysClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
+                using var scope = ApplicationGatewayClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetApplicationGatewayAvailableWafRuleSetsAsync");
                 scope.Start();
                 try
                 {
-                    var response = ApplicationGatewaysRestClient.ListAvailableWafRuleSets(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApplicationGatewayRestClient.ListAvailableWafRuleSets(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -514,7 +562,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets all application security groups in a subscription. </summary>
+        /// <summary>
+        /// Gets all application security groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
+        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroup> GetApplicationSecurityGroupsAsync(CancellationToken cancellationToken = default)
@@ -526,7 +578,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ApplicationSecurityGroupRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -541,7 +593,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ApplicationSecurityGroupRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -552,7 +604,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all application security groups in a subscription. </summary>
+        /// <summary>
+        /// Gets all application security groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups
+        /// Operation Id: ApplicationSecurityGroups_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroup> GetApplicationSecurityGroups(CancellationToken cancellationToken = default)
@@ -564,7 +620,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ApplicationSecurityGroupRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -579,7 +635,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ApplicationSecurityGroupRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -590,16 +646,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all of the available subnet delegations for this subscription in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableDelegations_List
+        /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableDelegations");
@@ -633,16 +689,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all of the available subnet delegations for this subscription in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableDelegations_List
+        /// </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDelegation> GetAvailableDelegations(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableDelegationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableDelegations");
@@ -676,16 +732,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all available service aliases for this subscription in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_List
+        /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServiceAliases");
@@ -719,16 +775,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all available service aliases for this subscription in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_List
+        /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliases(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableServiceAliases");
@@ -762,7 +818,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Azure Firewalls in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Firewalls in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
+        /// Operation Id: AzureFirewalls_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewall> GetAzureFirewallsAsync(CancellationToken cancellationToken = default)
@@ -774,7 +834,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await AzureFirewallRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -789,7 +849,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await AzureFirewallRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -800,7 +860,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Azure Firewalls in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Firewalls in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls
+        /// Operation Id: AzureFirewalls_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewall> GetAzureFirewalls(CancellationToken cancellationToken = default)
@@ -812,7 +876,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = AzureFirewallRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -827,7 +891,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = AzureFirewallRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureFirewall(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -838,7 +902,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Azure Firewall FQDN Tags in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Firewall FQDN Tags in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
+        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(CancellationToken cancellationToken = default)
@@ -876,7 +944,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Azure Firewall FQDN Tags in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Firewall FQDN Tags in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags
+        /// Operation Id: AzureFirewallFqdnTags_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(CancellationToken cancellationToken = default)
@@ -914,7 +986,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all Bastion Hosts in a subscription. </summary>
+        /// <summary>
+        /// Lists all Bastion Hosts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
+        /// Operation Id: BastionHosts_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BastionHost" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BastionHost> GetBastionHostsAsync(CancellationToken cancellationToken = default)
@@ -926,7 +1002,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await BastionHostRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -941,7 +1017,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await BastionHostRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -952,7 +1028,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all Bastion Hosts in a subscription. </summary>
+        /// <summary>
+        /// Lists all Bastion Hosts in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts
+        /// Operation Id: BastionHosts_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BastionHost" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BastionHost> GetBastionHosts(CancellationToken cancellationToken = default)
@@ -964,7 +1044,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = BastionHostRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -979,7 +1059,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = BastionHostRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BastionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -990,20 +1070,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
+        /// <summary>
+        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
+        /// Operation Id: CheckDnsNameAvailability
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
-        public async virtual Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (domainNameLabel == null)
-            {
-                throw new ArgumentNullException(nameof(domainNameLabel));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckDnsNameAvailability");
             scope.Start();
             try
@@ -1018,20 +1094,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
+        /// <summary>
+        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability
+        /// Operation Id: CheckDnsNameAvailability
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
         public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (domainNameLabel == null)
-            {
-                throw new ArgumentNullException(nameof(domainNameLabel));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckDnsNameAvailability");
             scope.Start();
             try
@@ -1046,19 +1118,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the custom IP prefixes in a subscription. </summary>
+        /// <summary>
+        /// Gets all the custom IP prefixes in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
+        /// Operation Id: CustomIPPrefixes_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomIpPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomIpPrefix> GetCustomIpPrefixesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CustomIPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomIPPrefix> GetCustomIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomIpPrefix>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CustomIPPrefix>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CustomIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIpPrefixes");
+                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIPPrefixes");
                 scope.Start();
                 try
                 {
-                    var response = await CustomIpPrefixCustomIPPrefixesRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CustomIPPrefixRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1066,14 +1142,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<CustomIpPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CustomIPPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CustomIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIpPrefixes");
+                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIPPrefixes");
                 scope.Start();
                 try
                 {
-                    var response = await CustomIpPrefixCustomIPPrefixesRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CustomIPPrefixRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1084,19 +1160,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the custom IP prefixes in a subscription. </summary>
+        /// <summary>
+        /// Gets all the custom IP prefixes in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes
+        /// Operation Id: CustomIPPrefixes_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIpPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomIpPrefix> GetCustomIpPrefixes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomIPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomIPPrefix> GetCustomIPPrefixes(CancellationToken cancellationToken = default)
         {
-            Page<CustomIpPrefix> FirstPageFunc(int? pageSizeHint)
+            Page<CustomIPPrefix> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CustomIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIpPrefixes");
+                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIPPrefixes");
                 scope.Start();
                 try
                 {
-                    var response = CustomIpPrefixCustomIPPrefixesRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CustomIPPrefixRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1104,14 +1184,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<CustomIpPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CustomIPPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CustomIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIpPrefixes");
+                using var scope = CustomIPPrefixClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCustomIPPrefixes");
                 scope.Start();
                 try
                 {
-                    var response = CustomIpPrefixCustomIPPrefixesRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIpPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CustomIPPrefixRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1122,7 +1202,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all DDoS protection plans in a subscription. </summary>
+        /// <summary>
+        /// Gets all DDoS protection plans in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
+        /// Operation Id: DdosProtectionPlans_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DdosProtectionPlan" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DdosProtectionPlan> GetDdosProtectionPlansAsync(CancellationToken cancellationToken = default)
@@ -1134,7 +1218,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await DdosProtectionPlanRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1149,7 +1233,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await DdosProtectionPlanRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1160,7 +1244,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all DDoS protection plans in a subscription. </summary>
+        /// <summary>
+        /// Gets all DDoS protection plans in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans
+        /// Operation Id: DdosProtectionPlans_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DdosProtectionPlan" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DdosProtectionPlan> GetDdosProtectionPlans(CancellationToken cancellationToken = default)
@@ -1172,7 +1260,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = DdosProtectionPlanRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1187,7 +1275,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = DdosProtectionPlanRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DdosProtectionPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1198,7 +1286,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all dscp configurations in a subscription. </summary>
+        /// <summary>
+        /// Gets all dscp configurations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
+        /// Operation Id: DscpConfiguration_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DscpConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscpConfiguration> GetDscpConfigurationsAsync(CancellationToken cancellationToken = default)
@@ -1210,7 +1302,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await DscpConfigurationRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1225,7 +1317,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await DscpConfigurationRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1236,7 +1328,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all dscp configurations in a subscription. </summary>
+        /// <summary>
+        /// Gets all dscp configurations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations
+        /// Operation Id: DscpConfiguration_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DscpConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscpConfiguration> GetDscpConfigurations(CancellationToken cancellationToken = default)
@@ -1248,7 +1344,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = DscpConfigurationRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1263,7 +1359,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = DscpConfigurationRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1274,16 +1370,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List what values of endpoint services are available for use. </summary>
+        /// <summary>
+        /// List what values of endpoint services are available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
+        /// Operation Id: AvailableEndpointServices_List
+        /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<EndpointServiceResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableEndpointServices");
@@ -1317,16 +1413,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List what values of endpoint services are available for use. </summary>
+        /// <summary>
+        /// List what values of endpoint services are available for use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices
+        /// Operation Id: AvailableEndpointServices_List
+        /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EndpointServiceResult> GetAvailableEndpointServices(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<EndpointServiceResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailableEndpointServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailableEndpointServices");
@@ -1360,7 +1456,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the express route circuits in a subscription. </summary>
+        /// <summary>
+        /// Gets all the express route circuits in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
+        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCircuit> GetExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
@@ -1372,7 +1472,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRouteCircuitRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1387,7 +1487,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRouteCircuitRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1398,7 +1498,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the express route circuits in a subscription. </summary>
+        /// <summary>
+        /// Gets all the express route circuits in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits
+        /// Operation Id: ExpressRouteCircuits_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCircuit> GetExpressRouteCircuits(CancellationToken cancellationToken = default)
@@ -1410,7 +1514,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRouteCircuitRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1425,7 +1529,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRouteCircuitRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuit(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1436,7 +1540,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the available express route service providers. </summary>
+        /// <summary>
+        /// Gets all the available express route service providers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
+        /// Operation Id: ExpressRouteServiceProviders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(CancellationToken cancellationToken = default)
@@ -1474,7 +1582,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the available express route service providers. </summary>
+        /// <summary>
+        /// Gets all the available express route service providers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders
+        /// Operation Id: ExpressRouteServiceProviders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(CancellationToken cancellationToken = default)
@@ -1512,7 +1624,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all the ExpressRouteCrossConnections in a subscription. </summary>
+        /// <summary>
+        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// Operation Id: ExpressRouteCrossConnections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCrossConnection> GetExpressRouteCrossConnectionsAsync(CancellationToken cancellationToken = default)
@@ -1524,7 +1640,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRouteCrossConnectionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1539,7 +1655,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRouteCrossConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1550,7 +1666,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all the ExpressRouteCrossConnections in a subscription. </summary>
+        /// <summary>
+        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections
+        /// Operation Id: ExpressRouteCrossConnections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCrossConnection> GetExpressRouteCrossConnections(CancellationToken cancellationToken = default)
@@ -1562,7 +1682,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRouteCrossConnectionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1577,7 +1697,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRouteCrossConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1588,7 +1708,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all the ExpressRoutePort resources in the specified subscription. </summary>
+        /// <summary>
+        /// List all the ExpressRoutePort resources in the specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
+        /// Operation Id: ExpressRoutePorts_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRoutePort" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRoutePort> GetExpressRoutePortsAsync(CancellationToken cancellationToken = default)
@@ -1600,7 +1724,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRoutePortRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1615,7 +1739,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRoutePortRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1626,7 +1750,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all the ExpressRoutePort resources in the specified subscription. </summary>
+        /// <summary>
+        /// List all the ExpressRoutePort resources in the specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts
+        /// Operation Id: ExpressRoutePorts_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRoutePort" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRoutePort> GetExpressRoutePorts(CancellationToken cancellationToken = default)
@@ -1638,7 +1766,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRoutePortRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1653,7 +1781,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRoutePortRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1664,7 +1792,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Firewall Policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Firewall Policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
+        /// Operation Id: FirewallPolicies_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirewallPolicy> GetFirewallPoliciesAsync(CancellationToken cancellationToken = default)
@@ -1676,7 +1808,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await FirewallPolicyRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1691,7 +1823,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await FirewallPolicyRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1702,7 +1834,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Firewall Policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Firewall Policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies
+        /// Operation Id: FirewallPolicies_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirewallPolicy> GetFirewallPolicies(CancellationToken cancellationToken = default)
@@ -1714,7 +1850,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = FirewallPolicyRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1729,7 +1865,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = FirewallPolicyRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1740,19 +1876,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all IpAllocations in a subscription. </summary>
+        /// <summary>
+        /// Gets all IpAllocations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
+        /// Operation Id: IpAllocations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IpAllocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IpAllocation> GetIpAllocationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPAllocation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IPAllocation> GetIPAllocationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IpAllocation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IPAllocation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IpAllocationClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpAllocations");
+                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPAllocations");
                 scope.Start();
                 try
                 {
-                    var response = await IpAllocationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IPAllocationIpAllocationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1760,14 +1900,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<IpAllocation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IPAllocation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IpAllocationClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpAllocations");
+                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPAllocations");
                 scope.Start();
                 try
                 {
-                    var response = await IpAllocationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IPAllocationIpAllocationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1778,19 +1918,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all IpAllocations in a subscription. </summary>
+        /// <summary>
+        /// Gets all IpAllocations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations
+        /// Operation Id: IpAllocations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IpAllocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IpAllocation> GetIpAllocations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPAllocation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IPAllocation> GetIPAllocations(CancellationToken cancellationToken = default)
         {
-            Page<IpAllocation> FirstPageFunc(int? pageSizeHint)
+            Page<IPAllocation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IpAllocationClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpAllocations");
+                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPAllocations");
                 scope.Start();
                 try
                 {
-                    var response = IpAllocationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IPAllocationIpAllocationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1798,14 +1942,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<IpAllocation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IPAllocation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IpAllocationClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpAllocations");
+                using var scope = IPAllocationIpAllocationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPAllocations");
                 scope.Start();
                 try
                 {
-                    var response = IpAllocationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IPAllocationIpAllocationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1816,19 +1960,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all IpGroups in a subscription. </summary>
+        /// <summary>
+        /// Gets all IpGroups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
+        /// Operation Id: IpGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IpGroup> GetIpGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IPGroup> GetIPGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IpGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IPGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IpGroupClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpGroups");
+                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPGroups");
                 scope.Start();
                 try
                 {
-                    var response = await IpGroupRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IPGroupIpGroupsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1836,14 +1984,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<IpGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IPGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IpGroupClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpGroups");
+                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPGroups");
                 scope.Start();
                 try
                 {
-                    var response = await IpGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IPGroupIpGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1854,19 +2002,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all IpGroups in a subscription. </summary>
+        /// <summary>
+        /// Gets all IpGroups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups
+        /// Operation Id: IpGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IpGroup> GetIpGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IPGroup> GetIPGroups(CancellationToken cancellationToken = default)
         {
-            Page<IpGroup> FirstPageFunc(int? pageSizeHint)
+            Page<IPGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IpGroupClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpGroups");
+                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPGroups");
                 scope.Start();
                 try
                 {
-                    var response = IpGroupRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IPGroupIpGroupsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1874,14 +2026,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<IpGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IPGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IpGroupClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIpGroups");
+                using var scope = IPGroupIpGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetIPGroups");
                 scope.Start();
                 try
                 {
-                    var response = IpGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IPGroupIpGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IPGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1892,7 +2044,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the load balancers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the load balancers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
+        /// Operation Id: LoadBalancers_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancer" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadBalancer> GetLoadBalancersAsync(CancellationToken cancellationToken = default)
@@ -1904,7 +2060,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await LoadBalancerRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1919,7 +2075,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await LoadBalancerRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1930,7 +2086,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the load balancers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the load balancers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers
+        /// Operation Id: LoadBalancers_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancer" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadBalancer> GetLoadBalancers(CancellationToken cancellationToken = default)
@@ -1942,7 +2102,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = LoadBalancerRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1957,7 +2117,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = LoadBalancerRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1968,28 +2128,24 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Swaps VIPs between two load balancers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SwapPublicIpAddressesLoadBalancerOperation> SwapPublicIpAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
+            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = await LoadBalancerRestClient.SwapPublicIpAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SwapPublicIpAddressesLoadBalancerOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -2000,28 +2156,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Swaps VIPs between two load balancers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SwapPublicIpAddressesLoadBalancerOperation SwapPublicIpAddressesLoadBalancer(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
+            using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = LoadBalancerRestClient.SwapPublicIpAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new SwapPublicIpAddressesLoadBalancerOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response);
-                if (waitForCompletion)
+                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -2032,7 +2184,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the Nat Gateways in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Nat Gateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
+        /// Operation Id: NatGateways_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NatGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NatGateway> GetNatGatewaysAsync(CancellationToken cancellationToken = default)
@@ -2044,7 +2200,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NatGatewayRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2059,7 +2215,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NatGatewayRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2070,7 +2226,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Nat Gateways in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Nat Gateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways
+        /// Operation Id: NatGateways_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NatGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NatGateway> GetNatGateways(CancellationToken cancellationToken = default)
@@ -2082,7 +2242,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NatGatewayRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2097,7 +2257,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NatGatewayRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2108,7 +2268,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network interfaces in a subscription. </summary>
+        /// <summary>
+        /// Gets all network interfaces in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
+        /// Operation Id: NetworkInterfaces_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterface> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
@@ -2120,7 +2284,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkInterfaceRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2135,7 +2299,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkInterfaceRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2146,7 +2310,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network interfaces in a subscription. </summary>
+        /// <summary>
+        /// Gets all network interfaces in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces
+        /// Operation Id: NetworkInterfaces_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterface> GetNetworkInterfaces(CancellationToken cancellationToken = default)
@@ -2158,7 +2326,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkInterfaceRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2173,7 +2341,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkInterfaceRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2184,7 +2352,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the network profiles in a subscription. </summary>
+        /// <summary>
+        /// Gets all the network profiles in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
+        /// Operation Id: NetworkProfiles_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkProfile" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkProfile> GetNetworkProfilesAsync(CancellationToken cancellationToken = default)
@@ -2196,7 +2368,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkProfileRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2211,7 +2383,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkProfileRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2222,7 +2394,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the network profiles in a subscription. </summary>
+        /// <summary>
+        /// Gets all the network profiles in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles
+        /// Operation Id: NetworkProfiles_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkProfile" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkProfile> GetNetworkProfiles(CancellationToken cancellationToken = default)
@@ -2234,7 +2410,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkProfileRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2249,7 +2425,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkProfileRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2260,7 +2436,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network security groups in a subscription. </summary>
+        /// <summary>
+        /// Gets all network security groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
+        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkSecurityGroup> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
@@ -2272,7 +2452,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkSecurityGroupRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2287,7 +2467,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkSecurityGroupRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2298,7 +2478,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network security groups in a subscription. </summary>
+        /// <summary>
+        /// Gets all network security groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups
+        /// Operation Id: NetworkSecurityGroups_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkSecurityGroup> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
@@ -2310,7 +2494,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkSecurityGroupRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2325,7 +2509,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkSecurityGroupRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2336,7 +2520,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all Network Virtual Appliances in a subscription. </summary>
+        /// <summary>
+        /// Gets all Network Virtual Appliances in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
+        /// Operation Id: NetworkVirtualAppliances_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualAppliance" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualAppliance> GetNetworkVirtualAppliancesAsync(CancellationToken cancellationToken = default)
@@ -2348,7 +2536,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkVirtualApplianceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2363,7 +2551,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkVirtualApplianceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2374,7 +2562,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all Network Virtual Appliances in a subscription. </summary>
+        /// <summary>
+        /// Gets all Network Virtual Appliances in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances
+        /// Operation Id: NetworkVirtualAppliances_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualAppliance" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualAppliance> GetNetworkVirtualAppliances(CancellationToken cancellationToken = default)
@@ -2386,7 +2578,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkVirtualApplianceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2401,7 +2593,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkVirtualApplianceRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2412,7 +2604,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network watchers by subscription. </summary>
+        /// <summary>
+        /// Gets all network watchers by subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
+        /// Operation Id: NetworkWatchers_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkWatcher" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkWatcher> GetNetworkWatchersAsync(CancellationToken cancellationToken = default)
@@ -2424,7 +2620,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await NetworkWatcherRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2435,7 +2631,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets all network watchers by subscription. </summary>
+        /// <summary>
+        /// Gets all network watchers by subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers
+        /// Operation Id: NetworkWatchers_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkWatcher" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkWatcher> GetNetworkWatchers(CancellationToken cancellationToken = default)
@@ -2447,7 +2647,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = NetworkWatcherRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2458,7 +2658,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets all private endpoints in a subscription. </summary>
+        /// <summary>
+        /// Gets all private endpoints in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
+        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpoint> GetPrivateEndpointsAsync(CancellationToken cancellationToken = default)
@@ -2470,7 +2674,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PrivateEndpointRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2485,7 +2689,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PrivateEndpointRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2496,7 +2700,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all private endpoints in a subscription. </summary>
+        /// <summary>
+        /// Gets all private endpoints in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints
+        /// Operation Id: PrivateEndpoints_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpoint> GetPrivateEndpoints(CancellationToken cancellationToken = default)
@@ -2508,7 +2716,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PrivateEndpointRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2523,7 +2731,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PrivateEndpointRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2534,16 +2742,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailablePrivateEndpointTypes");
@@ -2577,16 +2785,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_List
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAvailablePrivateEndpointTypes");
@@ -2620,7 +2828,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all private link service in a subscription. </summary>
+        /// <summary>
+        /// Gets all private link service in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
+        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkService> GetPrivateLinkServicesAsync(CancellationToken cancellationToken = default)
@@ -2632,7 +2844,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PrivateLinkServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2647,7 +2859,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PrivateLinkServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2658,7 +2870,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all private link service in a subscription. </summary>
+        /// <summary>
+        /// Gets all private link service in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices
+        /// Operation Id: PrivateLinkServices_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkService> GetPrivateLinkServices(CancellationToken cancellationToken = default)
@@ -2670,7 +2886,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PrivateLinkServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2685,7 +2901,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PrivateLinkServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2696,28 +2912,24 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
                 var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -2728,28 +2940,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibility
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
                 var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response);
-                if (waitForCompletion)
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -2760,16 +2968,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
@@ -2803,16 +3011,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServices
+        /// </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
@@ -2846,7 +3054,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the public IP addresses in a subscription. </summary>
+        /// <summary>
+        /// Gets all the public IP addresses in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
+        /// Operation Id: PublicIPAddresses_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddress> GetPublicIPAddressesAsync(CancellationToken cancellationToken = default)
@@ -2858,7 +3070,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PublicIPAddressRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2873,7 +3085,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PublicIPAddressRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2884,7 +3096,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the public IP addresses in a subscription. </summary>
+        /// <summary>
+        /// Gets all the public IP addresses in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses
+        /// Operation Id: PublicIPAddresses_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddress> GetPublicIPAddresses(CancellationToken cancellationToken = default)
@@ -2896,7 +3112,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PublicIPAddressRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2911,7 +3127,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PublicIPAddressRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2922,7 +3138,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the public IP prefixes in a subscription. </summary>
+        /// <summary>
+        /// Gets all the public IP prefixes in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
+        /// Operation Id: PublicIPPrefixes_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPPrefix> GetPublicIPPrefixesAsync(CancellationToken cancellationToken = default)
@@ -2934,7 +3154,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PublicIPPrefixRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2949,7 +3169,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await PublicIPPrefixRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2960,7 +3180,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the public IP prefixes in a subscription. </summary>
+        /// <summary>
+        /// Gets all the public IP prefixes in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes
+        /// Operation Id: PublicIPPrefixes_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPPrefix> GetPublicIPPrefixes(CancellationToken cancellationToken = default)
@@ -2972,7 +3196,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PublicIPPrefixRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2987,7 +3211,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = PublicIPPrefixRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2998,7 +3222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all route filters in a subscription. </summary>
+        /// <summary>
+        /// Gets all route filters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
+        /// Operation Id: RouteFilters_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilter> GetRouteFiltersAsync(CancellationToken cancellationToken = default)
@@ -3010,7 +3238,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await RouteFilterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3025,7 +3253,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await RouteFilterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3036,7 +3264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all route filters in a subscription. </summary>
+        /// <summary>
+        /// Gets all route filters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters
+        /// Operation Id: RouteFilters_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilter> GetRouteFilters(CancellationToken cancellationToken = default)
@@ -3048,7 +3280,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = RouteFilterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3063,7 +3295,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = RouteFilterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3074,7 +3306,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all route tables in a subscription. </summary>
+        /// <summary>
+        /// Gets all route tables in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
+        /// Operation Id: RouteTables_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteTable> GetRouteTablesAsync(CancellationToken cancellationToken = default)
@@ -3086,7 +3322,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await RouteTableRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3101,7 +3337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await RouteTableRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3112,7 +3348,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all route tables in a subscription. </summary>
+        /// <summary>
+        /// Gets all route tables in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables
+        /// Operation Id: RouteTables_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteTable> GetRouteTables(CancellationToken cancellationToken = default)
@@ -3124,7 +3364,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = RouteTableRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3139,7 +3379,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = RouteTableRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3150,7 +3390,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Security Partner Providers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Security Partner Providers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
+        /// Operation Id: SecurityPartnerProviders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityPartnerProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityPartnerProvider> GetSecurityPartnerProvidersAsync(CancellationToken cancellationToken = default)
@@ -3162,7 +3406,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await SecurityPartnerProviderRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3177,7 +3421,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await SecurityPartnerProviderRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3188,7 +3432,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Security Partner Providers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Security Partner Providers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders
+        /// Operation Id: SecurityPartnerProviders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityPartnerProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityPartnerProvider> GetSecurityPartnerProviders(CancellationToken cancellationToken = default)
@@ -3200,7 +3448,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = SecurityPartnerProviderRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3215,7 +3463,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = SecurityPartnerProviderRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3226,7 +3474,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the available bgp service communities. </summary>
+        /// <summary>
+        /// Gets all the available bgp service communities.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
+        /// Operation Id: BgpServiceCommunities_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(CancellationToken cancellationToken = default)
@@ -3264,7 +3516,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the available bgp service communities. </summary>
+        /// <summary>
+        /// Gets all the available bgp service communities.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities
+        /// Operation Id: BgpServiceCommunities_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BgpServiceCommunity> GetBgpServiceCommunities(CancellationToken cancellationToken = default)
@@ -3302,7 +3558,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the service endpoint policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the service endpoint policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
+        /// Operation Id: ServiceEndpointPolicies_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceEndpointPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken = default)
@@ -3314,7 +3574,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ServiceEndpointPolicyRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3329,7 +3589,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ServiceEndpointPolicyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3340,7 +3600,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the service endpoint policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the service endpoint policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies
+        /// Operation Id: ServiceEndpointPolicies_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceEndpointPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken = default)
@@ -3352,7 +3616,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ServiceEndpointPolicyRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3367,7 +3631,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ServiceEndpointPolicyRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3378,15 +3642,15 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of service tag information resources. </summary>
+        /// <summary>
+        /// Gets a list of service tag information resources.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
+        /// Operation Id: ServiceTags_List
+        /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<Response<ServiceTagsListResult>> GetServiceTagAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = ServiceTagsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetServiceTag");
             scope.Start();
             try
@@ -3401,15 +3665,15 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a list of service tag information resources. </summary>
+        /// <summary>
+        /// Gets a list of service tag information resources.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags
+        /// Operation Id: ServiceTags_List
+        /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Response<ServiceTagsListResult> GetServiceTag(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = ServiceTagsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetServiceTag");
             scope.Start();
             try
@@ -3424,17 +3688,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> List network usages for a subscription. </summary>
+        /// <summary>
+        /// List network usages for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3449,7 +3713,7 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3467,17 +3731,17 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List network usages for a subscription. </summary>
+        /// <summary>
+        /// List network usages for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<NetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3492,7 +3756,7 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -3510,7 +3774,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all virtual networks in a subscription. </summary>
+        /// <summary>
+        /// Gets all virtual networks in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
+        /// Operation Id: VirtualNetworks_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetwork> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
@@ -3522,7 +3790,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualNetworkRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3537,7 +3805,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualNetworkRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3548,7 +3816,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all virtual networks in a subscription. </summary>
+        /// <summary>
+        /// Gets all virtual networks in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks
+        /// Operation Id: VirtualNetworks_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetwork> GetVirtualNetworks(CancellationToken cancellationToken = default)
@@ -3560,7 +3832,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualNetworkRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3575,7 +3847,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualNetworkRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetwork(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3586,7 +3858,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkTap> GetVirtualNetworkTapsAsync(CancellationToken cancellationToken = default)
@@ -3598,7 +3874,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualNetworkTapRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3613,7 +3889,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualNetworkTapRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3624,7 +3900,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkTap> GetVirtualNetworkTaps(CancellationToken cancellationToken = default)
@@ -3636,7 +3916,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualNetworkTapRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3651,7 +3931,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualNetworkTapRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3662,7 +3942,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Virtual Routers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Virtual Routers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
+        /// Operation Id: VirtualRouters_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouter" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouter> GetVirtualRoutersAsync(CancellationToken cancellationToken = default)
@@ -3674,7 +3958,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualRouterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3689,7 +3973,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualRouterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3700,7 +3984,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Virtual Routers in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Virtual Routers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters
+        /// Operation Id: VirtualRouters_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouter" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouter> GetVirtualRouters(CancellationToken cancellationToken = default)
@@ -3712,7 +4000,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualRouterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3727,7 +4015,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualRouterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3738,19 +4026,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VirtualWANs in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VirtualWANs in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
+        /// Operation Id: VirtualWans_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWAN" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWAN> GetVirtualWANsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualWan" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWan> GetVirtualWansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualWan>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualWANVirtualWansClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWANs");
+                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWans");
                 scope.Start();
                 try
                 {
-                    var response = await VirtualWANVirtualWansRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualWanRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3758,14 +4050,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<VirtualWAN>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualWan>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VirtualWANVirtualWansClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWANs");
+                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWans");
                 scope.Start();
                 try
                 {
-                    var response = await VirtualWANVirtualWansRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualWanRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3776,19 +4068,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VirtualWANs in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VirtualWANs in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans
+        /// Operation Id: VirtualWans_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWAN" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWAN> GetVirtualWANs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWan" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWan> GetVirtualWans(CancellationToken cancellationToken = default)
         {
-            Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualWan> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualWANVirtualWansClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWANs");
+                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWans");
                 scope.Start();
                 try
                 {
-                    var response = VirtualWANVirtualWansRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualWanRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3796,14 +4092,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<VirtualWAN> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualWan> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VirtualWANVirtualWansClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWANs");
+                using var scope = VirtualWanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWans");
                 scope.Start();
                 try
                 {
-                    var response = VirtualWANVirtualWansRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualWanRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3814,7 +4110,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnSites in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnSites in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
+        /// Operation Id: VpnSites_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSite> GetVpnSitesAsync(CancellationToken cancellationToken = default)
@@ -3826,7 +4126,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnSiteRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3841,7 +4141,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnSiteRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3852,7 +4152,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnSites in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnSites in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites
+        /// Operation Id: VpnSites_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSite> GetVpnSites(CancellationToken cancellationToken = default)
@@ -3864,7 +4168,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnSiteRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3879,7 +4183,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnSiteRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3890,7 +4194,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnServerConfigurations in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnServerConfigurations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnServerConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnServerConfiguration> GetVpnServerConfigurationsAsync(CancellationToken cancellationToken = default)
@@ -3902,7 +4210,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnServerConfigurationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3917,7 +4225,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnServerConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3928,7 +4236,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnServerConfigurations in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnServerConfigurations in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnServerConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnServerConfiguration> GetVpnServerConfigurations(CancellationToken cancellationToken = default)
@@ -3940,7 +4252,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnServerConfigurationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3955,7 +4267,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnServerConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnServerConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3966,7 +4278,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VirtualHubs in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VirtualHubs in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
+        /// Operation Id: VirtualHubs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualHub" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHub> GetVirtualHubsAsync(CancellationToken cancellationToken = default)
@@ -3978,7 +4294,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualHubRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -3993,7 +4309,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VirtualHubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4004,7 +4320,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VirtualHubs in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VirtualHubs in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs
+        /// Operation Id: VirtualHubs_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualHub" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHub> GetVirtualHubs(CancellationToken cancellationToken = default)
@@ -4016,7 +4336,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualHubRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4031,7 +4351,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VirtualHubRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4042,7 +4362,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnGateways in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnGateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
+        /// Operation Id: VpnGateways_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnGateway> GetVpnGatewaysAsync(CancellationToken cancellationToken = default)
@@ -4054,7 +4378,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnGatewayRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4069,7 +4393,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await VpnGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4080,7 +4404,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the VpnGateways in a subscription. </summary>
+        /// <summary>
+        /// Lists all the VpnGateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways
+        /// Operation Id: VpnGateways_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnGateway> GetVpnGateways(CancellationToken cancellationToken = default)
@@ -4092,7 +4420,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnGatewayRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4107,7 +4435,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = VpnGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4118,7 +4446,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the P2SVpnGateways in a subscription. </summary>
+        /// <summary>
+        /// Lists all the P2SVpnGateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
+        /// Operation Id: P2sVpnGateways_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="P2SVpnGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<P2SVpnGateway> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
@@ -4130,7 +4462,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4145,7 +4477,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4156,7 +4488,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all the P2SVpnGateways in a subscription. </summary>
+        /// <summary>
+        /// Lists all the P2SVpnGateways in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways
+        /// Operation Id: P2sVpnGateways_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="P2SVpnGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<P2SVpnGateway> GetP2SVpnGateways(CancellationToken cancellationToken = default)
@@ -4168,7 +4504,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = P2SVpnGatewayP2sVpnGatewaysRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4183,7 +4519,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4194,7 +4530,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
+        /// <summary>
+        /// Lists ExpressRoute gateways under a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
+        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteGateway> GetExpressRouteGatewaysAsync(CancellationToken cancellationToken = default)
@@ -4206,7 +4546,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await ExpressRouteGatewayRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4217,7 +4557,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
+        /// <summary>
+        /// Lists ExpressRoute gateways under a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways
+        /// Operation Id: ExpressRouteGateways_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteGateway> GetExpressRouteGateways(CancellationToken cancellationToken = default)
@@ -4229,7 +4573,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = ExpressRouteGatewayRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(ArmClient, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteGateway(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4240,7 +4584,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets all the WAF policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the WAF policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
+        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebApplicationFirewallPolicy> GetWebApplicationFirewallPoliciesAsync(CancellationToken cancellationToken = default)
@@ -4252,7 +4600,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await WebApplicationFirewallPolicyRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4267,7 +4615,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await WebApplicationFirewallPolicyRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4278,7 +4626,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the WAF policies in a subscription. </summary>
+        /// <summary>
+        /// Gets all the WAF policies in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies
+        /// Operation Id: WebApplicationFirewallPolicies_ListAll
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebApplicationFirewallPolicy> GetWebApplicationFirewallPolicies(CancellationToken cancellationToken = default)
@@ -4290,7 +4642,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = WebApplicationFirewallPolicyRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4305,7 +4657,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = WebApplicationFirewallPolicyRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebApplicationFirewallPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

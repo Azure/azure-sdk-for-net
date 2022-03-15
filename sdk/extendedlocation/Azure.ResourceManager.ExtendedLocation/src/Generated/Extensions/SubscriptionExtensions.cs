@@ -16,30 +16,34 @@ namespace Azure.ResourceManager.ExtendedLocation
     {
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return subscription.GetCachedClient((armClient) =>
+            return subscription.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(armClient, subscription.Id);
+                return new SubscriptionExtensionClient(client, subscription.Id);
             }
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocation> GetCustomLocationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetCustomLocationsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocation> GetCustomLocations(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetCustomLocations(cancellationToken);

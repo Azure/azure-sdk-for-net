@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recommended sensitivity label update operation. </summary>
-    public partial class RecommendedSensitivityLabelUpdate : Resource
+    public partial class RecommendedSensitivityLabelUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
         public RecommendedSensitivityLabelUpdate()
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="op"></param>
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
-        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column) : base(id, name, type, systemData)
+        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;

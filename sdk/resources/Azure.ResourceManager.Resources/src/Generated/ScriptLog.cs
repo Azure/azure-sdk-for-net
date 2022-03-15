@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ScriptLog"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ScriptLog(ArmClient armClient, ScriptLogData data) : this(armClient, data.Id)
+        internal ScriptLog(ArmClient client, ScriptLogData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLog"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ScriptLog(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ScriptLog(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
-            _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(_scriptLogDeploymentScriptsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
+            TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
+            _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,10 +82,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default
+        /// Operation Id: DeploymentScripts_GetLogsDefault
+        /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ScriptLog>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScriptLog>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ScriptLog.Get");
             scope.Start();
@@ -94,8 +97,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _scriptLogDeploymentScriptsRestClient.GetLogsDefaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _scriptLogDeploymentScriptsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ScriptLog(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScriptLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +107,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default
+        /// Operation Id: DeploymentScripts_GetLogsDefault
+        /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScriptLog> Get(int? tail = null, CancellationToken cancellationToken = default)
@@ -115,44 +122,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _scriptLogDeploymentScriptsRestClient.GetLogsDefault(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
                 if (response.Value == null)
-                    throw _scriptLogDeploymentScriptsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScriptLog(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ScriptLog.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ScriptLog.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScriptLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

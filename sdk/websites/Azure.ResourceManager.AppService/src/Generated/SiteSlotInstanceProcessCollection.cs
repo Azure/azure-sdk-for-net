@@ -15,11 +15,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ProcessInfo and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SiteSlotInstanceProcess and their operations over its parent. </summary>
     public partial class SiteSlotInstanceProcessCollection : ArmCollection, IEnumerable<SiteSlotInstanceProcess>, IAsyncEnumerable<SiteSlotInstanceProcess>
     {
         private readonly ClientDiagnostics _siteSlotInstanceProcessWebAppsClientDiagnostics;
@@ -31,12 +32,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceProcessCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSlotInstanceProcessCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteSlotInstanceProcessCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotInstanceProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotInstanceProcess.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteSlotInstanceProcess.ResourceType, out string siteSlotInstanceProcessWebAppsApiVersion);
-            _siteSlotInstanceProcessWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceProcessWebAppsApiVersion);
+            TryGetApiVersion(SiteSlotInstanceProcess.ResourceType, out string siteSlotInstanceProcessWebAppsApiVersion);
+            _siteSlotInstanceProcessWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceProcessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,15 +50,43 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotInstance.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
-        /// OperationId: WebApps_GetInstanceProcessSlot
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotInstanceProcess>> GetAsync(string processId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+
+            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
+        /// <param name="processId"> PID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteSlotInstanceProcess> Get(string processId, CancellationToken cancellationToken = default)
         {
@@ -68,8 +98,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstanceProcess(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,26 +108,109 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
-        /// OperationId: WebApps_GetInstanceProcessSlot
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary>
+        /// Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes
+        /// Operation Id: WebApps_ListInstanceProcessesSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SiteSlotInstanceProcess" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotInstanceProcess> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SiteSlotInstanceProcess>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SiteSlotInstanceProcess>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes
+        /// Operation Id: WebApps_ListInstanceProcessesSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteSlotInstanceProcess" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotInstanceProcess> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SiteSlotInstanceProcess> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SiteSlotInstanceProcess> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotInstanceProcess>> GetAsync(string processId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Get");
+            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotInstanceProcess(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(processId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,60 +219,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public virtual Response<SiteSlotInstanceProcess> GetIfExists(string processId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
-
-            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstanceProcess(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="processId"> PID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotInstanceProcess>> GetIfExistsAsync(string processId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
-
-            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstanceProcess(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="processId"> PID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
@@ -179,21 +246,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotInstanceProcess>> GetIfExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Exists");
+            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(processId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,86 +275,33 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
-        /// OperationId: WebApps_ListInstanceProcessesSlot
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
+        /// Operation Id: WebApps_GetInstanceProcessSlot
+        /// </summary>
+        /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotInstanceProcess" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotInstanceProcess> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual Response<SiteSlotInstanceProcess> GetIfExists(string processId, CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotInstanceProcess> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteSlotInstanceProcess> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
-        /// OperationId: WebApps_ListInstanceProcessesSlot
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotInstanceProcess" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotInstanceProcess> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SiteSlotInstanceProcess>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _siteSlotInstanceProcessWebAppsRestClient.GetInstanceProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotInstanceProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceProcess(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteSlotInstanceProcess>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<SiteSlotInstanceProcess> IEnumerable<SiteSlotInstanceProcess>.GetEnumerator()

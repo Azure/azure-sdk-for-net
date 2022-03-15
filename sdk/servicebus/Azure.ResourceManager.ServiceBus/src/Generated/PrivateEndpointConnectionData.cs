@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : Resource
+    public partial class PrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         public PrivateEndpointConnectionData()
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndpointProvisioningState? provisioningState) : base(id, name, type, systemData)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -36,7 +36,19 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>
-        public WritableSubResource PrivateEndpoint { get; set; }
+        internal WritableSubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new WritableSubResource();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Details about the state of the connection. </summary>
         public ConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>

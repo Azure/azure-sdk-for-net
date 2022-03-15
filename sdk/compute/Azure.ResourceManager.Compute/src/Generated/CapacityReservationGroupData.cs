@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the CapacityReservationGroup data model. </summary>
-    public partial class CapacityReservationGroupData : TrackedResource
+    public partial class CapacityReservationGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
         /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<Resources.Models.SubResource> capacityReservations, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(id, name, type, systemData, tags, location)
+        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<Resources.Models.SubResource> capacityReservations, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             CapacityReservations = capacityReservations;
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
         public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
-        public CapacityReservationGroupInstanceView InstanceView { get; }
+        internal CapacityReservationGroupInstanceView InstanceView { get; }
+        /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>
+        public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
+        {
+            get => InstanceView.CapacityReservations;
+        }
     }
 }

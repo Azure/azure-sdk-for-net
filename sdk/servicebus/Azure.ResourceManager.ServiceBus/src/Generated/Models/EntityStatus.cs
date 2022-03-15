@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Entity status. </summary>
     public enum EntityStatus
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> Active. </summary>
         Active,
         /// <summary> Disabled. </summary>
@@ -25,8 +27,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Deleting. </summary>
         Deleting,
         /// <summary> Renaming. </summary>
-        Renaming,
-        /// <summary> Unknown. </summary>
-        Unknown
+        Renaming
     }
 }

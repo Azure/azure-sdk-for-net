@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerTrustGroup data model. </summary>
-    public partial class ServerTrustGroupData : Resource
+    public partial class ServerTrustGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerTrustGroupData. </summary>
         public ServerTrustGroupData()
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ServerTrustGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
-        internal ServerTrustGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<ServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, type, systemData)
+        internal ServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, resourceType, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;

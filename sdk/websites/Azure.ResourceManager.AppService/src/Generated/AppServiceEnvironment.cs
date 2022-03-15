@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -43,27 +44,27 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "AppServiceEnvironment"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServiceEnvironment(ArmClient armClient, AppServiceEnvironmentData data) : this(armClient, data.Id)
+        internal AppServiceEnvironment(ArmClient client, AppServiceEnvironmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironment"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppServiceEnvironment(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal AppServiceEnvironment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
-            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(_appServiceEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceEnvironmentApiVersion);
+            TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
+            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceEnvironmentApiVersion);
             _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_recommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendation.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
-            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
+            TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
+            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,12 +94,177 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Get
-        /// <summary> Description for Get the properties of an App Service Environment. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentDetectors in the HostingEnvironmentDetector. </summary>
+        /// <returns> An object representing collection of HostingEnvironmentDetectors and their operations over a HostingEnvironmentDetector. </returns>
+        public virtual HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
+        {
+            return new HostingEnvironmentDetectorCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get Hosting Environment Detector Response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AppServiceEnvironment>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentDetector>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Hosting Environment Detector Response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual Response<HostingEnvironmentDetector> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a AseV3NetworkingConfiguration along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
+        /// <returns> Returns a <see cref="AseV3NetworkingConfiguration" /> object. </returns>
+        public virtual AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration()
+        {
+            return new AseV3NetworkingConfiguration(Client, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
+        }
+
+        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePool along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
+        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePool" /> object. </returns>
+        public virtual HostingEnvironmentMultiRolePool GetHostingEnvironmentMultiRolePool()
+        {
+            return new HostingEnvironmentMultiRolePool(Client, new ResourceIdentifier(Id.ToString() + "/multiRolePools/default"));
+        }
+
+        /// <summary> Gets a collection of HostingEnvironmentWorkerPools in the HostingEnvironmentWorkerPool. </summary>
+        /// <returns> An object representing collection of HostingEnvironmentWorkerPools and their operations over a HostingEnvironmentWorkerPool. </returns>
+        public virtual HostingEnvironmentWorkerPoolCollection GetHostingEnvironmentWorkerPools()
+        {
+            return new HostingEnvironmentWorkerPoolCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get properties of a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
+        /// <param name="workerPoolName"> Name of the worker pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentWorkerPool>> GetHostingEnvironmentWorkerPoolAsync(string workerPoolName, CancellationToken cancellationToken = default)
+        {
+            return await GetHostingEnvironmentWorkerPools().GetAsync(workerPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get properties of a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
+        /// <param name="workerPoolName"> Name of the worker pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        public virtual Response<HostingEnvironmentWorkerPool> GetHostingEnvironmentWorkerPool(string workerPoolName, CancellationToken cancellationToken = default)
+        {
+            return GetHostingEnvironmentWorkerPools().Get(workerPoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HostingEnvironmentPrivateEndpointConnections in the HostingEnvironmentPrivateEndpointConnection. </summary>
+        /// <returns> An object representing collection of HostingEnvironmentPrivateEndpointConnections and their operations over a HostingEnvironmentPrivateEndpointConnection. </returns>
+        public virtual HostingEnvironmentPrivateEndpointConnectionCollection GetHostingEnvironmentPrivateEndpointConnections()
+        {
+            return new HostingEnvironmentPrivateEndpointConnectionCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Gets a private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentPrivateEndpointConnection>> GetHostingEnvironmentPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetHostingEnvironmentPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<HostingEnvironmentPrivateEndpointConnection> GetHostingEnvironmentPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetHostingEnvironmentPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HostingEnvironmentRecommendations in the HostingEnvironmentRecommendation. </summary>
+        /// <returns> An object representing collection of HostingEnvironmentRecommendations and their operations over a HostingEnvironmentRecommendation. </returns>
+        public virtual HostingEnvironmentRecommendationCollection GetHostingEnvironmentRecommendations()
+        {
+            return new HostingEnvironmentRecommendationCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get a recommendation rule for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
+        /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
+        /// </summary>
+        /// <param name="name"> Name of the recommendation. </param>
+        /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentRecommendation>> GetHostingEnvironmentRecommendationAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        {
+            return await GetHostingEnvironmentRecommendations().GetAsync(name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a recommendation rule for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
+        /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
+        /// </summary>
+        /// <param name="name"> Name of the recommendation. </param>
+        /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<HostingEnvironmentRecommendation> GetHostingEnvironmentRecommendation(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        {
+            return GetHostingEnvironmentRecommendations().Get(name, updateSeen, recommendationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get the properties of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AppServiceEnvironment>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Get");
             scope.Start();
@@ -106,8 +272,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _appServiceEnvironmentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,10 +282,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Get
-        /// <summary> Description for Get the properties of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the properties of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceEnvironment> Get(CancellationToken cancellationToken = default)
         {
@@ -129,8 +296,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _appServiceEnvironmentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,58 +306,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Delete
-        /// <summary> Description for Delete an App Service Environment. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Delete an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AppServiceEnvironmentDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = await _appServiceEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceEnvironmentDeleteOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -201,22 +333,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Delete
-        /// <summary> Description for Delete an App Service Environment. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Delete an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AppServiceEnvironmentDeleteOperation Delete(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = _appServiceEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
-                var operation = new AppServiceEnvironmentDeleteOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -227,26 +360,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Update
-        /// <summary> Description for Create or update an App Service Environment. </summary>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <summary>
+        /// Description for Create or update an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Update
+        /// </summary>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<Response<AppServiceEnvironment>> UpdateAsync(AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironment>> UpdateAsync(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (hostingEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
+                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,26 +386,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Update
-        /// <summary> Description for Create or update an App Service Environment. </summary>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <summary>
+        /// Description for Create or update an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Update
+        /// </summary>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual Response<AppServiceEnvironment> Update(AppServiceEnvironmentPatchOptions hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> Update(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (hostingEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostingEnvironmentEnvelope, cancellationToken);
-                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
+                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,10 +412,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListCapacities
-        /// <summary> Description for Get the used, available, and total worker capacity an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the used, available, and total worker capacity an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
+        /// Operation Id: AppServiceEnvironments_ListCapacities
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StampCapacity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StampCapacity> GetCapacitiesAsync(CancellationToken cancellationToken = default)
@@ -324,10 +454,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListCapacities
-        /// <summary> Description for Get the used, available, and total worker capacity an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the used, available, and total worker capacity an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
+        /// Operation Id: AppServiceEnvironments_ListCapacities
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StampCapacity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StampCapacity> GetCapacities(CancellationToken cancellationToken = default)
@@ -365,12 +496,13 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetVipInfo
-        /// <summary> Description for Get IP addresses assigned to an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get IP addresses assigned to an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
+        /// Operation Id: AppServiceEnvironments_GetVipInfo
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AddressResponse>> GetVipInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddressResponse>> GetVipInfoAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetVipInfo");
             scope.Start();
@@ -386,10 +518,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetVipInfo
-        /// <summary> Description for Get IP addresses assigned to an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get IP addresses assigned to an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
+        /// Operation Id: AppServiceEnvironments_GetVipInfo
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AddressResponse> GetVipInfo(CancellationToken cancellationToken = default)
         {
@@ -407,10 +540,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListDiagnostics
-        /// <summary> Description for Get diagnostic information for an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get diagnostic information for an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
+        /// Operation Id: AppServiceEnvironments_ListDiagnostics
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentDiagnostics> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
@@ -433,10 +567,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListDiagnostics
-        /// <summary> Description for Get diagnostic information for an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get diagnostic information for an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
+        /// Operation Id: AppServiceEnvironments_ListDiagnostics
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentDiagnostics> GetDiagnostics(CancellationToken cancellationToken = default)
@@ -459,15 +594,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetDiagnosticsItem
-        /// <summary> Description for Get a diagnostics item for an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get a diagnostics item for an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
+        /// Operation Id: AppServiceEnvironments_GetDiagnosticsItem
+        /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
-        public async virtual Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
 
@@ -485,13 +621,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetDiagnosticsItem
-        /// <summary> Description for Get a diagnostics item for an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get a diagnostics item for an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
+        /// Operation Id: AppServiceEnvironments_GetDiagnosticsItem
+        /// </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, CancellationToken cancellationToken = default)
         {
@@ -511,10 +648,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
-        /// <summary> Description for Get the network endpoints of all inbound dependencies of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the network endpoints of all inbound dependencies of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
+        /// Operation Id: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InboundEnvironmentEndpoint> GetInboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
@@ -552,10 +690,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
-        /// <summary> Description for Get the network endpoints of all inbound dependencies of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the network endpoints of all inbound dependencies of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
+        /// Operation Id: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InboundEnvironmentEndpoint> GetInboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
@@ -593,10 +732,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListOperations
-        /// <summary> Description for List all currently running operations on the App Service Environment. </summary>
+        /// <summary>
+        /// Description for List all currently running operations on the App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
+        /// Operation Id: AppServiceEnvironments_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationInformation> GetOperationsAsync(CancellationToken cancellationToken = default)
@@ -619,10 +759,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListOperations
-        /// <summary> Description for List all currently running operations on the App Service Environment. </summary>
+        /// <summary>
+        /// Description for List all currently running operations on the App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
+        /// Operation Id: AppServiceEnvironments_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationInformation> GetOperations(CancellationToken cancellationToken = default)
@@ -645,10 +786,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
-        /// <summary> Description for Get the network endpoints of all outbound dependencies of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the network endpoints of all outbound dependencies of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
+        /// Operation Id: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
@@ -686,10 +828,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
-        /// <summary> Description for Get the network endpoints of all outbound dependencies of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get the network endpoints of all outbound dependencies of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
+        /// Operation Id: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
@@ -727,10 +870,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetPrivateLinkResources
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary>
+        /// Description for Gets the private link resources
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
+        /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
@@ -753,10 +897,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetPrivateLinkResources
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary>
+        /// Description for Gets the private link resources
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
+        /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
@@ -779,12 +924,13 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Reboot
-        /// <summary> Description for Reboot all machines in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Reboot all machines in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
+        /// Operation Id: AppServiceEnvironments_Reboot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RebootAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RebootAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Reboot");
             scope.Start();
@@ -800,10 +946,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_Reboot
-        /// <summary> Description for Reboot all machines in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Reboot all machines in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
+        /// Operation Id: AppServiceEnvironments_Reboot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Reboot(CancellationToken cancellationToken = default)
         {
@@ -821,22 +968,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListAppServicePlans
-        /// <summary> Description for Get all App Service plans in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
+        /// Operation Id: AppServiceEnvironments_ListAppServicePlans
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePlanData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServicePlanData> GetAppServicePlansAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePlan" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePlan> GetAppServicePlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePlanData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePlan>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAppServicePlans");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListAppServicePlansAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -844,14 +992,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<AppServicePlanData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServicePlan>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAppServicePlans");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListAppServicePlansNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -862,22 +1010,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListAppServicePlans
-        /// <summary> Description for Get all App Service plans in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
+        /// Operation Id: AppServiceEnvironments_ListAppServicePlans
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePlanData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServicePlanData> GetAppServicePlans(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePlan" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePlan> GetAppServicePlans(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePlanData> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePlan> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAppServicePlans");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListAppServicePlans(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -885,14 +1034,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<AppServicePlanData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServicePlan> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetAppServicePlans");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListAppServicePlansNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -903,23 +1052,24 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListWebApps
-        /// <summary> Description for Get all apps in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all apps in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
+        /// Operation Id: AppServiceEnvironments_ListWebApps
+        /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSite> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSite>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -927,14 +1077,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSite>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -945,23 +1095,24 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListWebApps
-        /// <summary> Description for Get all apps in an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all apps in an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
+        /// Operation Id: AppServiceEnvironments_ListWebApps
+        /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteData> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSite> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
+            Page<WebSite> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -969,14 +1120,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSite> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -987,10 +1138,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListUsages
-        /// <summary> Description for Get global usage metrics of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get global usage metrics of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
+        /// Operation Id: AppServiceEnvironments_ListUsages
+        /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
@@ -1029,10 +1181,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListUsages
-        /// <summary> Description for Get global usage metrics of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get global usage metrics of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
+        /// Operation Id: AppServiceEnvironments_ListUsages
+        /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
@@ -1071,10 +1224,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ListHistoryForHostingEnvironment
-        /// <summary> Description for Get past recommendations for an app, optionally specified by the time range. </summary>
+        /// <summary>
+        /// Description for Get past recommendations for an app, optionally specified by the time range.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
+        /// Operation Id: Recommendations_ListHistoryForHostingEnvironment
+        /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1114,10 +1268,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ListHistoryForHostingEnvironment
-        /// <summary> Description for Get past recommendations for an app, optionally specified by the time range. </summary>
+        /// <summary>
+        /// Description for Get past recommendations for an app, optionally specified by the time range.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
+        /// Operation Id: Recommendations_ListHistoryForHostingEnvironment
+        /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1157,10 +1312,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ListRecommendedRulesForHostingEnvironment
-        /// <summary> Description for Get all recommendations for a hosting environment. </summary>
+        /// <summary>
+        /// Description for Get all recommendations for a hosting environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
+        /// Operation Id: Recommendations_ListRecommendedRulesForHostingEnvironment
+        /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1200,10 +1356,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ListRecommendedRulesForHostingEnvironment
-        /// <summary> Description for Get all recommendations for a hosting environment. </summary>
+        /// <summary>
+        /// Description for Get all recommendations for a hosting environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
+        /// Operation Id: Recommendations_ListRecommendedRulesForHostingEnvironment
+        /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1243,19 +1400,17 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_DisableAllForHostingEnvironment
-        /// <summary> Description for Disable all recommendations for an app. </summary>
+        /// <summary>
+        /// Description for Disable all recommendations for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
+        /// Operation Id: Recommendations_DisableAllForHostingEnvironment
+        /// </summary>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public async virtual Task<Response> DisableAllForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAllForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1271,19 +1426,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_DisableAllForHostingEnvironment
-        /// <summary> Description for Disable all recommendations for an app. </summary>
+        /// <summary>
+        /// Description for Disable all recommendations for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
+        /// Operation Id: Recommendations_DisableAllForHostingEnvironment
+        /// </summary>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response DisableAllForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1299,19 +1452,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ResetAllFiltersForHostingEnvironment
-        /// <summary> Description for Reset all recommendation opt-out settings for an app. </summary>
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
+        /// Operation Id: Recommendations_ResetAllFiltersForHostingEnvironment
+        /// </summary>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public async virtual Task<Response> ResetAllFiltersForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllFiltersForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1327,19 +1478,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: Recommendations_ResetAllFiltersForHostingEnvironment
-        /// <summary> Description for Reset all recommendation opt-out settings for an app. </summary>
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
+        /// Operation Id: Recommendations_ResetAllFiltersForHostingEnvironment
+        /// </summary>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response ResetAllFiltersForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironment.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1355,64 +1504,184 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        #region HostingEnvironmentDetector
-
-        /// <summary> Gets a collection of HostingEnvironmentDetectors in the AppServiceEnvironment. </summary>
-        /// <returns> An object representing collection of HostingEnvironmentDetectors and their operations over a AppServiceEnvironment. </returns>
-        public virtual HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironment>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new HostingEnvironmentDetectorCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region AseV3NetworkingConfiguration
-
-        /// <summary> Gets an object representing a AseV3NetworkingConfiguration along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
-        /// <returns> Returns a <see cref="AseV3NetworkingConfiguration" /> object. </returns>
-        public virtual AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new AseV3NetworkingConfiguration(ArmClient, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region HostingEnvironmentMultiRolePool
-
-        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePool along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
-        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePool" /> object. </returns>
-        public virtual HostingEnvironmentMultiRolePool GetHostingEnvironmentMultiRolePool()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironment>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new HostingEnvironmentMultiRolePool(ArmClient, new ResourceIdentifier(Id.ToString() + "/multiRolePools/default"));
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region HostingEnvironmentWorkerPool
-
-        /// <summary> Gets a collection of HostingEnvironmentWorkerPools in the AppServiceEnvironment. </summary>
-        /// <returns> An object representing collection of HostingEnvironmentWorkerPools and their operations over a AppServiceEnvironment. </returns>
-        public virtual HostingEnvironmentWorkerPoolCollection GetHostingEnvironmentWorkerPools()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new HostingEnvironmentWorkerPoolCollection(this);
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region HostingEnvironmentPrivateEndpointConnection
-
-        /// <summary> Gets a collection of HostingEnvironmentPrivateEndpointConnections in the AppServiceEnvironment. </summary>
-        /// <returns> An object representing collection of HostingEnvironmentPrivateEndpointConnections and their operations over a AppServiceEnvironment. </returns>
-        public virtual HostingEnvironmentPrivateEndpointConnectionCollection GetHostingEnvironmentPrivateEndpointConnections()
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironment>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return new HostingEnvironmentPrivateEndpointConnectionCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region HostingEnvironmentRecommendation
-
-        /// <summary> Gets a collection of HostingEnvironmentRecommendations in the AppServiceEnvironment. </summary>
-        /// <returns> An object representing collection of HostingEnvironmentRecommendations and their operations over a AppServiceEnvironment. </returns>
-        public virtual HostingEnvironmentRecommendationCollection GetHostingEnvironmentRecommendations()
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
+        /// Operation Id: AppServiceEnvironments_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<AppServiceEnvironment> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            return new HostingEnvironmentRecommendationCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServiceEnvironment(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
     }
 }

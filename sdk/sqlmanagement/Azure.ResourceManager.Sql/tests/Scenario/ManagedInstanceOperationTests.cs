@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(operationName));
+            Assert.IsTrue(await collection.ExistsAsync(operationName));
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);

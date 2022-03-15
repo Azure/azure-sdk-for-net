@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the set of probes used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="loadBalancingRules"> The load balancer rules that use this probe. </param>
         /// <param name="protocol"> The protocol of the end point. If &apos;Tcp&apos; is specified, a received ACK is required for the probe to be successful. If &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </param>
         /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
         /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        internal ProbeData(string id, string name, string etag, string type, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, ProvisioningState? provisioningState) : base(id)
+        internal ProbeData(string id, string name, string etag, string resourceType, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             LoadBalancingRules = loadBalancingRules;
             Protocol = protocol;
             Port = port;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The load balancer rules that use this probe. </summary>
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> The protocol of the end point. If &apos;Tcp&apos; is specified, a received ACK is required for the probe to be successful. If &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>

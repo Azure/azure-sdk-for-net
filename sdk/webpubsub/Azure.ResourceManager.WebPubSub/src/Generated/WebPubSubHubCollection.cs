@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSubHubCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal WebPubSubHubCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal WebPubSubHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _webPubSubHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubHub.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(WebPubSubHub.ResourceType, out string webPubSubHubApiVersion);
-            _webPubSubHubRestClient = new WebPubSubHubsRestOperations(_webPubSubHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubHubApiVersion);
+            TryGetApiVersion(WebPubSubHub.ResourceType, out string webPubSubHubApiVersion);
+            _webPubSubHubRestClient = new WebPubSubHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,62 +50,29 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebPubSub.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Create or update a hub setting. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Create or update a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubHubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubHub>> CreateOrUpdateAsync(WaitUntil waitUntil, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(ArmClient, _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a hub setting. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubHubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webPubSubHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(ArmClient, _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
-                if (waitForCompletion)
+                var operation = new WebPubSubArmOperation<WebPubSubHub>(new WebPubSubHubOperationSource(Client), _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -115,10 +83,76 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get a hub setting. </summary>
+        /// <summary>
+        /// Create or update a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="parameters"> The resource of WebPubSubHub and its properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<WebPubSubHub> CreateOrUpdate(WaitUntil waitUntil, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _webPubSubHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubHub>(new WebPubSubHubOperationSource(Client), _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual async Task<Response<WebPubSubHub>> GetAsync(string hubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+
+            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _webPubSubHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHub(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<WebPubSubHub> Get(string hubName, CancellationToken cancellationToken = default)
         {
@@ -130,8 +164,8 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken);
                 if (response.Value == null)
-                    throw _webPubSubHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSubHub(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,23 +174,109 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get a hub setting. </summary>
+        /// <summary>
+        /// List hub settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs
+        /// Operation Id: WebPubSubHubs_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WebPubSubHub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubHub> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WebPubSubHub>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webPubSubHubRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WebPubSubHub>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webPubSubHubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// List hub settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs
+        /// Operation Id: WebPubSubHubs_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WebPubSubHub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubHub> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<WebPubSubHub> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webPubSubHubRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WebPubSubHub> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webPubSubHubRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public async virtual Task<Response<WebPubSubHub>> GetAsync(string hubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
-            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Get");
+            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webPubSubHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _webPubSubHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSubHub(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(hubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,60 +285,14 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public virtual Response<WebPubSubHub> GetIfExists(string hubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-
-            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<WebPubSubHub>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSubHub(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public async virtual Task<Response<WebPubSubHub>> GetIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-
-            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<WebPubSubHub>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSubHub(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hubName"> The hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<bool> Exists(string hubName, CancellationToken cancellationToken = default)
         {
@@ -238,21 +312,27 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
         /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string hubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubHub>> GetIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
-            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
+            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(hubName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _webPubSubHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSubHub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,80 +341,33 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List hub settings. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
+        /// <param name="hubName"> The hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubHub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebPubSubHub> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual Response<WebPubSubHub> GetIfExists(string hubName, CancellationToken cancellationToken = default)
         {
-            Page<WebPubSubHub> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubHubRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebPubSubHub> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubHubRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
-        /// <summary> List hub settings. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSubHub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebPubSubHub> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<WebPubSubHub>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubHubRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _webPubSubHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSubHub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHub(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<WebPubSubHub>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubHubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<WebPubSubHub> IEnumerable<WebPubSubHub>.GetEnumerator()

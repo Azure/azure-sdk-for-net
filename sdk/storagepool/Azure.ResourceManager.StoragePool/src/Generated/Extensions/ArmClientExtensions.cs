@@ -15,25 +15,33 @@ namespace Azure.ResourceManager.StoragePool
     {
         #region DiskPool
         /// <summary> Gets an object representing a DiskPool along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskPool" /> object. </returns>
-        public static DiskPool GetDiskPool(this ArmClient armClient, ResourceIdentifier id)
+        public static DiskPool GetDiskPool(this ArmClient client, ResourceIdentifier id)
         {
-            DiskPool.ValidateResourceId(id);
-            return new DiskPool(armClient, id);
+            return client.GetClient(() =>
+            {
+                DiskPool.ValidateResourceId(id);
+                return new DiskPool(client, id);
+            }
+            );
         }
         #endregion
 
         #region IscsiTarget
         /// <summary> Gets an object representing a IscsiTarget along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IscsiTarget" /> object. </returns>
-        public static IscsiTarget GetIscsiTarget(this ArmClient armClient, ResourceIdentifier id)
+        public static IscsiTarget GetIscsiTarget(this ArmClient client, ResourceIdentifier id)
         {
-            IscsiTarget.ValidateResourceId(id);
-            return new IscsiTarget(armClient, id);
+            return client.GetClient(() =>
+            {
+                IscsiTarget.ValidateResourceId(id);
+                return new IscsiTarget(client, id);
+            }
+            );
         }
         #endregion
     }

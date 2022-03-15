@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerJobAgentJobExecutionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerJobAgentJobExecutionStep(ArmClient armClient, JobExecutionData data) : this(armClient, data.Id)
+        internal ServerJobAgentJobExecutionStep(ArmClient client, JobExecutionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerJobAgentJobExecutionStep(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerJobAgentJobExecutionStep(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
-            _serverJobAgentJobExecutionStepJobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
+            TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepJobStepExecutionsRestClient = new JobStepExecutionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,44 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
-        /// OperationId: JobStepExecutions_Get
-        /// <summary> Gets a step execution of a job execution. </summary>
+        /// <summary> Gets a collection of ServerJobAgentJobExecutionStepTargets in the ServerJobAgentJobExecutionStepTarget. </summary>
+        /// <returns> An object representing collection of ServerJobAgentJobExecutionStepTargets and their operations over a ServerJobAgentJobExecutionStepTarget. </returns>
+        public virtual ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets()
+        {
+            return new ServerJobAgentJobExecutionStepTargetCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobExecutionStep>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobExecutionStepTarget>> GetServerJobAgentJobExecutionStepTargetAsync(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return await GetServerJobAgentJobExecutionStepTargets().GetAsync(targetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerJobAgentJobExecutionStepTarget> GetServerJobAgentJobExecutionStepTarget(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return GetServerJobAgentJobExecutionStepTargets().Get(targetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a step execution of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
+        /// Operation Id: JobStepExecutions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerJobAgentJobExecutionStep>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionStep.Get");
             scope.Start();
@@ -96,8 +127,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +137,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
-        /// OperationId: JobStepExecutions_Get
-        /// <summary> Gets a step execution of a job execution. </summary>
+        /// <summary>
+        /// Gets a step execution of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
+        /// Operation Id: JobStepExecutions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerJobAgentJobExecutionStep> Get(CancellationToken cancellationToken = default)
         {
@@ -119,8 +151,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,51 +160,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionStep.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionStep.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region ServerJobAgentJobExecutionStepTarget
-
-        /// <summary> Gets a collection of ServerJobAgentJobExecutionStepTargets in the ServerJobAgentJobExecutionStep. </summary>
-        /// <returns> An object representing collection of ServerJobAgentJobExecutionStepTargets and their operations over a ServerJobAgentJobExecutionStep. </returns>
-        public virtual ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets()
-        {
-            return new ServerJobAgentJobExecutionStepTargetCollection(this);
-        }
-        #endregion
     }
 }

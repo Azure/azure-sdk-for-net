@@ -17,23 +17,25 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal partial class ContainerRegistryRestClient
     {
-        private string url;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _url;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ContainerRegistryRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="url"/> is null. </exception>
         public ContainerRegistryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string apiVersion = "2021-07-01")
         {
-            this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.apiVersion = apiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            _apiVersion = apiVersion;
         }
 
         internal HttpMessage CreateCheckDockerV2SupportRequest()
@@ -42,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -60,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -75,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -85,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/manifests/", false);
@@ -128,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -161,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -171,7 +173,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/manifests/", false);
@@ -190,7 +192,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
         public async Task<ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -219,7 +221,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -228,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
         public ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
@@ -257,7 +259,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -267,7 +269,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/manifests/", false);
@@ -301,7 +303,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -329,7 +331,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -339,7 +341,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/_catalog", false);
             if (last != null)
             {
@@ -349,7 +351,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("n", n.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -374,7 +376,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -397,7 +399,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -407,10 +409,10 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -439,7 +441,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -466,7 +468,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -476,10 +478,10 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -504,7 +506,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -527,7 +529,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -537,10 +539,10 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
@@ -577,7 +579,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -605,7 +607,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -615,7 +617,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags", false);
@@ -635,7 +637,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("digest", digest, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -669,7 +671,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -701,7 +703,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -711,12 +713,12 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -750,7 +752,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -782,7 +784,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -792,12 +794,12 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
@@ -839,7 +841,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -872,7 +874,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -882,12 +884,12 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -917,7 +919,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -945,7 +947,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 404:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -955,7 +957,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_manifests", false);
@@ -971,7 +973,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1004,7 +1006,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1035,7 +1037,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1045,12 +1047,12 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1084,7 +1086,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1116,7 +1118,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1126,12 +1128,12 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
@@ -1173,7 +1175,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1206,7 +1208,7 @@ namespace Azure.Containers.ContainerRegistry
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1216,7 +1218,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1249,7 +1251,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1279,7 +1281,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1289,7 +1291,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1329,7 +1331,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1366,7 +1368,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1376,7 +1378,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1415,7 +1417,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1451,7 +1453,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

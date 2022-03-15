@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of PublicCertificate and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SitePublicCertificate and their operations over its parent. </summary>
     public partial class SitePublicCertificateCollection : ArmCollection, IEnumerable<SitePublicCertificate>, IAsyncEnumerable<SitePublicCertificate>
     {
         private readonly ClientDiagnostics _sitePublicCertificateWebAppsClientDiagnostics;
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SitePublicCertificateCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SitePublicCertificateCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SitePublicCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePublicCertificate.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SitePublicCertificate.ResourceType, out string sitePublicCertificateWebAppsApiVersion);
-            _sitePublicCertificateWebAppsRestClient = new WebAppsRestOperations(_sitePublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePublicCertificateWebAppsApiVersion);
+            TryGetApiVersion(SitePublicCertificate.ResourceType, out string sitePublicCertificateWebAppsApiVersion);
+            _sitePublicCertificateWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,68 +50,29 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_CreateOrUpdatePublicCertificate
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Creates a hostname binding for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_CreateOrUpdatePublicCertificate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public virtual SitePublicCertificateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SitePublicCertificate>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            if (publicCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificate));
-            }
-
-            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken);
-                var operation = new SitePublicCertificateCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_CreateOrUpdatePublicCertificate
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public async virtual Task<SitePublicCertificateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            if (publicCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificate));
-            }
+            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
 
             using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SitePublicCertificateCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation<SitePublicCertificate>(Response.FromValue(new SitePublicCertificate(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -121,13 +83,76 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPublicCertificate
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary>
+        /// Description for Creates a hostname binding for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_CreateOrUpdatePublicCertificate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="publicCertificateName"> Public certificate name. </param>
+        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
+        public virtual ArmOperation<SitePublicCertificate> CreateOrUpdate(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken);
+                var operation = new AppServiceArmOperation<SitePublicCertificate>(Response.FromValue(new SitePublicCertificate(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        public virtual async Task<Response<SitePublicCertificate>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
+
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
+        /// <param name="publicCertificateName"> Public certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<SitePublicCertificate> Get(string publicCertificateName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +164,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken);
                 if (response.Value == null)
-                    throw _sitePublicCertificateWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,26 +174,109 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPublicCertificate
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary>
+        /// Description for Get public certificates for an app or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
+        /// Operation Id: WebApps_ListPublicCertificates
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SitePublicCertificate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SitePublicCertificate> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SitePublicCertificate>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SitePublicCertificate>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for Get public certificates for an app or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
+        /// Operation Id: WebApps_ListPublicCertificates
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SitePublicCertificate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SitePublicCertificate> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SitePublicCertificate> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SitePublicCertificate> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<SitePublicCertificate>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _sitePublicCertificateWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,60 +285,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public virtual Response<SitePublicCertificate> GetIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-
-            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<SitePublicCertificate>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-
-            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
@@ -250,21 +312,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePublicCertificate>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,86 +341,33 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListPublicCertificates
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
+        /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SitePublicCertificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SitePublicCertificate> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        public virtual Response<SitePublicCertificate> GetIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            Page<SitePublicCertificate> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SitePublicCertificate> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListPublicCertificates
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SitePublicCertificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SitePublicCertificate> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SitePublicCertificate>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SitePublicCertificate>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<SitePublicCertificate> IEnumerable<SitePublicCertificate>.GetEnumerator()

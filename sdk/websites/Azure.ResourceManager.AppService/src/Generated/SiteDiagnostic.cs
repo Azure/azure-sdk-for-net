@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteDiagnostic(ArmClient armClient, DiagnosticCategoryData data) : this(armClient, data.Id)
+        internal SiteDiagnostic(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteDiagnostic(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteDiagnostic(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteDiagnosticDiagnosticsApiVersion);
-            _siteDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticDiagnosticsApiVersion);
+            TryGetApiVersion(ResourceType, out string siteDiagnosticDiagnosticsApiVersion);
+            _siteDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,12 +82,83 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteDiagnosticCategory
-        /// <summary> Description for Get Diagnostics Category. </summary>
+        /// <summary> Gets a collection of SiteDiagnosticAnalyses in the SiteDiagnosticAnalysis. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticAnalyses and their operations over a SiteDiagnosticAnalysis. </returns>
+        public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
+        {
+            return new SiteDiagnosticAnalysisCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysis
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteDiagnostic>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual async Task<Response<SiteDiagnosticAnalysis>> GetSiteDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDiagnosticAnalyses().GetAsync(analysisName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysis
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual Response<SiteDiagnosticAnalysis> GetSiteDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDiagnosticAnalyses().Get(analysisName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteDiagnosticDetectors in the SiteDiagnosticDetector. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticDetectors and their operations over a SiteDiagnosticDetector. </returns>
+        public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
+        {
+            return new SiteDiagnosticDetectorCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetector
+        /// </summary>
+        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<Response<SiteDiagnosticDetector>> GetSiteDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDiagnosticDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetector
+        /// </summary>
+        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual Response<SiteDiagnosticDetector> GetSiteDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDiagnosticDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteDiagnostic>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnostic.Get");
             scope.Start();
@@ -96,8 +166,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,10 +176,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteDiagnosticCategory
-        /// <summary> Description for Get Diagnostics Category. </summary>
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteDiagnostic> Get(CancellationToken cancellationToken = default)
         {
@@ -119,8 +190,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,61 +199,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnostic.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnostic.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region SiteDiagnosticAnalysis
-
-        /// <summary> Gets a collection of SiteDiagnosticAnalyses in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticAnalyses and their operations over a SiteDiagnostic. </returns>
-        public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
-        {
-            return new SiteDiagnosticAnalysisCollection(this);
-        }
-        #endregion
-
-        #region SiteDiagnosticDetector
-
-        /// <summary> Gets a collection of SiteDiagnosticDetectors in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticDetectors and their operations over a SiteDiagnostic. </returns>
-        public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
-        {
-            return new SiteDiagnosticDetectorCollection(this);
-        }
-        #endregion
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the HybridIdentityMetadata data model. </summary>
-    public partial class HybridIdentityMetadataData : Resource
+    public partial class HybridIdentityMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
         public HybridIdentityMetadataData()
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="vmId"> Gets or sets the Vm Id. </param>
         /// <param name="publicKey"> Gets or sets the Public Key. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string vmId, string publicKey, SystemAssignedServiceIdentity identity, string provisioningState) : base(id, name, type, systemData)
+        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vmId, string publicKey, SystemAssignedServiceIdentity identity, string provisioningState) : base(id, name, resourceType, systemData)
         {
             VmId = vmId;
             PublicKey = publicKey;

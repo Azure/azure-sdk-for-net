@@ -27,6 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         public bool? Enabled { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps registration. </summary>
-        public AzureStaticWebAppsRegistration Registration { get; set; }
+        internal AzureStaticWebAppsRegistration Registration { get; set; }
+        /// <summary> The Client ID of the app used for login. </summary>
+        public string RegistrationClientId
+        {
+            get => Registration is null ? default : Registration.ClientId;
+            set
+            {
+                if (Registration is null)
+                    Registration = new AzureStaticWebAppsRegistration();
+                Registration.ClientId = value;
+            }
+        }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
@@ -12,23 +16,51 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ManagementGroup. </summary>
     public static partial class ManagementGroupExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this ManagementGroup managementGroup)
-        {
-            return new DeploymentCollection(managementGroup);
-        }
-        #endregion
-
         private static ManagementGroupExtensionClient GetExtensionClient(ManagementGroup managementGroup)
         {
-            return managementGroup.GetCachedClient((armClient) =>
+            return managementGroup.GetCachedClient((client) =>
             {
-                return new ManagementGroupExtensionClient(armClient, managementGroup.Id);
+                return new ManagementGroupExtensionClient(client, managementGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public static DeploymentCollection GetDeployments(this ManagementGroup managementGroup)
+        {
+            return GetExtensionClient(managementGroup).GetDeployments();
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+        /// Operation Id: Deployments_GetAtScope
+        /// </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public static async Task<Response<Deployment>> GetDeploymentAsync(this ManagementGroup managementGroup, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return await managementGroup.GetDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+        /// Operation Id: Deployments_GetAtScope
+        /// </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroup" /> instance the method will execute against. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public static Response<Deployment> GetDeployment(this ManagementGroup managementGroup, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return managementGroup.GetDeployments().Get(deploymentName, cancellationToken);
         }
     }
 }

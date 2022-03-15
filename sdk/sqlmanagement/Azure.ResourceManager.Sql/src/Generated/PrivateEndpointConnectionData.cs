@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : Resource
+    public partial class PrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         public PrivateEndpointConnectionData()
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, type, systemData)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -36,7 +36,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        public WritableSubResource PrivateEndpoint { get; set; }
+        internal WritableSubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new WritableSubResource();
+                PrivateEndpoint.Id = value;
+            }
+        }
+
         /// <summary> Connection state of the private endpoint connection. </summary>
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
