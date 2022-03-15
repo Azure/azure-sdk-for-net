@@ -1,6 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This client library enables working with the Microsoft Azure Communication Short Codes service</Description>
+    <Description>
+      This client library enables working with the Microsoft Azure Communication Short Codes service.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.ShortCodes/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.ShortCodes/CHANGELOG.md.
+    </Description>
     <AssemblyTitle>Azure Communication Short Code Service</AssemblyTitle>
     <Version>1.0.0-alpha.1</Version>
     <PackageTags>Microsoft Azure Communication Short Codes Service;Microsoft;Azure;Azure Communication Service;Azure Communication Short Codes Service;Short Codes;Communication;$(PackageCommonTags)</PackageTags>
@@ -18,14 +21,9 @@
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" LinkBase="Shared\Communication" />
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
   </ItemGroup>
 
