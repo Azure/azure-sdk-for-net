@@ -26,6 +26,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 LoggerMessage.Define<string>(LogLevel.Debug, new EventId(3, nameof(ContainerDoesNotExist)),
                     "Container '{containerName}' does not exist.");
 
+            private static readonly Action<ILogger<BlobListener>, TimeSpan, Exception> _timeout =
+                LoggerMessage.Define<TimeSpan>(LogLevel.Error, new EventId(4, nameof(ContainerDoesNotExist)),
+                    "Logs and container scan operation reached timeout '{timeout}'.");
+
             public static void InitializedScanInfo(ILogger<BlobListener> logger, string container, DateTime latestScanInfo) =>
                 _initializedScanInfo(logger, container, latestScanInfo.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture), null);
 
@@ -34,6 +38,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             public static void ContainerDoesNotExist(ILogger<BlobListener> logger, string container) =>
                 _containerDoesNotExist(logger, container, null);
+
+            public static void Timeout(ILogger<BlobListener> logger, TimeSpan timeout) =>
+                _timeout(logger, timeout, null);
         }
     }
 }

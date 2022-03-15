@@ -16,6 +16,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
@@ -392,6 +393,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+        }
+
+        [Test]
+        public void ExecuteAsync_Throws_TimeoutException()
+        {
+            TestBlobScanInfoManager testScanInfoManager = new TestBlobScanInfoManager();
+            testScanInfoManager.SetScanInfo(AccountName, ContainerName, DateTime.MinValue);
+            IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(testScanInfoManager, _exceptionHandler, NullLogger<BlobListener>.Instance);
+
+            // Set timeout to 1 second
+            typeof(ScanBlobScanLogHybridPollingStrategy)
+                  .GetField("_timeout", BindingFlags.Instance | BindingFlags.NonPublic)
+                  .SetValue(product, TimeSpan.FromSeconds(1));
+
+            // Mock poll logs with 10 seconds dealy
+            Task<TaskSeriesCommandResult> result = Task.Run(async () =>
+            {
+                await Task.Delay(10000);
+                return new TaskSeriesCommandResult();
+            });
+            Mock<IBlobListenerStrategy> mockPollLogsStrategy = new Mock<IBlobListenerStrategy>(MockBehavior.Strict);
+            mockPollLogsStrategy.Setup(x => x.ExecuteAsync(It.IsAny<CancellationToken>())).Returns(result);
+
+            typeof(ScanBlobScanLogHybridPollingStrategy)
+                  .GetField("_pollLogStrategy", BindingFlags.Instance | BindingFlags.NonPublic)
+                  .SetValue(product, mockPollLogsStrategy.Object);
+
+            Assert.ThrowsAsync<TimeoutException>(async () => await product.ExecuteAsync(CancellationToken.None));
         }
 
         private void RunExecuterWithExpectedBlobsInternal(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)

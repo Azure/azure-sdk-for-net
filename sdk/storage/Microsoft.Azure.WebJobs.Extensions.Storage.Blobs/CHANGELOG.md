@@ -1,5 +1,8 @@
 # Release History
 
+## 5.0.1
+- Throw a timeout exception if blob/logs scan hanged.
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Blobs 5.0.0.
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.

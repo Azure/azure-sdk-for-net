@@ -34,8 +34,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         // interval, each container will get its share of _scanBlobLimitPerPoll/number of containers.
         // this share will be listed for each container each polling interval
         private int _scanBlobLimitPerPoll = 10000;
-        private PollLogsStrategy _pollLogStrategy;
+        private IBlobListenerStrategy _pollLogStrategy;
         private bool _disposed;
+        private TimeSpan _timeout = TimeSpan.FromMinutes(10);
 
         public ScanBlobScanLogHybridPollingStrategy(IBlobScanInfoManager blobScanInfoManager, IWebJobsExceptionHandler exceptionHandler, ILogger<BlobListener> logger) : base()
         {
@@ -93,6 +94,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
         {
+            Task executeTask = ExecuteInternalAsync(cancellationToken);
+            if (await Task.WhenAny(executeTask, Task.Delay(_timeout, CancellationToken.None)).ConfigureAwait(false) == executeTask)
+            {
+                // Run subsequent iterations at "_pollingInterval" second intervals.
+                return new TaskSeriesCommandResult(wait: Task.Delay(PollingInterval, CancellationToken.None));
+            }
+            else
+            {
+                Logger.Timeout(_logger, _timeout);
+                throw new TimeoutException();
+            }
+        }
+
+        private async Task ExecuteInternalAsync(CancellationToken cancellationToken)
+        {
             ThrowIfDisposed();
 
             Task logPollingTask = _pollLogStrategy.ExecuteAsync(cancellationToken);
@@ -129,9 +145,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             await Task.WhenAll(pollingTasks).ConfigureAwait(false);
-
-            // Run subsequent iterations at "_pollingInterval" second intervals.
-            return new TaskSeriesCommandResult(wait: Task.Delay(PollingInterval, CancellationToken.None));
         }
 
         private async Task PollAndNotify(BlobContainerClient container, ContainerScanInfo containerScanInfo,
