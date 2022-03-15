@@ -37,7 +37,7 @@ parameters:
   type: string
   default: 'generate_job_matrix'
 - name: PreGenerationSteps
-  type: object
+  type: stepList
   default: []
 
 jobs:
