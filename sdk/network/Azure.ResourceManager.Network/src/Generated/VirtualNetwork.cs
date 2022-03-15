@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of Subnets and their operations over a Subnet. </returns>
         public virtual SubnetCollection GetSubnets()
         {
-            return new SubnetCollection(Client, Id);
+            return GetCachedClient(Client => new SubnetCollection(Client, Id));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetworkPeering. </returns>
         public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
-            return new VirtualNetworkPeeringCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkPeeringCollection(Client, Id));
         }
 
         /// <summary>

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IList<AccessRights> rights) : base(id, name, type, systemData, location)
+        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
         {
             Rights = rights;
         }

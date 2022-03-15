@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of HybridIdentityMetadata and their operations over a HybridIdentityMetadata. </returns>
         public virtual HybridIdentityMetadataCollection GetAllHybridIdentityMetadata()
         {
-            return new HybridIdentityMetadataCollection(Client, Id);
+            return GetCachedClient(Client => new HybridIdentityMetadataCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of MachineExtensions and their operations over a MachineExtension. </returns>
         public virtual MachineExtensionCollection GetMachineExtensions()
         {
-            return new MachineExtensionCollection(Client, Id);
+            return GetCachedClient(Client => new MachineExtensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of GuestAgents and their operations over a GuestAgent. </returns>
         public virtual GuestAgentCollection GetGuestAgents()
         {
-            return new GuestAgentCollection(Client, Id);
+            return GetCachedClient(Client => new GuestAgentCollection(Client, Id));
         }
 
         /// <summary>

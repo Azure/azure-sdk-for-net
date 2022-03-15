@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of BlobInventoryPolicies and their operations over a BlobInventoryPolicy. </returns>
         public virtual BlobInventoryPolicyCollection GetBlobInventoryPolicies()
         {
-            return new BlobInventoryPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new BlobInventoryPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of ObjectReplicationPolicies and their operations over a ObjectReplicationPolicy. </returns>
         public virtual ObjectReplicationPolicyCollection GetObjectReplicationPolicies()
         {
-            return new ObjectReplicationPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ObjectReplicationPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of LocalUsers and their operations over a LocalUser. </returns>
         public virtual LocalUserCollection GetLocalUsers()
         {
-            return new LocalUserCollection(Client, Id);
+            return GetCachedClient(Client => new LocalUserCollection(Client, Id));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of EncryptionScopes and their operations over a EncryptionScope. </returns>
         public virtual EncryptionScopeCollection GetEncryptionScopes()
         {
-            return new EncryptionScopeCollection(Client, Id);
+            return GetCachedClient(Client => new EncryptionScopeCollection(Client, Id));
         }
 
         /// <summary>

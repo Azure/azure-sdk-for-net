@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of NamespaceTopicAuthorizationRules and their operations over a NamespaceTopicAuthorizationRule. </returns>
         public virtual NamespaceTopicAuthorizationRuleCollection GetNamespaceTopicAuthorizationRules()
         {
-            return new NamespaceTopicAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceTopicAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusSubscriptions and their operations over a ServiceBusSubscription. </returns>
         public virtual ServiceBusSubscriptionCollection GetServiceBusSubscriptions()
         {
-            return new ServiceBusSubscriptionCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusSubscriptionCollection(Client, Id));
         }
 
         /// <summary>

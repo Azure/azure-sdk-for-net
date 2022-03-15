@@ -70,7 +70,7 @@ var vnetData = new VirtualNetworkData()
             AddressPrefix = "10.10.2.0/24",
             Delegations =
             {
-                new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
             },
             RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
             NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },

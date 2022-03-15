@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppStack. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="location"> Web App stack location. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Web App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOs"> Web App stack preferred OS. </param>
-        internal WebAppStack(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOs? preferredOs) : base(id, name, type, systemData, kind)
+        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOs? preferredOs) : base(id, name, resourceType, systemData, kind)
         {
             Location = location;
             DisplayText = displayText;

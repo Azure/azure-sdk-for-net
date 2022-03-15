@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vendor"> Premier add on Vendor. </param>
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer) : base(id, name, type, systemData, kind)
+        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer) : base(id, name, resourceType, systemData, kind)
         {
             Sku = sku;
             Product = product;

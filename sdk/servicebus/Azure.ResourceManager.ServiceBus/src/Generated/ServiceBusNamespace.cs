@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of DisasterRecoveries and their operations over a DisasterRecovery. </returns>
         public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
-            return new DisasterRecoveryCollection(Client, Id);
+            return GetCachedClient(Client => new DisasterRecoveryCollection(Client, Id));
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a NamespaceAuthorizationRule. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
-            return new NamespaceAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of MigrationConfigProperties and their operations over a MigrationConfigProperties. </returns>
         public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
-            return new MigrationConfigPropertiesCollection(Client, Id);
+            return GetCachedClient(Client => new MigrationConfigPropertiesCollection(Client, Id));
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusQueues and their operations over a ServiceBusQueue. </returns>
         public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
-            return new ServiceBusQueueCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusQueueCollection(Client, Id));
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusTopics and their operations over a ServiceBusTopic. </returns>
         public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {
-            return new ServiceBusTopicCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusTopicCollection(Client, Id));
         }
 
         /// <summary>

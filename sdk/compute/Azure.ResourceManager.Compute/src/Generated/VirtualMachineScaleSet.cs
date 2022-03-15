@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of VirtualMachineScaleSetExtensions and their operations over a VirtualMachineScaleSetExtension. </returns>
         public virtual VirtualMachineScaleSetExtensionCollection GetVirtualMachineScaleSetExtensions()
         {
-            return new VirtualMachineScaleSetExtensionCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineScaleSetExtensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of VirtualMachineScaleSetVms and their operations over a VirtualMachineScaleSetVm. </returns>
         public virtual VirtualMachineScaleSetVmCollection GetVirtualMachineScaleSetVms()
         {
-            return new VirtualMachineScaleSetVmCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineScaleSetVmCollection(Client, Id));
         }
 
         /// <summary>

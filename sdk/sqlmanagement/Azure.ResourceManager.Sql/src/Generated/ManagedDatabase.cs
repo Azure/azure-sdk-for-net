@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemas and their operations over a ManagedInstanceDatabaseSchema. </returns>
         public virtual ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
         {
-            return new ManagedInstanceDatabaseSchemaCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceDatabaseSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceDatabaseVulnerabilityAssessments and their operations over a ManagedInstanceDatabaseVulnerabilityAssessment. </returns>
         public virtual ManagedInstanceDatabaseVulnerabilityAssessmentCollection GetManagedInstanceDatabaseVulnerabilityAssessments()
         {
-            return new ManagedInstanceDatabaseVulnerabilityAssessmentCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceDatabaseVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicies and their operations over a ManagedInstanceDatabaseBackupShortTermRetentionPolicy. </returns>
         public virtual ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies()
         {
-            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseRestoreDetailsResults and their operations over a ManagedDatabaseRestoreDetailsResult. </returns>
         public virtual ManagedDatabaseRestoreDetailsResultCollection GetManagedDatabaseRestoreDetailsResults()
         {
-            return new ManagedDatabaseRestoreDetailsResultCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedDatabaseRestoreDetailsResultCollection(Client, Id));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicies and their operations over a ManagedDatabaseSecurityAlertPolicy. </returns>
         public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
         {
-            return new ManagedDatabaseSecurityAlertPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedDatabaseSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedTransparentDataEncryptions and their operations over a ManagedTransparentDataEncryption. </returns>
         public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
         {
-            return new ManagedTransparentDataEncryptionCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedTransparentDataEncryptionCollection(Client, Id));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicies and their operations over a ManagedInstanceLongTermRetentionPolicy. </returns>
         public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
         {
-            return new ManagedInstanceLongTermRetentionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceLongTermRetentionPolicyCollection(Client, Id));
         }
 
         /// <summary>

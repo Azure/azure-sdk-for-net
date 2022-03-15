@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
         /// <param name="metaData"> Downtime metadata. </param>
-        /// <param name="type"> Represents the type of the Detector. </param>
+        /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startTime, DateTimeOffset? endTime, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? type, IList<Solution> solutions)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startTime, DateTimeOffset? endTime, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? issueType, IList<Solution> solutions)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             Source = source;
             Priority = priority;
             MetaData = metaData;
-            Type = type;
+            IssueType = issueType;
             Solutions = solutions;
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Downtime metadata. </summary>
         public IList<IList<NameValuePair>> MetaData { get; }
         /// <summary> Represents the type of the Detector. </summary>
-        public IssueType? Type { get; set; }
+        public IssueType? IssueType { get; set; }
         /// <summary> List of proposed solutions. </summary>
         public IList<Solution> Solutions { get; }
     }

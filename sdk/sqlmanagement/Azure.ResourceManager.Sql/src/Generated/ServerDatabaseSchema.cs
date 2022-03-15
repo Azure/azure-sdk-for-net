@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseSchemaTables and their operations over a ServerDatabaseSchemaTable. </returns>
         public virtual ServerDatabaseSchemaTableCollection GetServerDatabaseSchemaTables()
         {
-            return new ServerDatabaseSchemaTableCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseSchemaTableCollection(Client, Id));
         }
 
         /// <summary>

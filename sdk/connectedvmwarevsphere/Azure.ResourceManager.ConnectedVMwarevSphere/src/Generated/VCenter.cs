@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of InventoryItems and their operations over a InventoryItem. </returns>
         public virtual InventoryItemCollection GetInventoryItems()
         {
-            return new InventoryItemCollection(Client, Id);
+            return GetCachedClient(Client => new InventoryItemCollection(Client, Id));
         }
 
         /// <summary>

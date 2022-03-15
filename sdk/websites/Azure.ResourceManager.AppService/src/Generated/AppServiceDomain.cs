@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DomainOwnershipIdentifiers and their operations over a DomainOwnershipIdentifier. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return new DomainOwnershipIdentifierCollection(Client, Id);
+            return GetCachedClient(Client => new DomainOwnershipIdentifierCollection(Client, Id));
         }
 
         /// <summary>

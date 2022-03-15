@@ -1473,16 +1473,17 @@ namespace Azure.Storage.Files.Shares
                         fileLastWrittenOn = smbProperties?.FileLastWrittenOn.ToFileDateTimeString();
                     }
 
-                    string fileChangedOn = null;
-                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn)
-                        == CopyableFileSmbProperties.ChangedOn)
-                    {
-                        fileChangedOn = Constants.File.Source;
-                    }
-                    else
-                    {
-                        fileChangedOn = smbProperties?.FileChangedOn.ToFileDateTimeString();
-                    }
+                    //TODO https://github.com/Azure/azure-sdk-for-net/issues/27564
+                    //string fileChangedOn = null;
+                    //if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn)
+                    //    == CopyableFileSmbProperties.ChangedOn)
+                    //{
+                    //    fileChangedOn = Constants.File.Source;
+                    //}
+                    //else
+                    //{
+                    //    fileChangedOn = smbProperties?.FileChangedOn.ToFileDateTimeString();
+                    //}
 
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
@@ -1491,7 +1492,8 @@ namespace Azure.Storage.Files.Shares
                         FileAttributes = fileAttributes,
                         FileCreationTime = fileCreatedOn,
                         FileLastWriteTime = fileLastWrittenOn,
-                        FileChangeTime = fileChangedOn,
+                        //TODO https://github.com/Azure/azure-sdk-for-net/issues/27564
+                        //FileChangeTime = fileChangedOn,
                         SetArchiveAttribute = setArchiveAttribute
                     };
 

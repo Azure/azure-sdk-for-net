@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryImages and their operations over a GalleryImage. </returns>
         public virtual GalleryImageCollection GetGalleryImages()
         {
-            return new GalleryImageCollection(Client, Id);
+            return GetCachedClient(Client => new GalleryImageCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryApplications and their operations over a GalleryApplication. </returns>
         public virtual GalleryApplicationCollection GetGalleryApplications()
         {
-            return new GalleryApplicationCollection(Client, Id);
+            return GetCachedClient(Client => new GalleryApplicationCollection(Client, Id));
         }
 
         /// <summary>

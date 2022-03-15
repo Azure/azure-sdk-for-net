@@ -1350,8 +1350,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraColumn
     {
         public CassandraColumn() { }
+        public string CassandraColumnType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
     }
     public partial class CassandraKeyspaceCreateUpdateData : Azure.ResourceManager.Models.TrackedResourceData
     {

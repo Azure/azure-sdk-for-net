@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ElasticPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="zoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, type, systemData, tags, location)
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;

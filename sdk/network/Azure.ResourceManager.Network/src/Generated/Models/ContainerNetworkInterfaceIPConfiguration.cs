@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceIPConfiguration. </summary>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="type"> Sub Resource type. </param>
+        /// <param name="containerNetworkInterfaceIpConfigurationType"> Sub Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface IP configuration resource. </param>
-        internal ContainerNetworkInterfaceIPConfiguration(string name, string type, string etag, ProvisioningState? provisioningState)
+        internal ContainerNetworkInterfaceIPConfiguration(string name, string containerNetworkInterfaceIpConfigurationType, string etag, ProvisioningState? provisioningState)
         {
             Name = name;
-            Type = type;
+            ContainerNetworkInterfaceIpConfigurationType = containerNetworkInterfaceIpConfigurationType;
             Etag = etag;
             ProvisioningState = provisioningState;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource. This name can be used to access the resource. </summary>
         public string Name { get; }
         /// <summary> Sub Resource type. </summary>
-        public string Type { get; }
+        public string ContainerNetworkInterfaceIpConfigurationType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The provisioning state of the container network interface IP configuration resource. </summary>
