@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdOrigins and their operations over a AfdOrigin. </returns>
         public virtual AfdOriginCollection GetAfdOrigins()
         {
-            return new AfdOriginCollection(Client, Id);
+            return GetCachedClient(Client => new AfdOriginCollection(Client, Id));
         }
 
         /// <summary>

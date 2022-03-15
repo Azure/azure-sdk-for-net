@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of DiskRestorePoints and their operations over a DiskRestorePoint. </returns>
         public virtual DiskRestorePointCollection GetDiskRestorePoints()
         {
-            return new DiskRestorePointCollection(Client, Id);
+            return GetCachedClient(Client => new DiskRestorePointCollection(Client, Id));
         }
 
         /// <summary>

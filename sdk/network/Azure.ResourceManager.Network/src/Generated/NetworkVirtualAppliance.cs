@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualApplianceSites and their operations over a VirtualApplianceSite. </returns>
         public virtual VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {
-            return new VirtualApplianceSiteCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualApplianceSiteCollection(Client, Id));
         }
 
         /// <summary>

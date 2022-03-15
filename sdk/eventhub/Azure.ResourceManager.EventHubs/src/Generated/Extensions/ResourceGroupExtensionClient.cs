@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubClusters and their operations over a EventHubCluster. </returns>
         public virtual EventHubClusterCollection GetEventHubClusters()
         {
-            return new EventHubClusterCollection(Client, Id);
+            return GetCachedClient(Client => new EventHubClusterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of EventHubNamespaces in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of EventHubNamespaces and their operations over a EventHubNamespace. </returns>
         public virtual EventHubNamespaceCollection GetEventHubNamespaces()
         {
-            return new EventHubNamespaceCollection(Client, Id);
+            return GetCachedClient(Client => new EventHubNamespaceCollection(Client, Id));
         }
     }
 }

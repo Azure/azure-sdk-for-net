@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RecoverableDatabases and their operations over a RecoverableDatabase. </returns>
         public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
         {
-            return new RecoverableDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RecoverableDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabases and their operations over a SqlDatabase. </returns>
         public virtual SqlDatabaseCollection GetSqlDatabases()
         {
-            return new SqlDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ElasticPools and their operations over a ElasticPool. </returns>
         public virtual ElasticPoolCollection GetElasticPools()
         {
-            return new ElasticPoolCollection(Client, Id);
+            return GetCachedClient(Client => new ElasticPoolCollection(Client, Id));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a ServerCommunicationLink. </returns>
         public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
         {
-            return new ServerCommunicationLinkCollection(Client, Id);
+            return GetCachedClient(Client => new ServerCommunicationLinkCollection(Client, Id));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServiceObjectives and their operations over a ServiceObjective. </returns>
         public virtual ServiceObjectiveCollection GetServiceObjectives()
         {
-            return new ServiceObjectiveCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceObjectiveCollection(Client, Id));
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a ExtendedServerBlobAuditingPolicy. </returns>
         public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
         {
-            return new ExtendedServerBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ExtendedServerBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a ServerBlobAuditingPolicy. </returns>
         public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
         {
-            return new ServerBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerAdvisors and their operations over a ServerAdvisor. </returns>
         public virtual ServerAdvisorCollection GetServerAdvisors()
         {
-            return new ServerAdvisorCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAdvisorCollection(Client, Id));
         }
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of EncryptionProtectors and their operations over a EncryptionProtector. </returns>
         public virtual EncryptionProtectorCollection GetEncryptionProtectors()
         {
-            return new EncryptionProtectorCollection(Client, Id);
+            return GetCachedClient(Client => new EncryptionProtectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of FailoverGroups and their operations over a FailoverGroup. </returns>
         public virtual FailoverGroupCollection GetFailoverGroups()
         {
-            return new FailoverGroupCollection(Client, Id);
+            return GetCachedClient(Client => new FailoverGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRule. </returns>
         public virtual FirewallRuleCollection GetFirewallRules()
         {
-            return new FirewallRuleCollection(Client, Id);
+            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of JobAgents and their operations over a JobAgent. </returns>
         public virtual JobAgentCollection GetJobAgents()
         {
-            return new JobAgentCollection(Client, Id);
+            return GetCachedClient(Client => new JobAgentCollection(Client, Id));
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
         public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
-            return new PrivateLinkResourceCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a ServerAzureADAdministrator. </returns>
         public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
         {
-            return new ServerAzureADAdministratorCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAzureADAdministratorCollection(Client, Id));
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a ServerAzureADOnlyAuthentication. </returns>
         public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
         {
-            return new ServerAzureADOnlyAuthenticationCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAzureADOnlyAuthenticationCollection(Client, Id));
         }
 
         /// <summary>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a ServerDevOpsAuditingSettings. </returns>
         public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
         {
-            return new ServerDevOpsAuditingSettingsCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDevOpsAuditingSettingsCollection(Client, Id));
         }
 
         /// <summary>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDnsAliases and their operations over a ServerDnsAlias. </returns>
         public virtual ServerDnsAliasCollection GetServerDnsAliases()
         {
-            return new ServerDnsAliasCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDnsAliasCollection(Client, Id));
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerKeys and their operations over a ServerKey. </returns>
         public virtual ServerKeyCollection GetServerKeys()
         {
-            return new ServerKeyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a ServerSecurityAlertPolicy. </returns>
         public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
         {
-            return new ServerSecurityAlertPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a ServerVulnerabilityAssessment. </returns>
         public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
         {
-            return new ServerVulnerabilityAssessmentCollection(Client, Id);
+            return GetCachedClient(Client => new ServerVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SyncAgents and their operations over a SyncAgent. </returns>
         public virtual SyncAgentCollection GetSyncAgents()
         {
-            return new SyncAgentCollection(Client, Id);
+            return GetCachedClient(Client => new SyncAgentCollection(Client, Id));
         }
 
         /// <summary>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of VirtualNetworkRules and their operations over a VirtualNetworkRule. </returns>
         public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
         {
-            return new VirtualNetworkRuleCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of OutboundFirewallRules and their operations over a OutboundFirewallRule. </returns>
         public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
         {
-            return new OutboundFirewallRuleCollection(Client, Id);
+            return GetCachedClient(Client => new OutboundFirewallRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a RestorableDroppedDatabase. </returns>
         public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
         {
-            return new RestorableDroppedDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RestorableDroppedDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a ServerConnectionPolicy. </returns>
         public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
         {
-            return new ServerConnectionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerConnectionPolicyCollection(Client, Id));
         }
 
         /// <summary>

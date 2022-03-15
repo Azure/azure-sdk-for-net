@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of SessionHosts and their operations over a SessionHost. </returns>
         public virtual SessionHostCollection GetSessionHosts()
         {
-            return new SessionHostCollection(Client, Id);
+            return GetCachedClient(Client => new SessionHostCollection(Client, Id));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of MsixPackages and their operations over a MsixPackage. </returns>
         public virtual MsixPackageCollection GetMsixPackages()
         {
-            return new MsixPackageCollection(Client, Id);
+            return GetCachedClient(Client => new MsixPackageCollection(Client, Id));
         }
 
         /// <summary>

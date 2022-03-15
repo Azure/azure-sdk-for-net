@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdRules and their operations over a AfdRule. </returns>
         public virtual AfdRuleCollection GetAfdRules()
         {
-            return new AfdRuleCollection(Client, Id);
+            return GetCachedClient(Client => new AfdRuleCollection(Client, Id));
         }
 
         /// <summary>

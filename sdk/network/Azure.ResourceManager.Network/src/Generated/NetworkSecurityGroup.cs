@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityRules and their operations over a SecurityRule. </returns>
         public virtual SecurityRuleCollection GetSecurityRules()
         {
-            return new SecurityRuleCollection(Client, Id);
+            return GetCachedClient(Client => new SecurityRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DefaultSecurityRules and their operations over a DefaultSecurityRule. </returns>
         public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
         {
-            return new DefaultSecurityRuleCollection(Client, Id);
+            return GetCachedClient(Client => new DefaultSecurityRuleCollection(Client, Id));
         }
 
         /// <summary>
