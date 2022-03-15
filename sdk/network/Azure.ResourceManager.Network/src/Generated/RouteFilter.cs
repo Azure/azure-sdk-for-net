@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteFilterRules and their operations over a RouteFilterRule. </returns>
         public virtual RouteFilterRuleCollection GetRouteFilterRules()
         {
-            return new RouteFilterRuleCollection(Client, Id);
+            return GetCachedClient(Client => new RouteFilterRuleCollection(Client, Id));
         }
 
         /// <summary>

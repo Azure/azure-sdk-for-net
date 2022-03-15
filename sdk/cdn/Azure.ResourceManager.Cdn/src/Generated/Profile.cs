@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnEndpoints and their operations over a CdnEndpoint. </returns>
         public virtual CdnEndpointCollection GetCdnEndpoints()
         {
-            return new CdnEndpointCollection(Client, Id);
+            return GetCachedClient(Client => new CdnEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdCustomDomains and their operations over a AfdCustomDomain. </returns>
         public virtual AfdCustomDomainCollection GetAfdCustomDomains()
         {
-            return new AfdCustomDomainCollection(Client, Id);
+            return GetCachedClient(Client => new AfdCustomDomainCollection(Client, Id));
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdEndpoints and their operations over a AfdEndpoint. </returns>
         public virtual AfdEndpointCollection GetAfdEndpoints()
         {
-            return new AfdEndpointCollection(Client, Id);
+            return GetCachedClient(Client => new AfdEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdOriginGroups and their operations over a AfdOriginGroup. </returns>
         public virtual AfdOriginGroupCollection GetAfdOriginGroups()
         {
-            return new AfdOriginGroupCollection(Client, Id);
+            return GetCachedClient(Client => new AfdOriginGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdRuleSets and their operations over a AfdRuleSet. </returns>
         public virtual AfdRuleSetCollection GetAfdRuleSets()
         {
-            return new AfdRuleSetCollection(Client, Id);
+            return GetCachedClient(Client => new AfdRuleSetCollection(Client, Id));
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdSecurityPolicies and their operations over a AfdSecurityPolicy. </returns>
         public virtual AfdSecurityPolicyCollection GetAfdSecurityPolicies()
         {
-            return new AfdSecurityPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new AfdSecurityPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdSecrets and their operations over a AfdSecret. </returns>
         public virtual AfdSecretCollection GetAfdSecrets()
         {
-            return new AfdSecretCollection(Client, Id);
+            return GetCachedClient(Client => new AfdSecretCollection(Client, Id));
         }
 
         /// <summary>

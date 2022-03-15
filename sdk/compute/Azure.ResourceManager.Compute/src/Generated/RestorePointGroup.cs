@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of RestorePoints and their operations over a RestorePoint. </returns>
         public virtual RestorePointCollection GetRestorePoints()
         {
-            return new RestorePointCollection(Client, Id);
+            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
         }
 
         /// <summary>

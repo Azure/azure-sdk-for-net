@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
         public virtual GenericResourceCollection GetGenericResources()
         {
-            return new GenericResourceCollection(Client, Id);
+            return GetCachedClient(Client => new GenericResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TenantPolicyDefinitions and their operations over a TenantPolicyDefinition. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
-            return new TenantPolicyDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new TenantPolicyDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TenantPolicySetDefinitions and their operations over a TenantPolicySetDefinition. </returns>
         public virtual TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
         {
-            return new TenantPolicySetDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new TenantPolicySetDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifest. </returns>
         public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
-            return new DataPolicyManifestCollection(Client, Id);
+            return GetCachedClient(Client => new DataPolicyManifestCollection(Client, Id));
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Subscriptions and their operations over a Subscription. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
         {
-            return new SubscriptionCollection(Client, Id);
+            return GetCachedClient(Client => new SubscriptionCollection(Client, Id));
         }
 
         /// <summary>

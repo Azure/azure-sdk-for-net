@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelays and their operations over a ServerfarmHybridConnectionNamespaceRelay. </returns>
         public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
-            return new ServerfarmHybridConnectionNamespaceRelayCollection(Client, Id);
+            return GetCachedClient(Client => new ServerfarmHybridConnectionNamespaceRelayCollection(Client, Id));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnections and their operations over a ServerfarmVirtualNetworkConnection. </returns>
         public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {
-            return new ServerfarmVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ServerfarmVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>

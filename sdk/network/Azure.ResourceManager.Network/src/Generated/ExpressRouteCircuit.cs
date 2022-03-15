@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitAuthorizations and their operations over a ExpressRouteCircuitAuthorization. </returns>
         public virtual ExpressRouteCircuitAuthorizationCollection GetExpressRouteCircuitAuthorizations()
         {
-            return new ExpressRouteCircuitAuthorizationCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCircuitAuthorizationCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitPeerings and their operations over a ExpressRouteCircuitPeering. </returns>
         public virtual ExpressRouteCircuitPeeringCollection GetExpressRouteCircuitPeerings()
         {
-            return new ExpressRouteCircuitPeeringCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCircuitPeeringCollection(Client, Id));
         }
 
         /// <summary>

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDetectors and their operations over a SiteDetector. </returns>
         public virtual SiteDetectorCollection GetSiteDetectors()
         {
-            return new SiteDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDetectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SitePrivateEndpointConnections and their operations over a SitePrivateEndpointConnection. </returns>
         public virtual SitePrivateEndpointConnectionCollection GetSitePrivateEndpointConnections()
         {
-            return new SitePrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SitePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteHybridConnectionNamespaceRelays and their operations over a SiteHybridConnectionNamespaceRelay. </returns>
         public virtual SiteHybridConnectionNamespaceRelayCollection GetSiteHybridConnectionNamespaceRelays()
         {
-            return new SiteHybridConnectionNamespaceRelayCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHybridConnectionNamespaceRelayCollection(Client, Id));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteVirtualNetworkConnections and their operations over a SiteVirtualNetworkConnection. </returns>
         public virtual SiteVirtualNetworkConnectionCollection GetSiteVirtualNetworkConnections()
         {
-            return new SiteVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDiagnostics and their operations over a SiteDiagnostic. </returns>
         public virtual SiteDiagnosticCollection GetSiteDiagnostics()
         {
-            return new SiteDiagnosticCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDiagnosticCollection(Client, Id));
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteRecommendations and their operations over a SiteRecommendation. </returns>
         public virtual SiteRecommendationCollection GetSiteRecommendations()
         {
-            return new SiteRecommendationCollection(Client, Id);
+            return GetCachedClient(Client => new SiteRecommendationCollection(Client, Id));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlots and their operations over a SiteSlot. </returns>
         public virtual SiteSlotCollection GetSiteSlots()
         {
-            return new SiteSlotCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotCollection(Client, Id));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteBackups and their operations over a SiteBackup. </returns>
         public virtual SiteBackupCollection GetSiteBackups()
         {
-            return new SiteBackupCollection(Client, Id);
+            return GetCachedClient(Client => new SiteBackupCollection(Client, Id));
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigAppsettings and their operations over a SiteConfigAppsetting. </returns>
         public virtual SiteConfigAppsettingCollection GetSiteConfigAppsettings()
         {
-            return new SiteConfigAppsettingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteConfigAppsettingCollection(Client, Id));
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigConnectionStrings and their operations over a SiteConfigConnectionString. </returns>
         public virtual SiteConfigConnectionStringCollection GetSiteConfigConnectionStrings()
         {
-            return new SiteConfigConnectionStringCollection(Client, Id);
+            return GetCachedClient(Client => new SiteConfigConnectionStringCollection(Client, Id));
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteContinuousWebJobs and their operations over a SiteContinuousWebJob. </returns>
         public virtual SiteContinuousWebJobCollection GetSiteContinuousWebJobs()
         {
-            return new SiteContinuousWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteContinuousWebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDeployments and their operations over a SiteDeployment. </returns>
         public virtual SiteDeploymentCollection GetSiteDeployments()
         {
-            return new SiteDeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDeploymentCollection(Client, Id));
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDomainOwnershipIdentifiers and their operations over a SiteDomainOwnershipIdentifier. </returns>
         public virtual SiteDomainOwnershipIdentifierCollection GetSiteDomainOwnershipIdentifiers()
         {
-            return new SiteDomainOwnershipIdentifierCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDomainOwnershipIdentifierCollection(Client, Id));
         }
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteFunctions and their operations over a SiteFunction. </returns>
         public virtual SiteFunctionCollection GetSiteFunctions()
         {
-            return new SiteFunctionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteFunctionCollection(Client, Id));
         }
 
         /// <summary>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteHostNameBindings and their operations over a SiteHostNameBinding. </returns>
         public virtual SiteHostNameBindingCollection GetSiteHostNameBindings()
         {
-            return new SiteHostNameBindingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHostNameBindingCollection(Client, Id));
         }
 
         /// <summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteHybridConnections and their operations over a SiteHybridConnection. </returns>
         public virtual SiteHybridConnectionCollection GetSiteHybridConnections()
         {
-            return new SiteHybridConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHybridConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteInstances and their operations over a SiteInstance. </returns>
         public virtual SiteInstanceCollection GetSiteInstances()
         {
-            return new SiteInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new SiteInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteProcesses and their operations over a SiteProcess. </returns>
         public virtual SiteProcessCollection GetSiteProcesses()
         {
-            return new SiteProcessCollection(Client, Id);
+            return GetCachedClient(Client => new SiteProcessCollection(Client, Id));
         }
 
         /// <summary>
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SitePremierAddons and their operations over a SitePremierAddon. </returns>
         public virtual SitePremierAddonCollection GetSitePremierAddons()
         {
-            return new SitePremierAddonCollection(Client, Id);
+            return GetCachedClient(Client => new SitePremierAddonCollection(Client, Id));
         }
 
         /// <summary>
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SitePublicCertificates and their operations over a SitePublicCertificate. </returns>
         public virtual SitePublicCertificateCollection GetSitePublicCertificates()
         {
-            return new SitePublicCertificateCollection(Client, Id);
+            return GetCachedClient(Client => new SitePublicCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSiteextensions and their operations over a SiteSiteextension. </returns>
         public virtual SiteSiteextensionCollection GetSiteSiteextensions()
         {
-            return new SiteSiteextensionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSiteextensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotTriggeredWebJobs and their operations over a SiteSlotTriggeredWebJob. </returns>
         public virtual SiteSlotTriggeredWebJobCollection GetSiteSlotTriggeredWebJobs()
         {
-            return new SiteSlotTriggeredWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotTriggeredWebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteWebJobs and their operations over a SiteWebJob. </returns>
         public virtual SiteWebJobCollection GetSiteWebJobs()
         {
-            return new SiteWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteWebJobCollection(Client, Id));
         }
 
         /// <summary>

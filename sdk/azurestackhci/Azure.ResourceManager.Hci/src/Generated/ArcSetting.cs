@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of ArcExtensions and their operations over a ArcExtension. </returns>
         public virtual ArcExtensionCollection GetArcExtensions()
         {
-            return new ArcExtensionCollection(Client, Id);
+            return GetCachedClient(Client => new ArcExtensionCollection(Client, Id));
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of VirtualMachineExtensions and their operations over a VirtualMachineExtension. </returns>
         public virtual VirtualMachineExtensionCollection GetVirtualMachineExtensions()
         {
-            return new VirtualMachineExtensionCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineExtensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of VirtualMachineRunCommands and their operations over a VirtualMachineRunCommand. </returns>
         public virtual VirtualMachineRunCommandCollection GetVirtualMachineRunCommands()
         {
-            return new VirtualMachineRunCommandCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineRunCommandCollection(Client, Id));
         }
 
         /// <summary>

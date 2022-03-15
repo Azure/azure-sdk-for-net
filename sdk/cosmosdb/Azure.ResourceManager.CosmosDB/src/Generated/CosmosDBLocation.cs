@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of RestorableDatabaseAccounts and their operations over a RestorableDatabaseAccount. </returns>
         public virtual RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts()
         {
-            return new RestorableDatabaseAccountCollection(Client, Id);
+            return GetCachedClient(Client => new RestorableDatabaseAccountCollection(Client, Id));
         }
 
         /// <summary>
