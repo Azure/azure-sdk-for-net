@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Initializes a new instance of EndpointResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="endpointType"> The type of endpoint. </param>
         /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData)
+        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, resourceType, systemData)
         {
             EndpointType = endpointType;
             ResourceId = resourceId;
