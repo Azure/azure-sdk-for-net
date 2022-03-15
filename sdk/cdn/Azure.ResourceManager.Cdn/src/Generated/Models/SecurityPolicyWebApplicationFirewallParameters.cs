@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Cdn.Models
         public SecurityPolicyWebApplicationFirewallParameters()
         {
             Associations = new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
-            Type = SecurityPolicyType.WebApplicationFirewall;
+            SecurityPolicyType = SecurityPolicyType.WebApplicationFirewall;
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
+        /// <param name="securityPolicyType"> The type of the Security policy to create. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType type, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(type)
+        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType securityPolicyType, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(securityPolicyType)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
-            Type = type;
+            SecurityPolicyType = securityPolicyType;
         }
 
         /// <summary> Resource ID. </summary>

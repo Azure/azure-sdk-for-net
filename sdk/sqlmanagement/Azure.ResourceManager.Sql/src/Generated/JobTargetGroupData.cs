@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of JobTargetGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="members"> Members of the target group. </param>
-        internal JobTargetGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<JobTarget> members) : base(id, name, type, systemData)
+        internal JobTargetGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JobTarget> members) : base(id, name, resourceType, systemData)
         {
             Members = members;
         }

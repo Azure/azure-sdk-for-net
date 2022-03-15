@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceUsage. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="displayName"> Friendly name shown in the UI. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nextResetTime"> Next reset time for the resource counter. </param>
         /// <param name="computeMode"> Compute mode used for this usage. </param>
         /// <param name="siteMode"> Site mode used for this usage. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetTime, ComputeModeOptions? computeMode, string siteMode) : base(id, name, type, systemData, kind)
+        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetTime, ComputeModeOptions? computeMode, string siteMode) : base(id, name, resourceType, systemData, kind)
         {
             DisplayName = displayName;
             ResourceName = resourceName;

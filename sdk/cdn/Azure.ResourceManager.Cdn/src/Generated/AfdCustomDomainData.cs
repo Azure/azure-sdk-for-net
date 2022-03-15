@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="azureDnsZone"> Resource reference to the Azure DNS zone. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AfdCustomDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, type, systemData)
+        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdCustomDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
         {
             TlsSettings = tlsSettings;
             AzureDnsZone = azureDnsZone;

@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a rule collection. </summary>
         internal AzureFirewallRCAction Action { get; set; }
         /// <summary> The type of action. </summary>
-        public AzureFirewallRCActionType? ActionType
+        public AzureFirewallRCActionType? AzureFirewallRCActionType
         {
-            get => Action is null ? default : Action.Type;
+            get => Action is null ? default : Action.AzureFirewallRCActionType;
             set
             {
                 if (Action is null)
                     Action = new AzureFirewallRCAction();
-                Action.Type = value;
+                Action.AzureFirewallRCActionType = value;
             }
         }
 

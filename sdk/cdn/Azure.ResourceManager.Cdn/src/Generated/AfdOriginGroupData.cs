@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdOriginGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, LoadBalancingSettingsParameters loadBalancingSettings, HealthProbeParameters healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedAfdOriginErrorDetectionSettings, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoadBalancingSettingsParameters loadBalancingSettings, HealthProbeParameters healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedAfdOriginErrorDetectionSettings, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;

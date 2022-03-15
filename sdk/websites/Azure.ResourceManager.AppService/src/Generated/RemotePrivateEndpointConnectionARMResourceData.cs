@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
-        internal RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, type, systemData, kind)
+        internal RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, resourceType, systemData, kind)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ApplicationDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;

@@ -8,9 +8,9 @@
         "Content-Length": "12",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-919fadabda6e2b4db80a99b08894f94a-a6f6118b50f1064c-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "e2563be987a751f6134cb4de4d585566",
+        "traceparent": "00-6fa1fc00d68332429d9e3d9da5b2442e-d0da3e7bdabd6c49-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220314.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6b105ce66af7054b3464ae055ff81420",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,41 +18,33 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "3afcfa9c-8fa3-49fb-8e9b-9db63b357f9a",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "961e0f3e-5d8d-4117-8fcf-e8a566705468",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Sun, 24 Oct 2021 11:10:56 GMT",
-        "pragma": "no-cache",
-        "request-id": "3afcfa9c-8fa3-49fb-8e9b-9db63b357f9a",
+        "Date": "Mon, 14 Mar 2022 15:35:11 GMT",
+        "Pragma": "no-cache",
+        "request-id": "961e0f3e-5d8d-4117-8fcf-e8a566705468",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "37"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
-        "    \u0022message\u0022: \u0022The input parameter is invalid.\u0022,\n",
-        "    \u0022innerError\u0022: {\n",
-        "      \u0022code\u0022: \u0022InvalidArgument\u0022,\n",
-        "      \u0022message\u0022: \u0022The input parameter \\u0022Query\\u0022 cannot be null or empty.\u0022\n",
-        "    }\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidArgument",
+          "message": "The input parameter is invalid.",
+          "innerError": {
+            "code": "InvalidArgument",
+            "message": "The input parameter \u0022Query\u0022 cannot be null or empty."
+          }
+        }
+      }
     }
   ],
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT": "antischOne",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "498699307"
+    "RandomSeed": "429817875"
   }
 }

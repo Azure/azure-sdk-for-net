@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, ProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, type, location, tags)
+        internal ExpressRouteGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, ProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
