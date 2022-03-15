@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
-            Parameters = new JsonObject()
+            Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountNamePrefix", new JsonObject()
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Tests
                         {"value", "Standard_LRS" }
                     }
                 }
-            }
+            })
         };
 
         protected static DeploymentProperties CreateDeploymentProperties()
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(AzureLocation.WestUS2)
         {
             Description = "My first version",
-            MainTemplate = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            MainTemplate = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"simple-storage-account.json"))).RootElement.GetObject()
+            $"simple-storage-account.json")))
         };
     }
 }

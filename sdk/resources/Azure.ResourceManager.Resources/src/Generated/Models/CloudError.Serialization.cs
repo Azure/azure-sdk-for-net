@@ -5,31 +5,31 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class HttpMessage
+    internal partial class CloudError
     {
-        internal static HttpMessage DeserializeHttpMessage(JsonElement element)
+        internal static CloudError DeserializeCloudError(JsonElement element)
         {
-            Optional<BinaryData> content = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    content = BinaryData.FromString(property.Value.GetRawText());
+                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
                     continue;
                 }
             }
-            return new HttpMessage(content.Value);
+            return new CloudError(error);
         }
     }
 }

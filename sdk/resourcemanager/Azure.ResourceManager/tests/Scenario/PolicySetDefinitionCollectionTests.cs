@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
+            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);

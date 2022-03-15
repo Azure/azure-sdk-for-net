@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Tests
                 }
             }
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
+            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
             Assert.AreEqual(model.Data.EnforcementMode, getResult.Data.EnforcementMode);
             if(model.Data.NonComplianceMessages != null || getResult.Data.NonComplianceMessages != null)
             {

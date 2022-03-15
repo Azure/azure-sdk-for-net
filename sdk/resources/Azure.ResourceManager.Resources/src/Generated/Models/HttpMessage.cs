@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> HTTP message. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of HttpMessage. </summary>
         /// <param name="content"> HTTP message content. </param>
-        internal HttpMessage(object content)
+        internal HttpMessage(BinaryData content)
         {
             Content = content;
         }
 
         /// <summary> HTTP message content. </summary>
-        public object Content { get; }
+        public BinaryData Content { get; }
     }
 }

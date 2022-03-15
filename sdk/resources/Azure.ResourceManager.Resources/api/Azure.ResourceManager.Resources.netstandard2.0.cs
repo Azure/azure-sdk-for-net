@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Resources
         public string Kind { get { throw null; } set { } }
         public string ManagedResourceGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
-        public object Outputs { get { throw null; } }
-        public object Parameters { get { throw null; } set { } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublisherTenantId { get { throw null; } }
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Resources
         public ApplicationDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ApplicationLockLevel lockLevel) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationDefinitionArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationAuthorization> Authorizations { get { throw null; } }
-        public object CreateUiDefinition { get { throw null; } set { } }
+        public System.BinaryData CreateUiDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.DeploymentMode DeploymentMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LockingAllowedActions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationLockLevel LockLevel { get { throw null; } set { } }
-        public object MainTemplate { get { throw null; } set { } }
+        public System.BinaryData MainTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationNotificationEndpoint> NotificationEndpoints { get { throw null; } set { } }
         public System.Uri PackageFileUri { get { throw null; } set { } }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
     }
@@ -424,15 +424,15 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact> LinkedTemplates { get { throw null; } }
         public string Location { get { throw null; } set { } }
-        public object MainTemplate { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData MainTemplate { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public object UiFormDefinition { get { throw null; } set { } }
+        public System.BinaryData UiFormDefinition { get { throw null; } set { } }
     }
     public static partial class TenantExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateTemplateHashDeployment(this Azure.ResourceManager.Resources.Tenant tenant, object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Azure.ResourceManager.Resources.Tenant tenant, object template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateTemplateHashDeployment(this Azure.ResourceManager.Resources.Tenant tenant, System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Azure.ResourceManager.Resources.Tenant tenant, System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Deployment> GetDeployment(this Azure.ResourceManager.Resources.Tenant tenant, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Deployment>> GetDeploymentAsync(this Azure.ResourceManager.Resources.Tenant tenant, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.DeploymentCollection GetDeployments(this Azure.ResourceManager.Resources.Tenant tenant) { throw null; }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Outputs { get { throw null; } }
         public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Outputs { get { throw null; } }
         public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DeploymentExportResult
     {
         internal DeploymentExportResult() { }
-        public object Template { get { throw null; } }
+        public System.BinaryData Template { get { throw null; } }
     }
     public partial class DeploymentInput
     {
@@ -728,8 +728,8 @@ namespace Azure.ResourceManager.Resources.Models
         public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningOperation? ProvisioningOperation { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public object RequestContent { get { throw null; } }
-        public object ResponseContent { get { throw null; } }
+        public System.BinaryData RequestContent { get { throw null; } }
+        public System.BinaryData ResponseContent { get { throw null; } }
         public string ServiceRequestId { get { throw null; } }
         public string StatusCode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.StatusMessage StatusMessage { get { throw null; } }
@@ -759,8 +759,8 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.DeploymentMode? Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.OnErrorDeploymentExtended OnErrorDeployment { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> OutputResources { get { throw null; } }
-        public object Outputs { get { throw null; } }
-        public object Parameters { get { throw null; } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ParametersLink ParametersLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ProviderData> Providers { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -938,9 +938,9 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class LinkedTemplateArtifact
     {
-        public LinkedTemplateArtifact(string path, object template) { }
+        public LinkedTemplateArtifact(string path, System.BinaryData template) { }
         public string Path { get { throw null; } set { } }
-        public object Template { get { throw null; } set { } }
+        public System.BinaryData Template { get { throw null; } set { } }
     }
     public partial class OnErrorDeployment
     {
@@ -980,8 +980,8 @@ namespace Azure.ResourceManager.Resources.Models
         public string Kind { get { throw null; } set { } }
         public string ManagedResourceGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
-        public object Outputs { get { throw null; } }
-        public object Parameters { get { throw null; } set { } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublisherTenantId { get { throw null; } }
@@ -1151,8 +1151,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class WhatIfChange
     {
         internal WhatIfChange() { }
-        public object After { get { throw null; } }
-        public object Before { get { throw null; } }
+        public System.BinaryData After { get { throw null; } }
+        public System.BinaryData Before { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ChangeType ChangeType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> Delta { get { throw null; } }
         public string ResourceId { get { throw null; } }
@@ -1168,8 +1168,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class WhatIfPropertyChange
     {
         internal WhatIfPropertyChange() { }
-        public object After { get { throw null; } }
-        public object Before { get { throw null; } }
+        public System.BinaryData After { get { throw null; } }
+        public System.BinaryData Before { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> Children { get { throw null; } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.PropertyChangeType PropertyChangeType { get { throw null; } }

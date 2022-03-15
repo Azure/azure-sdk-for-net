@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetVmExtensionData(string id, string name, string resourceType, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures) : base(id)
+        internal VirtualMachineScaleSetVmExtensionData(string id, string name, string resourceType, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -66,9 +67,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
         public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary> Json formatted public settings for the extension. </summary>
-        public object Settings { get; set; }
+        public BinaryData Settings { get; set; }
         /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
-        public object ProtectedSettings { get; set; }
+        public BinaryData ProtectedSettings { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The virtual machine extension instance view. </summary>
