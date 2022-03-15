@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The managed application lock level. </summary>
     public enum ApplicationLockLevel
     {
+        /// <summary> None. </summary>
+        None,
         /// <summary> CanNotDelete. </summary>
         CanNotDelete,
         /// <summary> ReadOnly. </summary>
-        ReadOnly,
-        /// <summary> None. </summary>
-        None
+        ReadOnly
     }
 }

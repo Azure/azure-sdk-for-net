@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusQueues_CreateResourceGroup
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             #region Snippet:Managing_ServiceBusQueues_CreateNamespace
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
             ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
             #endregion
             this.serviceBusQueueCollection = serviceBusQueueCollection;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_CreateQueue
             string queueName = "myQueue";
-            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             #endregion
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusQueues_DeleteQueue
             ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
-            await serviceBusQueue.DeleteAsync(true);
+            await serviceBusQueue.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
     }

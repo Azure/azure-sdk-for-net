@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {

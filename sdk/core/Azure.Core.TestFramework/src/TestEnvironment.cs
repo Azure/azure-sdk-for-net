@@ -632,6 +632,22 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        /// <summary>
+        /// Determines whether to enable the test framework to proxy traffic through fiddler.
+        /// </summary>
+        internal static bool EnableFiddler
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["EnableFiddler"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_FIDDLER");
+
+                bool.TryParse(switchString, out bool enableFiddler);
+
+                return enableFiddler;
+            }
+        }
+
         private void BootStrapTestResources()
         {
             lock (s_syncLock)

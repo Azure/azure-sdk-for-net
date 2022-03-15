@@ -1280,6 +1280,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         Upload = 2,
         Configuration = 3,
         Content = 4,
+        Account = 5,
     }
     public enum MediaJobErrorCode
     {
@@ -1292,6 +1293,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         ConfigurationUnsupported = 6,
         ContentMalformed = 7,
         ContentUnsupported = 8,
+        IdentityUnsupported = 9,
     }
     public partial class MediaJobErrorDetail
     {

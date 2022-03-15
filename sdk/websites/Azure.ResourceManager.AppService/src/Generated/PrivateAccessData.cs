@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of PrivateAccessData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="enabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
-        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, bool? enabled, IList<PrivateAccessVirtualNetwork> virtualNetworks) : base(id, name, type, systemData, kind)
+        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? enabled, IList<PrivateAccessVirtualNetwork> virtualNetworks) : base(id, name, resourceType, systemData, kind)
         {
             Enabled = enabled;
             VirtualNetworks = virtualNetworks;

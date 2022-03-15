@@ -448,11 +448,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IOperationsHealthOperations.
-        /// </summary>
-        public virtual IOperationsHealthOperations OperationsHealth { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -666,6 +661,21 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDistributedAvailabilityGroupsOperations.
+        /// </summary>
+        public virtual IDistributedAvailabilityGroupsOperations DistributedAvailabilityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerTrustCertificatesOperations.
+        /// </summary>
+        public virtual IServerTrustCertificatesOperations ServerTrustCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        public virtual IIPv6FirewallRulesOperations IPv6FirewallRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -983,7 +993,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies = new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(this);
             ManagedServerSecurityAlertPolicies = new ManagedServerSecurityAlertPoliciesOperations(this);
             Operations = new Operations(this);
-            OperationsHealth = new OperationsHealthOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             RecoverableManagedDatabases = new RecoverableManagedDatabasesOperations(this);
@@ -1027,6 +1036,9 @@ namespace Microsoft.Azure.Management.Sql
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
             ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
+            DistributedAvailabilityGroups = new DistributedAvailabilityGroupsOperations(this);
+            ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
+            IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

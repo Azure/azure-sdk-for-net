@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("endTime");
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(JobScheduleType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(JobScheduleType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Enabled))
             {

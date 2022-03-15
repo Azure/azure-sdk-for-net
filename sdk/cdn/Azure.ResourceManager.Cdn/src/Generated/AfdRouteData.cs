@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="customDomains"> Domains referenced by this endpoint. </param>
         /// <param name="originGroup"> A reference to the origin group. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, object compressionSettings, AfdQueryStringCachingBehavior? queryStringCachingBehavior, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             CustomDomains = customDomains;
             OriginGroup = originGroup;

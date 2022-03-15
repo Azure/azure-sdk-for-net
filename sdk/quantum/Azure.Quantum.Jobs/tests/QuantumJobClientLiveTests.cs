@@ -12,14 +12,54 @@ using Azure.Quantum.Jobs.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
     {
+        public const string ZERO_UID = "00000000-0000-0000-0000-000000000000";
+        public const string TENANT_ID = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        public const string PLACEHOLDER = "PLACEHOLDER";
+        public const string RESOURCE_GROUP = "myresourcegroup";
+        public const string WORKSPACE = "myworkspace";
+        public const string LOCATION = "eastus";
+        public const string STORAGE = "mystorage";
+
         public QuantumJobClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new QuantumJobClientRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..inputDataUri");
+            JsonPathSanitizers.Add("$..outputDataUri");
+            JsonPathSanitizers.Add("$..sasUri");
+            JsonPathSanitizers.Add("$..outputMappingBlobUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..containerUri");
+
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_LOCATION");
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_NAME");
+            JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_RG");
+
+            var testEnvironment = new QuantumJobClientTestEnvironment();
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/resourceGroups/[a-z0-9-]+/", $"/resourceGroups/{RESOURCE_GROUP}/"
+            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/workspaces/[a-z0-9-]+/", $"/workspaces/{WORKSPACE}/"
+            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"https://[^\.]+.blob.core.windows.net/", $"https://{STORAGE}.blob.core.windows.net/"
+            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"https://[^\.]+.quantum.azure.com/", $"https://{LOCATION}.quantum.azure.com/"
+            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/workspaces/[a-z0-9-]+/", $"/workspaces/{WORKSPACE}/"
+            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[a-z0-9-]+/", $"/subscriptions/{ZERO_UID}/"
+            ));
 
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;

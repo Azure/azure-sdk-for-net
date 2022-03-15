@@ -1,12 +1,41 @@
 # Release History
 
-## 7.7.0 (2022-02-11)
+## 7.8.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.8.0-beta.1 (2022-03-10)
+
+### Features Added
+
+- Added the `ServiceBusRuleManager` which allows managing rules for subscriptions.
+
+## 7.7.0 (2022-03-09)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Add the ability to manually renew message and session locks when using the processor.
 
 ### Bugs Fixed
 
 - Fixed name of ServiceBusAdministrationClient extension method.
+- Fixed entity name validation when passing in a subscription entity path into the 
+  CreateReceiver method.
 
 ### Other Changes
+
+- Removed LINQ allocations when sending messages. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.6.0 (2022-02-08)
 

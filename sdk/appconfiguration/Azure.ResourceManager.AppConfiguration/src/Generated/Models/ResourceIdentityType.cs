@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The type of managed identity used. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user-assigned identities. The type &apos;None&apos; will remove any identities. </summary>
-    public readonly partial struct ResourceIdentityType : IEquatable<ResourceIdentityType>
+    internal readonly partial struct ResourceIdentityType : IEquatable<ResourceIdentityType>
     {
         private readonly string _value;
 

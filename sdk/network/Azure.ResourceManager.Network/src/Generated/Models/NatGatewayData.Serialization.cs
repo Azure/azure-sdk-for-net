@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("idleTimeoutInMinutes");
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(PublicIpAddresses))
+            if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIpAddresses");
                 writer.WriteStartArray();
-                foreach (var item in PublicIpAddresses)
+                foreach (var item in PublicIPAddresses)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicIpPrefixes))
+            if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes");
                 writer.WriteStartArray();
-                foreach (var item in PublicIpPrefixes)
+                foreach (var item in PublicIPPrefixes)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }

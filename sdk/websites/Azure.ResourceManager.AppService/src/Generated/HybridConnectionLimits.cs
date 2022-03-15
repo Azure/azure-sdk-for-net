@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
-            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(_hybridConnectionLimitsAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
+            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HybridConnectionLimits>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectionLimits>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimits.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

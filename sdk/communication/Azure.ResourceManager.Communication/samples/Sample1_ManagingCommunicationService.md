@@ -28,7 +28,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true,rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -44,7 +44,7 @@ CommunicationServiceData data = new CommunicationServiceData()
     Location = "global",
     DataLocation = "UnitedStates",
 };
-ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
+ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
 CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
@@ -66,5 +66,5 @@ await foreach (CommunicationService communicationService  in list)
 CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
 CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-await communicationService.DeleteAsync(true);
+await communicationService.DeleteAsync(WaitUntil.Completed);
 ```

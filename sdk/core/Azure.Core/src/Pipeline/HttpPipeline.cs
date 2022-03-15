@@ -30,13 +30,13 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerCall"/> policies will be added,
-        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perCallIndex;
 
         /// <summary>
         /// The pipeline index where <see cref="HttpPipelinePosition.PerRetry"/> policies will be added,
-        /// if any are specified using <see cref="RequestOptions.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
+        /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perRetryIndex;
 
@@ -108,9 +108,13 @@ namespace Azure.Core.Pipeline
         /// <param name="context">Context specifying the message options.</param>
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context, CoreResponseClassifier? classifier = default)
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
             var message = CreateMessage();
+            if (classifier != null)
+            {
+                message.ResponseClassifier = classifier;
+            }
             message.ApplyRequestContext(context, classifier);
             return message;
         }

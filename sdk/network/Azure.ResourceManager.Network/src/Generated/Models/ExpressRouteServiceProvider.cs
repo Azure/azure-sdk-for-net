@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A ExpressRouteResourceProvider object. </summary>
-    public partial class ExpressRouteServiceProvider : Resource
+    public partial class ExpressRouteServiceProvider : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         public ExpressRouteServiceProvider()
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="peeringLocations"> A list of peering locations. </param>
         /// <param name="bandwidthsOffered"> A list of bandwidths offered. </param>
         /// <param name="provisioningState"> The provisioning state of the express route service provider resource. </param>
-        internal ExpressRouteServiceProvider(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal ExpressRouteServiceProvider(string id, string name, string resourceType, string location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;

@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
         {
             var assembly = Assembly.GetAssembly(GetType());
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(new UserAgentValue(GetType()));
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly));
 
             await SendGetRequest(transport, telemetryPolicy);
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public async Task ApplicationIdIsIncluded()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(new UserAgentValue(GetType(), "application-id"));
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly, "application-id"));
 
             await SendGetRequest(transport, telemetryPolicy);
 

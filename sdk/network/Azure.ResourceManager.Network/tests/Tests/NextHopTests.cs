@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string sourceIPAddress = networkInterfaceCollection
-                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
+                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IPConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
             //Use DestinationIPAddress from Route Table
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.Network.Tests
 
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
             var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
-            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties1);
+            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 
-            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(true, nhProperties2);
+            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties2);
             Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
 
             Response<RouteTable> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");
 
             //Validation
-            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIpAddress);
+            Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIPAddress);
             Assert.AreEqual(routeTable.Value.Id, getNextHop1.Value.RouteTableId);
             Assert.AreEqual("Internet", getNextHop2.Value.NextHopType.ToString());
             Assert.AreEqual("System Route", getNextHop2.Value.RouteTableId);

@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="defaultAction">The default action of allow or deny
         /// when no other rules match. Possible values include: 'Allow',
         /// 'Deny'</param>
+        /// <param name="virtualNetworkRules">The virtual network
+        /// rules.</param>
         /// <param name="ipRules">The IP ACL rules.</param>
-        public NetworkRuleSet(string defaultAction, IList<IPRule> ipRules = default(IList<IPRule>))
+        public NetworkRuleSet(string defaultAction, IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
         {
             DefaultAction = defaultAction;
+            VirtualNetworkRules = virtualNetworkRules;
             IpRules = ipRules;
             CustomInit();
         }
@@ -54,6 +57,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "defaultAction")]
         public string DefaultAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual network rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "virtualNetworkRules")]
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
 
         /// <summary>
         /// Gets or sets the IP ACL rules.
@@ -73,13 +82,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DefaultAction");
             }
-            if (IpRules != null)
+            if (VirtualNetworkRules != null)
             {
-                foreach (var element in IpRules)
+                foreach (var element in VirtualNetworkRules)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (IpRules != null)
+            {
+                foreach (var element1 in IpRules)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

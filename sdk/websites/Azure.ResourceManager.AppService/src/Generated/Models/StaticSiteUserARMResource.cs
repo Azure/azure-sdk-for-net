@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteUserARMResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="provider"> The identity provider for the static site user. </param>
         /// <param name="userId"> The user id for the static site user. </param>
         /// <param name="displayName"> The display name for the static site user. </param>
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
-        internal StaticSiteUserARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string provider, string userId, string displayName, string roles) : base(id, name, type, systemData, kind)
+        internal StaticSiteUserARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provider, string userId, string displayName, string roles) : base(id, name, resourceType, systemData, kind)
         {
             Provider = provider;
             UserId = userId;

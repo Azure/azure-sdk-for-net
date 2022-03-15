@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGateway data model. </summary>
-    public partial class VirtualNetworkGatewayData : Resource
+    public partial class VirtualNetworkGatewayData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         public VirtualNetworkGatewayData()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
             NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnType"> The type of this virtual network gateway. </param>
         /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
         /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
-        /// <param name="enablePrivateIpAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
         /// <param name="active"> ActiveActive flag. </param>
         /// <param name="gatewayDefaultSite"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
         /// <param name="natRules"> NatRules for virtual network gateway. </param>
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
-        internal VirtualNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIpAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, string resourceGuid, ProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, string resourceGuid, ProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
             VpnGatewayGeneration = vpnGatewayGeneration;
             EnableBgp = enableBgp;
-            EnablePrivateIpAddress = enablePrivateIpAddress;
+            EnablePrivateIPAddress = enablePrivateIPAddress;
             Active = active;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> IP configurations for virtual network gateway. </summary>
-        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualNetworkGatewayIPConfiguration> IPConfigurations { get; }
         /// <summary> The type of this virtual network gateway. </summary>
         public VirtualNetworkGatewayType? GatewayType { get; set; }
         /// <summary> The type of this virtual network gateway. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Whether BGP is enabled for this virtual network gateway or not. </summary>
         public bool? EnableBgp { get; set; }
         /// <summary> Whether private IP needs to be enabled on this gateway for connections or not. </summary>
-        public bool? EnablePrivateIpAddress { get; set; }
+        public bool? EnablePrivateIPAddress { get; set; }
         /// <summary> ActiveActive flag. </summary>
         public bool? Active { get; set; }
         /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>

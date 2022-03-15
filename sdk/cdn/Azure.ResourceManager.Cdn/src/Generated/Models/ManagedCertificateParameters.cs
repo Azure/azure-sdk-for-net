@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Managed Certificate used for https. </summary>
-    public partial class ManagedCertificateParameters : SecretParameters
+    internal partial class ManagedCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
         public ManagedCertificateParameters()
         {
-            Type = SecretType.ManagedCertificate;
+            SecretType = SecretType.ManagedCertificate;
         }
 
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
-        /// <param name="type"> The type of the Secret to create. </param>
-        internal ManagedCertificateParameters(SecretType type) : base(type)
+        /// <param name="secretType"> The type of the Secret to create. </param>
+        internal ManagedCertificateParameters(SecretType secretType) : base(secretType)
         {
-            Type = type;
+            SecretType = secretType;
         }
     }
 }

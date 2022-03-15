@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
         /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
         /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
-        /// <param name="type"> Whether this detector is an Analysis Detector or not. </param>
+        /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<SupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? type, float? score)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<SupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score)
         {
             Id = id;
             Name = name;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             Category = category;
             SupportTopicList = supportTopicList;
             AnalysisType = analysisType;
-            Type = type;
+            DetectorType = detectorType;
             Score = score;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Analysis Types for which this detector should apply to. </summary>
         public IReadOnlyList<string> AnalysisType { get; }
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
-        public DetectorType? Type { get; }
+        public DetectorType? DetectorType { get; }
         /// <summary> Defines score of a detector to power ML based matching. </summary>
         public float? Score { get; }
     }

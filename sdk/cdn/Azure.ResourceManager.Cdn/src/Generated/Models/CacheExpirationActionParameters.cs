@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache expiration action. </summary>
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType, string cacheDuration)
+        internal CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType, TimeSpan? cacheDuration)
         {
             OdataType = odataType;
             CacheBehavior = cacheBehavior;
@@ -41,6 +43,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The level at which the content needs to be cached. </summary>
         public CacheType CacheType { get; set; }
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
-        public string CacheDuration { get; set; }
+        public TimeSpan? CacheDuration { get; set; }
     }
 }

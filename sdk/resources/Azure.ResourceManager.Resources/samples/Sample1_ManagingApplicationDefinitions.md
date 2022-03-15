@@ -26,7 +26,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -45,7 +45,7 @@ var input = new ApplicationDefinitionData(resourceGroup.Data.Location, Applicati
     Description = $"{applicationDefinitionName} description",
     PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
 };
-ArmOperation<ApplicationDefinition> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(true, applicationDefinitionName, input);
+ArmOperation<ApplicationDefinition> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, input);
 ApplicationDefinition applicationDefinition = lro.Value;
 ```
 
@@ -70,7 +70,7 @@ ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.
 // Now we can get the application definition with GetAsync()
 ApplicationDefinition applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
 // With DeleteAsync(), we can delete the application definition
-await applicationDefinition.DeleteAsync(true);
+await applicationDefinition.DeleteAsync(WaitUntil.Completed);
 ```
 
 

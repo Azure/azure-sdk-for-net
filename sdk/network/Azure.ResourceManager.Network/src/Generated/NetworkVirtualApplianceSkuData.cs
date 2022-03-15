@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkVirtualApplianceSku data model. </summary>
-    public partial class NetworkVirtualApplianceSkuData : Resource
+    public partial class NetworkVirtualApplianceSkuData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
         public NetworkVirtualApplianceSkuData()
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
         /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
         /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, type, location, tags)
+        internal NetworkVirtualApplianceSkuData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Vendor = vendor;

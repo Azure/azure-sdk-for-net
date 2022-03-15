@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="runs"> List of triggered web job runs. </param>
-        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IList<TriggeredJobRun> runs) : base(id, name, type, systemData, kind)
+        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<TriggeredJobRun> runs) : base(id, name, resourceType, systemData, kind)
         {
             Runs = runs;
         }
