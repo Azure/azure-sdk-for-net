@@ -26,7 +26,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -37,11 +37,11 @@ Now that we have the resource group created, we can manage the cdn web applicati
 ```C# Snippet:Managing_CdnWebApplicationFirewallPolicies_CreateAWebApplicationFirewallPolicy
 // Get the cdn web application firewall policy collection from the specific resource group and create a firewall policy
 string policyName = "myPolicy";
-var input = new CdnWebApplicationFirewallPolicyData("Global", new Sku
+var input = new CdnWebApplicationFirewallPolicyData("Global", new CdnSku
 {
-    Name = SkuName.StandardMicrosoft
+    Name = CdnSkuName.StandardMicrosoft
 });
-ArmOperation<CdnWebApplicationFirewallPolicy> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(true, policyName, input);
+ArmOperation<CdnWebApplicationFirewallPolicy> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
 CdnWebApplicationFirewallPolicy policy = lro.Value;
 ```
 
@@ -66,5 +66,5 @@ CdnWebApplicationFirewallPolicyCollection policyCollection = resourceGroup.GetCd
 // Now we can get the policy with GetAsync()
 CdnWebApplicationFirewallPolicy policy = await policyCollection.GetAsync("myPolicy");
 // With DeleteAsync(), we can delete the policy
-await policy.DeleteAsync(true);
+await policy.DeleteAsync(WaitUntil.Completed);
 ```
