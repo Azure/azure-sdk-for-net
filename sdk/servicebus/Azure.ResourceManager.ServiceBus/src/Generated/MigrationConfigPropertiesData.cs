@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of MigrationConfigPropertiesData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of Migration Configuration. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="targetNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
         /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
         /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
-        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState) : base(id, name, type, systemData)
+        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;

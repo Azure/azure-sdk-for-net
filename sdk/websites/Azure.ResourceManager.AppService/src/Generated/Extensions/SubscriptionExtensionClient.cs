@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of TopLevelDomains and their operations over a TopLevelDomain. </returns>
         public virtual TopLevelDomainCollection GetTopLevelDomains()
         {
-            return new TopLevelDomainCollection(Client, Id);
+            return GetCachedClient(Client => new TopLevelDomainCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DeletedSites in the DeletedSite. </summary>
         /// <returns> An object representing collection of DeletedSites and their operations over a DeletedSite. </returns>
         public virtual DeletedSiteCollection GetDeletedSites()
         {
-            return new DeletedSiteCollection(Client, Id);
+            return GetCachedClient(Client => new DeletedSiteCollection(Client, Id));
         }
 
         /// <summary>

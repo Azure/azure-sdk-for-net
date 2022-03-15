@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of NetworkFeaturesData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="virtualNetworkName"> The Virtual Network name. </param>
         /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
-        internal NetworkFeaturesData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2) : base(id, name, type, systemData, kind)
+        internal NetworkFeaturesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2) : base(id, name, resourceType, systemData, kind)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;

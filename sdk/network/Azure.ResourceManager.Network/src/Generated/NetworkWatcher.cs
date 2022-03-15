@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PacketCaptures and their operations over a PacketCapture. </returns>
         public virtual PacketCaptureCollection GetPacketCaptures()
         {
-            return new PacketCaptureCollection(Client, Id);
+            return GetCachedClient(Client => new PacketCaptureCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ConnectionMonitors and their operations over a ConnectionMonitor. </returns>
         public virtual ConnectionMonitorCollection GetConnectionMonitors()
         {
-            return new ConnectionMonitorCollection(Client, Id);
+            return GetCachedClient(Client => new ConnectionMonitorCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FlowLogs and their operations over a FlowLog. </returns>
         public virtual FlowLogCollection GetFlowLogs()
         {
-            return new FlowLogCollection(Client, Id);
+            return GetCachedClient(Client => new FlowLogCollection(Client, Id));
         }
 
         /// <summary>

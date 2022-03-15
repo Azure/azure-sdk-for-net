@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of GeoBackupPolicies and their operations over a GeoBackupPolicy. </returns>
         public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
         {
-            return new GeoBackupPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new GeoBackupPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ReplicationLinks and their operations over a ReplicationLink. </returns>
         public virtual ReplicationLinkCollection GetReplicationLinks()
         {
-            return new ReplicationLinkCollection(Client, Id);
+            return GetCachedClient(Client => new ReplicationLinkCollection(Client, Id));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicies and their operations over a ExtendedDatabaseBlobAuditingPolicy. </returns>
         public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
         {
-            return new ExtendedDatabaseBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ExtendedDatabaseBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DatabaseBlobAuditingPolicies and their operations over a DatabaseBlobAuditingPolicy. </returns>
         public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
         {
-            return new DatabaseBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new DatabaseBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseAdvisors and their operations over a ServerDatabaseAdvisor. </returns>
         public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
         {
-            return new ServerDatabaseAdvisorCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseAdvisorCollection(Client, Id));
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseSchemas and their operations over a ServerDatabaseSchema. </returns>
         public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
         {
-            return new ServerDatabaseSchemaCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DatabaseSecurityAlertPolicies and their operations over a DatabaseSecurityAlertPolicy. </returns>
         public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
         {
-            return new DatabaseSecurityAlertPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new DatabaseSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessments and their operations over a ServerDatabaseVulnerabilityAssessment. </returns>
         public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
         {
-            return new ServerDatabaseVulnerabilityAssessmentCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DataWarehouseUserActivities and their operations over a DataWarehouseUserActivities. </returns>
         public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
         {
-            return new DataWarehouseUserActivitiesCollection(Client, Id);
+            return GetCachedClient(Client => new DataWarehouseUserActivitiesCollection(Client, Id));
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LongTermRetentionPolicies and their operations over a LongTermRetentionPolicy. </returns>
         public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
         {
-            return new LongTermRetentionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new LongTermRetentionPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RestorePoints and their operations over a RestorePoint. </returns>
         public virtual RestorePointCollection GetRestorePoints()
         {
-            return new RestorePointCollection(Client, Id);
+            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SyncGroups and their operations over a SyncGroup. </returns>
         public virtual SyncGroupCollection GetSyncGroups()
         {
-            return new SyncGroupCollection(Client, Id);
+            return GetCachedClient(Client => new SyncGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of WorkloadGroups and their operations over a WorkloadGroup. </returns>
         public virtual WorkloadGroupCollection GetWorkloadGroups()
         {
-            return new WorkloadGroupCollection(Client, Id);
+            return GetCachedClient(Client => new WorkloadGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptions and their operations over a LogicalDatabaseTransparentDataEncryption. </returns>
         public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
         {
-            return new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id);
+            return GetCachedClient(Client => new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id));
         }
 
         /// <summary>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of BackupShortTermRetentionPolicies and their operations over a BackupShortTermRetentionPolicy. </returns>
         public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
         {
-            return new BackupShortTermRetentionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new BackupShortTermRetentionPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of LedgerDigestUploads and their operations over a LedgerDigestUploads. </returns>
         public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
         {
-            return new LedgerDigestUploadsCollection(Client, Id);
+            return GetCachedClient(Client => new LedgerDigestUploadsCollection(Client, Id));
         }
 
         /// <summary>

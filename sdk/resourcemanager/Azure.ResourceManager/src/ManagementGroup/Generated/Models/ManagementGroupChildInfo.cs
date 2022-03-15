@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Management.Models
         }
 
         /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
-        /// <param name="type"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
+        /// <param name="managementGroupChildType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
         /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the child entity. </param>
         /// <param name="displayName"> The friendly name of the child resource. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupChildInfo(ManagementGroupChildType? type, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children)
+        internal ManagementGroupChildInfo(ManagementGroupChildType? managementGroupChildType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children)
         {
-            Type = type;
+            ManagementGroupChildType = managementGroupChildType;
             Id = id;
             Name = name;
             DisplayName = displayName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Management.Models
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
-        public ManagementGroupChildType? Type { get; }
+        public ManagementGroupChildType? ManagementGroupChildType { get; }
         /// <summary> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
         /// <summary> The name of the child entity. </summary>

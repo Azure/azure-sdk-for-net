@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
-        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, type, systemData, tags, location)
+        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ManagedBy = managedBy;

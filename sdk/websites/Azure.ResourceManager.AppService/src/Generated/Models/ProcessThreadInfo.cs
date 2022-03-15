@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="identifier"> Site extension ID. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="userProcessorTime"> User processor time. </param>
         /// <param name="state"> Thread state. </param>
         /// <param name="waitReason"> Wait reason. </param>
-        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startTime, string totalProcessorTime, string userProcessorTime, string state, string waitReason) : base(id, name, type, systemData, kind)
+        internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startTime, string totalProcessorTime, string userProcessorTime, string state, string waitReason) : base(id, name, resourceType, systemData, kind)
         {
             Identifier = identifier;
             Href = href;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotTriggeredWebJobHistories and their operations over a SiteSlotTriggeredWebJobHistory. </returns>
         public virtual SiteSlotTriggeredWebJobHistoryCollection GetSiteSlotTriggeredWebJobHistories()
         {
-            return new SiteSlotTriggeredWebJobHistoryCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotTriggeredWebJobHistoryCollection(Client, Id));
         }
 
         /// <summary>

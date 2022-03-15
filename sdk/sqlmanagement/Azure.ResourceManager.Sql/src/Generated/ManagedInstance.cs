@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabases and their operations over a ManagedDatabase. </returns>
         public virtual ManagedDatabaseCollection GetManagedDatabases()
         {
-            return new ManagedDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceAdministrators and their operations over a ManagedInstanceAdministrator. </returns>
         public virtual ManagedInstanceAdministratorCollection GetManagedInstanceAdministrators()
         {
-            return new ManagedInstanceAdministratorCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceAdministratorCollection(Client, Id));
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceAzureADOnlyAuthentications and their operations over a ManagedInstanceAzureADOnlyAuthentication. </returns>
         public virtual ManagedInstanceAzureADOnlyAuthenticationCollection GetManagedInstanceAzureADOnlyAuthentications()
         {
-            return new ManagedInstanceAzureADOnlyAuthenticationCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceAzureADOnlyAuthenticationCollection(Client, Id));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceEncryptionProtectors and their operations over a ManagedInstanceEncryptionProtector. </returns>
         public virtual ManagedInstanceEncryptionProtectorCollection GetManagedInstanceEncryptionProtectors()
         {
-            return new ManagedInstanceEncryptionProtectorCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceEncryptionProtectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceKeys and their operations over a ManagedInstanceKey. </returns>
         public virtual ManagedInstanceKeyCollection GetManagedInstanceKeys()
         {
-            return new ManagedInstanceKeyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceOperations and their operations over a ManagedInstanceOperation. </returns>
         public virtual ManagedInstanceOperationCollection GetManagedInstanceOperations()
         {
-            return new ManagedInstanceOperationCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceOperationCollection(Client, Id));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstancePrivateEndpointConnections and their operations over a ManagedInstancePrivateEndpointConnection. </returns>
         public virtual ManagedInstancePrivateEndpointConnectionCollection GetManagedInstancePrivateEndpointConnections()
         {
-            return new ManagedInstancePrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstancePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstancePrivateLinks and their operations over a ManagedInstancePrivateLink. </returns>
         public virtual ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks()
         {
-            return new ManagedInstancePrivateLinkCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstancePrivateLinkCollection(Client, Id));
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceVulnerabilityAssessments and their operations over a ManagedInstanceVulnerabilityAssessment. </returns>
         public virtual ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments()
         {
-            return new ManagedInstanceVulnerabilityAssessmentCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedServerSecurityAlertPolicies and their operations over a ManagedServerSecurityAlertPolicy. </returns>
         public virtual ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies()
         {
-            return new ManagedServerSecurityAlertPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedServerSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RecoverableManagedDatabases and their operations over a RecoverableManagedDatabase. </returns>
         public virtual RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases()
         {
-            return new RecoverableManagedDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RecoverableManagedDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RestorableDroppedManagedDatabases and their operations over a RestorableDroppedManagedDatabase. </returns>
         public virtual RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases()
         {
-            return new RestorableDroppedManagedDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RestorableDroppedManagedDatabaseCollection(Client, Id));
         }
 
         /// <summary>

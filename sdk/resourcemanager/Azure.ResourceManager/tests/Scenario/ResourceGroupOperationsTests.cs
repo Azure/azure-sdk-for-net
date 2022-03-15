@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg2 = await rg1.GetAsync();
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg2 = await rg1.UpdateAsync(parameters);
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")));
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(tags, rg2.Data.Tags);
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(tags2, rg2.Data.Tags);
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);

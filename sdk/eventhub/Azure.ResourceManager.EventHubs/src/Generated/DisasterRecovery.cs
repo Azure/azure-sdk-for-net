@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of DisasterRecoveryAuthorizationRules and their operations over a DisasterRecoveryAuthorizationRule. </returns>
         public virtual DisasterRecoveryAuthorizationRuleCollection GetDisasterRecoveryAuthorizationRules()
         {
-            return new DisasterRecoveryAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new DisasterRecoveryAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
